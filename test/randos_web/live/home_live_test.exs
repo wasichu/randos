@@ -74,11 +74,6 @@ defmodule RandosWeb.HomeLiveTest do
     render(view_a)
     assert has_element?(view_a, "#connecting-panel")
     assert has_element?(view_a, "#match-role-label")
-
-    view_a |> element("#enter-call-button") |> render_click()
-    assert has_element?(view_a, "#call-panel")
-    assert has_element?(view_a, "#local-waveform")
-    assert has_element?(view_a, "#remote-waveform")
   end
 
   test "can leave the queue before a match", %{conn: conn} do

@@ -5,7 +5,8 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
   defp start_matchmaker(_) do
     name = :"matchmaker_#{System.unique_integer([:positive])}"
-    start_supervised!({Matchmaker, name: name})
+    call_starter = fn _match, _call_options -> {:ok, self()} end
+    start_supervised!({Matchmaker, name: name, call_starter: call_starter})
     %{matchmaker: name}
   end
 

@@ -1,5 +1,5 @@
 defmodule Randos.Comms.AnonymousSessionTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias Randos.Comms.AnonymousSession
 

@@ -1,5 +1,5 @@
 defmodule Randos.Comms.CallSessionTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias Randos.Comms.CallSession
 
@@ -55,11 +55,11 @@ defmodule Randos.Comms.CallSessionTest do
 
     assert {:ok, ended_call} =
              extended_call
-             |> Ash.Changeset.for_update(:end_call, %{ended_reason: :hang_up})
+             |> Ash.Changeset.for_update(:end_call, %{ended_reason: :hangup})
              |> Ash.update()
 
     assert ended_call.status == :ended
-    assert ended_call.ended_reason == :hang_up
+    assert ended_call.ended_reason == :hangup
     assert %DateTime{} = ended_call.ended_at
   end
 

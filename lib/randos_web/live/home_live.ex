@@ -1,6 +1,7 @@
 defmodule RandosWeb.HomeLive do
   use RandosWeb, :live_view
 
+  alias Randos.Calls.CallCoordinator
   alias Randos.ConversationFlow
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
@@ -27,6 +28,10 @@ defmodule RandosWeb.HomeLive do
       |> assign(:match, nil)
       |> assign(:match_role, nil)
       |> assign(:webrtc_role, nil)
+      |> assign(:call_pid, nil)
+      |> assign(:call_status, nil)
+      |> assign(:call_ended_reason, nil)
+      |> assign(:extension_count, 0)
       |> assign_form(preferences)
 
     {:ok, socket}
@@ -74,9 +79,51 @@ defmodule RandosWeb.HomeLive do
     {:noreply, update(socket, :stop_after_call?, &(!&1))}
   end
 
+  def handle_event("hang_up", _params, socket) do
+    if socket.assigns.call_pid do
+      CallCoordinator.hang_up(socket.assigns.call_pid, socket.assigns.participant_id)
+    end
+
+    {:noreply, socket}
+  end
+
+  def handle_event("mock_time_up", _params, socket) do
+    if socket.assigns.call_pid do
+      CallCoordinator.force_time_up(socket.assigns.call_pid)
+    end
+
+    {:noreply, socket}
+  end
+
+  def handle_event("extension_vote", %{"vote" => vote}, socket) do
+    vote = if vote == "continue", do: :continue, else: :end
+
+    if socket.assigns.call_pid do
+      CallCoordinator.vote_extension(socket.assigns.call_pid, socket.assigns.participant_id, vote)
+    end
+
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_info({:randos_match, match}, socket) do
     {:noreply, assign_match(socket, match)}
+  end
+
+  def handle_info({:mock_call_active, call}, socket) do
+    {:noreply, assign_call_state(socket, call, :in_call)}
+  end
+
+  def handle_info({:mock_call_extension_pending, call}, socket) do
+    {:noreply, assign_call_state(socket, call, :extension_pending)}
+  end
+
+  def handle_info({:mock_call_extended, call}, socket) do
+    {:noreply, assign_call_state(socket, call, :in_call)}
+  end
+
+  def handle_info({:mock_call_ended, call}, socket) do
+    {:noreply, finish_call(socket, call)}
   end
 
   @impl true
@@ -199,6 +246,8 @@ defmodule RandosWeb.HomeLive do
                 <.call_panel
                   preferences={@preferences}
                   stop_after_call?={@stop_after_call?}
+                  call_status={@call_status}
+                  extension_count={@extension_count}
                   language_name={&language_name/1}
                 />
               <% :extension_pending -> %>
@@ -268,17 +317,8 @@ defmodule RandosWeb.HomeLive do
       </div>
       <div class="grid gap-3 sm:grid-cols-2">
         <button
-          id="enter-call-button"
-          phx-click="transition"
-          phx-value-to="in_call"
-          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
-        >
-          {gettext("Enter mock call")}
-        </button>
-        <button
           id="cancel-connection-button"
-          phx-click="transition"
-          phx-value-to="idle"
+          phx-click="hang_up"
           class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Cancel")}
@@ -290,6 +330,8 @@ defmodule RandosWeb.HomeLive do
 
   attr :preferences, :map, required: true
   attr :stop_after_call?, :boolean, required: true
+  attr :call_status, :atom, default: nil
+  attr :extension_count, :integer, required: true
   attr :language_name, :any, required: true
 
   defp call_panel(assigns) do
@@ -305,7 +347,7 @@ defmodule RandosWeb.HomeLive do
           </h2>
         </div>
         <span class="rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-800">
-          {gettext("5 min max")}
+          {gettext("5 min limit")}
         </span>
       </div>
 
@@ -324,6 +366,12 @@ defmodule RandosWeb.HomeLive do
           <strong>{@language_name.(@preferences["listening_language"])}</strong>
         </p>
         <p>{gettext("Random calls last up to 5 minutes")}</p>
+        <p id="call-status-label">
+          {gettext("Call status:")} <strong>{call_status_label(@call_status)}</strong>
+        </p>
+        <p id="extension-count-label">
+          {gettext("Extensions:")} <strong>{@extension_count}</strong>
+        </p>
       </div>
 
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -355,24 +403,21 @@ defmodule RandosWeb.HomeLive do
       <div class="grid gap-3 sm:grid-cols-3">
         <button
           id="time-up-button"
-          phx-click="transition"
-          phx-value-to="extension_pending"
+          phx-click="mock_time_up"
           class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
           {gettext("Mock time up")}
         </button>
         <button
           id="next-rando-button"
-          phx-click="transition"
-          phx-value-to="looking"
+          phx-click="hang_up"
           class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Find next")}
         </button>
         <button
           id="hang-up-button"
-          phx-click="transition"
-          phx-value-to="idle"
+          phx-click="hang_up"
           class="rounded-md border border-red-200 px-5 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
         >
           {gettext("Hang up")}
@@ -418,24 +463,24 @@ defmodule RandosWeb.HomeLive do
       <div class="grid gap-3 sm:grid-cols-3">
         <button
           id="continue-call-button"
-          phx-click="transition"
-          phx-value-to="in_call"
+          phx-click="extension_vote"
+          phx-value-vote="continue"
           class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
           {gettext("Continue")}
         </button>
         <button
           id="find-new-after-extension-button"
-          phx-click="transition"
-          phx-value-to="looking"
+          phx-click="extension_vote"
+          phx-value-vote="end"
           class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Find someone else")}
         </button>
         <button
           id="end-call-button"
-          phx-click="transition"
-          phx-value-to="idle"
+          phx-click="extension_vote"
+          phx-value-vote="end"
           class="rounded-md border border-red-200 px-5 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
         >
           {gettext("End")}
@@ -501,8 +546,35 @@ defmodule RandosWeb.HomeLive do
     |> assign(:match, match)
     |> assign(:match_role, match_role)
     |> assign(:webrtc_role, webrtc_role)
+    |> assign(:call_pid, match.call_pid)
+    |> assign(:call_status, :connecting)
+    |> assign(:call_ended_reason, nil)
+    |> assign(:extension_count, 0)
     |> assign(:matchmaking_error, nil)
     |> assign(:ui_state, :connecting)
+  end
+
+  defp assign_call_state(socket, call, ui_state) do
+    socket
+    |> assign(:call_pid, call.call_pid)
+    |> assign(:call_status, call.status)
+    |> assign(:extension_count, call.extension_count)
+    |> assign(:call_ended_reason, call.ended_reason)
+    |> assign(:ui_state, ui_state)
+  end
+
+  defp finish_call(socket, call) do
+    socket =
+      socket
+      |> assign_call_state(call, :idle)
+      |> assign(:call_pid, nil)
+      |> assign(:match, nil)
+
+    if socket.assigns.stop_after_call? do
+      assign(socket, :ui_state, :idle)
+    else
+      join_matchmaking(socket)
+    end
   end
 
   defp roles_for(%{participant_a: %{id: participant_id}}, participant_id),
@@ -518,6 +590,12 @@ defmodule RandosWeb.HomeLive do
   defp webrtc_role_label(:offerer), do: gettext("offerer")
   defp webrtc_role_label(:answerer), do: gettext("answerer")
   defp webrtc_role_label(nil), do: gettext("no WebRTC role")
+
+  defp call_status_label(:active), do: gettext("active")
+  defp call_status_label(:connecting), do: gettext("connecting")
+  defp call_status_label(:extension_pending), do: gettext("extension pending")
+  defp call_status_label(:ended), do: gettext("ended")
+  defp call_status_label(nil), do: gettext("waiting")
 
   defp parse_state("idle"), do: :idle
   defp parse_state("looking"), do: :looking

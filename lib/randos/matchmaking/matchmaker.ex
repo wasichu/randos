@@ -8,6 +8,7 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   use GenServer
 
+  alias Randos.Calls.CallCoordinator
   alias Randos.ConversationLanguages
 
   @type language_code :: String.t()
@@ -29,7 +30,13 @@ defmodule Randos.Matchmaking.Matchmaker do
           answerer: :participant_b
         }
 
-  defstruct queues: %{}, participants: %{}, monitors: %{}, pubsub: Randos.PubSub
+  defstruct queues: %{},
+            participants: %{},
+            monitors: %{},
+            pubsub: Randos.PubSub,
+            call_supervisor: Randos.Calls.CallSupervisor,
+            call_options: [],
+            call_starter: {CallCoordinator, :start_match}
 
   @supported_language_codes ConversationLanguages.codes()
 
@@ -65,7 +72,13 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @impl true
   def init(opts) do
-    {:ok, %__MODULE__{pubsub: Keyword.get(opts, :pubsub, Randos.PubSub)}}
+    {:ok,
+     %__MODULE__{
+       pubsub: Keyword.get(opts, :pubsub, Randos.PubSub),
+       call_supervisor: Keyword.get(opts, :call_supervisor, Randos.Calls.CallSupervisor),
+       call_options: Keyword.get(opts, :call_options, []),
+       call_starter: Keyword.get(opts, :call_starter, {CallCoordinator, :start_match})
+     }}
   end
 
   @impl true
@@ -125,6 +138,8 @@ defmodule Randos.Matchmaking.Matchmaker do
     case pop_waiting_participant(state, compatible_key) do
       {%{} = waiting_participant, state} ->
         match = build_match(waiting_participant, participant)
+        {:ok, call_pid} = start_call(match, state)
+        match = Map.merge(match, %{call_pid: call_pid})
         notify_match(state.pubsub, match)
         {:reply, {:matched, match}, state}
 
@@ -222,6 +237,24 @@ defmodule Randos.Matchmaking.Matchmaker do
       offerer: :participant_a,
       answerer: :participant_b
     }
+  end
+
+  defp start_call(match, state) do
+    call_options =
+      state.call_options
+      |> Keyword.put(:supervisor, state.call_supervisor)
+
+    with {:ok, pid} <- apply_call_starter(state.call_starter, match, call_options) do
+      {:ok, pid}
+    end
+  end
+
+  defp apply_call_starter({module, function}, match, call_options) do
+    apply(module, function, [match, call_options])
+  end
+
+  defp apply_call_starter(function, match, call_options) when is_function(function, 2) do
+    function.(match, call_options)
   end
 
   defp deterministic_match_id(participant_a_id, participant_b_id) do

@@ -22,9 +22,10 @@ defmodule Randos.Comms.CallSession do
   @ended_reasons [
     :canceled,
     :completed,
-    :declined_extension,
-    :timeout,
-    :hang_up,
+    :extension_declined,
+    :extension_timeout,
+    :hangup,
+    :disconnected,
     :max_duration_reached
   ]
 
