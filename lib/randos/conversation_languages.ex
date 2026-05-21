@@ -19,6 +19,14 @@ defmodule Randos.ConversationLanguages do
   def all, do: @languages
 
   @doc """
+  Returns supported stable internal language codes.
+  """
+  @spec codes() :: [String.t()]
+  def codes do
+    Enum.map(@languages, fn {_name, code} -> code end)
+  end
+
+  @doc """
   Finds an English display name for a language code.
   """
   @spec name(String.t()) :: String.t()

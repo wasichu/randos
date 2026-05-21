@@ -45,6 +45,7 @@ config :spark,
   ]
 
 config :randos,
+  ash_domains: [Randos.Comms],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
