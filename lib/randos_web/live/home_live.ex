@@ -1,0 +1,485 @@
+defmodule RandosWeb.HomeLive do
+  use RandosWeb, :live_view
+
+  alias Randos.ConversationFlow
+  alias Randos.ConversationLanguages
+
+  @impl true
+  def mount(_params, _session, socket) do
+    preferences = default_preferences()
+
+    socket =
+      socket
+      |> assign(:page_title, gettext("Randos"))
+      |> assign(:ui_state, :idle)
+      |> assign(:preferences, preferences)
+      |> assign(:stop_after_call?, false)
+      |> assign_form(preferences)
+
+    {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("update_preferences", %{"conversation" => params}, socket) do
+    preferences = normalize_preferences(params, socket.assigns.preferences)
+
+    {:noreply,
+     socket
+     |> assign(:preferences, preferences)
+     |> assign_form(preferences)}
+  end
+
+  def handle_event("find", %{"conversation" => params}, socket) do
+    preferences = normalize_preferences(params, socket.assigns.preferences)
+
+    socket =
+      socket
+      |> assign(:preferences, preferences)
+      |> assign_form(preferences)
+
+    if acknowledged?(preferences) do
+      {:noreply, transition(socket, :looking)}
+    else
+      {:noreply, socket}
+    end
+  end
+
+  def handle_event("transition", %{"to" => state}, socket) do
+    {:noreply, transition(socket, parse_state(state))}
+  end
+
+  def handle_event("toggle_stop_after_call", _params, socket) do
+    {:noreply, update(socket, :stop_after_call?, &(!&1))}
+  end
+
+  @impl true
+  def render(assigns) do
+    ~H"""
+    <Layouts.app flash={@flash}>
+      <div class="min-h-[calc(100vh-5rem)] bg-stone-50 text-stone-950">
+        <section class="mx-auto grid w-full max-w-6xl gap-10 px-5 py-8 sm:px-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
+          <div class="flex flex-col justify-between gap-10">
+            <div>
+              <p class="mb-4 text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+                {gettext("Audio language practice")}
+              </p>
+              <h1 class="text-5xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
+                {gettext("Randos")}
+              </h1>
+              <p class="mt-6 max-w-xl text-xl leading-8 text-stone-700">
+                {gettext("Short anonymous conversations for language practice.")}
+              </p>
+              <p class="mt-3 text-base text-stone-500">
+                {gettext("No accounts. No profiles. No pressure.")}
+              </p>
+            </div>
+
+            <div
+              id="state-progress"
+              class="grid grid-cols-2 gap-3 text-sm sm:grid-cols-5 lg:grid-cols-1"
+            >
+              <div
+                :for={state <- [:idle, :looking, :connecting, :in_call, :extension_pending]}
+                id={"state-progress-#{state}"}
+                class={[
+                  "rounded-md border px-4 py-3 transition-colors duration-200",
+                  progress_step_class(assigns, state)
+                ]}
+              >
+                <p class="font-semibold">{state_label(state)}</p>
+                <p class="mt-1 text-xs leading-5 opacity-75">{state_description(state)}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70">
+            <%= case @ui_state do %>
+              <% :idle -> %>
+                <div id="idle-panel" class="p-5 sm:p-7">
+                  <.form
+                    for={@form}
+                    id="conversation-form"
+                    phx-change="update_preferences"
+                    phx-submit="find"
+                    class="space-y-5"
+                  >
+                    <div class="grid gap-4 sm:grid-cols-2">
+                      <.input
+                        field={@form[:speaking_language]}
+                        type="select"
+                        label={gettext("I will speak in")}
+                        options={language_options()}
+                        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
+                      />
+                      <.input
+                        field={@form[:listening_language]}
+                        type="select"
+                        label={gettext("I want them to speak in")}
+                        options={language_options()}
+                        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
+                      />
+                    </div>
+
+                    <div class="rounded-md border border-stone-200 bg-stone-50 px-4 py-4">
+                      <.input
+                        field={@form[:adult_acknowledgment]}
+                        type="checkbox"
+                        label={
+                          gettext(
+                            "I am 18 or older and understand that conversations are anonymous and unmoderated."
+                          )
+                        }
+                        class="size-4 rounded border-stone-300 text-teal-700 focus:ring-teal-600"
+                      />
+                    </div>
+
+                    <button
+                      id="find-rando-button"
+                      type="submit"
+                      disabled={!acknowledged?(@preferences)}
+                      class={[
+                        "inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition duration-200",
+                        acknowledged?(@preferences) &&
+                          "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100",
+                        !acknowledged?(@preferences) &&
+                          "cursor-not-allowed bg-stone-200 text-stone-500"
+                      ]}
+                    >
+                      <.icon name="hero-magnifying-glass" class="size-5" />
+                      {gettext("Find a rando")}
+                    </button>
+                  </.form>
+                </div>
+              <% :looking -> %>
+                <.searching_panel />
+              <% :connecting -> %>
+                <.connecting_panel />
+              <% :in_call -> %>
+                <.call_panel
+                  preferences={@preferences}
+                  stop_after_call?={@stop_after_call?}
+                  language_name={&language_name/1}
+                />
+              <% :extension_pending -> %>
+                <.extension_panel />
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </Layouts.app>
+    """
+  end
+
+  defp searching_panel(assigns) do
+    ~H"""
+    <div id="looking-panel" class="space-y-6 p-5 sm:p-7">
+      <div>
+        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+          {gettext("Looking")}
+        </p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
+          {gettext("Finding a rando")}
+        </h2>
+        <p class="mt-3 leading-7 text-stone-600">
+          {gettext("This is a mocked search state. Matchmaking will come later.")}
+        </p>
+      </div>
+      <div class="h-2 overflow-hidden rounded-full bg-stone-100">
+        <div class="h-full w-1/2 rounded-full bg-teal-700 motion-safe:animate-pulse"></div>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <button
+          id="mock-connect-button"
+          phx-click="transition"
+          phx-value-to="connecting"
+          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+        >
+          {gettext("Mock match found")}
+        </button>
+        <button
+          id="cancel-search-button"
+          phx-click="transition"
+          phx-value-to="idle"
+          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        >
+          {gettext("Stop looking")}
+        </button>
+      </div>
+    </div>
+    """
+  end
+
+  defp connecting_panel(assigns) do
+    ~H"""
+    <div id="connecting-panel" class="space-y-6 p-5 sm:p-7">
+      <div>
+        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+          {gettext("Connecting")}
+        </p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
+          {gettext("Preparing the call")}
+        </h2>
+        <p class="mt-3 leading-7 text-stone-600">
+          {gettext("No audio is captured in this skeleton. This only previews the call state.")}
+        </p>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <button
+          id="enter-call-button"
+          phx-click="transition"
+          phx-value-to="in_call"
+          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+        >
+          {gettext("Enter mock call")}
+        </button>
+        <button
+          id="cancel-connection-button"
+          phx-click="transition"
+          phx-value-to="idle"
+          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        >
+          {gettext("Cancel")}
+        </button>
+      </div>
+    </div>
+    """
+  end
+
+  attr :preferences, :map, required: true
+  attr :stop_after_call?, :boolean, required: true
+  attr :language_name, :any, required: true
+
+  defp call_panel(assigns) do
+    ~H"""
+    <div id="call-panel" class="space-y-6 p-5 sm:p-7">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+            {gettext("Your rando")}
+          </p>
+          <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
+            {gettext("Audio-only call")}
+          </h2>
+        </div>
+        <span class="rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-800">
+          {gettext("5 min max")}
+        </span>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <.waveform id="local-waveform" label={gettext("You")} />
+        <.waveform id="remote-waveform" label={gettext("Your rando")} />
+      </div>
+
+      <div class="grid gap-3 rounded-md border border-stone-200 bg-stone-50 p-4 text-sm text-stone-700">
+        <p id="speaking-language-label">
+          {gettext("You are speaking:")}
+          <strong>{@language_name.(@preferences["speaking_language"])}</strong>
+        </p>
+        <p id="listening-language-label">
+          {gettext("They are speaking:")}
+          <strong>{@language_name.(@preferences["listening_language"])}</strong>
+        </p>
+        <p>{gettext("Random calls last up to 5 minutes")}</p>
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <button
+          id="mute-button"
+          type="button"
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        >
+          <.icon name="hero-speaker-x-mark" class="size-5" />
+          {gettext("Mute")}
+        </button>
+
+        <button
+          id="stop-after-call-toggle"
+          type="button"
+          phx-click="toggle_stop_after_call"
+          aria-pressed={@stop_after_call?}
+          class={[
+            "inline-flex items-center justify-center gap-2 rounded-md border px-5 py-3 font-semibold transition",
+            @stop_after_call? && "border-teal-700 bg-teal-50 text-teal-900",
+            !@stop_after_call? && "border-stone-300 text-stone-700 hover:border-stone-950"
+          ]}
+        >
+          <.icon name="hero-stop-circle" class="size-5" />
+          {gettext("Stop after this call")}
+        </button>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+        <button
+          id="time-up-button"
+          phx-click="transition"
+          phx-value-to="extension_pending"
+          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+        >
+          {gettext("Mock time up")}
+        </button>
+        <button
+          id="next-rando-button"
+          phx-click="transition"
+          phx-value-to="looking"
+          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        >
+          {gettext("Find next")}
+        </button>
+        <button
+          id="hang-up-button"
+          phx-click="transition"
+          phx-value-to="idle"
+          class="rounded-md border border-red-200 px-5 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
+        >
+          {gettext("Hang up")}
+        </button>
+      </div>
+    </div>
+    """
+  end
+
+  attr :id, :string, required: true
+  attr :label, :string, required: true
+
+  defp waveform(assigns) do
+    ~H"""
+    <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-4">
+      <p class="text-sm font-semibold text-stone-700">{@label}</p>
+      <div class="mt-4 flex h-24 items-center justify-center gap-1.5" aria-hidden="true">
+        <span
+          :for={height <- ["h-8", "h-14", "h-10", "h-20", "h-12", "h-16", "h-7", "h-11"]}
+          class={["w-2 rounded-full bg-teal-700/70", height]}
+        >
+        </span>
+      </div>
+    </div>
+    """
+  end
+
+  defp extension_panel(assigns) do
+    ~H"""
+    <div id="extension-panel" class="space-y-6 p-5 sm:p-7">
+      <div>
+        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+          {gettext("Time is up")}
+        </p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
+          {gettext("Continue for another 5 minutes?")}
+        </h2>
+        <p class="mt-3 leading-7 text-stone-600">
+          {gettext("The call only extends if both people choose to continue.")}
+        </p>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+        <button
+          id="continue-call-button"
+          phx-click="transition"
+          phx-value-to="in_call"
+          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+        >
+          {gettext("Continue")}
+        </button>
+        <button
+          id="find-new-after-extension-button"
+          phx-click="transition"
+          phx-value-to="looking"
+          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        >
+          {gettext("Find someone else")}
+        </button>
+        <button
+          id="end-call-button"
+          phx-click="transition"
+          phx-value-to="idle"
+          class="rounded-md border border-red-200 px-5 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
+        >
+          {gettext("End")}
+        </button>
+      </div>
+    </div>
+    """
+  end
+
+  defp transition(socket, to) do
+    case ConversationFlow.transition(socket.assigns.ui_state, to) do
+      {:ok, state} -> assign(socket, :ui_state, state)
+      {:error, :invalid_transition} -> socket
+    end
+  end
+
+  defp parse_state("idle"), do: :idle
+  defp parse_state("looking"), do: :looking
+  defp parse_state("connecting"), do: :connecting
+  defp parse_state("in_call"), do: :in_call
+  defp parse_state("extension_pending"), do: :extension_pending
+
+  defp default_preferences do
+    %{
+      "speaking_language" => "en",
+      "listening_language" => "es",
+      "adult_acknowledgment" => "false"
+    }
+  end
+
+  defp normalize_preferences(params, current) do
+    current
+    |> Map.merge(
+      Map.take(params, ["speaking_language", "listening_language", "adult_acknowledgment"])
+    )
+    |> Map.update("adult_acknowledgment", "false", &normalize_checkbox/1)
+  end
+
+  defp normalize_checkbox(true), do: "true"
+  defp normalize_checkbox("true"), do: "true"
+  defp normalize_checkbox(_value), do: "false"
+
+  defp acknowledged?(%{"adult_acknowledgment" => "true"}), do: true
+  defp acknowledged?(_preferences), do: false
+
+  defp assign_form(socket, preferences) do
+    assign(socket, :form, to_form(preferences, as: :conversation))
+  end
+
+  defp language_options do
+    [
+      {gettext("English"), "en"},
+      {gettext("Spanish"), "es"},
+      {gettext("French"), "fr"},
+      {gettext("German"), "de"},
+      {gettext("Italian"), "it"},
+      {gettext("Portuguese"), "pt"}
+    ]
+  end
+
+  defp language_name("en"), do: gettext("English")
+  defp language_name("es"), do: gettext("Spanish")
+  defp language_name("fr"), do: gettext("French")
+  defp language_name("de"), do: gettext("German")
+  defp language_name("it"), do: gettext("Italian")
+  defp language_name("pt"), do: gettext("Portuguese")
+  defp language_name(code), do: ConversationLanguages.name(code)
+
+  defp state_label(:idle), do: gettext("Ready")
+  defp state_label(:looking), do: gettext("Looking")
+  defp state_label(:connecting), do: gettext("Connecting")
+  defp state_label(:in_call), do: gettext("In call")
+  defp state_label(:extension_pending), do: gettext("Time is up")
+
+  defp state_description(:idle), do: gettext("Choose your languages when you are ready.")
+  defp state_description(:looking), do: gettext("Finding a compatible anonymous partner.")
+  defp state_description(:connecting), do: gettext("A compatible rando is available.")
+  defp state_description(:in_call), do: gettext("You are in a mocked audio-only call.")
+
+  defp state_description(:extension_pending),
+    do: gettext("Both people choose whether to continue.")
+
+  defp progress_step_class(assigns, state) do
+    if assigns.ui_state == state do
+      "border-stone-950 bg-stone-950 text-white"
+    else
+      "border-stone-200 bg-white text-stone-500"
+    end
+  end
+end
