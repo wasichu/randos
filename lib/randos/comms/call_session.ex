@@ -13,13 +13,25 @@ defmodule Randos.Comms.CallSession do
 
   alias Randos.ConversationLanguages
 
-  @default_max_call_duration_seconds 300
+  @default_call_duration_seconds 300
   @extension_duration_seconds 300
+  @max_call_duration_seconds 1_800
+  @max_extension_count 5
   @extension_response_timeout_seconds 20
   @supported_language_codes ConversationLanguages.codes()
+  @ended_reasons [
+    :canceled,
+    :completed,
+    :declined_extension,
+    :timeout,
+    :hang_up,
+    :max_duration_reached
+  ]
 
-  def default_max_call_duration_seconds, do: @default_max_call_duration_seconds
+  def default_call_duration_seconds, do: @default_call_duration_seconds
   def extension_duration_seconds, do: @extension_duration_seconds
+  def max_call_duration_seconds, do: @max_call_duration_seconds
+  def max_extension_count, do: @max_extension_count
   def extension_response_timeout_seconds, do: @extension_response_timeout_seconds
 
   state_machine do
@@ -62,6 +74,7 @@ defmodule Randos.Comms.CallSession do
 
     update :extend_call do
       require_atomic? false
+      change &__MODULE__.ensure_extension_available/2
       change transition_state(:active)
       change increment(:extension_count)
     end
@@ -71,7 +84,7 @@ defmodule Randos.Comms.CallSession do
 
       argument :ended_reason, :atom do
         allow_nil? false
-        constraints one_of: [:canceled, :completed, :declined_extension, :timeout, :hang_up]
+        constraints one_of: @ended_reasons
       end
 
       change transition_state(:ended)
@@ -85,6 +98,7 @@ defmodule Randos.Comms.CallSession do
     validate one_of(:listens_language_a, @supported_language_codes)
     validate one_of(:speaks_language_b, @supported_language_codes)
     validate one_of(:listens_language_b, @supported_language_codes)
+    validate compare(:extension_count, less_than_or_equal_to: @max_extension_count)
   end
 
   attributes do
@@ -120,13 +134,31 @@ defmodule Randos.Comms.CallSession do
 
     attribute :ended_reason, :atom do
       public? true
-      constraints one_of: [:canceled, :completed, :declined_extension, :timeout, :hang_up]
+      constraints one_of: @ended_reasons
+    end
+
+    attribute :default_call_duration_seconds, :integer do
+      allow_nil? false
+      public? true
+      default @default_call_duration_seconds
+    end
+
+    attribute :extension_duration_seconds, :integer do
+      allow_nil? false
+      public? true
+      default @extension_duration_seconds
     end
 
     attribute :max_duration_seconds, :integer do
       allow_nil? false
       public? true
-      default @default_max_call_duration_seconds
+      default @max_call_duration_seconds
+    end
+
+    attribute :max_extension_count, :integer do
+      allow_nil? false
+      public? true
+      default @max_extension_count
     end
 
     attribute :extension_count, :integer do
@@ -134,6 +166,19 @@ defmodule Randos.Comms.CallSession do
       public? true
       default 0
       constraints min: 0
+    end
+  end
+
+  @doc false
+  def ensure_extension_available(changeset, _context) do
+    if Ash.Changeset.get_attribute(changeset, :extension_count) >= @max_extension_count do
+      Ash.Changeset.add_error(
+        changeset,
+        field: :extension_count,
+        message: "has reached the maximum extension count"
+      )
+    else
+      changeset
     end
   end
 end

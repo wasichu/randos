@@ -18,7 +18,10 @@ defmodule Randos.Comms.CallSessionTest do
     assert {:ok, call} = create_connecting_call()
 
     assert call.status == :connecting
-    assert call.max_duration_seconds == CallSession.default_max_call_duration_seconds()
+    assert call.default_call_duration_seconds == CallSession.default_call_duration_seconds()
+    assert call.extension_duration_seconds == CallSession.extension_duration_seconds()
+    assert call.max_duration_seconds == CallSession.max_call_duration_seconds()
+    assert call.max_extension_count == CallSession.max_extension_count()
     assert call.extension_count == 0
     assert is_nil(call.started_at)
     assert is_nil(call.ended_at)
@@ -70,6 +73,54 @@ defmodule Randos.Comms.CallSessionTest do
 
     assert ended_call.status == :ended
     assert ended_call.ended_reason == :canceled
+  end
+
+  test "allows ending because the maximum duration was reached" do
+    {:ok, call} = create_connecting_call()
+
+    assert {:ok, ended_call} =
+             call
+             |> Ash.Changeset.for_update(:end_call, %{ended_reason: :max_duration_reached})
+             |> Ash.update()
+
+    assert ended_call.status == :ended
+    assert ended_call.ended_reason == :max_duration_reached
+  end
+
+  test "does not allow calls to extend beyond the maximum extension count" do
+    {:ok, call} = create_connecting_call()
+
+    {:ok, active_call} =
+      call
+      |> Ash.Changeset.for_update(:mark_active)
+      |> Ash.update()
+
+    extended_call =
+      Enum.reduce(1..CallSession.max_extension_count(), active_call, fn _count, call ->
+        {:ok, extension_pending_call} =
+          call
+          |> Ash.Changeset.for_update(:mark_extension_pending)
+          |> Ash.update()
+
+        {:ok, extended_call} =
+          extension_pending_call
+          |> Ash.Changeset.for_update(:extend_call)
+          |> Ash.update()
+
+        extended_call
+      end)
+
+    assert extended_call.extension_count == CallSession.max_extension_count()
+
+    {:ok, extension_pending_call} =
+      extended_call
+      |> Ash.Changeset.for_update(:mark_extension_pending)
+      |> Ash.update()
+
+    assert {:error, _error} =
+             extension_pending_call
+             |> Ash.Changeset.for_update(:extend_call)
+             |> Ash.update()
   end
 
   test "rejects invalid lifecycle transitions cleanly" do
