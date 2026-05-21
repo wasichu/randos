@@ -11,6 +11,7 @@ defmodule Randos.Application do
       RandosWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:randos, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Randos.PubSub},
+      Randos.Matchmaking.Matchmaker,
       # Start a worker by calling: Randos.Worker.start_link(arg)
       # {Randos.Worker, arg},
       # Start to serve requests, typically the last entry

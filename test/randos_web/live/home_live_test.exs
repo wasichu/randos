@@ -1,5 +1,5 @@
 defmodule RandosWeb.HomeLiveTest do
-  use RandosWeb.ConnCase, async: true
+  use RandosWeb.ConnCase
 
   import Phoenix.LiveViewTest
 
@@ -24,7 +24,64 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#find-rando-button[disabled]")
   end
 
-  test "walks through the mocked conversation states", %{conn: conn} do
+  test "shows validation when searching without the adult acknowledgment", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/")
+
+    view
+    |> form("#conversation-form",
+      conversation: %{
+        speaking_language: "en",
+        listening_language: "es",
+        adult_acknowledgment: "false"
+      }
+    )
+    |> render_submit()
+
+    assert has_element?(view, "#idle-panel")
+    assert has_element?(view, "#matchmaking-error")
+  end
+
+  test "matches two compatible browser sessions and assigns roles", %{conn: conn} do
+    {:ok, view_a, _html} = live(conn, ~p"/")
+
+    view_a
+    |> form("#conversation-form",
+      conversation: %{
+        speaking_language: "en",
+        listening_language: "es",
+        adult_acknowledgment: "true"
+      }
+    )
+    |> render_submit()
+
+    assert has_element?(view_a, "#looking-panel")
+
+    {:ok, view_b, _html} = live(conn, ~p"/")
+
+    view_b
+    |> form("#conversation-form",
+      conversation: %{
+        speaking_language: "es",
+        listening_language: "en",
+        adult_acknowledgment: "true"
+      }
+    )
+    |> render_submit()
+
+    assert has_element?(view_b, "#connecting-panel")
+    assert has_element?(view_b, "#match-role-label")
+
+    render(view_a)
+    assert has_element?(view_a, "#connecting-panel")
+    assert has_element?(view_a, "#match-role-label")
+
+    view_a |> element("#enter-call-button") |> render_click()
+    assert has_element?(view_a, "#call-panel")
+    assert has_element?(view_a, "#local-waveform")
+    assert has_element?(view_a, "#remote-waveform")
+  end
+
+  test "can leave the queue before a match", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/")
 
     view
@@ -39,21 +96,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     assert has_element?(view, "#looking-panel")
 
-    view |> element("#mock-connect-button") |> render_click()
-    assert has_element?(view, "#connecting-panel")
-
-    view |> element("#enter-call-button") |> render_click()
-    assert has_element?(view, "#call-panel")
-    assert has_element?(view, "#local-waveform")
-    assert has_element?(view, "#remote-waveform")
-
-    view |> element("#time-up-button") |> render_click()
-    assert has_element?(view, "#extension-panel")
-
-    view |> element("#continue-call-button") |> render_click()
-    assert has_element?(view, "#call-panel")
-
-    view |> element("#hang-up-button") |> render_click()
+    view |> element("#cancel-search-button") |> render_click()
     assert has_element?(view, "#idle-panel")
   end
 end

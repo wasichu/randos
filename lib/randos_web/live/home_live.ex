@@ -3,10 +3,17 @@ defmodule RandosWeb.HomeLive do
 
   alias Randos.ConversationFlow
   alias Randos.ConversationLanguages
+  alias Randos.Matchmaking.Matchmaker
 
   @impl true
   def mount(_params, _session, socket) do
     preferences = default_preferences()
+    participant_id = anonymous_participant_id()
+    match_topic = "matchmaking:participant:#{participant_id}"
+
+    if connected?(socket) do
+      Phoenix.PubSub.subscribe(Randos.PubSub, match_topic)
+    end
 
     socket =
       socket
@@ -14,6 +21,12 @@ defmodule RandosWeb.HomeLive do
       |> assign(:ui_state, :idle)
       |> assign(:preferences, preferences)
       |> assign(:stop_after_call?, false)
+      |> assign(:participant_id, participant_id)
+      |> assign(:match_topic, match_topic)
+      |> assign(:matchmaking_error, nil)
+      |> assign(:match, nil)
+      |> assign(:match_role, nil)
+      |> assign(:webrtc_role, nil)
       |> assign_form(preferences)
 
     {:ok, socket}
@@ -35,21 +48,41 @@ defmodule RandosWeb.HomeLive do
     socket =
       socket
       |> assign(:preferences, preferences)
+      |> assign(:matchmaking_error, nil)
       |> assign_form(preferences)
 
     if acknowledged?(preferences) do
-      {:noreply, transition(socket, :looking)}
+      {:noreply, join_matchmaking(socket)}
     else
-      {:noreply, socket}
+      {:noreply,
+       assign(
+         socket,
+         :matchmaking_error,
+         gettext("Accept the 18+ acknowledgment before looking for a rando.")
+       )}
     end
   end
 
   def handle_event("transition", %{"to" => state}, socket) do
-    {:noreply, transition(socket, parse_state(state))}
+    to = parse_state(state)
+    socket = maybe_leave_matchmaking(socket, to)
+
+    {:noreply, transition(socket, to)}
   end
 
   def handle_event("toggle_stop_after_call", _params, socket) do
     {:noreply, update(socket, :stop_after_call?, &(!&1))}
+  end
+
+  @impl true
+  def handle_info({:randos_match, match}, socket) do
+    {:noreply, assign_match(socket, match)}
+  end
+
+  @impl true
+  def terminate(_reason, _socket) do
+    Matchmaker.leave(self())
+    :ok
   end
 
   @impl true
@@ -148,12 +181,20 @@ defmodule RandosWeb.HomeLive do
                       <.icon name="hero-magnifying-glass" class="size-5" />
                       {gettext("Find a rando")}
                     </button>
+
+                    <p
+                      :if={@matchmaking_error}
+                      id="matchmaking-error"
+                      class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+                    >
+                      {@matchmaking_error}
+                    </p>
                   </.form>
                 </div>
               <% :looking -> %>
                 <.searching_panel />
               <% :connecting -> %>
-                <.connecting_panel />
+                <.connecting_panel match_role={@match_role} webrtc_role={@webrtc_role} />
               <% :in_call -> %>
                 <.call_panel
                   preferences={@preferences}
@@ -180,22 +221,14 @@ defmodule RandosWeb.HomeLive do
         <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
           {gettext("Finding a rando")}
         </h2>
-        <p class="mt-3 leading-7 text-stone-600">
-          {gettext("This is a mocked search state. Matchmaking will come later.")}
+        <p id="looking-status" class="mt-3 leading-7 text-stone-600">
+          {gettext("Waiting for someone with complementary language preferences.")}
         </p>
       </div>
       <div class="h-2 overflow-hidden rounded-full bg-stone-100">
         <div class="h-full w-1/2 rounded-full bg-teal-700 motion-safe:animate-pulse"></div>
       </div>
-      <div class="grid gap-3 sm:grid-cols-2">
-        <button
-          id="mock-connect-button"
-          phx-click="transition"
-          phx-value-to="connecting"
-          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
-        >
-          {gettext("Mock match found")}
-        </button>
+      <div class="grid gap-3">
         <button
           id="cancel-search-button"
           phx-click="transition"
@@ -209,6 +242,9 @@ defmodule RandosWeb.HomeLive do
     """
   end
 
+  attr :match_role, :atom, default: nil
+  attr :webrtc_role, :atom, default: nil
+
   defp connecting_panel(assigns) do
     ~H"""
     <div id="connecting-panel" class="space-y-6 p-5 sm:p-7">
@@ -220,8 +256,15 @@ defmodule RandosWeb.HomeLive do
           {gettext("Preparing the call")}
         </h2>
         <p class="mt-3 leading-7 text-stone-600">
-          {gettext("No audio is captured in this skeleton. This only previews the call state.")}
+          {gettext("You have matched. No audio or WebRTC is started in this step.")}
         </p>
+      </div>
+      <div
+        :if={@match_role && @webrtc_role}
+        id="match-role-label"
+        class="rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"
+      >
+        {gettext("Match role:")} {role_label(@match_role)} · {webrtc_role_label(@webrtc_role)}
       </div>
       <div class="grid gap-3 sm:grid-cols-2">
         <button
@@ -409,6 +452,73 @@ defmodule RandosWeb.HomeLive do
     end
   end
 
+  defp join_matchmaking(socket) do
+    preferences = socket.assigns.preferences
+
+    attrs = %{
+      id: socket.assigns.participant_id,
+      pid: self(),
+      topic: socket.assigns.match_topic,
+      speaks_language: preferences["speaking_language"],
+      listens_language: preferences["listening_language"],
+      accepted_adult_terms: acknowledged?(preferences)
+    }
+
+    case Matchmaker.join(attrs) do
+      :queued ->
+        transition(socket, :looking)
+
+      {:matched, match} ->
+        assign_match(socket, match)
+
+      {:error, :already_queued} ->
+        transition(socket, :looking)
+
+      {:error, :adult_terms_required} ->
+        assign(
+          socket,
+          :matchmaking_error,
+          gettext("Accept the 18+ acknowledgment before looking for a rando.")
+        )
+
+      {:error, :unsupported_language} ->
+        assign(socket, :matchmaking_error, gettext("Choose supported conversation languages."))
+    end
+  end
+
+  defp maybe_leave_matchmaking(%{assigns: %{ui_state: :looking}} = socket, to)
+       when to in [:idle, :connecting] do
+    Matchmaker.leave(self())
+    socket
+  end
+
+  defp maybe_leave_matchmaking(socket, _to), do: socket
+
+  defp assign_match(socket, match) do
+    {match_role, webrtc_role} = roles_for(match, socket.assigns.participant_id)
+
+    socket
+    |> assign(:match, match)
+    |> assign(:match_role, match_role)
+    |> assign(:webrtc_role, webrtc_role)
+    |> assign(:matchmaking_error, nil)
+    |> assign(:ui_state, :connecting)
+  end
+
+  defp roles_for(%{participant_a: %{id: participant_id}}, participant_id),
+    do: {:participant_a, :offerer}
+
+  defp roles_for(%{participant_b: %{id: participant_id}}, participant_id),
+    do: {:participant_b, :answerer}
+
+  defp role_label(:participant_a), do: gettext("participant A")
+  defp role_label(:participant_b), do: gettext("participant B")
+  defp role_label(nil), do: gettext("unassigned")
+
+  defp webrtc_role_label(:offerer), do: gettext("offerer")
+  defp webrtc_role_label(:answerer), do: gettext("answerer")
+  defp webrtc_role_label(nil), do: gettext("no WebRTC role")
+
   defp parse_state("idle"), do: :idle
   defp parse_state("looking"), do: :looking
   defp parse_state("connecting"), do: :connecting
@@ -421,6 +531,10 @@ defmodule RandosWeb.HomeLive do
       "listening_language" => "es",
       "adult_acknowledgment" => "false"
     }
+  end
+
+  defp anonymous_participant_id do
+    "anon-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false)
   end
 
   defp normalize_preferences(params, current) do
