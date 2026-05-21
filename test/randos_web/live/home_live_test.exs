@@ -79,16 +79,19 @@ defmodule RandosWeb.HomeLiveTest do
 
     assert eventually_has_element?(view_a, "#call-panel")
     assert has_element?(view_a, "#call-countdown")
+    assert has_element?(view_a, "#webrtc-skeleton[data-webrtc-role='offerer']")
     refute has_element?(view_a, "#extension-countdown")
     assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 
     view_a |> element("#time-up-button") |> render_click()
     assert eventually_has_element?(view_a, "#extension-panel")
     refute has_element?(view_a, "#call-countdown")
+    refute has_element?(view_a, "#webrtc-skeleton")
     assert has_element?(view_a, "#extension-countdown")
 
     view_a |> element("#end-call-button") |> render_click()
     assert eventually_missing_element?(view_a, "#call-countdown")
+    assert eventually_missing_element?(view_a, "#webrtc-skeleton")
     assert eventually_missing_element?(view_a, "#extension-countdown")
   end
 

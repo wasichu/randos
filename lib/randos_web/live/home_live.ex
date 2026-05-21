@@ -398,6 +398,22 @@ defmodule RandosWeb.HomeLive do
         <span id="call-countdown-value" data-countdown-value>--:-- remaining</span>
       </div>
 
+      <div
+        :if={@call_status == :active && @webrtc_role}
+        id="webrtc-skeleton"
+        phx-hook="WebRTCSkeleton"
+        phx-update="ignore"
+        data-participant-id={@participant_id}
+        data-webrtc-role={@webrtc_role}
+        data-webrtc-state="not_started"
+        class="rounded-md border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-600"
+      >
+        <div class="flex items-center justify-between gap-3">
+          <span class="font-medium text-stone-700">{gettext("Peer connection")}</span>
+          <span id="webrtc-state-label" data-webrtc-status>not started</span>
+        </div>
+      </div>
+
       <div class="grid gap-4 sm:grid-cols-2">
         <.waveform id="local-waveform" label={gettext("You")} />
         <.waveform id="remote-waveform" label={gettext("Your rando")} />

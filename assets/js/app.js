@@ -24,6 +24,7 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import {hooks as colocatedHooks} from "phoenix-colocated/randos"
 import topbar from "../vendor/topbar"
+import {RandosWebRTCPeer, WebRTCPeerState} from "./webrtc_peer"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const Hooks = {
@@ -70,6 +71,67 @@ const Hooks = {
       if (this.interval) {
         window.clearInterval(this.interval)
         this.interval = null
+      }
+    },
+  },
+  WebRTCSkeleton: {
+    mounted() {
+      this.statusEl = this.el.querySelector("[data-webrtc-status]")
+      this.handleBeforeUnload = () => this.cleanup({notify: true})
+      this.handleEvent("randos:signal", signal => this.peer?.receiveSignal(signal))
+      window.addEventListener("pagehide", this.handleBeforeUnload)
+
+      if (!window.RTCPeerConnection) {
+        this.pushEvent("signal", {
+          type: "connection_failed",
+          payload: {reason: "rtc_peer_connection_unavailable"},
+        })
+        this.setState(WebRTCPeerState.FAILED)
+        return
+      }
+
+      this.peer = new RandosWebRTCPeer({
+        role: this.el.dataset.webrtcRole,
+        pushSignal: (type, payload) => this.pushEvent("signal", {type, payload}),
+        onStateChange: state => this.setState(state),
+      })
+
+      this.peer.start().catch(error => {
+        this.pushEvent("signal", {
+          type: "connection_failed",
+          payload: {reason: error.message || "peer_connection_start_failed"},
+        })
+        this.setState(WebRTCPeerState.FAILED)
+      })
+    },
+
+    destroyed() {
+      this.cleanup()
+    },
+
+    disconnected() {
+      this.cleanup()
+    },
+
+    cleanup({notify = false} = {}) {
+      window.removeEventListener("pagehide", this.handleBeforeUnload)
+
+      if (notify && this.peer) {
+        this.pushEvent("signal", {
+          type: "peer_disconnected",
+          payload: {reason: "page_unload"},
+        })
+      }
+
+      this.peer?.close()
+      this.peer = null
+    },
+
+    setState(state) {
+      this.el.dataset.webrtcState = state
+
+      if (this.statusEl) {
+        this.statusEl.textContent = state.replaceAll("_", " ")
       }
     },
   },
