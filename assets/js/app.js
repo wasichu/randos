@@ -26,10 +26,53 @@ import {hooks as colocatedHooks} from "phoenix-colocated/randos"
 import topbar from "../vendor/topbar"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+const Hooks = {
+  CallCountdown: {
+    mounted() {
+      this.tick = () => {
+        const deadline = Number(this.el.dataset.deadlineUnixMs)
+        const remainingMs = Math.max(deadline - Date.now(), 0)
+        const totalSeconds = Math.ceil(remainingMs / 1000)
+        const minutes = Math.floor(totalSeconds / 60)
+        const seconds = totalSeconds % 60
+        const value = this.el.querySelector("#call-countdown-value")
+
+        if (value) {
+          value.textContent = `${minutes}:${seconds.toString().padStart(2, "0")} remaining`
+        }
+
+        this.el.dataset.underMinute = totalSeconds < 60 ? "true" : "false"
+      }
+
+      this.tick()
+      this.interval = window.setInterval(this.tick, 1000)
+    },
+
+    updated() {
+      this.tick()
+    },
+
+    destroyed() {
+      this.cleanup()
+    },
+
+    disconnected() {
+      this.cleanup()
+    },
+
+    cleanup() {
+      if (this.interval) {
+        window.clearInterval(this.interval)
+        this.interval = null
+      }
+    },
+  },
+}
+
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks: {...colocatedHooks},
+  hooks: {...colocatedHooks, ...Hooks},
 })
 
 // Show progress bar on live navigation and form submits
@@ -80,4 +123,3 @@ if (process.env.NODE_ENV === "development") {
     window.liveReloader = reloader
   })
 }
-

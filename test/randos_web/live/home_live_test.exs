@@ -74,6 +74,14 @@ defmodule RandosWeb.HomeLiveTest do
     render(view_a)
     assert has_element?(view_a, "#connecting-panel")
     assert has_element?(view_a, "#match-role-label")
+    refute has_element?(view_a, "#call-countdown")
+
+    assert eventually_has_element?(view_a, "#call-panel")
+    assert has_element?(view_a, "#call-countdown")
+
+    view_a |> element("#time-up-button") |> render_click()
+    assert eventually_has_element?(view_a, "#extension-panel")
+    refute has_element?(view_a, "#call-countdown")
   end
 
   test "can leave the queue before a match", %{conn: conn} do
@@ -93,5 +101,19 @@ defmodule RandosWeb.HomeLiveTest do
 
     view |> element("#cancel-search-button") |> render_click()
     assert has_element?(view, "#idle-panel")
+    refute has_element?(view, "#call-countdown")
+  end
+
+  defp eventually_has_element?(view, selector, attempts \\ 120)
+
+  defp eventually_has_element?(_view, _selector, 0), do: false
+
+  defp eventually_has_element?(view, selector, attempts) do
+    if has_element?(view, selector) do
+      true
+    else
+      Process.sleep(10)
+      eventually_has_element?(view, selector, attempts - 1)
+    end
   end
 end

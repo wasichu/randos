@@ -31,6 +31,7 @@ defmodule RandosWeb.HomeLive do
       |> assign(:call_pid, nil)
       |> assign(:call_status, nil)
       |> assign(:call_ended_reason, nil)
+      |> assign(:call_deadline_unix_ms, nil)
       |> assign(:extension_count, 0)
       |> assign_form(preferences)
 
@@ -247,6 +248,7 @@ defmodule RandosWeb.HomeLive do
                   preferences={@preferences}
                   stop_after_call?={@stop_after_call?}
                   call_status={@call_status}
+                  call_deadline_unix_ms={@call_deadline_unix_ms}
                   extension_count={@extension_count}
                   language_name={&language_name/1}
                 />
@@ -331,6 +333,7 @@ defmodule RandosWeb.HomeLive do
   attr :preferences, :map, required: true
   attr :stop_after_call?, :boolean, required: true
   attr :call_status, :atom, default: nil
+  attr :call_deadline_unix_ms, :integer, default: nil
   attr :extension_count, :integer, required: true
   attr :language_name, :any, required: true
 
@@ -349,6 +352,18 @@ defmodule RandosWeb.HomeLive do
         <span class="rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-800">
           {gettext("5 min limit")}
         </span>
+      </div>
+
+      <div
+        :if={@call_status == :active && @call_deadline_unix_ms}
+        id="call-countdown"
+        phx-hook="CallCountdown"
+        phx-update="ignore"
+        data-deadline-unix-ms={@call_deadline_unix_ms}
+        class="inline-flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-medium text-stone-600"
+      >
+        <.icon name="hero-clock" class="size-4 text-teal-700" />
+        <span id="call-countdown-value">--:-- remaining</span>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2">
@@ -558,6 +573,7 @@ defmodule RandosWeb.HomeLive do
     socket
     |> assign(:call_pid, call.call_pid)
     |> assign(:call_status, call.status)
+    |> assign(:call_deadline_unix_ms, call.call_deadline_unix_ms)
     |> assign(:extension_count, call.extension_count)
     |> assign(:call_ended_reason, call.ended_reason)
     |> assign(:ui_state, ui_state)

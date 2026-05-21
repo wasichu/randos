@@ -17,6 +17,7 @@ defmodule Randos.Calls.CallCoordinator do
     :status,
     :timeout_ref,
     :extension_timeout_ref,
+    :call_deadline_unix_ms,
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
@@ -205,7 +206,12 @@ defmodule Randos.Calls.CallCoordinator do
 
   defp schedule_call_timeout(state, duration_ms) do
     cancel_timer(state.timeout_ref)
-    %{state | timeout_ref: Process.send_after(self(), :call_time_limit_reached, duration_ms)}
+
+    %{
+      state
+      | timeout_ref: Process.send_after(self(), :call_time_limit_reached, duration_ms),
+        call_deadline_unix_ms: System.system_time(:millisecond) + duration_ms
+    }
   end
 
   defp record_extension_vote(state, participant_id, vote) do
@@ -287,6 +293,7 @@ defmodule Randos.Calls.CallCoordinator do
       match: state.match,
       extension_count: state.call_session.extension_count,
       max_duration_seconds: state.call_session.max_duration_seconds,
+      call_deadline_unix_ms: state.call_deadline_unix_ms,
       ended_reason: state.call_session.ended_reason
     }
   end
