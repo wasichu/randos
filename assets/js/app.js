@@ -35,10 +35,16 @@ const Hooks = {
         const totalSeconds = Math.ceil(remainingMs / 1000)
         const minutes = Math.floor(totalSeconds / 60)
         const seconds = totalSeconds % 60
-        const value = this.el.querySelector("#call-countdown-value")
+        const value = this.el.querySelector("[data-countdown-value]")
+          || this.el.querySelector("#call-countdown-value")
+          || this.el.querySelector("#extension-countdown-value")
 
         if (value) {
-          value.textContent = `${minutes}:${seconds.toString().padStart(2, "0")} remaining`
+          if (this.el.dataset.countdownMode === "seconds") {
+            value.textContent = `Decision closes in ${totalSeconds}s`
+          } else {
+            value.textContent = `${minutes}:${seconds.toString().padStart(2, "0")} remaining`
+          }
         }
 
         this.el.dataset.underMinute = totalSeconds < 60 ? "true" : "false"

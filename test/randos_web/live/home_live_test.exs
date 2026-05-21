@@ -74,14 +74,22 @@ defmodule RandosWeb.HomeLiveTest do
     render(view_a)
     assert has_element?(view_a, "#connecting-panel")
     assert has_element?(view_a, "#match-role-label")
+    assert has_element?(view_a, "#connecting-panel[data-webrtc-role='offerer']")
     refute has_element?(view_a, "#call-countdown")
 
     assert eventually_has_element?(view_a, "#call-panel")
     assert has_element?(view_a, "#call-countdown")
+    refute has_element?(view_a, "#extension-countdown")
+    assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 
     view_a |> element("#time-up-button") |> render_click()
     assert eventually_has_element?(view_a, "#extension-panel")
     refute has_element?(view_a, "#call-countdown")
+    assert has_element?(view_a, "#extension-countdown")
+
+    view_a |> element("#end-call-button") |> render_click()
+    assert eventually_missing_element?(view_a, "#call-countdown")
+    assert eventually_missing_element?(view_a, "#extension-countdown")
   end
 
   test "can leave the queue before a match", %{conn: conn} do
@@ -102,6 +110,7 @@ defmodule RandosWeb.HomeLiveTest do
     view |> element("#cancel-search-button") |> render_click()
     assert has_element?(view, "#idle-panel")
     refute has_element?(view, "#call-countdown")
+    refute has_element?(view, "#extension-countdown")
   end
 
   defp eventually_has_element?(view, selector, attempts \\ 120)
@@ -114,6 +123,19 @@ defmodule RandosWeb.HomeLiveTest do
     else
       Process.sleep(10)
       eventually_has_element?(view, selector, attempts - 1)
+    end
+  end
+
+  defp eventually_missing_element?(view, selector, attempts \\ 120)
+
+  defp eventually_missing_element?(_view, _selector, 0), do: false
+
+  defp eventually_missing_element?(view, selector, attempts) do
+    if has_element?(view, selector) do
+      Process.sleep(10)
+      eventually_missing_element?(view, selector, attempts - 1)
+    else
+      true
     end
   end
 end

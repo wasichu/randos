@@ -10,6 +10,7 @@ defmodule Randos.Calls.CallCoordinator do
   use GenServer
 
   alias Randos.Comms.CallSession
+  alias Randos.Signaling
 
   defstruct [
     :match,
@@ -18,6 +19,7 @@ defmodule Randos.Calls.CallCoordinator do
     :timeout_ref,
     :extension_timeout_ref,
     :call_deadline_unix_ms,
+    :extension_deadline_unix_ms,
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
@@ -47,6 +49,10 @@ defmodule Randos.Calls.CallCoordinator do
 
   def vote_extension(call_pid, participant_id, vote) when vote in [:continue, :end] do
     GenServer.call(call_pid, {:extension_vote, participant_id, vote})
+  end
+
+  def relay_signal(call_pid, participant_id, type, payload \\ %{}) do
+    GenServer.call(call_pid, {:relay_signal, participant_id, type, payload})
   end
 
   def force_time_up(call_pid) do
@@ -131,6 +137,19 @@ defmodule Randos.Calls.CallCoordinator do
     {:reply, {:error, :not_extension_pending}, state}
   end
 
+  def handle_call({:relay_signal, participant_id, type, payload}, _from, state) do
+    call = %{call_id: state.call_session.id, match: state.match}
+
+    case Signaling.build_message(call, participant_id, type, payload) do
+      {:ok, message} ->
+        relay_signal_to_peer(state, message)
+        {:reply, :ok, state}
+
+      {:error, reason} ->
+        {:reply, {:error, reason}, state}
+    end
+  end
+
   @impl true
   def handle_info(:activate_call, %{status: :connecting} = state) do
     {:ok, call_session} =
@@ -156,12 +175,16 @@ defmodule Randos.Calls.CallCoordinator do
     extension_timeout_ref =
       Process.send_after(self(), :extension_response_timeout, state.extension_response_timeout_ms)
 
+    extension_deadline_unix_ms =
+      System.system_time(:millisecond) + state.extension_response_timeout_ms
+
     state = %{
       state
       | call_session: call_session,
         status: :extension_pending,
         timeout_ref: nil,
         extension_timeout_ref: extension_timeout_ref,
+        extension_deadline_unix_ms: extension_deadline_unix_ms,
         extension_votes: %{}
     }
 
@@ -242,6 +265,7 @@ defmodule Randos.Calls.CallCoordinator do
             | call_session: call_session,
               status: :active,
               extension_timeout_ref: nil,
+              extension_deadline_unix_ms: nil,
               extension_votes: %{}
           }
           |> schedule_call_timeout(state.extension_duration_ms)
@@ -285,6 +309,11 @@ defmodule Randos.Calls.CallCoordinator do
     Phoenix.PubSub.broadcast(state.pubsub, state.match.participant_b.topic, message)
   end
 
+  defp relay_signal_to_peer(state, message) do
+    {:ok, peer} = Signaling.peer_for(state.match, message.from_participant_id)
+    Phoenix.PubSub.broadcast(state.pubsub, peer.topic, {:signaling, message})
+  end
+
   defp public_call_state(state) do
     %{
       call_id: state.call_session.id,
@@ -294,6 +323,7 @@ defmodule Randos.Calls.CallCoordinator do
       extension_count: state.call_session.extension_count,
       max_duration_seconds: state.call_session.max_duration_seconds,
       call_deadline_unix_ms: state.call_deadline_unix_ms,
+      extension_deadline_unix_ms: state.extension_deadline_unix_ms,
       ended_reason: state.call_session.ended_reason
     }
   end

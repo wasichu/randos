@@ -71,8 +71,21 @@ defmodule Randos.Calls.CallCoordinatorTest do
     assert deadline_a == deadline_b
     assert deadline_a > System.system_time(:millisecond)
 
-    assert_receive {:mock_call_extension_pending, %{status: :extension_pending}}
-    assert_receive {:mock_call_extension_pending, %{status: :extension_pending}}
+    assert_receive {:mock_call_extension_pending,
+                    %{
+                      status: :extension_pending,
+                      extension_deadline_unix_ms: extension_deadline_a
+                    }}
+
+    assert_receive {:mock_call_extension_pending,
+                    %{
+                      status: :extension_pending,
+                      extension_deadline_unix_ms: extension_deadline_b
+                    }}
+
+    assert is_integer(extension_deadline_a)
+    assert extension_deadline_a == extension_deadline_b
+    assert extension_deadline_a > System.system_time(:millisecond)
 
     Enum.each(pids, &send(&1, :stop))
   end
@@ -83,8 +96,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
     assert_receive {:mock_call_active, %{status: :active, call_deadline_unix_ms: first_deadline}}
     assert_receive {:mock_call_active, %{status: :active, call_deadline_unix_ms: ^first_deadline}}
-    assert_receive {:mock_call_extension_pending, %{status: :extension_pending}}
-    assert_receive {:mock_call_extension_pending, %{status: :extension_pending}}
+
+    assert_receive {:mock_call_extension_pending,
+                    %{status: :extension_pending, extension_deadline_unix_ms: extension_deadline}}
+
+    assert_receive {:mock_call_extension_pending,
+                    %{status: :extension_pending, extension_deadline_unix_ms: ^extension_deadline}}
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "a", :continue)
     refute_receive {:mock_call_extended, _call}, 5
@@ -150,6 +167,29 @@ defmodule Randos.Calls.CallCoordinatorTest do
     assert :ok = CallCoordinator.hang_up(call_pid, "a")
     assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :hangup}}
     assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :hangup}}
+
+    Enum.each(pids, &send(&1, :stop))
+  end
+
+  test "relays future WebRTC signaling messages only to the peer" do
+    {match, pids} = match()
+    call_pid = start_call(match)
+
+    assert_receive {:mock_call_active, %{status: :active}}
+    assert_receive {:mock_call_active, %{status: :active}}
+
+    assert :ok =
+             CallCoordinator.relay_signal(call_pid, "a", "offer", %{
+               "sdp" => "mock-offer"
+             })
+
+    assert_receive {:signaling,
+                    %{
+                      type: :offer,
+                      from_participant_id: "a",
+                      to_participant_id: "b",
+                      payload: %{"sdp" => "mock-offer"}
+                    }}
 
     Enum.each(pids, &send(&1, :stop))
   end

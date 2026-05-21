@@ -5,6 +5,7 @@ defmodule RandosWeb.HomeLive do
   alias Randos.ConversationFlow
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
+  alias Randos.Signaling
 
   @impl true
   def mount(_params, _session, socket) do
@@ -32,6 +33,7 @@ defmodule RandosWeb.HomeLive do
       |> assign(:call_status, nil)
       |> assign(:call_ended_reason, nil)
       |> assign(:call_deadline_unix_ms, nil)
+      |> assign(:extension_deadline_unix_ms, nil)
       |> assign(:extension_count, 0)
       |> assign_form(preferences)
 
@@ -106,6 +108,13 @@ defmodule RandosWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("signal", %{"type" => type} = params, socket) do
+    payload = Map.get(params, "payload", %{})
+    socket = relay_client_signal(socket, type, payload)
+
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_info({:randos_match, match}, socket) do
     {:noreply, assign_match(socket, match)}
@@ -125,6 +134,10 @@ defmodule RandosWeb.HomeLive do
 
   def handle_info({:mock_call_ended, call}, socket) do
     {:noreply, finish_call(socket, call)}
+  end
+
+  def handle_info({:signaling, message}, socket) do
+    {:noreply, push_event(socket, "randos:signal", encode_signal(message))}
   end
 
   @impl true
@@ -242,7 +255,11 @@ defmodule RandosWeb.HomeLive do
               <% :looking -> %>
                 <.searching_panel />
               <% :connecting -> %>
-                <.connecting_panel match_role={@match_role} webrtc_role={@webrtc_role} />
+                <.connecting_panel
+                  match_role={@match_role}
+                  webrtc_role={@webrtc_role}
+                  participant_id={@participant_id}
+                />
               <% :in_call -> %>
                 <.call_panel
                   preferences={@preferences}
@@ -250,10 +267,12 @@ defmodule RandosWeb.HomeLive do
                   call_status={@call_status}
                   call_deadline_unix_ms={@call_deadline_unix_ms}
                   extension_count={@extension_count}
+                  participant_id={@participant_id}
+                  webrtc_role={@webrtc_role}
                   language_name={&language_name/1}
                 />
               <% :extension_pending -> %>
-                <.extension_panel />
+                <.extension_panel extension_deadline_unix_ms={@extension_deadline_unix_ms} />
             <% end %>
           </div>
         </section>
@@ -295,10 +314,16 @@ defmodule RandosWeb.HomeLive do
 
   attr :match_role, :atom, default: nil
   attr :webrtc_role, :atom, default: nil
+  attr :participant_id, :string, required: true
 
   defp connecting_panel(assigns) do
     ~H"""
-    <div id="connecting-panel" class="space-y-6 p-5 sm:p-7">
+    <div
+      id="connecting-panel"
+      data-participant-id={@participant_id}
+      data-webrtc-role={@webrtc_role}
+      class="space-y-6 p-5 sm:p-7"
+    >
       <div>
         <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
           {gettext("Connecting")}
@@ -335,11 +360,18 @@ defmodule RandosWeb.HomeLive do
   attr :call_status, :atom, default: nil
   attr :call_deadline_unix_ms, :integer, default: nil
   attr :extension_count, :integer, required: true
+  attr :participant_id, :string, required: true
+  attr :webrtc_role, :atom, default: nil
   attr :language_name, :any, required: true
 
   defp call_panel(assigns) do
     ~H"""
-    <div id="call-panel" class="space-y-6 p-5 sm:p-7">
+    <div
+      id="call-panel"
+      data-participant-id={@participant_id}
+      data-webrtc-role={@webrtc_role}
+      class="space-y-6 p-5 sm:p-7"
+    >
       <div class="flex items-start justify-between gap-4">
         <div>
           <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
@@ -363,7 +395,7 @@ defmodule RandosWeb.HomeLive do
         class="inline-flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-medium text-stone-600"
       >
         <.icon name="hero-clock" class="size-4 text-teal-700" />
-        <span id="call-countdown-value">--:-- remaining</span>
+        <span id="call-countdown-value" data-countdown-value>--:-- remaining</span>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2">
@@ -460,6 +492,8 @@ defmodule RandosWeb.HomeLive do
     """
   end
 
+  attr :extension_deadline_unix_ms, :integer, default: nil
+
   defp extension_panel(assigns) do
     ~H"""
     <div id="extension-panel" class="space-y-6 p-5 sm:p-7">
@@ -473,6 +507,18 @@ defmodule RandosWeb.HomeLive do
         <p class="mt-3 leading-7 text-stone-600">
           {gettext("The call only extends if both people choose to continue.")}
         </p>
+        <div
+          :if={@extension_deadline_unix_ms}
+          id="extension-countdown"
+          phx-hook="CallCountdown"
+          phx-update="ignore"
+          data-deadline-unix-ms={@extension_deadline_unix_ms}
+          data-countdown-mode="seconds"
+          class="mt-4 inline-flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-medium text-stone-600"
+        >
+          <.icon name="hero-clock" class="size-4 text-teal-700" />
+          <span id="extension-countdown-value" data-countdown-value>Decision closes soon</span>
+        </div>
       </div>
 
       <div class="grid gap-3 sm:grid-cols-3">
@@ -574,6 +620,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_pid, call.call_pid)
     |> assign(:call_status, call.status)
     |> assign(:call_deadline_unix_ms, call.call_deadline_unix_ms)
+    |> assign(:extension_deadline_unix_ms, call.extension_deadline_unix_ms)
     |> assign(:extension_count, call.extension_count)
     |> assign(:call_ended_reason, call.ended_reason)
     |> assign(:ui_state, ui_state)
@@ -591,6 +638,46 @@ defmodule RandosWeb.HomeLive do
     else
       join_matchmaking(socket)
     end
+  end
+
+  defp relay_client_signal(socket, "extension_accepted", _payload) do
+    if socket.assigns.call_pid do
+      CallCoordinator.vote_extension(
+        socket.assigns.call_pid,
+        socket.assigns.participant_id,
+        :continue
+      )
+    end
+
+    socket
+  end
+
+  defp relay_client_signal(socket, "extension_declined", _payload) do
+    if socket.assigns.call_pid do
+      CallCoordinator.vote_extension(socket.assigns.call_pid, socket.assigns.participant_id, :end)
+    end
+
+    socket
+  end
+
+  defp relay_client_signal(socket, type, payload) do
+    with call_pid when not is_nil(call_pid) <- socket.assigns.call_pid,
+         {:ok, _type} <- Signaling.cast_type(type) do
+      CallCoordinator.relay_signal(call_pid, socket.assigns.participant_id, type, payload)
+    end
+
+    socket
+  end
+
+  defp encode_signal(message) do
+    %{
+      call_id: message.call_id,
+      type: Atom.to_string(message.type),
+      from_participant_id: message.from_participant_id,
+      to_participant_id: message.to_participant_id,
+      payload: message.payload,
+      sent_at_unix_ms: message.sent_at_unix_ms
+    }
   end
 
   defp roles_for(%{participant_a: %{id: participant_id}}, participant_id),
