@@ -74,12 +74,19 @@ const Hooks = {
       }
     },
   },
-  WebRTCSkeleton: {
+  WebRTCAudio: {
     mounted() {
       this.statusEl = this.el.querySelector("[data-webrtc-status]")
+      this.microphoneEl = this.el.querySelector("[data-microphone-status]")
+      this.muteButton = this.el.querySelector("[data-webrtc-mute]")
+      this.muteLabel = this.el.querySelector("[data-mute-label]")
+      this.remoteAudio = this.el.querySelector("[data-remote-audio]")
+      this.muted = false
       this.handleBeforeUnload = () => this.cleanup({notify: true})
+      this.handleMute = () => this.toggleMute()
       this.handleEvent("randos:signal", signal => this.peer?.receiveSignal(signal))
       window.addEventListener("pagehide", this.handleBeforeUnload)
+      this.muteButton?.addEventListener("click", this.handleMute)
 
       if (!window.RTCPeerConnection) {
         this.pushEvent("signal", {
@@ -94,14 +101,14 @@ const Hooks = {
         role: this.el.dataset.webrtcRole,
         pushSignal: (type, payload) => this.pushEvent("signal", {type, payload}),
         onStateChange: state => this.setState(state),
+        onLocalStream: stream => this.setLocalStream(stream),
+        onRemoteStream: stream => this.setRemoteStream(stream),
       })
 
       this.peer.start().catch(error => {
-        this.pushEvent("signal", {
-          type: "connection_failed",
-          payload: {reason: error.message || "peer_connection_start_failed"},
+        this.peer?.failConnection({
+          reason: error.message || "peer_connection_start_failed",
         })
-        this.setState(WebRTCPeerState.FAILED)
       })
     },
 
@@ -115,6 +122,7 @@ const Hooks = {
 
     cleanup({notify = false} = {}) {
       window.removeEventListener("pagehide", this.handleBeforeUnload)
+      this.muteButton?.removeEventListener("click", this.handleMute)
 
       if (notify && this.peer) {
         this.pushEvent("signal", {
@@ -125,6 +133,44 @@ const Hooks = {
 
       this.peer?.close()
       this.peer = null
+      this.setRemoteStream(null)
+      this.setLocalStream(null)
+    },
+
+    toggleMute() {
+      this.muted = !this.muted
+      this.peer?.setMuted(this.muted)
+      this.el.dataset.microphoneMuted = this.muted ? "true" : "false"
+
+      if (this.muteLabel) {
+        this.muteLabel.textContent = this.muted ? "Unmute" : "Mute"
+      }
+
+      if (this.muteButton) {
+        this.muteButton.setAttribute("aria-pressed", this.muted ? "true" : "false")
+      }
+    },
+
+    setLocalStream(stream) {
+      if (this.muteButton) {
+        this.muteButton.disabled = !stream
+      }
+
+      if (stream && this.microphoneEl) {
+        this.microphoneEl.textContent = "microphone ready"
+      }
+    },
+
+    setRemoteStream(stream) {
+      if (!this.remoteAudio) return
+
+      this.remoteAudio.srcObject = stream
+
+      if (stream) {
+        this.remoteAudio.play().catch(() => {
+          this.setState(WebRTCPeerState.ICE_CHECKING)
+        })
+      }
     },
 
     setState(state) {
@@ -132,6 +178,14 @@ const Hooks = {
 
       if (this.statusEl) {
         this.statusEl.textContent = state.replaceAll("_", " ")
+      }
+
+      if (this.microphoneEl) {
+        if (state === WebRTCPeerState.REQUESTING_MICROPHONE) {
+          this.microphoneEl.textContent = "requesting microphone"
+        } else if (state === WebRTCPeerState.MICROPHONE_DENIED) {
+          this.microphoneEl.textContent = "microphone unavailable"
+        }
       }
     },
   },

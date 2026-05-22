@@ -187,6 +187,12 @@ defmodule RandosWeb.HomeLive do
           </div>
 
           <div class="rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70">
+            <.call_media_panel
+              :if={@call_status in [:active, :extension_pending] && @webrtc_role}
+              participant_id={@participant_id}
+              webrtc_role={@webrtc_role}
+            />
+
             <%= case @ui_state do %>
               <% :idle -> %>
                 <div id="idle-panel" class="p-5 sm:p-7">
@@ -332,7 +338,7 @@ defmodule RandosWeb.HomeLive do
           {gettext("Preparing the call")}
         </h2>
         <p class="mt-3 leading-7 text-stone-600">
-          {gettext("You have matched. No audio or WebRTC is started in this step.")}
+          {gettext("You have matched. Audio starts when the call opens.")}
         </p>
       </div>
       <div
@@ -398,22 +404,6 @@ defmodule RandosWeb.HomeLive do
         <span id="call-countdown-value" data-countdown-value>--:-- remaining</span>
       </div>
 
-      <div
-        :if={@call_status == :active && @webrtc_role}
-        id="webrtc-skeleton"
-        phx-hook="WebRTCSkeleton"
-        phx-update="ignore"
-        data-participant-id={@participant_id}
-        data-webrtc-role={@webrtc_role}
-        data-webrtc-state="not_started"
-        class="rounded-md border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-600"
-      >
-        <div class="flex items-center justify-between gap-3">
-          <span class="font-medium text-stone-700">{gettext("Peer connection")}</span>
-          <span id="webrtc-state-label" data-webrtc-status>not started</span>
-        </div>
-      </div>
-
       <div class="grid gap-4 sm:grid-cols-2">
         <.waveform id="local-waveform" label={gettext("You")} />
         <.waveform id="remote-waveform" label={gettext("Your rando")} />
@@ -438,15 +428,6 @@ defmodule RandosWeb.HomeLive do
       </div>
 
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          id="mute-button"
-          type="button"
-          class="inline-flex items-center justify-center gap-2 rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
-        >
-          <.icon name="hero-speaker-x-mark" class="size-5" />
-          {gettext("Mute")}
-        </button>
-
         <button
           id="stop-after-call-toggle"
           type="button"
@@ -486,6 +467,51 @@ defmodule RandosWeb.HomeLive do
           {gettext("Hang up")}
         </button>
       </div>
+    </div>
+    """
+  end
+
+  attr :participant_id, :string, required: true
+  attr :webrtc_role, :atom, required: true
+
+  defp call_media_panel(assigns) do
+    ~H"""
+    <div
+      id="webrtc-audio"
+      phx-hook="WebRTCAudio"
+      phx-update="ignore"
+      data-participant-id={@participant_id}
+      data-webrtc-role={@webrtc_role}
+      data-webrtc-state="not_started"
+      data-microphone-muted="false"
+      class="border-b border-stone-200 bg-stone-50/80 px-5 py-4 sm:px-7"
+    >
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="grid gap-1 text-sm">
+          <p class="font-semibold text-stone-800">{gettext("Audio connection")}</p>
+          <p class="text-stone-600">
+            <span id="microphone-status-label" data-microphone-status>
+              {gettext("waiting for microphone")}
+            </span>
+            <span class="px-1 text-stone-300">/</span>
+            <span id="webrtc-state-label" data-webrtc-status>not started</span>
+          </p>
+        </div>
+
+        <button
+          id="mute-button"
+          type="button"
+          data-webrtc-mute
+          disabled
+          aria-pressed="false"
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400"
+        >
+          <.icon name="hero-speaker-x-mark" class="size-5" />
+          <span data-mute-label>{gettext("Mute")}</span>
+        </button>
+      </div>
+
+      <audio id="remote-audio" data-remote-audio autoplay playsinline></audio>
     </div>
     """
   end
@@ -781,7 +807,7 @@ defmodule RandosWeb.HomeLive do
   defp state_description(:idle), do: gettext("Choose your languages when you are ready.")
   defp state_description(:looking), do: gettext("Finding a compatible anonymous partner.")
   defp state_description(:connecting), do: gettext("A compatible rando is available.")
-  defp state_description(:in_call), do: gettext("You are in a mocked audio-only call.")
+  defp state_description(:in_call), do: gettext("You are in an audio-only call.")
 
   defp state_description(:extension_pending),
     do: gettext("Both people choose whether to continue.")

@@ -21,6 +21,8 @@ const serializeIceCandidate = candidate => {
 
 export const WebRTCPeerState = Object.freeze({
   NOT_STARTED: "not_started",
+  REQUESTING_MICROPHONE: "requesting_microphone",
+  MICROPHONE_DENIED: "microphone_denied",
   CREATING_PEER_CONNECTION: "creating_peer_connection",
   WAITING_FOR_OFFER: "waiting_for_offer",
   OFFER_SENT: "offer_sent",
@@ -32,12 +34,15 @@ export const WebRTCPeerState = Object.freeze({
 })
 
 export class RandosWebRTCPeer {
-  constructor({role, pushSignal, onStateChange}) {
+  constructor({role, pushSignal, onStateChange, onLocalStream, onRemoteStream}) {
     this.role = role
     this.pushSignal = pushSignal
     this.onStateChange = onStateChange
+    this.onLocalStream = onLocalStream
+    this.onRemoteStream = onRemoteStream
     this.peerConnection = null
-    this.dataChannel = null
+    this.localStream = null
+    this.remoteStream = null
     this.state = WebRTCPeerState.NOT_STARTED
     this.pendingIceCandidates = []
   }
@@ -45,23 +50,56 @@ export class RandosWebRTCPeer {
   async start() {
     if (this.peerConnection) return
 
+    await this.captureLocalAudio()
+
     this.setState(WebRTCPeerState.CREATING_PEER_CONNECTION)
     this.peerConnection = new RTCPeerConnection({iceServers: ICE_SERVERS})
     this.peerConnection.onicecandidate = event => this.handleLocalIceCandidate(event)
     this.peerConnection.oniceconnectionstatechange = () => this.handleIceConnectionState()
     this.peerConnection.onconnectionstatechange = () => this.handleConnectionState()
-    this.peerConnection.ondatachannel = event => {
-      this.dataChannel = event.channel
+    this.peerConnection.ontrack = event => this.handleRemoteTrack(event)
+
+    for (const track of this.localStream.getAudioTracks()) {
+      this.peerConnection.addTrack(track, this.localStream)
     }
 
     if (this.role === "offerer") {
-      this.dataChannel = this.peerConnection.createDataChannel("randos-control")
       const offer = await this.peerConnection.createOffer()
       await this.peerConnection.setLocalDescription(offer)
       this.pushSignal("offer", {sdp: serializeSessionDescription(this.peerConnection.localDescription)})
       this.setState(WebRTCPeerState.OFFER_SENT)
     } else {
       this.setState(WebRTCPeerState.WAITING_FOR_OFFER)
+    }
+  }
+
+  async captureLocalAudio() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      this.setState(WebRTCPeerState.MICROPHONE_DENIED)
+      throw new Error("microphone_capture_unavailable")
+    }
+
+    this.setState(WebRTCPeerState.REQUESTING_MICROPHONE)
+
+    try {
+      this.localStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+        video: false,
+      })
+      this.onLocalStream?.(this.localStream)
+    } catch (error) {
+      this.setState(WebRTCPeerState.MICROPHONE_DENIED)
+      throw error
+    }
+  }
+
+  setMuted(muted) {
+    for (const track of this.localStream?.getAudioTracks() || []) {
+      track.enabled = !muted
     }
   }
 
@@ -113,22 +151,40 @@ export class RandosWebRTCPeer {
   }
 
   close() {
-    if (this.dataChannel) {
-      this.dataChannel.close()
-      this.dataChannel = null
+    this.cleanupMedia()
+    this.setState(WebRTCPeerState.CLOSED)
+  }
+
+  failConnection(payload) {
+    if (this.state === WebRTCPeerState.FAILED || this.state === WebRTCPeerState.CLOSED) return
+
+    this.pushSignal("connection_failed", payload)
+    this.cleanupMedia()
+    this.setState(WebRTCPeerState.FAILED)
+  }
+
+  cleanupMedia() {
+    if (this.localStream) {
+      for (const track of this.localStream.getTracks()) {
+        track.stop()
+      }
+
+      this.localStream = null
     }
 
     if (this.peerConnection) {
       this.peerConnection.onicecandidate = null
       this.peerConnection.oniceconnectionstatechange = null
       this.peerConnection.onconnectionstatechange = null
-      this.peerConnection.ondatachannel = null
+      this.peerConnection.ontrack = null
       this.peerConnection.close()
       this.peerConnection = null
     }
 
+    this.remoteStream = null
     this.pendingIceCandidates = []
-    this.setState(WebRTCPeerState.CLOSED)
+    this.onLocalStream?.(null)
+    this.onRemoteStream?.(null)
   }
 
   async flushPendingIceCandidates() {
@@ -146,6 +202,17 @@ export class RandosWebRTCPeer {
     }
   }
 
+  handleRemoteTrack(event) {
+    if (event.streams[0]) {
+      this.remoteStream = event.streams[0]
+    } else {
+      this.remoteStream ||= new MediaStream()
+      this.remoteStream.addTrack(event.track)
+    }
+
+    this.onRemoteStream?.(this.remoteStream)
+  }
+
   handleIceConnectionState() {
     const iceState = this.peerConnection?.iceConnectionState
 
@@ -155,8 +222,7 @@ export class RandosWebRTCPeer {
       this.pushSignal("connection_established", {ice_connection_state: iceState})
       this.setState(WebRTCPeerState.CONNECTED)
     } else if (iceState === "failed" || iceState === "disconnected") {
-      this.pushSignal("connection_failed", {ice_connection_state: iceState})
-      this.setState(WebRTCPeerState.FAILED)
+      this.failConnection({ice_connection_state: iceState})
     } else if (iceState === "closed") {
       this.setState(WebRTCPeerState.CLOSED)
     }
@@ -168,8 +234,7 @@ export class RandosWebRTCPeer {
     if (connectionState === "connected") {
       this.setState(WebRTCPeerState.CONNECTED)
     } else if (connectionState === "failed" || connectionState === "disconnected") {
-      this.pushSignal("connection_failed", {connection_state: connectionState})
-      this.setState(WebRTCPeerState.FAILED)
+      this.failConnection({connection_state: connectionState})
     } else if (connectionState === "closed") {
       this.setState(WebRTCPeerState.CLOSED)
     }
