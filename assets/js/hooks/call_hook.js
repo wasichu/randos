@@ -11,11 +11,15 @@ export const WebRTCAudio = {
     this.muteButton = this.el.querySelector("[data-webrtc-mute]")
     this.muteLabel = this.el.querySelector("[data-mute-label]")
     this.remoteAudio = this.el.querySelector("[data-remote-audio]")
+    this.remoteAudioStatusEl = this.el.querySelector("[data-remote-audio-status]")
+    this.remoteAudioPlayButton = this.el.querySelector("[data-remote-audio-play]")
+    this.pendingSignals = []
     this.muted = false
 
     this.cleanupBag.addEventListener(window, "pagehide", () => this.cleanup({notify: true}))
     this.cleanupBag.addEventListener(this.muteButton, "click", () => this.toggleMute())
-    this.handleEvent("randos:signal", signal => this.peer?.receiveSignal(signal))
+    this.cleanupBag.addEventListener(this.remoteAudioPlayButton, "click", () => this.playRemoteAudio())
+    this.handleEvent("randos:signal", signal => this.receiveSignal(signal))
 
     if (!window.RTCPeerConnection) {
       this.pushEvent("signal", {
@@ -36,11 +40,14 @@ export const WebRTCAudio = {
 
     logEvent("call.webrtc_hook_mounted", {role: this.el.dataset.webrtcRole})
 
-    this.peer.start().catch(error => {
-      this.peer?.failConnection({
-        reason: error.message || "peer_connection_start_failed",
+    this.peer
+      .start()
+      .then(() => this.flushPendingSignals())
+      .catch(error => {
+        this.peer?.failConnection({
+          reason: error.message || "peer_connection_start_failed",
+        })
       })
-    })
   },
 
   destroyed() {
@@ -65,6 +72,7 @@ export const WebRTCAudio = {
 
     this.peer?.close()
     this.peer = null
+    this.pendingSignals = []
     this.setRemoteStream(null)
     this.setLocalStream(null)
     this.cleanupBag?.cleanup()
@@ -85,6 +93,24 @@ export const WebRTCAudio = {
     }
   },
 
+  receiveSignal(signal) {
+    if (!this.peer) {
+      this.pendingSignals.push(signal)
+      return
+    }
+
+    this.peer.receiveSignal(signal)
+  },
+
+  flushPendingSignals() {
+    const signals = this.pendingSignals
+    this.pendingSignals = []
+
+    for (const signal of signals) {
+      this.peer?.receiveSignal(signal)
+    }
+  },
+
   setLocalStream(stream) {
     if (this.muteButton) {
       this.muteButton.disabled = !stream
@@ -96,10 +122,43 @@ export const WebRTCAudio = {
   },
 
   setRemoteStream(stream) {
-    attachRemoteAudio(this.remoteAudio, stream).catch(error => {
-      logWarning("media.remote_audio_playback_blocked", {reason: error.message})
-      this.setState(WebRTCClientState.ICE_CHECKING)
-    })
+    if (this.remoteAudioStatusEl) {
+      this.remoteAudioStatusEl.textContent = stream ? "remote audio received" : "waiting for remote audio"
+    }
+
+    if (this.remoteAudioPlayButton) {
+      this.remoteAudioPlayButton.hidden = !stream
+    }
+
+    attachRemoteAudio(this.remoteAudio, stream)
+      .then(() => {
+        if (stream && this.remoteAudioStatusEl) {
+          this.remoteAudioStatusEl.textContent = "remote audio playing"
+        }
+      })
+      .catch(error => {
+        logWarning("media.remote_audio_playback_blocked", {reason: error.message})
+
+        if (stream && this.remoteAudioStatusEl) {
+          this.remoteAudioStatusEl.textContent = "remote audio needs a tap"
+        }
+
+        if (this.remoteAudioPlayButton) {
+          this.remoteAudioPlayButton.hidden = !stream
+        }
+      })
+  },
+
+  playRemoteAudio() {
+    attachRemoteAudio(this.remoteAudio, this.remoteAudio?.srcObject)
+      .then(() => {
+        if (this.remoteAudioStatusEl) {
+          this.remoteAudioStatusEl.textContent = "remote audio playing"
+        }
+      })
+      .catch(error => {
+        logWarning("media.remote_audio_playback_failed", {reason: error.message})
+      })
   },
 
   setState(state) {

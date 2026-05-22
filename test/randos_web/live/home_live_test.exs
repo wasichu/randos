@@ -82,6 +82,8 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
     assert has_element?(view_a, "#mute-button[disabled]")
     assert has_element?(view_a, "#remote-audio")
+    assert has_element?(view_a, "#remote-audio-status-label")
+    assert has_element?(view_a, "#remote-audio-play-button[hidden]")
     refute has_element?(view_a, "#extension-countdown")
     assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 

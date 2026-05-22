@@ -34,6 +34,7 @@ export class WebRTCClient {
     this.localStream = null
     this.remoteStream = null
     this.state = WebRTCClientState.NOT_STARTED
+    this.pendingSignals = []
     this.pendingIceCandidates = []
     this.cleaned = false
   }
@@ -65,6 +66,8 @@ export class WebRTCClient {
       this.setState(WebRTCClientState.WAITING_FOR_OFFER)
       logEvent("webrtc.waiting_for_offer")
     }
+
+    await this.flushPendingSignals()
   }
 
   async captureLocalAudio() {
@@ -88,7 +91,13 @@ export class WebRTCClient {
   }
 
   async receiveSignal(signal) {
-    if (!this.peerConnection || this.state === WebRTCClientState.CLOSED) return
+    if (this.state === WebRTCClientState.CLOSED) return
+
+    if (!this.peerConnection) {
+      this.pendingSignals.push(signal)
+      logDebug("signaling.queued", {type: signal.type})
+      return
+    }
 
     logDebug("signaling.received", {type: signal.type})
 
@@ -107,6 +116,15 @@ export class WebRTCClient {
       case "connection_failed":
         this.close()
         break
+    }
+  }
+
+  async flushPendingSignals() {
+    const signals = this.pendingSignals
+    this.pendingSignals = []
+
+    for (const signal of signals) {
+      await this.receiveSignal(signal)
     }
   }
 
@@ -173,6 +191,7 @@ export class WebRTCClient {
     }
 
     this.remoteStream = null
+    this.pendingSignals = []
     this.pendingIceCandidates = []
     this.onLocalStream?.(null)
     this.onRemoteStream?.(null)

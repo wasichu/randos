@@ -495,6 +495,10 @@ defmodule RandosWeb.HomeLive do
             </span>
             <span class="px-1 text-stone-300">/</span>
             <span id="webrtc-state-label" data-webrtc-status>not started</span>
+            <span class="px-1 text-stone-300">/</span>
+            <span id="remote-audio-status-label" data-remote-audio-status>
+              {gettext("waiting for remote audio")}
+            </span>
           </p>
         </div>
 
@@ -510,6 +514,16 @@ defmodule RandosWeb.HomeLive do
           <span data-mute-label>{gettext("Mute")}</span>
         </button>
       </div>
+
+      <button
+        id="remote-audio-play-button"
+        type="button"
+        data-remote-audio-play
+        hidden
+        class="mt-3 rounded-md border border-teal-200 bg-white px-4 py-2 text-sm font-semibold text-teal-800 transition hover:border-teal-700"
+      >
+        {gettext("Enable remote audio")}
+      </button>
 
       <audio id="remote-audio" data-remote-audio autoplay playsinline></audio>
     </div>
