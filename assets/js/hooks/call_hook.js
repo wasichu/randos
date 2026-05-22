@@ -1,6 +1,7 @@
 import {CleanupBag} from "../randos/cleanup"
 import {attachRemoteAudio, audioStreamSummary} from "../randos/media"
 import {logEvent, logWarning} from "../randos/logging"
+import {AudioLevelVisualizer} from "../randos/audio_visualizer"
 import {WebRTCClient, WebRTCClientState} from "../randos/webrtc_client"
 
 export const WebRTCAudio = {
@@ -13,6 +14,10 @@ export const WebRTCAudio = {
     this.remoteAudio = this.el.querySelector("[data-remote-audio]")
     this.remoteAudioStatusEl = this.el.querySelector("[data-remote-audio-status]")
     this.remoteAudioPlayButton = this.el.querySelector("[data-remote-audio-play]")
+    this.localVisualizer = null
+    this.remoteVisualizer = null
+    this.localVisualizerCanvas = document.querySelector("[data-audio-visualizer='local']")
+    this.remoteVisualizerCanvas = document.querySelector("[data-audio-visualizer='remote']")
     this.pendingSignals = []
     this.muted = false
 
@@ -75,6 +80,7 @@ export const WebRTCAudio = {
     this.pendingSignals = []
     this.setRemoteStream(null)
     this.setLocalStream(null)
+    this.stopVisualizers()
     this.cleanupBag?.cleanup()
     logEvent("cleanup.webrtc_audio_hook", {notify})
   },
@@ -82,6 +88,7 @@ export const WebRTCAudio = {
   toggleMute() {
     this.muted = !this.muted
     this.peer?.setMuted(this.muted)
+    this.localVisualizer?.setMuted(this.muted)
     this.el.dataset.microphoneMuted = this.muted ? "true" : "false"
 
     if (this.muteLabel) {
@@ -112,16 +119,28 @@ export const WebRTCAudio = {
   },
 
   setLocalStream(stream) {
+    this.localVisualizer?.close()
+    this.localVisualizer = null
+
     if (this.muteButton) {
       this.muteButton.disabled = !stream
     }
 
     if (stream && this.microphoneEl) {
       this.microphoneEl.textContent = "microphone ready"
+      this.localVisualizer = new AudioLevelVisualizer({
+        canvas: this.localVisualizerCanvas,
+        stream,
+        muted: this.muted,
+      })
+      this.localVisualizer.start()
     }
   },
 
   setRemoteStream(stream) {
+    this.remoteVisualizer?.close()
+    this.remoteVisualizer = null
+
     if (this.remoteAudioStatusEl) {
       this.remoteAudioStatusEl.textContent = stream
         ? `remote audio received (${audioStreamSummary(stream)})`
@@ -134,6 +153,14 @@ export const WebRTCAudio = {
 
     if (this.remoteAudio) {
       this.remoteAudio.hidden = !stream
+    }
+
+    if (stream) {
+      this.remoteVisualizer = new AudioLevelVisualizer({
+        canvas: this.remoteVisualizerCanvas,
+        stream,
+      })
+      this.remoteVisualizer.start()
     }
 
     attachRemoteAudio(this.remoteAudio, stream)
@@ -153,6 +180,13 @@ export const WebRTCAudio = {
           this.remoteAudioPlayButton.hidden = !stream
         }
       })
+  },
+
+  stopVisualizers() {
+    this.localVisualizer?.close()
+    this.remoteVisualizer?.close()
+    this.localVisualizer = null
+    this.remoteVisualizer = null
   },
 
   playRemoteAudio() {

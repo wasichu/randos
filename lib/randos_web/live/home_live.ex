@@ -546,13 +546,12 @@ defmodule RandosWeb.HomeLive do
     ~H"""
     <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-3 sm:p-4">
       <p class="text-sm font-semibold text-stone-700">{@label}</p>
-      <div class="mt-4 flex h-16 items-center justify-center gap-1.5 sm:h-24" aria-hidden="true">
-        <span
-          :for={height <- ["h-8", "h-14", "h-10", "h-20", "h-12", "h-16", "h-7", "h-11"]}
-          class={["w-2 rounded-full bg-teal-700/70", height]}
-        >
-        </span>
-      </div>
+      <canvas
+        id={"#{@id}-canvas"}
+        data-audio-visualizer={if(@id == "local-waveform", do: "local", else: "remote")}
+        class="mt-4 h-16 w-full rounded-md bg-white sm:h-24"
+      >
+      </canvas>
     </div>
     """
   end
