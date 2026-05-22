@@ -150,17 +150,17 @@ defmodule RandosWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash}>
-      <div class="min-h-[calc(100vh-5rem)] bg-stone-50 text-stone-950">
-        <section class="mx-auto grid w-full max-w-6xl gap-10 px-5 py-8 sm:px-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
+      <div class="min-h-[calc(100vh-5rem)] overflow-x-hidden bg-stone-50 text-stone-950">
+        <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
           <div class="flex flex-col justify-between gap-10">
             <div>
               <p class="mb-4 text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
                 {gettext("Audio language practice")}
               </p>
-              <h1 class="text-5xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
+              <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
                 {gettext("Randos")}
               </h1>
-              <p class="mt-6 max-w-xl text-xl leading-8 text-stone-700">
+              <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
                 {gettext("Short anonymous conversations for language practice.")}
               </p>
               <p class="mt-3 text-base text-stone-500">
@@ -170,13 +170,13 @@ defmodule RandosWeb.HomeLive do
 
             <div
               id="state-progress"
-              class="grid grid-cols-2 gap-3 text-sm sm:grid-cols-5 lg:grid-cols-1"
+              class="grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 sm:grid-cols-5 lg:grid-cols-1"
             >
               <div
                 :for={state <- [:idle, :looking, :connecting, :in_call, :extension_pending]}
                 id={"state-progress-#{state}"}
                 class={[
-                  "rounded-md border px-4 py-3 transition-colors duration-200",
+                  "rounded-md border px-3 py-2 transition-colors duration-200 sm:px-4 sm:py-3",
                   progress_step_class(assigns, state)
                 ]}
               >
@@ -186,7 +186,7 @@ defmodule RandosWeb.HomeLive do
             </div>
           </div>
 
-          <div class="rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70">
+          <div class="min-w-0 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70">
             <.call_media_panel
               :if={@call_status in [:active, :extension_pending] && @webrtc_role}
               participant_id={@participant_id}
@@ -376,7 +376,7 @@ defmodule RandosWeb.HomeLive do
       id="call-panel"
       data-participant-id={@participant_id}
       data-webrtc-role={@webrtc_role}
-      class="space-y-6 p-5 sm:p-7"
+      class="space-y-5 p-4 sm:space-y-6 sm:p-7"
     >
       <div class="flex items-start justify-between gap-4">
         <div>
@@ -404,12 +404,12 @@ defmodule RandosWeb.HomeLive do
         <span id="call-countdown-value" data-countdown-value>--:-- remaining</span>
       </div>
 
-      <div class="grid gap-4 sm:grid-cols-2">
+      <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
         <.waveform id="local-waveform" label={gettext("You")} />
         <.waveform id="remote-waveform" label={gettext("Your rando")} />
       </div>
 
-      <div class="grid gap-3 rounded-md border border-stone-200 bg-stone-50 p-4 text-sm text-stone-700">
+      <div class="grid gap-3 rounded-md border border-stone-200 bg-stone-50 p-3 text-sm text-stone-700 sm:p-4">
         <p id="speaking-language-label">
           {gettext("You are speaking:")}
           <strong>{@language_name.(@preferences["speaking_language"])}</strong>
@@ -444,25 +444,25 @@ defmodule RandosWeb.HomeLive do
         </button>
       </div>
 
-      <div class="grid gap-3 sm:grid-cols-3">
+      <div class="grid gap-2 sm:grid-cols-3 sm:gap-3">
         <button
           id="time-up-button"
           phx-click="mock_time_up"
-          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+          class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
           {gettext("Mock time up")}
         </button>
         <button
           id="next-rando-button"
           phx-click="hang_up"
-          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+          class="rounded-md border border-stone-300 px-4 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Find next")}
         </button>
         <button
           id="hang-up-button"
           phx-click="hang_up"
-          class="rounded-md border border-red-200 px-5 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
+          class="rounded-md border border-red-200 px-4 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
         >
           {gettext("Hang up")}
         </button>
@@ -484,18 +484,18 @@ defmodule RandosWeb.HomeLive do
       data-webrtc-role={@webrtc_role}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
-      class="border-b border-stone-200 bg-stone-50/80 px-5 py-4 sm:px-7"
+      class="border-b border-stone-200 bg-stone-50/80 px-4 py-4 sm:px-7"
     >
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div class="grid gap-1 text-sm">
+        <div class="grid min-w-0 gap-1 text-sm">
           <p class="font-semibold text-stone-800">{gettext("Audio connection")}</p>
-          <p class="text-stone-600">
+          <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-stone-600">
             <span id="microphone-status-label" data-microphone-status>
               {gettext("waiting for microphone")}
             </span>
-            <span class="px-1 text-stone-300">/</span>
+            <span class="text-stone-300">/</span>
             <span id="webrtc-state-label" data-webrtc-status>not started</span>
-            <span class="px-1 text-stone-300">/</span>
+            <span class="text-stone-300">/</span>
             <span id="remote-audio-status-label" data-remote-audio-status>
               {gettext("waiting for remote audio")}
             </span>
@@ -508,7 +508,7 @@ defmodule RandosWeb.HomeLive do
           data-webrtc-mute
           disabled
           aria-pressed="false"
-          class="inline-flex items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400"
+          class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400 sm:w-auto"
         >
           <.icon name="hero-speaker-x-mark" class="size-5" />
           <span data-mute-label>{gettext("Mute")}</span>
@@ -520,7 +520,7 @@ defmodule RandosWeb.HomeLive do
         type="button"
         data-remote-audio-play
         hidden
-        class="mt-3 rounded-md border border-teal-200 bg-white px-4 py-2 text-sm font-semibold text-teal-800 transition hover:border-teal-700"
+        class="mt-3 w-full rounded-md border border-teal-200 bg-white px-4 py-2 text-sm font-semibold text-teal-800 transition hover:border-teal-700 sm:w-auto"
       >
         {gettext("Enable remote audio")}
       </button>
@@ -535,9 +535,9 @@ defmodule RandosWeb.HomeLive do
 
   defp waveform(assigns) do
     ~H"""
-    <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-4">
+    <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-3 sm:p-4">
       <p class="text-sm font-semibold text-stone-700">{@label}</p>
-      <div class="mt-4 flex h-24 items-center justify-center gap-1.5" aria-hidden="true">
+      <div class="mt-4 flex h-16 items-center justify-center gap-1.5 sm:h-24" aria-hidden="true">
         <span
           :for={height <- ["h-8", "h-14", "h-10", "h-20", "h-12", "h-16", "h-7", "h-11"]}
           class={["w-2 rounded-full bg-teal-700/70", height]}
@@ -552,7 +552,7 @@ defmodule RandosWeb.HomeLive do
 
   defp extension_panel(assigns) do
     ~H"""
-    <div id="extension-panel" class="space-y-6 p-5 sm:p-7">
+    <div id="extension-panel" class="space-y-5 p-4 sm:space-y-6 sm:p-7">
       <div>
         <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
           {gettext("Time is up")}
@@ -577,12 +577,12 @@ defmodule RandosWeb.HomeLive do
         </div>
       </div>
 
-      <div class="grid gap-3 sm:grid-cols-3">
+      <div class="grid gap-2 sm:grid-cols-3 sm:gap-3">
         <button
           id="continue-call-button"
           phx-click="extension_vote"
           phx-value-vote="continue"
-          class="rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+          class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
           {gettext("Continue")}
         </button>
@@ -590,7 +590,7 @@ defmodule RandosWeb.HomeLive do
           id="find-new-after-extension-button"
           phx-click="extension_vote"
           phx-value-vote="end"
-          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+          class="rounded-md border border-stone-300 px-4 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Find someone else")}
         </button>
@@ -598,7 +598,7 @@ defmodule RandosWeb.HomeLive do
           id="end-call-button"
           phx-click="extension_vote"
           phx-value-vote="end"
-          class="rounded-md border border-red-200 px-5 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
+          class="rounded-md border border-red-200 px-4 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
         >
           {gettext("End")}
         </button>

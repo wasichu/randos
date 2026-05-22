@@ -188,16 +188,17 @@ defmodule RandosWeb.CoreComponents do
     <div class="fieldset mb-2">
       <label>
         <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
-        <span class="label">
+        <span class="label flex items-start gap-3 whitespace-normal">
           <input
             type="checkbox"
             id={@id}
             name={@name}
             value="true"
             checked={@checked}
-            class={@class || "checkbox checkbox-sm"}
+            class={[@class || "checkbox checkbox-sm", "shrink-0"]}
             {@rest}
-          />{@label}
+          />
+          <span class="min-w-0 flex-1 leading-6">{@label}</span>
         </span>
       </label>
       <.error :for={msg <- @errors}>{msg}</.error>
