@@ -525,7 +525,16 @@ defmodule RandosWeb.HomeLive do
         {gettext("Enable remote audio")}
       </button>
 
-      <audio id="remote-audio" data-remote-audio autoplay playsinline></audio>
+      <audio
+        id="remote-audio"
+        data-remote-audio
+        autoplay
+        controls
+        hidden
+        playsinline
+        class="mt-3 w-full"
+      >
+      </audio>
     </div>
     """
   end

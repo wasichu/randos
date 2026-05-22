@@ -1,5 +1,5 @@
 import {CleanupBag} from "../randos/cleanup"
-import {attachRemoteAudio} from "../randos/media"
+import {attachRemoteAudio, audioStreamSummary} from "../randos/media"
 import {logEvent, logWarning} from "../randos/logging"
 import {WebRTCClient, WebRTCClientState} from "../randos/webrtc_client"
 
@@ -123,24 +123,30 @@ export const WebRTCAudio = {
 
   setRemoteStream(stream) {
     if (this.remoteAudioStatusEl) {
-      this.remoteAudioStatusEl.textContent = stream ? "remote audio received" : "waiting for remote audio"
+      this.remoteAudioStatusEl.textContent = stream
+        ? `remote audio received (${audioStreamSummary(stream)})`
+        : "waiting for remote audio"
     }
 
     if (this.remoteAudioPlayButton) {
       this.remoteAudioPlayButton.hidden = !stream
     }
 
+    if (this.remoteAudio) {
+      this.remoteAudio.hidden = !stream
+    }
+
     attachRemoteAudio(this.remoteAudio, stream)
       .then(() => {
         if (stream && this.remoteAudioStatusEl) {
-          this.remoteAudioStatusEl.textContent = "remote audio playing"
+          this.remoteAudioStatusEl.textContent = `remote audio playing (${audioStreamSummary(stream)})`
         }
       })
       .catch(error => {
         logWarning("media.remote_audio_playback_blocked", {reason: error.message})
 
         if (stream && this.remoteAudioStatusEl) {
-          this.remoteAudioStatusEl.textContent = "remote audio needs a tap"
+          this.remoteAudioStatusEl.textContent = `remote audio needs a tap (${audioStreamSummary(stream)})`
         }
 
         if (this.remoteAudioPlayButton) {
@@ -153,7 +159,8 @@ export const WebRTCAudio = {
     attachRemoteAudio(this.remoteAudio, this.remoteAudio?.srcObject)
       .then(() => {
         if (this.remoteAudioStatusEl) {
-          this.remoteAudioStatusEl.textContent = "remote audio playing"
+          this.remoteAudioStatusEl.textContent =
+            `remote audio playing (${audioStreamSummary(this.remoteAudio?.srcObject)})`
         }
       })
       .catch(error => {

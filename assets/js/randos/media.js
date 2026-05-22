@@ -37,8 +37,24 @@ export const attachRemoteAudio = (audioElement, stream) => {
   if (!audioElement) return Promise.resolve()
 
   audioElement.srcObject = stream
+  audioElement.autoplay = true
+  audioElement.muted = false
+  audioElement.volume = 1
 
   if (!stream) return Promise.resolve()
 
   return audioElement.play()
+}
+
+export const audioStreamSummary = stream => {
+  const tracks = stream?.getAudioTracks() || []
+
+  if (tracks.length === 0) return "no audio tracks"
+
+  return tracks
+    .map(track => {
+      const muted = track.muted ? "muted" : "unmuted"
+      return `${track.readyState} ${muted}`
+    })
+    .join(", ")
 }
