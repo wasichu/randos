@@ -34,6 +34,32 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
   setup :start_matchmaker
 
+  test "does not leave queued participants behind when call start fails" do
+    name = :"matchmaker_failure_#{System.unique_integer([:positive])}"
+    call_starter = fn _match, _call_options -> {:error, :supervisor_down} end
+    start_supervised!({Matchmaker, name: name, call_starter: call_starter}, id: name)
+
+    pid_a = waiting_pid()
+    pid_b = waiting_pid()
+
+    assert :queued =
+             Matchmaker.join(
+               name,
+               participant(id: "a", pid: pid_a, speaks_language: "en", listens_language: "es")
+             )
+
+    assert {:error, :call_start_failed} =
+             Matchmaker.join(
+               name,
+               participant(id: "b", pid: pid_b, speaks_language: "es", listens_language: "en")
+             )
+
+    assert %{queued_count: 0} = Matchmaker.snapshot(name)
+
+    send(pid_a, :stop)
+    send(pid_b, :stop)
+  end
+
   test "matches compatible participants and notifies both topics", %{matchmaker: matchmaker} do
     pid_a = waiting_pid()
     pid_b = waiting_pid()

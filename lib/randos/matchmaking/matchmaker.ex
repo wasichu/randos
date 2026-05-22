@@ -8,6 +8,8 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   use GenServer
 
+  require Logger
+
   alias Randos.Calls.CallCoordinator
   alias Randos.ConversationLanguages
 
@@ -97,11 +99,16 @@ defmodule Randos.Matchmaking.Matchmaker do
         {:reply, {:error, :already_queued}, state}
 
       true ->
+        Logger.debug("matchmaking_join participant_id=#{participant.id}")
         join_queue(participant, state)
     end
   end
 
   def handle_call({:leave, pid}, _from, state) do
+    Logger.debug(
+      "matchmaking_leave pid=#{inspect(pid)} queued=#{Map.has_key?(state.participants, pid)}"
+    )
+
     if Map.has_key?(state.participants, pid) do
       {:reply, :ok, remove_participant(pid, state)}
     else
@@ -125,6 +132,7 @@ defmodule Randos.Matchmaking.Matchmaker do
   def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
     case state.monitors do
       %{^ref => ^pid} ->
+        Logger.info("matchmaking_participant_down pid=#{inspect(pid)}")
         {:noreply, remove_participant(pid, state)}
 
       _monitors ->
@@ -138,12 +146,24 @@ defmodule Randos.Matchmaking.Matchmaker do
     case pop_waiting_participant(state, compatible_key) do
       {%{} = waiting_participant, state} ->
         match = build_match(waiting_participant, participant)
-        {:ok, call_pid} = start_call(match, state)
-        match = Map.merge(match, %{call_pid: call_pid})
-        notify_match(state.pubsub, match)
-        {:reply, {:matched, match}, state}
+
+        case start_call(match, state) do
+          {:ok, call_pid} ->
+            match = Map.merge(match, %{call_pid: call_pid})
+            Logger.info("matchmaking_matched match_id=#{match.id}")
+            notify_match(state.pubsub, match)
+            {:reply, {:matched, match}, state}
+
+          {:error, reason} ->
+            Logger.warning(
+              "matchmaking_call_start_failed match_id=#{match.id} reason=#{inspect(reason)}"
+            )
+
+            {:reply, {:error, :call_start_failed}, state}
+        end
 
       {nil, state} ->
+        Logger.debug("matchmaking_queued participant_id=#{participant.id}")
         state = add_participant(participant, state)
         {:reply, :queued, state}
     end
@@ -246,6 +266,9 @@ defmodule Randos.Matchmaking.Matchmaker do
 
     with {:ok, pid} <- apply_call_starter(state.call_starter, match, call_options) do
       {:ok, pid}
+    else
+      {:error, reason} -> {:error, reason}
+      other -> {:error, other}
     end
   end
 

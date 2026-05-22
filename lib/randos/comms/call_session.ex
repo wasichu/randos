@@ -26,6 +26,8 @@ defmodule Randos.Comms.CallSession do
     :extension_timeout,
     :hangup,
     :disconnected,
+    :connection_failed,
+    :peer_disconnected,
     :max_duration_reached
   ]
 

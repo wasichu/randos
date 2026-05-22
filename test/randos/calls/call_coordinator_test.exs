@@ -171,6 +171,22 @@ defmodule Randos.Calls.CallCoordinatorTest do
     Enum.each(pids, &send(&1, :stop))
   end
 
+  test "duplicate hangup after call process exits is safe" do
+    {match, pids} = match()
+    call_pid = start_call(match)
+
+    assert_receive {:mock_call_active, %{status: :active}}
+    assert_receive {:mock_call_active, %{status: :active}}
+
+    assert :ok = CallCoordinator.hang_up(call_pid, "a")
+    assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :hangup}}
+    assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :hangup}}
+
+    assert {:error, :call_unavailable} = CallCoordinator.hang_up(call_pid, "a")
+
+    Enum.each(pids, &send(&1, :stop))
+  end
+
   test "relays future WebRTC signaling messages only to the peer" do
     {match, pids} = match()
     call_pid = start_call(match)
@@ -194,6 +210,32 @@ defmodule Randos.Calls.CallCoordinatorTest do
     Enum.each(pids, &send(&1, :stop))
   end
 
+  test "connection failure signal notifies peer and ends call" do
+    {match, pids} = match()
+    call_pid = start_call(match)
+
+    assert_receive {:mock_call_active, %{status: :active}}
+    assert_receive {:mock_call_active, %{status: :active}}
+
+    assert :ok =
+             CallCoordinator.relay_signal(call_pid, "a", "connection_failed", %{
+               "reason" => "ice_failed"
+             })
+
+    assert_receive {:signaling,
+                    %{
+                      type: :connection_failed,
+                      from_participant_id: "a",
+                      to_participant_id: "b",
+                      payload: %{"reason" => "ice_failed"}
+                    }}
+
+    assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :connection_failed}}
+    assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :connection_failed}}
+
+    Enum.each(pids, &send(&1, :stop))
+  end
+
   test "participant disconnect ends the call" do
     {match, [pid_a, pid_b]} = match()
     start_call(match)
@@ -206,5 +248,23 @@ defmodule Randos.Calls.CallCoordinatorTest do
     assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :disconnected}}
 
     send(pid_b, :stop)
+  end
+
+  test "extension vote after ended call is safe" do
+    {match, pids} = match()
+    call_pid = start_call(match, call_duration_ms: 5)
+
+    assert_receive {:mock_call_active, %{status: :active}}
+    assert_receive {:mock_call_active, %{status: :active}}
+    assert_receive {:mock_call_extension_pending, %{status: :extension_pending}}
+    assert_receive {:mock_call_extension_pending, %{status: :extension_pending}}
+
+    assert :ok = CallCoordinator.vote_extension(call_pid, "a", :end)
+    assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :extension_declined}}
+    assert_receive {:mock_call_ended, %{status: :ended, ended_reason: :extension_declined}}
+
+    assert {:error, :call_unavailable} = CallCoordinator.vote_extension(call_pid, "b", :continue)
+
+    Enum.each(pids, &send(&1, :stop))
   end
 end

@@ -8,6 +8,7 @@ import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
 
 const ICE_SERVERS = [{urls: "stun:stun.l.google.com:19302"}]
+const DISCONNECTED_GRACE_MS = 5000
 
 export const WebRTCClientState = Object.freeze({
   NOT_STARTED: "not_started",
@@ -36,6 +37,8 @@ export class WebRTCClient {
     this.state = WebRTCClientState.NOT_STARTED
     this.pendingSignals = []
     this.pendingIceCandidates = []
+    this.disconnectedTimeout = null
+    this.connectionEstablishedSent = false
     this.cleaned = false
   }
 
@@ -160,6 +163,7 @@ export class WebRTCClient {
   close() {
     if (this.cleaned) return
 
+    this.clearDisconnectedTimeout()
     this.cleanupMedia()
     this.setState(WebRTCClientState.CLOSED)
     logEvent("webrtc.closed")
@@ -168,6 +172,7 @@ export class WebRTCClient {
   failConnection(payload) {
     if (this.state === WebRTCClientState.FAILED || this.state === WebRTCClientState.CLOSED) return
 
+    this.clearDisconnectedTimeout()
     this.pushSignal("connection_failed", payload)
     this.cleanupMedia()
     this.setState(WebRTCClientState.FAILED)
@@ -178,6 +183,7 @@ export class WebRTCClient {
     if (this.cleaned) return
 
     this.cleaned = true
+    this.clearDisconnectedTimeout()
     stopStream(this.localStream)
     this.localStream = null
 
@@ -224,15 +230,27 @@ export class WebRTCClient {
     const iceState = this.peerConnection?.iceConnectionState
     logDebug("webrtc.ice_state", {state: iceState})
 
-    if (iceState === "checking") {
+    if (iceState === "new") {
+      this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
+    } else if (iceState === "checking") {
       this.setState(WebRTCClientState.ICE_CHECKING)
     } else if (iceState === "connected" || iceState === "completed") {
-      this.pushSignal("connection_established", {ice_connection_state: iceState})
+      this.clearDisconnectedTimeout()
+
+      if (!this.connectionEstablishedSent) {
+        this.pushSignal("connection_established", {ice_connection_state: iceState})
+        this.connectionEstablishedSent = true
+      }
+
       this.setState(WebRTCClientState.CONNECTED)
       logEvent("webrtc.connected", {iceState})
-    } else if (iceState === "failed" || iceState === "disconnected") {
+    } else if (iceState === "disconnected") {
+      this.setState(WebRTCClientState.ICE_CHECKING)
+      this.scheduleDisconnectedFailure({ice_connection_state: iceState})
+    } else if (iceState === "failed") {
       this.failConnection({ice_connection_state: iceState})
     } else if (iceState === "closed") {
+      this.clearDisconnectedTimeout()
       this.setState(WebRTCClientState.CLOSED)
     }
   }
@@ -241,13 +259,39 @@ export class WebRTCClient {
     const connectionState = this.peerConnection?.connectionState
     logDebug("webrtc.connection_state", {state: connectionState})
 
-    if (connectionState === "connected") {
+    if (connectionState === "new") {
+      this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
+    } else if (connectionState === "connecting") {
+      this.setState(WebRTCClientState.ICE_CHECKING)
+    } else if (connectionState === "connected") {
+      this.clearDisconnectedTimeout()
       this.setState(WebRTCClientState.CONNECTED)
-    } else if (connectionState === "failed" || connectionState === "disconnected") {
+    } else if (connectionState === "disconnected") {
+      this.setState(WebRTCClientState.ICE_CHECKING)
+      this.scheduleDisconnectedFailure({connection_state: connectionState})
+    } else if (connectionState === "failed") {
       this.failConnection({connection_state: connectionState})
     } else if (connectionState === "closed") {
+      this.clearDisconnectedTimeout()
       this.setState(WebRTCClientState.CLOSED)
     }
+  }
+
+  scheduleDisconnectedFailure(payload) {
+    if (this.disconnectedTimeout || this.cleaned) return
+
+    logWarning("webrtc.disconnected", payload)
+    this.disconnectedTimeout = window.setTimeout(() => {
+      this.disconnectedTimeout = null
+      this.failConnection({...payload, reason: "disconnected_timeout"})
+    }, DISCONNECTED_GRACE_MS)
+  }
+
+  clearDisconnectedTimeout() {
+    if (!this.disconnectedTimeout) return
+
+    window.clearTimeout(this.disconnectedTimeout)
+    this.disconnectedTimeout = null
   }
 
   setState(state) {

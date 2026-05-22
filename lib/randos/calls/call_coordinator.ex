@@ -9,6 +9,8 @@ defmodule Randos.Calls.CallCoordinator do
 
   use GenServer
 
+  require Logger
+
   alias Randos.Comms.CallSession
   alias Randos.Signaling
 
@@ -44,15 +46,15 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   def hang_up(call_pid, participant_id) do
-    GenServer.call(call_pid, {:hang_up, participant_id})
+    safe_call(call_pid, {:hang_up, participant_id})
   end
 
   def vote_extension(call_pid, participant_id, vote) when vote in [:continue, :end] do
-    GenServer.call(call_pid, {:extension_vote, participant_id, vote})
+    safe_call(call_pid, {:extension_vote, participant_id, vote})
   end
 
   def relay_signal(call_pid, participant_id, type, payload \\ %{}) do
-    GenServer.call(call_pid, {:relay_signal, participant_id, type, payload})
+    safe_call(call_pid, {:relay_signal, participant_id, type, payload})
   end
 
   def force_time_up(call_pid) do
@@ -96,12 +98,15 @@ defmodule Randos.Calls.CallCoordinator do
           )
       }
 
+      Logger.info("call_coordinator_started call_id=#{call_session.id} match_id=#{match.id}")
+
       {:ok, state}
     end
   end
 
   @impl true
   def handle_call({:hang_up, _participant_id}, _from, state) do
+    Logger.info("call_hangup call_id=#{state.call_session.id} status=#{state.status}")
     state = end_call(state, :hangup)
     {:stop, :normal, :ok, state}
   end
@@ -115,10 +120,13 @@ defmodule Randos.Calls.CallCoordinator do
 
     cond do
       vote == :end ->
+        Logger.info("call_extension_declined call_id=#{state.call_session.id}")
         state = end_call(state, :extension_declined)
         {:stop, :normal, :ok, state}
 
       both_participants_voted_continue?(state) ->
+        Logger.info("call_extension_accepted call_id=#{state.call_session.id}")
+
         case extend_call(state) do
           {:ok, state} ->
             {:reply, :ok, state}
@@ -142,8 +150,12 @@ defmodule Randos.Calls.CallCoordinator do
 
     case Signaling.build_message(call, participant_id, type, payload) do
       {:ok, message} ->
+        Logger.debug(
+          "call_signal_relay call_id=#{message.call_id} type=#{message.type} from=#{message.from_participant_id}"
+        )
+
         relay_signal_to_peer(state, message)
-        {:reply, :ok, state}
+        maybe_end_after_lifecycle_signal(state, message)
 
       {:error, reason} ->
         {:reply, {:error, reason}, state}
@@ -152,6 +164,8 @@ defmodule Randos.Calls.CallCoordinator do
 
   @impl true
   def handle_info(:activate_call, %{status: :connecting} = state) do
+    Logger.info("call_activated call_id=#{state.call_session.id}")
+
     {:ok, call_session} =
       state.call_session
       |> Ash.Changeset.for_update(:mark_active)
@@ -167,6 +181,8 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   def handle_info(:call_time_limit_reached, %{status: :active} = state) do
+    Logger.info("call_time_limit_reached call_id=#{state.call_session.id}")
+
     {:ok, call_session} =
       state.call_session
       |> Ash.Changeset.for_update(:mark_extension_pending)
@@ -194,12 +210,17 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   def handle_info(:extension_response_timeout, %{status: :extension_pending} = state) do
+    Logger.info("call_extension_timeout call_id=#{state.call_session.id}")
     state = end_call(state, :extension_timeout)
     {:stop, :normal, state}
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
+  def handle_info({:DOWN, ref, :process, _pid, reason}, state) do
     if Map.has_key?(state.monitors, ref) do
+      Logger.info(
+        "call_participant_down call_id=#{state.call_session.id} reason=#{inspect(reason)}"
+      )
+
       state = end_call(state, :disconnected)
       {:stop, :normal, state}
     else
@@ -258,6 +279,7 @@ defmodule Randos.Calls.CallCoordinator do
          |> Ash.update() do
       {:ok, call_session} ->
         cancel_timer(state.extension_timeout_ref)
+        Logger.info("call_extended call_id=#{state.call_session.id}")
 
         state =
           %{
@@ -279,6 +301,10 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   defp end_call(state, reason) do
+    Logger.info(
+      "call_ended call_id=#{state.call_session.id} reason=#{reason} status=#{state.status}"
+    )
+
     cancel_timer(state.timeout_ref)
     cancel_timer(state.extension_timeout_ref)
 
@@ -295,6 +321,22 @@ defmodule Randos.Calls.CallCoordinator do
     broadcast(state, {:mock_call_ended, public_call_state(state)})
     demonitor_participants(state)
     state
+  end
+
+  defp maybe_end_after_lifecycle_signal(state, %{type: type})
+       when type in [:connection_failed, :peer_disconnected] do
+    state = end_call(state, type)
+    {:stop, :normal, :ok, state}
+  end
+
+  defp maybe_end_after_lifecycle_signal(state, _message), do: {:reply, :ok, state}
+
+  defp safe_call(call_pid, message) when is_pid(call_pid) do
+    GenServer.call(call_pid, message)
+  catch
+    :exit, {:noproc, _} -> {:error, :call_unavailable}
+    :exit, {:normal, _} -> {:error, :call_unavailable}
+    :exit, {:shutdown, _} -> {:error, :call_unavailable}
   end
 
   defp demonitor_participants(state) do
