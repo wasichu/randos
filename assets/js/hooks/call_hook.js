@@ -131,6 +131,7 @@ export const WebRTCAudio = {
       this.localVisualizer = new AudioLevelVisualizer({
         canvas: this.localVisualizerCanvas,
         stream,
+        tone: "local",
         muted: this.muted,
       })
       this.localVisualizer.start()
@@ -159,6 +160,7 @@ export const WebRTCAudio = {
       this.remoteVisualizer = new AudioLevelVisualizer({
         canvas: this.remoteVisualizerCanvas,
         stream,
+        tone: "remote",
       })
       this.remoteVisualizer.start()
     }

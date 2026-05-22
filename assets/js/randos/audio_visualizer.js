@@ -2,12 +2,19 @@ import {logWarning} from "./logging"
 
 const FFT_SIZE = 256
 const BAR_COUNT = 24
+const BARS_PER_SIDE = BAR_COUNT / 2
 const FRAME_RATE_MS = 50
+const COLORS = {
+  local: "rgba(8, 145, 178, 0.72)",
+  remote: "rgba(124, 58, 237, 0.62)",
+  muted: "rgba(120, 113, 108, 0.42)",
+}
 
 export class AudioLevelVisualizer {
-  constructor({canvas, stream, muted = false}) {
+  constructor({canvas, stream, tone = "local", muted = false}) {
     this.canvas = canvas
     this.stream = stream
+    this.tone = tone
     this.muted = muted
     this.animationFrame = null
     this.lastFrameAt = 0
@@ -106,19 +113,27 @@ export class AudioLevelVisualizer {
     }
 
     context.clearRect(0, 0, width, height)
-    context.fillStyle = this.muted ? "rgba(120, 113, 108, 0.5)" : "rgba(15, 118, 110, 0.78)"
+    context.fillStyle = this.muted ? COLORS.muted : COLORS[this.tone] || COLORS.local
 
     const gap = 4 * ratio
-    const barWidth = (width - gap * (levels.length - 1)) / levels.length
+    const sideWidth = width / 2
+    const barWidth = (sideWidth - gap * BARS_PER_SIDE) / BARS_PER_SIDE
     const minHeight = 5 * ratio
+    const centerX = width / 2
+    const centerY = height / 2
 
-    levels.forEach((level, index) => {
-      const barHeight = Math.max(minHeight, level * height)
-      const x = index * (barWidth + gap)
-      const y = (height - barHeight) / 2
+    levels.slice(0, BARS_PER_SIDE).forEach((level, index) => {
+      const barHeight = Math.max(minHeight, level * height * 0.86)
+      const y = centerY - barHeight / 2
       const radius = Math.min(barWidth / 2, 5 * ratio)
+      const offset = gap + index * (barWidth + gap)
+      const rightX = centerX + offset
+      const leftX = centerX - offset - barWidth
 
-      this.roundedRect(context, x, y, barWidth, barHeight, radius)
+      this.roundedRect(context, rightX, y, barWidth, barHeight, radius)
+      context.fill()
+
+      this.roundedRect(context, leftX, y, barWidth, barHeight, radius)
       context.fill()
     })
   }

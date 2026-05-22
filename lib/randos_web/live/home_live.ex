@@ -549,7 +549,7 @@ defmodule RandosWeb.HomeLive do
       <canvas
         id={"#{@id}-canvas"}
         data-audio-visualizer={if(@id == "local-waveform", do: "local", else: "remote")}
-        class="mt-4 h-16 w-full rounded-md bg-white sm:h-24"
+        class="mt-4 h-16 w-full rounded-md border border-stone-100 bg-white shadow-inner shadow-stone-100 sm:h-24"
       >
       </canvas>
     </div>
