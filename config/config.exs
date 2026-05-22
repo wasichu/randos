@@ -48,6 +48,17 @@ config :randos,
   ash_domains: [Randos.Comms],
   generators: [timestamp_type: :utc_datetime]
 
+config :randos, RandosWeb.IceServers,
+  servers: [
+    %{urls: "stun:stun.l.google.com:19302"}
+  ],
+  future_env: [
+    turn_server_url: "TURN_SERVER_URL",
+    turn_shared_secret: "TURN_SHARED_SECRET",
+    turn_realm: "TURN_REALM",
+    turn_credential_ttl_seconds: "TURN_CREDENTIAL_TTL_SECONDS"
+  ]
+
 # Configures the endpoint
 config :randos, RandosWeb.Endpoint,
   url: [host: "localhost"],

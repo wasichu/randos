@@ -7,7 +7,6 @@ import {
 import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
 
-const ICE_SERVERS = [{urls: "stun:stun.l.google.com:19302"}]
 const DISCONNECTED_GRACE_MS = 5000
 
 export const WebRTCClientState = Object.freeze({
@@ -25,8 +24,9 @@ export const WebRTCClientState = Object.freeze({
 })
 
 export class WebRTCClient {
-  constructor({role, pushSignal, onStateChange, onLocalStream, onRemoteStream}) {
+  constructor({role, iceServers, pushSignal, onStateChange, onLocalStream, onRemoteStream}) {
     this.role = role
+    this.iceServers = iceServers
     this.pushSignal = pushSignal
     this.onStateChange = onStateChange
     this.onLocalStream = onLocalStream
@@ -45,11 +45,11 @@ export class WebRTCClient {
   async start() {
     if (this.peerConnection || this.cleaned) return
 
-    logEvent("webrtc.start", {role: this.role})
+    logEvent("webrtc.start", {role: this.role, iceServerCount: this.iceServers.length})
     await this.captureLocalAudio()
 
     this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
-    this.peerConnection = new RTCPeerConnection({iceServers: ICE_SERVERS})
+    this.peerConnection = new RTCPeerConnection({iceServers: this.iceServers})
     this.peerConnection.onicecandidate = event => this.handleLocalIceCandidate(event)
     this.peerConnection.oniceconnectionstatechange = () => this.handleIceConnectionState()
     this.peerConnection.onconnectionstatechange = () => this.handleConnectionState()

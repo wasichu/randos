@@ -2,6 +2,7 @@ import {CleanupBag} from "../randos/cleanup"
 import {attachRemoteAudio, audioStreamSummary} from "../randos/media"
 import {logEvent, logWarning} from "../randos/logging"
 import {AudioLevelVisualizer} from "../randos/audio_visualizer"
+import {iceServersFromPage} from "../randos/ice_servers"
 import {WebRTCClient, WebRTCClientState} from "../randos/webrtc_client"
 
 export const WebRTCAudio = {
@@ -37,6 +38,7 @@ export const WebRTCAudio = {
 
     this.peer = new WebRTCClient({
       role: this.el.dataset.webrtcRole,
+      iceServers: iceServersFromPage(),
       pushSignal: (type, payload) => this.pushEvent("signal", {type, payload}),
       onStateChange: state => this.setState(state),
       onLocalStream: stream => this.setLocalStream(stream),

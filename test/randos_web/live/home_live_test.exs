@@ -24,6 +24,13 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#find-rando-button[disabled]")
   end
 
+  test "renders browser ICE server metadata", %{conn: conn} do
+    html = get(conn, ~p"/") |> html_response(200)
+
+    assert html =~ ~s(name="randos-ice-servers")
+    assert html =~ "stun:stun.l.google.com:19302"
+  end
+
   test "shows validation when searching without the adult acknowledgment", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/")
 
