@@ -76,11 +76,11 @@ defmodule RandosWeb.HomeLiveTest do
     |> render_submit()
 
     assert has_element?(view_b, "#connecting-panel")
-    assert has_element?(view_b, "#match-role-label")
+    assert has_element?(view_b, "#match-connection-label")
 
     render(view_a)
     assert has_element?(view_a, "#connecting-panel")
-    assert has_element?(view_a, "#match-role-label")
+    assert has_element?(view_a, "#match-connection-label")
     assert has_element?(view_a, "#connecting-panel[data-webrtc-role='offerer']")
     refute has_element?(view_a, "#call-countdown")
 
@@ -145,8 +145,8 @@ defmodule RandosWeb.HomeLiveTest do
     view_a |> element("#end-call-button") |> render_click()
 
     assert_redirect(view_a, ~p"/")
-    assert eventually_has_element?(view_b, "#idle-panel")
-    refute has_element?(view_b, "#looking-panel")
+    assert eventually_has_element?(view_b, "#looking-panel")
+    refute has_element?(view_b, "#idle-panel")
   end
 
   test "can leave the queue before a match", %{conn: conn} do

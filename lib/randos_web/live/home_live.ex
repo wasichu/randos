@@ -22,7 +22,7 @@ defmodule RandosWeb.HomeLive do
       |> assign(:page_title, gettext("Randos"))
       |> assign(:ui_state, :idle)
       |> assign(:preferences, preferences)
-      |> assign(:stop_after_call?, true)
+      |> assign(:stop_after_call?, false)
       |> assign(:participant_id, participant_id)
       |> assign(:match_topic, match_topic)
       |> assign(:matchmaking_error, nil)
@@ -343,13 +343,13 @@ defmodule RandosWeb.HomeLive do
           {gettext("You have matched. Audio starts when the call opens.")}
         </p>
       </div>
-      <div
+      <p
         :if={@match_role && @webrtc_role}
-        id="match-role-label"
+        id="match-connection-label"
         class="rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"
       >
-        {gettext("Match role:")} {role_label(@match_role)} · {webrtc_role_label(@webrtc_role)}
-      </div>
+        {gettext("Secure audio connection is starting.")}
+      </p>
       <div class="grid gap-3 sm:grid-cols-2">
         <button
           id="cancel-connection-button"
@@ -424,7 +424,7 @@ defmodule RandosWeb.HomeLive do
 
   defp call_timer_panel(assigns) do
     ~H"""
-    <div class="order-2 col-span-full border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-1 sm:px-7">
+    <div class="order-2 col-span-full flex border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-1 sm:h-full sm:items-center sm:justify-end sm:px-7">
       <div
         :if={@call_status == :active && @call_deadline_unix_ms}
         id="call-countdown"
@@ -455,7 +455,7 @@ defmodule RandosWeb.HomeLive do
       data-microphone-muted="false"
       class="contents"
     >
-      <div class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+      <div class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7">
         <div class="min-w-0">
           <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5">
             <span>{gettext("Connection:")}</span>
@@ -608,7 +608,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_status, :connecting)
     |> assign(:call_ended_reason, nil)
     |> assign(:extension_count, 0)
-    |> assign(:stop_after_call?, true)
+    |> assign(:stop_after_call?, false)
     |> assign(:matchmaking_error, nil)
     |> assign(:ui_state, :connecting)
   end
@@ -691,14 +691,6 @@ defmodule RandosWeb.HomeLive do
 
   defp roles_for(%{participant_b: %{id: participant_id}}, participant_id),
     do: {:participant_b, :answerer}
-
-  defp role_label(:participant_a), do: gettext("participant A")
-  defp role_label(:participant_b), do: gettext("participant B")
-  defp role_label(nil), do: gettext("unassigned")
-
-  defp webrtc_role_label(:offerer), do: gettext("offerer")
-  defp webrtc_role_label(:answerer), do: gettext("answerer")
-  defp webrtc_role_label(nil), do: gettext("no WebRTC role")
 
   defp parse_state("idle"), do: :idle
   defp parse_state("looking"), do: :looking
