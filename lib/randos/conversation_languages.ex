@@ -20,6 +20,7 @@ defmodule Randos.ConversationLanguages do
     {"Türkçe (TR)", "tr"},
     {"Bahasa Indonesia (ID)", "id"}
   ]
+  @supported_language_codes Enum.map(@languages, fn {_name, code} -> code end)
 
   @doc """
   Returns conversation language names and stable internal codes.
@@ -31,9 +32,13 @@ defmodule Randos.ConversationLanguages do
   Returns supported stable internal language codes.
   """
   @spec codes() :: [String.t()]
-  def codes do
-    Enum.map(@languages, fn {_name, code} -> code end)
-  end
+  def codes, do: @supported_language_codes
+
+  @doc """
+  Returns true when a stable internal language code is supported.
+  """
+  @spec supported?(String.t()) :: boolean()
+  def supported?(code) when is_binary(code), do: code in codes()
 
   @doc """
   Finds a display label for a language code.
@@ -47,4 +52,21 @@ defmodule Randos.ConversationLanguages do
     end)
     |> Kernel.||(code)
   end
+
+  @doc """
+  Normalizes a browser locale into a supported language code.
+  """
+  @spec code_from_locale(String.t() | nil) :: String.t()
+  def code_from_locale(locale) when is_binary(locale) do
+    locale
+    |> String.split(["-", "_"], parts: 2)
+    |> List.first()
+    |> String.downcase()
+    |> case do
+      code when code in @supported_language_codes -> code
+      _code -> "en"
+    end
+  end
+
+  def code_from_locale(_locale), do: "en"
 end

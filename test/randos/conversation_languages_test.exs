@@ -43,8 +43,23 @@ defmodule Randos.ConversationLanguagesTest do
            ]
   end
 
+  test "checks supported stable internal language codes" do
+    assert ConversationLanguages.supported?("ja")
+    refute ConversationLanguages.supported?("zz")
+  end
+
   test "looks up display labels by code" do
     assert ConversationLanguages.name("pt") == "Português (PT)"
     assert ConversationLanguages.name("zz") == "zz"
+  end
+
+  test "normalizes browser locales into supported language codes" do
+    assert ConversationLanguages.code_from_locale("en-US") == "en"
+    assert ConversationLanguages.code_from_locale("es-MX") == "es"
+    assert ConversationLanguages.code_from_locale("pt-BR") == "pt"
+    assert ConversationLanguages.code_from_locale("ja-JP") == "ja"
+    assert ConversationLanguages.code_from_locale("zh_Hans_CN") == "zh"
+    assert ConversationLanguages.code_from_locale("tl-PH") == "en"
+    assert ConversationLanguages.code_from_locale(nil) == "en"
   end
 end

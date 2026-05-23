@@ -28,6 +28,7 @@ import {WebRTCAudio} from "./hooks/call_hook"
 import {CallCountdown} from "./hooks/countdown_hook"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+const browserLocale = navigator.languages?.[0] || navigator.language || null
 const Hooks = {
   CallCountdown,
   WebRTCAudio,
@@ -35,7 +36,7 @@ const Hooks = {
 
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken},
+  params: {_csrf_token: csrfToken, browser_locale: browserLocale},
   hooks: {...colocatedHooks, ...Hooks},
 })
 

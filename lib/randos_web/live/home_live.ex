@@ -9,7 +9,7 @@ defmodule RandosWeb.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    preferences = default_preferences()
+    preferences = default_preferences(socket)
     participant_id = anonymous_participant_id()
     match_topic = "matchmaking:participant:#{participant_id}"
 
@@ -706,12 +706,25 @@ defmodule RandosWeb.HomeLive do
   defp parse_state("in_call"), do: :in_call
   defp parse_state("extension_pending"), do: :extension_pending
 
-  defp default_preferences do
+  defp default_preferences(socket) do
+    language = browser_locale_language(socket)
+
     %{
-      "speaking_language" => "en",
-      "listening_language" => "es",
+      "speaking_language" => language,
+      "listening_language" => language,
       "adult_acknowledgment" => "false"
     }
+  end
+
+  defp browser_locale_language(socket) do
+    locale =
+      if connected?(socket) do
+        socket
+        |> get_connect_params()
+        |> Map.get("browser_locale")
+      end
+
+    ConversationLanguages.code_from_locale(locale)
   end
 
   defp anonymous_participant_id do
