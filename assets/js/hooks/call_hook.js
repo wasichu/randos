@@ -12,6 +12,8 @@ export const WebRTCAudio = {
     this.microphoneEl = this.el.querySelector("[data-microphone-status]")
     this.muteButton = this.el.querySelector("[data-webrtc-mute]")
     this.muteLabel = this.el.querySelector("[data-mute-label]")
+    this.muteIcon = this.el.querySelector("[data-mute-icon]")
+    this.unmuteIcon = this.el.querySelector("[data-unmute-icon]")
     this.remoteAudio = this.el.querySelector("[data-remote-audio]")
     this.remoteAudioStatusEl = this.el.querySelector("[data-remote-audio-status]")
     this.remoteAudioPlayButton = this.el.querySelector("[data-remote-audio-play]")
@@ -99,6 +101,11 @@ export const WebRTCAudio = {
 
     if (this.muteButton) {
       this.muteButton.setAttribute("aria-pressed", this.muted ? "true" : "false")
+    }
+
+    if (this.muteIcon && this.unmuteIcon) {
+      this.muteIcon.hidden = this.muted
+      this.unmuteIcon.hidden = !this.muted
     }
   },
 

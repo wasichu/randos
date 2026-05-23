@@ -482,7 +482,12 @@ defmodule RandosWeb.HomeLive do
           aria-pressed="false"
           class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400"
         >
-          <.icon name="hero-speaker-x-mark" class="size-5 shrink-0" />
+          <span data-mute-icon class="inline-flex">
+            <.icon name="hero-speaker-x-mark" class="size-5 shrink-0" />
+          </span>
+          <span data-unmute-icon hidden>
+            <.icon name="hero-speaker-wave" class="size-5 shrink-0" />
+          </span>
           <span data-mute-label class="leading-none">{gettext("Mute")}</span>
         </button>
       </div>
