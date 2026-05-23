@@ -103,3 +103,84 @@
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
 /* This file is for your main application CSS */
+
+[data-theme="dark"] .bg-stone-50 {
+  background-color: #0c0a09;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: #1c1917;
+}
+
+[data-theme="dark"] .bg-stone-100 {
+  background-color: #292524;
+}
+
+[data-theme="dark"] .bg-stone-200 {
+  background-color: #44403c;
+}
+
+[data-theme="dark"] .bg-teal-50 {
+  background-color: rgb(19 78 74 / 0.35);
+}
+
+[data-theme="dark"] .bg-red-50 {
+  background-color: rgb(127 29 29 / 0.28);
+}
+
+[data-theme="dark"] .text-stone-950 {
+  color: #fafaf9;
+}
+
+[data-theme="dark"] .text-stone-800 {
+  color: #e7e5e4;
+}
+
+[data-theme="dark"] .text-stone-700,
+[data-theme="dark"] .text-stone-600 {
+  color: #d6d3d1;
+}
+
+[data-theme="dark"] .text-stone-500 {
+  color: #a8a29e;
+}
+
+[data-theme="dark"] .text-teal-700 {
+  color: #5eead4;
+}
+
+[data-theme="dark"] .text-teal-800,
+[data-theme="dark"] .text-teal-900 {
+  color: #99f6e4;
+}
+
+[data-theme="dark"] .border-stone-100,
+[data-theme="dark"] .border-stone-200,
+[data-theme="dark"] .border-stone-300 {
+  border-color: #44403c;
+}
+
+[data-theme="dark"] .border-teal-100,
+[data-theme="dark"] .border-teal-200 {
+  border-color: rgb(45 212 191 / 0.35);
+}
+
+[data-theme="dark"] .border-red-200 {
+  border-color: rgb(248 113 113 / 0.35);
+}
+
+[data-theme="dark"] .shadow-stone-200\/70,
+[data-theme="dark"] .shadow-stone-100 {
+  --tw-shadow-color: rgb(0 0 0 / 0.35);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #1c1917;
+  color: #fafaf9;
+}
+
+[data-theme="dark"] canvas {
+  background-color: #1c1917;
+}

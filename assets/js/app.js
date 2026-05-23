@@ -39,6 +39,34 @@ const liveSocket = new LiveSocket("/live", Socket, {
   hooks: {...colocatedHooks, ...Hooks},
 })
 
+const themeStorageKey = "randos:theme"
+
+const preferredTheme = () => {
+  const storedTheme = window.localStorage.getItem(themeStorageKey)
+  if (storedTheme === "dark" || storedTheme === "light") return storedTheme
+
+  return "dark"
+}
+
+const setTheme = theme => {
+  document.documentElement.dataset.theme = theme
+  window.localStorage.setItem(themeStorageKey, theme)
+
+  for (const button of document.querySelectorAll("[data-theme-toggle]")) {
+    button.setAttribute("aria-pressed", theme === "dark" ? "true" : "false")
+    button.setAttribute("title", theme === "dark" ? "Switch to light mode" : "Switch to dark mode")
+  }
+}
+
+setTheme(preferredTheme())
+window.addEventListener("click", event => {
+  const button = event.target.closest("[data-theme-toggle]")
+  if (!button) return
+
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark"
+  setTheme(nextTheme)
+})
+
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))

@@ -10,6 +10,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     assert has_element?(view, "#conversation-form")
     assert has_element?(view, "#find-rando-button[disabled]")
+    assert has_element?(view, "#theme-toggle[data-theme-toggle]")
 
     view
     |> form("#conversation-form",

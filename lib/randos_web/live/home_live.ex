@@ -757,7 +757,7 @@ defmodule RandosWeb.HomeLive do
   defp state_label(:in_call), do: gettext("In call")
   defp state_label(:extension_pending), do: gettext("Time is up")
 
-  defp state_description(:idle), do: gettext("Choose your languages when you are ready.")
+  defp state_description(:idle), do: gettext("Choose your languages.")
   defp state_description(:looking), do: gettext("Finding a compatible rando.")
   defp state_description(:connecting), do: gettext("Starting call with rando.")
   defp state_description(:in_call), do: gettext("Conversation is active.")

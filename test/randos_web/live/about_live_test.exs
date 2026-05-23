@@ -9,6 +9,7 @@ defmodule RandosWeb.AboutLiveTest do
     assert has_element?(view, "h1", "About Randos")
     assert has_element?(view, "img[src='/images/logo.svg']")
     assert has_element?(view, "a[href='/about']", "About")
+    assert has_element?(view, "#theme-toggle[data-theme-toggle]")
   end
 
   test "links to the about page from the app header", %{conn: conn} do
