@@ -92,20 +92,65 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#remote-waveform-canvas[data-audio-visualizer='remote']")
     assert has_element?(view_a, "#remote-audio")
     assert has_element?(view_a, "#remote-audio-status-label")
-    assert has_element?(view_a, "#remote-audio-play-button[hidden]")
+    refute has_element?(view_a, "#remote-audio-play-button")
+    assert has_element?(view_a, "#webrtc-state-label")
+    refute has_element?(view_a, "#speaking-language-label")
+    refute has_element?(view_a, "#time-up-button")
+    refute has_element?(view_a, "#stop-after-call-toggle")
     refute has_element?(view_a, "#extension-countdown")
     assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 
-    view_a |> element("#time-up-button") |> render_click()
+    assert {:ok, call_pid} = eventually_call_pid()
+    Randos.Calls.CallCoordinator.force_time_up(call_pid)
+
     assert eventually_has_element?(view_a, "#extension-panel")
     refute has_element?(view_a, "#call-countdown")
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
-    assert has_element?(view_a, "#extension-countdown")
+    assert has_element?(view_a, "#continue-call-button")
+    assert has_element?(view_a, "#end-call-button")
+    refute has_element?(view_a, "#find-new-after-extension-button")
+    refute has_element?(view_a, "#extension-countdown")
 
     view_a |> element("#end-call-button") |> render_click()
     assert eventually_missing_element?(view_a, "#call-countdown")
     assert eventually_missing_element?(view_a, "#webrtc-audio")
-    assert eventually_missing_element?(view_a, "#extension-countdown")
+    assert eventually_has_element?(view_a, "#idle-panel")
+  end
+
+  test "ending an active call returns to idle instead of requeueing", %{conn: conn} do
+    {:ok, view_a, _html} = live(conn, ~p"/")
+
+    view_a
+    |> form("#conversation-form",
+      conversation: %{
+        speaking_language: "en",
+        listening_language: "es",
+        adult_acknowledgment: "true"
+      }
+    )
+    |> render_submit()
+
+    {:ok, view_b, _html} = live(conn, ~p"/")
+
+    view_b
+    |> form("#conversation-form",
+      conversation: %{
+        speaking_language: "es",
+        listening_language: "en",
+        adult_acknowledgment: "true"
+      }
+    )
+    |> render_submit()
+
+    assert eventually_has_element?(view_a, "#call-panel")
+
+    view_a |> element("#end-call-button") |> render_click()
+
+    assert eventually_has_element?(view_a, "#idle-panel")
+    refute has_element?(view_a, "#looking-panel")
+    refute has_element?(view_a, "#webrtc-audio")
+    assert eventually_has_element?(view_b, "#idle-panel")
+    refute has_element?(view_b, "#looking-panel")
   end
 
   test "can leave the queue before a match", %{conn: conn} do
@@ -152,6 +197,27 @@ defmodule RandosWeb.HomeLiveTest do
       eventually_missing_element?(view, selector, attempts - 1)
     else
       true
+    end
+  end
+
+  defp eventually_call_pid(attempts \\ 120)
+
+  defp eventually_call_pid(0), do: :error
+
+  defp eventually_call_pid(attempts) do
+    Randos.Calls.CallSupervisor
+    |> DynamicSupervisor.which_children()
+    |> Enum.find_value(fn
+      {_, pid, _, _} when is_pid(pid) -> pid
+      _child -> nil
+    end)
+    |> case do
+      nil ->
+        Process.sleep(10)
+        eventually_call_pid(attempts - 1)
+
+      pid ->
+        {:ok, pid}
     end
   end
 end

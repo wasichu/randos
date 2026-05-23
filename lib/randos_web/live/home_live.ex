@@ -22,7 +22,7 @@ defmodule RandosWeb.HomeLive do
       |> assign(:page_title, gettext("Randos"))
       |> assign(:ui_state, :idle)
       |> assign(:preferences, preferences)
-      |> assign(:stop_after_call?, false)
+      |> assign(:stop_after_call?, true)
       |> assign(:participant_id, participant_id)
       |> assign(:match_topic, match_topic)
       |> assign(:matchmaking_error, nil)
@@ -78,28 +78,30 @@ defmodule RandosWeb.HomeLive do
     {:noreply, transition(socket, to)}
   end
 
-  def handle_event("toggle_stop_after_call", _params, socket) do
-    {:noreply, update(socket, :stop_after_call?, &(!&1))}
-  end
-
   def handle_event("hang_up", _params, socket) do
-    if socket.assigns.call_pid do
-      CallCoordinator.hang_up(socket.assigns.call_pid, socket.assigns.participant_id)
-    end
+    socket = assign(socket, :stop_after_call?, true)
+    hang_up_current_call(socket)
 
     {:noreply, socket}
   end
 
-  def handle_event("mock_time_up", _params, socket) do
-    if socket.assigns.call_pid do
-      CallCoordinator.force_time_up(socket.assigns.call_pid)
-    end
+  def handle_event("next_rando", _params, socket) do
+    socket = assign(socket, :stop_after_call?, false)
+    hang_up_current_call(socket)
 
     {:noreply, socket}
+  end
+
+  def handle_event("end_call", _params, socket) do
+    socket = assign(socket, :stop_after_call?, true)
+    hang_up_current_call(socket)
+
+    {:noreply, return_to_idle(socket)}
   end
 
   def handle_event("extension_vote", %{"vote" => vote}, socket) do
     vote = if vote == "continue", do: :continue, else: :end
+    socket = assign(socket, :stop_after_call?, vote == :end)
 
     if socket.assigns.call_pid do
       CallCoordinator.vote_extension(socket.assigns.call_pid, socket.assigns.participant_id, vote)
@@ -154,9 +156,6 @@ defmodule RandosWeb.HomeLive do
         <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
           <div class="flex flex-col justify-between gap-10">
             <div>
-              <p class="mb-4 text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
-                {gettext("Audio language practice")}
-              </p>
               <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
                 {gettext("Randos")}
               </h1>
@@ -164,7 +163,7 @@ defmodule RandosWeb.HomeLive do
                 {gettext("Short anonymous conversations for language practice.")}
               </p>
               <p class="mt-3 text-base text-stone-500">
-                {gettext("No accounts. No profiles. No pressure.")}
+                {gettext("No accounts. No profiles. No video. No pressure.")}
               </p>
             </div>
 
@@ -186,7 +185,7 @@ defmodule RandosWeb.HomeLive do
             </div>
           </div>
 
-          <div class="min-w-0 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70">
+          <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
             <.call_media_panel
               :if={@call_status in [:active, :extension_pending] && @webrtc_role}
               participant_id={@participant_id}
@@ -195,7 +194,7 @@ defmodule RandosWeb.HomeLive do
 
             <%= case @ui_state do %>
               <% :idle -> %>
-                <div id="idle-panel" class="p-5 sm:p-7">
+                <div id="idle-panel" class="col-span-full p-5 sm:p-7">
                   <.form
                     for={@form}
                     id="conversation-form"
@@ -269,17 +268,20 @@ defmodule RandosWeb.HomeLive do
               <% :in_call -> %>
                 <.call_panel
                   preferences={@preferences}
-                  stop_after_call?={@stop_after_call?}
-                  call_status={@call_status}
-                  call_deadline_unix_ms={@call_deadline_unix_ms}
-                  extension_count={@extension_count}
                   participant_id={@participant_id}
                   webrtc_role={@webrtc_role}
                   language_name={&language_name/1}
                 />
               <% :extension_pending -> %>
-                <.extension_panel extension_deadline_unix_ms={@extension_deadline_unix_ms} />
+                <.extension_panel />
             <% end %>
+
+            <.call_timer_panel
+              :if={@ui_state == :in_call}
+              call_status={@call_status}
+              call_deadline_unix_ms={@call_deadline_unix_ms}
+            />
+            <.call_actions_panel :if={@ui_state == :in_call} />
           </div>
         </section>
       </div>
@@ -289,7 +291,7 @@ defmodule RandosWeb.HomeLive do
 
   defp searching_panel(assigns) do
     ~H"""
-    <div id="looking-panel" class="space-y-6 p-5 sm:p-7">
+    <div id="looking-panel" class="col-span-full space-y-6 p-5 sm:p-7">
       <div>
         <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
           {gettext("Looking")}
@@ -328,7 +330,7 @@ defmodule RandosWeb.HomeLive do
       id="connecting-panel"
       data-participant-id={@participant_id}
       data-webrtc-role={@webrtc_role}
-      class="space-y-6 p-5 sm:p-7"
+      class="col-span-full space-y-6 p-5 sm:p-7"
     >
       <div>
         <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
@@ -362,10 +364,6 @@ defmodule RandosWeb.HomeLive do
   end
 
   attr :preferences, :map, required: true
-  attr :stop_after_call?, :boolean, required: true
-  attr :call_status, :atom, default: nil
-  attr :call_deadline_unix_ms, :integer, default: nil
-  attr :extension_count, :integer, required: true
   attr :participant_id, :string, required: true
   attr :webrtc_role, :atom, default: nil
   attr :language_name, :any, required: true
@@ -376,96 +374,67 @@ defmodule RandosWeb.HomeLive do
       id="call-panel"
       data-participant-id={@participant_id}
       data-webrtc-role={@webrtc_role}
-      class="space-y-5 p-4 sm:space-y-6 sm:p-7"
+      class="order-1 col-span-full space-y-5 p-4 sm:space-y-6 sm:p-7"
     >
-      <div class="flex items-start justify-between gap-4">
-        <div>
-          <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
-            {gettext("Your rando")}
-          </p>
-          <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
-            {gettext("Audio-only call")}
-          </h2>
-        </div>
-        <span class="rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-800">
-          {gettext("5 min limit")}
-        </span>
+      <div>
+        <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
+          {gettext("Current call")}
+        </h2>
       </div>
 
+      <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
+        <.waveform
+          id="local-waveform"
+          label={gettext("You")}
+          language={@language_name.(@preferences["speaking_language"])}
+        />
+        <.waveform
+          id="remote-waveform"
+          label={gettext("Your rando")}
+          language={@language_name.(@preferences["listening_language"])}
+        />
+      </div>
+    </div>
+    """
+  end
+
+  defp call_actions_panel(assigns) do
+    ~H"""
+    <div class="order-3 col-span-full grid gap-2 border-t border-stone-200 px-4 py-3 sm:col-span-2 sm:grid-cols-2 sm:gap-3 sm:border-l sm:px-7">
+      <button
+        id="next-rando-button"
+        phx-click="next_rando"
+        class="inline-flex h-12 items-center justify-center rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+      >
+        {gettext("Next rando")}
+      </button>
+      <button
+        id="end-call-button"
+        phx-click="end_call"
+        class="inline-flex h-12 items-center justify-center rounded-md border border-red-200 px-4 py-0 font-semibold leading-none text-red-700 transition hover:border-red-700 hover:bg-red-50"
+      >
+        {gettext("End")}
+      </button>
+    </div>
+    """
+  end
+
+  attr :call_status, :atom, default: nil
+  attr :call_deadline_unix_ms, :integer, default: nil
+
+  defp call_timer_panel(assigns) do
+    ~H"""
+    <div class="order-2 col-span-full border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-1 sm:px-7">
       <div
         :if={@call_status == :active && @call_deadline_unix_ms}
         id="call-countdown"
         phx-hook="CallCountdown"
         phx-update="ignore"
         data-deadline-unix-ms={@call_deadline_unix_ms}
-        class="inline-flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-medium text-stone-600"
+        class="inline-flex items-center gap-2 font-medium text-stone-600"
       >
         <.icon name="hero-clock" class="size-4 text-teal-700" />
         <span id="call-countdown-value" data-countdown-value>--:-- remaining</span>
-      </div>
-
-      <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
-        <.waveform id="local-waveform" label={gettext("You")} />
-        <.waveform id="remote-waveform" label={gettext("Your rando")} />
-      </div>
-
-      <div class="grid gap-3 rounded-md border border-stone-200 bg-stone-50 p-3 text-sm text-stone-700 sm:p-4">
-        <p id="speaking-language-label">
-          {gettext("You are speaking:")}
-          <strong>{@language_name.(@preferences["speaking_language"])}</strong>
-        </p>
-        <p id="listening-language-label">
-          {gettext("They are speaking:")}
-          <strong>{@language_name.(@preferences["listening_language"])}</strong>
-        </p>
-        <p>{gettext("Random calls last up to 5 minutes")}</p>
-        <p id="call-status-label">
-          {gettext("Call status:")} <strong>{call_status_label(@call_status)}</strong>
-        </p>
-        <p id="extension-count-label">
-          {gettext("Extensions:")} <strong>{@extension_count}</strong>
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          id="stop-after-call-toggle"
-          type="button"
-          phx-click="toggle_stop_after_call"
-          aria-pressed={@stop_after_call?}
-          class={[
-            "inline-flex items-center justify-center gap-2 rounded-md border px-5 py-3 font-semibold transition",
-            @stop_after_call? && "border-teal-700 bg-teal-50 text-teal-900",
-            !@stop_after_call? && "border-stone-300 text-stone-700 hover:border-stone-950"
-          ]}
-        >
-          <.icon name="hero-stop-circle" class="size-5" />
-          {gettext("Stop after this call")}
-        </button>
-      </div>
-
-      <div class="grid gap-2 sm:grid-cols-3 sm:gap-3">
-        <button
-          id="time-up-button"
-          phx-click="mock_time_up"
-          class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
-        >
-          {gettext("Mock time up")}
-        </button>
-        <button
-          id="next-rando-button"
-          phx-click="hang_up"
-          class="rounded-md border border-stone-300 px-4 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
-        >
-          {gettext("Find next")}
-        </button>
-        <button
-          id="hang-up-button"
-          phx-click="hang_up"
-          class="rounded-md border border-red-200 px-4 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
-        >
-          {gettext("Hang up")}
-        </button>
       </div>
     </div>
     """
@@ -484,46 +453,36 @@ defmodule RandosWeb.HomeLive do
       data-webrtc-role={@webrtc_role}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
-      class="border-b border-stone-200 bg-stone-50/80 px-4 py-4 sm:px-7"
+      class="contents"
     >
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div class="grid min-w-0 gap-1 text-sm">
-          <p class="font-semibold text-stone-800">{gettext("Audio connection")}</p>
-          <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-stone-600">
-            <span id="microphone-status-label" data-microphone-status>
+      <div class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+        <div class="min-w-0">
+          <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5">
+            <span>{gettext("Connection:")}</span>
+            <span id="webrtc-state-label" data-webrtc-status>not started</span>
+            <span id="microphone-status-label" data-microphone-status class="sr-only">
               {gettext("waiting for microphone")}
             </span>
-            <span class="text-stone-300">/</span>
-            <span id="webrtc-state-label" data-webrtc-status>not started</span>
-            <span class="text-stone-300">/</span>
-            <span id="remote-audio-status-label" data-remote-audio-status>
+            <span id="remote-audio-status-label" data-remote-audio-status class="sr-only">
               {gettext("waiting for remote audio")}
             </span>
           </p>
         </div>
+      </div>
 
+      <div class="order-3 col-span-full border-t border-stone-200 px-4 py-3 sm:col-span-1 sm:px-7">
         <button
           id="mute-button"
           type="button"
           data-webrtc-mute
           disabled
           aria-pressed="false"
-          class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400 sm:w-auto"
+          class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400"
         >
-          <.icon name="hero-speaker-x-mark" class="size-5" />
-          <span data-mute-label>{gettext("Mute")}</span>
+          <.icon name="hero-speaker-x-mark" class="size-5 shrink-0" />
+          <span data-mute-label class="leading-none">{gettext("Mute")}</span>
         </button>
       </div>
-
-      <button
-        id="remote-audio-play-button"
-        type="button"
-        data-remote-audio-play
-        hidden
-        class="mt-3 w-full rounded-md border border-teal-200 bg-white px-4 py-2 text-sm font-semibold text-teal-800 transition hover:border-teal-700 sm:w-auto"
-      >
-        {gettext("Enable remote audio")}
-      </button>
 
       <audio
         id="remote-audio"
@@ -532,7 +491,7 @@ defmodule RandosWeb.HomeLive do
         controls
         hidden
         playsinline
-        class="mt-3 w-full"
+        class="sr-only"
       >
       </audio>
     </div>
@@ -541,51 +500,33 @@ defmodule RandosWeb.HomeLive do
 
   attr :id, :string, required: true
   attr :label, :string, required: true
+  attr :language, :string, required: true
 
   defp waveform(assigns) do
     ~H"""
     <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-3 sm:p-4">
-      <p class="text-sm font-semibold text-stone-700">{@label}</p>
+      <div class="mb-4">
+        <p class="text-sm font-semibold text-stone-800">{@label}</p>
+        <p class="mt-1 text-sm text-stone-500">{@language}</p>
+      </div>
       <canvas
         id={"#{@id}-canvas"}
         data-audio-visualizer={if(@id == "local-waveform", do: "local", else: "remote")}
-        class="mt-4 h-16 w-full rounded-md border border-stone-100 bg-white shadow-inner shadow-stone-100 sm:h-24"
+        class="h-20 w-full rounded-md border border-stone-100 bg-white shadow-inner shadow-stone-100 sm:h-28"
       >
       </canvas>
     </div>
     """
   end
 
-  attr :extension_deadline_unix_ms, :integer, default: nil
-
   defp extension_panel(assigns) do
     ~H"""
-    <div id="extension-panel" class="space-y-5 p-4 sm:space-y-6 sm:p-7">
-      <div>
-        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
-          {gettext("Time is up")}
-        </p>
-        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
-          {gettext("Continue for another 5 minutes?")}
-        </h2>
-        <p class="mt-3 leading-7 text-stone-600">
-          {gettext("The call only extends if both people choose to continue.")}
-        </p>
-        <div
-          :if={@extension_deadline_unix_ms}
-          id="extension-countdown"
-          phx-hook="CallCountdown"
-          phx-update="ignore"
-          data-deadline-unix-ms={@extension_deadline_unix_ms}
-          data-countdown-mode="seconds"
-          class="mt-4 inline-flex items-center gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-medium text-stone-600"
-        >
-          <.icon name="hero-clock" class="size-4 text-teal-700" />
-          <span id="extension-countdown-value" data-countdown-value>Decision closes soon</span>
-        </div>
-      </div>
+    <div id="extension-panel" class="col-span-full space-y-6 p-4 sm:p-7">
+      <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
+        {gettext("Time is up. Continue for another 5 minutes?")}
+      </h2>
 
-      <div class="grid gap-2 sm:grid-cols-3 sm:gap-3">
+      <div class="grid gap-2 sm:grid-cols-2 sm:gap-3">
         <button
           id="continue-call-button"
           phx-click="extension_vote"
@@ -593,14 +534,6 @@ defmodule RandosWeb.HomeLive do
           class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
           {gettext("Continue")}
-        </button>
-        <button
-          id="find-new-after-extension-button"
-          phx-click="extension_vote"
-          phx-value-vote="end"
-          class="rounded-md border border-stone-300 px-4 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
-        >
-          {gettext("Find someone else")}
         </button>
         <button
           id="end-call-button"
@@ -675,6 +608,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_status, :connecting)
     |> assign(:call_ended_reason, nil)
     |> assign(:extension_count, 0)
+    |> assign(:stop_after_call?, true)
     |> assign(:matchmaking_error, nil)
     |> assign(:ui_state, :connecting)
   end
@@ -704,6 +638,24 @@ defmodule RandosWeb.HomeLive do
     end
   end
 
+  defp hang_up_current_call(socket) do
+    if socket.assigns.call_pid do
+      CallCoordinator.hang_up(socket.assigns.call_pid, socket.assigns.participant_id)
+    end
+  end
+
+  defp return_to_idle(socket) do
+    socket
+    |> assign(:ui_state, :idle)
+    |> assign(:call_pid, nil)
+    |> assign(:match, nil)
+    |> assign(:match_role, nil)
+    |> assign(:webrtc_role, nil)
+    |> assign(:call_status, nil)
+    |> assign(:call_deadline_unix_ms, nil)
+    |> assign(:extension_deadline_unix_ms, nil)
+  end
+
   defp relay_client_signal(socket, "extension_accepted", _payload) do
     if socket.assigns.call_pid do
       CallCoordinator.vote_extension(
@@ -717,6 +669,8 @@ defmodule RandosWeb.HomeLive do
   end
 
   defp relay_client_signal(socket, "extension_declined", _payload) do
+    socket = assign(socket, :stop_after_call?, true)
+
     if socket.assigns.call_pid do
       CallCoordinator.vote_extension(socket.assigns.call_pid, socket.assigns.participant_id, :end)
     end
@@ -757,12 +711,6 @@ defmodule RandosWeb.HomeLive do
   defp webrtc_role_label(:offerer), do: gettext("offerer")
   defp webrtc_role_label(:answerer), do: gettext("answerer")
   defp webrtc_role_label(nil), do: gettext("no WebRTC role")
-
-  defp call_status_label(:active), do: gettext("active")
-  defp call_status_label(:connecting), do: gettext("connecting")
-  defp call_status_label(:extension_pending), do: gettext("extension pending")
-  defp call_status_label(:ended), do: gettext("ended")
-  defp call_status_label(nil), do: gettext("waiting")
 
   defp parse_state("idle"), do: :idle
   defp parse_state("looking"), do: :looking
@@ -829,7 +777,7 @@ defmodule RandosWeb.HomeLive do
   defp state_description(:idle), do: gettext("Choose your languages when you are ready.")
   defp state_description(:looking), do: gettext("Finding a compatible anonymous partner.")
   defp state_description(:connecting), do: gettext("A compatible rando is available.")
-  defp state_description(:in_call), do: gettext("You are in an audio-only call.")
+  defp state_description(:in_call), do: gettext("Conversation is active.")
 
   defp state_description(:extension_pending),
     do: gettext("Both people choose whether to continue.")
