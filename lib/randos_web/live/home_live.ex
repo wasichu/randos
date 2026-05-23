@@ -156,9 +156,12 @@ defmodule RandosWeb.HomeLive do
         <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
           <div class="flex flex-col justify-between gap-10">
             <div>
-              <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
-                {gettext("Randos")}
-              </h1>
+              <div class="flex items-center gap-3 sm:gap-4">
+                <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
+                <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
+                  {gettext("Randos")}
+                </h1>
+              </div>
               <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
                 {gettext("Short anonymous conversations for language practice.")}
               </p>
