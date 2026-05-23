@@ -37,9 +37,7 @@ defmodule RandosWeb.Layouts do
     ~H"""
     <header class="border-b border-stone-200 bg-stone-50/90 px-5 py-4 backdrop-blur sm:px-8">
       <a href="/" class="inline-flex items-center gap-3 text-sm font-semibold text-stone-950">
-        <span class="flex size-9 items-center justify-center rounded-md bg-stone-950 text-white">
-          <.icon name="hero-microphone" class="size-5" />
-        </span>
+        <img src={~p"/images/logo.svg"} alt="" class="size-9" />
         <span>{gettext("Randos")}</span>
       </a>
     </header>
