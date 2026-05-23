@@ -112,8 +112,6 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view_a, "#extension-countdown")
 
     view_a |> element("#end-call-button") |> render_click()
-    assert eventually_missing_element?(view_a, "#call-countdown")
-    assert eventually_missing_element?(view_a, "#webrtc-audio")
     assert eventually_has_element?(view_a, "#idle-panel")
   end
 
@@ -146,9 +144,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     view_a |> element("#end-call-button") |> render_click()
 
-    assert eventually_has_element?(view_a, "#idle-panel")
-    refute has_element?(view_a, "#looking-panel")
-    refute has_element?(view_a, "#webrtc-audio")
+    assert_redirect(view_a, ~p"/")
     assert eventually_has_element?(view_b, "#idle-panel")
     refute has_element?(view_b, "#looking-panel")
   end
@@ -184,19 +180,6 @@ defmodule RandosWeb.HomeLiveTest do
     else
       Process.sleep(10)
       eventually_has_element?(view, selector, attempts - 1)
-    end
-  end
-
-  defp eventually_missing_element?(view, selector, attempts \\ 120)
-
-  defp eventually_missing_element?(_view, _selector, 0), do: false
-
-  defp eventually_missing_element?(view, selector, attempts) do
-    if has_element?(view, selector) do
-      Process.sleep(10)
-      eventually_missing_element?(view, selector, attempts - 1)
-    else
-      true
     end
   end
 

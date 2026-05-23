@@ -96,7 +96,7 @@ defmodule RandosWeb.HomeLive do
     socket = assign(socket, :stop_after_call?, true)
     hang_up_current_call(socket)
 
-    {:noreply, return_to_idle(socket)}
+    {:noreply, redirect(socket, to: ~p"/")}
   end
 
   def handle_event("extension_vote", %{"vote" => vote}, socket) do
@@ -642,18 +642,6 @@ defmodule RandosWeb.HomeLive do
     if socket.assigns.call_pid do
       CallCoordinator.hang_up(socket.assigns.call_pid, socket.assigns.participant_id)
     end
-  end
-
-  defp return_to_idle(socket) do
-    socket
-    |> assign(:ui_state, :idle)
-    |> assign(:call_pid, nil)
-    |> assign(:match, nil)
-    |> assign(:match_role, nil)
-    |> assign(:webrtc_role, nil)
-    |> assign(:call_status, nil)
-    |> assign(:call_deadline_unix_ms, nil)
-    |> assign(:extension_deadline_unix_ms, nil)
   end
 
   defp relay_client_signal(socket, "extension_accepted", _payload) do
