@@ -18,6 +18,7 @@ defmodule RandosWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive, :home
+    live "/about", AboutLive, :about
   end
 
   # Other scopes may use custom stacks.

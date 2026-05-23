@@ -35,11 +35,20 @@ defmodule RandosWeb.Layouts do
 
   def app(assigns) do
     ~H"""
-    <header class="border-b border-stone-200 bg-stone-50/90 px-5 py-4 backdrop-blur sm:px-8">
+    <header class="flex items-center justify-between gap-4 border-b border-stone-200 bg-stone-50/90 px-5 py-4 backdrop-blur sm:px-8">
       <a href="/" class="inline-flex items-center gap-3 text-sm font-semibold text-stone-950">
         <img src={~p"/images/logo.svg"} alt="" class="size-9" />
         <span>{gettext("Randos")}</span>
       </a>
+      <nav class="flex items-center gap-4 text-sm font-medium text-stone-600">
+        <.link
+          navigate={~p"/about"}
+          class="inline-flex items-center gap-1.5 transition hover:text-stone-950"
+        >
+          <.icon name="hero-information-circle" class="size-4" />
+          {gettext("About")}
+        </.link>
+      </nav>
     </header>
 
     <main>
