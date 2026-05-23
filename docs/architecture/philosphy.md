@@ -66,9 +66,9 @@ A conversation only continues if both people mutually agree to extend it.
 
 ## Time Limits
 
-Random calls start with a five minute limit.
+Random calls start with a ten minute limit.
 
-At the end of each five minute segment, both users may choose whether to continue.
+At the end of each ten minute segment, both users may choose whether to continue.
 
 The call only extends if both users agree.
 

@@ -22,6 +22,10 @@ defmodule Randos.Comms.CallSessionTest do
     assert call.extension_duration_seconds == CallSession.extension_duration_seconds()
     assert call.max_duration_seconds == CallSession.max_call_duration_seconds()
     assert call.max_extension_count == CallSession.max_extension_count()
+    assert call.default_call_duration_seconds == 600
+    assert call.extension_duration_seconds == 600
+    assert call.max_duration_seconds == 1_800
+    assert call.max_extension_count == 2
     assert call.extension_count == 0
     assert is_nil(call.started_at)
     assert is_nil(call.ended_at)

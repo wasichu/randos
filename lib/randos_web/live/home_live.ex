@@ -531,7 +531,7 @@ defmodule RandosWeb.HomeLive do
     ~H"""
     <div id="extension-panel" class="col-span-full space-y-6 p-4 sm:p-7">
       <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
-        {gettext("Time is up. Continue for another 5 minutes?")}
+        {gettext("Time is up. Continue for another 10 minutes?")}
       </h2>
 
       <div class="grid gap-2 sm:grid-cols-2 sm:gap-3">

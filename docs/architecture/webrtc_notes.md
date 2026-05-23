@@ -72,7 +72,7 @@ A call can be:
 - extension_pending
 - ended
 
-When the five minute timer expires, the call coordinator moves the call into `extension_pending`.
+When the ten minute timer expires, the call coordinator moves the call into `extension_pending`.
 
 If both users accept, the call extends.
 

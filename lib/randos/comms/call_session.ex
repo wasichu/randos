@@ -13,10 +13,10 @@ defmodule Randos.Comms.CallSession do
 
   alias Randos.ConversationLanguages
 
-  @default_call_duration_seconds 300
-  @extension_duration_seconds 300
+  @default_call_duration_seconds 600
+  @extension_duration_seconds 600
   @max_call_duration_seconds 1_800
-  @max_extension_count 5
+  @max_extension_count 2
   @extension_response_timeout_seconds 20
   @supported_language_codes ConversationLanguages.codes()
   @ended_reasons [
