@@ -707,14 +707,17 @@ defmodule RandosWeb.HomeLive do
   defp parse_state("extension_pending"), do: :extension_pending
 
   defp default_preferences(socket) do
-    language = browser_locale_language(socket)
+    speaking_language = browser_locale_language(socket)
 
     %{
-      "speaking_language" => language,
-      "listening_language" => language,
+      "speaking_language" => speaking_language,
+      "listening_language" => default_listening_language(speaking_language),
       "adult_acknowledgment" => "false"
     }
   end
+
+  defp default_listening_language("en"), do: "es"
+  defp default_listening_language(_speaking_language), do: "en"
 
   defp browser_locale_language(socket) do
     locale =

@@ -40,22 +40,22 @@ defmodule RandosWeb.HomeLiveTest do
     assert html =~ "stun:stun.l.google.com:19302"
   end
 
-  test "defaults conversation languages from browser locale", %{conn: conn} do
+  test "defaults speak language from browser locale and hear language to English", %{conn: conn} do
     conn = put_connect_params(conn, %{"browser_locale" => "pt-BR"})
 
     {:ok, view, _html} = live(conn, ~p"/")
 
     assert has_element?(view, "#conversation_speaking_language option[value='pt'][selected]")
-    assert has_element?(view, "#conversation_listening_language option[value='pt'][selected]")
+    assert has_element?(view, "#conversation_listening_language option[value='en'][selected]")
   end
 
-  test "falls back to English for unsupported browser locales", %{conn: conn} do
+  test "defaults hear language to Spanish when speak language is English", %{conn: conn} do
     conn = put_connect_params(conn, %{"browser_locale" => "tl-PH"})
 
     {:ok, view, _html} = live(conn, ~p"/")
 
     assert has_element?(view, "#conversation_speaking_language option[value='en'][selected]")
-    assert has_element?(view, "#conversation_listening_language option[value='en'][selected]")
+    assert has_element?(view, "#conversation_listening_language option[value='es'][selected]")
   end
 
   test "shows validation when searching without the adult acknowledgment", %{conn: conn} do
