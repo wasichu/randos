@@ -738,22 +738,9 @@ defmodule RandosWeb.HomeLive do
   end
 
   defp language_options do
-    [
-      {gettext("English"), "en"},
-      {gettext("Spanish"), "es"},
-      {gettext("French"), "fr"},
-      {gettext("German"), "de"},
-      {gettext("Italian"), "it"},
-      {gettext("Portuguese"), "pt"}
-    ]
+    ConversationLanguages.all()
   end
 
-  defp language_name("en"), do: gettext("English")
-  defp language_name("es"), do: gettext("Spanish")
-  defp language_name("fr"), do: gettext("French")
-  defp language_name("de"), do: gettext("German")
-  defp language_name("it"), do: gettext("Italian")
-  defp language_name("pt"), do: gettext("Portuguese")
   defp language_name(code), do: ConversationLanguages.name(code)
 
   defp state_label(:idle), do: gettext("Ready")

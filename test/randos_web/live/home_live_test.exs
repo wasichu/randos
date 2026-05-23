@@ -11,6 +11,14 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#conversation-form")
     assert has_element?(view, "#find-rando-button[disabled]")
     assert has_element?(view, "#theme-toggle[data-theme-toggle]")
+    assert has_element?(view, "#conversation_speaking_language option[value='zh']")
+    assert has_element?(view, "#conversation_speaking_language option[value='hi']")
+    assert has_element?(view, "#conversation_speaking_language option[value='ar']")
+    assert has_element?(view, "#conversation_speaking_language option[value='id']")
+    assert has_element?(view, "#conversation_listening_language option[value='zh']")
+    assert has_element?(view, "#conversation_listening_language option[value='hi']")
+    assert has_element?(view, "#conversation_listening_language option[value='ar']")
+    assert has_element?(view, "#conversation_listening_language option[value='id']")
 
     view
     |> form("#conversation-form",

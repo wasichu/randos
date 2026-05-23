@@ -4,12 +4,21 @@ defmodule Randos.ConversationLanguages do
   """
 
   @languages [
-    {"English", "en"},
-    {"Spanish", "es"},
-    {"French", "fr"},
-    {"German", "de"},
-    {"Italian", "it"},
-    {"Portuguese", "pt"}
+    {"English (EN)", "en"},
+    {"Español (ES)", "es"},
+    {"中文 (ZH)", "zh"},
+    {"हिन्दी (HI)", "hi"},
+    {"العربية (AR)", "ar"},
+    {"Português (PT)", "pt"},
+    {"বাংলা (BN)", "bn"},
+    {"Русский (RU)", "ru"},
+    {"日本語 (JA)", "ja"},
+    {"Français (FR)", "fr"},
+    {"Deutsch (DE)", "de"},
+    {"한국어 (KO)", "ko"},
+    {"Italiano (IT)", "it"},
+    {"Türkçe (TR)", "tr"},
+    {"Bahasa Indonesia (ID)", "id"}
   ]
 
   @doc """
@@ -27,7 +36,7 @@ defmodule Randos.ConversationLanguages do
   end
 
   @doc """
-  Finds an English display name for a language code.
+  Finds a display label for a language code.
   """
   @spec name(String.t()) :: String.t()
   def name(code) when is_binary(code) do
