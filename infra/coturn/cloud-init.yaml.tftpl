@@ -1,0 +1,17 @@
+#cloud-config
+write_files:
+  - path: /etc/randos-coturn.env
+    owner: root:root
+    permissions: "0600"
+    content: |
+      PROJECT_NAME=${project_name}
+      TURN_HOSTNAME=${turn_hostname}
+      TURN_REALM=${turn_realm}
+      TURN_SHARED_SECRET=${turn_shared_secret}
+      RELAY_MIN_PORT=${relay_min_port}
+      RELAY_MAX_PORT=${relay_max_port}
+      LETSENCRYPT_EMAIL=${letsencrypt_email}
+      TURN_CREDENTIAL_TTL_SECONDS=${turn_credential_ttl_secs}
+
+runcmd:
+  - echo "Randos coturn bootstrap placeholder. Full Docker/certbot/coturn setup will be added in Task 2." > /var/log/randos-coturn-bootstrap.log

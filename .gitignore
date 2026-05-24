@@ -34,6 +34,13 @@ randos-*.tar
 # Ignore locally generated development TLS certificates.
 /priv/cert/*.pem
 
+# Ignore local Terraform state, caches, and secret variable files.
+**/.terraform/
+**/terraform.tfstate
+**/terraform.tfstate.*
+**/*.tfvars
+**/*.tfvars.json
+
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/
