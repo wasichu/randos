@@ -154,141 +154,203 @@ defmodule RandosWeb.HomeLive do
     <Layouts.app flash={@flash}>
       <div class="min-h-[calc(100vh-5rem)] overflow-x-hidden bg-stone-50 text-stone-950">
         <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
-          <div class="flex flex-col justify-between gap-10">
-            <div>
-              <div class="flex items-center gap-3 sm:gap-4">
-                <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
-                <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
-                  {gettext("Randos")}
-                </h1>
-              </div>
-              <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
-                {gettext("Short anonymous conversations for language practice.")}
-              </p>
-              <p class="mt-3 text-base text-stone-500">
-                {gettext("No accounts. No profiles. No video. No pressure.")}
-              </p>
-            </div>
-
-            <div
-              id="state-progress"
-              class="grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 sm:grid-cols-5 lg:grid-cols-1"
-            >
-              <div
-                :for={state <- [:idle, :looking, :connecting, :in_call, :extension_pending]}
-                id={"state-progress-#{state}"}
-                class={[
-                  "rounded-md border px-3 py-2 transition-colors duration-200 sm:px-4 sm:py-3",
-                  progress_step_class(assigns, state)
-                ]}
-              >
-                <p class="font-semibold">{state_label(state)}</p>
-                <p class="mt-1 text-xs leading-5 opacity-75">{state_description(state)}</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
-            <.call_media_panel
-              :if={@call_status in [:active, :extension_pending] && @webrtc_role}
-              participant_id={@participant_id}
-              webrtc_role={@webrtc_role}
-            />
-
-            <%= case @ui_state do %>
-              <% :idle -> %>
-                <div id="idle-panel" class="col-span-full p-5 sm:p-7">
-                  <.form
-                    for={@form}
-                    id="conversation-form"
-                    phx-change="update_preferences"
-                    phx-submit="find"
-                    class="space-y-5"
-                  >
-                    <div class="grid gap-4 sm:grid-cols-2">
-                      <.input
-                        field={@form[:speaking_language]}
-                        type="select"
-                        label={gettext("I will speak in")}
-                        options={language_options()}
-                        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
-                      />
-                      <.input
-                        field={@form[:listening_language]}
-                        type="select"
-                        label={gettext("I want them to speak in")}
-                        options={language_options()}
-                        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
-                      />
-                    </div>
-
-                    <div class="rounded-md border border-stone-200 bg-stone-50 px-4 py-4">
-                      <.input
-                        field={@form[:adult_acknowledgment]}
-                        type="checkbox"
-                        label={
-                          gettext(
-                            "I am 18 or older and understand that conversations are anonymous and unmoderated."
-                          )
-                        }
-                        class="size-4 rounded border-stone-300 text-teal-700 focus:ring-teal-600"
-                      />
-                    </div>
-
-                    <button
-                      id="find-rando-button"
-                      type="submit"
-                      disabled={!acknowledged?(@preferences)}
-                      class={[
-                        "inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition duration-200",
-                        acknowledged?(@preferences) &&
-                          "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100",
-                        !acknowledged?(@preferences) &&
-                          "cursor-not-allowed bg-stone-200 text-stone-500"
-                      ]}
-                    >
-                      <.icon name="hero-magnifying-glass" class="size-5" />
-                      {gettext("Find a rando")}
-                    </button>
-
-                    <p
-                      :if={@matchmaking_error}
-                      id="matchmaking-error"
-                      class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
-                    >
-                      {@matchmaking_error}
-                    </p>
-                  </.form>
-                </div>
-              <% :looking -> %>
-                <.searching_panel />
-              <% :connecting -> %>
-                <.connecting_panel
-                  match_role={@match_role}
-                  webrtc_role={@webrtc_role}
-                  participant_id={@participant_id}
-                />
-              <% :in_call -> %>
-                <.call_panel
-                  preferences={@preferences}
-                  participant_id={@participant_id}
-                  webrtc_role={@webrtc_role}
-                  language_name={&language_name/1}
-                />
-              <% :extension_pending -> %>
-                <.extension_panel />
-            <% end %>
-
-            <.call_timer_panel
-              :if={@ui_state == :in_call}
-              call_status={@call_status}
-              call_deadline_unix_ms={@call_deadline_unix_ms}
-            />
-            <.call_actions_panel :if={@ui_state == :in_call} />
-          </div>
+          <.hero_panel ui_state={@ui_state} />
+          <.conversation_card
+            ui_state={@ui_state}
+            call_status={@call_status}
+            call_deadline_unix_ms={@call_deadline_unix_ms}
+            participant_id={@participant_id}
+            webrtc_role={@webrtc_role}
+            match_role={@match_role}
+            preferences={@preferences}
+            form={@form}
+            matchmaking_error={@matchmaking_error}
+          />
         </section>
       </div>
     </Layouts.app>
+    """
+  end
+
+  attr :ui_state, :atom, required: true
+
+  defp hero_panel(assigns) do
+    ~H"""
+    <div class="flex flex-col justify-between gap-10">
+      <div>
+        <div class="flex items-center gap-3 sm:gap-4">
+          <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
+          <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
+            {gettext("Randos")}
+          </h1>
+        </div>
+        <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
+          {gettext("Short anonymous conversations for language practice.")}
+        </p>
+        <p class="mt-3 text-base text-stone-500">
+          {gettext("No accounts. No profiles. No video. No pressure.")}
+        </p>
+      </div>
+
+      <.state_progress ui_state={@ui_state} />
+    </div>
+    """
+  end
+
+  attr :ui_state, :atom, required: true
+
+  defp state_progress(assigns) do
+    ~H"""
+    <div
+      id="state-progress"
+      class="grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 sm:grid-cols-5 lg:grid-cols-1"
+    >
+      <div
+        :for={state <- [:idle, :looking, :connecting, :in_call, :extension_pending]}
+        id={"state-progress-#{state}"}
+        class={[
+          "rounded-md border px-3 py-2 transition-colors duration-200 sm:px-4 sm:py-3",
+          progress_step_class(@ui_state, state)
+        ]}
+      >
+        <p class="font-semibold">{state_label(state)}</p>
+        <p class="mt-1 text-xs leading-5 opacity-75">{state_description(state)}</p>
+      </div>
+    </div>
+    """
+  end
+
+  attr :ui_state, :atom, required: true
+  attr :call_status, :atom, default: nil
+  attr :call_deadline_unix_ms, :integer, default: nil
+  attr :participant_id, :string, required: true
+  attr :webrtc_role, :atom, default: nil
+  attr :match_role, :atom, default: nil
+  attr :preferences, :map, required: true
+  attr :form, :any, required: true
+  attr :matchmaking_error, :string, default: nil
+
+  defp conversation_card(assigns) do
+    ~H"""
+    <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
+      <.call_media_panel
+        :if={@call_status in [:active, :extension_pending] && @webrtc_role}
+        participant_id={@participant_id}
+        webrtc_role={@webrtc_role}
+      />
+
+      <%= case @ui_state do %>
+        <% :idle -> %>
+          <.idle_panel
+            form={@form}
+            preferences={@preferences}
+            matchmaking_error={@matchmaking_error}
+          />
+        <% :looking -> %>
+          <.searching_panel />
+        <% :connecting -> %>
+          <.connecting_panel
+            match_role={@match_role}
+            webrtc_role={@webrtc_role}
+            participant_id={@participant_id}
+          />
+        <% :in_call -> %>
+          <.call_panel
+            preferences={@preferences}
+            participant_id={@participant_id}
+            webrtc_role={@webrtc_role}
+            language_name={&language_name/1}
+          />
+        <% :extension_pending -> %>
+          <.extension_panel />
+      <% end %>
+
+      <.call_timer_panel
+        :if={@ui_state == :in_call}
+        call_status={@call_status}
+        call_deadline_unix_ms={@call_deadline_unix_ms}
+      />
+      <.call_actions_panel :if={@ui_state == :in_call} />
+    </div>
+    """
+  end
+
+  attr :form, :any, required: true
+  attr :preferences, :map, required: true
+  attr :matchmaking_error, :string, default: nil
+
+  defp idle_panel(assigns) do
+    ~H"""
+    <div id="idle-panel" class="col-span-full p-5 sm:p-7">
+      <.form
+        for={@form}
+        id="conversation-form"
+        phx-change="update_preferences"
+        phx-submit="find"
+        class="space-y-5"
+      >
+        <.language_fields form={@form} />
+
+        <div class="rounded-md border border-stone-200 bg-stone-50 px-4 py-4">
+          <.input
+            field={@form[:adult_acknowledgment]}
+            type="checkbox"
+            label={
+              gettext(
+                "I am 18 or older and understand that conversations are anonymous and unmoderated."
+              )
+            }
+            class="size-4 rounded border-stone-300 text-teal-700 focus:ring-teal-600"
+          />
+        </div>
+
+        <button
+          id="find-rando-button"
+          type="submit"
+          disabled={!acknowledged?(@preferences)}
+          class={[
+            "inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition duration-200",
+            acknowledged?(@preferences) &&
+              "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100",
+            !acknowledged?(@preferences) && "cursor-not-allowed bg-stone-200 text-stone-500"
+          ]}
+        >
+          <.icon name="hero-magnifying-glass" class="size-5" />
+          {gettext("Find a rando")}
+        </button>
+
+        <p
+          :if={@matchmaking_error}
+          id="matchmaking-error"
+          class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+        >
+          {@matchmaking_error}
+        </p>
+      </.form>
+    </div>
+    """
+  end
+
+  attr :form, :any, required: true
+
+  defp language_fields(assigns) do
+    ~H"""
+    <div class="grid gap-4 sm:grid-cols-2">
+      <.input
+        field={@form[:speaking_language]}
+        type="select"
+        label={gettext("I will speak in")}
+        options={language_options()}
+        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
+      />
+      <.input
+        field={@form[:listening_language]}
+        type="select"
+        label={gettext("I want them to speak in")}
+        options={language_options()}
+        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
+      />
+    </div>
     """
   end
 
@@ -773,8 +835,8 @@ defmodule RandosWeb.HomeLive do
   defp state_description(:extension_pending),
     do: gettext("Both people choose whether to continue.")
 
-  defp progress_step_class(assigns, state) do
-    if assigns.ui_state == state do
+  defp progress_step_class(ui_state, state) do
+    if ui_state == state do
       "border-stone-950 bg-stone-950 text-white"
     else
       "border-stone-200 bg-white text-stone-500"
