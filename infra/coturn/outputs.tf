@@ -39,6 +39,7 @@ output "randos_environment" {
   sensitive   = true
   value       = <<-EOT
     TURN_HOST=${var.turn_hostname}
+    TURN_STUN_URL=stun:${var.turn_hostname}:3478
     TURN_SERVER_URL=turn:${var.turn_hostname}:3478
     TURNS_SERVER_URL=turns:${var.turn_hostname}:5349
     TURN_REALM=${var.turn_realm}

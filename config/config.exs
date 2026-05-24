@@ -53,7 +53,10 @@ config :randos, RandosWeb.IceServers,
     %{urls: "stun:stun.l.google.com:19302"}
   ],
   future_env: [
+    turn_host: "TURN_HOST",
+    turn_stun_url: "TURN_STUN_URL",
     turn_server_url: "TURN_SERVER_URL",
+    turns_server_url: "TURNS_SERVER_URL",
     turn_shared_secret: "TURN_SHARED_SECRET",
     turn_realm: "TURN_REALM",
     turn_credential_ttl_seconds: "TURN_CREDENTIAL_TTL_SECONDS"

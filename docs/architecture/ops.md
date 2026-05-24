@@ -18,26 +18,36 @@ The application currently reads these environment variables from config:
 | `PHX_HOST` | `config/runtime.exs` | Public production host. Defaults to `example.com`. |
 | `DNS_CLUSTER_QUERY` | `config/runtime.exs`, `lib/randos/application.ex` | Optional DNS clustering query for distributed deployments. |
 
-## Future TURN Variables
+## TURN Variables
 
-These variables are listed in ICE configuration metadata for future coturn
-support, but they are not read at runtime yet:
+These variables configure browser ICE servers for WebRTC calls:
 
 | Variable | Status |
 | --- | --- |
-| `TURN_SERVER_URL` | Future TURN configuration only. |
-| `TURN_SHARED_SECRET` | Future TURN configuration only. |
-| `TURN_REALM` | Future TURN configuration only. |
-| `TURN_CREDENTIAL_TTL_SECONDS` | Future TURN configuration only. |
+| `TURN_HOST` | Optional hostname shortcut. When present, the app derives `stun:`, `turn:`, and `turns:` URLs from it. |
+| `TURN_STUN_URL` | Optional explicit STUN URL, for example `stun:turn.slowinput.org:3478`. |
+| `TURN_SERVER_URL` | Optional explicit TURN URL, for example `turn:turn.slowinput.org:3478`. |
+| `TURNS_SERVER_URL` | Optional explicit TURN-over-TLS URL, for example `turns:turn.slowinput.org:5349`. |
+| `TURN_SHARED_SECRET` | coturn REST API shared secret used to generate temporary browser credentials. |
+| `TURN_REALM` | coturn realm. Kept with deployment config; browsers do not need it directly. |
+| `TURN_CREDENTIAL_TTL_SECONDS` | Lifetime for generated temporary TURN credentials. Defaults to `900`. |
 
-ICE server configuration currently defaults to public STUN:
+Without `TURN_SHARED_SECRET` and at least one TURN URL, ICE server
+configuration falls back to public STUN:
 
 ```text
 stun:stun.l.google.com:19302
 ```
 
-TURN and coturn support are structurally prepared, but runtime env-backed TURN
-configuration has not been implemented yet.
+For local coturn testing:
+
+```bash
+TURN_HOST="turn.slowinput.org" \
+TURN_REALM="turn.slowinput.org" \
+TURN_SHARED_SECRET="$(terraform -chdir=infra/coturn output -raw turn_shared_secret)" \
+TURN_CREDENTIAL_TTL_SECONDS="900" \
+mix phx.server
+```
 
 ## Local Development
 
