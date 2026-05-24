@@ -51,9 +51,12 @@ The bootstrap script:
 3. Enables and starts Docker.
 4. Attempts Let's Encrypt HTTP-01 certificate issuance for `turn_hostname`.
 5. Writes `/etc/coturn/turnserver.conf`.
-6. Installs a certbot deploy hook that restarts coturn after renewal.
-7. Enables the certbot systemd timer.
-8. Starts coturn in Docker when certificate files are present.
+6. Copies the Let's Encrypt cert and key into `/etc/coturn/certs/` for the
+   Docker container to read.
+7. Installs a certbot deploy hook that refreshes those cert copies and restarts
+   coturn after renewal.
+8. Enables the certbot systemd timer.
+9. Starts coturn in Docker when certificate files are present.
 
 The coturn container uses host networking:
 
@@ -100,6 +103,17 @@ Inspect certificates:
 
 ```bash
 sudo certbot certificates
+```
+
+If coturn reports default certificate filenames such as
+`turn_server_cert.pem` or `turn_server_pkey.pem`, rerun the bootstrap so it
+refreshes `/etc/coturn/certs/` and restarts the container with explicit cert and
+key arguments:
+
+```bash
+sudo /usr/local/sbin/randos-coturn-bootstrap
+sudo docker logs coturn --tail 200
+sudo ss -tulpn | grep -E '(:3478|:5349)'
 ```
 
 ## Required Inputs
@@ -307,11 +321,20 @@ static-auth-secret=...
 It does not create static username/password users and does not run as an open
 relay.
 
-The TURN shared secret is written to root-readable files only:
+The TURN shared secret is written to:
 
 ```text
 /etc/randos-coturn.env
 /etc/coturn/turnserver.conf
+```
+
+`/etc/randos-coturn.env` remains root-readable only. The mounted coturn config
+and cert files under `/etc/coturn` are readable by the container process so the
+Docker image can load its config and TLS key:
+
+```text
+/etc/coturn/turnserver.conf
+/etc/coturn/certs/privkey.pem
 ```
 
 The Phoenix app will later use the same shared secret to generate temporary TURN

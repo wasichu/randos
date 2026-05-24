@@ -44,11 +44,15 @@ write_files:
       systemctl enable --now docker
 
       mkdir -p /etc/coturn
-      chmod 700 /etc/coturn
+      mkdir -p /etc/coturn/certs
+      chmod 755 /etc/coturn
+      chmod 755 /etc/coturn/certs
 
       CERT_DIR="/etc/letsencrypt/live/$TURN_HOSTNAME"
       FULLCHAIN="$CERT_DIR/fullchain.pem"
       PRIVKEY="$CERT_DIR/privkey.pem"
+      COTURN_FULLCHAIN="/etc/coturn/certs/fullchain.pem"
+      COTURN_PRIVKEY="/etc/coturn/certs/privkey.pem"
 
       if [ -f "$FULLCHAIN" ] && [ -f "$PRIVKEY" ]; then
         echo "[$(date --iso-8601=seconds)] Existing Let's Encrypt certificate found for $TURN_HOSTNAME"
@@ -87,19 +91,33 @@ write_files:
       min-port=$RELAY_MIN_PORT
       max-port=$RELAY_MAX_PORT
 
-      cert=/etc/letsencrypt/live/$TURN_HOSTNAME/fullchain.pem
-      pkey=/etc/letsencrypt/live/$TURN_HOSTNAME/privkey.pem
+      cert=$COTURN_FULLCHAIN
+      pkey=$COTURN_PRIVKEY
 
       no-cli
       log-file=stdout
       EOF
 
-      chmod 600 /etc/coturn/turnserver.conf
+      chmod 644 /etc/coturn/turnserver.conf
+
+      if [ -f "$FULLCHAIN" ] && [ -f "$PRIVKEY" ]; then
+        install -m 0644 "$FULLCHAIN" "$COTURN_FULLCHAIN"
+        install -m 0644 "$PRIVKEY" "$COTURN_PRIVKEY"
+      fi
 
       mkdir -p /etc/letsencrypt/renewal-hooks/deploy
       cat > /etc/letsencrypt/renewal-hooks/deploy/restart-coturn <<'EOF'
       #!/usr/bin/env bash
       set -euo pipefail
+
+      source /etc/randos-coturn.env
+
+      RENEWED_CERT_DIR="$${RENEWED_LINEAGE:-/etc/letsencrypt/live/$${TURN_HOSTNAME}}"
+
+      if [ -f "$${RENEWED_CERT_DIR}/fullchain.pem" ] && [ -f "$${RENEWED_CERT_DIR}/privkey.pem" ]; then
+        install -m 0644 "$${RENEWED_CERT_DIR}/fullchain.pem" /etc/coturn/certs/fullchain.pem
+        install -m 0644 "$${RENEWED_CERT_DIR}/privkey.pem" /etc/coturn/certs/privkey.pem
+      fi
 
       if docker ps --format '{{.Names}}' | grep -qx coturn; then
         docker restart coturn
@@ -109,7 +127,7 @@ write_files:
 
       systemctl enable --now certbot.timer || true
 
-      if [ ! -f "$FULLCHAIN" ] || [ ! -f "$PRIVKEY" ]; then
+      if [ ! -f "$COTURN_FULLCHAIN" ] || [ ! -f "$COTURN_PRIVKEY" ]; then
         echo "[$(date --iso-8601=seconds)] Certificate files are missing, so coturn container start is deferred."
         echo "[$(date --iso-8601=seconds)] Verify DNS and rerun: sudo /usr/local/sbin/randos-coturn-bootstrap"
         exit 0
@@ -121,10 +139,11 @@ write_files:
         --name coturn \
         --restart unless-stopped \
         --network host \
-        -v /etc/coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro \
-        -v /etc/letsencrypt:/etc/letsencrypt:ro \
+        -v /etc/coturn:/etc/coturn:ro \
         coturn/coturn \
-        -c /etc/coturn/turnserver.conf
+        -c /etc/coturn/turnserver.conf \
+        --cert="$COTURN_FULLCHAIN" \
+        --pkey="$COTURN_PRIVKEY"
 
       echo "[$(date --iso-8601=seconds)] coturn container started"
       docker ps --filter name=coturn
