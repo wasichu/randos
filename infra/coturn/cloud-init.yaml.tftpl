@@ -1,4 +1,6 @@
 #cloud-config
+package_update: true
+
 write_files:
   - path: /etc/randos-coturn.env
     owner: root:root
@@ -13,5 +15,119 @@ write_files:
       LETSENCRYPT_EMAIL=${letsencrypt_email}
       TURN_CREDENTIAL_TTL_SECONDS=${turn_credential_ttl_secs}
 
+  - path: /usr/local/sbin/randos-coturn-bootstrap
+    owner: root:root
+    permissions: "0700"
+    content: |
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      LOG_FILE="/var/log/randos-coturn-bootstrap.log"
+      exec > >(tee -a "$LOG_FILE") 2>&1
+
+      echo "[$(date --iso-8601=seconds)] Starting Randos coturn bootstrap"
+
+      source /etc/randos-coturn.env
+
+      export DEBIAN_FRONTEND=noninteractive
+
+      apt-get update
+      apt-get install -y \
+        ca-certificates \
+        certbot \
+        curl \
+        dnsutils \
+        docker.io \
+        netcat-openbsd \
+        ufw
+
+      systemctl enable --now docker
+
+      mkdir -p /etc/coturn
+      chmod 700 /etc/coturn
+
+      CERT_DIR="/etc/letsencrypt/live/$TURN_HOSTNAME"
+      FULLCHAIN="$CERT_DIR/fullchain.pem"
+      PRIVKEY="$CERT_DIR/privkey.pem"
+
+      if [ -f "$FULLCHAIN" ] && [ -f "$PRIVKEY" ]; then
+        echo "[$(date --iso-8601=seconds)] Existing Let's Encrypt certificate found for $TURN_HOSTNAME"
+      else
+        echo "[$(date --iso-8601=seconds)] Attempting Let's Encrypt certificate issuance for $TURN_HOSTNAME"
+
+        if [ -n "$LETSENCRYPT_EMAIL" ]; then
+          CERTBOT_EMAIL_ARGS=(--email "$LETSENCRYPT_EMAIL")
+        else
+          CERTBOT_EMAIL_ARGS=(--register-unsafely-without-email)
+        fi
+
+        if certbot certonly \
+          --standalone \
+          --non-interactive \
+          --agree-tos \
+          "$${CERTBOT_EMAIL_ARGS[@]}" \
+          -d "$TURN_HOSTNAME"; then
+          echo "[$(date --iso-8601=seconds)] Certificate issued for $TURN_HOSTNAME"
+        else
+          echo "[$(date --iso-8601=seconds)] Certificate issuance failed. This is expected if DNS is not ready yet."
+          echo "[$(date --iso-8601=seconds)] After DNS resolves, rerun: sudo /usr/local/sbin/randos-coturn-bootstrap"
+        fi
+      fi
+
+      cat > /etc/coturn/turnserver.conf <<EOF
+      listening-port=3478
+      tls-listening-port=5349
+
+      fingerprint
+      realm=$TURN_REALM
+
+      use-auth-secret
+      static-auth-secret=$TURN_SHARED_SECRET
+
+      min-port=$RELAY_MIN_PORT
+      max-port=$RELAY_MAX_PORT
+
+      cert=/etc/letsencrypt/live/$TURN_HOSTNAME/fullchain.pem
+      pkey=/etc/letsencrypt/live/$TURN_HOSTNAME/privkey.pem
+
+      no-cli
+      log-file=stdout
+      EOF
+
+      chmod 600 /etc/coturn/turnserver.conf
+
+      mkdir -p /etc/letsencrypt/renewal-hooks/deploy
+      cat > /etc/letsencrypt/renewal-hooks/deploy/restart-coturn <<'EOF'
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      if docker ps --format '{{.Names}}' | grep -qx coturn; then
+        docker restart coturn
+      fi
+      EOF
+      chmod 700 /etc/letsencrypt/renewal-hooks/deploy/restart-coturn
+
+      systemctl enable --now certbot.timer || true
+
+      if [ ! -f "$FULLCHAIN" ] || [ ! -f "$PRIVKEY" ]; then
+        echo "[$(date --iso-8601=seconds)] Certificate files are missing, so coturn container start is deferred."
+        echo "[$(date --iso-8601=seconds)] Verify DNS and rerun: sudo /usr/local/sbin/randos-coturn-bootstrap"
+        exit 0
+      fi
+
+      docker rm -f coturn >/dev/null 2>&1 || true
+      docker pull coturn/coturn
+      docker run -d \
+        --name coturn \
+        --restart unless-stopped \
+        --network host \
+        -v /etc/coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro \
+        -v /etc/letsencrypt:/etc/letsencrypt:ro \
+        coturn/coturn \
+        -c /etc/coturn/turnserver.conf
+
+      echo "[$(date --iso-8601=seconds)] coturn container started"
+      docker ps --filter name=coturn
+
 runcmd:
-  - echo "Randos coturn bootstrap placeholder. Full Docker/certbot/coturn setup will be added in Task 2." > /var/log/randos-coturn-bootstrap.log
+  - /usr/local/sbin/randos-coturn-bootstrap

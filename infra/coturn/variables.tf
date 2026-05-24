@@ -42,13 +42,13 @@ variable "ssh_allowed_cidr" {
 variable "turn_hostname" {
   description = "Public TURN hostname. DNS is managed manually outside Terraform."
   type        = string
-  default     = "turn.slowinput.com"
+  default     = "turn.slowinput.org"
 }
 
 variable "turn_realm" {
   description = "TURN realm."
   type        = string
-  default     = "turn.slowinput.com"
+  default     = "turn.slowinput.org"
 }
 
 variable "turn_shared_secret" {
