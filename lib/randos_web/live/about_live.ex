@@ -92,6 +92,21 @@ defmodule RandosWeb.AboutLive do
                 )}
               </p>
             </section>
+
+            <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-stone-500">
+                {gettext("Randos is open source and built in public.")}
+              </p>
+              <a
+                href="https://github.com/wasichu/randos"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 font-medium text-stone-700 transition hover:text-teal-800"
+              >
+                <.icon name="hero-code-bracket" class="size-4" />
+                {gettext("View on GitHub")}
+              </a>
+            </section>
           </div>
         </article>
       </div>
