@@ -7,6 +7,8 @@
 Randos is an anonymous, audio-only language conversation app for low-pressure
 human practice.
 
+[Try Randos][live-site].
+
 It is not a social network, content platform, or metrics-driven language app.
 It is closer to public conversational infrastructure: a calm place where adults
 can briefly meet through language and then disappear.
@@ -205,3 +207,5 @@ TURN_CREDENTIAL_TTL_SECONDS="900"
 Run a single app instance until matchmaking and call coordination are moved to
 shared/distributed infrastructure. The current in-memory state model is not
 safe for horizontally scaled app instances.
+
+[live-site]: https://randos.slowinput.org
