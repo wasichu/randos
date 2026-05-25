@@ -247,7 +247,7 @@ defmodule RandosWeb.HomeLive do
             matchmaking_error={@matchmaking_error}
           />
         <% :looking -> %>
-          <.searching_panel />
+          <.searching_panel preferences={@preferences} language_name={&language_name/1} />
         <% :connecting -> %>
           <.connecting_panel
             match_role={@match_role}
@@ -354,6 +354,9 @@ defmodule RandosWeb.HomeLive do
     """
   end
 
+  attr :preferences, :map, required: true
+  attr :language_name, :any, required: true
+
   defp searching_panel(assigns) do
     ~H"""
     <div id="looking-panel" class="col-span-full space-y-6 p-5 sm:p-7">
@@ -365,7 +368,11 @@ defmodule RandosWeb.HomeLive do
           {gettext("Finding a rando")}
         </h2>
         <p id="looking-status" class="mt-3 leading-7 text-stone-600">
-          {gettext("Waiting for someone with complementary language preferences.")}
+          {gettext(
+            "Looking for a rando speaking %{speaking_language} who wants to hear %{listening_language}.",
+            speaking_language: @language_name.(@preferences["listening_language"]),
+            listening_language: @language_name.(@preferences["speaking_language"])
+          )}
         </p>
       </div>
       <div class="h-2 overflow-hidden rounded-full bg-stone-100">

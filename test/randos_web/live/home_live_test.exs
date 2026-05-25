@@ -90,6 +90,12 @@ defmodule RandosWeb.HomeLiveTest do
 
     assert has_element?(view_a, "#looking-panel")
 
+    assert has_element?(
+             view_a,
+             "#looking-status",
+             "Looking for a rando speaking Español (ES) who wants to hear English (EN)."
+           )
+
     {:ok, view_b, _html} = live(conn, ~p"/")
 
     view_b
