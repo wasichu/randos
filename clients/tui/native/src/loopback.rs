@@ -154,6 +154,7 @@ fn open_capture(
                 .capture_device_us
                 .store(micros(at.callback.duration_since(at.capture)), Relaxed);
         },
+        // Error callbacks are off the real-time path (stream failures only), so I/O is fine here.
         |err| eprintln!("randos_media: input stream error: {err}"),
         None,
     )?;

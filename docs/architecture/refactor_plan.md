@@ -102,8 +102,10 @@ machines. Staged: skeleton → browser interop with real TURN → hardening → 
 Stage 0 so far: the helper (`clients/tui/native`, crate `randos_media`) with
 Port framing and a `--loopback` mode (cpal → Opus → cpal, ≈81 ms pipeline
 latency measured), and `Tui.Media` owning it over a `{:packet, 4}` Port.
-Remaining: an acoustic mouth-to-ear check by hand, and putting the loopback
-under Port control. Capability-aware matching comes before Stage 1.
+Remaining: an acoustic mouth-to-ear check by hand (and whether macOS shows a
+mic prompt, naming which app), starting `Tui.Media` under the TUI's
+supervision tree with a restart test (nothing starts it yet), and putting the
+loopback under Port control. Capability-aware matching comes before Stage 1.
 
 ### 4.4 Distribution
 
