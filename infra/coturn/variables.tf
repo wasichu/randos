@@ -25,7 +25,7 @@ variable "region" {
 variable "droplet_size" {
   description = "DigitalOcean Droplet size slug."
   type        = string
-  default     = "s-1vcpu-1gb"
+  default     = "s-1vcpu-1gb-amd"
 }
 
 variable "droplet_image" {

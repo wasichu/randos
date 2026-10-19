@@ -151,7 +151,7 @@ export TF_VAR_letsencrypt_email="you@example.com"
 | --- | --- | --- |
 | `project_name` | `randos-coturn` | Resource name prefix. |
 | `region` | `nyc3` | DigitalOcean region. |
-| `droplet_size` | `s-1vcpu-1gb` | Small inexpensive Droplet size. |
+| `droplet_size` | `s-1vcpu-1gb-amd` | Small inexpensive Droplet size. |
 | `ssh_public_key_path` | none | Existing local SSH public key path. |
 | `ssh_allowed_cidrs` | `[]` | CIDRs allowed to SSH. Empty means no SSH rule; `0.0.0.0/0` is rejected. Set your IPs in `terraform.tfvars`. |
 | `turn_hostname` | `turn.slowinput.org` | Public TURN hostname. |
