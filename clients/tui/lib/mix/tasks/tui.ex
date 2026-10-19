@@ -9,7 +9,8 @@ defmodule Mix.Tasks.Tui do
       RANDOS_URL=ws://localhost:4000/participant/websocket mix tui
 
   Logs go to `tmp/tui.log` (anything printed would garble the screen).
-  This client has no audio yet: point it at a dev server, not production.
+  Calls have no audio yet (`t` on the idle screen tests the mic through the
+  media helper, if built): point it at a dev server, not production.
   """
   use Mix.Task
 
@@ -23,11 +24,14 @@ defmodule Mix.Tasks.Tui do
     log_to_file("tmp/tui.log")
     Mix.Task.run("app.start")
 
-    {:ok, pid} = Tui.App.start_link(name: nil, uri: url)
-    ref = Process.monitor(pid)
+    {:ok, supervisor} = Tui.Supervisor.start_link(uri: url)
+    app = Process.whereis(Tui.App)
+    ref = Process.monitor(app)
 
+    # Quitting stops the app normally (it's :transient, so it stays down);
+    # then take Tui.Media and the helper down with it.
     receive do
-      {:DOWN, ^ref, :process, ^pid, _reason} -> :ok
+      {:DOWN, ^ref, :process, ^app, _reason} -> Supervisor.stop(supervisor)
     end
   end
 

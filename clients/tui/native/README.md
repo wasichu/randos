@@ -15,8 +15,8 @@ just media-loopback            # default mic → Opus → default speaker, 20 s
 randos_media --loopback [--in device|sine] [--out device|null|wav:PATH] [--seconds N]
 ```
 
-Without `--seconds` the loopback runs alongside the Port loop until stdin
-closes. Once a second it prints to stderr where the latency goes: device
+`--seconds` defaults to 20. The TUI runs the same loopback over the Port
+(`t` on the idle screen, 5 s). Once a second it reports where the latency goes: device
 buffers (from cpal's callback timestamps), the two rings, and the codec's
 fixed 26.5 ms (one 20 ms frame plus 6.5 ms of Opus lookahead). That's the
 pipeline's own latency, not an acoustic mouth-to-ear measurement. Use
@@ -30,16 +30,37 @@ extra frames are dropped, so device clock drift can't grow the latency.
 
 ## Port protocol
 
-Each message is a 4-byte big-endian length plus the body (Erlang
-`{:packet, 4}`). Bodies so far:
+Each message is a 4-byte big-endian length plus a JSON object (Erlang
+`{:packet, 4}`). The Elixir side is `Tui.Media` / `Tui.Media.Protocol`; the
+Rust side is `src/protocol.rs`. Change all three, and this table, together.
 
-| From | Body | Meaning |
+Requests carry an integer `id`, and each gets exactly one reply echoing it as
+`reply`, with either `ok` (a result) or `error` (a message). Events are
+unsolicited and carry `event` instead.
+
+| Request (`cmd`) | Fields | `ok` result |
 | --- | --- | --- |
-| Elixir | `ping` | liveness check |
-| helper | `pong` | reply to `ping` |
-| helper | `error:unknown_message` | unrecognized message |
+| `ping` | | `"pong"` |
+| `loopback_start` | `in`: `device`\|`sine`; `out`: `device`\|`null`\|`wav:PATH` | `{"input": "...", "output": "..."}`: what was opened |
+| `loopback_stop` | | `true` (also when none was running) |
 
-The helper exits when its stdin closes (the Port is closed or the TUI dies).
+Errors: `loopback already running`, `unknown input ...`, device failures
+(e.g. no 48 kHz config), and `invalid request: ...` for anything that doesn't
+parse. A request too malformed to have an id gets `{"reply": null, "error": ...}`.
+
+| Event | Fields |
+| --- | --- |
+| `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
+| `loopback_failed` | `error`; the loopback stopped on its own |
+| `stream_error` | `error`; a device stream reported a problem |
+
+The helper exits when its stdin closes (the Port is closed or the TUI dies),
+stopping any loopback. It never writes to stderr in Port mode except a fatal
+startup error, since stderr is the user's terminal.
+
+Contract tests: `tests/port.rs` drives the built binary over stdin/stdout;
+`clients/tui/test/tui/media_test.exs` drives it through `Tui.Media`. Both use
+`sine`/`null`, so neither needs audio hardware.
 
 ## Dependencies
 
@@ -51,6 +72,7 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `cpal` 0.18 | Mic and speaker I/O | Apache-2.0 | Links the OS audio APIs (CoreAudio via `objc2`; ALSA via `alsa-sys` on Linux, which needs alsa-lib headers to build) |
 | `opus` 0.4 (+ `opusic-sys`) | Opus encode/decode, the codec browsers offer by default | MIT/Apache-2.0; libopus BSD-3-Clause | Yes: `opusic-sys` builds the reference libopus from bundled source and links it statically. Needs `cmake` at build time (pinned in `mise.toml`) |
 | `ringbuf` 0.5 | Lock-free SPSC rings between the real-time callbacks and the worker | MIT/Apache-2.0 | No |
+| `serde` 1, `serde_json` 1 | The Port's JSON messages (the TUI side already uses Jason) | MIT/Apache-2.0 | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |
 
 The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,

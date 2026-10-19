@@ -1,5 +1,5 @@
-//! Stage 0 loopback: mic → Opus encode → decode → speaker, with live latency
-//! stats on stderr. It proves device access, macOS mic permission, and the
+//! Stage 0 loopback: mic → Opus encode → decode → speaker, reporting live
+//! latency stats as `Event`s (over the Port, or to stderr from the CLI). It proves device access, macOS mic permission, and the
 //! codec path before WebRTC exists.
 //!
 //! Threads: the cpal callbacks only copy samples into or out of lock-free
@@ -9,6 +9,7 @@
 use std::fs::File;
 use std::io::BufWriter;
 use std::path::PathBuf;
+use std::str::FromStr;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering::Relaxed};
 use std::thread::{self, JoinHandle};
@@ -19,8 +20,15 @@ use cpal::{SampleFormat, Stream, StreamConfig, SupportedStreamConfig, SupportedS
 use ringbuf::traits::{Consumer, Observer, Producer, Split};
 use ringbuf::{HeapCons, HeapProd, HeapRb};
 
+use serde::Serialize;
+
 use crate::Error;
 use crate::codec::{self, FRAME, OpusLoop, SAMPLE_RATE, Sine};
+use crate::protocol::{Event, LoopbackStats};
+
+/// Where the loopback reports stats and failures. Called from the worker and
+/// from cpal's error callbacks, never from the real-time data callbacks.
+pub type Notify = Arc<dyn Fn(Event) + Send + Sync>;
 
 pub enum Input {
     Device,
@@ -31,6 +39,40 @@ pub enum Output {
     Device,
     Null,
     Wav(PathBuf),
+}
+
+impl FromStr for Input {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "device" => Ok(Input::Device),
+            "sine" => Ok(Input::Sine),
+            other => Err(format!("unknown input {other:?} (device|sine)")),
+        }
+    }
+}
+
+impl FromStr for Output {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "device" => Ok(Output::Device),
+            "null" => Ok(Output::Null),
+            other => match other.strip_prefix("wav:") {
+                Some(path) if !path.is_empty() => Ok(Output::Wav(PathBuf::from(path))),
+                _ => Err(format!("unknown output {other:?} (device|null|wav:PATH)")),
+            },
+        }
+    }
+}
+
+/// What a started loopback is actually using, for the reply and the CLI.
+#[derive(Debug, Serialize)]
+pub struct Started {
+    pub input: String,
+    pub output: String,
 }
 
 /// Playback may queue at most this much (two frames); beyond it, frames are
@@ -72,35 +114,39 @@ pub struct Loopback {
 }
 
 impl Loopback {
-    pub fn start(input: Input, output: Output) -> Result<Self, Error> {
+    pub fn start(input: Input, output: Output, notify: Notify) -> Result<(Self, Started), Error> {
         let host = cpal::default_host();
         let stats = Arc::new(Stats::default());
         let mut streams = Vec::new();
 
-        let source = match input {
-            Input::Sine => Source::Sine(Sine::new(440.0)),
+        let (source, input_name) = match input {
+            Input::Sine => (Source::Sine(Sine::new(440.0)), "sine 440 Hz".to_owned()),
             Input::Device => {
-                let (stream, ring, channels) = open_capture(&host, &stats)?;
+                let (stream, ring, channels, name) = open_capture(&host, &stats, &notify)?;
                 streams.push(stream);
-                Source::Device { ring, channels }
+                (Source::Device { ring, channels }, name)
             }
         };
 
-        let sink = match output {
-            Output::Null => Sink::Null,
-            Output::Wav(path) => Sink::Wav(hound::WavWriter::create(
-                path,
-                hound::WavSpec {
-                    channels: 1,
-                    sample_rate: SAMPLE_RATE,
-                    bits_per_sample: 32,
-                    sample_format: hound::SampleFormat::Float,
-                },
-            )?),
+        let (sink, output_name) = match output {
+            Output::Null => (Sink::Null, "null".to_owned()),
+            Output::Wav(path) => {
+                let name = format!("wav:{}", path.display());
+                let writer = hound::WavWriter::create(
+                    path,
+                    hound::WavSpec {
+                        channels: 1,
+                        sample_rate: SAMPLE_RATE,
+                        bits_per_sample: 32,
+                        sample_format: hound::SampleFormat::Float,
+                    },
+                )?;
+                (Sink::Wav(writer), name)
+            }
             Output::Device => {
-                let (stream, ring, channels) = open_playback(&host, &stats)?;
+                let (stream, ring, channels, name) = open_playback(&host, &stats, &notify)?;
                 streams.push(stream);
-                Sink::Device { ring, channels }
+                (Sink::Device { ring, channels }, name)
             }
         };
 
@@ -113,14 +159,34 @@ impl Loopback {
             let stop = Arc::clone(&stop);
             thread::Builder::new()
                 .name("loopback".into())
-                .spawn(move || run_worker(source, sink, &stop, &stats))?
+                .spawn(move || {
+                    let result = run_worker(source, sink, &stop, &stats, &notify);
+                    if let Err(err) = &result {
+                        notify(Event::LoopbackFailed {
+                            error: err.to_string(),
+                        });
+                    }
+                    result
+                })?
         };
 
-        Ok(Self {
-            _streams: streams,
-            stop,
-            worker,
-        })
+        let started = Started {
+            input: input_name,
+            output: output_name,
+        };
+        Ok((
+            Self {
+                _streams: streams,
+                stop,
+                worker,
+            },
+            started,
+        ))
+    }
+
+    /// False once the worker has stopped on its own (it reported `LoopbackFailed`).
+    pub fn is_running(&self) -> bool {
+        !self.worker.is_finished()
     }
 
     pub fn stop(self) -> Result<(), Error> {
@@ -132,12 +198,13 @@ impl Loopback {
 fn open_capture(
     host: &cpal::Host,
     stats: &Arc<Stats>,
-) -> Result<(Stream, HeapCons<f32>, usize), Error> {
+    notify: &Notify,
+) -> Result<(Stream, HeapCons<f32>, usize, String), Error> {
     let device = host
         .default_input_device()
         .ok_or("no default input device")?;
     let config = pick_config(device.supported_input_configs()?, "input")?;
-    let config = report_config("input", &device, &config);
+    let (config, name) = describe(&device, &config);
     let channels = usize::from(config.channels);
 
     let (mut ring, consumer) = HeapRb::<f32>::new(SAMPLE_RATE as usize * channels).split();
@@ -154,23 +221,23 @@ fn open_capture(
                 .capture_device_us
                 .store(micros(at.callback.duration_since(at.capture)), Relaxed);
         },
-        // Error callbacks are off the real-time path (stream failures only), so I/O is fine here.
-        |err| eprintln!("randos_media: input stream error: {err}"),
+        stream_error(notify),
         None,
     )?;
 
-    Ok((stream, consumer, channels))
+    Ok((stream, consumer, channels, name))
 }
 
 fn open_playback(
     host: &cpal::Host,
     stats: &Arc<Stats>,
-) -> Result<(Stream, HeapProd<f32>, usize), Error> {
+    notify: &Notify,
+) -> Result<(Stream, HeapProd<f32>, usize, String), Error> {
     let device = host
         .default_output_device()
         .ok_or("no default output device")?;
     let config = pick_config(device.supported_output_configs()?, "output")?;
-    let config = report_config("output", &device, &config);
+    let (config, name) = describe(&device, &config);
     let channels = usize::from(config.channels);
 
     let (producer, mut ring) = HeapRb::<f32>::new(SAMPLE_RATE as usize * channels).split();
@@ -189,11 +256,22 @@ fn open_playback(
                 .playback_device_us
                 .store(micros(at.playback.duration_since(at.callback)), Relaxed);
         },
-        |err| eprintln!("randos_media: output stream error: {err}"),
+        stream_error(notify),
         None,
     )?;
 
-    Ok((stream, producer, channels))
+    Ok((stream, producer, channels, name))
+}
+
+/// cpal's error callback runs off the real-time path (stream failures only),
+/// so allocating here is fine.
+fn stream_error(notify: &Notify) -> impl FnMut(cpal::Error) + Send + 'static {
+    let notify = Arc::clone(notify);
+    move |err| {
+        notify(Event::StreamError {
+            error: err.to_string(),
+        })
+    }
 }
 
 /// The fewest-channel f32 config at 48 kHz. Fails loudly rather than falling
@@ -230,23 +308,19 @@ fn pick_config(
         })
 }
 
-fn report_config(
-    what: &str,
-    device: &cpal::Device,
-    config: &SupportedStreamConfig,
-) -> StreamConfig {
+fn describe(device: &cpal::Device, config: &SupportedStreamConfig) -> (StreamConfig, String) {
     let name = device
         .description()
         .map(|d| d.name().to_owned())
         .unwrap_or_else(|_| "unknown device".into());
-    eprintln!(
-        "randos_media: {what}: {name}, {}ch {} Hz {}, buffer {:?}",
+    let description = format!(
+        "{name}, {}ch {} Hz {}, buffer {:?}",
         config.channels(),
         config.sample_rate(),
         config.sample_format(),
         config.buffer_size()
     );
-    config.config()
+    (config.config(), description)
 }
 
 fn run_worker(
@@ -254,6 +328,7 @@ fn run_worker(
     mut sink: Sink,
     stop: &AtomicBool,
     stats: &Stats,
+    notify: &Notify,
 ) -> Result<(), Error> {
     let mut codec = OpusLoop::new()?;
     let (mut frame, mut decoded) = ([0.0; FRAME], [0.0; FRAME]);
@@ -301,7 +376,7 @@ fn run_worker(
             }
         }
 
-        report.frame(packet_bytes, &frame, &source, &sink, stats);
+        report.frame(packet_bytes, &frame, &source, &sink, stats, notify);
     }
 
     if let Sink::Wav(writer) = sink {
@@ -334,7 +409,7 @@ fn micros(duration: Duration) -> u64 {
     u64::try_from(duration.as_micros()).unwrap_or(u64::MAX)
 }
 
-/// Prints one stderr line per second: where the mouth-to-ear latency goes.
+/// Reports once a second where the mouth-to-ear latency goes.
 struct Report {
     since: Instant,
     frames: u32,
@@ -361,6 +436,7 @@ impl Report {
         source: &Source,
         sink: &Sink,
         stats: &Stats,
+        notify: &Notify,
     ) {
         self.frames += 1;
         self.bytes += bytes;
@@ -379,22 +455,28 @@ impl Report {
             Sink::Device { ring, channels } => ms_of(ring.occupied_len() / channels),
             Sink::Null | Sink::Wav(_) => 0.0,
         };
-        let capture_device = stats.capture_device_us.load(Relaxed) as f64 / 1000.0;
-        let playback_device = stats.playback_device_us.load(Relaxed) as f64 / 1000.0;
+        let capture_device_ms = stats.capture_device_us.load(Relaxed) as f64 / 1000.0;
+        let playback_device_ms = stats.playback_device_us.load(Relaxed) as f64 / 1000.0;
         // A whole 20 ms frame is buffered before encoding, plus 6.5 ms of Opus lookahead.
         let codec_ms = 26.5;
-        let total = capture_device + capture_ring + codec_ms + playback_ring + playback_device;
-        let kbps = self.bytes as f64 * 8.0 / elapsed.as_secs_f64() / 1000.0;
-        let level_db = 20.0 * self.peak.max(1e-6).log10();
 
-        eprintln!(
-            "randos_media: ≈{total:.1} ms = capture {capture_device:.1} + ring {capture_ring:.1} \
-             + codec {codec_ms} + ring {playback_ring:.1} + playback {playback_device:.1} | \
-             {kbps:.0} kbps, input peak {level_db:.0} dBFS | underruns {} overruns {} dropped {}",
-            stats.playback_underruns.load(Relaxed),
-            stats.capture_overruns.load(Relaxed),
-            self.dropped,
-        );
+        notify(Event::LoopbackStats(LoopbackStats {
+            latency_ms: capture_device_ms
+                + capture_ring
+                + codec_ms
+                + playback_ring
+                + playback_device_ms,
+            capture_device_ms,
+            capture_ring_ms: capture_ring,
+            codec_ms,
+            playback_ring_ms: playback_ring,
+            playback_device_ms,
+            kbps: self.bytes as f64 * 8.0 / elapsed.as_secs_f64() / 1000.0,
+            input_peak_dbfs: f64::from(20.0 * self.peak.max(1e-6).log10()),
+            underruns: stats.playback_underruns.load(Relaxed),
+            overruns: stats.capture_overruns.load(Relaxed),
+            dropped: self.dropped,
+        }));
 
         *self = Self {
             dropped: self.dropped,

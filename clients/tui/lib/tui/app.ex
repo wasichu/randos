@@ -8,6 +8,10 @@ defmodule Tui.App do
       `Tui.Connection` to it
     * `:connection` — use an existing connection pid instead (tests pass
       themselves and receive pushes as casts)
+    * `:media` — the `Tui.Media` server (pid or name), if audio is available;
+      `t` on the idle screen runs a short mic → speaker test through it
+    * `:mic_test` — `{input, output}` for that test (default
+      `{"device", "device"}`; tests use `{"sine", "null"}`)
     * `:test_pid` — receives `{:tui_model, app_pid, model}` after every change (tests)
   """
   use ExRatatui.App
@@ -18,9 +22,11 @@ defmodule Tui.App do
   alias ExRatatui.Style
   alias ExRatatui.Widgets.{Block, List, Paragraph}
   alias Tui.Connection
+  alias Tui.Media
   alias Tui.Model
 
   @tick_ms 1_000
+  @mic_test_ms 5_000
 
   @impl true
   def mount(opts) do
@@ -42,6 +48,9 @@ defmodule Tui.App do
        connection: connection,
        owned?: owned?,
        uri: Keyword.get(opts, :uri, "(test)"),
+       media: Keyword.get(opts, :media),
+       mic_test_endpoints: Keyword.get(opts, :mic_test, {"device", "device"}),
+       mic_test: nil,
        test_pid: Keyword.get(opts, :test_pid)
      }}
   end
@@ -64,6 +73,17 @@ defmodule Tui.App do
     {:noreply, apply_model(state, Model.tick(state.model, now_ms()), [])}
   end
 
+  def handle_info({:media, "loopback_stats", stats}, %{mic_test: %{running?: true}} = state),
+    do: {:noreply, update_mic_test(state, stats: stats)}
+
+  def handle_info({:media, "loopback_failed", %{"error" => error}}, %{mic_test: %{}} = state),
+    do: {:noreply, update_mic_test(state, running?: false, error: error)}
+
+  def handle_info(:mic_test_done, %{mic_test: %{running?: true}} = state) do
+    _ = call_media(state.media, &Media.loopback_stop/1)
+    {:noreply, update_mic_test(state, running?: false)}
+  end
+
   def handle_info(_message, state), do: {:noreply, state}
 
   @impl true
@@ -71,6 +91,14 @@ defmodule Tui.App do
     do: {:stop, state}
 
   def handle_event(%Event.Key{code: "q", kind: "press"}, state), do: {:stop, state}
+
+  def handle_event(
+        %Event.Key{code: "t", kind: "press"},
+        %{model: %{connection: :connected, status: :idle}, mic_test: test} = state
+      )
+      when test == nil or not test.running? do
+    {:noreply, start_mic_test(state)}
+  end
 
   def handle_event(%Event.Key{code: code, kind: "press"}, state) do
     {model, commands} = Model.key(state.model, code)
@@ -99,17 +127,18 @@ defmodule Tui.App do
 
     [
       {header(state), header_area}
-      | main(model, main_area)
+      | main(model, main_area, mic_test_text(state))
     ] ++
       [
         {%List{items: model.log, block: panel(" Events ")}, log_area},
-        {%Paragraph{text: " " <> help(model), style: %Style{fg: :dark_gray}}, help_area}
+        {%Paragraph{text: " " <> help(model) <> mic_help(state), style: %Style{fg: :dark_gray}},
+         help_area}
       ]
   end
 
   # The idle form is a List so the selection marker keeps rows aligned
   # (Paragraph wrapping trims leading spaces).
-  defp main(%{connection: :connected, status: :idle} = model, area) do
+  defp main(%{connection: :connected, status: :idle} = model, area, mic_test) do
     [form_area, text_area] = Layout.split(area, :vertical, [{:length, 5}, {:min, 0}])
     ack = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
 
@@ -129,11 +158,12 @@ defmodule Tui.App do
 
     [
       {form, form_area},
-      {%Paragraph{text: error <> "Press Enter to find a rando.", wrap: true}, text_area}
+      {%Paragraph{text: error <> "Press Enter to find a rando." <> mic_test, wrap: true},
+       text_area}
     ]
   end
 
-  defp main(model, area) do
+  defp main(model, area, _mic_test) do
     [{%Paragraph{text: main_text(model), block: panel(title(model)), wrap: true}, area}]
   end
 
@@ -199,11 +229,62 @@ defmodule Tui.App do
   defp help(%{status: :extension_pending}), do: "y continue  n end  q quit"
   defp help(_model), do: "q quit"
 
+  defp mic_help(%{media: nil}), do: ""
+  defp mic_help(%{model: %{connection: :connected, status: :idle}}), do: "  t mic test"
+  defp mic_help(_state), do: ""
+
+  defp mic_test_text(%{media: nil}), do: ""
+  defp mic_test_text(%{mic_test: nil}), do: "\n\nPress t to test your mic (wear headphones)."
+
+  defp mic_test_text(%{mic_test: %{error: error}}) when is_binary(error),
+    do: "\n\nMic test failed: " <> error
+
+  defp mic_test_text(%{mic_test: %{running?: true, stats: nil}}),
+    do: "\n\nMic test: say something; you should hear yourself…"
+
+  defp mic_test_text(%{mic_test: %{running?: running?, stats: stats}}) do
+    prefix = if running?, do: "Mic test:", else: "Mic test done:"
+
+    "\n\n#{prefix} ≈#{round(stats["latency_ms"])} ms delay, " <>
+      "input peak #{round(stats["input_peak_dbfs"])} dBFS"
+  end
+
   defp panel(title) do
     %Block{title: title, borders: [:all], border_type: :rounded, border_style: %Style{fg: :cyan}}
   end
 
   ## Helpers
+
+  defp start_mic_test(state) do
+    {input, output} = state.mic_test_endpoints
+
+    case call_media(state.media, &Media.loopback_start(&1, input, output)) do
+      {:ok, _started} ->
+        Process.send_after(self(), :mic_test_done, @mic_test_ms)
+        notify_test(%{state | mic_test: %{running?: true, stats: nil, error: nil}})
+
+      {:error, reason} ->
+        notify_test(%{state | mic_test: %{running?: false, stats: nil, error: reason}})
+    end
+  end
+
+  defp update_mic_test(state, changes),
+    do: notify_test(%{state | mic_test: Map.merge(state.mic_test, Map.new(changes))})
+
+  # Media is optional and restartable: a missing or restarting helper is an
+  # error to show, not a crash.
+  defp call_media(nil, _fun), do: {:error, "no audio helper (cargo build -p randos_media)"}
+
+  defp call_media(media, fun) do
+    fun.(media)
+  catch
+    :exit, _reason -> {:error, "the audio helper isn't running"}
+  end
+
+  defp notify_test(state) do
+    if state.test_pid, do: send(state.test_pid, {:tui_mic_test, self(), state.mic_test})
+    state
+  end
 
   defp apply_model(state, model, commands) do
     Enum.each(commands, fn {:push, event, payload} ->

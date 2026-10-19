@@ -267,7 +267,9 @@ The browser's matching seam is unchanged: `processLocalStream` in
   - The helper takes `--in sine|wav:PATH|device` and
     `--out null|wav:PATH|device`, so CI runs the same binary without audio
     hardware.
-  - `Tui.Media` is tested against a fake Port.
+  - `Tui.Media` is tested against the real helper binary rather than a fake
+    Port, using the hardware-free `sine`/`null` loopback (stronger, and just
+    as fast); `tests/port.rs` covers the same contract from the Rust side.
   - `just tui-smoke` grows a TUI↔browser scenario: Chrome with
     `--use-fake-device-for-media-stream` (already used by `just smoke`), the
     helper with `--in sine --out wav`, asserting received energy in both

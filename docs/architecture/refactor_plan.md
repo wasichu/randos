@@ -1,6 +1,6 @@
 # Randos roadmap
 
-Verified against the code at `ae684df` (2026-10-19). Update this line, and
+Verified against the code at `c236547` (2026-10-19). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -99,13 +99,18 @@ run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
 `ex_webrtc` rejected for its in-VM NIFs (OpenSSL, libsrtp) compiled on users'
 machines. Staged: skeleton → browser interop with real TURN → hardening → AEC.
 
-Stage 0 so far: the helper (`clients/tui/native`, crate `randos_media`) with
-Port framing and a `--loopback` mode (cpal → Opus → cpal, ≈81 ms pipeline
-latency measured), and `Tui.Media` owning it over a `{:packet, 4}` Port.
-Remaining: an acoustic mouth-to-ear check by hand (and whether macOS shows a
-mic prompt, naming which app), starting `Tui.Media` under the TUI's
-supervision tree with a restart test (nothing starts it yet), and putting the
-loopback under Port control. Capability-aware matching comes before Stage 1.
+Stage 0 code is done:
+- the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port
+  protocol (requests with ids, replies, events) and runs a cpal → Opus → cpal
+  loopback (≈81 ms pipeline latency measured);
+- `Tui.Media` owns it (pure `Tui.Media.Protocol`), under `Tui.Supervisor`
+  next to `Tui.App`, so a helper crash restarts only the helper;
+- `t` on the TUI's idle screen runs a 5 s mic test through it.
+
+**Open TODO (needs headphones, by hand):** run `just media-loopback` and the
+TUI's `t` mic test, clap to judge mouth-to-ear delay, and note whether macOS
+shows a mic prompt and which app it names. Record the results in
+`tui_audio.md`. Capability-aware matching comes before Stage 1.
 
 ### 4.4 Distribution
 

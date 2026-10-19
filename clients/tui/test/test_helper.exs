@@ -1,4 +1,10 @@
 # Integration tests need a running Randos server (just tui-smoke starts one).
-# :native tests need the media helper built (cargo build -p randos_media).
-helper_built? = File.regular?(Tui.Media.default_helper_path())
-ExUnit.start(exclude: [:integration] ++ if(helper_built?, do: [], else: [:native]))
+#
+# :native tests need the media helper built (cargo build -p randos_media;
+# just precommit does). They're skipped when it isn't, unless
+# RANDOS_REQUIRE_NATIVE=1 (set it in CI), which turns a missing helper into
+# failures instead of a silent skip.
+require_native? = System.get_env("RANDOS_REQUIRE_NATIVE") == "1"
+run_native? = require_native? or File.regular?(Tui.Media.default_helper_path())
+
+ExUnit.start(exclude: [:integration] ++ if(run_native?, do: [], else: [:native]))
