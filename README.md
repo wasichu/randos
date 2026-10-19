@@ -53,16 +53,20 @@ disappear on application restart.
 
 ## Local Development
 
-Install dependencies and build assets:
+Toolchain versions (Erlang/OTP, Elixir, just) are pinned in `mise.toml`, and
+common commands live in the `Justfile` (`just --list` shows them all).
+
+Install the toolchain and dependencies, and build assets:
 
 ```bash
-mix setup
+mise install
+just setup
 ```
 
 Start the app:
 
 ```bash
-mix phx.server
+just dev
 ```
 
 Open:
