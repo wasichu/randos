@@ -23,7 +23,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 2 | UI-agnostic participant core; LiveView becomes a shell | Done |
 | 3 | Public participant channel (browser stays on LiveView) | Done |
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
-| 4 | TUI | 4.1, 4.2 done; **next: 4.3 (audio)** |
+| 4 | TUI | 4.1, 4.2 done; 4.3 Stage 0 done (headphone check pending), **next: 4.3 Stage 1**; then 4.4 release binaries and 4.5 Homebrew tap |
 | 5 | Voice anonymization | Planned |
 
 ## How it fits together
@@ -129,6 +129,37 @@ Decisions for Stage 1 (from the Stage 0 review):
 ### 4.4 Distribution
 
 Single-binary releases via Burrito (`mix ex_ratatui.gen.burrito`).
+
+### 4.5 Homebrew (custom tap)
+
+Goal: `brew install wasichu/randos/randos`, then `randos` just works. Far
+off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
+
+- **A tap, not homebrew-core.** Core wants formulas built from source (Rust
+  plus Erlang/Elixir toolchains at install time) and a notable project; a tap
+  (`github.com/wasichu/homebrew-randos`, formula `randos`) can install our
+  prebuilt release archives, one per platform (`on_macos`/`on_arm` blocks
+  with a `sha256` each). Linuxbrew gets the Linux glibc build from the same
+  formula. Core can be revisited if the project grows.
+- **What it installs:** the TUI and the `randos_media` helper side by side,
+  so `Tui.Media.default_helper_path/0` finds it without `RANDOS_MEDIA_BIN`.
+  Decide in 4.4 whether that's a Burrito binary (unpacks to a cache dir on
+  first run) or a plain `mix release` directory; the latter suits Homebrew's
+  layout better.
+- **Release automation:** a tagged release in CI builds the archives,
+  attaches them to a GitHub release, and bumps the formula's URLs and hashes
+  in the tap (needs a token with write access to the tap, stored as a repo
+  secret: owner's call when we get there). The formula's `test do` block runs
+  the TUI's `--version` and pings the helper.
+- **Product defaults that change for installed users:** `mix tui` defaults to
+  the local dev server; an installed `randos` must default to production
+  (`wss://randos.slowinput.org/participant/websocket`), with `--url` kept for
+  dev.
+- **macOS:** Homebrew formulas don't add the quarantine attribute, so an
+  unsigned binary runs; mic permission is granted to the terminal app hosting
+  it. Signing and notarization are optional for a tap, but revisit them if the
+  4.3 Stage 0 mic-permission findings show an unsigned helper is treated
+  differently.
 
 ## Phase 5: Voice anonymization
 
