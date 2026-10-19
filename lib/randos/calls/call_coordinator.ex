@@ -1,6 +1,6 @@
 defmodule Randos.Calls.CallCoordinator do
   @moduledoc """
-  Per-call mock coordination process.
+  Per-call coordination process.
 
   This process owns ephemeral call state: timers, participant monitors, hangups,
   and extension votes. It updates the Ash `CallSession` resource for domain
@@ -181,7 +181,7 @@ defmodule Randos.Calls.CallCoordinator do
       %{state | call_session: call_session, status: :active}
       |> schedule_call_timeout(state.call_duration_ms)
 
-    broadcast(state, {:mock_call_active, public_call_state(state)})
+    broadcast(state, {:call_active, public_call_state(state)})
 
     {:noreply, state}
   end
@@ -210,7 +210,7 @@ defmodule Randos.Calls.CallCoordinator do
         extension_votes: %{}
     }
 
-    broadcast(state, {:mock_call_extension_pending, public_call_state(state)})
+    broadcast(state, {:call_extension_pending, public_call_state(state)})
 
     {:noreply, state}
   end
@@ -303,7 +303,7 @@ defmodule Randos.Calls.CallCoordinator do
           }
           |> schedule_call_timeout(state.extension_duration_ms)
 
-        broadcast(state, {:mock_call_extended, public_call_state(state)})
+        broadcast(state, {:call_extended, public_call_state(state)})
         {:ok, state}
 
       {:error, _error} ->
@@ -329,7 +329,7 @@ defmodule Randos.Calls.CallCoordinator do
       end
 
     state = %{state | call_session: call_session, status: :ended}
-    broadcast(state, {:mock_call_ended, public_call_state(state)})
+    broadcast(state, {:call_ended, public_call_state(state)})
     demonitor_participants(state)
     state
   end

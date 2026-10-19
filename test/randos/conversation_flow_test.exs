@@ -4,7 +4,7 @@ defmodule Randos.ConversationFlowTest do
   alias Randos.ConversationFlow
 
   describe "transition/2" do
-    test "allows the mocked product skeleton state transitions" do
+    test "allows the participant flow state transitions" do
       assert {:ok, :looking} = ConversationFlow.transition(:idle, :looking)
       assert {:ok, :idle} = ConversationFlow.transition(:looking, :idle)
       assert {:ok, :connecting} = ConversationFlow.transition(:looking, :connecting)

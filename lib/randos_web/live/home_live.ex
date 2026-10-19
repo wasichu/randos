@@ -122,19 +122,19 @@ defmodule RandosWeb.HomeLive do
     {:noreply, assign_match(socket, match)}
   end
 
-  def handle_info({:mock_call_active, call}, socket) do
+  def handle_info({:call_active, call}, socket) do
     {:noreply, assign_call_state(socket, call, :in_call)}
   end
 
-  def handle_info({:mock_call_extension_pending, call}, socket) do
+  def handle_info({:call_extension_pending, call}, socket) do
     {:noreply, assign_call_state(socket, call, :extension_pending)}
   end
 
-  def handle_info({:mock_call_extended, call}, socket) do
+  def handle_info({:call_extended, call}, socket) do
     {:noreply, assign_call_state(socket, call, :in_call)}
   end
 
-  def handle_info({:mock_call_ended, call}, socket) do
+  def handle_info({:call_ended, call}, socket) do
     {:noreply, finish_call(socket, call)}
   end
 

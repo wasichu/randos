@@ -1,6 +1,6 @@
 defmodule Randos.ConversationFlow do
   @moduledoc """
-  Centralized UI state transitions for the mocked conversation flow.
+  Centralized UI state transitions for the participant conversation flow.
   """
 
   @type state :: :idle | :looking | :connecting | :in_call | :extension_pending
