@@ -1,21 +1,26 @@
-# Tui
+# Randos terminal client (text-only)
 
-**TODO: Add description**
+A terminal client for [Randos](../../README.md): choose languages, get matched,
+see the call timer, vote on extensions, hang up or go next. **No audio yet**
+(roadmap Phase 4.3), so a browser peer's call ends immediately with
+`audio_unsupported`; two terminal clients can hold a call.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `tui` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:tui, "~> 0.1.0"}
-  ]
-end
+```bash
+just tui                      # from the repo root: local dev server (just dev)
+cd clients/tui && mix tui --url ws://localhost:4000/participant/websocket
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/tui>.
+Keys are shown at the bottom of the screen; `q` quits. Logs go to `tmp/tui.log`.
 
+It speaks the public participant channel protocol,
+[`docs/architecture/participant_channel.md`](../../docs/architecture/participant_channel.md),
+and is written against that document only.
+
+- `Tui.Model` — pure view model: folds server messages and keys into what's
+  shown, returns channel pushes as commands
+- `Tui.Connection` — Slipstream client for the channel
+- `Tui.App` — the ex_ratatui app
+
+Tests: `mix test` (unit, app under ex_ratatui's test mode, connection against
+`Slipstream.SocketTest`); `just tui-smoke` from the repo root for two real
+clients against a server.

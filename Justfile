@@ -52,6 +52,21 @@ smoke:
     for _ in $(seq 1 60); do curl -sf -o /dev/null http://localhost:4010/ && break; sleep 1; done
     BASE_URL=http://localhost:4010 node test/e2e/call_smoke.mjs
 
+# Terminal client (text-only) against the local dev server; RANDOS_URL or --url to override
+tui *args:
+    cd clients/tui && mix tui {{args}}
+
+# Two real TUI clients call each other through a throwaway server with 8s segments
+tui-smoke:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p tmp
+    PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS=8000 mix phx.server > tmp/tui-smoke-server.log 2>&1 &
+    server=$!
+    trap 'kill $server 2>/dev/null; wait $server 2>/dev/null || true' EXIT
+    for _ in $(seq 1 60); do curl -sf -o /dev/null http://localhost:4010/ && break; sleep 1; done
+    cd clients/tui && RANDOS_URL=ws://localhost:4010/participant/websocket mix test --only integration
+
 # Run the TUI client's tests (pass args through)
 test-tui *args:
     cd clients/tui && mix test {{args}}

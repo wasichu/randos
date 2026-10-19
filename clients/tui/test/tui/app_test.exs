@@ -77,7 +77,7 @@ defmodule Tui.AppTest do
       )
 
     send(pid, {:randos, {:joined, %{"state" => server_state("idle"), "languages" => @languages}}})
-    assert_receive {:tui_model, %Model{status: :idle}}
+    assert_receive {:tui_model, ^pid, %Model{status: :idle}}
 
     for code <- [" ", "enter"], do: key(pid, code)
 
@@ -85,7 +85,7 @@ defmodule Tui.AppTest do
                     {:push, "find", %{speaks: "en", listens: "es", adult_acknowledged: true}}}
 
     send(pid, {:randos, {:push, "state", server_state("in_call")}})
-    assert_receive {:tui_model, %Model{status: :in_call}}
+    assert_receive {:tui_model, ^pid, %Model{status: :in_call}}
 
     send(pid, {:randos, {:push, "signal", %{"type" => "offer", "call_id" => "call-1"}}})
 

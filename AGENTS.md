@@ -11,6 +11,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
   - `just setup` — toolchain + deps + assets
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
+  - `just tui` — the terminal client against the local dev server (`RANDOS_URL`/`--url`
+    to override); `just tui-smoke` — two real TUI clients call each other through a
+    throwaway server (run after changing `clients/tui` or the channel)
   - `just top` — dev server plus a terminal dashboard (`RandosDev.Monitor`, in `dev/`):
     queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
   - `just test [path]`, `just test-failed`
@@ -56,6 +59,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
 | Channel API | `RandosWeb.ParticipantSocket`/`ParticipantChannel` (shared `RandosWeb.ParticipantShell`) | Anonymous JSON API for non-browser clients (the TUI). Protocol: `docs/architecture/participant_channel.md`; keep it in sync with the channel |
 | Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
+| TUI client | `clients/tui` (separate Mix project: `Tui.App`, `Tui.Model`, `Tui.Connection`) | Text-only terminal client over the participant channel. **Written against `participant_channel.md` only, never the channel source**; anything it needs that the doc lacks is a doc bug. Renders server state; no state machine of its own |
 
 - Processes notify LiveViews over `Randos.PubSub`. Topic per participant:
   `"matchmaking:participant:<id>"`.

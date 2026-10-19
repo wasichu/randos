@@ -8,7 +8,7 @@ defmodule Tui.App do
       `Tui.Connection` to it
     * `:connection` — use an existing connection pid instead (tests pass
       themselves and receive pushes as casts)
-    * `:test_pid` — receives `{:tui_model, model}` after every change (tests)
+    * `:test_pid` — receives `{:tui_model, app_pid, model}` after every change (tests)
   """
   use ExRatatui.App
 
@@ -209,7 +209,7 @@ defmodule Tui.App do
       Connection.push(state.connection, event, payload)
     end)
 
-    if state.test_pid, do: send(state.test_pid, {:tui_model, model})
+    if state.test_pid, do: send(state.test_pid, {:tui_model, self(), model})
     %{state | model: model}
   end
 

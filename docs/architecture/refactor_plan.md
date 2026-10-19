@@ -23,7 +23,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 2 | UI-agnostic participant core; LiveView becomes a shell | Done |
 | 3 | Public participant channel (browser stays on LiveView) | Done |
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
-| 4 | TUI | 4.1 done; **next: 4.2** |
+| 4 | TUI | 4.1, 4.2 done; **next: 4.3 (audio)** |
 | 5 | Voice anonymization | Planned |
 
 ## How it fits together
@@ -75,7 +75,7 @@ Built as `RandosDev.Monitor` (an `ExRatatui.App`) over the pure
 - **Tests:** ex_ratatui's headless backend; the state the monitor renders comes
   from a plain module that folds telemetry events, tested without a terminal.
 
-### 4.2 Text-only participant client
+### 4.2 Text-only participant client (done)
 
 A separate Mix project in `clients/tui` (its own deps; nothing in the server
 release). It is a **renderer of the channel's `state` pushes**: it holds no
@@ -84,9 +84,12 @@ participant state machine of its own, because the server's
 and timer, vote on extensions, hang up, Next. Audio is a stub. It can be
 matched with a browser user.
 
-- Channel client: decide when starting, between Slipstream and a small
-  hand-written Phoenix-protocol client over a websocket library (justify the
-  dependency either way).
+- Built as `Tui.App` over the pure `Tui.Model`, connected by `Tui.Connection`
+  (Slipstream, chosen for join/heartbeat/reconnect handling and its test
+  helper). Languages come from the join reply. With no audio, the client
+  answers a peer's `offer` with `connection_failed` (`audio_unsupported`),
+  so a browser peer's call ends cleanly; two TUIs can hold a call (used by
+  `just tui-smoke`). `just tui` runs it against the local dev server.
 
 ### 4.3 Audio
 
