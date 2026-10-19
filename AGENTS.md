@@ -25,7 +25,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 | Layer | Module(s) | Owns |
 | --- | --- | --- |
-| Ash domain | `Randos.Comms` (`AnonymousSession`, `CallSession`) | Domain facts + valid call lifecycle transitions (AshStateMachine) |
+| Ash domain | `Randos.Comms` (`CallSession`) | Domain facts + valid call lifecycle transitions (AshStateMachine) |
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership, keyed by `{speaks, listens}` |
 | Calls | `Randos.Calls.CallCoordinator` (one per call, under `Randos.Calls.CallSupervisor`) | Timers, extension votes, participant monitoring, signal relay |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
@@ -82,7 +82,7 @@ skills under `.claude/skills/` (regenerate with `mix usage_rules.sync`):
 
 - `phoenix-framework` — Phoenix, HEEx, LiveView (streams, forms, tests). Load
   before touching `lib/randos_web/` or templates.
-- `ash-framework` — Ash, AshPhoenix, AshStateMachine. Load before touching
+- `ash-framework` — Ash, AshStateMachine. Load before touching
   `lib/randos/comms/` or anything calling `Ash.*`.
 
 Never edit generated content between `usage-rules-start`/`-end` markers or in

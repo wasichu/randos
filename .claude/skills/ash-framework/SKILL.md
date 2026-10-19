@@ -1,6 +1,6 @@
 ---
 name: ash-framework
-description: "Use when working with Ash, AshPhoenix, or AshStateMachine (Randos.Comms resources, actions, changesets, state transitions). Consult before domain changes."
+description: "Use when working with Ash or AshStateMachine (Randos.Comms resources, actions, changesets, state transitions). Consult before domain changes."
 metadata:
   managed-by: usage-rules
 ---
@@ -28,20 +28,10 @@ metadata:
 - [temporal](references/ash/temporal.md)
 - [testing](references/ash/testing.md)
 
-### ash_phoenix
-
-- [ash_phoenix](references/ash_phoenix/ash_phoenix.md)
-- [best_practices](references/ash_phoenix/best_practices.md)
-- [debugging_form_submissions](references/ash_phoenix/debugging_form_submissions.md)
-- [error_handling](references/ash_phoenix/error_handling.md)
-- [form_integration](references/ash_phoenix/form_integration.md)
-- [nested_forms](references/ash_phoenix/nested_forms.md)
-- [union_forms](references/ash_phoenix/union_forms.md)
-
 ## Searching Documentation
 
 ```sh
-mix usage_rules.search_docs "search term" -p ash -p ash_phoenix -p ash_state_machine
+mix usage_rules.search_docs "search term" -p ash -p ash_state_machine
 ```
 
 ## Available Mix Tasks
@@ -73,9 +63,6 @@ mix usage_rules.search_docs "search term" -p ash -p ash_phoenix -p ash_state_mac
 - `mix ash.signals` - Prints the signals of your application, and what emits and listens to them
 - `mix ash.tear_down` - Runs all tear_down tasks for any extension on any resource/domain in your application.
 - `mix compile.ash_signals`
-- `mix ash_phoenix.gen.html` - Generates a controller and HTML views for an existing Ash resource.
-- `mix ash_phoenix.gen.live` - Generates liveviews for a given domain and resource.
-- `mix ash_phoenix.install` - Installs AshPhoenix into a project. Should be called with `mix igniter.install ash_phoenix`
 - `mix ash_state_machine.generate_flow_charts` - Generates Mermaid Flow Charts for each resource using `AshStateMachine`
 - `mix ash_state_machine.install` - Installs AshStateMachine
 - `mix ash_state_machine.install.docs`

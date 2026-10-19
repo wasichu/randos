@@ -9,7 +9,6 @@ defmodule Randos.Comms do
   use Ash.Domain
 
   resources do
-    resource Randos.Comms.AnonymousSession
     resource Randos.Comms.CallSession
   end
 end
