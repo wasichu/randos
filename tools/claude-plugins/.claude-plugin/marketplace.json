@@ -1,0 +1,12 @@
+{
+  "name": "randos-local",
+  "owner": { "name": "Randos" },
+  "description": "Project-local Claude Code plugins for Randos.",
+  "plugins": [
+    {
+      "name": "expert-lsp",
+      "source": "./expert-lsp",
+      "description": "Elixir code intelligence via Expert (the official Elixir language server): diagnostics after edits and symbol navigation."
+    }
+  ]
+}

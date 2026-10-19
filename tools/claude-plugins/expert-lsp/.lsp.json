@@ -1,0 +1,11 @@
+{
+  "expert": {
+    "command": "expert",
+    "args": ["--stdio"],
+    "extensionToLanguage": {
+      ".ex": "elixir",
+      ".exs": "elixir",
+      ".heex": "phoenix-heex"
+    }
+  }
+}

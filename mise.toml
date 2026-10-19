@@ -10,3 +10,6 @@ node = "26.10.0"
 # Infra as code for the coturn server (infra/coturn); state is encrypted and
 # committed (see infra/coturn/README.md).
 opentofu = "1.13.1"
+# Elixir language server: gives Claude Code (via the expert-lsp plugin in
+# tools/claude-plugins) compiler diagnostics after edits and symbol navigation.
+expert = "0.1.11"
