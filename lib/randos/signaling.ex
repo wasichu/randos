@@ -10,18 +10,9 @@ defmodule Randos.Signaling do
 
   @media_types [:offer, :answer, :ice_candidate]
 
-  @lifecycle_types [
-    :hangup,
-    :peer_disconnected,
-    :connection_failed,
-    :connection_established,
-    :time_limit_reached,
-    :extension_requested,
-    :extension_accepted,
-    :extension_declined,
-    :extension_confirmed,
-    :extension_timeout
-  ]
+  # What the client reports about its own connection. The server relays these
+  # to the peer, and connection_failed / peer_disconnected also end the call.
+  @lifecycle_types [:connection_established, :connection_failed, :peer_disconnected]
 
   @types @media_types ++ @lifecycle_types
 
@@ -29,16 +20,9 @@ defmodule Randos.Signaling do
           :offer
           | :answer
           | :ice_candidate
-          | :hangup
-          | :peer_disconnected
-          | :connection_failed
           | :connection_established
-          | :time_limit_reached
-          | :extension_requested
-          | :extension_accepted
-          | :extension_declined
-          | :extension_confirmed
-          | :extension_timeout
+          | :connection_failed
+          | :peer_disconnected
 
   @type message :: %{
           call_id: String.t(),

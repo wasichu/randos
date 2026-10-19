@@ -8,7 +8,7 @@ import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
 
 const DISCONNECTED_GRACE_MS = 5000
-const TEARDOWN_SIGNALS = new Set(["hangup", "peer_disconnected", "connection_failed"])
+const TEARDOWN_SIGNALS = new Set(["peer_disconnected", "connection_failed"])
 
 export const WebRTCClientState = Object.freeze({
   NOT_STARTED: "not_started",

@@ -82,6 +82,10 @@ Functional core, imperative shell:
 
 ## Phase 3: public participant transport (a Channel)
 
+Status: done (browser stays on LiveView; decided 2026-10-19). `ParticipantShell`
+shared by HomeLive and `ParticipantChannel`; protocol in
+`participant_channel.md`. No coordinator Registry yet (nothing needs it).
+
 The TUI can't use LiveView, and must not use distribution or SSH. So:
 
 - Add `RandosWeb.ParticipantSocket` + `ParticipantChannel` ("participant:<id>")
