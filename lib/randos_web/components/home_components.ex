@@ -137,7 +137,7 @@ defmodule RandosWeb.HomeComponents do
                 "I am 18 or older and understand that conversations are anonymous and unmoderated."
               )
             }
-            class="size-4 rounded border-stone-300 text-teal-700 focus:ring-teal-600"
+            class="size-4 rounded border-stone-300 accent-teal-700 focus:ring-teal-600"
           />
         </div>
 
@@ -148,7 +148,7 @@ defmodule RandosWeb.HomeComponents do
           class={[
             "inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition duration-200",
             acknowledged?(@preferences) &&
-              "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100",
+              "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300",
             !acknowledged?(@preferences) && "cursor-not-allowed bg-stone-200 text-stone-500"
           ]}
         >
@@ -438,7 +438,7 @@ defmodule RandosWeb.HomeComponents do
           id="continue-call-button"
           phx-click="extension_vote"
           phx-value-vote="continue"
-          class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100"
+          class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
           {gettext("Continue")}
         </button>
@@ -477,7 +477,7 @@ defmodule RandosWeb.HomeComponents do
 
   defp progress_step_class(ui_state, state) do
     if ui_state == state do
-      "border-stone-950 bg-stone-950 text-white"
+      "border-stone-950 bg-stone-950 text-white dark:border-stone-100 dark:bg-stone-100 dark:text-stone-950"
     else
       "border-stone-200 bg-white text-stone-500"
     end
