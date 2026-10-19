@@ -30,7 +30,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | --- | --- | --- |
 | Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership, keyed by `{speaks, listens}` |
-| Calls | `Randos.Calls.CallCoordinator` (one per call, under `Randos.Calls.CallSupervisor`) | Timers, extension votes, participant monitoring, signal relay |
+| Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, signal relay |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
 | Web | `RandosWeb.HomeLive` | UI state (`Randos.ConversationFlow`), browser events, assigns |
 | Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
