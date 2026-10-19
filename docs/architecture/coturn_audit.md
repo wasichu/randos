@@ -4,24 +4,23 @@
 cloud-init), logging **errors only** (`log-min-level=error`, native in
 coturn 4.18), infra on **OpenTofu with encrypted, committed state**.
 
-**Status:** the hardened config is in `cloud-init.yaml.tftpl` / `variables.tf`
-(pinned `coturn/coturn:4.18.0`, `denied-peer-ip` incl. metadata and
-IPv4-mapped IPv6, `no-tcp-relay`, `no-multicast-peers`, `external-ip`
-mapped reserved→anchor from metadata, `total-quota`/`max-bps`, errors-only
-logs with Docker log rotation, key/conf `0640 root:nogroup` since the image
-runs as `nobody`, relay range 49152–65535, TTL 3600). **Not applied.**
-Step A applies the same turnserver.conf on the live host once SSH works;
-step B is `just tofu apply` after state is rebuilt by import.
+**Status: applied 2026-10-19 (rebuild, ~2.5 min TURN downtime).** Step A was
+skipped: the Droplet Console's agent couldn't authenticate, so we went straight
+to the rebuild. New droplet `610528889` (`s-1vcpu-1gb-amd`; `s-1vcpu-1gb` is no
+longer offered in nyc3), reserved IP unchanged, TURN secret rotated and set on
+Fly. Verified from outside: coturn 4.18.0 running with the hardened config,
+Let's Encrypt cert issued at boot (port 80 works), STUN on 3478 UDP/TCP, TLS
+1.2+ only on 5349, authenticated TURN relay works with the app's REST
+credentials, and relaying to metadata, loopback, and every private range
+returns 403. `tofu plan` shows no drift.
 
-Read-only audit of the TURN/STUN server (`randos-coturn`, DigitalOcean nyc3,
-reserved IP 129.212.147.247 = `turn.slowinput.org`). Nothing was changed.
-
-**Method and limits.** Repo review of `infra/coturn/`, `doctl` reads, and
-external probes. SSH was not possible from this machine: the DO firewall
-allows port 22 only from 73.155.84.140/32, and the only DO SSH key isn't the
-local key. So on-host state (exact coturn version, live `turnserver.conf`,
-logs, ufw, patch level) is **inferred from the repo**, not observed.
-Terraform state is not on this machine, and `terraform` isn't installed here.
+Follow-ups for the next intentional rebuild (each changes `user_data`, which
+replaces the droplet):
+- Drop `no-cli` (deprecated in 4.18; CLI is off by default).
+- coturn allows relaying to the droplet's own anchor IP (10.17.0.5) despite
+  `denied-peer-ip` (it treats its own addresses as valid peers). With TCP
+  relay off this only reaches coturn's own UDP ports; acceptable.
+- Consider a Let's Encrypt email for expiry notices (renewal is automatic).
 
 ## Verified
 
