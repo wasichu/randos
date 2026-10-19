@@ -137,7 +137,14 @@ These are project-specific and are **not** covered by the Phoenix skill:
   `assets/js/app.js`). `app.css` remaps light stone/teal utilities for dark;
   for colors it doesn't remap, add an explicit `dark:` variant.
 - Only `app.js` / `app.css` bundles exist. No vendored `<script src>`/`<link href>`
-  in layouts, and **never** inline `<script>` in HEEx. Hooks go in
+  in layouts, and **never** inline `<script>` in HEEx. Why: every byte of
+  front-end code is built from this repo and served from our own origin
+  (no CDNs or third-party requests that could leak an anonymous user's IP),
+  digested for cache-busting, and inline-script-free so a strict
+  Content-Security-Policy stays possible. The one planned exception
+  (Phase 5): AudioWorklet processors load by URL, so each is its own esbuild
+  entry from this repo, same origin; the dev-only voice lab gets its own
+  bundle built only with `dev_routes`. Hooks go in
   `assets/js/hooks/` and are registered in `assets/js/app.js`. A hook that
   owns its DOM also needs `phx-update="ignore"`.
 - UI should feel calm and polished: clean typography, subtle transitions and

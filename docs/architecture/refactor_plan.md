@@ -166,29 +166,26 @@ off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
 The most experimental phase, so it's built around a **voice lab** that
 makes trying an approach cheap and comparing approaches easy, by ear and by
 eye, before anything touches a real call. (Design reviewed with the advisor
-2026-10-19; two decisions below are open.)
+2026-10-19.)
 
-### Open decisions (owner's call before the lab is built)
+### Decisions (2026-10-19)
 
-1. **What language the processors are written in.** The 4.3 decisions say
-   "prototype in Elixir, ship in Rust"; a browser lab wants processors that
-   run in an AudioWorklet. Writing each variant in JS (lab, browser), Elixir
-   (TUI prototype), and Rust (TUI ship) means three implementations, which
-   breaks "the TUI and browser offer equivalently good experiences".
-   **Recommended:** DSP variants are written once in Rust and compiled two
-   ways: to WASM for the AudioWorklet (the lab and the browser call) and
-   natively into the media helper (the TUI). The lab then tests exactly what
-   both clients run. Elixir prototyping is kept only for model-based
-   approaches via Nx, if at all.
-2. **An exception to "only `app.js`/`app.css` bundles exist".**
-   `audioWorklet.addModule(url)` loads each processor from its own URL, so
-   processors can't live inside `app.js`, and a dev-only lab UI compiled into
-   `app.js` would ship to production. **Recommended:** (a) processors are
-   their own esbuild entry points (or static files under `priv/static/`),
-   allowed by a documented exception for worklet modules; (b) the lab UI is a
-   separate `voice_lab.js` entry built only with `dev_routes`; (c) shippable
-   processors live under `assets/js/randos/voice/` (the winner joins the
-   production call path), and only the lab UI under `assets/js/voice_lab/`.
+1. **Processors are written once, in Rust** (one implementation, no
+   competing versions in different languages). Each variant compiles two
+   ways: to WASM for an AudioWorklet (the lab and the browser call) and
+   natively into the media helper (the TUI). The lab therefore tests exactly
+   what both clients run. This replaces the 4.3 plan to prototype in Elixir;
+   Elixir/Nx stays an option only for model-based experiments that can't be
+   expressed this way.
+2. **A documented exception to the one-bundle rule** (see AGENTS.md):
+   - worklet processors are their own esbuild entry points (or static files
+     under `priv/static/`), served from our own origin, because
+     `audioWorklet.addModule(url)` loads each one from its own URL;
+   - the lab UI is a separate `voice_lab.js` entry built only with
+     `dev_routes`, so dev code never ships;
+   - shippable processors live under `assets/js/randos/voice/` (the winner
+     joins the production call path); only the lab UI goes under
+     `assets/js/voice_lab/`.
 
 ### Plan
 
@@ -291,5 +288,6 @@ All 2026-10-19 unless noted.
 - **Dev monitor (4.1) runs in the dev VM**, not as a separate node.
 - **TUI audio (4.3): one Rust helper as a Port** (str0m, Opus, cpal);
   headphones in v1; capability-aware matching before Stage 1; the Phase 5
-  anonymizer is prototyped in Elixir and shipped in Rust. See
+  anonymizer is written once in Rust (WASM in the browser, native in the
+  helper). See
   [`tui_audio.md`](tui_audio.md).

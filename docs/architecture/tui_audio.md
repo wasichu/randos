@@ -223,7 +223,8 @@ bindings, so Phase 5 isn't decided now:
   on-device model (e.g. ONNX). Lowest latency, and a crashing model can't take
   down the BEAM.
 - **Bounce to Elixir:** frames go up the Port to an Elixir processor (e.g. Nx)
-  and come back. More latency and copying, but experiments stay in Elixir.
+  and come back. More latency and copying. Kept only as an option for
+  model-based experiments; DSP variants are Rust (decision 2).
 
 The browser's matching seam is unchanged: `processLocalStream` in
 `WebRTCClient.startConnection()`.
@@ -311,8 +312,10 @@ The browser's matching seam is unchanged: `processLocalStream` in
 ## Decisions (2026-10-19)
 
 1. **Option B:** all media in one Rust helper run as a Port; no `ex_webrtc`.
-2. **Phase 5 anonymizer:** prototype in Elixir (bounced frames), ship in Rust
-   (the helper's `Processor`). Not tied to Nx/Bumblebee.
+2. **Phase 5 anonymizer:** written once in Rust, used natively by the
+   helper's `Processor` and compiled to WASM for the browser (revised
+   2026-10-19 from "prototype in Elixir, ship in Rust", so there's one
+   implementation; see the roadmap's Phase 5). Not tied to Nx/Bumblebee.
 3. **v1 platforms:** macOS arm64 and Linux glibc x86_64; Intel Mac, musl and
    Windows with 4.4 packaging.
 4. **Headphones required in v1** (plus ducking); echo cancellation in Stage 3.
