@@ -37,6 +37,17 @@ certs:
 test *args:
     mix test {{args}}
 
+# Browser smoke test: two headless Chromes place a real WebRTC call (needs Chrome)
+smoke:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p tmp
+    PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS=8000 mix phx.server > tmp/smoke-server.log 2>&1 &
+    server=$!
+    trap 'kill $server 2>/dev/null; wait $server 2>/dev/null || true' EXIT
+    for _ in $(seq 1 60); do curl -sf -o /dev/null http://localhost:4010/ && break; sleep 1; done
+    BASE_URL=http://localhost:4010 node test/e2e/call_smoke.mjs
+
 # Re-run only previously failed tests
 test-failed:
     mix test --failed

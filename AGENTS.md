@@ -13,6 +13,12 @@ are product requirements, not suggestions. Don't add features that violate them.
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
   - `just test [path]`, `just test-failed`
   - `just precommit` — **run before declaring any change done** and fix everything it reports
+  - `just smoke` — browser end-to-end check (`test/e2e/call_smoke.mjs`): two
+    headless Chromes with fake mics place a real WebRTC call, extend it, and
+    check mic teardown. **Run it after any change to `assets/js/` or the call
+    flow**; `mix test` can't see browser behavior. Needs Chrome (or `CHROME_BIN`).
+  - `RANDOS_CALL_SEGMENT_MS=8000 just dev` — dev-only short call segments for
+    trying the extension flow by hand
   - `just outdated`, `just update` (also regenerates the usage-rules block below)
   - `just graft` — rebuild the graft graph after large changes
 - MCP servers (`.mcp.json`): `graft` (code graph, always on) and `tidewave`

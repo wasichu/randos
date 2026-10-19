@@ -12,9 +12,8 @@ defmodule Randos.Application do
       {DNSCluster, query: Application.get_env(:randos, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Randos.PubSub},
       {DynamicSupervisor, strategy: :one_for_one, name: Randos.Calls.CallSupervisor},
-      Randos.Matchmaking.Matchmaker,
-      # Start a worker by calling: Randos.Worker.start_link(arg)
-      # {Randos.Worker, arg},
+      {Randos.Matchmaking.Matchmaker,
+       call_options: Application.get_env(:randos, :call_options, [])},
       # Start to serve requests, typically the last entry
       RandosWeb.Endpoint
     ]

@@ -74,3 +74,14 @@ config :phoenix_live_view,
   debug_attributes: true,
   # Enable helpful, but potentially expensive runtime checks
   enable_expensive_runtime_checks: true
+
+# Shorten call segments for manual/e2e testing of the extension flow, e.g.
+# `RANDOS_CALL_SEGMENT_MS=8000 just dev`. Dev only; never set in prod config.
+if segment_ms = System.get_env("RANDOS_CALL_SEGMENT_MS") do
+  segment_ms = String.to_integer(segment_ms)
+
+  config :randos, :call_options,
+    call_duration_ms: segment_ms,
+    extension_duration_ms: segment_ms,
+    extension_response_timeout_ms: segment_ms
+end
