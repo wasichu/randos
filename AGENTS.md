@@ -11,6 +11,8 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
   - `just setup` — toolchain + deps + assets
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
+  - `just serve` — the same server without IEx, for running in the background;
+    if something already answers on :4000 it reuses it and exits
   - `just tui` — the terminal client against the local dev server (`RANDOS_URL`/`--url`
     to override); `just tui-smoke` — two real TUI clients call each other through a
     throwaway server (run after changing `clients/tui` or the channel)
@@ -38,8 +40,16 @@ are product requirements, not suggestions. Don't add features that violate them.
     manager) and `TF_VAR_do_token`. Never commit plaintext state (`just precommit` checks).
 - MCP servers (`.mcp.json`): `graft` (code graph, always on) and `tidewave`
   (runtime: eval in the running app, logs, docs, SQL-free introspection).
-  Tidewave only answers while `just dev` is running on :4000 — prefer it over
+  Tidewave only answers while a dev server is running on :4000 — prefer it over
   `mix run` scripts for poking at live process state (Matchmaker, calls).
+- **Standing rule: start the dev server yourself when needed.** If Tidewave,
+  the TUI (`just tui`), or a test needs the dev server and nothing is
+  listening on :4000, run `just serve` in the background (exactly that
+  command, so the user's permission rule matches) and wait until
+  `http://localhost:4000/` answers. If a server is already up (the user's
+  `just dev`, or one you started earlier), reuse it; never start a second
+  one. `just serve` checks this itself. The throwaway servers that
+  `just smoke` / `just tui-smoke` start on :4010 are separate and fine.
 - Prefer plain Elixir and OTP (`GenServer`, `:gen_statem`, `Registry`, `:pg`,
   `Task`) over adding dependencies; justify any new dep. Production runs a
   single node today, but don't bake in single-node assumptions casually.

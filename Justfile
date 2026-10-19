@@ -16,6 +16,19 @@ setup:
 dev:
     iex -S mix phx.server
 
+# Dev server without IEx (for background use: Tidewave, the TUI, tests).
+# Reuses a running server: if something already answers on $PORT (default
+# 4000), it says so and exits instead of starting a second one.
+serve:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    port="${PORT:-4000}"
+    if curl -s -o /dev/null --max-time 2 "http://localhost:${port}/"; then
+      echo "dev server already running on :${port}; reusing it"
+      exit 0
+    fi
+    exec mix phx.server
+
 # Run the dev server against the coturn TURN server managed by infra/coturn
 dev-turn:
     TURN_HOST="turn.slowinput.org" \
