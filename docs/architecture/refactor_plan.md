@@ -221,21 +221,23 @@ yet. Items marked **Bug** are defects, not cleanups.
    Phase 3, when `Randos` core vs `RandosWeb` (LiveView + Channel) is a real
    split worth enforcing; at that point declare `Randos` and `RandosWeb`
    boundaries with `RandosWeb` depending only on the core's public modules.
-8. **Multi-node matchmaking: likely split queue in production.** Unverified,
-   because `flyctl` isn't installed here. Run `fly scale show -a randos` to
-   confirm.
-   - `rel/env.sh.eex` clusters nodes via `DNS_CLUSTER_QUERY=${FLY_APP_NAME}.internal`
-     and PubSub spans nodes, but `Matchmaker` is registered locally
-     (`matchmaker.ex:45-48`, `name: __MODULE__`), so each machine has its own
-     queue, and HomeLive calls the local one.
-   - `fly.toml` sets no machine count. Fly's default `fly deploy` creates **two**
-     machines for HA, and `auto_stop_machines`/`min_machines_running = 0`
-     means either may be up.
-   - If two are running, two compatible people load-balanced onto different
-     machines never match. **Bug if more than one machine is up.**
+8. **Multi-node matchmaking: split queue in production.** **Bug.**
+   - Verified 2026-10-19 with `fly scale show` / `fly machines list`:
+     app group `app` has **2 machines** in `ord` (`4d895d20b93158`,
+     `d8d09d6fe0d148`), both shared-cpu-1x/512MB. Both were stopped at check
+     time (`auto_stop_machines`, `min_machines_running = 0`), but both have
+     run recently (last updated 2026-10-19 and 2026-10-13).
+   - `rel/env.sh.eex` clusters the nodes via
+     `DNS_CLUSTER_QUERY=${FLY_APP_NAME}.internal`, and PubSub spans nodes, but
+     `Matchmaker` is registered locally (`matchmaker.ex:45-48`,
+     `name: __MODULE__`). Each machine therefore has its own queue, and
+     HomeLive calls the local one.
+   - Whenever both machines are up, the Fly proxy can spread visitors across
+     them, and two compatible people on different machines never match.
+     That can happen after a deploy, or once load starts the second machine.
    - Options (not chosen):
-     - pin to one machine (`fly scale count 1`, simplest, matches the
-       transient design);
+     - pin to one machine (`fly scale count 1`; simplest, matches the
+       transient design, and an ended call loses nothing);
      - a cluster-wide singleton (`:global` name or Horde) with failover;
      - a queue distributed over `:pg`/PubSub, where each node matches locally
        and falls back to remote.
@@ -405,7 +407,7 @@ behavior nobody has tested.
 
 ### Summary: real bugs vs cleanups
 
-Bugs: §8 (split queue if more than one Fly machine runs), §10 (orphaned
+Bugs: §8 (split queue: 2 Fly machines confirmed), §10 (orphaned
 waiting participant), §13 (stale TURN credentials), §16 (mic leak on early
 teardown), §17 (blank visualizers after extension), §18 (swallowed signal
 errors). Everything else is cleanup or design.
