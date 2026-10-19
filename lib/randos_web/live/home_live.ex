@@ -569,8 +569,7 @@ defmodule RandosWeb.HomeLive do
         hidden
         playsinline
         class="sr-only"
-      >
-      </audio>
+      ></audio>
     </div>
     """
   end
@@ -590,8 +589,7 @@ defmodule RandosWeb.HomeLive do
         id={"#{@id}-canvas"}
         data-audio-visualizer={if(@id == "local-waveform", do: "local", else: "remote")}
         class="h-20 w-full rounded-md border border-stone-100 bg-white shadow-inner shadow-stone-100 sm:h-28"
-      >
-      </canvas>
+      ></canvas>
     </div>
     """
   end
