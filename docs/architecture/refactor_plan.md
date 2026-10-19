@@ -119,6 +119,13 @@ The TUI can't use LiveView, and must not use distribution or SSH. So:
 
 ## Ash: keep or replace (Phase 1 checkpoint)
 
+**Decided 2026-10-19: replaced.** Calls are now `Randos.Calls.Call` +
+`Randos.Calls.Lifecycle`; `ash` and `ash_state_machine` (and their transitive
+deps) are gone. Guiding principle going forward: plain Elixir/OTP first, and
+justify every dependency. Next: the coordinator becomes a `:gen_statem`, whose
+`state_timeout`s replace the manual timer bookkeeping. The analysis below is
+kept for the record.
+
 What Ash does in Randos today, after Phase 1: one resource (`CallSession`) on
 the ETS data layer, five actions, an AshStateMachine with six transitions, five
 `one_of` validations and an extension-count check. `CallCoordinator` creates
@@ -195,19 +202,19 @@ yet. Items marked **Bug** are defects, not cleanups.
 
 ### Phase 1 (small, independent)
 
-1. **Simplify `CallCoordinator.init/1`.** `call_coordinator.ex:77-104`
+1. **(Done in `c79ea82`.) Simplify `CallCoordinator.init/1`.** `call_coordinator.ex:77-104`
    re-derives `activation_delay_ms`, `pubsub` and the three durations with
    `Keyword.get(opts, key, CallSession.x() * 1_000)`, duplicating the struct
    defaults at `:17-32`. Build the struct once:
    `struct!(__MODULE__, Keyword.take(opts, @overridable))` then set
    `match`/`call_session`/`status`.
-2. **One source of truth for call status.** The coordinator keeps
+2. **(Done in `c79ea82`.) One source of truth for call status.** The coordinator keeps
    `state.status` (`:83`, `:181`, `:206`, `:299`, `:331`) and the same value is
    mirrored in `state.call_session.status`. `end_call/2`'s
    `if state.status == :ended` guard (`:323`) exists because of it. Resolved by
    the Ash decision: if Ash goes, `%Call{}` owns status; if Ash stays,
    read status from `call_session`.
-4. **Ash calls in the coordinator** (only if Ash stays). `{:ok, call_session} =
+4. **(Moot: Ash removed.) Ash calls in the coordinator.** `{:ok, call_session} =
    … |> Ash.update()` at `:175` and `:192` raise `MatchError` inside
    `handle_info`, and `Ash.update!()` at `:328` raises inside `end_call/2`.
    Add a code interface on `Randos.Comms` (`Comms.mark_call_active(call)`,

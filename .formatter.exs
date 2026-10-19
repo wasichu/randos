@@ -1,5 +1,5 @@
 [
-  import_deps: [:ash_state_machine, :ash, :reactor, :phoenix],
-  plugins: [Spark.Formatter, Phoenix.LiveView.HTMLFormatter],
+  import_deps: [:phoenix],
+  plugins: [Phoenix.LiveView.HTMLFormatter],
   inputs: ["*.{heex,ex,exs}", "{config,lib,test}/**/*.{heex,ex,exs}"]
 ]

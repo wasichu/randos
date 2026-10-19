@@ -2,8 +2,8 @@ defmodule Randos.Matchmaking.Matchmaker do
   @moduledoc """
   In-memory anonymous matchmaking queue.
 
-  This process owns live queue membership only. Queue state is intentionally not
-  represented by Ash resources and disappears when the process or server stops.
+  This process owns live queue membership only. Queue state is intentionally
+  transient and disappears when the process or server stops.
   """
 
   use GenServer

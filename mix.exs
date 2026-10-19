@@ -43,11 +43,6 @@ defmodule Randos.MixProject do
               {:phoenix, sub_rules: ["phoenix", "elixir", "html", "liveview"]},
               ~r/^phoenix_/
             ]
-          ],
-          "ash-framework": [
-            description:
-              "Use when working with Ash or AshStateMachine (Randos.Comms resources, actions, changesets, state transitions). Consult before domain changes.",
-            usage_rules: [:ash, ~r/^ash_/]
           ]
         ]
       ]
@@ -72,8 +67,6 @@ defmodule Randos.MixProject do
       {:sourceror, "~> 1.8", only: [:dev, :test]},
       {:usage_rules, "~> 1.0", only: [:dev]},
       {:tidewave, "~> 0.9", only: :dev},
-      {:ash_state_machine, "~> 0.2"},
-      {:ash, "~> 3.0"},
       {:phoenix, "~> 1.8"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},

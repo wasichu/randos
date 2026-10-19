@@ -47,7 +47,8 @@ Randos is a Phoenix LiveView application with:
 - local HTTPS support for microphone testing
 - a Terraform/coturn scaffold under `infra/coturn`
 
-The app currently uses ETS-backed Ash resources and process-backed call state.
+All state is process-backed: a matchmaking queue GenServer and one coordinator
+process per call.
 There is no database. Queues, calls, and call session state are transient and
 disappear on application restart.
 

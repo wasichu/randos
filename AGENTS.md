@@ -19,13 +19,16 @@ are product requirements, not suggestions. Don't add features that violate them.
   (runtime: eval in the running app, logs, docs, SQL-free introspection).
   Tidewave only answers while `just dev` is running on :4000 — prefer it over
   `mix run` scripts for poking at live process state (Matchmaker, calls).
+- Prefer plain Elixir and OTP (`GenServer`, `:gen_statem`, `Registry`, `:pg`,
+  `Task`) over adding dependencies; justify any new dep. Production runs a
+  single node today, but don't bake in single-node assumptions casually.
 - Use `Req` for HTTP. Don't add `:httpoison`, `:tesla`, or `:httpc`.
 
 ## Architecture (layer boundaries)
 
 | Layer | Module(s) | Owns |
 | --- | --- | --- |
-| Ash domain | `Randos.Comms` (`CallSession`) | Domain facts + valid call lifecycle transitions (AshStateMachine) |
+| Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership, keyed by `{speaks, listens}` |
 | Calls | `Randos.Calls.CallCoordinator` (one per call, under `Randos.Calls.CallSupervisor`) | Timers, extension votes, participant monitoring, signal relay |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
@@ -34,9 +37,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 - Processes notify LiveViews over `Randos.PubSub`. Topic per participant:
   `"matchmaking:participant:<id>"`.
-- **No database.** Ash resources use `Ash.DataLayer.Ets`; all state is
-  transient and vanishes on restart. Don't add Ecto/Postgres without asking.
-- Call timing constants live in `Randos.Comms.CallSession` (10-min segments,
+- **No database.** All state lives in processes and vanishes on restart.
+  Don't add Ecto/Postgres without asking.
+- Call timing constants live in `Randos.Calls.Lifecycle` (10-min segments,
   max 2 extensions, 30-min cap, 20 s vote timeout). Reuse them; don't hardcode.
 - ICE/TURN config: `RandosWeb.IceServers` (env-driven; see README "TURN And STUN").
 - Call coordinators broadcast `{:call_active | :call_extension_pending |
@@ -85,8 +88,6 @@ skills under `.claude/skills/` (regenerate with `mix usage_rules.sync`):
 
 - `phoenix-framework` — Phoenix, HEEx, LiveView (streams, forms, tests). Load
   before touching `lib/randos_web/` or templates.
-- `ash-framework` — Ash, AshStateMachine. Load before touching
-  `lib/randos/comms/` or anything calling `Ash.*`.
 
 Never edit generated content between `usage-rules-start`/`-end` markers or in
 those skill directories by hand; change `usage_rules/0` in `mix.exs` instead.
