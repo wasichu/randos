@@ -60,6 +60,8 @@ pub struct LoopbackStats {
     pub capture_device_ms: f64,
     pub capture_ring_ms: f64,
     pub codec_ms: f64,
+    /// Added by converting a non-48 kHz device to and from Opus's rate.
+    pub resample_ms: f64,
     pub playback_ring_ms: f64,
     pub playback_device_ms: f64,
     pub kbps: f64,
@@ -89,12 +91,13 @@ impl fmt::Display for Event {
         match self {
             Event::LoopbackStats(s) => write!(
                 f,
-                "≈{:.1} ms = capture {:.1} + ring {:.1} + codec {} + ring {:.1} + playback {:.1} | \
-                 {:.0} kbps, input peak {:.0} dBFS | underruns {} overruns {} dropped {}",
+                "≈{:.1} ms = capture {:.1} + ring {:.1} + codec {} + resample {:.1} + ring {:.1} + \
+                 playback {:.1} | {:.0} kbps, input peak {:.0} dBFS | underruns {} overruns {} dropped {}",
                 s.latency_ms,
                 s.capture_device_ms,
                 s.capture_ring_ms,
                 s.codec_ms,
+                s.resample_ms,
                 s.playback_ring_ms,
                 s.playback_device_ms,
                 s.kbps,

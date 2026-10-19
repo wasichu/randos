@@ -9,6 +9,7 @@ mod codec;
 mod frame;
 mod loopback;
 mod protocol;
+mod resample;
 
 use std::io::{self, BufReader, BufWriter};
 use std::process::ExitCode;

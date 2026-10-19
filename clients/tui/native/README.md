@@ -22,8 +22,11 @@ fixed 26.5 ms (one 20 ms frame plus 6.5 ms of Opus lookahead). That's the
 pipeline's own latency, not an acoustic mouth-to-ear measurement. Use
 headphones: there is no echo cancellation yet (Stage 3).
 
-Devices must offer 48 kHz f32 (Opus can't take 44.1 kHz); the helper refuses
-to start rather than resample, until Stage 2. The cpal callbacks only copy
+Devices run at 48 kHz when they offer it. Otherwise the helper takes the
+highest f32 rate with whole 20 ms frames (so Bluetooth headphones' 44.1 kHz
+music mode wins over their 16 kHz call mode) and resamples each frame to and
+from Opus's 48 kHz on the worker thread (`src/resample.rs`, rubato's FFT
+resampler; its delay shows as `resample_ms`). The cpal callbacks only copy
 into or out of lock-free rings (`ringbuf`) and bump atomics; a worker thread
 does the downmix, Opus, upmix, and stats. Playback queues at most 40 ms, and
 extra frames are dropped, so device clock drift can't grow the latency.
@@ -50,7 +53,7 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 
 | Event | Fields |
 | --- | --- |
-| `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
+| `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `resample_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
 | `loopback_failed` | `error`; the loopback stopped on its own |
 | `stream_error` | `error`; a device stream reported a problem |
 
@@ -73,6 +76,7 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `opus` 0.4 (+ `opusic-sys`) | Opus encode/decode, the codec browsers offer by default | MIT/Apache-2.0; libopus BSD-3-Clause | Yes: `opusic-sys` builds the reference libopus from bundled source and links it statically. Needs `cmake` at build time (pinned in `mise.toml`) |
 | `ringbuf` 0.5 | Lock-free SPSC rings between the real-time callbacks and the worker | MIT/Apache-2.0 | No |
 | `serde` 1, `serde_json` 1 | The Port's JSON messages (the TUI side already uses Jason) | MIT/Apache-2.0 | No |
+| `rubato` 5 | Sample-rate conversion between a device's rate (e.g. 44.1 kHz Bluetooth) and Opus's 48 kHz; pulls in `audioadapter`, `realfft`/`rustfft`, `windowfunctions` | MIT/Apache-2.0 (deps MIT, Apache, Zlib) | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |
 
 The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,

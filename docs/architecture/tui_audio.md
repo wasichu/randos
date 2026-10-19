@@ -294,6 +294,11 @@ The browser's matching seam is unchanged: `processLocalStream` in
    - Headphones required.
    - Ends with the str0m-vs-webrtc-rs checkpoint and an automated TUI↔browser
      call in `just tui-smoke`.
+   - **Moved up from Stage 2 (done 2026-10-19): resampling.** The first
+     headphone test failed on Shokz OpenRun Bluetooth headphones, whose
+     output offers only 44.1 kHz (music mode) or 16 kHz (call mode) [run].
+     Bluetooth is common, so the helper now resamples any device rate with
+     whole 20 ms frames to and from 48 kHz.
 2. **Hardening:**
    - `turns:` via turn-client-rustls.
    - Jitter buffer tuning and packet-loss concealment.
