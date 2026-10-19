@@ -45,10 +45,7 @@ defmodule Randos.Participant do
 
   @type error :: :adult_terms_required | :unsupported_language | :call_start_failed
 
-  @type join_result ::
-          :queued
-          | {:matched, Match.t()}
-          | {:error, :already_queued | error()}
+  @type join_result :: Randos.Matchmaking.Matchmaker.join_result()
 
   @type event ::
           {:update_preferences, preferences()}

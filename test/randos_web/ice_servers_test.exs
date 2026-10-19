@@ -1,6 +1,9 @@
 defmodule RandosWeb.IceServersTest do
   use ExUnit.Case, async: false
 
+  # Short TTLs are logged as warnings on purpose.
+  @moduletag :capture_log
+
   alias Randos.Calls.Lifecycle
   alias RandosWeb.IceServers
 

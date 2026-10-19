@@ -275,7 +275,7 @@ yet. Items marked **Bug** are defects, not cleanups.
    :stop]`, `[:randos, :matchmaking, :join | :match | :leave]`). The Phase 4.1
    dev monitor TUI can attach to those events instead of polling; LiveDashboard
    metrics come for free.
-6. **`@spec`/`@doc` on public functions.** `CallCoordinator` has 0 `@doc` and
+6. **(Done for CallCoordinator, Matchmaker, Participant, Lifecycle, Match.) `@spec`/`@doc` on public functions.** `CallCoordinator` has 0 `@doc` and
    0 `@spec` on its public API (`start_match/2`, `hang_up/2`,
    `vote_extension/3`, `relay_signal/4`, `force_time_up/1`); `Matchmaker` has
    `@doc`s on join/leave/snapshot but no `@spec`s. Do this together with the

@@ -24,6 +24,22 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @supported_language_codes ConversationLanguages.codes()
 
+  @typedoc "What `join/1` needs; `accepted_adult_terms` must be `true`."
+  @type join_attrs :: %{
+          required(:id) => String.t(),
+          required(:pid) => pid(),
+          required(:topic) => String.t(),
+          required(:speaks_language) => String.t(),
+          required(:listens_language) => String.t(),
+          optional(:accepted_adult_terms) => boolean()
+        }
+
+  @type join_result ::
+          :queued
+          | {:matched, Match.t()}
+          | {:error,
+             :adult_terms_required | :unsupported_language | :already_queued | :call_start_failed}
+
   def start_link(opts \\ []) do
     {name, opts} = Keyword.pop(opts, :name, __MODULE__)
     GenServer.start_link(__MODULE__, opts, name: name)
@@ -36,16 +52,20 @@ defmodule Randos.Matchmaking.Matchmaker do
   `{:matched, match}` (with `call_pid`); both participants then hear about the
   call only from the coordinator, as `{:call_updated, %Call{}}`.
   """
-  def join(attrs), do: join(__MODULE__, attrs)
+  @spec join(GenServer.server(), join_attrs()) :: join_result()
+  def join(server \\ __MODULE__, attrs)
 
-  def join(server, attrs) do
+  def join(server, attrs) when is_map(attrs) do
     GenServer.call(server, {:join, attrs})
   end
 
   @doc """
   Leaves the queue if the participant is currently waiting.
   """
+  @spec leave(pid()) :: :ok
   def leave(pid) when is_pid(pid), do: leave(__MODULE__, pid)
+
+  @spec leave(GenServer.server(), pid()) :: :ok
 
   def leave(server, pid) when is_pid(pid) do
     GenServer.call(server, {:leave, pid})
@@ -54,6 +74,7 @@ defmodule Randos.Matchmaking.Matchmaker do
   @doc """
   Returns a lightweight snapshot for tests and diagnostics.
   """
+  @spec snapshot(GenServer.server()) :: %{queued_count: non_neg_integer(), queues: map()}
   def snapshot(server \\ __MODULE__) do
     GenServer.call(server, :snapshot)
   end
