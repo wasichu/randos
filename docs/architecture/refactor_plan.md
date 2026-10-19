@@ -267,7 +267,7 @@ yet. Items marked **Bug** are defects, not cleanups.
    `matchmaker.ex:16-31` (`@type participant`/`match`) and built ad hoc in
    `build_match/2` (`:252-260`) and `participant_from_attrs/1` (`:239-248`).
    These become the contract LiveView, Channel and TUI share.
-5. **Structured logging + telemetry.** 17 interpolated `Logger` calls
+5. **(Done.) Structured logging + telemetry.** 17 interpolated `Logger` calls
    (`"call_ended call_id=#{…}"`) across `call_coordinator.ex` (11) and
    `matchmaker.ex` (6). Move ids into Logger metadata
    (`Logger.info("call_ended", call_id: …, reason: …)`) and emit

@@ -285,6 +285,34 @@ defmodule Randos.Calls.CallCoordinatorTest do
     end
   end
 
+  test "emits telemetry when a call starts and stops" do
+    ref = make_ref()
+    test_pid = self()
+
+    :telemetry.attach_many(
+      "#{inspect(ref)}",
+      [[:randos, :call, :start], [:randos, :call, :stop]],
+      fn event, measurements, metadata, _ ->
+        send(test_pid, {ref, event, measurements, metadata})
+      end,
+      nil
+    )
+
+    on_exit(fn -> :telemetry.detach("#{inspect(ref)}") end)
+
+    {match, _pids} = match()
+    call_pid = start_call(match)
+    assert_receive {^ref, [:randos, :call, :start], _, %{call_id: call_id}}
+    assert_receive {:call_updated, %{status: :active}}
+
+    :ok = CallCoordinator.hang_up(call_pid, "a")
+
+    assert_receive {^ref, [:randos, :call, :stop], %{duration: duration},
+                    %{call_id: ^call_id, reason: :hangup}}
+
+    assert duration > 0
+  end
+
   describe "lifecycle under the call supervisor" do
     test "is not restarted after the call ends" do
       {match, _pids} = match()

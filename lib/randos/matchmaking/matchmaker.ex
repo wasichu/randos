@@ -70,30 +70,27 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @impl true
   def handle_call({:join, attrs}, _from, state) do
-    participant = entry_from_attrs(attrs)
+    {reply, state} = do_join(attrs, state)
 
-    cond do
-      Map.get(attrs, :accepted_adult_terms) != true ->
-        {:reply, {:error, :adult_terms_required}, state}
+    result =
+      case reply do
+        {:matched, _match} -> :matched
+        {:error, reason} -> reason
+        :queued -> :queued
+      end
 
-      not supported_language?(participant.speaks_language) or
-          not supported_language?(participant.listens_language) ->
-        {:reply, {:error, :unsupported_language}, state}
+    Logger.debug("matchmaking join", result: result)
 
-      Map.has_key?(state.participants, participant.pid) ->
-        {:reply, {:error, :already_queued}, state}
+    :telemetry.execute(
+      [:randos, :matchmaking, :join],
+      %{queue_size: map_size(state.participants)},
+      %{result: result}
+    )
 
-      true ->
-        Logger.debug("matchmaking_join participant_id=#{participant.id}")
-        join_queue(participant, state)
-    end
+    {:reply, reply, state}
   end
 
   def handle_call({:leave, pid}, _from, state) do
-    Logger.debug(
-      "matchmaking_leave pid=#{inspect(pid)} queued=#{Map.has_key?(state.participants, pid)}"
-    )
-
     if Map.has_key?(state.participants, pid) do
       {:reply, :ok, remove_participant(pid, state)}
     else
@@ -117,11 +114,30 @@ defmodule Randos.Matchmaking.Matchmaker do
   def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
     case state.monitors do
       %{^ref => ^pid} ->
-        Logger.info("matchmaking_participant_down pid=#{inspect(pid)}")
+        Logger.info("matchmaking participant went away while queued")
         {:noreply, remove_participant(pid, state)}
 
       _monitors ->
         {:noreply, state}
+    end
+  end
+
+  defp do_join(attrs, state) do
+    participant = entry_from_attrs(attrs)
+
+    cond do
+      Map.get(attrs, :accepted_adult_terms) != true ->
+        {{:error, :adult_terms_required}, state}
+
+      not supported_language?(participant.speaks_language) or
+          not supported_language?(participant.listens_language) ->
+        {{:error, :unsupported_language}, state}
+
+      Map.has_key?(state.participants, participant.pid) ->
+        {{:error, :already_queued}, state}
+
+      true ->
+        join_queue(participant, state)
     end
   end
 
@@ -134,24 +150,21 @@ defmodule Randos.Matchmaking.Matchmaker do
 
         case start_call(match, state) do
           {:ok, call_pid} ->
-            match = %{match | call_pid: call_pid}
-            Logger.info("matchmaking_matched match_id=#{match.id}")
-            {:reply, {:matched, match}, state}
+            Logger.info("matchmaking matched", match_id: match.id)
+            {{:matched, %{match | call_pid: call_pid}}, state}
 
           {:error, reason} ->
-            Logger.warning(
-              "matchmaking_call_start_failed match_id=#{match.id} reason=#{inspect(reason)}"
+            Logger.warning("matchmaking call start failed",
+              match_id: match.id,
+              reason: inspect(reason)
             )
 
             # Not the waiting participant's fault: give them their place back.
-            state = add_participant(waiting_participant, state, :front)
-            {:reply, {:error, :call_start_failed}, state}
+            {{:error, :call_start_failed}, add_participant(waiting_participant, state, :front)}
         end
 
       {nil, state} ->
-        Logger.debug("matchmaking_queued participant_id=#{participant.id}")
-        state = add_participant(participant, state)
-        {:reply, :queued, state}
+        {:queued, add_participant(participant, state)}
     end
   end
 

@@ -88,6 +88,36 @@ defmodule Randos.Matchmaking.MatchmakerTest do
     send(pid_b, :stop)
   end
 
+  test "emits telemetry for each join with its result", %{matchmaker: matchmaker} do
+    ref = make_ref()
+    test_pid = self()
+
+    :telemetry.attach(
+      "#{inspect(ref)}",
+      [:randos, :matchmaking, :join],
+      fn _event, measurements, metadata, _ -> send(test_pid, {ref, measurements, metadata}) end,
+      nil
+    )
+
+    on_exit(fn -> :telemetry.detach("#{inspect(ref)}") end)
+
+    pid = waiting_pid()
+
+    Matchmaker.join(
+      matchmaker,
+      participant(pid: pid, speaks_language: "en", listens_language: "es")
+    )
+
+    assert_receive {^ref, %{queue_size: 1}, %{result: :queued}}
+
+    Matchmaker.join(
+      matchmaker,
+      participant(pid: waiting_pid(), speaks_language: "es", listens_language: "en")
+    )
+
+    assert_receive {^ref, %{queue_size: 0}, %{result: :matched}}
+  end
+
   test "does not match incompatible participants", %{matchmaker: matchmaker} do
     pid_a = waiting_pid()
     pid_b = waiting_pid()

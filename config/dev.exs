@@ -57,8 +57,8 @@ config :randos, RandosWeb.Endpoint,
 # Enable dev routes for dashboard and mailbox
 config :randos, dev_routes: true
 
-# Do not include metadata nor timestamps in development logs
-config :logger, :default_formatter, format: "[$level] $message\n"
+# No timestamps in development logs; metadata (call_id, reason, ...) after the message
+config :logger, :default_formatter, format: "[$level] $message $metadata\n"
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.

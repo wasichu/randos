@@ -36,6 +36,7 @@ defmodule Randos.Calls.CallCoordinator do
 
   defstruct [
     :call,
+    :started_at,
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
@@ -103,9 +104,20 @@ defmodule Randos.Calls.CallCoordinator do
 
     data =
       struct!(__MODULE__, Keyword.take(opts, @overridable))
-      |> Map.merge(%{call: Call.new(self(), match), monitors: monitor_participants(match)})
+      |> Map.merge(%{
+        call: Call.new(self(), match),
+        monitors: monitor_participants(match),
+        started_at: System.monotonic_time()
+      })
 
-    Logger.info("call_coordinator_started call_id=#{data.call.id} match_id=#{match.id}")
+    # Every log line from this process carries the call and match ids.
+    Logger.metadata(call_id: data.call.id, match_id: match.id)
+    Logger.info("call started")
+
+    :telemetry.execute([:randos, :call, :start], %{system_time: System.system_time()}, %{
+      call_id: data.call.id
+    })
+
     {:ok, :connecting, data}
   end
 
@@ -138,24 +150,24 @@ defmodule Randos.Calls.CallCoordinator do
 
   # Timers.
   def handle_event(:state_timeout, :activate, :connecting, data) do
-    Logger.info("call_activated call_id=#{data.call.id}")
+    Logger.info("call activated")
     {:next_state, :active, %{data | call: Lifecycle.activate(data.call)}}
   end
 
   def handle_event(event_type, :time_up, :active, data)
       when event_type in [:state_timeout, :cast] do
-    Logger.info("call_time_limit_reached call_id=#{data.call.id}")
+    Logger.info("call time limit reached")
     {:next_state, :extension_pending, %{data | call: Lifecycle.request_extension(data.call)}}
   end
 
   def handle_event(:state_timeout, :vote_timeout, :extension_pending, data) do
-    Logger.info("call_extension_timeout call_id=#{data.call.id}")
+    Logger.info("call extension vote timed out")
     {:stop, :normal, end_call(data, :extension_timeout)}
   end
 
   # Participant requests.
   def handle_event({:call, from}, {:hang_up, _participant_id}, state, data) do
-    Logger.info("call_hangup call_id=#{data.call.id} status=#{state}")
+    Logger.info("call hung up", status: state)
     {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :hangup)}
   end
 
@@ -169,7 +181,7 @@ defmodule Randos.Calls.CallCoordinator do
 
     cond do
       vote == :end ->
-        Logger.info("call_extension_declined call_id=#{data.call.id}")
+        Logger.info("call extension declined")
         {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :extension_declined)}
 
       both_participants_voted_continue?(data) ->
@@ -187,9 +199,7 @@ defmodule Randos.Calls.CallCoordinator do
   def handle_event({:call, from}, {:relay_signal, participant_id, type, payload}, _state, data) do
     case Signaling.build_message(data.call, participant_id, type, payload) do
       {:ok, message} ->
-        Logger.debug(
-          "call_signal_relay call_id=#{message.call_id} type=#{message.type} from=#{message.from_participant_id}"
-        )
+        Logger.debug("call signal relayed", status: message.type)
 
         relay_signal_to_peer(data, message)
 
@@ -207,7 +217,7 @@ defmodule Randos.Calls.CallCoordinator do
   # A participant's LiveView went away.
   def handle_event(:info, {:DOWN, ref, :process, _pid, reason}, _state, data)
       when is_map_key(data.monitors, ref) do
-    Logger.info("call_participant_down call_id=#{data.call.id} reason=#{inspect(reason)}")
+    Logger.info("call participant went away", reason: inspect(reason))
     {:stop, :normal, end_call(data, :disconnected)}
   end
 
@@ -219,7 +229,7 @@ defmodule Randos.Calls.CallCoordinator do
   defp extend_call(from, data) do
     case Lifecycle.extend(data.call) do
       {:ok, call} ->
-        Logger.info("call_extended call_id=#{call.id}")
+        Logger.info("call extended")
         {:next_state, :active, %{data | call: call}, [{:reply, from, :ok}]}
 
       {:error, :max_extensions} ->
@@ -228,9 +238,16 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   defp end_call(data, reason) do
-    Logger.info("call_ended call_id=#{data.call.id} reason=#{reason} status=#{data.call.status}")
+    Logger.info("call ended", reason: reason, status: data.call.status)
     demonitor_participants(data)
     data = %{data | call: Lifecycle.end_call(data.call, reason)}
+
+    :telemetry.execute(
+      [:randos, :call, :stop],
+      %{duration: System.monotonic_time() - data.started_at},
+      %{call_id: data.call.id, reason: reason, extension_count: data.call.extension_count}
+    )
+
     broadcast(data)
     data
   end
@@ -265,6 +282,11 @@ defmodule Randos.Calls.CallCoordinator do
   # The single call-event message: `{:call_updated, %Call{}}`, sent to both
   # participants on every status change (including the initial :connecting).
   defp broadcast(%{call: %Call{match: match} = call} = data) do
+    :telemetry.execute([:randos, :call, :status], %{count: 1}, %{
+      call_id: call.id,
+      status: call.status
+    })
+
     Phoenix.PubSub.broadcast(data.pubsub, match.participant_a.topic, {:call_updated, call})
     Phoenix.PubSub.broadcast(data.pubsub, match.participant_b.topic, {:call_updated, call})
   end
