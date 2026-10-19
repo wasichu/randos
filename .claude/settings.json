@@ -84,16 +84,5 @@
   "subagentStatusLine": {
     "type": "command",
     "command": "node \"${CLAUDE_PROJECT_DIR:-.}/.claude/helpers/graft-statusline.cjs\""
-  },
-  "extraKnownMarketplaces": {
-    "randos-local": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/knightmoves/src/slowinput/randos/tools/claude-plugins"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "expert-lsp@randos-local": true
   }
 }
