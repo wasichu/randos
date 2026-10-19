@@ -38,7 +38,8 @@ are product requirements, not suggestions. Don't add features that violate them.
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership, keyed by `{speaks, listens}` |
 | Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, signal relay |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
-| Web | `RandosWeb.HomeLive` | UI state (`Randos.ConversationFlow`), browser events, assigns |
+| Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back. `handle(participant, event) :: {participant, [effect]}` |
+| Web | `RandosWeb.HomeLive` | Shell over `Randos.Participant`: maps browser events/PubSub to participant events, runs effects, renders |
 | Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
 
 - Processes notify LiveViews over `Randos.PubSub`. Topic per participant:

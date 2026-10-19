@@ -248,8 +248,6 @@ try {
     assert(painted > 0, `local visualizer canvas is blank after extension (painted=${painted})`)
   })
 
-  // "End" does a full page redirect (which always frees the mic), so these use
-  // the paths that keep the page alive: "Next rando" and the peer hanging up.
   await scenario("next rando releases the microphone", async () => {
     const streams = await a.streamCount()
     assert(streams > 0, "page A never captured a mic stream")
@@ -257,6 +255,24 @@ try {
     await sleep(1_000)
     const live = await a.liveMicTracks(streams)
     assert(live === 0, `${live} mic track(s) from the finished call still live`)
+  })
+
+  await scenario("ending a call stays on the page, goes idle, and releases the microphone", async () => {
+    const e = await browser.newPage("E")
+    const f = await browser.newPage("F")
+    await Promise.all([e.open(), f.open()])
+    await e.findRando("ja", "ko")
+    await f.findRando("ko", "ja")
+    await Promise.all([e.webrtcStateIs("connected"), f.webrtcStateIs("connected")])
+
+    const streams = await e.streamCount()
+    await e.eval(`window.__sameDocument = true`)
+    await e.click("#end-call-button")
+    await e.waitFor(`!!document.querySelector("#idle-panel")`, "idle after ending")
+    assert(await e.eval(`window.__sameDocument === true`), "ending the call reloaded the page")
+    await sleep(500)
+    const live = await e.liveMicTracks(streams)
+    assert(live === 0, `${live} mic track(s) still live after ending the call`)
   })
 
   await scenario("peer hanging up during the mic prompt releases the microphone", async () => {

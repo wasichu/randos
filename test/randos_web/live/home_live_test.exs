@@ -185,7 +185,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     view_a |> element("#end-call-button") |> render_click()
 
-    assert_redirect(view_a, ~p"/")
+    assert eventually_has_element?(view_a, "#idle-panel")
     assert eventually_has_element?(view_b, "#looking-panel")
     refute has_element?(view_b, "#idle-panel")
   end

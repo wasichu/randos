@@ -52,6 +52,12 @@ below.
 
 ## Phase 2: the spine (a UI-agnostic participant core)
 
+Status: core landed (`7986493`, `76261b7`, and the HomeLive shell commit).
+`{:call_updated, %Call{}}` is the only call event; `Randos.Participant` is
+the core; `ConversationFlow` is gone; the "End" button no longer reloads the
+page. Remaining: §13 (fresh ICE servers per call), HomeComponents extraction,
+`%Match{}` struct (§3).
+
 Functional core, imperative shell:
 
 - `Randos.Participant` — a struct (preferences, ui state, match, call status,
@@ -294,7 +300,7 @@ yet. Items marked **Bug** are defects, not cleanups.
     - `start_call/2`'s `with … else` (`:262-273`) is a no-op wrapper.
     - Queues append with `&1 ++ [participant]` (`:178`), which is O(n). Fine
       at this scale, but use `:queue` if it grows.
-12. **HomeLive trusts any call message.** `handle_info({:call_active, call}, …)`
+12. **(Fixed by `Randos.Participant`'s identity rules.) HomeLive trusts any call message.** `handle_info({:call_active, call}, …)`
     (`home_live.ex:125-139`) applies state from any call without checking it
     matches `@match`/`@call_pid`. The ghost-call bug fixed in `24a37a3` showed
     the impact. The participant core should drop events whose `call_id`

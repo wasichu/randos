@@ -1,144 +1,126 @@
 defmodule RandosWeb.HomeLive do
+  @moduledoc """
+  The web shell around `Randos.Participant`.
+
+  Browser events and PubSub messages become participant events; the effects
+  the participant returns are run here (matchmaker, call coordinator,
+  `push_event`). This module owns only web concerns: the form, error copy,
+  and rendering.
+  """
   use RandosWeb, :live_view
 
   alias Randos.Calls.CallCoordinator
-  alias Randos.ConversationFlow
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
-  alias Randos.Signaling
+  alias Randos.Participant
 
   @impl true
   def mount(_params, _session, socket) do
     preferences = default_preferences(socket)
-    participant_id = anonymous_participant_id()
-    match_topic = "matchmaking:participant:#{participant_id}"
+    participant = Participant.new(participant_preferences(preferences))
 
     if connected?(socket) do
-      Phoenix.PubSub.subscribe(Randos.PubSub, match_topic)
+      Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
     end
 
-    socket =
-      socket
-      |> assign(:page_title, gettext("Randos"))
-      |> assign(:ui_state, :idle)
-      |> assign(:preferences, preferences)
-      |> assign(:stop_after_call?, false)
-      |> assign(:participant_id, participant_id)
-      |> assign(:match_topic, match_topic)
-      |> assign(:matchmaking_error, nil)
-      |> assign(:match, nil)
-      |> assign(:match_role, nil)
-      |> assign(:webrtc_role, nil)
-      |> assign(:call_pid, nil)
-      |> assign(:call_status, nil)
-      |> assign(:call_ended_reason, nil)
-      |> assign(:call_deadline_unix_ms, nil)
-      |> assign(:extension_deadline_unix_ms, nil)
-      |> assign(:extension_count, 0)
-      |> assign_form(preferences)
-
-    {:ok, socket}
+    {:ok,
+     socket
+     |> assign(:page_title, gettext("Randos"))
+     |> assign(:preferences, preferences)
+     |> assign_form(preferences)
+     |> assign_participant(participant)}
   end
 
   @impl true
   def handle_event("update_preferences", %{"conversation" => params}, socket) do
-    preferences = normalize_preferences(params, socket.assigns.preferences)
-
-    {:noreply,
-     socket
-     |> assign(:preferences, preferences)
-     |> assign_form(preferences)}
+    socket = put_preferences(socket, params)
+    {:noreply, run(socket, {:update_preferences, participant_preferences(socket)})}
   end
 
   def handle_event("find", %{"conversation" => params}, socket) do
-    preferences = normalize_preferences(params, socket.assigns.preferences)
-
-    socket =
-      socket
-      |> assign(:preferences, preferences)
-      |> assign(:matchmaking_error, nil)
-      |> assign_form(preferences)
-
-    if acknowledged?(preferences) do
-      {:noreply, join_matchmaking(socket)}
-    else
-      {:noreply,
-       assign(
-         socket,
-         :matchmaking_error,
-         gettext("Accept the 18+ acknowledgment before looking for a rando.")
-       )}
-    end
+    socket = put_preferences(socket, params)
+    {:noreply, run(socket, {:find, participant_preferences(socket)})}
   end
 
-  def handle_event("transition", %{"to" => state}, socket) do
-    to = parse_state(state)
-    socket = maybe_leave_matchmaking(socket, to)
-
-    {:noreply, transition(socket, to)}
-  end
-
-  def handle_event("hang_up", _params, socket) do
-    socket = assign(socket, :stop_after_call?, true)
-    hang_up_current_call(socket)
-
-    {:noreply, socket}
-  end
-
-  def handle_event("next_rando", _params, socket) do
-    socket = assign(socket, :stop_after_call?, false)
-    hang_up_current_call(socket)
-
-    {:noreply, socket}
-  end
-
-  def handle_event("end_call", _params, socket) do
-    socket = assign(socket, :stop_after_call?, true)
-    hang_up_current_call(socket)
-
-    {:noreply, redirect(socket, to: ~p"/")}
-  end
+  def handle_event("cancel_search", _params, socket), do: {:noreply, run(socket, :cancel_search)}
+  def handle_event("end_call", _params, socket), do: {:noreply, run(socket, :end_call)}
+  def handle_event("next_rando", _params, socket), do: {:noreply, run(socket, :next)}
 
   def handle_event("extension_vote", %{"vote" => vote}, socket) do
     vote = if vote == "continue", do: :continue, else: :end
-    socket = assign(socket, :stop_after_call?, vote == :end)
-
-    if socket.assigns.call_pid do
-      CallCoordinator.vote_extension(socket.assigns.call_pid, socket.assigns.participant_id, vote)
-    end
-
-    {:noreply, socket}
+    {:noreply, run(socket, {:vote, vote})}
   end
 
   def handle_event("signal", %{"type" => type} = params, socket) do
-    payload = Map.get(params, "payload", %{})
-    socket = relay_client_signal(socket, type, payload)
-
-    {:noreply, socket}
+    {:noreply, run(socket, {:client_signal, type, Map.get(params, "payload", %{})})}
   end
 
   @impl true
-  def handle_info({:call_updated, call}, socket) do
-    socket =
-      case call.status do
-        :connecting -> assign_match(socket, Map.put(call.match, :call_pid, call.pid))
-        :active -> assign_call_state(socket, call, :in_call)
-        :extension_pending -> assign_call_state(socket, call, :extension_pending)
-        :ended -> finish_call(socket, call)
-      end
-
-    {:noreply, socket}
-  end
-
-  def handle_info({:signaling, message}, socket) do
-    {:noreply, push_event(socket, "randos:signal", encode_signal(message))}
-  end
+  def handle_info({:call_updated, _call} = event, socket), do: {:noreply, run(socket, event)}
+  def handle_info({:signaling, _message} = event, socket), do: {:noreply, run(socket, event)}
 
   @impl true
   def terminate(_reason, _socket) do
     Matchmaker.leave(self())
     :ok
   end
+
+  ## Running the participant core
+
+  defp run(socket, event) do
+    {participant, effects} = Participant.handle(socket.assigns.participant, event)
+    Enum.reduce(effects, assign_participant(socket, participant), &run_effect/2)
+  end
+
+  defp run_effect({:join_queue, attrs}, socket) do
+    run(socket, {:join_result, Matchmaker.join(Map.put(attrs, :pid, self()))})
+  end
+
+  defp run_effect(:leave_queue, socket) do
+    Matchmaker.leave(self())
+    socket
+  end
+
+  defp run_effect({:hang_up, call_pid}, socket) do
+    CallCoordinator.hang_up(call_pid, socket.assigns.participant.id)
+    socket
+  end
+
+  defp run_effect({:vote, call_pid, vote}, socket) do
+    CallCoordinator.vote_extension(call_pid, socket.assigns.participant.id, vote)
+    socket
+  end
+
+  defp run_effect({:relay_signal, call_pid, type, payload}, socket) do
+    CallCoordinator.relay_signal(call_pid, socket.assigns.participant.id, type, payload)
+    socket
+  end
+
+  defp run_effect({:push_signal, message}, socket) do
+    push_event(socket, "randos:signal", message)
+  end
+
+  # Templates read these flat assigns, derived from the participant.
+  defp assign_participant(socket, %Participant{} = participant) do
+    socket
+    |> assign(:participant, participant)
+    |> assign(:ui_state, participant.status)
+    |> assign(:webrtc_role, participant.webrtc_role)
+    |> assign(:call_status, participant.call && participant.call.status)
+    |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
+    |> assign(:matchmaking_error, error_message(participant.error))
+  end
+
+  defp error_message(nil), do: nil
+
+  defp error_message(:adult_terms_required),
+    do: gettext("Accept the 18+ acknowledgment before looking for a rando.")
+
+  defp error_message(:unsupported_language),
+    do: gettext("Choose supported conversation languages.")
+
+  defp error_message(:call_start_failed),
+    do: gettext("We couldn't start that call. Please try again.")
 
   @impl true
   def render(assigns) do
@@ -151,9 +133,7 @@ defmodule RandosWeb.HomeLive do
             ui_state={@ui_state}
             call_status={@call_status}
             call_deadline_unix_ms={@call_deadline_unix_ms}
-            participant_id={@participant_id}
             webrtc_role={@webrtc_role}
-            match_role={@match_role}
             preferences={@preferences}
             form={@form}
             matchmaking_error={@matchmaking_error}
@@ -215,9 +195,7 @@ defmodule RandosWeb.HomeLive do
   attr :ui_state, :atom, required: true
   attr :call_status, :atom, default: nil
   attr :call_deadline_unix_ms, :integer, default: nil
-  attr :participant_id, :string, required: true
   attr :webrtc_role, :atom, default: nil
-  attr :match_role, :atom, default: nil
   attr :preferences, :map, required: true
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
@@ -227,7 +205,6 @@ defmodule RandosWeb.HomeLive do
     <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
       <.call_media_panel
         :if={@call_status in [:active, :extension_pending] && @webrtc_role}
-        participant_id={@participant_id}
         webrtc_role={@webrtc_role}
       />
 
@@ -241,15 +218,10 @@ defmodule RandosWeb.HomeLive do
         <% :looking -> %>
           <.searching_panel preferences={@preferences} language_name={&language_name/1} />
         <% :connecting -> %>
-          <.connecting_panel
-            match_role={@match_role}
-            webrtc_role={@webrtc_role}
-            participant_id={@participant_id}
-          />
+          <.connecting_panel webrtc_role={@webrtc_role} />
         <% :in_call -> %>
           <.call_panel
             preferences={@preferences}
-            participant_id={@participant_id}
             webrtc_role={@webrtc_role}
             language_name={&language_name/1}
           />
@@ -373,8 +345,7 @@ defmodule RandosWeb.HomeLive do
       <div class="grid gap-3">
         <button
           id="cancel-search-button"
-          phx-click="transition"
-          phx-value-to="idle"
+          phx-click="cancel_search"
           class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Stop looking")}
@@ -384,15 +355,12 @@ defmodule RandosWeb.HomeLive do
     """
   end
 
-  attr :match_role, :atom, default: nil
   attr :webrtc_role, :atom, default: nil
-  attr :participant_id, :string, required: true
 
   defp connecting_panel(assigns) do
     ~H"""
     <div
       id="connecting-panel"
-      data-participant-id={@participant_id}
       data-webrtc-role={@webrtc_role}
       class="col-span-full space-y-6 p-5 sm:p-7"
     >
@@ -408,7 +376,7 @@ defmodule RandosWeb.HomeLive do
         </p>
       </div>
       <p
-        :if={@match_role && @webrtc_role}
+        :if={@webrtc_role}
         id="match-connection-label"
         class="rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"
       >
@@ -417,7 +385,7 @@ defmodule RandosWeb.HomeLive do
       <div class="grid gap-3 sm:grid-cols-2">
         <button
           id="cancel-connection-button"
-          phx-click="hang_up"
+          phx-click="end_call"
           class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
           {gettext("Cancel")}
@@ -428,7 +396,6 @@ defmodule RandosWeb.HomeLive do
   end
 
   attr :preferences, :map, required: true
-  attr :participant_id, :string, required: true
   attr :webrtc_role, :atom, default: nil
   attr :language_name, :any, required: true
 
@@ -436,7 +403,6 @@ defmodule RandosWeb.HomeLive do
     ~H"""
     <div
       id="call-panel"
-      data-participant-id={@participant_id}
       data-webrtc-role={@webrtc_role}
       class="order-1 col-span-full space-y-5 p-4 sm:space-y-6 sm:p-7"
     >
@@ -504,7 +470,6 @@ defmodule RandosWeb.HomeLive do
     """
   end
 
-  attr :participant_id, :string, required: true
   attr :webrtc_role, :atom, required: true
 
   defp call_media_panel(assigns) do
@@ -513,7 +478,6 @@ defmodule RandosWeb.HomeLive do
       id="webrtc-audio"
       phx-hook="WebRTCAudio"
       phx-update="ignore"
-      data-participant-id={@participant_id}
       data-webrtc-role={@webrtc_role}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
@@ -615,156 +579,6 @@ defmodule RandosWeb.HomeLive do
     """
   end
 
-  defp transition(socket, to) do
-    case ConversationFlow.transition(socket.assigns.ui_state, to) do
-      {:ok, state} -> assign(socket, :ui_state, state)
-      {:error, :invalid_transition} -> socket
-    end
-  end
-
-  defp join_matchmaking(socket) do
-    preferences = socket.assigns.preferences
-
-    attrs = %{
-      id: socket.assigns.participant_id,
-      pid: self(),
-      topic: socket.assigns.match_topic,
-      speaks_language: preferences["speaking_language"],
-      listens_language: preferences["listening_language"],
-      accepted_adult_terms: acknowledged?(preferences)
-    }
-
-    case Matchmaker.join(attrs) do
-      :queued ->
-        transition(socket, :looking)
-
-      {:matched, match} ->
-        assign_match(socket, match)
-
-      {:error, :already_queued} ->
-        transition(socket, :looking)
-
-      {:error, :adult_terms_required} ->
-        assign(
-          socket,
-          :matchmaking_error,
-          gettext("Accept the 18+ acknowledgment before looking for a rando.")
-        )
-
-      {:error, :unsupported_language} ->
-        assign(socket, :matchmaking_error, gettext("Choose supported conversation languages."))
-    end
-  end
-
-  defp maybe_leave_matchmaking(%{assigns: %{ui_state: :looking}} = socket, to)
-       when to in [:idle, :connecting] do
-    Matchmaker.leave(self())
-    socket
-  end
-
-  defp maybe_leave_matchmaking(socket, _to), do: socket
-
-  defp assign_match(socket, match) do
-    {match_role, webrtc_role} = roles_for(match, socket.assigns.participant_id)
-
-    socket
-    |> assign(:match, match)
-    |> assign(:match_role, match_role)
-    |> assign(:webrtc_role, webrtc_role)
-    |> assign(:call_pid, match.call_pid)
-    |> assign(:call_status, :connecting)
-    |> assign(:call_ended_reason, nil)
-    |> assign(:extension_count, 0)
-    |> assign(:stop_after_call?, false)
-    |> assign(:matchmaking_error, nil)
-    |> assign(:ui_state, :connecting)
-  end
-
-  defp assign_call_state(socket, call, ui_state) do
-    socket
-    |> assign(:call_pid, call.pid)
-    |> assign(:call_status, call.status)
-    |> assign(:call_deadline_unix_ms, call.call_deadline_unix_ms)
-    |> assign(:extension_deadline_unix_ms, call.extension_deadline_unix_ms)
-    |> assign(:extension_count, call.extension_count)
-    |> assign(:call_ended_reason, call.ended_reason)
-    |> assign(:ui_state, ui_state)
-  end
-
-  defp finish_call(socket, call) do
-    socket =
-      socket
-      |> assign_call_state(call, :idle)
-      |> assign(:call_pid, nil)
-      |> assign(:match, nil)
-
-    if socket.assigns.stop_after_call? do
-      assign(socket, :ui_state, :idle)
-    else
-      join_matchmaking(socket)
-    end
-  end
-
-  defp hang_up_current_call(socket) do
-    if socket.assigns.call_pid do
-      CallCoordinator.hang_up(socket.assigns.call_pid, socket.assigns.participant_id)
-    end
-  end
-
-  defp relay_client_signal(socket, "extension_accepted", _payload) do
-    if socket.assigns.call_pid do
-      CallCoordinator.vote_extension(
-        socket.assigns.call_pid,
-        socket.assigns.participant_id,
-        :continue
-      )
-    end
-
-    socket
-  end
-
-  defp relay_client_signal(socket, "extension_declined", _payload) do
-    socket = assign(socket, :stop_after_call?, true)
-
-    if socket.assigns.call_pid do
-      CallCoordinator.vote_extension(socket.assigns.call_pid, socket.assigns.participant_id, :end)
-    end
-
-    socket
-  end
-
-  defp relay_client_signal(socket, type, payload) do
-    with call_pid when not is_nil(call_pid) <- socket.assigns.call_pid,
-         {:ok, _type} <- Signaling.cast_type(type) do
-      CallCoordinator.relay_signal(call_pid, socket.assigns.participant_id, type, payload)
-    end
-
-    socket
-  end
-
-  defp encode_signal(message) do
-    %{
-      call_id: message.call_id,
-      type: Atom.to_string(message.type),
-      from_participant_id: message.from_participant_id,
-      to_participant_id: message.to_participant_id,
-      payload: message.payload,
-      sent_at_unix_ms: message.sent_at_unix_ms
-    }
-  end
-
-  defp roles_for(%{participant_a: %{id: participant_id}}, participant_id),
-    do: {:participant_a, :offerer}
-
-  defp roles_for(%{participant_b: %{id: participant_id}}, participant_id),
-    do: {:participant_b, :answerer}
-
-  defp parse_state("idle"), do: :idle
-  defp parse_state("looking"), do: :looking
-  defp parse_state("connecting"), do: :connecting
-  defp parse_state("in_call"), do: :in_call
-  defp parse_state("extension_pending"), do: :extension_pending
-
   defp default_preferences(socket) do
     speaking_language = browser_locale_language(socket)
 
@@ -789,10 +603,6 @@ defmodule RandosWeb.HomeLive do
     ConversationLanguages.code_from_locale(locale)
   end
 
-  defp anonymous_participant_id do
-    "anon-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false)
-  end
-
   defp normalize_preferences(params, current) do
     current
     |> Map.merge(
@@ -810,6 +620,25 @@ defmodule RandosWeb.HomeLive do
 
   defp assign_form(socket, preferences) do
     assign(socket, :form, to_form(preferences, as: :conversation))
+  end
+
+  defp put_preferences(socket, params) do
+    preferences = normalize_preferences(params, socket.assigns.preferences)
+
+    socket
+    |> assign(:preferences, preferences)
+    |> assign_form(preferences)
+  end
+
+  defp participant_preferences(%Phoenix.LiveView.Socket{} = socket),
+    do: participant_preferences(socket.assigns.preferences)
+
+  defp participant_preferences(preferences) do
+    %{
+      speaks: preferences["speaking_language"],
+      listens: preferences["listening_language"],
+      adult_acknowledged?: acknowledged?(preferences)
+    }
   end
 
   defp language_options do
