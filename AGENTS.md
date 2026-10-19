@@ -54,6 +54,7 @@ are product requirements, not suggestions. Don't add features that violate them.
   `{:call_updated, %Randos.Calls.Call{}}` on every status change (starting with
   `:connecting`) and `{:signaling, msg}` from the peer. `Matchmaker.join/1`
   replies `{:matched, match}` to the joiner but broadcasts nothing.
+- `docs/architecture/coturn_audit.md`: TURN server findings and proposed hardening.
 - `docs/architecture/refactor_plan.md` is the current roadmap (participant core,
   Channel API, TUI, voice anonymization). `docs/architecture/` has design notes; `docs/prompts/` is the historical
   prompt log of how features were built (context, not spec).
