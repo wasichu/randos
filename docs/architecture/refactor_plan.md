@@ -365,7 +365,7 @@ behavior nobody has tested.
       rejection.
     - Effect: no `connection_failed` reaches the server, and the call sits in
       "connecting" until someone hangs up. (Phase 1)
-19. **(Partly fixed in `b9ab772`: signals after teardown are dropped; serialization still open.) Late signals after teardown.** Signals aren't serialized, so `close()`
+19. **(Fixed: signals are serialized through one promise chain gated on start().) Late signals after teardown.** Signals aren't serialized, so `close()`
     can land in the middle of `receiveOffer`, and then `createAnswer()` throws on
     null (`:138`). After `failConnection` the state is FAILED, not CLOSED, so
     the guard at `:97` lets later signals through to the queue (`:99-100`),
@@ -379,7 +379,7 @@ behavior nobody has tested.
 21. (Fixed in `b9ab772`.) `logging.js:3` reads `localStorage` without try/catch. In some privacy
     modes that throws, which would break every `logEvent`, including those in
     `start()`. (inferred; Phase 1)
-22. **Cleanups.**
+22. **(Done.) Cleanups.**
     - Two duplicate signal queues: `call_hook.js:24,112-128` and
       `webrtc_client.js:38,99-132`. The hook's queue only fills when
       `RTCPeerConnection` is missing, and then grows without bound.

@@ -8,6 +8,7 @@ import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
 
 const DISCONNECTED_GRACE_MS = 5000
+const TEARDOWN_SIGNALS = new Set(["hangup", "peer_disconnected", "connection_failed"])
 
 export const WebRTCClientState = Object.freeze({
   NOT_STARTED: "not_started",
@@ -35,14 +36,21 @@ export class WebRTCClient {
     this.localStream = null
     this.remoteStream = null
     this.state = WebRTCClientState.NOT_STARTED
-    this.pendingSignals = []
+    // Signals are handled strictly in order, and only after start() settles.
+    this.ready = Promise.resolve()
+    this.signalChain = Promise.resolve()
     this.pendingIceCandidates = []
     this.disconnectedTimeout = null
     this.connectionEstablishedSent = false
     this.cleaned = false
   }
 
-  async start() {
+  start() {
+    this.ready = this.startConnection()
+    return this.ready
+  }
+
+  async startConnection() {
     if (this.peerConnection || this.cleaned) return
 
     logEvent("webrtc.start", {role: this.role, iceServerCount: this.iceServers.length})
@@ -61,8 +69,10 @@ export class WebRTCClient {
     this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
     this.peerConnection = new RTCPeerConnection({iceServers: this.iceServers})
     this.peerConnection.onicecandidate = event => this.handleLocalIceCandidate(event)
-    this.peerConnection.oniceconnectionstatechange = () => this.handleIceConnectionState()
-    this.peerConnection.onconnectionstatechange = () => this.handleConnectionState()
+    this.peerConnection.oniceconnectionstatechange = () =>
+      this.handleConnectionState("ice_connection_state", this.peerConnection?.iceConnectionState)
+    this.peerConnection.onconnectionstatechange = () =>
+      this.handleConnectionState("connection_state", this.peerConnection?.connectionState)
     this.peerConnection.ontrack = event => this.handleRemoteTrack(event)
 
     for (const track of this.localStream.getAudioTracks()) {
@@ -81,8 +91,6 @@ export class WebRTCClient {
       this.setState(WebRTCClientState.WAITING_FOR_OFFER)
       logEvent("webrtc.waiting_for_offer")
     }
-
-    await this.flushPendingSignals()
   }
 
   async captureLocalAudio() {
@@ -107,41 +115,37 @@ export class WebRTCClient {
     logEvent("media.microphone_muted", {muted})
   }
 
-  async receiveSignal(signal) {
-    if (this.cleaned) return
+  // Returns a promise for this signal's handling (rejecting if it fails) while
+  // keeping the chain alive for the signals after it.
+  receiveSignal(signal) {
+    if (this.cleaned) return Promise.resolve()
 
-    if (!this.peerConnection) {
-      this.pendingSignals.push(signal)
-      logDebug("signaling.queued", {type: signal.type})
-      return
+    // Teardown signals act immediately rather than waiting their turn.
+    if (TEARDOWN_SIGNALS.has(signal.type)) {
+      this.close()
+      return Promise.resolve()
     }
 
-    logDebug("signaling.received", {type: signal.type})
+    const handled = this.signalChain.then(async () => {
+      await this.ready.catch(() => {})
+      if (this.cleaned || !this.peerConnection) return
 
-    switch (signal.type) {
-      case "offer":
-        await this.receiveOffer(signal.payload.sdp)
-        break
-      case "answer":
-        await this.receiveAnswer(signal.payload.sdp)
-        break
-      case "ice_candidate":
-        await this.receiveIceCandidate(signal.payload.candidate)
-        break
-      case "hangup":
-      case "peer_disconnected":
-      case "connection_failed":
-        this.close()
-        break
-    }
+      logDebug("signaling.received", {type: signal.type})
+      await this.handleSignal(signal)
+    })
+
+    this.signalChain = handled.catch(() => {})
+    return handled
   }
 
-  async flushPendingSignals() {
-    const signals = this.pendingSignals
-    this.pendingSignals = []
-
-    for (const signal of signals) {
-      await this.receiveSignal(signal)
+  async handleSignal(signal) {
+    switch (signal.type) {
+      case "offer":
+        return this.receiveOffer(signal.payload.sdp)
+      case "answer":
+        return this.receiveAnswer(signal.payload.sdp)
+      case "ice_candidate":
+        return this.receiveIceCandidate(signal.payload.candidate)
     }
   }
 
@@ -177,25 +181,25 @@ export class WebRTCClient {
   close() {
     if (this.cleaned) return
 
-    this.clearDisconnectedTimeout()
-    this.cleanupMedia()
+    this.teardown()
     this.setState(WebRTCClientState.CLOSED)
     logEvent("webrtc.closed")
   }
 
   failConnection(payload) {
-    if (this.state === WebRTCClientState.FAILED || this.state === WebRTCClientState.CLOSED) return
+    if (this.cleaned) return
 
-    this.clearDisconnectedTimeout()
     this.pushSignal("connection_failed", payload)
-    this.cleanupMedia()
+    this.teardown()
+    // Keep the more specific state if the mic was the problem.
     if (this.state !== WebRTCClientState.MICROPHONE_DENIED) {
       this.setState(WebRTCClientState.FAILED)
     }
     logWarning("webrtc.failed", payload)
   }
 
-  cleanupMedia() {
+  // The one place media and the peer connection are released. Idempotent.
+  teardown() {
     if (this.cleaned) return
 
     this.cleaned = true
@@ -213,7 +217,6 @@ export class WebRTCClient {
     }
 
     this.remoteStream = null
-    this.pendingSignals = []
     this.pendingIceCandidates = []
     this.onLocalStream?.(null)
     this.onRemoteStream?.(null)
@@ -242,55 +245,43 @@ export class WebRTCClient {
     logEvent("media.remote_track")
   }
 
-  handleIceConnectionState() {
-    const iceState = this.peerConnection?.iceConnectionState
-    logDebug("webrtc.ice_state", {state: iceState})
+  // Both iceConnectionState and connectionState feed this; `source` names
+  // which one in any payload sent to the server.
+  handleConnectionState(source, state) {
+    logDebug("webrtc.connection_state", {source, state})
 
-    if (iceState === "new") {
-      this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
-    } else if (iceState === "checking") {
-      this.setState(WebRTCClientState.ICE_CHECKING)
-    } else if (iceState === "connected" || iceState === "completed") {
-      this.clearDisconnectedTimeout()
-
-      if (!this.connectionEstablishedSent) {
-        this.pushSignal("connection_established", {ice_connection_state: iceState})
-        this.connectionEstablishedSent = true
-      }
-
-      this.setState(WebRTCClientState.CONNECTED)
-      logEvent("webrtc.connected", {iceState})
-    } else if (iceState === "disconnected") {
-      this.setState(WebRTCClientState.ICE_CHECKING)
-      this.scheduleDisconnectedFailure({ice_connection_state: iceState})
-    } else if (iceState === "failed") {
-      this.failConnection({ice_connection_state: iceState})
-    } else if (iceState === "closed") {
-      this.clearDisconnectedTimeout()
-      this.setState(WebRTCClientState.CLOSED)
+    switch (state) {
+      case "new":
+        this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
+        break
+      case "checking":
+      case "connecting":
+        this.setState(WebRTCClientState.ICE_CHECKING)
+        break
+      case "connected":
+      case "completed":
+        this.markConnected(source, state)
+        break
+      case "disconnected":
+        this.setState(WebRTCClientState.ICE_CHECKING)
+        this.scheduleDisconnectedFailure({[source]: state})
+        break
+      case "failed":
+        this.failConnection({[source]: state})
+        break
     }
   }
 
-  handleConnectionState() {
-    const connectionState = this.peerConnection?.connectionState
-    logDebug("webrtc.connection_state", {state: connectionState})
+  markConnected(source, state) {
+    this.clearDisconnectedTimeout()
 
-    if (connectionState === "new") {
-      this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
-    } else if (connectionState === "connecting") {
-      this.setState(WebRTCClientState.ICE_CHECKING)
-    } else if (connectionState === "connected") {
-      this.clearDisconnectedTimeout()
-      this.setState(WebRTCClientState.CONNECTED)
-    } else if (connectionState === "disconnected") {
-      this.setState(WebRTCClientState.ICE_CHECKING)
-      this.scheduleDisconnectedFailure({connection_state: connectionState})
-    } else if (connectionState === "failed") {
-      this.failConnection({connection_state: connectionState})
-    } else if (connectionState === "closed") {
-      this.clearDisconnectedTimeout()
-      this.setState(WebRTCClientState.CLOSED)
+    if (!this.connectionEstablishedSent) {
+      this.pushSignal("connection_established", {[source]: state})
+      this.connectionEstablishedSent = true
     }
+
+    this.setState(WebRTCClientState.CONNECTED)
+    logEvent("webrtc.connected", {source, state})
   }
 
   scheduleDisconnectedFailure(payload) {

@@ -14,6 +14,5 @@ export const callCountdownValue = ({deadlineUnixMs, now = Date.now()}) => {
     totalSeconds,
     underMinute: totalSeconds < 60,
     label: `${minutes}:${seconds.toString().padStart(2, "0")} remaining`,
-    decisionLabel: `Decision closes in ${totalSeconds}s`,
   }
 }

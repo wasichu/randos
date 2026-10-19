@@ -34,7 +34,6 @@ export const WebRTCAudio = {
     this.remoteAudioPlayButton = this.el.querySelector("[data-remote-audio-play]")
     this.localVisualizer = null
     this.remoteVisualizer = null
-    this.pendingSignals = []
     this.muted = false
 
     this.cleanupBag.addEventListener(window, "pagehide", () => this.cleanup({notify: true}))
@@ -64,7 +63,6 @@ export const WebRTCAudio = {
 
     this.peer
       .start()
-      .then(() => this.flushPendingSignals())
       .catch(error => this.peer?.failConnection({reason: startFailureReason(error)}))
   },
 
@@ -90,7 +88,6 @@ export const WebRTCAudio = {
 
     this.peer?.close()
     this.peer = null
-    this.pendingSignals = []
     this.setRemoteStream(null)
     this.setLocalStream(null)
     this.stopVisualizers()
@@ -119,26 +116,12 @@ export const WebRTCAudio = {
   },
 
   receiveSignal(signal) {
-    if (!this.peer) {
-      this.pendingSignals.push(signal)
-      return
-    }
-
-    this.peer.receiveSignal(signal).catch(error => this.failSignal(error))
+    this.peer?.receiveSignal(signal).catch(error => this.failSignal(error))
   },
 
   failSignal(error) {
     logWarning("signaling.handle_failed", {reason: error.message})
     this.peer?.failConnection({reason: error.message || "signal_handling_failed"})
-  },
-
-  flushPendingSignals() {
-    const signals = this.pendingSignals
-    this.pendingSignals = []
-
-    for (const signal of signals) {
-      this.peer?.receiveSignal(signal).catch(error => this.failSignal(error))
-    }
   },
 
   setLocalStream(stream) {
