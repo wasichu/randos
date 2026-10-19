@@ -53,7 +53,7 @@ defmodule Randos.Comms.CallSession do
   end
 
   actions do
-    defaults [:read]
+    defaults [:read, :destroy]
 
     create :create_connecting_call do
       accept [

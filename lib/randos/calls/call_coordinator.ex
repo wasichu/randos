@@ -5,9 +5,13 @@ defmodule Randos.Calls.CallCoordinator do
   This process owns ephemeral call state: timers, participant monitors, hangups,
   and extension votes. It updates the Ash `CallSession` resource for domain
   lifecycle validation, but it does not handle audio or WebRTC.
+
+  A coordinator lives exactly as long as its call: it is `:temporary` so the
+  supervisor never restarts a finished call, and it destroys its `CallSession`
+  record on exit so nothing outlives the call.
   """
 
-  use GenServer
+  use GenServer, restart: :temporary
 
   require Logger
 
@@ -65,6 +69,8 @@ defmodule Randos.Calls.CallCoordinator do
   @impl true
   def init(opts) do
     match = Keyword.fetch!(opts, :match)
+
+    Process.flag(:trap_exit, true)
 
     with {:ok, call_session} <- create_call_session(match) do
       monitors = monitor_participants(match)
@@ -229,6 +235,11 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   def handle_info(_message, state), do: {:noreply, state}
+
+  @impl true
+  def terminate(_reason, state) do
+    Ash.destroy(state.call_session)
+  end
 
   defp create_call_session(match) do
     CallSession
