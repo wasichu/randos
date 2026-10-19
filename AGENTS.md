@@ -48,9 +48,10 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Call timing constants live in `Randos.Calls.Lifecycle` (10-min segments,
   max 2 extensions, 30-min cap, 20 s vote timeout). Reuse them; don't hardcode.
 - ICE/TURN config: `RandosWeb.IceServers` (env-driven; see README "TURN And STUN").
-- Call coordinators broadcast `{:call_active | :call_extension_pending |
-  :call_extended | :call_ended, call}` and `{:signaling, msg}`; the matchmaker
-  broadcasts `{:randos_match, match}`.
+- A participant hears about its call only from the call's coordinator:
+  `{:call_updated, %Randos.Calls.Call{}}` on every status change (starting with
+  `:connecting`) and `{:signaling, msg}` from the peer. `Matchmaker.join/1`
+  replies `{:matched, match}` to the joiner but broadcasts nothing.
 - `docs/architecture/refactor_plan.md` is the current roadmap (participant core,
   Channel API, TUI, voice anonymization). `docs/architecture/` has design notes; `docs/prompts/` is the historical
   prompt log of how features were built (context, not spec).

@@ -61,23 +61,23 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     start_call(match)
 
-    assert_receive {:call_active,
+    assert_receive {:call_updated,
                     %{status: :active, extension_count: 0, call_deadline_unix_ms: deadline_a}}
 
-    assert_receive {:call_active,
+    assert_receive {:call_updated,
                     %{status: :active, extension_count: 0, call_deadline_unix_ms: deadline_b}}
 
     assert is_integer(deadline_a)
     assert deadline_a == deadline_b
     assert deadline_a > System.system_time(:millisecond)
 
-    assert_receive {:call_extension_pending,
+    assert_receive {:call_updated,
                     %{
                       status: :extension_pending,
                       extension_deadline_unix_ms: extension_deadline_a
                     }}
 
-    assert_receive {:call_extension_pending,
+    assert_receive {:call_updated,
                     %{
                       status: :extension_pending,
                       extension_deadline_unix_ms: extension_deadline_b
@@ -94,28 +94,28 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match, call_duration_ms: 5)
 
-    assert_receive {:call_active, %{status: :active, call_deadline_unix_ms: first_deadline}}
-    assert_receive {:call_active, %{status: :active, call_deadline_unix_ms: ^first_deadline}}
+    assert_receive {:call_updated, %{status: :active, call_deadline_unix_ms: first_deadline}}
+    assert_receive {:call_updated, %{status: :active, call_deadline_unix_ms: ^first_deadline}}
 
-    assert_receive {:call_extension_pending,
+    assert_receive {:call_updated,
                     %{status: :extension_pending, extension_deadline_unix_ms: extension_deadline}}
 
-    assert_receive {:call_extension_pending,
+    assert_receive {:call_updated,
                     %{status: :extension_pending, extension_deadline_unix_ms: ^extension_deadline}}
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "a", :continue)
-    refute_receive {:call_extended, _call}, 5
+    refute_receive {:call_updated, %{status: :active}}, 5
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "b", :continue)
 
-    assert_receive {:call_extended,
+    assert_receive {:call_updated,
                     %{
                       status: :active,
                       extension_count: 1,
                       call_deadline_unix_ms: extension_deadline
                     }}
 
-    assert_receive {:call_extended,
+    assert_receive {:call_updated,
                     %{
                       status: :active,
                       extension_count: 1,
@@ -131,14 +131,14 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match, call_duration_ms: 5)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_extension_pending, %{status: :extension_pending}}
-    assert_receive {:call_extension_pending, %{status: :extension_pending}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :extension_pending}}
+    assert_receive {:call_updated, %{status: :extension_pending}}
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "a", :end)
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :extension_declined}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :extension_declined}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :extension_declined}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :extension_declined}}
 
     Enum.each(pids, &send(&1, :stop))
   end
@@ -147,12 +147,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     start_call(match, call_duration_ms: 5, extension_response_timeout_ms: 5)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_extension_pending, %{status: :extension_pending}}
-    assert_receive {:call_extension_pending, %{status: :extension_pending}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :extension_timeout}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :extension_timeout}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :extension_pending}}
+    assert_receive {:call_updated, %{status: :extension_pending}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :extension_timeout}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :extension_timeout}}
 
     Enum.each(pids, &send(&1, :stop))
   end
@@ -161,12 +161,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
 
     assert :ok = CallCoordinator.hang_up(call_pid, "a")
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :hangup}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :hangup}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :hangup}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :hangup}}
 
     Enum.each(pids, &send(&1, :stop))
   end
@@ -175,12 +175,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
 
     assert :ok = CallCoordinator.hang_up(call_pid, "a")
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :hangup}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :hangup}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :hangup}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :hangup}}
 
     assert {:error, :call_unavailable} = CallCoordinator.hang_up(call_pid, "a")
 
@@ -191,8 +191,8 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
 
     assert :ok =
              CallCoordinator.relay_signal(call_pid, "a", "offer", %{
@@ -214,8 +214,8 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
 
     assert :ok =
              CallCoordinator.relay_signal(call_pid, "a", "connection_failed", %{
@@ -230,8 +230,8 @@ defmodule Randos.Calls.CallCoordinatorTest do
                       payload: %{"reason" => "ice_failed"}
                     }}
 
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :connection_failed}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :connection_failed}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
 
     Enum.each(pids, &send(&1, :stop))
   end
@@ -240,12 +240,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, [pid_a, pid_b]} = match()
     start_call(match)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
 
     Process.exit(pid_a, :kill)
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :disconnected}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :disconnected}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
 
     send(pid_b, :stop)
   end
@@ -254,14 +254,14 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, pids} = match()
     call_pid = start_call(match, call_duration_ms: 5)
 
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_active, %{status: :active}}
-    assert_receive {:call_extension_pending, %{status: :extension_pending}}
-    assert_receive {:call_extension_pending, %{status: :extension_pending}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :active}}
+    assert_receive {:call_updated, %{status: :extension_pending}}
+    assert_receive {:call_updated, %{status: :extension_pending}}
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "a", :end)
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :extension_declined}}
-    assert_receive {:call_ended, %{status: :ended, ended_reason: :extension_declined}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :extension_declined}}
+    assert_receive {:call_updated, %{status: :ended, ended_reason: :extension_declined}}
 
     assert {:error, :call_unavailable} = CallCoordinator.vote_extension(call_pid, "b", :continue)
 
@@ -277,21 +277,32 @@ defmodule Randos.Calls.CallCoordinatorTest do
         extension_response_timeout_ms: 1_000
       )
 
-    assert_receive {:call_active, %{id: call_id}}
-    assert_receive {:call_active, %{id: ^call_id}}
+    assert_receive {:call_updated, %{status: :active, id: call_id}}
+    assert_receive {:call_updated, %{status: :active, id: ^call_id}}
     {call_pid, call_id}
+  end
+
+  defp flush_call_updates(call_id) do
+    receive do
+      {:call_updated, %{id: ^call_id}} -> flush_call_updates(call_id)
+    after
+      0 -> :ok
+    end
   end
 
   describe "lifecycle under the call supervisor" do
     test "is not restarted after the call ends" do
       {match, _pids} = match()
-      {call_pid, _call_id} = start_supervised_call(match)
+      {call_pid, call_id} = start_supervised_call(match)
       ref = Process.monitor(call_pid)
 
       assert :ok = CallCoordinator.hang_up(call_pid, "a")
       assert_receive {:DOWN, ^ref, :process, ^call_pid, :normal}
 
-      refute_receive {:call_active, _}, 100
+      # Drain this call's own updates; a restarted (ghost) call would send
+      # updates under a new id.
+      flush_call_updates(call_id)
+      refute_receive {:call_updated, _}, 100
 
       refute Enum.any?(
                DynamicSupervisor.which_children(Randos.Calls.CallSupervisor),

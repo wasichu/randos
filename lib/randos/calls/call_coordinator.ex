@@ -11,7 +11,9 @@ defmodule Randos.Calls.CallCoordinator do
     * `:extension_pending` — waits for both votes, or times out and ends
 
   The coordinator also monitors both participants, relays WebRTC signaling
-  between them, and broadcasts the `%Call{}` on every change. It never touches
+  between them, and broadcasts `{:call_updated, %Call{}}` to both on every
+  status change; that and `{:signaling, message}` are the only messages
+  participants receive about a call. It never touches
   audio. It is `:temporary`: a finished call is never restarted.
   """
 
@@ -109,18 +111,19 @@ defmodule Randos.Calls.CallCoordinator do
   @impl :gen_statem
   # Entering a state: arm its timer and tell both participants.
   def handle_event(:enter, _old, :connecting, data) do
+    broadcast(data)
     {:keep_state_and_data, [{:state_timeout, data.activation_delay_ms, :activate}]}
   end
 
   def handle_event(:enter, old, :active, data) do
-    {duration_ms, message} =
+    duration_ms =
       case old do
-        :connecting -> {data.call_duration_ms, :call_active}
-        :extension_pending -> {data.extension_duration_ms, :call_extended}
+        :connecting -> data.call_duration_ms
+        :extension_pending -> data.extension_duration_ms
       end
 
     data = put_in(data.call.call_deadline_unix_ms, deadline(duration_ms))
-    broadcast(data, {message, data.call})
+    broadcast(data)
     {:keep_state, data, [{:state_timeout, duration_ms, :time_up}]}
   end
 
@@ -128,7 +131,7 @@ defmodule Randos.Calls.CallCoordinator do
     timeout_ms = data.extension_response_timeout_ms
     data = put_in(data.call.extension_deadline_unix_ms, deadline(timeout_ms))
     data = %{data | extension_votes: %{}}
-    broadcast(data, {:call_extension_pending, data.call})
+    broadcast(data)
     {:keep_state, data, [{:state_timeout, timeout_ms, :vote_timeout}]}
   end
 
@@ -227,7 +230,7 @@ defmodule Randos.Calls.CallCoordinator do
     Logger.info("call_ended call_id=#{data.call.id} reason=#{reason} status=#{data.call.status}")
     demonitor_participants(data)
     data = %{data | call: Lifecycle.end_call(data.call, reason)}
-    broadcast(data, {:call_ended, data.call})
+    broadcast(data)
     data
   end
 
@@ -258,9 +261,11 @@ defmodule Randos.Calls.CallCoordinator do
     :exit, {:shutdown, _} -> {:error, :call_unavailable}
   end
 
-  defp broadcast(%{call: %Call{match: match}} = data, message) do
-    Phoenix.PubSub.broadcast(data.pubsub, match.participant_a.topic, message)
-    Phoenix.PubSub.broadcast(data.pubsub, match.participant_b.topic, message)
+  # The single call-event message: `{:call_updated, %Call{}}`, sent to both
+  # participants on every status change (including the initial :connecting).
+  defp broadcast(%{call: %Call{match: match} = call} = data) do
+    Phoenix.PubSub.broadcast(data.pubsub, match.participant_a.topic, {:call_updated, call})
+    Phoenix.PubSub.broadcast(data.pubsub, match.participant_b.topic, {:call_updated, call})
   end
 
   defp relay_signal_to_peer(data, message) do

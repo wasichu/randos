@@ -35,7 +35,6 @@ defmodule Randos.Matchmaking.Matchmaker do
   defstruct queues: %{},
             participants: %{},
             monitors: %{},
-            pubsub: Randos.PubSub,
             call_supervisor: Randos.Calls.CallSupervisor,
             call_options: [],
             call_starter: {CallCoordinator, :start_match}
@@ -49,6 +48,10 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @doc """
   Joins the queue or immediately matches with a compatible waiting participant.
+
+  On a match the call's coordinator is started and the joiner gets
+  `{:matched, match}` (with `call_pid`); both participants then hear about the
+  call only from the coordinator, as `{:call_updated, %Call{}}`.
   """
   def join(attrs), do: join(__MODULE__, attrs)
 
@@ -76,7 +79,6 @@ defmodule Randos.Matchmaking.Matchmaker do
   def init(opts) do
     {:ok,
      %__MODULE__{
-       pubsub: Keyword.get(opts, :pubsub, Randos.PubSub),
        call_supervisor: Keyword.get(opts, :call_supervisor, Randos.Calls.CallSupervisor),
        call_options: Keyword.get(opts, :call_options, []),
        call_starter: Keyword.get(opts, :call_starter, {CallCoordinator, :start_match})
@@ -151,7 +153,6 @@ defmodule Randos.Matchmaking.Matchmaker do
           {:ok, call_pid} ->
             match = Map.merge(match, %{call_pid: call_pid})
             Logger.info("matchmaking_matched match_id=#{match.id}")
-            notify_match(state.pubsub, match)
             {:reply, {:matched, match}, state}
 
           {:error, reason} ->
@@ -291,10 +292,5 @@ defmodule Randos.Matchmaking.Matchmaker do
   defp deterministic_match_id(participant_a_id, participant_b_id) do
     :crypto.hash(:sha256, participant_a_id <> ":" <> participant_b_id)
     |> Base.url_encode64(padding: false)
-  end
-
-  defp notify_match(pubsub, match) do
-    Phoenix.PubSub.broadcast(pubsub, match.participant_a.topic, {:randos_match, match})
-    Phoenix.PubSub.broadcast(pubsub, match.participant_b.topic, {:randos_match, match})
   end
 end

@@ -118,24 +118,16 @@ defmodule RandosWeb.HomeLive do
   end
 
   @impl true
-  def handle_info({:randos_match, match}, socket) do
-    {:noreply, assign_match(socket, match)}
-  end
+  def handle_info({:call_updated, call}, socket) do
+    socket =
+      case call.status do
+        :connecting -> assign_match(socket, Map.put(call.match, :call_pid, call.pid))
+        :active -> assign_call_state(socket, call, :in_call)
+        :extension_pending -> assign_call_state(socket, call, :extension_pending)
+        :ended -> finish_call(socket, call)
+      end
 
-  def handle_info({:call_active, call}, socket) do
-    {:noreply, assign_call_state(socket, call, :in_call)}
-  end
-
-  def handle_info({:call_extension_pending, call}, socket) do
-    {:noreply, assign_call_state(socket, call, :extension_pending)}
-  end
-
-  def handle_info({:call_extended, call}, socket) do
-    {:noreply, assign_call_state(socket, call, :in_call)}
-  end
-
-  def handle_info({:call_ended, call}, socket) do
-    {:noreply, finish_call(socket, call)}
+    {:noreply, socket}
   end
 
   def handle_info({:signaling, message}, socket) do

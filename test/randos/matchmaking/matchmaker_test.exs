@@ -62,7 +62,7 @@ defmodule Randos.Matchmaking.MatchmakerTest do
     send(pid_b, :stop)
   end
 
-  test "matches compatible participants and notifies both topics", %{matchmaker: matchmaker} do
+  test "matches compatible participants and starts their call", %{matchmaker: matchmaker} do
     pid_a = waiting_pid()
     pid_b = waiting_pid()
 
@@ -72,9 +72,6 @@ defmodule Randos.Matchmaking.MatchmakerTest do
     participant_b =
       participant(id: "b", pid: pid_b, speaks_language: "es", listens_language: "en")
 
-    Phoenix.PubSub.subscribe(Randos.PubSub, participant_a.topic)
-    Phoenix.PubSub.subscribe(Randos.PubSub, participant_b.topic)
-
     assert :queued = Matchmaker.join(matchmaker, participant_a)
     assert {:matched, match} = Matchmaker.join(matchmaker, participant_b)
 
@@ -82,9 +79,8 @@ defmodule Randos.Matchmaking.MatchmakerTest do
     assert match.participant_b.id == "b"
     assert match.offerer == :participant_a
     assert match.answerer == :participant_b
+    assert is_pid(match.call_pid)
 
-    assert_receive {:randos_match, ^match}
-    assert_receive {:randos_match, ^match}
     assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)
 
     send(pid_a, :stop)
