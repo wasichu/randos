@@ -92,7 +92,7 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (design proposed, awaiting review)
+### 4.3 Audio (design accepted; Stage 0 next)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
@@ -121,12 +121,9 @@ Single-binary releases via Burrito (`mix ex_ratatui.gen.burrito`).
 
 Not scheduled; pick up when relevant.
 
-- **Text-only clients and browsers.** The TUI ends a call when a peer offers
-  audio, but when the TUI matches *first* it is the offerer, sends nothing,
-  and a browser answerer waits for an offer for the whole segment. Options:
-  capability-aware matching (`find` carries `audio: true|false`, and the
-  Matchmaker only pairs like with like), or keep the TUI dev-only until 4.3
-  brings real audio. Decision pending.
+- **Text-only clients and browsers.** Decided: capability-aware matching
+  (`find` carries `audio`; the Matchmaker pairs only compatible clients),
+  built before 4.3 Stage 1. Until then the TUI is dev-server only.
 
 - **Multi-node matchmaking.** Production runs one Fly machine because
   `Matchmaker` is node-local (two machines split the queue). Before scaling
@@ -165,3 +162,7 @@ All 2026-10-19 unless noted.
 - **Infra on OpenTofu with encrypted, committed state**; passphrase in the
   owner's Keychain and password manager.
 - **Dev monitor (4.1) runs in the dev VM**, not as a separate node.
+- **TUI audio (4.3): one Rust helper as a Port** (str0m, Opus, cpal);
+  headphones in v1; capability-aware matching before Stage 1; the Phase 5
+  anonymizer is prototyped in Elixir and shipped in Rust. See
+  [`tui_audio.md`](tui_audio.md).

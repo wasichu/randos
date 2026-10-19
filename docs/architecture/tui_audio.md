@@ -1,6 +1,6 @@
 # TUI audio (Phase 4.3): design
 
-Status: **proposed, for review.** No code or dependencies yet.
+Status: **accepted 2026-10-19** (decisions below). Stage 0 in progress.
 Researched 2026-10-19. Each claim is marked **[run]** (we ran it here, Elixir
 1.20.4 / OTP 29.1.1, macOS arm64), **[source]** (read in package source,
 metadata, or official docs), or **[unverified]** (reported but not checked;
@@ -296,16 +296,15 @@ The browser's matching seam is unchanged: `processLocalStream` in
   libopus, built on our CI.
 - **No new NIFs**, and nothing compiled on users' machines.
 
-## Open questions for you
+## Decisions (2026-10-19)
 
-1. **Option B (Rust helper) over A (`ex_webrtc`)?** That's the core call;
-   everything else follows from it.
-2. **Where should the Phase 5 anonymizer run: in Rust (in the helper) or in
-   Elixir (bounced frames, e.g. Nx)?** The seam supports both. Your answer
-   shapes how much the helper exposes.
-3. **v1 platforms:** macOS arm64 + Linux glibc x86_64 first, the rest in 4.4?
-4. **Headphones required in v1**, with AEC in Stage 3?
-5. **Capability-aware matching** (`find` carries `audio`): needed before any
-   TUI is used against production.
-6. **Rust as a project build dependency** (in `mise.toml`, for whoever builds
-   the helper): OK?
+1. **Option B:** all media in one Rust helper run as a Port; no `ex_webrtc`.
+2. **Phase 5 anonymizer:** prototype in Elixir (bounced frames), ship in Rust
+   (the helper's `Processor`). Not tied to Nx/Bumblebee.
+3. **v1 platforms:** macOS arm64 and Linux glibc x86_64; Intel Mac, musl and
+   Windows with 4.4 packaging.
+4. **Headphones required in v1** (plus ducking); echo cancellation in Stage 3.
+5. **Capability-aware matching before Stage 1**, so the TUI and the browser
+   offer equivalently good experiences: `find` carries `audio`, and the
+   matchmaker only pairs compatible clients.
+6. **Rust is a pinned build dependency** in `mise.toml`.
