@@ -165,7 +165,32 @@ off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
 
 The most experimental phase, so it's built around a **voice lab** that
 makes trying an approach cheap and comparing approaches easy, by ear and by
-eye, before anything touches a real call.
+eye, before anything touches a real call. (Design reviewed with the advisor
+2026-10-19; two decisions below are open.)
+
+### Open decisions (owner's call before the lab is built)
+
+1. **What language the processors are written in.** The 4.3 decisions say
+   "prototype in Elixir, ship in Rust"; a browser lab wants processors that
+   run in an AudioWorklet. Writing each variant in JS (lab, browser), Elixir
+   (TUI prototype), and Rust (TUI ship) means three implementations, which
+   breaks "the TUI and browser offer equivalently good experiences".
+   **Recommended:** DSP variants are written once in Rust and compiled two
+   ways: to WASM for the AudioWorklet (the lab and the browser call) and
+   natively into the media helper (the TUI). The lab then tests exactly what
+   both clients run. Elixir prototyping is kept only for model-based
+   approaches via Nx, if at all.
+2. **An exception to "only `app.js`/`app.css` bundles exist".**
+   `audioWorklet.addModule(url)` loads each processor from its own URL, so
+   processors can't live inside `app.js`, and a dev-only lab UI compiled into
+   `app.js` would ship to production. **Recommended:** (a) processors are
+   their own esbuild entry points (or static files under `priv/static/`),
+   allowed by a documented exception for worklet modules; (b) the lab UI is a
+   separate `voice_lab.js` entry built only with `dev_routes`; (c) shippable
+   processors live under `assets/js/randos/voice/` (the winner joins the
+   production call path), and only the lab UI under `assets/js/voice_lab/`.
+
+### Plan
 
 1. **Seam first.** One explicit spot in each client's audio path between the
    mic and the call, with a pass-through default:
@@ -173,38 +198,51 @@ eye, before anything touches a real call.
      and before `addTrack`: `localStream = await processLocalStream(rawStream)`.
      Teardown must stop the *raw* tracks and close the processor's
      AudioContext; decide whether mute and the visualizer act on raw or
-     processed audio; share one AudioContext.
-   - TUI: the equivalent spot in the 4.3 native pipeline (the helper's
-     `Processor`, prototyped in Elixir first per the 4.3 decisions).
+     processed audio; share one AudioContext, created at the capture rate
+     (48 kHz) so the seam doesn't add a resampler.
+   - TUI: the equivalent spot in the helper's pipeline (its `Processor`).
+   - **Done when** `just smoke` passes with pass-through *in the call path*
+     and the lab has measured pass-through latency (a worklet hop costs at
+     least one render quantum plus destination buffering). That number is
+     the budget every real variant is measured against.
 2. **Voice lab (local web page).** A dev-only LiveView at `/dev/voice-lab`,
-   inside the existing `dev_routes` scope, so it never ships to production.
-   - **Pluggable processors.** Each approach is one module behind a common
-     interface (e.g. an AudioWorklet processor under
-     `assets/js/voice_lab/processors/`, plus a manifest of name,
-     parameters, and where it runs). Adding a variant = adding a file; the
-     lab picks it up and renders its parameter sliders automatically. A
-     pass-through baseline is always present.
-   - **Sources.** Bundled, openly licensed speech clips (several voices,
-     both supported languages' worth of variety), a test tone, and the live
-     mic. The mic path is processed in real time to headphones only; nothing
-     is recorded, stored, or uploaded (README product constraints).
-   - **Compare side by side.** Pick any two to four variants: synchronized
-     playback with instant switching (same clip, same position), a blind A/B
-     mode that hides which is which and tallies your picks, and a parameter
-     sweep that renders one variant at several settings in a row.
-   - **See it, not just hear it.** Per variant: spectrogram and pitch track
-     next to the original, measured processing latency and CPU per frame,
-     and a level meter, so "sounds robotic" can be matched to something
-     visible.
-   - **Same code as the call.** Processors run through the same seam
-     function the browser call uses, so a variant that wins in the lab is
-     one setting away from a real call (`just smoke` then checks it doesn't
-     break teardown).
-3. **Comparison write-ups.** After each round of experiments, a short
-   report: the variants tried, their latency/CPU numbers, spectrogram
-   snapshots, your blind A/B results, and a recommendation. Reports use only
-   the bundled clips, never a recording of anyone's voice.
-4. **Model mini-project** (its own design doc once the lab exists): DSP
+   inside the existing `dev_routes` scope, so it never ships to production
+   (the phoenix-framework skill applies; canvas hooks need
+   `phx-update="ignore"`).
+   - **One file per variant.** Sliders come from the processor's own
+     AudioWorklet `parameterDescriptors` (name, default, min, max), so there
+     is no separate manifest to keep in sync; a few static fields add display
+     name, description, and which clients it runs in. A pass-through
+     baseline is always present.
+   - **Sources.** Bundled, openly licensed speech clips chosen to span the
+     pitch range on purpose (low and high voices, where anonymization quality
+     diverges), with a license/attribution file next to them; a test tone;
+     and the live mic.
+   - **Comparison works on rendered clips.** Every variant of a clip is
+     rendered up front with `OfflineAudioContext`: deterministic, faster than
+     real time, and exactly in sync. That gives instant switching at the same
+     position, blind A/B, parameter sweeps, and side-by-side spectrograms.
+   - **Live mic is a separate "listen live" mode:** real time to headphones
+     with a level meter and nothing else. Nothing is recorded, stored, or
+     uploaded (README product constraints).
+   - **Honest numbers.** CPU cost is the offline render time divided by the
+     clip length (real-time factor). Algorithmic latency comes from
+     cross-correlating each rendered output with its input. (Check which
+     timing APIs `AudioWorkletGlobalScope` actually has before promising
+     per-frame timing.)
+   - **Same code as the call:** variants plug into the seam function the
+     browser call uses, so a lab winner is one setting away from a real call.
+3. **Built in stages.**
+   - **v0:** seam + pass-through + one pitch-shift variant, offline render,
+     play and switch, spectrograms. Enough to start judging results.
+   - **v1:** blind A/B, parameter sweeps, pitch tracks, real-time factor and
+     latency numbers, listen-live mode.
+   - **v2:** comparison write-ups.
+4. **Comparison write-ups.** After each round, a report page: variants
+   tried, their numbers, spectrogram images, blind A/B results, a
+   recommendation, and the processed clips embedded so the report can be
+   listened to. Only bundled clips, never a recording of anyone's voice.
+5. **Model mini-project** (its own design doc once the lab exists): DSP
    (pitch/formant shifting) vs. on-device voice conversion, latency budget,
    browser WASM/WebGPU vs. native, and how much anonymity each actually
    gives (a speaker-similarity check belongs in the lab once there's a
