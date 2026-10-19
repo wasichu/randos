@@ -82,8 +82,9 @@ format:
 # Full pre-commit check: server, clients/tui, the Rust helper, and the encrypted-state guard
 precommit: check-state-encrypted
     mix precommit
-    cd clients/tui && mix precommit
     just native-check
+    cargo build --quiet -p randos_media
+    cd clients/tui && mix precommit
 
 # Rust media helper checks: format, clippy (warnings are errors), tests, cargo-deny
 native-check:
