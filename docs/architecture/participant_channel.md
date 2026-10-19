@@ -22,13 +22,20 @@ Tests: `test/randos_web/channels/participant_channel_test.exs`.
 
 ## Joining
 
-Join topic `"participant"` with `{}`. The reply is the initial
-[state](#state).
+Join topic `"participant"` with `{}`. The reply carries the initial
+[state](#state) and the supported conversation languages (use these codes in
+`find`; don't hardcode the list):
 
 ```json
 ["1", "1", "participant", "phx_join", {}]
-→ ["1", "1", "participant", "phx_reply", {"status": "ok", "response": {"status": "idle", "webrtc_role": null, "error": null, "call": null}}]
+→ ["1", "1", "participant", "phx_reply", {"status": "ok", "response": {
+    "state": {"status": "idle", "webrtc_role": null, "error": null, "call": null},
+    "languages": [{"code": "en", "name": "English (EN)"}, {"code": "es", "name": "Español (ES)"}, …]
+  }}]
 ```
+
+A reconnect (e.g. Slipstream rejoining) is a new participant: the join reply
+is a fresh `idle` state.
 
 ## Client → server events
 
@@ -49,15 +56,16 @@ Events that don't apply in the current status are accepted and ignored.
 Malformed payloads reply `invalid_message`; unknown signal types reply
 `unsupported_signal_type`.
 
-Supported languages (both `speaks` and `listens`): `en es zh hi ar pt bn ru
-ja fr de ko it tr id` (`Randos.ConversationLanguages`). Others give
-`error: "unsupported_language"`.
+`speaks` and `listens` must be codes from the join reply's `languages`;
+others give `error: "unsupported_language"`.
 
 ## Server → client pushes
 
 ### `state`
 
-Pushed whenever the participant's state changes (and returned on join).
+Pushed whenever the participant's state changes (the initial one comes in
+the join reply). JSON strings throughout: `status`, `webrtc_role`, `error`,
+and `call.status` / `call.ended_reason` arrive as strings, e.g. `"in_call"`.
 
 ```json
 {

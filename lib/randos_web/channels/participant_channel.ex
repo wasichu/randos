@@ -10,6 +10,7 @@ defmodule RandosWeb.ParticipantChannel do
   """
   use Phoenix.Channel
 
+  alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
   alias Randos.Signaling
@@ -35,7 +36,7 @@ defmodule RandosWeb.ParticipantChannel do
         find_refilled_at: System.monotonic_time(:millisecond)
       )
 
-    {:ok, state, socket}
+    {:ok, %{state: state, languages: languages()}, socket}
   end
 
   @impl true
@@ -93,6 +94,11 @@ defmodule RandosWeb.ParticipantChannel do
     Enum.each(client_effects, &deliver(socket, &1))
     socket = assign(socket, :participant, participant)
     push_state_if_changed(socket)
+  end
+
+  # Supported conversation languages, so clients never hardcode the list.
+  defp languages do
+    Enum.map(ConversationLanguages.all(), fn {name, code} -> %{code: code, name: name} end)
   end
 
   defp deliver(socket, {:push_signal, message}), do: push(socket, "signal", message)

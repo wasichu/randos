@@ -12,7 +12,7 @@ defmodule RandosWeb.ParticipantChannelTest do
   alias RandosWeb.ParticipantSocket
 
   defp join_participant do
-    {:ok, state, socket} =
+    {:ok, %{state: state, languages: [_ | _]}, socket} =
       ParticipantSocket
       |> socket(nil, %{})
       |> subscribe_and_join(RandosWeb.ParticipantChannel, "participant")
@@ -34,6 +34,16 @@ defmodule RandosWeb.ParticipantChannelTest do
   test "joining gives an idle participant with no call or identifiers" do
     {state, _socket} = join_participant()
     assert state == %{status: :idle, webrtc_role: nil, error: nil, call: nil}
+  end
+
+  test "the join reply lists the supported languages" do
+    {:ok, %{languages: languages}, _socket} =
+      ParticipantSocket
+      |> socket(nil, %{})
+      |> subscribe_and_join(RandosWeb.ParticipantChannel, "participant")
+
+    assert %{code: "en", name: "English (EN)"} in languages
+    assert length(languages) == length(Randos.ConversationLanguages.codes())
   end
 
   test "find without the 18+ acknowledgment reports an error in state" do
