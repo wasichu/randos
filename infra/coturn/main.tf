@@ -61,10 +61,15 @@ resource "digitalocean_firewall" "coturn" {
   droplet_ids = [digitalocean_droplet.coturn.id]
   tags        = local.common_tags
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "22"
-    source_addresses = [var.ssh_allowed_cidr]
+  # SSH only from explicitly listed addresses; none means no SSH rule at all.
+  dynamic "inbound_rule" {
+    for_each = length(var.ssh_allowed_cidrs) > 0 ? [1] : []
+
+    content {
+      protocol         = "tcp"
+      port_range       = "22"
+      source_addresses = var.ssh_allowed_cidrs
+    }
   }
 
   inbound_rule {

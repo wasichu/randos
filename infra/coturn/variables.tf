@@ -39,10 +39,15 @@ variable "ssh_public_key_path" {
   type        = string
 }
 
-variable "ssh_allowed_cidr" {
-  description = "CIDR range allowed to connect to SSH on TCP 22."
-  type        = string
-  default     = "0.0.0.0/0"
+variable "ssh_allowed_cidrs" {
+  description = "CIDRs allowed to SSH (TCP 22). Empty (the default) means no SSH access; set your own IPs in terraform.tfvars. Never 0.0.0.0/0."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = !contains(var.ssh_allowed_cidrs, "0.0.0.0/0") && !contains(var.ssh_allowed_cidrs, "::/0")
+    error_message = "SSH must not be open to the whole internet."
+  }
 }
 
 variable "turn_hostname" {

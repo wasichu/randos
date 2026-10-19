@@ -153,7 +153,7 @@ export TF_VAR_letsencrypt_email="you@example.com"
 | `region` | `nyc3` | DigitalOcean region. |
 | `droplet_size` | `s-1vcpu-1gb` | Small inexpensive Droplet size. |
 | `ssh_public_key_path` | none | Existing local SSH public key path. |
-| `ssh_allowed_cidr` | `0.0.0.0/0` | CIDR allowed to connect to SSH. Tighten this (the live firewall is narrower than this default; set it to match before applying). |
+| `ssh_allowed_cidrs` | `[]` | CIDRs allowed to SSH. Empty means no SSH rule; `0.0.0.0/0` is rejected. Set your IPs in `terraform.tfvars`. |
 | `turn_hostname` | `turn.slowinput.org` | Public TURN hostname. |
 | `turn_realm` | `turn.slowinput.org` | coturn realm. |
 | `turn_shared_secret` | `null` | If unset, OpenTofu generates a secret. |
@@ -170,7 +170,7 @@ export TF_VAR_letsencrypt_email="you@example.com"
 
 Inbound rules:
 
-- TCP `22` from `ssh_allowed_cidr`
+- TCP `22` from `ssh_allowed_cidrs` (no SSH rule if empty)
 - TCP `80` from anywhere for Let's Encrypt HTTP-01 validation
 - UDP `3478` from anywhere for STUN/TURN
 - TCP `3478` from anywhere for STUN/TURN over TCP
