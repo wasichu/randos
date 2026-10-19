@@ -176,7 +176,7 @@ defmodule RandosWeb.HomeLive do
 
   defp hero_panel(assigns) do
     ~H"""
-    <div class="flex flex-col justify-between gap-10">
+    <div id="hero-panel" class="flex flex-col justify-between gap-10">
       <div>
         <div class="flex items-center gap-3 sm:gap-4">
           <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />

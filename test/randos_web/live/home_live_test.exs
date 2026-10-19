@@ -3,6 +3,14 @@ defmodule RandosWeb.HomeLiveTest do
 
   import Phoenix.LiveViewTest
 
+  test "serves the home page on the initial HTTP request", %{conn: conn} do
+    html = conn |> get(~p"/") |> html_response(200)
+    document = LazyHTML.from_document(html)
+
+    refute Enum.empty?(LazyHTML.query(document, "#hero-panel"))
+    refute Enum.empty?(LazyHTML.query(document, "#conversation-form"))
+  end
+
   test "renders the product skeleton and disables search until the acknowledgment is checked", %{
     conn: conn
   } do
