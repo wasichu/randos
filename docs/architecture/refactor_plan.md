@@ -323,7 +323,7 @@ yet. Items marked **Bug** are defects, not cleanups.
     - Fix (Phase 2/3): send fresh ICE servers with each match (in the
       `{:randos_match, …}` payload or a push event). Set TTL ≥ max call
       duration plus a margin.
-14. `config :randos, RandosWeb.IceServers, future_env: […]`
+14. (Done.) `config :randos, RandosWeb.IceServers, future_env: […]`
     (`config/config.exs:56-64`) is dead: the module hardcodes the env var
     names. Delete it, or have the module read it (Phase 1).
 15. Env vars are read with `System.get_env/1` on every render
