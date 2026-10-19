@@ -1,7 +1,9 @@
 const DEFAULT_ICE_SERVERS = [{urls: "stun:stun.l.google.com:19302"}]
 
-export const iceServersFromPage = () => {
-  const content = document.querySelector("meta[name='randos-ice-servers']")?.content
+// ICE servers (with fresh TURN credentials) are rendered per call onto the
+// call's element as data-ice-servers.
+export const iceServersFrom = element => {
+  const content = element?.dataset.iceServers
 
   if (!content) return DEFAULT_ICE_SERVERS
 

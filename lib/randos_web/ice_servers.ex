@@ -5,12 +5,21 @@ defmodule RandosWeb.IceServers do
   This boundary keeps STUN/TURN configuration in Phoenix instead of hardcoding
   it in JavaScript. It defaults to public STUN and can expose coturn STUN/TURN
   servers with short-lived TURN REST API credentials when configured by env.
+
+  Credentials are minted per call (see `RandosWeb.HomeLive`) and must outlive
+  the longest possible call: coturn re-checks them when an allocation is
+  refreshed, so expiry mid-call would drop relayed audio. A configured TTL
+  below that floor is raised to it.
   """
+
+  require Logger
 
   @default_ice_servers [
     %{urls: "stun:stun.l.google.com:19302"}
   ]
-  @default_turn_credential_ttl_seconds 900
+  @default_turn_credential_ttl_seconds 3_600
+  # Longest call (30 min) plus time to connect and a margin.
+  @min_turn_credential_ttl_seconds Randos.Calls.Lifecycle.max_call_duration_seconds() + 600
 
   @doc """
   Returns ICE servers safe to expose to the browser.
@@ -98,9 +107,20 @@ defmodule RandosWeb.IceServers do
   end
 
   defp turn_credential_ttl_seconds do
-    "TURN_CREDENTIAL_TTL_SECONDS"
-    |> env()
-    |> parse_positive_integer(@default_turn_credential_ttl_seconds)
+    ttl =
+      "TURN_CREDENTIAL_TTL_SECONDS"
+      |> env()
+      |> parse_positive_integer(@default_turn_credential_ttl_seconds)
+
+    if ttl < @min_turn_credential_ttl_seconds do
+      Logger.warning(
+        "TURN_CREDENTIAL_TTL_SECONDS=#{ttl} is shorter than the longest call; using #{@min_turn_credential_ttl_seconds}"
+      )
+
+      @min_turn_credential_ttl_seconds
+    else
+      ttl
+    end
   end
 
   defp parse_positive_integer(value, default) when is_binary(value) do

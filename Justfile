@@ -21,7 +21,7 @@ dev-turn:
     TURN_HOST="turn.slowinput.org" \
     TURN_REALM="turn.slowinput.org" \
     TURN_SHARED_SECRET="$(terraform -chdir=infra/coturn output -raw turn_shared_secret)" \
-    TURN_CREDENTIAL_TTL_SECONDS="900" \
+    TURN_CREDENTIAL_TTL_SECONDS="3600" \
     iex -S mix phx.server
 
 # Generate local HTTPS certs with mkcert (for mic/WebRTC testing)

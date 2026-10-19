@@ -30,7 +30,7 @@ These variables configure browser ICE servers for WebRTC calls:
 | `TURNS_SERVER_URL` | Optional explicit TURN-over-TLS URL, for example `turns:turn.slowinput.org:5349`. |
 | `TURN_SHARED_SECRET` | coturn REST API shared secret used to generate temporary browser credentials. |
 | `TURN_REALM` | coturn realm. Kept with deployment config; browsers do not need it directly. |
-| `TURN_CREDENTIAL_TTL_SECONDS` | Lifetime for generated temporary TURN credentials. Defaults to `900`. |
+| `TURN_CREDENTIAL_TTL_SECONDS` | Lifetime for TURN credentials, which are minted per call. Defaults to `3600`; values below the longest call plus 10 minutes (`2400`) are raised to that, since coturn re-checks credentials when refreshing an allocation. |
 
 Without `TURN_SHARED_SECRET` and at least one TURN URL, ICE server
 configuration falls back to public STUN:
@@ -45,7 +45,7 @@ For local coturn testing:
 TURN_HOST="turn.slowinput.org" \
 TURN_REALM="turn.slowinput.org" \
 TURN_SHARED_SECRET="$(terraform -chdir=infra/coturn output -raw turn_shared_secret)" \
-TURN_CREDENTIAL_TTL_SECONDS="900" \
+TURN_CREDENTIAL_TTL_SECONDS="3600" \
 mix phx.server
 ```
 

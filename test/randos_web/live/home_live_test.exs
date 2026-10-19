@@ -41,13 +41,6 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#find-rando-button[disabled]")
   end
 
-  test "renders browser ICE server metadata", %{conn: conn} do
-    html = get(conn, ~p"/") |> html_response(200)
-
-    assert html =~ ~s(name="randos-ice-servers")
-    assert html =~ "stun:stun.l.google.com:19302"
-  end
-
   test "defaults speak language from browser locale and hear language to English", %{conn: conn} do
     conn = put_connect_params(conn, %{"browser_locale" => "pt-BR"})
 
@@ -128,6 +121,7 @@ defmodule RandosWeb.HomeLiveTest do
     assert eventually_has_element?(view_a, "#call-panel")
     assert has_element?(view_a, "#call-countdown")
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
+    assert has_element?(view_a, "#webrtc-audio[data-ice-servers*='stun:']")
     assert has_element?(view_a, "#mute-button[disabled]")
     assert has_element?(view_a, "#local-waveform-canvas[data-audio-visualizer='local']")
     assert has_element?(view_a, "#remote-waveform-canvas[data-audio-visualizer='remote']")

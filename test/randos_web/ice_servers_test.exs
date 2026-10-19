@@ -57,6 +57,28 @@ defmodule RandosWeb.IceServersTest do
     end)
   end
 
+  test "credentials always outlive the longest possible call" do
+    floor = Randos.Calls.Lifecycle.max_call_duration_seconds() + 600
+
+    with_restored_env(fn ->
+      System.put_env("TURN_HOST", "turn.slowinput.org")
+      System.put_env("TURN_SHARED_SECRET", "shared-secret")
+
+      for {configured, minimum} <- [{"900", floor}, {nil, 3_600}, {"7200", 7_200}] do
+        if configured,
+          do: System.put_env("TURN_CREDENTIAL_TTL_SECONDS", configured),
+          else: System.delete_env("TURN_CREDENTIAL_TTL_SECONDS")
+
+        [_stun, %{"username" => username} | _] = IceServers.list()
+        {expires_at, ""} = Integer.parse(username)
+        ttl = expires_at - System.system_time(:second)
+
+        assert ttl in (minimum - 2)..minimum,
+               "TTL #{inspect(configured)} gave #{ttl}s, expected ~#{minimum}s"
+      end
+    end)
+  end
+
   test "supports explicit STUN, TURN, and TURNS URLs from environment variables" do
     with_restored_env(fn ->
       System.put_env("TURN_STUN_URL", "stun:turn.example.com:3478")

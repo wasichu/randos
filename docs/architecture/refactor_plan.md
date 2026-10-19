@@ -55,7 +55,7 @@ below.
 Status: core landed (`7986493`, `76261b7`, and the HomeLive shell commit).
 `{:call_updated, %Call{}}` is the only call event; `Randos.Participant` is
 the core; `ConversationFlow` is gone; the "End" button no longer reloads the
-page. Remaining: §13 (fresh ICE servers per call), HomeComponents extraction,
+page; ICE servers are minted per call (§13). Remaining: HomeComponents extraction,
 `%Match{}` struct (§3).
 
 Functional core, imperative shell:
@@ -308,7 +308,7 @@ yet. Items marked **Bug** are defects, not cleanups.
 
 ### IceServers (`lib/randos_web/ice_servers.ex`)
 
-13. **TURN credentials go stale.** **Bug when TURN is enabled.**
+13. **(Fixed: credentials minted per call, TTL ≥ longest call + 10 min.) TURN credentials go stale.** **Bug when TURN is enabled.**
     - Where: credentials are minted once, at full page render, into a
       `<meta>` tag (`layouts/root.html.heex:7`). `iceServersFromPage()`
       (`assets/js/randos/ice_servers.js:3`) re-reads that same tag and never
@@ -421,5 +421,4 @@ behavior nobody has tested.
 ### Summary: real bugs vs cleanups
 
 Bugs: §8 (split queue: mitigated by running one machine), §10 (fixed),
-§13 (stale TURN credentials, **open**, lands with Phase 2), §16, §17, §18
-(fixed). Everything else is cleanup or design.
+§13, §16, §17, §18 (fixed). Everything else is cleanup or design.

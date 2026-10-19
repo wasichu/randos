@@ -13,6 +13,7 @@ defmodule RandosWeb.HomeLive do
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
+  alias RandosWeb.IceServers
 
   @impl true
   def mount(_params, _session, socket) do
@@ -103,12 +104,25 @@ defmodule RandosWeb.HomeLive do
   # Templates read these flat assigns, derived from the participant.
   defp assign_participant(socket, %Participant{} = participant) do
     socket
+    |> assign_ice_servers(participant)
     |> assign(:participant, participant)
     |> assign(:ui_state, participant.status)
     |> assign(:webrtc_role, participant.webrtc_role)
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
     |> assign(:matchmaking_error, error_message(participant.error))
+  end
+
+  # Fresh STUN/TURN credentials for every new call, so they can never be older
+  # than the call that uses them (they used to be minted once per page load).
+  defp assign_ice_servers(socket, %Participant{call_pid: call_pid}) do
+    previous = socket.assigns[:participant]
+
+    cond do
+      call_pid == nil -> assign(socket, :ice_servers, nil)
+      previous && previous.call_pid == call_pid -> socket
+      true -> assign(socket, :ice_servers, IceServers.json())
+    end
   end
 
   defp error_message(nil), do: nil
@@ -134,6 +148,7 @@ defmodule RandosWeb.HomeLive do
             call_status={@call_status}
             call_deadline_unix_ms={@call_deadline_unix_ms}
             webrtc_role={@webrtc_role}
+            ice_servers={@ice_servers}
             preferences={@preferences}
             form={@form}
             matchmaking_error={@matchmaking_error}
@@ -200,12 +215,15 @@ defmodule RandosWeb.HomeLive do
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
 
+  attr :ice_servers, :string, default: nil
+
   defp conversation_card(assigns) do
     ~H"""
     <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
       <.call_media_panel
         :if={@call_status in [:active, :extension_pending] && @webrtc_role}
         webrtc_role={@webrtc_role}
+        ice_servers={@ice_servers}
       />
 
       <%= case @ui_state do %>
@@ -472,6 +490,8 @@ defmodule RandosWeb.HomeLive do
 
   attr :webrtc_role, :atom, required: true
 
+  attr :ice_servers, :string, default: nil
+
   defp call_media_panel(assigns) do
     ~H"""
     <div
@@ -479,6 +499,7 @@ defmodule RandosWeb.HomeLive do
       phx-hook="WebRTCAudio"
       phx-update="ignore"
       data-webrtc-role={@webrtc_role}
+      data-ice-servers={@ice_servers}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
       class="contents"

@@ -133,7 +133,7 @@ To test against the coturn server managed by `infra/coturn`:
 TURN_HOST="turn.slowinput.org" \
 TURN_REALM="turn.slowinput.org" \
 TURN_SHARED_SECRET="$(terraform -chdir=infra/coturn output -raw turn_shared_secret)" \
-TURN_CREDENTIAL_TTL_SECONDS="900" \
+TURN_CREDENTIAL_TTL_SECONDS="3600" \
 mix phx.server
 ```
 
@@ -206,7 +206,7 @@ For TURN-backed production, also set:
 TURN_HOST="turn.slowinput.org"
 TURN_REALM="turn.slowinput.org"
 TURN_SHARED_SECRET="..."
-TURN_CREDENTIAL_TTL_SECONDS="900"
+TURN_CREDENTIAL_TTL_SECONDS="3600"
 ```
 
 Run a single app instance until matchmaking and call coordination are moved to
