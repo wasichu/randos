@@ -1,0 +1,10 @@
+# Cargo workspace for the repo's Rust code (so rust-analyzer and cargo find it
+# from the repo root). The only member is the TUI's media helper; see
+# clients/tui/native/README.md.
+[workspace]
+members = ["clients/tui/native"]
+resolver = "3"
+
+[profile.release]
+lto = true
+codegen-units = 1

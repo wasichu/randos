@@ -20,7 +20,3 @@ panic = "deny"
 todo = "deny"
 dbg_macro = "deny"
 print_stdout = "deny" # stdout is the Port; write frames, never print
-
-[profile.release]
-lto = true
-codegen-units = 1

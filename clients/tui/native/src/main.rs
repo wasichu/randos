@@ -23,9 +23,9 @@ fn run() -> io::Result<()> {
     let mut output = BufWriter::new(io::stdout().lock());
 
     while let Some(message) = frame::read_frame(&mut input)? {
-        let reply: &[u8] = match message.as_slice() {
-            b"ping" => b"pong",
-            _ => b"error:unknown_message",
+        let reply = match message.as_slice() {
+            b"ping" => b"pong".as_slice(),
+            _ => b"error:unknown_message".as_slice(),
         };
         frame::write_frame(&mut output, reply)?;
     }

@@ -91,6 +91,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 ## Rust (the TUI media helper, `clients/tui/native`)
 
+- The root `Cargo.toml` is a Cargo workspace whose only member is the helper
+  (so rust-analyzer and `cargo` work from the repo root; build output goes to
+  `/target`, the lockfile is the root `Cargo.lock`).
 - Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,
   cargo-deny). `just native-check` runs fmt, clippy with warnings as errors,
   tests, and `cargo deny check`; it is part of `just precommit`.
