@@ -96,7 +96,7 @@ This is acceptable.
 
 The app controls the official user experience and protects its own infrastructure.
 
-The main infrastructure concern is continued TURN bandwidth usage, which should be handled later with short-lived TURN credentials.
+The main infrastructure concern is continued TURN bandwidth usage. TURN credentials are minted per call and expire (60 minutes by default), and coturn caps per-allocation bandwidth (`max-bps`), which bounds what a modified client can do after a call ends.
 
 ## Permanent Non Goals
 

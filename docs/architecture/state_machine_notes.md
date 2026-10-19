@@ -6,24 +6,20 @@ The goal is to make matchmaking, call coordination, and UI transitions predictab
 
 ## Architectural Principle
 
-Ash state machines should model domain lifecycle transitions.
+Each lifecycle has exactly one owner:
 
-GenServers should manage live runtime coordination.
-
-Browser JavaScript should manage browser-local WebRTC state.
+- **Call lifecycle:** `Randos.Calls.CallCoordinator`, a `:gen_statem` (one per
+  call), using the rules in `Randos.Calls.Lifecycle` and owning the
+  `Randos.Calls.Call` struct.
+- **A person's flow:** `Randos.Participant` (pure; run by
+  `RandosWeb.ParticipantShell` from the LiveView or the participant channel).
+- **Browser media:** `WebRTCClient` in `assets/js/randos/webrtc_client.js`.
 
 Do not collapse these responsibilities together.
 
-## Ash State Machine Usage
+## Call Lifecycle
 
-Use `ash_state_machine` for `CallSession.status`.
-
-Statuses:
-
-- connecting
-- active
-- extension_pending
-- ended
+Statuses: `connecting`, `active`, `extension_pending`, `ended`.
 
 Allowed transitions:
 
@@ -34,33 +30,20 @@ Allowed transitions:
 - extension_pending -> active
 - extension_pending -> ended
 
-Do not mutate status fields manually.
+Each `:gen_statem` state owns its timer as a `state_timeout`, so leaving a
+state cancels it. Transition from the wrong status raises; the extension cap
+is the one legitimate refusal (`Lifecycle.extend/1`).
 
-Use transition actions.
+## What the Call State Machine Does Not Handle
 
-## What Ash State Machines Should Not Handle
+- queue membership (`Randos.Matchmaking.Matchmaker`)
+- ICE state, SDP signaling, browser media state (browser JavaScript)
+- waveform visualization (browser)
+- socket presence (the participant's transport process)
 
-Do not use Ash state machines for:
+## Participant States
 
-- queue membership
-- ICE state
-- SDP signaling
-- active socket presence
-- browser media state
-- waveform visualization
-- timeout ownership
-- extension vote tracking
-
-Those belong to:
-
-- GenServers
-- PubSub
-- browser JavaScript
-- WebRTC APIs
-
-## LiveView UI States
-
-The UI should also have explicit states:
+A participant (`Randos.Participant`) has explicit states:
 
 - idle
 - looking
@@ -101,7 +84,7 @@ Possible states:
 
 This state should remain browser-local.
 
-Do not attempt to fully synchronize browser WebRTC state with Ash resources.
+Do not attempt to fully synchronize browser WebRTC state with the server. The server only hears `connection_established`, `connection_failed`, and `peer_disconnected`.
 
 ## Idempotency
 

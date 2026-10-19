@@ -23,7 +23,7 @@ The default TURN hostname and realm are:
 turn.slowinput.org
 ```
 
-DNS is managed manually in Cloudflare. Terraform does not create Cloudflare
+DNS is managed manually in Cloudflare. OpenTofu does not create Cloudflare
 resources.
 
 After `tofu apply`, create this Cloudflare record manually:
@@ -74,7 +74,7 @@ turns:turn.slowinput.org:5349
 
 ## DNS Timing And Certbot Recovery
 
-Terraform does not assume DNS already exists during `tofu apply`. If
+OpenTofu does not assume DNS already exists during `tofu apply`. If
 Cloudflare DNS is not ready when the Droplet first boots, certbot may fail.
 That is expected and handled gracefully.
 
@@ -124,7 +124,7 @@ sudo ss -tulpn | grep -E '(:3478|:5349)'
 export TF_VAR_do_token="dop_v1_..."
 ```
 
-`ssh_public_key_path` is also required. Terraform reads this public key,
+`ssh_public_key_path` is also required. OpenTofu reads this public key,
 uploads it to DigitalOcean, and associates it with the Droplet.
 
 Example SSH key generation:

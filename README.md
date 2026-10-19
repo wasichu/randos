@@ -42,13 +42,14 @@ Randos is a Phoenix LiveView application with:
 
 - anonymous matchmaking
 - WebRTC microphone capture and peer audio
-- dynamic ICE server configuration
-- coturn-ready TURN credential generation
+- per-call STUN/TURN credentials for a self-hosted coturn server
+- a public, anonymous channel API for non-browser clients
+  (`docs/architecture/participant_channel.md`)
 - local HTTPS support for microphone testing
-- a Terraform/coturn scaffold under `infra/coturn`
+- the coturn server as code (OpenTofu + cloud-init) under `infra/coturn`
 
 All state is process-backed: a matchmaking queue GenServer and one coordinator
-process per call.
+process per call. The roadmap is `docs/architecture/refactor_plan.md`.
 There is no database. Queues, calls, and call session state are transient and
 disappear on application restart.
 
@@ -150,7 +151,7 @@ fails. It does not give Randos server-side audio access.
 
 ## Infrastructure
 
-The coturn Terraform and cloud-init setup lives in:
+The coturn OpenTofu and cloud-init setup lives in:
 
 ```text
 infra/coturn/
@@ -161,8 +162,9 @@ Operational docs:
 - `docs/architecture/ops.md`
 - `infra/coturn/README.md`
 
-The Terraform state contains the generated TURN shared secret. Keep it private
-and backed up.
+The OpenTofu state (committed, encrypted) contains the generated TURN shared
+secret; its passphrase lives in the owner's Keychain and password manager.
+See `infra/coturn/README.md`.
 
 ## Checks
 

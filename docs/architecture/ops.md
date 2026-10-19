@@ -148,9 +148,10 @@ mix assets.deploy
 
 ## Production Basics
 
-The app currently has no database configured. Ash resources use ETS-backed
-transient state, and matchmaking and calls are process-backed. Queued users,
-active calls, and call session state disappear on application restart.
+The app has no database. Matchmaking and calls are process-backed (a
+matchmaker GenServer and one coordinator per call); queued users and active
+calls disappear on application restart. Production runs a single Fly machine
+(see "Multi-node matchmaking" in `refactor_plan.md`).
 
 At minimum, production needs:
 

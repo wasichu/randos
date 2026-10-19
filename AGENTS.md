@@ -61,8 +61,10 @@ are product requirements, not suggestions. Don't add features that violate them.
   `:connecting`) and `{:signaling, msg}` from the peer. `Matchmaker.join/1`
   replies `{:matched, match}` to the joiner but broadcasts nothing.
 - `docs/architecture/coturn_audit.md`: TURN server findings and proposed hardening.
-- `docs/architecture/refactor_plan.md` is the current roadmap (participant core,
-  Channel API, TUI, voice anonymization). `docs/architecture/` has design notes; `docs/prompts/` is the historical
+- `docs/architecture/refactor_plan.md` is the living roadmap (status, how the
+  pieces fit, Phase 4 TUI and 5 voice anonymization, open items, decisions).
+  Keep it in sync: symbols not line numbers, and update its "Verified" line.
+  `docs/architecture/` has design notes (dated ones say so at the top); `docs/prompts/` is the historical
   prompt log of how features were built (context, not spec).
 
 ## Testing
