@@ -162,9 +162,20 @@ allocation by the end of Stage 1, switch to webrtc-rs and accept UDP-only
   speakers, both 48 kHz f32) at **≈81 ms**: capture device 12.2 ms + capture
   ring 1–8 ms + codec 26.5 ms (one 20 ms frame + 6.5 ms Opus lookahead) +
   playback ring 21–28 ms + playback device 12.9 ms [run, from cpal callback
-  timestamps; acoustic mouth-to-ear not yet measured]. A real call adds the
-  network and a jitter buffer, and drops the loopback's playback-ring
-  slack.
+  timestamps]. A real call adds the network and a jitter buffer, and drops
+  the loopback's playback-ring slack.
+- **Headphone test (2026-10-19), Bluetooth** [run, by the owner]: MacBook Pro
+  mic (48 kHz) into Shokz OpenRun Pro 2 (bone conduction, output resampled
+  to 44.1 kHz): **≈290 ms**, of which ≈192 ms is the playback latency macOS
+  reports for the Bluetooth device. The rest: capture 12 + capture ring 3–9
+  + codec 26.5 + resample 10 + playback ring 40–50 ms. Zero underruns,
+  overruns, or drops. By ear the echo "felt super fast", so the reported
+  Bluetooth figure may be conservative, or ~290 ms is unobtrusive over bone
+  conduction; not settled. No feedback with open-ear headphones at a
+  moderate volume. The TUI's `t` mic test (through `Tui.Media` and the Port)
+  showed ≈280 ms, matching the standalone helper.
+  - Worth trimming later: the playback ring holds 40–50 ms on Bluetooth
+    versus ≈25 ms on the built-in speakers (Bluetooth pulls bigger chunks).
 
 #### Echo cancellation
 
@@ -261,9 +272,11 @@ The browser's matching seam is unchanged: `processLocalStream` in
   differently [unverified, high impact]. Prove this in Stage 0.
   - Stage 0 result: the helper run directly from an already-authorized
     terminal got real mic audio (a −46 dBFS room floor; a denied mic yields
-    all-zero samples) [run]. Still unproven: a first-time prompt, launching
-    through `Tui.Media` under `mix tui` (the Port mode doesn't open devices
-    yet), and a Burrito-unpacked binary.
+    all-zero samples) [run]. Launching through `Tui.Media` under `mix tui`
+    (the `t` mic test) also worked, with **no prompt**: access is attributed
+    to the hosting terminal, which already had it [run, 2026-10-19]. Still
+    unproven: the first-time prompt on a terminal without mic access, and a
+    Burrito-unpacked or Homebrew-installed binary (4.4/4.5).
 - **Testing and CI:**
   - The helper takes `--in sine|wav:PATH|device` and
     `--out null|wav:PATH|device`, so CI runs the same binary without audio

@@ -107,10 +107,11 @@ Stage 0 code is done:
   next to `Tui.App`, so a helper crash restarts only the helper;
 - `t` on the TUI's idle screen runs a 5 s mic test through it.
 
-**Open TODO (needs headphones, by hand):** run `just media-loopback` and the
-TUI's `t` mic test, clap to judge mouth-to-ear delay, and note whether macOS
-shows a mic prompt and which app it names. Record the results in
-`tui_audio.md`.
+**Headphone test: done (2026-10-19).** On Bluetooth (Shokz OpenRun Pro 2),
+≈290 ms mouth-to-ear (≈192 ms of it Bluetooth), no feedback or glitches, no
+mic prompt (the terminal already had access); the TUI's mic test matched.
+It also moved resampling into Stage 0, since the headphones offer only
+44.1/16 kHz. Details in `tui_audio.md`.
 
 Capability-aware matching is built: `find` carries `audio` (browsers always
 `true`, the TUI `false` until Stage 1), and `Matchmaker` keys its queues by
