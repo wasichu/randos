@@ -11,6 +11,8 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
   - `just setup` — toolchain + deps + assets
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
+  - `just top` — dev server plus a terminal dashboard (`RandosDev.Monitor`, in `dev/`):
+    queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
   - `just test [path]`, `just test-failed`
   - `just precommit` — **run before declaring any change done** and fix everything it reports
     (warnings-as-errors compile, unused deps, format, `credo --strict`, tests)

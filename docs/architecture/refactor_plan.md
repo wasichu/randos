@@ -23,7 +23,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 2 | UI-agnostic participant core; LiveView becomes a shell | Done |
 | 3 | Public participant channel (browser stays on LiveView) | Done |
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
-| 4 | TUI | **Next: 4.1** |
+| 4 | TUI | 4.1 done; **next: 4.2** |
 | 5 | Voice anonymization | Planned |
 
 ## How it fits together
@@ -52,12 +52,16 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 
 ## Phase 4: TUI
 
-### 4.1 Local dev monitor (next)
+### 4.1 Local dev monitor (done)
 
 A terminal dashboard for watching the server while developing: queue depth by
 language pair (`Matchmaker.snapshot/0`), live calls and their status changes,
 and a feed of recent call/matchmaking events, all from the telemetry events
 above. It's also the learning ramp for ex_ratatui before the real client.
+
+Built as `RandosDev.Monitor` (an `ExRatatui.App`) over the pure
+`RandosDev.Monitor.State`, run by `mix randos.top` / `just top`. Code lives in
+`dev/`, compiled only in dev and test.
 
 - **Data path (decided): in the dev VM.** Telemetry handlers and the
   Matchmaker are local to one BEAM VM, so the monitor runs *inside* the dev

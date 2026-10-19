@@ -43,6 +43,11 @@ defmodule Randos.MixProject do
               {:phoenix, sub_rules: ["phoenix", "elixir", "html", "liveview"]},
               ~r/^phoenix_/
             ]
+          ],
+          "ex-ratatui": [
+            description:
+              "Use when building terminal UIs with ex_ratatui (the dev monitor in dev/, and the TUI client in clients/tui): widgets, layout, App callbacks, testing.",
+            usage_rules: [:ex_ratatui]
           ]
         ]
       ]
@@ -56,7 +61,9 @@ defmodule Randos.MixProject do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  # dev/ holds dev-only tools (the `just top` monitor); never compiled for prod.
+  defp elixirc_paths(:test), do: ["lib", "dev", "test/support"]
+  defp elixirc_paths(:dev), do: ["lib", "dev"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -68,6 +75,8 @@ defmodule Randos.MixProject do
       {:usage_rules, "~> 1.0", only: [:dev]},
       {:tidewave, "~> 0.9", only: :dev},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      # Dev-only terminal dashboard (`just top`); never in the release.
+      {:ex_ratatui, "~> 0.17", only: [:dev, :test]},
       {:phoenix, "~> 1.8"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},

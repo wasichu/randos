@@ -33,6 +33,10 @@ certs:
       -cert-file priv/cert/randos_dev.pem \
       localhost 127.0.0.1 ::1 "$(hostname)" randos.local
 
+# Dev server plus a terminal dashboard of queues, calls, and events (q quits)
+top:
+    mix randos.top
+
 # Run tests (pass args through, e.g. `just test test/randos/signaling_test.exs`)
 test *args:
     mix test {{args}}
