@@ -39,7 +39,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, signal relay |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
 | Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back. `handle(participant, event) :: {participant, [effect]}` |
-| Web | `RandosWeb.HomeLive` | Shell over `Randos.Participant`: maps browser events/PubSub to participant events, runs effects, renders |
+| Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
 | Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
 
 - Processes notify LiveViews over `Randos.PubSub`. Topic per participant:
