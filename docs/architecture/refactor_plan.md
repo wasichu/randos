@@ -163,6 +163,10 @@ off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
 
 ## Phase 5: Voice anonymization
 
+The most experimental phase, so it's built around a **voice lab** that
+makes trying an approach cheap and comparing approaches easy, by ear and by
+eye, before anything touches a real call.
+
 1. **Seam first.** One explicit spot in each client's audio path between the
    mic and the call, with a pass-through default:
    - Browser: in `WebRTCClient.startConnection()`, after `captureLocalAudio()`
@@ -170,10 +174,41 @@ off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
      Teardown must stop the *raw* tracks and close the processor's
      AudioContext; decide whether mute and the visualizer act on raw or
      processed audio; share one AudioContext.
-   - TUI: the equivalent spot in the 4.3 native pipeline.
-2. **Model mini-project** (its own design doc once the seam exists): DSP
+   - TUI: the equivalent spot in the 4.3 native pipeline (the helper's
+     `Processor`, prototyped in Elixir first per the 4.3 decisions).
+2. **Voice lab (local web page).** A dev-only LiveView at `/dev/voice-lab`,
+   inside the existing `dev_routes` scope, so it never ships to production.
+   - **Pluggable processors.** Each approach is one module behind a common
+     interface (e.g. an AudioWorklet processor under
+     `assets/js/voice_lab/processors/`, plus a manifest of name,
+     parameters, and where it runs). Adding a variant = adding a file; the
+     lab picks it up and renders its parameter sliders automatically. A
+     pass-through baseline is always present.
+   - **Sources.** Bundled, openly licensed speech clips (several voices,
+     both supported languages' worth of variety), a test tone, and the live
+     mic. The mic path is processed in real time to headphones only; nothing
+     is recorded, stored, or uploaded (README product constraints).
+   - **Compare side by side.** Pick any two to four variants: synchronized
+     playback with instant switching (same clip, same position), a blind A/B
+     mode that hides which is which and tallies your picks, and a parameter
+     sweep that renders one variant at several settings in a row.
+   - **See it, not just hear it.** Per variant: spectrogram and pitch track
+     next to the original, measured processing latency and CPU per frame,
+     and a level meter, so "sounds robotic" can be matched to something
+     visible.
+   - **Same code as the call.** Processors run through the same seam
+     function the browser call uses, so a variant that wins in the lab is
+     one setting away from a real call (`just smoke` then checks it doesn't
+     break teardown).
+3. **Comparison write-ups.** After each round of experiments, a short
+   report: the variants tried, their latency/CPU numbers, spectrogram
+   snapshots, your blind A/B results, and a recommendation. Reports use only
+   the bundled clips, never a recording of anyone's voice.
+4. **Model mini-project** (its own design doc once the lab exists): DSP
    (pitch/formant shifting) vs. on-device voice conversion, latency budget,
-   browser WASM/WebGPU vs. native.
+   browser WASM/WebGPU vs. native, and how much anonymity each actually
+   gives (a speaker-similarity check belongs in the lab once there's a
+   candidate model).
 
 ## Open items
 
