@@ -4,6 +4,7 @@ defmodule Tui.AppTest do
   alias ExRatatui.Event
   alias ExRatatui.Runtime
   alias Tui.App
+  alias Tui.Media.State, as: MediaState
   alias Tui.Model
 
   @languages [
@@ -31,7 +32,7 @@ defmodule Tui.AppTest do
         %{
           model: model,
           uri: "ws://localhost:4000/participant/websocket",
-          media_state: Tui.Media.State.new(false)
+          media_state: MediaState.new(false)
         },
         extra
       )
@@ -64,7 +65,7 @@ defmodule Tui.AppTest do
 
       with_media = fn mic_test ->
         render_text(model("idle"), %{
-          media_state: %Tui.Media.State{available?: true, mic_test: mic_test}
+          media_state: %MediaState{available?: true, mic_test: mic_test}
         })
       end
 
