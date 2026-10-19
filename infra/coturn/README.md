@@ -153,15 +153,18 @@ export TF_VAR_letsencrypt_email="you@example.com"
 | `region` | `nyc3` | DigitalOcean region. |
 | `droplet_size` | `s-1vcpu-1gb` | Small inexpensive Droplet size. |
 | `ssh_public_key_path` | none | Existing local SSH public key path. |
-| `ssh_allowed_cidr` | `0.0.0.0/0` | CIDR allowed to connect to SSH. Tighten this when possible. |
+| `ssh_allowed_cidr` | `0.0.0.0/0` | CIDR allowed to connect to SSH. Tighten this (the live firewall is narrower than this default; set it to match before applying). |
 | `turn_hostname` | `turn.slowinput.org` | Public TURN hostname. |
 | `turn_realm` | `turn.slowinput.org` | coturn realm. |
-| `turn_shared_secret` | `null` | If unset, Terraform generates a secret. |
+| `turn_shared_secret` | `null` | If unset, OpenTofu generates a secret. |
 | `relay_min_port` | `49152` | Minimum UDP relay port. |
-| `relay_max_port` | `49252` | Maximum UDP relay port. |
+| `relay_max_port` | `65535` | Maximum UDP relay port (one port per relayed participant). |
 | `letsencrypt_email` | empty | Email for certbot registration. |
 | `assign_reserved_ip` | `true` | Create and assign a DigitalOcean reserved IP. |
-| `turn_credential_ttl_seconds` | `900` | Suggested TTL for future Randos TURN credentials. |
+| `turn_credential_ttl_seconds` | `3600` | TTL to set for the app's TURN credentials (the app enforces ≥ 2400). |
+| `coturn_image` | `coturn/coturn:4.18.0` | Pinned image; bump deliberately after checking releases/advisories. |
+| `total_quota` | `400` | Max concurrent relay allocations. |
+| `max_bps` | `32000` | Per-allocation bandwidth cap (bytes/s); voice needs ~8 KB/s. |
 
 ## Firewall
 

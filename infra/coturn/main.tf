@@ -39,6 +39,9 @@ resource "digitalocean_droplet" "coturn" {
     relay_max_port           = var.relay_max_port
     letsencrypt_email        = var.letsencrypt_email
     turn_credential_ttl_secs = var.turn_credential_ttl_seconds
+    coturn_image             = var.coturn_image
+    total_quota              = var.total_quota
+    max_bps                  = var.max_bps
   })
 }
 

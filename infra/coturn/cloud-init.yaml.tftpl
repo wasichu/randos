@@ -13,6 +13,7 @@ write_files:
       RELAY_MIN_PORT=${relay_min_port}
       RELAY_MAX_PORT=${relay_max_port}
       LETSENCRYPT_EMAIL=${letsencrypt_email}
+      COTURN_IMAGE=${coturn_image}
       TURN_CREDENTIAL_TTL_SECONDS=${turn_credential_ttl_secs}
 
   - path: /usr/local/sbin/randos-coturn-bootstrap
@@ -78,12 +79,24 @@ write_files:
         fi
       fi
 
+      # Advertise the reserved IP for relays. DigitalOcean delivers reserved-IP
+      # traffic to the droplet's anchor IP, so map public -> anchor.
+      METADATA="http://169.254.169.254/metadata/v1"
+      RESERVED_IP="$(curl -fsS "$METADATA/reserved_ip/ipv4/ip_address" 2>/dev/null || true)"
+      ANCHOR_IP="$(curl -fsS "$METADATA/interfaces/public/0/anchor_ipv4/address" 2>/dev/null || true)"
+      EXTERNAL_IP_LINE=""
+      if [ -n "$RESERVED_IP" ] && [ -n "$ANCHOR_IP" ]; then
+        EXTERNAL_IP_LINE="external-ip=$RESERVED_IP/$ANCHOR_IP"
+      fi
+
       cat > /etc/coturn/turnserver.conf <<EOF
       listening-port=3478
       tls-listening-port=5349
+      $EXTERNAL_IP_LINE
 
       fingerprint
       realm=$TURN_REALM
+      no-software-attribute
 
       use-auth-secret
       static-auth-secret=$TURN_SHARED_SECRET
@@ -95,14 +108,47 @@ write_files:
       pkey=$COTURN_PRIVKEY
 
       no-cli
+
+      # Randos only relays UDP audio between two browsers/clients.
+      no-tcp-relay
+      no-multicast-peers
+
+      # Never relay to private, loopback, link-local (incl. the 169.254.169.254
+      # metadata service, which holds this server's secret), CGNAT, benchmark,
+      # or multicast/reserved addresses.
+      denied-peer-ip=0.0.0.0-0.255.255.255
+      denied-peer-ip=10.0.0.0-10.255.255.255
+      denied-peer-ip=100.64.0.0-100.127.255.255
+      denied-peer-ip=127.0.0.0-127.255.255.255
+      denied-peer-ip=169.254.0.0-169.254.255.255
+      denied-peer-ip=172.16.0.0-172.31.255.255
+      denied-peer-ip=192.0.0.0-192.0.0.255
+      denied-peer-ip=192.168.0.0-192.168.255.255
+      denied-peer-ip=198.18.0.0-198.19.255.255
+      denied-peer-ip=224.0.0.0-255.255.255.255
+      denied-peer-ip=::1
+      denied-peer-ip=64:ff9b::-64:ff9b::ffff:ffff
+      denied-peer-ip=::ffff:0.0.0.0-::ffff:255.255.255.255
+      denied-peer-ip=fc00::-fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+      denied-peer-ip=fe80::-febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+
+      # Abuse limits sized for audio on a small droplet. No per-user quota:
+      # every credential minted in the same second shares a username.
+      total-quota=${total_quota}
+      max-bps=${max_bps}
+
+      # Anonymity: log errors only, no per-session lines (no caller IPs).
+      log-min-level=error
       log-file=stdout
       EOF
 
-      chmod 644 /etc/coturn/turnserver.conf
+      # The container runs coturn unprivileged; give its group read access only.
+      chown root:65534 /etc/coturn/turnserver.conf
+      chmod 640 /etc/coturn/turnserver.conf
 
       if [ -f "$FULLCHAIN" ] && [ -f "$PRIVKEY" ]; then
         install -m 0644 "$FULLCHAIN" "$COTURN_FULLCHAIN"
-        install -m 0644 "$PRIVKEY" "$COTURN_PRIVKEY"
+        install -m 0640 -g 65534 "$PRIVKEY" "$COTURN_PRIVKEY"
       fi
 
       mkdir -p /etc/letsencrypt/renewal-hooks/deploy
@@ -116,7 +162,7 @@ write_files:
 
       if [ -f "$${RENEWED_CERT_DIR}/fullchain.pem" ] && [ -f "$${RENEWED_CERT_DIR}/privkey.pem" ]; then
         install -m 0644 "$${RENEWED_CERT_DIR}/fullchain.pem" /etc/coturn/certs/fullchain.pem
-        install -m 0644 "$${RENEWED_CERT_DIR}/privkey.pem" /etc/coturn/certs/privkey.pem
+        install -m 0640 -g 65534 "$${RENEWED_CERT_DIR}/privkey.pem" /etc/coturn/certs/privkey.pem
       fi
 
       if docker ps --format '{{.Names}}' | grep -qx coturn; then
@@ -134,13 +180,16 @@ write_files:
       fi
 
       docker rm -f coturn >/dev/null 2>&1 || true
-      docker pull coturn/coturn
+      # Pinned image (var.coturn_image); upgrade deliberately by changing it.
+      docker pull "$COTURN_IMAGE"
       docker run -d \
         --name coturn \
         --restart unless-stopped \
         --network host \
+        --log-opt max-size=1m \
+        --log-opt max-file=2 \
         -v /etc/coturn:/etc/coturn:ro \
-        coturn/coturn \
+        "$COTURN_IMAGE" \
         -c /etc/coturn/turnserver.conf \
         --cert="$COTURN_FULLCHAIN" \
         --pkey="$COTURN_PRIVKEY"

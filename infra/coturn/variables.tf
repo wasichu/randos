@@ -74,7 +74,7 @@ variable "relay_min_port" {
 variable "relay_max_port" {
   description = "Maximum UDP relay port for coturn."
   type        = number
-  default     = 49252
+  default     = 65535
 }
 
 variable "letsencrypt_email" {
@@ -92,5 +92,23 @@ variable "assign_reserved_ip" {
 variable "turn_credential_ttl_seconds" {
   description = "Suggested TTL for Randos-generated temporary TURN credentials."
   type        = number
-  default     = 900
+  default     = 3600
+}
+
+variable "coturn_image" {
+  description = "Pinned coturn Docker image. Upgrade deliberately (check https://github.com/coturn/coturn/releases and security advisories)."
+  type        = string
+  default     = "coturn/coturn:4.18.0"
+}
+
+variable "total_quota" {
+  description = "Max concurrent relay allocations (one per relayed participant)."
+  type        = number
+  default     = 400
+}
+
+variable "max_bps" {
+  description = "Per-allocation bandwidth cap in bytes/second. Opus voice needs ~8 KB/s; 32000 leaves headroom while preventing bulk relaying."
+  type        = number
+  default     = 32000
 }

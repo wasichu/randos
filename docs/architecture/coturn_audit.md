@@ -1,5 +1,18 @@
 # coturn audit (2026-10-19)
 
+**Decisions (2026-10-19):** option C (harden in place now, then rebuild from
+cloud-init), logging **errors only** (`log-min-level=error`, native in
+coturn 4.18), infra on **OpenTofu with encrypted, committed state**.
+
+**Status:** the hardened config is in `cloud-init.yaml.tftpl` / `variables.tf`
+(pinned `coturn/coturn:4.18.0`, `denied-peer-ip` incl. metadata and
+IPv4-mapped IPv6, `no-tcp-relay`, `no-multicast-peers`, `external-ip`
+mapped reserved→anchor from metadata, `total-quota`/`max-bps`, errors-only
+logs with Docker log rotation, key/conf `0640 root:nogroup` since the image
+runs as `nobody`, relay range 49152–65535, TTL 3600). **Not applied.**
+Step A applies the same turnserver.conf on the live host once SSH works;
+step B is `just tofu apply` after state is rebuilt by import.
+
 Read-only audit of the TURN/STUN server (`randos-coturn`, DigitalOcean nyc3,
 reserved IP 129.212.147.247 = `turn.slowinput.org`). Nothing was changed.
 
