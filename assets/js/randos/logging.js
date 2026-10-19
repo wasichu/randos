@@ -1,6 +1,14 @@
 const LOG_PREFIX = "randos"
 
-const debugEnabled = () => window.localStorage.getItem("randos:debug") === "true"
+// localStorage can throw (privacy modes, blocked storage); logging must never
+// break the call flow.
+const debugEnabled = () => {
+  try {
+    return window.localStorage.getItem("randos:debug") === "true"
+  } catch {
+    return false
+  }
+}
 
 export const logEvent = (event, details = {}) => {
   if (!debugEnabled()) return

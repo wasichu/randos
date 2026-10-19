@@ -5,6 +5,21 @@ import {AudioLevelVisualizer} from "../randos/audio_visualizer"
 import {iceServersFromPage} from "../randos/ice_servers"
 import {WebRTCClient, WebRTCClientState} from "../randos/webrtc_client"
 
+// Distinguish "the mic was refused or missing" from network/peer failures so
+// the server and the peer see a meaningful reason.
+const startFailureReason = error => {
+  switch (error?.name) {
+    case "NotAllowedError":
+    case "SecurityError":
+      return "microphone_denied"
+    case "NotFoundError":
+    case "OverconstrainedError":
+      return "microphone_not_found"
+    default:
+      return error?.message || "peer_connection_start_failed"
+  }
+}
+
 export const WebRTCAudio = {
   mounted() {
     this.cleanupBag = new CleanupBag("webrtc-audio-hook")
@@ -19,8 +34,6 @@ export const WebRTCAudio = {
     this.remoteAudioPlayButton = this.el.querySelector("[data-remote-audio-play]")
     this.localVisualizer = null
     this.remoteVisualizer = null
-    this.localVisualizerCanvas = document.querySelector("[data-audio-visualizer='local']")
-    this.remoteVisualizerCanvas = document.querySelector("[data-audio-visualizer='remote']")
     this.pendingSignals = []
     this.muted = false
 
@@ -52,11 +65,7 @@ export const WebRTCAudio = {
     this.peer
       .start()
       .then(() => this.flushPendingSignals())
-      .catch(error => {
-        this.peer?.failConnection({
-          reason: error.message || "peer_connection_start_failed",
-        })
-      })
+      .catch(error => this.peer?.failConnection({reason: startFailureReason(error)}))
   },
 
   destroyed() {
@@ -115,7 +124,12 @@ export const WebRTCAudio = {
       return
     }
 
-    this.peer.receiveSignal(signal)
+    this.peer.receiveSignal(signal).catch(error => this.failSignal(error))
+  },
+
+  failSignal(error) {
+    logWarning("signaling.handle_failed", {reason: error.message})
+    this.peer?.failConnection({reason: error.message || "signal_handling_failed"})
   },
 
   flushPendingSignals() {
@@ -123,7 +137,7 @@ export const WebRTCAudio = {
     this.pendingSignals = []
 
     for (const signal of signals) {
-      this.peer?.receiveSignal(signal)
+      this.peer?.receiveSignal(signal).catch(error => this.failSignal(error))
     }
   },
 
@@ -138,7 +152,7 @@ export const WebRTCAudio = {
     if (stream && this.microphoneEl) {
       this.microphoneEl.textContent = "microphone ready"
       this.localVisualizer = new AudioLevelVisualizer({
-        canvas: this.localVisualizerCanvas,
+        findCanvas: () => document.querySelector("[data-audio-visualizer='local']"),
         stream,
         tone: "local",
         muted: this.muted,
@@ -167,7 +181,7 @@ export const WebRTCAudio = {
 
     if (stream) {
       this.remoteVisualizer = new AudioLevelVisualizer({
-        canvas: this.remoteVisualizerCanvas,
+        findCanvas: () => document.querySelector("[data-audio-visualizer='remote']"),
         stream,
         tone: "remote",
       })

@@ -46,7 +46,17 @@ export class WebRTCClient {
     if (this.peerConnection || this.cleaned) return
 
     logEvent("webrtc.start", {role: this.role, iceServerCount: this.iceServers.length})
-    await this.captureLocalAudio()
+    const stream = await this.captureLocalAudio()
+
+    // The call may have ended while the mic prompt was open; never keep a
+    // microphone the user no longer has a call for.
+    if (this.cleaned) {
+      stopStream(stream)
+      return
+    }
+
+    this.localStream = stream
+    this.onLocalStream?.(stream)
 
     this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
     this.peerConnection = new RTCPeerConnection({iceServers: this.iceServers})
@@ -61,7 +71,9 @@ export class WebRTCClient {
 
     if (this.role === "offerer") {
       const offer = await this.peerConnection.createOffer()
+      if (this.cleaned) return
       await this.peerConnection.setLocalDescription(offer)
+      if (this.cleaned) return
       this.pushSignal("offer", {sdp: serializeSessionDescription(this.peerConnection.localDescription)})
       this.setState(WebRTCClientState.OFFER_SENT)
       logEvent("webrtc.offer_sent")
@@ -78,10 +90,12 @@ export class WebRTCClient {
     logEvent("media.microphone_request")
 
     try {
-      this.localStream = await captureLocalAudio()
-      this.onLocalStream?.(this.localStream)
+      const stream = await captureLocalAudio()
       logEvent("media.microphone_ready")
+      return stream
     } catch (error) {
+      if (this.cleaned) return null
+
       this.setState(WebRTCClientState.MICROPHONE_DENIED)
       logWarning("media.microphone_failed", {reason: error.message})
       throw error
@@ -94,7 +108,7 @@ export class WebRTCClient {
   }
 
   async receiveSignal(signal) {
-    if (this.state === WebRTCClientState.CLOSED) return
+    if (this.cleaned) return
 
     if (!this.peerConnection) {
       this.pendingSignals.push(signal)
@@ -175,7 +189,9 @@ export class WebRTCClient {
     this.clearDisconnectedTimeout()
     this.pushSignal("connection_failed", payload)
     this.cleanupMedia()
-    this.setState(WebRTCClientState.FAILED)
+    if (this.state !== WebRTCClientState.MICROPHONE_DENIED) {
+      this.setState(WebRTCClientState.FAILED)
+    }
     logWarning("webrtc.failed", payload)
   }
 

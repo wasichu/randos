@@ -11,8 +11,10 @@ const COLORS = {
 }
 
 export class AudioLevelVisualizer {
-  constructor({canvas, stream, tone = "local", muted = false}) {
-    this.canvas = canvas
+  // `findCanvas` is called every frame: LiveView may replace the canvas element
+  // (e.g. the call panel re-renders after an extension), so never hold onto one.
+  constructor({findCanvas, stream, tone = "local", muted = false}) {
+    this.findCanvas = findCanvas
     this.stream = stream
     this.tone = tone
     this.muted = muted
@@ -25,8 +27,12 @@ export class AudioLevelVisualizer {
     this.closed = false
   }
 
+  get canvas() {
+    return this.findCanvas()
+  }
+
   start() {
-    if (!this.canvas || !this.stream || this.closed) return
+    if (!this.stream || this.closed) return
 
     try {
       this.audioContext = new AudioContext()
@@ -101,6 +107,8 @@ export class AudioLevelVisualizer {
 
   renderBars(levels) {
     const canvas = this.canvas
+    if (!canvas) return
+
     const context = canvas.getContext("2d")
     const rect = canvas.getBoundingClientRect()
     const ratio = window.devicePixelRatio || 1
@@ -153,9 +161,7 @@ export class AudioLevelVisualizer {
   }
 
   clear() {
-    const context = this.canvas?.getContext("2d")
-    if (!context) return
-
-    context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    const canvas = this.canvas
+    canvas?.getContext("2d").clearRect(0, 0, canvas.width, canvas.height)
   }
 }
