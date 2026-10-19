@@ -89,6 +89,29 @@ are product requirements, not suggestions. Don't add features that violate them.
 - A logged `matchmaking_call_start_failed ... reason=:supervisor_down` during
   `mix test` is expected (`matchmaker_test.exs` injects that failure on purpose).
 
+## Rust (the TUI media helper, `clients/tui/native`)
+
+- Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,
+  cargo-deny). `just native-check` runs fmt, clippy with warnings as errors,
+  tests, and `cargo deny check`; it is part of `just precommit`.
+- **No panics in the helper.** `unwrap`/`expect`/`panic!`/`todo!` are denied by
+  clippy outside tests; return errors and report them over the Port as
+  messages. A panic kills the user's call.
+- **stdout is the Port.** Never print to it (`print_stdout` is denied); write
+  frames via `frame::write_frame`. Diagnostics go to stderr.
+- **No `unsafe`** (`forbid(unsafe_code)` in Cargo.toml). If a dependency
+  forces FFI, isolate it and document why in the crate README.
+- **The Port protocol is a contract**, documented in
+  `clients/tui/native/README.md`; change the doc, the Rust side, and the
+  Elixir side together, with tests on both sides.
+- **Real-time audio threads** (cpal callbacks) must not allocate, lock, or do
+  I/O: hand frames off through a lock-free ring buffer.
+- **Dependencies:** justify each one in the crate README (purpose, license,
+  whether it pulls in C); permissive licenses only (`deny.toml`).
+- Rust code intelligence: install the official plugin once per machine,
+  `claude plugin install rust-analyzer-lsp@claude-plugins-official --scope local`
+  (rust-analyzer comes from `mise.toml`), then restart Claude Code.
+
 ## Phoenix / frontend house rules
 
 These are project-specific and are **not** covered by the Phoenix skill:

@@ -13,3 +13,8 @@ opentofu = "1.13.1"
 # Elixir language server: gives Claude Code (via the expert-lsp plugin in
 # tools/claude-plugins) compiler diagnostics after edits and symbol navigation.
 expert = "0.1.11"
+# Rust: builds the TUI's media helper (clients/tui/native). Build-time only;
+# users get prebuilt binaries (Phase 4.4).
+rust = { version = "1.99.1", components = "rustfmt,clippy,rust-analyzer" }
+# Dependency advisories, license policy, and duplicate checks for the helper.
+cargo-deny = "0.20.2"

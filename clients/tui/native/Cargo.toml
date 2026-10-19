@@ -1,0 +1,26 @@
+[package]
+name = "randos_media"
+version = "0.1.0"
+edition = "2024"
+description = "Media helper for the Randos TUI: WebRTC, Opus, mic/speaker. Runs as an Erlang Port."
+license = "MIT"
+publish = false
+
+# Every dependency is justified in clients/tui/native/README.md (AGENTS.md rule).
+[dependencies]
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+# A panic kills the call: errors go back over the Port as messages instead.
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+dbg_macro = "deny"
+print_stdout = "deny" # stdout is the Port; write frames, never print
+
+[profile.release]
+lto = true
+codegen-units = 1
