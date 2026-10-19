@@ -127,6 +127,11 @@ Same flow as the browser (`assets/js/randos/webrtc_client.js`):
    send `peer_disconnected`. Either ends the call for both people.
 5. Receiving `connection_failed` or `peer_disconnected` means tear down.
 
+**Clients without audio** must answer a peer's `offer` with the `end_call`
+event, never `connection_failed`. `end_call` ends the call with this client
+stopping, so only the peer is requeued; any other ending requeues both
+participants, and two incompatible clients would rematch in a loop.
+
 Signal types: `offer`, `answer`, `ice_candidate`, `connection_established`,
 `connection_failed`, `peer_disconnected`. The server relays payloads as-is
 and never touches media.

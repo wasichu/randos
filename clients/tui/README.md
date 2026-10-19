@@ -2,8 +2,11 @@
 
 A terminal client for [Randos](../../README.md): choose languages, get matched,
 see the call timer, vote on extensions, hang up or go next. **No audio yet**
-(roadmap Phase 4.3), so a browser peer's call ends immediately with
-`audio_unsupported`; two terminal clients can hold a call.
+(roadmap Phase 4.3). When a peer offers audio (a browser that matched second),
+the client ends the call and goes idle; two terminal clients can hold a call.
+**Use it against a dev server, not production**: if it matches *first* with a
+browser, the browser waits for an offer that never comes (see the roadmap's
+open items).
 
 ```bash
 just tui                      # from the repo root: local dev server (just dev)

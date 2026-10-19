@@ -165,8 +165,9 @@ defmodule Tui.App do
 
   defp main_text(%{status: :in_call} = model) do
     "You're in a call.#{time_left(model, " remaining")}\n\n" <>
-      "This client has no audio yet, so a browser peer's call ends right away. " <>
-      "Two terminal clients can stay in a call to try timers and extension votes."
+      "This client has no audio yet: if the peer offers audio (a browser), " <>
+      "the call ends and you go back to idle. Two terminal clients can stay " <>
+      "in a call to try timers and extension votes."
   end
 
   defp main_text(%{status: :extension_pending} = model) do

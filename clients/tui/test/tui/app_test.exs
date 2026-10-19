@@ -70,7 +70,7 @@ defmodule Tui.AppTest do
     end
   end
 
-  test "the running app turns keys into protocol pushes and refuses audio" do
+  test "the running app turns keys into protocol pushes and ends calls offering audio" do
     pid =
       start_supervised!(
         {App, name: nil, test_mode: {100, 24}, connection: self(), test_pid: self()}
@@ -89,12 +89,10 @@ defmodule Tui.AppTest do
 
     send(pid, {:randos, {:push, "signal", %{"type" => "offer", "call_id" => "call-1"}}})
 
-    assert_receive {:"$gen_cast",
-                    {:push, "signal",
-                     %{type: "connection_failed", payload: %{reason: "audio_unsupported"}}}}
-
-    key(pid, "e")
     assert_receive {:"$gen_cast", {:push, "end_call", %{}}}
+
+    key(pid, "n")
+    assert_receive {:"$gen_cast", {:push, "next", %{}}}
 
     ref = Process.monitor(pid)
     key(pid, "q")

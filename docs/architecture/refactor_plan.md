@@ -87,9 +87,10 @@ matched with a browser user.
 - Built as `Tui.App` over the pure `Tui.Model`, connected by `Tui.Connection`
   (Slipstream, chosen for join/heartbeat/reconnect handling and its test
   helper). Languages come from the join reply. With no audio, the client
-  answers a peer's `offer` with `connection_failed` (`audio_unsupported`),
-  so a browser peer's call ends cleanly; two TUIs can hold a call (used by
-  `just tui-smoke`). `just tui` runs it against the local dev server.
+  answers a peer's `offer` with `end_call` (only the peer is requeued; see
+  the protocol doc); two TUIs can hold a call (used by `just tui-smoke`).
+  `just tui` runs it against the local dev server. Not production-safe yet:
+  see "Text-only clients and browsers" under open items.
 
 ### 4.3 Audio
 
@@ -119,6 +120,13 @@ Single-binary releases via Burrito (`mix ex_ratatui.gen.burrito`).
 ## Open items
 
 Not scheduled; pick up when relevant.
+
+- **Text-only clients and browsers.** The TUI ends a call when a peer offers
+  audio, but when the TUI matches *first* it is the offerer, sends nothing,
+  and a browser answerer waits for an offer for the whole segment. Options:
+  capability-aware matching (`find` carries `audio: true|false`, and the
+  Matchmaker only pairs like with like), or keep the TUI dev-only until 4.3
+  brings real audio. Decision pending.
 
 - **Multi-node matchmaking.** Production runs one Fly machine because
   `Matchmaker` is node-local (two machines split the queue). Before scaling

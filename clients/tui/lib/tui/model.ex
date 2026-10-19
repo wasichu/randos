@@ -9,8 +9,8 @@ defmodule Tui.Model do
   are channel pushes for the caller to send: `{:push, event, payload}`.
 
   This client has no audio yet, so it refuses WebRTC: when a peer's `offer`
-  arrives it answers `connection_failed` (`audio_unsupported`), which ends the
-  call cleanly for a browser peer instead of leaving them waiting.
+  arrives it sends `end_call`, which ends the call with this client going
+  idle and only the peer requeued.
   """
 
   @max_log 30
@@ -29,7 +29,6 @@ defmodule Tui.Model do
           webrtc_role: String.t() | nil,
           error: String.t() | nil,
           call: map() | nil,
-          refused_call_id: String.t() | nil,
           now_ms: integer(),
           log: [String.t()]
         }
@@ -44,7 +43,6 @@ defmodule Tui.Model do
             webrtc_role: nil,
             error: nil,
             call: nil,
-            refused_call_id: nil,
             now_ms: 0,
             log: []
 
@@ -70,7 +68,6 @@ defmodule Tui.Model do
       model
       | connection: :connected,
         languages: Enum.map(languages, &%{code: &1["code"], name: &1["name"]}),
-        refused_call_id: nil,
         # A (re)join is a brand-new participant; don't log it as a transition.
         status: nil
     }
@@ -94,15 +91,17 @@ defmodule Tui.Model do
 
   def push(model, "ice_servers", _payload), do: {model, []}
 
-  def push(model, "signal", %{"type" => "offer", "call_id" => call_id}) do
-    if model.refused_call_id == call_id do
-      {model, []}
-    else
-      model = log(%{model | refused_call_id: call_id}, "peer offered audio; this client has none")
+  def push(model, "signal", %{"type" => "offer"}) do
+    # end_call (not connection_failed): it ends the call with us stopping, so
+    # only the peer is requeued. Any other ending requeues both of us, and
+    # we'd rematch and refuse again in a loop.
+    model =
+      log(
+        model,
+        "peer offered audio; this client has none, so the call ended (Enter to look again)"
+      )
 
-      {model,
-       [{:push, "signal", %{type: "connection_failed", payload: %{reason: "audio_unsupported"}}}]}
-    end
+    {model, [{:push, "end_call", %{}}]}
   end
 
   def push(model, "signal", _signal), do: {model, []}
