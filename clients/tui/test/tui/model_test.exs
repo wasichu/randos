@@ -45,7 +45,8 @@ defmodule Tui.ModelTest do
     {model, commands} = keys(joined(), ["right", "tab", "right", "right", "tab", " ", "enter"])
 
     assert commands == [
-             {:push, "find", %{speaks: "es", listens: "en", adult_acknowledged: true}}
+             {:push, "find",
+              %{speaks: "es", listens: "en", adult_acknowledged: true, audio: false}}
            ]
 
     assert model.adult_acknowledged?

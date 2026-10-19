@@ -6,13 +6,20 @@ defmodule RandosWeb.ParticipantShellTest do
   alias Randos.Participant
   alias RandosWeb.ParticipantShell
 
-  @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true}
+  @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true, audio?: true}
 
   test "client state never exposes the match, the peer, ids, or pids" do
     participant = Participant.new(@prefs)
 
     entry = fn id ->
-      %Entry{id: id, pid: self(), topic: "t:#{id}", speaks_language: "en", listens_language: "es"}
+      %Entry{
+        id: id,
+        pid: self(),
+        topic: "t:#{id}",
+        speaks_language: "en",
+        listens_language: "es",
+        audio?: true
+      }
     end
 
     match = %Match{

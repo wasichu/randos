@@ -24,14 +24,19 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @supported_language_codes ConversationLanguages.codes()
 
-  @typedoc "What `join/1` needs; `accepted_adult_terms` must be `true`."
+  @typedoc """
+  What `join/1` needs; `accepted_adult_terms` must be `true`. `audio?`
+  (default `false`) is whether the client carries call audio: only entries
+  that agree are matched, and queues are keyed by `{speaks, listens, audio?}`.
+  """
   @type join_attrs :: %{
           required(:id) => String.t(),
           required(:pid) => pid(),
           required(:topic) => String.t(),
           required(:speaks_language) => String.t(),
           required(:listens_language) => String.t(),
-          optional(:accepted_adult_terms) => boolean()
+          optional(:accepted_adult_terms) => boolean(),
+          optional(:audio?) => boolean()
         }
 
   @type join_result ::
@@ -163,7 +168,8 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   defp join_queue(participant, state) do
-    compatible_key = {participant.listens_language, participant.speaks_language}
+    compatible_key =
+      {participant.listens_language, participant.speaks_language, participant.audio?}
 
     case pop_waiting_participant(state, compatible_key) do
       {%{} = waiting_participant, state} ->
@@ -190,7 +196,7 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   defp add_participant(participant, state, position \\ :back) do
-    key = {participant.speaks_language, participant.listens_language}
+    key = {participant.speaks_language, participant.listens_language, participant.audio?}
     ref = Process.monitor(participant.pid)
 
     enqueue =
@@ -268,7 +274,8 @@ defmodule Randos.Matchmaking.Matchmaker do
       pid: Map.fetch!(attrs, :pid),
       topic: Map.fetch!(attrs, :topic),
       speaks_language: Map.fetch!(attrs, :speaks_language),
-      listens_language: Map.fetch!(attrs, :listens_language)
+      listens_language: Map.fetch!(attrs, :listens_language),
+      audio?: Map.get(attrs, :audio?, false) == true
     }
   end
 

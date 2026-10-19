@@ -6,7 +6,14 @@ defmodule RandosWeb.ParticipantChannelTest do
   import Phoenix.ConnTest
 
   import Phoenix.LiveViewTest,
-    only: [live: 2, form: 3, render_submit: 1, render_hook: 3, assert_push_event: 3]
+    only: [
+      live: 2,
+      form: 3,
+      render_submit: 1,
+      render_hook: 3,
+      assert_push_event: 3,
+      has_element?: 2
+    ]
 
   alias Randos.Matchmaking.Matchmaker
   alias RandosWeb.ParticipantSocket
@@ -20,13 +27,13 @@ defmodule RandosWeb.ParticipantChannelTest do
     {state, socket}
   end
 
-  defp find(socket, speaks, listens, ack \\ true) do
+  defp find(socket, speaks, listens, ack \\ true, extra \\ %{}) do
     ref =
-      push(socket, "find", %{
-        "speaks" => speaks,
-        "listens" => listens,
-        "adult_acknowledged" => ack
-      })
+      push(
+        socket,
+        "find",
+        Map.merge(%{"speaks" => speaks, "listens" => listens, "adult_acknowledged" => ack}, extra)
+      )
 
     assert_reply ref, :ok
   end
@@ -56,12 +63,12 @@ defmodule RandosWeb.ParticipantChannelTest do
     {_state, socket} = join_participant()
     find(socket, "it", "pt")
     assert_push "state", %{status: :looking}
-    assert %{queues: %{{"it", "pt"} => [_]}} = Matchmaker.snapshot()
+    assert %{queues: %{{"it", "pt", false} => [_]}} = Matchmaker.snapshot()
 
     ref = push(socket, "cancel_search", %{})
     assert_reply ref, :ok
     assert_push "state", %{status: :idle}
-    refute Map.has_key?(Matchmaker.snapshot().queues, {"it", "pt"})
+    refute Map.has_key?(Matchmaker.snapshot().queues, {"it", "pt", false})
   end
 
   test "closing the channel leaves the queue" do
@@ -73,7 +80,7 @@ defmodule RandosWeb.ParticipantChannelTest do
     ref = leave(socket)
     assert_reply ref, :ok
     Process.sleep(50)
-    refute Map.has_key?(Matchmaker.snapshot().queues, {"tr", "id"})
+    refute Map.has_key?(Matchmaker.snapshot().queues, {"tr", "id", false})
   end
 
   test "malformed messages are rejected without touching state" do
@@ -81,6 +88,8 @@ defmodule RandosWeb.ParticipantChannelTest do
 
     for {event, payload} <- [
           {"find", %{"speaks" => 1}},
+          {"find",
+           %{"speaks" => "en", "listens" => "es", "adult_acknowledged" => true, "audio" => "yes"}},
           {"vote", %{"vote" => "maybe"}},
           {"signal", %{"type" => "offer"}},
           {"bogus", %{}}
@@ -104,22 +113,42 @@ defmodule RandosWeb.ParticipantChannelTest do
     assert_reply ref, :error, %{reason: "rate_limited"}
   end
 
-  test "a channel participant and a browser participant can call each other" do
-    {_state, socket} = join_participant()
-    find(socket, "ja", "ko")
-    assert_push "state", %{status: :looking}
-
+  defp browser_find(speaks, listens) do
     {:ok, view, _html} = live(build_conn(), "/")
 
     view
     |> form("#conversation-form",
       conversation: %{
-        speaking_language: "ko",
-        listening_language: "ja",
+        speaking_language: speaks,
+        listening_language: listens,
         adult_acknowledgment: "true"
       }
     )
     |> render_submit()
+
+    view
+  end
+
+  test "a text-only channel participant is never matched with a browser" do
+    {_state, socket} = join_participant()
+    find(socket, "hi", "bn")
+    assert_push "state", %{status: :looking}
+
+    view = browser_find("bn", "hi")
+
+    assert %{queues: %{{"hi", "bn", false} => [_], {"bn", "hi", true} => [_]}} =
+             Matchmaker.snapshot()
+
+    refute_push "state", %{status: :connecting}
+    assert has_element?(view, "#looking-panel")
+  end
+
+  test "a channel participant and a browser participant can call each other" do
+    {_state, socket} = join_participant()
+    find(socket, "ja", "ko", true, %{"audio" => true})
+    assert_push "state", %{status: :looking}
+
+    view = browser_find("ko", "ja")
 
     # The channel participant was waiting first, so it offers.
     assert_push "ice_servers", %{ice_servers: [_ | _]}

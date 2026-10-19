@@ -5,7 +5,7 @@ defmodule Randos.ParticipantTest do
   alias Randos.Matchmaking.{Entry, Match}
   alias Randos.Participant
 
-  @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true}
+  @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true, audio?: true}
 
   defp participant(attrs \\ []), do: struct!(Participant.new(@prefs), attrs)
 
@@ -14,7 +14,14 @@ defmodule Randos.ParticipantTest do
   # A match with `p` as participant_a (the offerer) unless told otherwise.
   defp match(p, opts \\ []) do
     entry = fn id, topic ->
-      %Entry{id: id, pid: self(), topic: topic, speaks_language: "en", listens_language: "es"}
+      %Entry{
+        id: id,
+        pid: self(),
+        topic: topic,
+        speaks_language: "en",
+        listens_language: "es",
+        audio?: true
+      }
     end
 
     me = entry.(p.id, p.topic)
@@ -65,7 +72,8 @@ defmodule Randos.ParticipantTest do
                topic: p.topic,
                speaks_language: "fr",
                listens_language: "de",
-               accepted_adult_terms: true
+               accepted_adult_terms: true,
+               audio?: true
              }
     end
 

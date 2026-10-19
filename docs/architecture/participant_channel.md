@@ -45,7 +45,7 @@ show up as [`state`](#state) pushes, not in the reply.
 
 | Event | Payload | Applies when | Effect |
 | --- | --- | --- | --- |
-| `find` | `{"speaks": "en", "listens": "es", "adult_acknowledged": true}` | `idle` | Join the queue (or match immediately). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
+| `find` | `{"speaks": "en", "listens": "es", "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone whose languages mirror yours **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
 | `end_call` | `{}` | in a call | Hang up and go `idle`. The peer goes back to `looking`. |
 | `next` | `{}` | in a call | Hang up and go straight back to `looking`. |
@@ -58,6 +58,13 @@ Malformed payloads reply `invalid_message`; unknown signal types reply
 
 `speaks` and `listens` must be codes from the join reply's `languages`;
 others give `error: "unsupported_language"`.
+
+`audio` (boolean, optional, default `false`) says whether this client can
+carry call audio over WebRTC. Browsers always do. A client that sends
+`false` (or leaves it out) is only matched with other clients that sent
+`false`, so a browser user never ends up in a silent call with a text-only
+client. Send `true` only once you can actually answer or offer an audio
+call; a non-boolean value replies `invalid_message`.
 
 ## Server → client pushes
 
@@ -127,8 +134,9 @@ Same flow as the browser (`assets/js/randos/webrtc_client.js`):
    send `peer_disconnected`. Either ends the call for both people.
 5. Receiving `connection_failed` or `peer_disconnected` means tear down.
 
-**Clients without audio** must answer a peer's `offer` with the `end_call`
-event, never `connection_failed`. `end_call` ends the call with this client
+**Clients without audio** send `"audio": false` in `find`, so they're only
+matched with each other. If one still receives an `offer`, it must answer
+with the `end_call` event, never `connection_failed`. `end_call` ends the call with this client
 stopping, so only the peer is requeued; any other ending requeues both
 participants, and two incompatible clients would rematch in a loop.
 

@@ -198,11 +198,15 @@ defmodule Tui.Model do
   defp status_line(:in_call), do: "in call"
   defp status_line(:extension_pending), do: "time is up: continue? (y/n)"
 
+  # `audio: false` until the media helper can carry a call (Phase 4.3
+  # Stage 1): the server then pairs us only with other text-only clients,
+  # never with a browser user who would sit through a silent call.
   defp find_payload(model) do
     %{
       speaks: Enum.at(model.languages, model.speaks).code,
       listens: Enum.at(model.languages, model.listens).code,
-      adult_acknowledged: model.adult_acknowledged?
+      adult_acknowledged: model.adult_acknowledged?,
+      audio: false
     }
   end
 

@@ -180,7 +180,9 @@ defmodule RandosWeb.HomeLive do
     %{
       speaks: preferences["speaking_language"],
       listens: preferences["listening_language"],
-      adult_acknowledged?: acknowledged?(preferences)
+      adult_acknowledged?: acknowledged?(preferences),
+      # The browser always brings WebRTC audio.
+      audio?: true
     }
   end
 end

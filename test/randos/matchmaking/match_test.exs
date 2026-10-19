@@ -5,6 +5,7 @@ defmodule Randos.Matchmaking.MatchTest do
 
   defp entry(id) do
     %Entry{
+      audio?: true,
       id: id,
       pid: self(),
       topic: "topic:#{id}",

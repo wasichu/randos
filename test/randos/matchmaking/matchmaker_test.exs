@@ -21,7 +21,8 @@ defmodule Randos.Matchmaking.MatchmakerTest do
       topic: "test:matchmaking:#{id}",
       speaks_language: Map.fetch!(attrs, :speaks_language),
       listens_language: Map.fetch!(attrs, :listens_language),
-      accepted_adult_terms: Map.get(attrs, :accepted_adult_terms, true)
+      accepted_adult_terms: Map.get(attrs, :accepted_adult_terms, true),
+      audio?: Map.get(attrs, :audio?, true)
     }
   end
 
@@ -57,7 +58,7 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
     # The joiner gets the error; the person who was already waiting keeps
     # their place at the front of the queue instead of silently vanishing.
-    assert %{queued_count: 1, queues: %{{"en", "es"} => ["a"]}} = Matchmaker.snapshot(name)
+    assert %{queued_count: 1, queues: %{{"en", "es", true} => ["a"]}} = Matchmaker.snapshot(name)
 
     send(pid_a, :stop)
     send(pid_b, :stop)
@@ -138,6 +139,45 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
     send(pid_a, :stop)
     send(pid_b, :stop)
+  end
+
+  test "only matches clients that agree on carrying audio", %{matchmaker: matchmaker} do
+    join = fn id, speaks, listens, audio? ->
+      Matchmaker.join(
+        matchmaker,
+        participant(
+          id: id,
+          pid: waiting_pid(),
+          speaks_language: speaks,
+          listens_language: listens,
+          audio?: audio?
+        )
+      )
+    end
+
+    assert :queued = join.("text-only", "en", "es", false)
+    # Same languages, but this one has audio: no silent call with the text-only client.
+    assert :queued = join.("browser", "es", "en", true)
+
+    assert %{queues: %{{"en", "es", false} => ["text-only"], {"es", "en", true} => ["browser"]}} =
+             Matchmaker.snapshot(matchmaker)
+
+    assert {:matched, %Match{}} = join.("another-browser", "en", "es", true)
+    assert {:matched, %Match{}} = join.("another-text-only", "es", "en", false)
+    assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)
+  end
+
+  test "a join without audio? counts as no audio", %{matchmaker: matchmaker} do
+    attrs =
+      participant(
+        id: "old-client",
+        pid: waiting_pid(),
+        speaks_language: "en",
+        listens_language: "es"
+      )
+
+    assert :queued = Matchmaker.join(matchmaker, Map.delete(attrs, :audio?))
+    assert %{queues: %{{"en", "es", false} => ["old-client"]}} = Matchmaker.snapshot(matchmaker)
   end
 
   test "rejects participants without adult terms acceptance", %{matchmaker: matchmaker} do

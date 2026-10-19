@@ -110,7 +110,11 @@ Stage 0 code is done:
 **Open TODO (needs headphones, by hand):** run `just media-loopback` and the
 TUI's `t` mic test, clap to judge mouth-to-ear delay, and note whether macOS
 shows a mic prompt and which app it names. Record the results in
-`tui_audio.md`. Capability-aware matching comes before Stage 1.
+`tui_audio.md`.
+
+Capability-aware matching is built: `find` carries `audio` (browsers always
+`true`, the TUI `false` until Stage 1), and `Matchmaker` keys its queues by
+`{speaks, listens, audio?}`, so text-only clients only meet each other.
 
 Decisions for Stage 1 (from the Stage 0 review):
 - **Media state into a pure module.** The mic test's state lives ad hoc in
@@ -143,10 +147,6 @@ Single-binary releases via Burrito (`mix ex_ratatui.gen.burrito`).
 ## Open items
 
 Not scheduled; pick up when relevant.
-
-- **Text-only clients and browsers.** Decided: capability-aware matching
-  (`find` carries `audio`; the Matchmaker pairs only compatible clients),
-  built before 4.3 Stage 1. Until then the TUI is dev-server only.
 
 - **Multi-node matchmaking.** Production runs one Fly machine because
   `Matchmaker` is node-local (two machines split the queue). Before scaling

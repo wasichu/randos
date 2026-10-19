@@ -7,6 +7,7 @@ defmodule Randos.SignalingTest do
   defp match do
     entry = fn id ->
       %Entry{
+        audio?: true,
         id: id,
         pid: self(),
         topic: "topic:#{id}",

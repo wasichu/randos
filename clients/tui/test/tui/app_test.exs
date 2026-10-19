@@ -111,7 +111,8 @@ defmodule Tui.AppTest do
     for code <- [" ", "enter"], do: key(pid, code)
 
     assert_receive {:"$gen_cast",
-                    {:push, "find", %{speaks: "en", listens: "es", adult_acknowledged: true}}}
+                    {:push, "find",
+                     %{speaks: "en", listens: "es", adult_acknowledged: true, audio: false}}}
 
     send(pid, {:randos, {:push, "state", server_state("in_call")}})
     assert_receive {:tui_model, ^pid, %Model{status: :in_call}}

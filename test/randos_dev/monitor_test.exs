@@ -6,7 +6,7 @@ defmodule RandosDev.MonitorTest do
   alias RandosDev.Monitor
   alias RandosDev.Monitor.State
 
-  defp snapshot, do: %{queued_count: 2, queues: %{{"en", "es"} => ["a", "b"]}}
+  defp snapshot, do: %{queued_count: 2, queues: %{{"en", "es", true} => ["a", "b"]}}
 
   defp render_to_text(state, width \\ 100, height \\ 30) do
     terminal = ExRatatui.init_test_terminal(width, height)
@@ -40,7 +40,7 @@ defmodule RandosDev.MonitorTest do
     assert text =~ "Randos dev monitor"
     assert text =~ "waiting 2"
     assert text =~ "live calls 1"
-    assert text =~ ~r/en\s+es\s+2/
+    assert text =~ ~r/en\s+es\s+yes\s+2/
     assert text =~ ~r/call-abcdef\s+active/
     assert text =~ "call-abcdef started"
   end

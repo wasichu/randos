@@ -11,11 +11,11 @@ defmodule RandosDev.Monitor.StateTest do
     state =
       State.put_snapshot(State.new(), %{
         queued_count: 3,
-        queues: %{{"fr", "de"} => ["a"], {"en", "es"} => ["b", "c"]}
+        queues: %{{"fr", "de", true} => ["a"], {"en", "es", false} => ["b", "c"]}
       })
 
     assert state.queued_count == 3
-    assert state.queues == [{"en", "es", 2}, {"fr", "de", 1}]
+    assert state.queues == [{"en", "es", false, 2}, {"fr", "de", true, 1}]
   end
 
   test "a call is tracked from start through status changes to its end" do

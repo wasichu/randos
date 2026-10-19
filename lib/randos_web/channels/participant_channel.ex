@@ -20,7 +20,7 @@ defmodule RandosWeb.ParticipantChannel do
   @find_capacity 5
   @find_refill_ms 6_000
 
-  @default_preferences %{speaks: "en", listens: "es", adult_acknowledged?: false}
+  @default_preferences %{speaks: "en", listens: "es", adult_acknowledged?: false, audio?: false}
 
   @impl true
   def join("participant", _params, socket) do
@@ -42,13 +42,23 @@ defmodule RandosWeb.ParticipantChannel do
   @impl true
   def handle_in(
         "find",
-        %{"speaks" => speaks, "listens" => listens, "adult_acknowledged" => ack},
+        %{"speaks" => speaks, "listens" => listens, "adult_acknowledged" => ack} = payload,
         socket
       )
-      when is_binary(speaks) and is_binary(listens) and is_boolean(ack) do
+      when is_binary(speaks) and is_binary(listens) and is_boolean(ack) and
+             (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) do
     case take_find_token(socket) do
       {:ok, socket} ->
-        preferences = %{speaks: speaks, listens: listens, adult_acknowledged?: ack}
+        # Clients that don't say they carry audio are matched only with each other.
+        audio? = Map.get(payload, "audio", false)
+
+        preferences = %{
+          speaks: speaks,
+          listens: listens,
+          adult_acknowledged?: ack,
+          audio?: audio?
+        }
+
         {:reply, :ok, run(socket, {:find, preferences})}
 
       {:error, socket} ->

@@ -14,6 +14,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   defp participant(id, pid, speaks_language, listens_language) do
     %Entry{
+      audio?: true,
       id: id,
       pid: pid,
       topic: "test:call:#{id}:#{System.unique_integer([:positive])}",

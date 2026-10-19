@@ -16,7 +16,7 @@ defmodule RandosDev.Monitor.State do
         }
 
   @type t :: %__MODULE__{
-          queues: [{String.t(), String.t(), non_neg_integer()}],
+          queues: [{String.t(), String.t(), boolean(), non_neg_integer()}],
           queued_count: non_neg_integer(),
           calls: %{String.t() => call()},
           ended_count: non_neg_integer(),
@@ -50,7 +50,7 @@ defmodule RandosDev.Monitor.State do
   def put_snapshot(state, %{queued_count: queued_count, queues: queues}) do
     rows =
       queues
-      |> Enum.map(fn {{speaks, listens}, ids} -> {speaks, listens, length(ids)} end)
+      |> Enum.map(fn {{speaks, listens, audio?}, ids} -> {speaks, listens, audio?, length(ids)} end)
       |> Enum.sort()
 
     %{state | queues: rows, queued_count: queued_count}

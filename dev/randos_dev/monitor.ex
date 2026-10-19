@@ -115,12 +115,15 @@ defmodule RandosDev.Monitor do
   end
 
   defp queues_table(data) do
-    rows = Enum.map(data.queues, fn {speaks, listens, n} -> [speaks, listens, "#{n}"] end)
+    rows =
+      Enum.map(data.queues, fn {speaks, listens, audio?, n} ->
+        [speaks, listens, if(audio?, do: "yes", else: "no"), "#{n}"]
+      end)
 
     %Table{
-      header: ["Speaks", "Listens", "Waiting"],
+      header: ["Speaks", "Listens", "Audio", "Waiting"],
       rows: rows,
-      widths: [{:length, 8}, {:length, 8}, {:min, 7}],
+      widths: [{:length, 8}, {:length, 8}, {:length, 6}, {:min, 7}],
       block: panel(" Queue ")
     }
   end

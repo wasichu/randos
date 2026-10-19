@@ -235,9 +235,9 @@ The browser's matching seam is unchanged: `processLocalStream` in
   it failed to start. Otherwise the helper answers the offer.
 - **Helper crash mid-call:** the supervisor restarts the helper, the TUI sends
   `end_call` and shows why. No attempt to re-offer in v1.
-- **The capability-matching open item becomes "`find` carries `audio: true`
-  only once the helper has started and found a device".** Text-only TUIs keep
-  `audio: false`. That still needs your decision on capability-aware matching.
+- **`find` carries `audio: true` only once the helper can carry the call**
+  (Stage 1, with a working device). Capability-aware matching is built: until
+  then the TUI sends `audio: false` and only meets other text-only clients.
 
 ## Implications
 
@@ -297,7 +297,6 @@ The browser's matching seam is unchanged: `processLocalStream` in
    - `turns:` via turn-client-rustls.
    - Jitter buffer tuning and packet-loss concealment.
    - Device selection, mute.
-   - Capability-aware matching, if you choose it.
 3. **AEC:** sonora or aec3 (or macOS VoiceProcessingIO), so headphones become
    optional.
 4. **Packaging (with 4.4):** a CI matrix of helper binaries, starting with
