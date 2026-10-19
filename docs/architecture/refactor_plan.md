@@ -92,12 +92,12 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio
+### 4.3 Audio (design proposed, awaiting review)
 
-`ex_webrtc` for the peer connection plus native capture/playback (e.g. a
-Membrane PortAudio plugin or a small Rustler NIF). Design doc first: device
-selection, **echo cancellation** (browsers provide it; a native client doesn't),
-Opus, and using the per-call `ice_servers` push.
+Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
+run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
+`ex_webrtc` rejected for its in-VM NIFs (OpenSSL, libsrtp) compiled on users'
+machines. Staged: skeleton → browser interop with real TURN → hardening → AEC.
 
 ### 4.4 Distribution
 
