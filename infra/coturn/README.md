@@ -1,6 +1,6 @@
-# Randos coturn Terraform
+# Randos coturn (OpenTofu)
 
-This directory contains Terraform and cloud-init for a reproducible
+This directory contains OpenTofu (Terraform-compatible) config and cloud-init for a reproducible
 DigitalOcean Droplet that runs coturn for Randos WebRTC calls.
 
 ## What It Provisions
@@ -26,7 +26,7 @@ turn.slowinput.org
 DNS is managed manually in Cloudflare. Terraform does not create Cloudflare
 resources.
 
-After `terraform apply`, create this Cloudflare record manually:
+After `tofu apply`, create this Cloudflare record manually:
 
 ```text
 A record:
@@ -74,7 +74,7 @@ turns:turn.slowinput.org:5349
 
 ## DNS Timing And Certbot Recovery
 
-Terraform does not assume DNS already exists during `terraform apply`. If
+Terraform does not assume DNS already exists during `tofu apply`. If
 Cloudflare DNS is not ready when the Droplet first boots, certbot may fail.
 That is expected and handled gracefully.
 
@@ -176,30 +176,60 @@ Inbound rules:
 
 Outbound TCP, UDP, and ICMP are allowed.
 
+## State (encrypted and committed)
+
+`terraform.tfstate` in this directory **is committed**, encrypted with
+OpenTofu state encryption (AES-GCM, key derived from a passphrase; see the
+`encryption` block in `versions.tf`). Encryption is enforced: OpenTofu refuses
+to write plaintext state or plans.
+
+- The passphrase lives only in your password manager. Export it before any
+  command: `export TF_VAR_state_passphrase='…'` (16+ characters).
+- `TF_VAR_do_token` must also be set (a DigitalOcean token; read-only is
+  enough for `plan`/`import`, `apply` needs write scopes).
+- Commit `terraform.tfstate` after every `apply`/`import`. Don't commit
+  `terraform.tfstate.backup` (ignored).
+- Losing the passphrase means losing the state, not the infrastructure: it can
+  be rebuilt with `tofu import` (see below).
+
+### Rebuilding state from live resources
+
+```bash
+tofu import 'digitalocean_ssh_key.coturn' <ssh key id>        # doctl compute ssh-key list
+tofu import 'digitalocean_droplet.coturn' <droplet id>         # doctl compute droplet list
+tofu import 'digitalocean_firewall.coturn' <firewall id>       # doctl compute firewall list
+tofu import 'digitalocean_reserved_ip.coturn[0]' <reserved ip> # doctl compute reserved-ip list
+tofu import 'digitalocean_reserved_ip_assignment.coturn[0]' <reserved ip>,<droplet id>
+```
+
+`random_password.turn_shared_secret` can't be imported without the live
+secret; leaving it out means the next `apply` generates a new secret (and
+replaces the droplet), which is the intended rotation path.
+
 ## Commands
 
-Initialize Terraform:
+Initialize (from the repo root, `just tofu init`; or inside this directory):
 
 ```bash
 cd infra/coturn
-terraform init
+tofu init
 ```
 
 Review the plan:
 
 ```bash
-terraform plan
+tofu plan
 ```
 
 Apply the infrastructure:
 
 ```bash
-terraform apply
+tofu apply
 ```
 
 The expected flow is:
 
-1. Run `terraform apply`.
+1. Run `tofu apply`.
 2. Read the `dns_target_ip` output.
 3. Create the manual Cloudflare DNS-only A record.
 4. Verify DNS resolution.
@@ -209,7 +239,7 @@ The expected flow is:
 Destroy the infrastructure:
 
 ```bash
-terraform destroy
+tofu destroy
 ```
 
 After destroy, verify the Droplet and reserved IP are gone in the DigitalOcean
@@ -217,7 +247,7 @@ UI.
 
 ## Outputs
 
-Terraform outputs:
+OpenTofu outputs:
 
 - Droplet public IP
 - Reserved IP, when enabled
@@ -231,8 +261,8 @@ Terraform outputs:
 To display sensitive outputs after apply:
 
 ```bash
-terraform output turn_shared_secret
-terraform output randos_environment
+tofu output turn_shared_secret
+tofu output randos_environment
 ```
 
 ## Inspecting The Server
@@ -240,7 +270,7 @@ terraform output randos_environment
 SSH as root:
 
 ```bash
-ssh root@$(terraform output -raw dns_target_ip)
+ssh root@$(tofu output -raw dns_target_ip)
 ```
 
 Inspect bootstrap logs:

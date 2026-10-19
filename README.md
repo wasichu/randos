@@ -132,7 +132,7 @@ To test against the coturn server managed by `infra/coturn`:
 ```bash
 TURN_HOST="turn.slowinput.org" \
 TURN_REALM="turn.slowinput.org" \
-TURN_SHARED_SECRET="$(terraform -chdir=infra/coturn output -raw turn_shared_secret)" \
+TURN_SHARED_SECRET="$(tofu -chdir=infra/coturn output -raw turn_shared_secret)" \
 TURN_CREDENTIAL_TTL_SECONDS="3600" \
 mix phx.server
 ```

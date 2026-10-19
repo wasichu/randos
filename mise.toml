@@ -7,3 +7,6 @@ just = "1.59.0"
 # Node runs the browser smoke test (test/e2e/call_smoke.mjs, `just smoke`);
 # it needs >= 22 for the built-in WebSocket/fetch. No npm packages.
 node = "26.10.0"
+# Infra as code for the coturn server (infra/coturn); state is encrypted and
+# committed (see infra/coturn/README.md).
+opentofu = "1.13.1"

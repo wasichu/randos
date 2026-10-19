@@ -7,7 +7,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 ## Toolchain & commands
 
-- Versions are pinned in `mise.toml` (Erlang/OTP, Elixir, just). Run `mise install`.
+- Versions are pinned in `mise.toml` (Erlang/OTP, Elixir, just, node, OpenTofu). Run `mise install`.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
   - `just setup` — toolchain + deps + assets
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
@@ -22,6 +22,9 @@ are product requirements, not suggestions. Don't add features that violate them.
     trying the extension flow by hand
   - `just outdated`, `just update` (also regenerates the usage-rules block below)
   - `just graft` — rebuild the graft graph after large changes
+  - `just tofu <cmd>` — OpenTofu for the coturn server (`infra/coturn`). State is
+    encrypted and committed; needs `TF_VAR_state_passphrase` (user's password
+    manager) and `TF_VAR_do_token`. Never commit plaintext state (`just precommit` checks).
 - MCP servers (`.mcp.json`): `graft` (code graph, always on) and `tidewave`
   (runtime: eval in the running app, logs, docs, SQL-free introspection).
   Tidewave only answers while `just dev` is running on :4000 — prefer it over

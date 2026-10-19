@@ -1,3 +1,9 @@
+variable "state_passphrase" {
+  description = "Passphrase that encrypts the OpenTofu state and plans (at least 16 characters). Keep it in a password manager; set TF_VAR_state_passphrase."
+  type        = string
+  sensitive   = true
+}
+
 variable "do_token" {
   description = "DigitalOcean API token used by the provider."
   type        = string

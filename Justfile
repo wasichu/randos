@@ -20,7 +20,7 @@ dev:
 dev-turn:
     TURN_HOST="turn.slowinput.org" \
     TURN_REALM="turn.slowinput.org" \
-    TURN_SHARED_SECRET="$(terraform -chdir=infra/coturn output -raw turn_shared_secret)" \
+    TURN_SHARED_SECRET="$(tofu -chdir=infra/coturn output -raw turn_shared_secret)" \
     TURN_CREDENTIAL_TTL_SECONDS="3600" \
     iex -S mix phx.server
 
@@ -56,9 +56,20 @@ test-failed:
 format:
     mix format
 
-# Full pre-commit check: warnings-as-errors, unused deps, format, tests
-precommit:
+# Full pre-commit check: warnings-as-errors, unused deps, format, credo, tests,
+# and a guard that the committed coturn state is encrypted
+precommit: check-state-encrypted
     mix precommit
+
+# Refuse a plaintext infra/coturn/terraform.tfstate (it holds the TURN secret)
+check-state-encrypted:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    state=infra/coturn/terraform.tfstate
+    if [ -f "$state" ] && ! grep -q '"encrypted_data"' "$state"; then
+      echo "ERROR: $state is not encrypted; do not commit it" >&2
+      exit 1
+    fi
 
 # Build dev assets
 assets:
@@ -76,6 +87,13 @@ update:
 # Refresh the graft context graph after big changes
 graft:
     graft build
+
+# OpenTofu for the coturn server, e.g. `just tofu plan` (needs TF_VAR_state_passphrase, TF_VAR_do_token)
+tofu *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    : "${TF_VAR_state_passphrase:?export TF_VAR_state_passphrase (from your password manager)}"
+    cd infra/coturn && tofu {{args}}
 
 # Build the release Docker image locally
 docker-build:

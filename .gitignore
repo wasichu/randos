@@ -38,6 +38,8 @@ randos-*.tar
 **/.terraform/
 **/terraform.tfstate
 **/terraform.tfstate.*
+# ...except the coturn state, which is encrypted (OpenTofu state encryption)
+!/infra/coturn/terraform.tfstate
 **/*.tfvars
 **/*.tfvars.json
 
