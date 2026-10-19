@@ -27,16 +27,29 @@ defmodule Randos.MixProject do
     ]
   end
 
-  # Usage rules for LLMs
+  # Usage rules for LLMs: short Elixir/OTP rules are inlined into AGENTS.md;
+  # framework rules become on-demand skills. Run `mix usage_rules.sync`.
   defp usage_rules do
     [
-      file: "USAGE_RULES.md",
-      usage_rules: [
-        :elixir,
-        :otp,
-        :phoenix,
-        :ash,
-        :ash_phoenix
+      file: "AGENTS.md",
+      usage_rules: [{:usage_rules, sub_rules: ["elixir", "otp"]}],
+      skills: [
+        location: ".claude/skills",
+        build: [
+          "phoenix-framework": [
+            description:
+              "Use when working on the Randos web layer: Phoenix, HEEx templates, LiveView (streams, forms, hooks, tests). Consult before editing lib/randos_web.",
+            usage_rules: [
+              {:phoenix, sub_rules: ["phoenix", "elixir", "html", "liveview"]},
+              ~r/^phoenix_/
+            ]
+          ],
+          "ash-framework": [
+            description:
+              "Use when working with Ash, AshPhoenix, or AshStateMachine (Randos.Comms resources, actions, changesets, state transitions). Consult before domain changes.",
+            usage_rules: [:ash, ~r/^ash_/]
+          ]
+        ]
       ]
     ]
   end
@@ -58,6 +71,7 @@ defmodule Randos.MixProject do
     [
       {:sourceror, "~> 1.8", only: [:dev, :test]},
       {:usage_rules, "~> 1.0", only: [:dev]},
+      {:tidewave, "~> 0.9", only: :dev},
       {:ash_state_machine, "~> 0.2"},
       {:ash_phoenix, "~> 2.0"},
       {:ash, "~> 3.0"},
