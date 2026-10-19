@@ -136,17 +136,24 @@ These are project-specific and are **not** covered by the Phoenix skill:
 - Dark mode is `data-theme="dark"` on `<html>` (default dark; toggle in
   `assets/js/app.js`). `app.css` remaps light stone/teal utilities for dark;
   for colors it doesn't remap, add an explicit `dark:` variant.
-- Only `app.js` / `app.css` bundles exist. No vendored `<script src>`/`<link href>`
-  in layouts, and **never** inline `<script>` in HEEx. Why: every byte of
-  front-end code is built from this repo and served from our own origin
-  (no CDNs or third-party requests that could leak an anonymous user's IP),
-  digested for cache-busting, and inline-script-free so a strict
-  Content-Security-Policy stays possible. The one planned exception
-  (Phase 5): AudioWorklet processors load by URL, so each is its own esbuild
-  entry from this repo, same origin; the dev-only voice lab gets its own
-  bundle built only with `dev_routes`. Hooks go in
-  `assets/js/hooks/` and are registered in `assets/js/app.js`. A hook that
-  owns its DOM also needs `phx-update="ignore"`.
+- **Front-end code is first-party, built, and same-origin.** Every script
+  and stylesheet is built from this repo by our esbuild/Tailwind pipeline
+  (entries declared in `config/config.exs`) and served from our own origin,
+  digested for cache-busting. Concretely:
+  - no third-party `<script src>` / `<link href>` (CDNs, analytics, fonts):
+    they'd tell a third party an anonymous user's IP and visit times;
+  - no inline JavaScript of any kind: no `<script>` blocks in HEEx, no
+    `onclick=`-style handlers, no `javascript:` URLs, no `eval`/`new
+    Function`, so a strict Content-Security-Policy stays possible;
+  - third-party code enters only through the build: a Mix dep (e.g.
+    `phoenix_live_view`'s JS) or a file committed under `assets/vendor/`
+    and imported (like `topbar.js`), never fetched at runtime.
+  `app.js` and `app.css` are the default bundles. Add another entry point
+  only when there's a reason (e.g. AudioWorklet processors, which browsers
+  load by URL, or the dev-only voice lab), and keep dev-only entries out of
+  production builds.
+- Hooks go in `assets/js/hooks/` and are registered in `assets/js/app.js`. A
+  hook that owns its DOM also needs `phx-update="ignore"`.
 - UI should feel calm and polished: clean typography, subtle transitions and
   hover states, considered loading states.
 

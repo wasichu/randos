@@ -177,7 +177,9 @@ eye, before anything touches a real call. (Design reviewed with the advisor
    what both clients run. This replaces the 4.3 plan to prototype in Elixir;
    Elixir/Nx stays an option only for model-based experiments that can't be
    expressed this way.
-2. **A documented exception to the one-bundle rule** (see AGENTS.md):
+2. **Bundles follow the first-party, same-origin rule** (AGENTS.md; the
+   rule was broadened from "only `app.js`/`app.css`" to the security
+   properties it protects, so this needs no exception):
    - worklet processors are their own esbuild entry points (or static files
      under `priv/static/`), served from our own origin, because
      `audioWorklet.addModule(url)` loads each one from its own URL;
