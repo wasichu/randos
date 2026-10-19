@@ -34,7 +34,7 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
   setup :start_matchmaker
 
-  test "does not leave queued participants behind when call start fails" do
+  test "keeps the waiting participant queued when call start fails" do
     name = :"matchmaker_failure_#{System.unique_integer([:positive])}"
     call_starter = fn _match, _call_options -> {:error, :supervisor_down} end
     start_supervised!({Matchmaker, name: name, call_starter: call_starter}, id: name)
@@ -54,7 +54,9 @@ defmodule Randos.Matchmaking.MatchmakerTest do
                participant(id: "b", pid: pid_b, speaks_language: "es", listens_language: "en")
              )
 
-    assert %{queued_count: 0} = Matchmaker.snapshot(name)
+    # The joiner gets the error; the person who was already waiting keeps
+    # their place at the front of the queue instead of silently vanishing.
+    assert %{queued_count: 1, queues: %{{"en", "es"} => ["a"]}} = Matchmaker.snapshot(name)
 
     send(pid_a, :stop)
     send(pid_b, :stop)

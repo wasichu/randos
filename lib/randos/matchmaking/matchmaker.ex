@@ -159,6 +159,8 @@ defmodule Randos.Matchmaking.Matchmaker do
               "matchmaking_call_start_failed match_id=#{match.id} reason=#{inspect(reason)}"
             )
 
+            # Not the waiting participant's fault: give them their place back.
+            state = add_participant(waiting_participant, state, :front)
             {:reply, {:error, :call_start_failed}, state}
         end
 
@@ -169,13 +171,19 @@ defmodule Randos.Matchmaking.Matchmaker do
     end
   end
 
-  defp add_participant(participant, state) do
+  defp add_participant(participant, state, position \\ :back) do
     key = {participant.speaks_language, participant.listens_language}
     ref = Process.monitor(participant.pid)
 
+    enqueue =
+      case position do
+        :back -> &(&1 ++ [participant])
+        :front -> &[participant | &1]
+      end
+
     %{
       state
-      | queues: Map.update(state.queues, key, [participant], &(&1 ++ [participant])),
+      | queues: Map.update(state.queues, key, [participant], enqueue),
         participants: Map.put(state.participants, participant.pid, {key, participant, ref}),
         monitors: Map.put(state.monitors, ref, participant.pid)
     }
