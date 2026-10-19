@@ -12,25 +12,8 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   alias Randos.Calls.CallCoordinator
   alias Randos.ConversationLanguages
-
-  @type language_code :: String.t()
-  @type participant_id :: String.t()
-
-  @type participant :: %{
-          id: participant_id(),
-          pid: pid(),
-          topic: String.t(),
-          speaks_language: language_code(),
-          listens_language: language_code()
-        }
-
-  @type match :: %{
-          id: String.t(),
-          participant_a: participant(),
-          participant_b: participant(),
-          offerer: :participant_a,
-          answerer: :participant_b
-        }
+  alias Randos.Matchmaking.Entry
+  alias Randos.Matchmaking.Match
 
   defstruct queues: %{},
             participants: %{},
@@ -87,10 +70,10 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @impl true
   def handle_call({:join, attrs}, _from, state) do
-    participant = participant_from_attrs(attrs)
+    participant = entry_from_attrs(attrs)
 
     cond do
-      participant.accepted_adult_terms != true ->
+      Map.get(attrs, :accepted_adult_terms) != true ->
         {:reply, {:error, :adult_terms_required}, state}
 
       not supported_language?(participant.speaks_language) or
@@ -147,11 +130,11 @@ defmodule Randos.Matchmaking.Matchmaker do
 
     case pop_waiting_participant(state, compatible_key) do
       {%{} = waiting_participant, state} ->
-        match = build_match(waiting_participant, participant)
+        match = Match.new(waiting_participant, participant)
 
         case start_call(match, state) do
           {:ok, call_pid} ->
-            match = Map.merge(match, %{call_pid: call_pid})
+            match = %{match | call_pid: call_pid}
             Logger.info("matchmaking_matched match_id=#{match.id}")
             {:reply, {:matched, match}, state}
 
@@ -245,37 +228,25 @@ defmodule Randos.Matchmaking.Matchmaker do
     end
   end
 
-  defp participant_from_attrs(attrs) do
-    %{
+  defp entry_from_attrs(attrs) do
+    %Entry{
       id: Map.fetch!(attrs, :id),
       pid: Map.fetch!(attrs, :pid),
       topic: Map.fetch!(attrs, :topic),
       speaks_language: Map.fetch!(attrs, :speaks_language),
-      listens_language: Map.fetch!(attrs, :listens_language),
-      accepted_adult_terms: Map.get(attrs, :accepted_adult_terms, false)
+      listens_language: Map.fetch!(attrs, :listens_language)
     }
   end
 
   defp supported_language?(code), do: code in @supported_language_codes
-
-  defp build_match(participant_a, participant_b) do
-    %{
-      id: deterministic_match_id(participant_a.id, participant_b.id),
-      participant_a: Map.drop(participant_a, [:accepted_adult_terms]),
-      participant_b: Map.drop(participant_b, [:accepted_adult_terms]),
-      offerer: :participant_a,
-      answerer: :participant_b
-    }
-  end
 
   defp start_call(match, state) do
     call_options =
       state.call_options
       |> Keyword.put(:supervisor, state.call_supervisor)
 
-    with {:ok, pid} <- apply_call_starter(state.call_starter, match, call_options) do
-      {:ok, pid}
-    else
+    case apply_call_starter(state.call_starter, match, call_options) do
+      {:ok, pid} -> {:ok, pid}
       {:error, reason} -> {:error, reason}
       other -> {:error, other}
     end
@@ -287,10 +258,5 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   defp apply_call_starter(function, match, call_options) when is_function(function, 2) do
     function.(match, call_options)
-  end
-
-  defp deterministic_match_id(participant_a_id, participant_b_id) do
-    :crypto.hash(:sha256, participant_a_id <> ":" <> participant_b_id)
-    |> Base.url_encode64(padding: false)
   end
 end

@@ -2,6 +2,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
   use ExUnit.Case
 
   alias Randos.Calls.CallCoordinator
+  alias Randos.Matchmaking.{Entry, Match}
 
   defp waiting_pid do
     spawn(fn ->
@@ -12,7 +13,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
   end
 
   defp participant(id, pid, speaks_language, listens_language) do
-    %{
+    %Entry{
       id: id,
       pid: pid,
       topic: "test:call:#{id}:#{System.unique_integer([:positive])}",
@@ -27,13 +28,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
     participant_a = participant("a", pid_a, "en", "es")
     participant_b = participant("b", pid_b, "es", "en")
 
-    match = %{
-      id: "match-#{System.unique_integer([:positive])}",
-      participant_a: participant_a,
-      participant_b: participant_b,
-      offerer: :participant_a,
-      answerer: :participant_b
-    }
+    match = Match.new(participant_a, participant_b)
 
     Phoenix.PubSub.subscribe(Randos.PubSub, participant_a.topic)
     Phoenix.PubSub.subscribe(Randos.PubSub, participant_b.topic)

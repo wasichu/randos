@@ -32,6 +32,7 @@ defmodule Randos.Participant do
   """
 
   alias Randos.Calls.Call
+  alias Randos.Matchmaking.Match
   alias Randos.Signaling
 
   @type status :: :idle | :looking | :connecting | :in_call | :extension_pending
@@ -46,7 +47,7 @@ defmodule Randos.Participant do
 
   @type join_result ::
           :queued
-          | {:matched, map()}
+          | {:matched, Match.t()}
           | {:error, :already_queued | error()}
 
   @type event ::
@@ -134,7 +135,7 @@ defmodule Randos.Participant do
 
   def handle(p, {:call_updated, %Call{} = call}) do
     cond do
-      not mine?(p, call) -> {p, []}
+      not Match.member?(call.match, p.id) -> {p, []}
       call.pid == p.call_pid -> update_call(p, call)
       p.status == :looking and call.status != :ended -> update_call(adopt(p, call), call)
       p.status == :idle and call.status != :ended -> {p, [{:hang_up, call.pid}]}
@@ -180,7 +181,7 @@ defmodule Randos.Participant do
       | status: :connecting,
         call_pid: match.call_pid,
         call: nil,
-        webrtc_role: Signaling.webrtc_role_for(match, p.id),
+        webrtc_role: Match.webrtc_role(match, p.id),
         stop_after_call?: false,
         error: nil
     }
@@ -192,7 +193,7 @@ defmodule Randos.Participant do
     %{
       p
       | call_pid: call.pid,
-        webrtc_role: Signaling.webrtc_role_for(call.match, p.id),
+        webrtc_role: Match.webrtc_role(call.match, p.id),
         stop_after_call?: false,
         error: nil
     }
@@ -217,10 +218,6 @@ defmodule Randos.Participant do
       end
 
     {%{p | call: call, status: status}, []}
-  end
-
-  defp mine?(p, %Call{match: match}) do
-    p.id in [match.participant_a.id, match.participant_b.id]
   end
 
   defp join_attrs(p) do

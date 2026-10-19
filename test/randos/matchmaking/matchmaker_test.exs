@@ -77,8 +77,8 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
     assert match.participant_a.id == "a"
     assert match.participant_b.id == "b"
-    assert match.offerer == :participant_a
-    assert match.answerer == :participant_b
+    assert Randos.Matchmaking.Match.webrtc_role(match, "a") == :offerer
+    assert Randos.Matchmaking.Match.webrtc_role(match, "b") == :answerer
     assert is_pid(match.call_pid)
 
     assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)

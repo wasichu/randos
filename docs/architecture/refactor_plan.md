@@ -55,8 +55,9 @@ below.
 Status: core landed (`7986493`, `76261b7`, and the HomeLive shell commit).
 `{:call_updated, %Call{}}` is the only call event; `Randos.Participant` is
 the core; `ConversationFlow` is gone; the "End" button no longer reloads the
-page; ICE servers are minted per call (§13). Remaining: HomeComponents extraction,
-`%Match{}` struct (§3).
+page; ICE servers are minted per call (§13); components live in
+`RandosWeb.HomeComponents`; matches are `%Match{}`/`%Entry{}` structs (§3).
+Phase 2 is complete.
 
 Functional core, imperative shell:
 
@@ -259,7 +260,7 @@ yet. Items marked **Bug** are defects, not cleanups.
 
 ### Phase 2 (with the participant-core extraction)
 
-3. **Structs at the boundaries.** `%Randos.Match{}`, `%Randos.Participant{}`
+3. **(Done: `Randos.Matchmaking.Match`/`Entry`, `Randos.Calls.Call`, `Randos.Participant`.) Structs at the boundaries.** `%Randos.Match{}`, `%Randos.Participant{}`
    (queue entry: id, pid, topic, languages) and `%Randos.Calls.Call{}` (what
    `public_call_state/1`, `call_coordinator.ex:370-382`, returns today) with
    `@enforce_keys` and `@type t`. Today these are maps typed only in

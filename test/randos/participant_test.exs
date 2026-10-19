@@ -2,6 +2,7 @@ defmodule Randos.ParticipantTest do
   use ExUnit.Case, async: true
 
   alias Randos.Calls.Call
+  alias Randos.Matchmaking.{Entry, Match}
   alias Randos.Participant
 
   @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true}
@@ -12,16 +13,18 @@ defmodule Randos.ParticipantTest do
 
   # A match with `p` as participant_a (the offerer) unless told otherwise.
   defp match(p, opts \\ []) do
-    me = %{id: p.id, topic: p.topic}
-    peer = %{id: "anon-peer", topic: "participant:anon-peer"}
+    entry = fn id, topic ->
+      %Entry{id: id, pid: self(), topic: topic, speaks_language: "en", listens_language: "es"}
+    end
+
+    me = entry.(p.id, p.topic)
+    peer = entry.("anon-peer", "participant:anon-peer")
     {a, b} = if opts[:as] == :participant_b, do: {peer, me}, else: {me, peer}
 
-    %{
+    %Match{
       id: "match-1",
       participant_a: a,
       participant_b: b,
-      offerer: :participant_a,
-      answerer: :participant_b,
       call_pid: Keyword.get(opts, :call_pid, fake_pid())
     }
   end

@@ -12,7 +12,7 @@ defmodule Randos.Calls.Call do
   @type t :: %__MODULE__{
           id: String.t(),
           pid: pid(),
-          match: map(),
+          match: Randos.Matchmaking.Match.t(),
           status: status(),
           extension_count: non_neg_integer(),
           call_deadline_unix_ms: integer() | nil,
@@ -35,7 +35,7 @@ defmodule Randos.Calls.Call do
   @doc """
   Builds a new `:connecting` call with a random, unguessable id.
   """
-  @spec new(pid(), map()) :: t()
+  @spec new(pid(), Randos.Matchmaking.Match.t()) :: t()
   def new(pid, match) do
     %__MODULE__{
       id: "call-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false),

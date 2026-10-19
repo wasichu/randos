@@ -23,6 +23,7 @@ defmodule Randos.Calls.CallCoordinator do
 
   alias Randos.Calls.Call
   alias Randos.Calls.Lifecycle
+  alias Randos.Matchmaking.Match
   alias Randos.Signaling
 
   @overridable [
@@ -51,7 +52,7 @@ defmodule Randos.Calls.CallCoordinator do
 
   Options: `:supervisor`, plus test overrides for `#{Enum.join(@overridable, ", ")}`.
   """
-  @spec start_match(map(), keyword()) :: DynamicSupervisor.on_start_child()
+  @spec start_match(Match.t(), keyword()) :: DynamicSupervisor.on_start_child()
   def start_match(match, opts \\ []) do
     {supervisor, opts} = Keyword.pop(opts, :supervisor, Randos.Calls.CallSupervisor)
     DynamicSupervisor.start_child(supervisor, {__MODULE__, Keyword.put(opts, :match, match)})
@@ -269,7 +270,7 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   defp relay_signal_to_peer(data, message) do
-    {:ok, peer} = Signaling.peer_for(data.call.match, message.from_participant_id)
+    {:ok, peer} = Match.peer(data.call.match, message.from_participant_id)
     Phoenix.PubSub.broadcast(data.pubsub, peer.topic, {:signaling, message})
   end
 end

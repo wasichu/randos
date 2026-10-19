@@ -1,15 +1,21 @@
 defmodule Randos.SignalingTest do
   use ExUnit.Case, async: true
 
+  alias Randos.Matchmaking.{Entry, Match}
   alias Randos.Signaling
 
   defp match do
-    %{
-      participant_a: %{id: "a", topic: "topic:a"},
-      participant_b: %{id: "b", topic: "topic:b"},
-      offerer: :participant_a,
-      answerer: :participant_b
-    }
+    entry = fn id ->
+      %Entry{
+        id: id,
+        pid: self(),
+        topic: "topic:#{id}",
+        speaks_language: "en",
+        listens_language: "es"
+      }
+    end
+
+    %Match{id: "match-1", participant_a: entry.("a"), participant_b: entry.("b")}
   end
 
   test "casts supported signaling types without creating atoms from unknown input" do
@@ -30,11 +36,5 @@ defmodule Randos.SignalingTest do
     assert message.to_participant_id == "b"
     assert message.payload == %{"sdp" => "mock-sdp"}
     assert is_integer(message.sent_at_unix_ms)
-  end
-
-  test "returns assigned WebRTC roles" do
-    assert Signaling.webrtc_role_for(match(), "a") == :offerer
-    assert Signaling.webrtc_role_for(match(), "b") == :answerer
-    assert is_nil(Signaling.webrtc_role_for(match(), "unknown"))
   end
 end
