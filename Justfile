@@ -88,11 +88,16 @@ update:
 graft:
     graft build
 
-# OpenTofu for the coturn server, e.g. `just tofu plan` (needs TF_VAR_state_passphrase, TF_VAR_do_token)
+# OpenTofu for coturn (`just tofu plan`); passphrase from Keychain, DO token from doctl
 tofu *args:
     #!/usr/bin/env bash
     set -euo pipefail
-    : "${TF_VAR_state_passphrase:?export TF_VAR_state_passphrase (from your password manager)}"
+    if [ -z "${TF_VAR_state_passphrase:-}" ]; then
+      TF_VAR_state_passphrase="$(security find-generic-password -s randos-tofu-state-passphrase -w)" \
+        || { echo "No Keychain item randos-tofu-state-passphrase (see infra/coturn/README.md)" >&2; exit 1; }
+    fi
+    export TF_VAR_state_passphrase
+    export TF_VAR_do_token="${TF_VAR_do_token:-$(doctl auth token --context "${DO_CONTEXT:-default}")}"
     cd infra/coturn && tofu {{args}}
 
 # Build the release Docker image locally

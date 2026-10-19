@@ -186,10 +186,16 @@ OpenTofu state encryption (AES-GCM, key derived from a passphrase; see the
 `encryption` block in `versions.tf`). Encryption is enforced: OpenTofu refuses
 to write plaintext state or plans.
 
-- The passphrase lives only in your password manager. Export it before any
-  command: `export TF_VAR_state_passphrase='…'` (16+ characters).
-- `TF_VAR_do_token` must also be set (a DigitalOcean token; read-only is
-  enough for `plan`/`import`, `apply` needs write scopes).
+- The passphrase lives in your password manager and, on macOS, in the
+  Keychain item `randos-tofu-state-passphrase`, which `just tofu …` reads.
+  Create it once (generates a random passphrase without printing it):
+  `security add-generic-password -a "$USER" -s randos-tofu-state-passphrase -w "$(openssl rand -base64 32)"`,
+  then copy it into your password manager:
+  `security find-generic-password -s randos-tofu-state-passphrase -w | pbcopy`.
+  Elsewhere, export `TF_VAR_state_passphrase` instead.
+- The DigitalOcean token comes from `doctl auth token` (context `default`, or
+  `DO_CONTEXT=<name> just tofu …`); `TF_VAR_do_token` overrides it. Read-only
+  is enough for `plan`/`import`; `apply` needs a write-scoped context.
 - Commit `terraform.tfstate` after every `apply`/`import`. Don't commit
   `terraform.tfstate.backup` (ignored).
 - Losing the passphrase means losing the state, not the infrastructure: it can
