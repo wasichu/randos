@@ -29,20 +29,20 @@ jobs:
         os: [ubuntu-24.04, macos-15]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: ALSA headers (cpal on Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libasound2-dev
 
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v5
         with:
           install_args: ${{ env.MISE_TOOLS }}
 
       - uses: Swatinem/rust-cache@v2
 
       - name: Cache Mix deps and builds
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             deps
@@ -69,14 +69,14 @@ jobs:
     name: smoke (browser + TUI)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v5
         with:
           install_args: erlang elixir just node
 
       - name: Cache Mix deps and builds
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             deps

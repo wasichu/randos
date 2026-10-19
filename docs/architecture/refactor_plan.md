@@ -152,9 +152,9 @@ Not scheduled; pick up when relevant.
   `Matchmaker` is node-local (two machines split the queue). Before scaling
   out, pick one: a cluster-wide singleton (`:global`/Horde), or a queue over
   `:pg`/PubSub that matches locally and falls back to remote.
-- **CI.** None; `main` is the deployed branch and nothing runs
-  `just precommit` on push. Simple option: a GitHub Actions workflow running
-  precommit + `just smoke` (deploys stay manual). Owner's call.
+- **CI (done).** `.github/workflows/ci.yml`: `just precommit` on macOS and
+  Linux (with `RANDOS_REQUIRE_NATIVE=1`), plus `just smoke` and
+  `just tui-smoke`. Deploys stay manual (`just deploy`).
 - **Same pair rematching on "Next"** when they're the only two queued
   (product decision: a short "recently matched" exclusion?).
 - **`RandosWeb.IceServers` reads env vars per call.** Move them to

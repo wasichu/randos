@@ -18,7 +18,11 @@ are product requirements, not suggestions. Don't add features that violate them.
     queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
   - `just test [path]`, `just test-failed`
   - `just precommit` — **run before declaring any change done** and fix everything it reports
-    (warnings-as-errors compile, unused deps, format, `credo --strict`, tests)
+    (warnings-as-errors compile, unused deps, format, `credo --strict`, tests).
+    Check its exit status, not filtered output: piping it through `grep`/`tail`
+    hides failures. CI (`.github/workflows/ci.yml`) runs it on macOS and Linux
+    with `RANDOS_REQUIRE_NATIVE=1`, plus `just smoke` and `just tui-smoke`;
+    inspect runs with `gh run list` / `gh run view --log-failed`.
   - `just smoke` — browser end-to-end check (`test/e2e/call_smoke.mjs`): two
     headless Chromes with fake mics place a real WebRTC call, extend it, and
     check mic teardown. **Run it after any change to `assets/js/` or the call
