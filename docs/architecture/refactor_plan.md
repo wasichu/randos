@@ -228,7 +228,7 @@ yet. Items marked **Bug** are defects, not cleanups.
    Phase 3, when `Randos` core vs `RandosWeb` (LiveView + Channel) is a real
    split worth enforcing; at that point declare `Randos` and `RandosWeb`
    boundaries with `RandosWeb` depending only on the core's public modules.
-8. **Multi-node matchmaking: split queue in production.** **Bug.**
+8. **Multi-node matchmaking: split queue in production.** **Bug — mitigated 2026-10-19:** scaled to one machine (`fly scale count 1`). Multi-node support is still a goal; pick an option below before scaling up again.
    - Verified 2026-10-19 with `fly scale show` / `fly machines list`:
      app group `app` has **2 machines** in `ord` (`4d895d20b93158`,
      `d8d09d6fe0d148`), both shared-cpu-1x/512MB. Both were stopped at check
@@ -273,7 +273,7 @@ yet. Items marked **Bug** are defects, not cleanups.
    `vote_extension/3`, `relay_signal/4`, `force_time_up/1`); `Matchmaker` has
    `@doc`s on join/leave/snapshot but no `@spec`s. Do this together with the
    structs (§3) so specs reference `Match.t()`/`Call.t()`.
-10. **Matchmaker: waiting participant orphaned when a call fails to start.**
+10. **(Fixed in `419fbeb`.) Matchmaker: waiting participant orphaned when a call fails to start.**
     **Bug.**
     - Where: `join_queue/2`, `matchmaker.ex:143-170`. The waiting participant
       is popped and demonitored before `start_call/2`. On `{:error, _}` only
@@ -330,7 +330,7 @@ Reviewed in full (all 11 files). Items 16 and 17 I re-verified directly; the
 rest are from reading the code, and "(inferred)" means it depends on runtime
 behavior nobody has tested.
 
-16. **Teardown during the mic prompt leaks the mic.** **Bug.**
+16. **(Fixed in `b9ab772`, covered by `just smoke`.) Teardown during the mic prompt leaks the mic.** **Bug.** (Only via "Next"/peer hang-up: "End" does a full-page redirect, which frees the mic on its own.)
     - Where: `WebRTCClient.start()` checks `this.cleaned` only on entry
       (`webrtc_client.js:45`) and never re-checks after
       `await this.captureLocalAudio()` (`:48`).
@@ -342,7 +342,7 @@ behavior nobody has tested.
       mic indicator stays on.
     - Fix: re-check `cleaned` after every `await` in `start()`, and stop the
       stream if teardown already happened. (Phase 1)
-17. **Visualizers go blank after a call is extended.** **Bug.**
+17. **(Fixed in `b9ab772`, covered by `just smoke`.) Visualizers go blank after a call is extended.** **Bug.**
     - Where: `call_hook.js:22-23` looks up the canvases once with
       `document.querySelector`. They live in `call_panel`, which is replaced by
       `extension_panel` during `:extension_pending` (`home_live.ex:257-266`),
@@ -351,25 +351,25 @@ behavior nobody has tested.
       canvases.
     - Fix: re-query the canvases in the hook's `updated()`, or move them inside
       the hook's own subtree. (Phase 1)
-18. **Signal errors are swallowed.** **Bug.**
+18. **(Fixed in `b9ab772`.) Signal errors are swallowed.** **Bug.**
     - Where: `call_hook.js:118` calls the async `peer.receiveSignal()` without
       `await` or `.catch`. A rejected `setRemoteDescription`, `createAnswer` or
       `addIceCandidate` (`webrtc_client.js:135-159, 212`) becomes an unhandled
       rejection.
     - Effect: no `connection_failed` reaches the server, and the call sits in
       "connecting" until someone hangs up. (Phase 1)
-19. **Late signals after teardown.** Signals aren't serialized, so `close()`
+19. **(Partly fixed in `b9ab772`: signals after teardown are dropped; serialization still open.) Late signals after teardown.** Signals aren't serialized, so `close()`
     can land in the middle of `receiveOffer`, and then `createAnswer()` throws on
     null (`:138`). After `failConnection` the state is FAILED, not CLOSED, so
     the guard at `:97` lets later signals through to the queue (`:99-100`),
     which is never drained. Serialize signal handling through one promise chain.
     (Phase 2)
-20. **Mic denial is indistinguishable from a network failure.**
+20. **(Fixed in `b9ab772`.) Mic denial is indistinguishable from a network failure.**
     `webrtc_client.js:85` sets MICROPHONE_DENIED, but `failConnection`
     (`call_hook.js:56`) immediately overwrites it with FAILED and reports
     `error.message`, not `error.name` (`NotAllowedError` / `NotFoundError`).
     Send the name so the UI can say "allow microphone access". (Phase 1)
-21. `logging.js:3` reads `localStorage` without try/catch. In some privacy
+21. (Fixed in `b9ab772`.) `logging.js:3` reads `localStorage` without try/catch. In some privacy
     modes that throws, which would break every `logEvent`, including those in
     `start()`. (inferred; Phase 1)
 22. **Cleanups.**
@@ -414,7 +414,6 @@ behavior nobody has tested.
 
 ### Summary: real bugs vs cleanups
 
-Bugs: §8 (split queue: 2 Fly machines confirmed), §10 (orphaned
-waiting participant), §13 (stale TURN credentials), §16 (mic leak on early
-teardown), §17 (blank visualizers after extension), §18 (swallowed signal
-errors). Everything else is cleanup or design.
+Bugs: §8 (split queue: mitigated by running one machine), §10 (fixed),
+§13 (stale TURN credentials, **open**, lands with Phase 2), §16, §17, §18
+(fixed). Everything else is cleanup or design.
