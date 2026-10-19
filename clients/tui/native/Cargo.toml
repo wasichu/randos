@@ -8,6 +8,10 @@ publish = false
 
 # Every dependency is justified in clients/tui/native/README.md (AGENTS.md rule).
 [dependencies]
+cpal = "0.18"
+hound = "3.5"
+opus = "0.4"
+ringbuf = "0.5"
 
 [lints.rust]
 unsafe_code = "forbid"

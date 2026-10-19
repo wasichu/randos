@@ -157,8 +157,14 @@ allocation by the end of Stage 1, switch to webrtc-rs and accept UDP-only
   - **ffmpeg/sox as Ports**: fine for a quick macOS spike [run: the pipe
     framing worked, 1920 B per 20 ms frame of 48 kHz mono s16le], but sox is
     stale and ffmpeg lacks Windows audio output [unverified].
-- **Latency:** ~10 ms device buffers each way plus jitter buffer [unverified
-  estimate, not measured].
+- **Latency:** ~10 ms device buffers each way plus jitter buffer. Stage 0
+  measured the loopback's own pipeline on a MacBook Pro (built-in mic and
+  speakers, both 48 kHz f32) at **≈81 ms**: capture device 12.2 ms + capture
+  ring 1–8 ms + codec 26.5 ms (one 20 ms frame + 6.5 ms Opus lookahead) +
+  playback ring 21–28 ms + playback device 12.9 ms [run, from cpal callback
+  timestamps; acoustic mouth-to-ear not yet measured]. A real call adds the
+  network and a jitter buffer, and drops the loopback's playback-ring
+  slack.
 
 #### Echo cancellation
 
@@ -252,6 +258,11 @@ The browser's matching seam is unchanged: `processLocalStream` in
 - **macOS mic permission (TCC):** access may be attributed to the hosting
   terminal app, and an unsigned helper unpacked by Burrito may behave
   differently [unverified, high impact]. Prove this in Stage 0.
+  - Stage 0 result: the helper run directly from an already-authorized
+    terminal got real mic audio (a −46 dBFS room floor; a denied mic yields
+    all-zero samples) [run]. Still unproven: a first-time prompt, launching
+    through `Tui.Media` under `mix tui` (the Port mode doesn't open devices
+    yet), and a Burrito-unpacked binary.
 - **Testing and CI:**
   - The helper takes `--in sine|wav:PATH|device` and
     `--out null|wav:PATH|device`, so CI runs the same binary without audio

@@ -1,6 +1,6 @@
 # Randos roadmap
 
-Verified against the code at `6b13eec` (2026-10-19). Update this line, and
+Verified against the code at `ae684df` (2026-10-19). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -92,12 +92,18 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (design accepted; Stage 0 next)
+### 4.3 Audio (design accepted; Stage 0 in progress)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
 `ex_webrtc` rejected for its in-VM NIFs (OpenSSL, libsrtp) compiled on users'
 machines. Staged: skeleton → browser interop with real TURN → hardening → AEC.
+
+Stage 0 so far: the helper (`clients/tui/native`, crate `randos_media`) with
+Port framing and a `--loopback` mode (cpal → Opus → cpal, ≈81 ms pipeline
+latency measured), and `Tui.Media` owning it over a `{:packet, 4}` Port.
+Remaining: an acoustic mouth-to-ear check by hand, and putting the loopback
+under Port control. Capability-aware matching comes before Stage 1.
 
 ### 4.4 Distribution
 

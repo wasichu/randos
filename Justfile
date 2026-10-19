@@ -86,6 +86,10 @@ precommit: check-state-encrypted
     cargo build --quiet -p randos_media
     cd clients/tui && mix precommit
 
+# Media helper loopback: default mic → Opus → default speaker; latency on stderr (use headphones)
+media-loopback seconds="20":
+    cargo run --quiet -p randos_media -- --loopback --seconds {{seconds}}
+
 # Rust media helper checks: format, clippy (warnings are errors), tests, cargo-deny
 native-check:
     cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny check --hide-inclusion-graph 2>&1 | tail -1

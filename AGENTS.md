@@ -97,6 +97,8 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,
   cargo-deny). `just native-check` runs fmt, clippy with warnings as errors,
   tests, and `cargo deny check`; it is part of `just precommit`.
+  `just media-loopback` runs mic → Opus → speaker by hand and prints latency
+  (headphones; no echo cancellation yet).
 - **No panics in the helper.** `unwrap`/`expect`/`panic!`/`todo!` are denied by
   clippy outside tests; return errors and report them over the Port as
   messages. A panic kills the user's call.
