@@ -36,6 +36,12 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Prefer plain Elixir and OTP (`GenServer`, `:gen_statem`, `Registry`, `:pg`,
   `Task`) over adding dependencies; justify any new dep. Production runs a
   single node today, but don't bake in single-node assumptions casually.
+- Elixir code intelligence: the `expert-lsp` Claude Code plugin in
+  `tools/claude-plugins` runs Expert (pinned in `mise.toml`). It's enabled per
+  machine, not in committed settings. One-time setup from the repo root:
+  `claude plugin marketplace add ./tools/claude-plugins --scope local && claude plugin install expert-lsp@randos-local --scope local`,
+  then restart Claude Code. (The plugin CLI rewrites `.claude/settings.json`
+  and empties graft's `footerLinksRegexes`; check `git diff` afterwards.)
 - Use `Req` for HTTP. Don't add `:httpoison`, `:tesla`, or `:httpc`.
 
 ## Architecture (layer boundaries)
