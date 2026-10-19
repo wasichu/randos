@@ -1,6 +1,7 @@
 defmodule RandosWeb.IceServersTest do
   use ExUnit.Case, async: false
 
+  alias Randos.Calls.Lifecycle
   alias RandosWeb.IceServers
 
   test "returns default public STUN config" do
@@ -58,7 +59,7 @@ defmodule RandosWeb.IceServersTest do
   end
 
   test "credentials always outlive the longest possible call" do
-    floor = Randos.Calls.Lifecycle.max_call_duration_seconds() + 600
+    floor = Lifecycle.max_call_duration_seconds() + 600
 
     with_restored_env(fn ->
       System.put_env("TURN_HOST", "turn.slowinput.org")

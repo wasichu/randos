@@ -1,6 +1,7 @@
 defmodule Randos.Matchmaking.MatchmakerTest do
   use ExUnit.Case, async: true
 
+  alias Randos.Matchmaking.Match
   alias Randos.Matchmaking.Matchmaker
 
   defp start_matchmaker(_) do
@@ -77,8 +78,8 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
     assert match.participant_a.id == "a"
     assert match.participant_b.id == "b"
-    assert Randos.Matchmaking.Match.webrtc_role(match, "a") == :offerer
-    assert Randos.Matchmaking.Match.webrtc_role(match, "b") == :answerer
+    assert Match.webrtc_role(match, "a") == :offerer
+    assert Match.webrtc_role(match, "b") == :answerer
     assert is_pid(match.call_pid)
 
     assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)

@@ -3,6 +3,8 @@ defmodule RandosWeb.HomeLiveTest do
 
   import Phoenix.LiveViewTest
 
+  alias Randos.Calls.CallCoordinator
+
   test "serves the home page on the initial HTTP request", %{conn: conn} do
     html = conn |> get(~p"/") |> html_response(200)
     document = LazyHTML.from_document(html)
@@ -136,7 +138,7 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 
     assert {:ok, call_pid} = eventually_call_pid()
-    Randos.Calls.CallCoordinator.force_time_up(call_pid)
+    CallCoordinator.force_time_up(call_pid)
 
     assert eventually_has_element?(view_a, "#extension-panel")
     refute has_element?(view_a, "#call-countdown")

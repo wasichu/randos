@@ -227,7 +227,7 @@ yet. Items marked **Bug** are defects, not cleanups.
    Add a code interface on `Randos.Comms` (`Comms.mark_call_active(call)`,
    etc.) and handle `{:error, _}` by ending the call with a reason. If Ash goes,
    this item disappears.
-7. **Credo.** Add `{:credo, "~> 1.7", only: [:dev, :test]}` and put
+7. **(Done: credo in precommit; boundary deferred.) Credo.** Add `{:credo, "~> 1.7", only: [:dev, :test]}` and put
    `credo --strict` in the `precommit` alias. Recommendation on
    [`boundary`](https://hex.pm/packages/boundary) (0.11.0, maintained, Sept
    2026): **not yet**. With ~15 modules and the TUI planned as a separate Mix
