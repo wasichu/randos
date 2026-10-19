@@ -15,6 +15,12 @@ defmodule RandosWeb.Endpoint do
     websocket: [connect_info: [session: @session_options]],
     longpoll: [connect_info: [session: @session_options]]
 
+  # Anonymous participant API for non-browser clients (the TUI). Websocket
+  # only; frames are capped well above an SDP offer (a few KB).
+  socket "/participant", RandosWeb.ParticipantSocket,
+    websocket: [max_frame_size: 64_000],
+    longpoll: false
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # When code reloading is disabled (e.g., in production),
