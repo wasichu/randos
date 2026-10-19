@@ -9,11 +9,10 @@ defmodule RandosWeb.HomeLive do
   """
   use RandosWeb, :live_view
 
-  alias Randos.Calls.CallCoordinator
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
-  alias RandosWeb.IceServers
+  alias RandosWeb.ParticipantShell
 
   import RandosWeb.HomeComponents
 
@@ -31,6 +30,7 @@ defmodule RandosWeb.HomeLive do
      |> assign(:page_title, gettext("Randos"))
      |> assign(:preferences, preferences)
      |> assign_form(preferences)
+     |> assign(:ice_servers, nil)
      |> assign_participant(participant)}
   end
 
@@ -68,63 +68,27 @@ defmodule RandosWeb.HomeLive do
     :ok
   end
 
-  ## Running the participant core
+  ## Running the participant core (see RandosWeb.ParticipantShell)
 
   defp run(socket, event) do
-    {participant, effects} = Participant.handle(socket.assigns.participant, event)
-    Enum.reduce(effects, assign_participant(socket, participant), &run_effect/2)
+    {participant, client_effects} = ParticipantShell.run(socket.assigns.participant, event)
+    Enum.reduce(client_effects, assign_participant(socket, participant), &deliver/2)
   end
 
-  defp run_effect({:join_queue, attrs}, socket) do
-    run(socket, {:join_result, Matchmaker.join(Map.put(attrs, :pid, self()))})
-  end
+  defp deliver({:push_signal, message}, socket), do: push_event(socket, "randos:signal", message)
 
-  defp run_effect(:leave_queue, socket) do
-    Matchmaker.leave(self())
-    socket
-  end
-
-  defp run_effect({:hang_up, call_pid}, socket) do
-    CallCoordinator.hang_up(call_pid, socket.assigns.participant.id)
-    socket
-  end
-
-  defp run_effect({:vote, call_pid, vote}, socket) do
-    CallCoordinator.vote_extension(call_pid, socket.assigns.participant.id, vote)
-    socket
-  end
-
-  defp run_effect({:relay_signal, call_pid, type, payload}, socket) do
-    CallCoordinator.relay_signal(call_pid, socket.assigns.participant.id, type, payload)
-    socket
-  end
-
-  defp run_effect({:push_signal, message}, socket) do
-    push_event(socket, "randos:signal", message)
-  end
+  defp deliver({:ice_servers, servers}, socket),
+    do: assign(socket, :ice_servers, servers && Jason.encode!(servers))
 
   # Templates read these flat assigns, derived from the participant.
   defp assign_participant(socket, %Participant{} = participant) do
     socket
-    |> assign_ice_servers(participant)
     |> assign(:participant, participant)
     |> assign(:ui_state, participant.status)
     |> assign(:webrtc_role, participant.webrtc_role)
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
     |> assign(:matchmaking_error, error_message(participant.error))
-  end
-
-  # Fresh STUN/TURN credentials for every new call, so they can never be older
-  # than the call that uses them (they used to be minted once per page load).
-  defp assign_ice_servers(socket, %Participant{call_pid: call_pid}) do
-    previous = socket.assigns[:participant]
-
-    cond do
-      call_pid == nil -> assign(socket, :ice_servers, nil)
-      previous && previous.call_pid == call_pid -> socket
-      true -> assign(socket, :ice_servers, IceServers.json())
-    end
   end
 
   defp error_message(nil), do: nil
