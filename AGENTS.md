@@ -18,6 +18,8 @@ are product requirements, not suggestions. Don't add features that violate them.
     headless Chromes with fake mics place a real WebRTC call, extend it, and
     check mic teardown. **Run it after any change to `assets/js/` or the call
     flow**; `mix test` can't see browser behavior. Needs Chrome (or `CHROME_BIN`).
+  - Production check: `BASE_URL=https://randos.slowinput.org SMOKE_SKIP_EXTENSION=1 node test/e2e/call_smoke.mjs`
+    (the canonical host; `randos.fly.dev` rejects browser sockets by design)
   - `RANDOS_CALL_SEGMENT_MS=8000 just dev` — dev-only short call segments for
     trying the extension flow by hand
   - `just outdated`, `just update` (also regenerates the usage-rules block below)

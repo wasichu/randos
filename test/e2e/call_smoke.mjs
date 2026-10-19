@@ -3,6 +3,7 @@
 //
 //   RANDOS_CALL_SEGMENT_MS=8000 just dev   # in another terminal, or use `just smoke`
 //   node test/e2e/call_smoke.mjs
+//   BASE_URL=https://randos.fly.dev SMOKE_SKIP_EXTENSION=1 node test/e2e/call_smoke.mjs  # production
 //
 // No npm dependencies: drives headless Chrome over the DevTools protocol.
 // Set CHROME_BIN to pick a browser; otherwise we look for Playwright's
@@ -235,7 +236,8 @@ try {
     await Promise.all([a.webrtcStateIs("connected"), b.webrtcStateIs("connected")])
   })
 
-  await scenario("visualizers keep drawing after an extension", async () => {
+  // Production uses real 10-minute segments; set SMOKE_SKIP_EXTENSION=1 there.
+  if (!process.env.SMOKE_SKIP_EXTENSION) await scenario("visualizers keep drawing after an extension", async () => {
     await Promise.all([
       a.waitFor(`!!document.querySelector("#extension-panel")`, "extension prompt", 60_000),
       b.waitFor(`!!document.querySelector("#extension-panel")`, "extension prompt", 60_000),
