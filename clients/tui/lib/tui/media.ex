@@ -14,6 +14,8 @@ defmodule Tui.Media do
 
   Helper events are sent to the `:notify` process as
   `{:media, name, payload}`, e.g. `{:media, "loopback_stats", %{...}}`.
+  Every (re)start first sends `{:media, "ready", %{}}`: a fresh helper, so
+  any media state the receiver holds is stale.
   """
   use GenServer
 
@@ -75,7 +77,9 @@ defmodule Tui.Media do
 
     if File.regular?(path) do
       port = Port.open({:spawn_executable, path}, [:binary, {:packet, 4}, :exit_status])
-      {:ok, %{port: port, next_id: 1, pending: %{}, notify: Keyword.get(opts, :notify)}}
+      notify = Keyword.get(opts, :notify)
+      notify(notify, {:media, "ready", %{}})
+      {:ok, %{port: port, next_id: 1, pending: %{}, notify: notify}}
     else
       Logger.warning("media helper not found at #{path}; running without audio")
       :ignore

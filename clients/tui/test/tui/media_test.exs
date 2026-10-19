@@ -16,6 +16,7 @@ defmodule Tui.MediaTest do
 
   test "runs a loopback and forwards its events to :notify" do
     media = start_supervised!({Media, notify: self()})
+    assert_receive {:media, "ready", %{}}
 
     assert {:ok, %{"input" => "sine 440 Hz", "output" => "null"}} =
              Media.loopback_start(media, "sine", "null")

@@ -79,6 +79,10 @@ defmodule Tui.App do
   def handle_info({:media, "loopback_failed", %{"error" => error}}, %{mic_test: %{}} = state),
     do: {:noreply, update_mic_test(state, running?: false, error: error)}
 
+  # A fresh helper: whatever test was running died with the old one.
+  def handle_info({:media, "ready", _}, %{mic_test: %{running?: true}} = state),
+    do: {:noreply, update_mic_test(state, running?: false, error: "the audio helper restarted")}
+
   def handle_info(:mic_test_done, %{mic_test: %{running?: true}} = state) do
     _ = call_media(state.media, &Media.loopback_stop/1)
     {:noreply, update_mic_test(state, running?: false)}

@@ -147,6 +147,7 @@ defmodule Tui.AppTest do
     end
 
     @tag :native
+    @tag :capture_log
     test "runs a loopback through Tui.Media and shows its stats" do
       app = idle_app(:app_test_media, mic_test: {"sine", "null"})
       start_supervised!({Tui.Media, name: :app_test_media, notify: app})
@@ -155,6 +156,15 @@ defmodule Tui.AppTest do
       assert_receive {:tui_mic_test, ^app, %{running?: true, stats: nil}}
 
       assert_receive {:tui_mic_test, ^app, %{running?: true, stats: %{"codec_ms" => 26.5}}},
+                     2_000
+
+      # The helper dying mid-test is reported, not left showing "running".
+      media = Process.whereis(:app_test_media)
+      {:os_pid, os_pid} = Port.info(:sys.get_state(media).port, :os_pid)
+      System.cmd("kill", ["-9", Integer.to_string(os_pid)])
+
+      assert_receive {:tui_mic_test, ^app,
+                      %{running?: false, error: "the audio helper restarted"}},
                      2_000
     end
 

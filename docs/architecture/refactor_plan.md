@@ -112,6 +112,16 @@ TUI's `t` mic test, clap to judge mouth-to-ear delay, and note whether macOS
 shows a mic prompt and which app it names. Record the results in
 `tui_audio.md`. Capability-aware matching comes before Stage 1.
 
+Decisions for Stage 1 (from the Stage 0 review):
+- **Media state into a pure module.** The mic test's state lives ad hoc in
+  `Tui.App`; call media state (ICE, mute, levels) must not. Extend `Tui.Model`
+  or add a pure `Tui.Media.State`. `Tui.App` should also stop calling
+  `Tui.Media` synchronously from key handlers (it blocks rendering while a
+  device opens): Media pushes state, App renders it.
+- **`OpusLoop` is loopback-shaped.** Stage 1 splits encode (mic → network)
+  from decode (network → speaker), and the WebRTC path replaces the device
+  sink. It isn't an abstraction to keep.
+
 ### 4.4 Distribution
 
 Single-binary releases via Burrito (`mix ex_ratatui.gen.burrito`).
