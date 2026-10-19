@@ -690,7 +690,7 @@ defmodule RandosWeb.HomeLive do
 
   defp assign_call_state(socket, call, ui_state) do
     socket
-    |> assign(:call_pid, call.call_pid)
+    |> assign(:call_pid, call.pid)
     |> assign(:call_status, call.status)
     |> assign(:call_deadline_unix_ms, call.call_deadline_unix_ms)
     |> assign(:extension_deadline_unix_ms, call.extension_deadline_unix_ms)

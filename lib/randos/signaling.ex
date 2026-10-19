@@ -77,14 +77,14 @@ defmodule Randos.Signaling do
   @doc """
   Builds a relay message for the participant's peer.
   """
-  @spec build_message(map(), String.t(), atom() | String.t(), map()) ::
+  @spec build_message(Randos.Calls.Call.t(), String.t(), atom() | String.t(), map()) ::
           {:ok, message()} | {:error, :unknown_participant | :unsupported_signal_type}
   def build_message(call, from_participant_id, type, payload \\ %{}) do
     with {:ok, type} <- cast_type(type),
          {:ok, peer} <- peer_for(call.match, from_participant_id) do
       {:ok,
        %{
-         call_id: call.call_id,
+         call_id: call.id,
          type: type,
          from_participant_id: from_participant_id,
          to_participant_id: peer.id,

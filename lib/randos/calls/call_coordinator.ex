@@ -2,65 +2,81 @@ defmodule Randos.Calls.CallCoordinator do
   @moduledoc """
   Per-call coordination process.
 
-  This process owns ephemeral call state: timers, participant monitors, hangups,
-  and extension votes. It updates the Ash `CallSession` resource for domain
-  lifecycle validation, but it does not handle audio or WebRTC.
+  Owns one call's `Randos.Calls.Call` plus everything ephemeral around it:
+  timers, participant monitors, hangups, extension votes, and signaling relay.
+  Status rules come from `Randos.Calls.Lifecycle`. It never touches audio.
 
-  A coordinator lives exactly as long as its call: it is `:temporary` so the
-  supervisor never restarts a finished call, and it destroys its `CallSession`
-  record on exit so nothing outlives the call.
+  A coordinator lives exactly as long as its call: it is `:temporary`, so the
+  supervisor never restarts a finished call.
   """
 
   use GenServer, restart: :temporary
 
   require Logger
 
-  alias Randos.Comms.CallSession
+  alias Randos.Calls.Call
+  alias Randos.Calls.Lifecycle
   alias Randos.Signaling
 
+  @overridable [
+    :pubsub,
+    :activation_delay_ms,
+    :call_duration_ms,
+    :extension_duration_ms,
+    :extension_response_timeout_ms
+  ]
+
   defstruct [
-    :match,
-    :call_session,
-    :status,
+    :call,
     :timeout_ref,
     :extension_timeout_ref,
-    :call_deadline_unix_ms,
-    :extension_deadline_unix_ms,
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
     activation_delay_ms: 750,
-    call_duration_ms: CallSession.default_call_duration_seconds() * 1_000,
-    extension_duration_ms: CallSession.extension_duration_seconds() * 1_000,
-    extension_response_timeout_ms: CallSession.extension_response_timeout_seconds() * 1_000
+    call_duration_ms: Lifecycle.call_duration_seconds() * 1_000,
+    extension_duration_ms: Lifecycle.extension_duration_seconds() * 1_000,
+    extension_response_timeout_ms: Lifecycle.extension_response_timeout_seconds() * 1_000
   ]
 
-  def start_match(match, opts \\ []) do
-    supervisor = Keyword.get(opts, :supervisor, Randos.Calls.CallSupervisor)
-    child_opts = Keyword.drop(opts, [:supervisor])
+  @doc """
+  Starts a coordinator for `match` under the call supervisor.
 
-    DynamicSupervisor.start_child(
-      supervisor,
-      {__MODULE__, Keyword.put(child_opts, :match, match)}
-    )
+  Options: `:supervisor`, plus test overrides for `#{Enum.join(@overridable, ", ")}`.
+  """
+  @spec start_match(map(), keyword()) :: DynamicSupervisor.on_start_child()
+  def start_match(match, opts \\ []) do
+    {supervisor, opts} = Keyword.pop(opts, :supervisor, Randos.Calls.CallSupervisor)
+    DynamicSupervisor.start_child(supervisor, {__MODULE__, Keyword.put(opts, :match, match)})
   end
 
+  @doc false
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
   end
 
+  @doc "Ends the call on behalf of `participant_id`."
+  @spec hang_up(pid(), String.t()) :: :ok | {:error, :call_unavailable}
   def hang_up(call_pid, participant_id) do
     safe_call(call_pid, {:hang_up, participant_id})
   end
 
+  @doc "Records a participant's extension vote while the call is `:extension_pending`."
+  @spec vote_extension(pid(), String.t(), :continue | :end) ::
+          :ok | {:error, :not_extension_pending | :call_unavailable}
   def vote_extension(call_pid, participant_id, vote) when vote in [:continue, :end] do
     safe_call(call_pid, {:extension_vote, participant_id, vote})
   end
 
+  @doc "Relays a WebRTC signaling message to the participant's peer."
+  @spec relay_signal(pid(), String.t(), atom() | String.t(), map()) ::
+          :ok | {:error, atom()}
   def relay_signal(call_pid, participant_id, type, payload \\ %{}) do
     safe_call(call_pid, {:relay_signal, participant_id, type, payload})
   end
 
+  @doc false
+  # Test helper: jump straight to the end of the current call segment.
   def force_time_up(call_pid) do
     send(call_pid, :call_time_limit_reached)
     :ok
@@ -70,77 +86,37 @@ defmodule Randos.Calls.CallCoordinator do
   def init(opts) do
     match = Keyword.fetch!(opts, :match)
 
-    Process.flag(:trap_exit, true)
+    state =
+      struct!(__MODULE__, Keyword.take(opts, @overridable))
+      |> Map.merge(%{call: Call.new(self(), match), monitors: monitor_participants(match)})
 
-    with {:ok, call_session} <- create_call_session(match) do
-      monitors = monitor_participants(match)
-      activation_delay_ms = Keyword.get(opts, :activation_delay_ms, 750)
-      Process.send_after(self(), :activate_call, activation_delay_ms)
+    Process.send_after(self(), :activate_call, state.activation_delay_ms)
+    Logger.info("call_coordinator_started call_id=#{state.call.id} match_id=#{match.id}")
 
-      state = %__MODULE__{
-        match: Map.merge(match, %{call_id: call_session.id, call_pid: self()}),
-        call_session: call_session,
-        status: :connecting,
-        monitors: monitors,
-        pubsub: Keyword.get(opts, :pubsub, Randos.PubSub),
-        activation_delay_ms: activation_delay_ms,
-        call_duration_ms:
-          Keyword.get(
-            opts,
-            :call_duration_ms,
-            CallSession.default_call_duration_seconds() * 1_000
-          ),
-        extension_duration_ms:
-          Keyword.get(
-            opts,
-            :extension_duration_ms,
-            CallSession.extension_duration_seconds() * 1_000
-          ),
-        extension_response_timeout_ms:
-          Keyword.get(
-            opts,
-            :extension_response_timeout_ms,
-            CallSession.extension_response_timeout_seconds() * 1_000
-          )
-      }
-
-      Logger.info("call_coordinator_started call_id=#{call_session.id} match_id=#{match.id}")
-
-      {:ok, state}
-    end
+    {:ok, state}
   end
 
   @impl true
   def handle_call({:hang_up, _participant_id}, _from, state) do
-    Logger.info("call_hangup call_id=#{state.call_session.id} status=#{state.status}")
-    state = end_call(state, :hangup)
-    {:stop, :normal, :ok, state}
+    Logger.info("call_hangup call_id=#{state.call.id} status=#{state.call.status}")
+    {:stop, :normal, :ok, end_call(state, :hangup)}
   end
 
   def handle_call(
         {:extension_vote, participant_id, vote},
         _from,
-        %{status: :extension_pending} = state
+        %{call: %Call{status: :extension_pending}} = state
       ) do
-    state = record_extension_vote(state, participant_id, vote)
+    state = %{state | extension_votes: Map.put(state.extension_votes, participant_id, vote)}
 
     cond do
       vote == :end ->
-        Logger.info("call_extension_declined call_id=#{state.call_session.id}")
-        state = end_call(state, :extension_declined)
-        {:stop, :normal, :ok, state}
+        Logger.info("call_extension_declined call_id=#{state.call.id}")
+        {:stop, :normal, :ok, end_call(state, :extension_declined)}
 
       both_participants_voted_continue?(state) ->
-        Logger.info("call_extension_accepted call_id=#{state.call_session.id}")
-
-        case extend_call(state) do
-          {:ok, state} ->
-            {:reply, :ok, state}
-
-          {:error, state} ->
-            state = end_call(state, :max_duration_reached)
-            {:stop, :normal, :ok, state}
-        end
+        Logger.info("call_extension_accepted call_id=#{state.call.id}")
+        extend_call(state)
 
       true ->
         {:reply, :ok, state}
@@ -152,9 +128,7 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   def handle_call({:relay_signal, participant_id, type, payload}, _from, state) do
-    call = %{call_id: state.call_session.id, match: state.match}
-
-    case Signaling.build_message(call, participant_id, type, payload) do
+    case Signaling.build_message(state.call, participant_id, type, payload) do
       {:ok, message} ->
         Logger.debug(
           "call_signal_relay call_id=#{message.call_id} type=#{message.type} from=#{message.from_participant_id}"
@@ -169,88 +143,54 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   @impl true
-  def handle_info(:activate_call, %{status: :connecting} = state) do
-    Logger.info("call_activated call_id=#{state.call_session.id}")
-
-    {:ok, call_session} =
-      state.call_session
-      |> Ash.Changeset.for_update(:mark_active)
-      |> Ash.update()
+  def handle_info(:activate_call, %{call: %Call{status: :connecting}} = state) do
+    Logger.info("call_activated call_id=#{state.call.id}")
 
     state =
-      %{state | call_session: call_session, status: :active}
+      %{state | call: Lifecycle.activate(state.call)}
       |> schedule_call_timeout(state.call_duration_ms)
 
-    broadcast(state, {:call_active, public_call_state(state)})
-
+    broadcast(state, {:call_active, state.call})
     {:noreply, state}
   end
 
-  def handle_info(:call_time_limit_reached, %{status: :active} = state) do
-    Logger.info("call_time_limit_reached call_id=#{state.call_session.id}")
+  def handle_info(:call_time_limit_reached, %{call: %Call{status: :active}} = state) do
+    Logger.info("call_time_limit_reached call_id=#{state.call.id}")
 
-    {:ok, call_session} =
-      state.call_session
-      |> Ash.Changeset.for_update(:mark_extension_pending)
-      |> Ash.update()
-
-    extension_timeout_ref =
-      Process.send_after(self(), :extension_response_timeout, state.extension_response_timeout_ms)
-
-    extension_deadline_unix_ms =
-      System.system_time(:millisecond) + state.extension_response_timeout_ms
+    call = %{
+      Lifecycle.request_extension(state.call)
+      | extension_deadline_unix_ms: deadline(state.extension_response_timeout_ms)
+    }
 
     state = %{
       state
-      | call_session: call_session,
-        status: :extension_pending,
+      | call: call,
         timeout_ref: nil,
-        extension_timeout_ref: extension_timeout_ref,
-        extension_deadline_unix_ms: extension_deadline_unix_ms,
-        extension_votes: %{}
+        extension_votes: %{},
+        extension_timeout_ref:
+          Process.send_after(
+            self(),
+            :extension_response_timeout,
+            state.extension_response_timeout_ms
+          )
     }
 
-    broadcast(state, {:call_extension_pending, public_call_state(state)})
-
+    broadcast(state, {:call_extension_pending, state.call})
     {:noreply, state}
   end
 
-  def handle_info(:extension_response_timeout, %{status: :extension_pending} = state) do
-    Logger.info("call_extension_timeout call_id=#{state.call_session.id}")
-    state = end_call(state, :extension_timeout)
-    {:stop, :normal, state}
+  def handle_info(:extension_response_timeout, %{call: %Call{status: :extension_pending}} = state) do
+    Logger.info("call_extension_timeout call_id=#{state.call.id}")
+    {:stop, :normal, end_call(state, :extension_timeout)}
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, reason}, state) do
-    if Map.has_key?(state.monitors, ref) do
-      Logger.info(
-        "call_participant_down call_id=#{state.call_session.id} reason=#{inspect(reason)}"
-      )
-
-      state = end_call(state, :disconnected)
-      {:stop, :normal, state}
-    else
-      {:noreply, state}
-    end
+  def handle_info({:DOWN, ref, :process, _pid, reason}, state)
+      when is_map_key(state.monitors, ref) do
+    Logger.info("call_participant_down call_id=#{state.call.id} reason=#{inspect(reason)}")
+    {:stop, :normal, end_call(state, :disconnected)}
   end
 
   def handle_info(_message, state), do: {:noreply, state}
-
-  @impl true
-  def terminate(_reason, state) do
-    Ash.destroy(state.call_session)
-  end
-
-  defp create_call_session(match) do
-    CallSession
-    |> Ash.Changeset.for_create(:create_connecting_call, %{
-      speaks_language_a: match.participant_a.speaks_language,
-      listens_language_a: match.participant_a.listens_language,
-      speaks_language_b: match.participant_b.speaks_language,
-      listens_language_b: match.participant_b.listens_language
-    })
-    |> Ash.create()
-  end
 
   defp monitor_participants(match) do
     Map.new([:participant_a, :participant_b], fn role ->
@@ -265,79 +205,53 @@ defmodule Randos.Calls.CallCoordinator do
     %{
       state
       | timeout_ref: Process.send_after(self(), :call_time_limit_reached, duration_ms),
-        call_deadline_unix_ms: System.system_time(:millisecond) + duration_ms
+        call: %{state.call | call_deadline_unix_ms: deadline(duration_ms)}
     }
   end
 
-  defp record_extension_vote(state, participant_id, vote) do
-    %{state | extension_votes: Map.put(state.extension_votes, participant_id, vote)}
-  end
+  defp deadline(duration_ms), do: System.system_time(:millisecond) + duration_ms
 
-  defp both_participants_voted_continue?(state) do
-    participant_ids = [
-      state.match.participant_a.id,
-      state.match.participant_b.id
-    ]
-
-    Enum.all?(participant_ids, fn participant_id ->
+  defp both_participants_voted_continue?(%{call: %Call{match: match}} = state) do
+    Enum.all?([match.participant_a.id, match.participant_b.id], fn participant_id ->
       Map.get(state.extension_votes, participant_id) == :continue
     end)
   end
 
   defp extend_call(state) do
-    case state.call_session
-         |> Ash.Changeset.for_update(:extend_call)
-         |> Ash.update() do
-      {:ok, call_session} ->
+    case Lifecycle.extend(state.call) do
+      {:ok, call} ->
         cancel_timer(state.extension_timeout_ref)
-        Logger.info("call_extended call_id=#{state.call_session.id}")
+        Logger.info("call_extended call_id=#{call.id}")
 
         state =
-          %{
-            state
-            | call_session: call_session,
-              status: :active,
-              extension_timeout_ref: nil,
-              extension_deadline_unix_ms: nil,
-              extension_votes: %{}
-          }
+          %{state | call: call, extension_timeout_ref: nil, extension_votes: %{}}
           |> schedule_call_timeout(state.extension_duration_ms)
 
-        broadcast(state, {:call_extended, public_call_state(state)})
-        {:ok, state}
+        broadcast(state, {:call_extended, state.call})
+        {:reply, :ok, state}
 
-      {:error, _error} ->
-        {:error, state}
+      {:error, :max_extensions} ->
+        {:stop, :normal, :ok, end_call(state, :max_duration_reached)}
     end
   end
 
   defp end_call(state, reason) do
     Logger.info(
-      "call_ended call_id=#{state.call_session.id} reason=#{reason} status=#{state.status}"
+      "call_ended call_id=#{state.call.id} reason=#{reason} status=#{state.call.status}"
     )
 
     cancel_timer(state.timeout_ref)
     cancel_timer(state.extension_timeout_ref)
-
-    call_session =
-      if state.status == :ended do
-        state.call_session
-      else
-        state.call_session
-        |> Ash.Changeset.for_update(:end_call, %{ended_reason: reason})
-        |> Ash.update!()
-      end
-
-    state = %{state | call_session: call_session, status: :ended}
-    broadcast(state, {:call_ended, public_call_state(state)})
     demonitor_participants(state)
+
+    state = %{state | call: Lifecycle.end_call(state.call, reason)}
+    broadcast(state, {:call_ended, state.call})
     state
   end
 
   defp maybe_end_after_lifecycle_signal(state, %{type: type})
        when type in [:connection_failed, :peer_disconnected] do
-    state = end_call(state, type)
-    {:stop, :normal, :ok, state}
+    {:stop, :normal, :ok, end_call(state, type)}
   end
 
   defp maybe_end_after_lifecycle_signal(state, _message), do: {:reply, :ok, state}
@@ -357,27 +271,13 @@ defmodule Randos.Calls.CallCoordinator do
   defp cancel_timer(nil), do: :ok
   defp cancel_timer(ref), do: Process.cancel_timer(ref)
 
-  defp broadcast(state, message) do
-    Phoenix.PubSub.broadcast(state.pubsub, state.match.participant_a.topic, message)
-    Phoenix.PubSub.broadcast(state.pubsub, state.match.participant_b.topic, message)
+  defp broadcast(%{call: %Call{match: match}} = state, message) do
+    Phoenix.PubSub.broadcast(state.pubsub, match.participant_a.topic, message)
+    Phoenix.PubSub.broadcast(state.pubsub, match.participant_b.topic, message)
   end
 
   defp relay_signal_to_peer(state, message) do
-    {:ok, peer} = Signaling.peer_for(state.match, message.from_participant_id)
+    {:ok, peer} = Signaling.peer_for(state.call.match, message.from_participant_id)
     Phoenix.PubSub.broadcast(state.pubsub, peer.topic, {:signaling, message})
-  end
-
-  defp public_call_state(state) do
-    %{
-      call_id: state.call_session.id,
-      call_pid: self(),
-      status: state.status,
-      match: state.match,
-      extension_count: state.call_session.extension_count,
-      max_duration_seconds: state.call_session.max_duration_seconds,
-      call_deadline_unix_ms: state.call_deadline_unix_ms,
-      extension_deadline_unix_ms: state.extension_deadline_unix_ms,
-      ended_reason: state.call_session.ended_reason
-    }
   end
 end

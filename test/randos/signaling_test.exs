@@ -19,7 +19,7 @@ defmodule Randos.SignalingTest do
   end
 
   test "builds a relay message for the peer" do
-    call = %{call_id: "call-1", match: match()}
+    call = %Randos.Calls.Call{id: "call-1", pid: self(), match: match()}
 
     assert {:ok, message} =
              Signaling.build_message(call, "a", "offer", %{"sdp" => "mock-sdp"})

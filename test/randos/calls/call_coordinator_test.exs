@@ -2,7 +2,6 @@ defmodule Randos.Calls.CallCoordinatorTest do
   use ExUnit.Case
 
   alias Randos.Calls.CallCoordinator
-  alias Randos.Comms.CallSession
 
   defp waiting_pid do
     spawn(fn ->
@@ -278,13 +277,9 @@ defmodule Randos.Calls.CallCoordinatorTest do
         extension_response_timeout_ms: 1_000
       )
 
-    assert_receive {:call_active, %{call_id: call_id}}
-    assert_receive {:call_active, %{call_id: ^call_id}}
+    assert_receive {:call_active, %{id: call_id}}
+    assert_receive {:call_active, %{id: ^call_id}}
     {call_pid, call_id}
-  end
-
-  defp call_session_exists?(call_id) do
-    match?({:ok, _}, Ash.get(CallSession, call_id))
   end
 
   describe "lifecycle under the call supervisor" do
@@ -302,27 +297,6 @@ defmodule Randos.Calls.CallCoordinatorTest do
                DynamicSupervisor.which_children(Randos.Calls.CallSupervisor),
                fn {_, pid, _, _} -> pid == call_pid end
              )
-    end
-
-    test "removes its call session record when the call ends" do
-      {match, _pids} = match()
-      {call_pid, call_id} = start_supervised_call(match)
-      ref = Process.monitor(call_pid)
-      assert call_session_exists?(call_id)
-
-      assert :ok = CallCoordinator.hang_up(call_pid, "a")
-      assert_receive {:DOWN, ^ref, :process, ^call_pid, :normal}
-
-      refute call_session_exists?(call_id)
-    end
-
-    test "removes its call session record when shut down by the supervisor" do
-      {match, _pids} = match()
-      {call_pid, call_id} = start_supervised_call(match)
-
-      assert :ok = DynamicSupervisor.terminate_child(Randos.Calls.CallSupervisor, call_pid)
-
-      refute call_session_exists?(call_id)
     end
   end
 end
