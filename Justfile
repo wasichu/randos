@@ -52,6 +52,10 @@ smoke:
     for _ in $(seq 1 60); do curl -sf -o /dev/null http://localhost:4010/ && break; sleep 1; done
     BASE_URL=http://localhost:4010 node test/e2e/call_smoke.mjs
 
+# Run the TUI client's tests (pass args through)
+test-tui *args:
+    cd clients/tui && mix test {{args}}
+
 # Re-run only previously failed tests
 test-failed:
     mix test --failed
@@ -60,10 +64,10 @@ test-failed:
 format:
     mix format
 
-# Full pre-commit check: warnings-as-errors, unused deps, format, credo, tests,
-# and a guard that the committed coturn state is encrypted
+# Full pre-commit check: server + clients/tui (compile, format, credo, tests) and encrypted-state guard
 precommit: check-state-encrypted
     mix precommit
+    cd clients/tui && mix precommit
 
 # Refuse a plaintext infra/coturn/terraform.tfstate (it holds the TURN secret)
 check-state-encrypted:
