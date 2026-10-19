@@ -65,9 +65,11 @@ These are project-specific and are **not** covered by the Phoenix skill:
   `core_components.ex`). Overriding `class` on `<.input>` drops all default classes.
 - Tailwind v4, no `tailwind.config.js`. Keep the `@import "tailwindcss" source(none);`
   + `@source` lines in `assets/css/app.css`. Never use `@apply`.
-- Hand-write Tailwind components. Don't introduce *new* daisyUI component classes
-  (the plugin is still vendored/imported in `app.css`; removal is Phase 1 of
-  `docs/architecture/refactor_plan.md`).
+- Hand-write Tailwind components; there is no component library (daisyUI was
+  removed). Palette is stone (neutrals) + teal (accent) + red (errors).
+- Dark mode is `data-theme="dark"` on `<html>` (default dark; toggle in
+  `assets/js/app.js`). `app.css` remaps light stone/teal utilities for dark;
+  for colors it doesn't remap, add an explicit `dark:` variant.
 - Only `app.js` / `app.css` bundles exist. No vendored `<script src>`/`<link href>`
   in layouts, and **never** inline `<script>` in HEEx. Hooks go in
   `assets/js/hooks/` and are registered in `assets/js/app.js`. A hook that
