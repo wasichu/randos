@@ -92,7 +92,7 @@ media-loopback seconds="20":
 
 # Rust media helper checks: format, clippy (warnings are errors), tests, cargo-deny
 native-check:
-    cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny check --hide-inclusion-graph 2>&1 | tail -1
+    cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny --log-level error check --hide-inclusion-graph
 
 # Refuse a plaintext infra/coturn/terraform.tfstate (it holds the TURN secret)
 check-state-encrypted:

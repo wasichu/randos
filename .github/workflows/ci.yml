@@ -1,0 +1,103 @@
+# CI: the same checks as `just precommit` on macOS (arm64) and Linux (glibc
+# x86_64), the helper's two v1 targets, plus the end-to-end smoke tests.
+# Toolchain versions come from mise.toml, like on a dev machine.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # A missing media helper fails the :native tests instead of skipping them.
+  RANDOS_REQUIRE_NATIVE: "1"
+  MISE_TOOLS: erlang elixir just rust cmake cargo-deny
+
+jobs:
+  precommit:
+    name: precommit (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: ALSA headers (cpal on Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev
+
+      - uses: jdx/mise-action@v3
+        with:
+          install_args: ${{ env.MISE_TOOLS }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Cache Mix deps and builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+            clients/tui/deps
+            clients/tui/_build
+          key: mix-${{ runner.os }}-${{ hashFiles('mise.toml', 'mix.lock', 'clients/tui/mix.lock') }}
+          restore-keys: mix-${{ runner.os }}-
+
+      - name: Fetch deps
+        run: |
+          mix local.hex --force --if-missing
+          mix deps.get
+          (cd clients/tui && mix deps.get)
+
+      - run: just precommit
+
+      # precommit formats and unlocks unused deps in place; anything it
+      # changed means the commit wasn't run through it.
+      - name: Precommit left the tree unchanged
+        run: git diff --exit-code
+
+  smoke:
+    name: smoke (browser + TUI)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jdx/mise-action@v3
+        with:
+          install_args: erlang elixir just node
+
+      - name: Cache Mix deps and builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+            clients/tui/deps
+            clients/tui/_build
+          key: mix-smoke-${{ hashFiles('mise.toml', 'mix.lock', 'clients/tui/mix.lock') }}
+          restore-keys: mix-smoke-
+
+      - name: Setup (deps and assets)
+        run: |
+          mix local.hex --force --if-missing
+          mix setup
+          (cd clients/tui && mix deps.get)
+
+      - name: Browser smoke (two headless Chromes, fake mics)
+        run: CHROME_BIN="$(command -v google-chrome)" just smoke
+
+      - name: TUI smoke (two terminal clients)
+        run: just tui-smoke
+
+      - name: Server log on failure
+        if: failure()
+        run: tail -n 200 tmp/smoke-server.log tmp/tui-smoke-server.log 2>/dev/null || true
