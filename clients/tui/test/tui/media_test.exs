@@ -30,6 +30,18 @@ defmodule Tui.MediaTest do
     assert Media.loopback_stop(media) == :ok
   end
 
+  test "async requests reply by message, tagged with the command" do
+    media = start_supervised!({Media, []})
+
+    :ok = Media.request_async(media, :ping)
+    assert_receive {:media_reply, :ping, {:ok, "pong"}}
+
+    :ok = Media.request_async(media, {:loopback_start, "nope", "null"})
+
+    assert_receive {:media_reply, {:loopback_start, "nope", "null"},
+                    {:error, "unknown input" <> _}}
+  end
+
   test "helper errors come back as error replies" do
     media = start_supervised!({Media, []})
     assert {:error, "unknown input" <> _} = Media.loopback_start(media, "nope", "null")

@@ -117,11 +117,11 @@ Capability-aware matching is built: `find` carries `audio` (browsers always
 `{speaks, listens, audio?}`, so text-only clients only meet each other.
 
 Decisions for Stage 1 (from the Stage 0 review):
-- **Media state into a pure module.** The mic test's state lives ad hoc in
-  `Tui.App`; call media state (ICE, mute, levels) must not. Extend `Tui.Model`
-  or add a pure `Tui.Media.State`. `Tui.App` should also stop calling
-  `Tui.Media` synchronously from key handlers (it blocks rendering while a
-  device opens): Media pushes state, App renders it.
+- **Media state lives in a pure module (done).** `Tui.Media.State` holds
+  local audio state as `{state, commands}` transitions (the mic test today);
+  Stage 1's call audio (ICE, mute, levels) goes there too, not in `Tui.App`.
+  `Tui.App` sends requests with `Tui.Media.request_async/2` and never blocks
+  on the helper.
 - **`OpusLoop` is loopback-shaped.** Stage 1 splits encode (mic → network)
   from decode (network → speaker), and the WebRTC path replaces the device
   sink. It isn't an abstraction to keep.

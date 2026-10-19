@@ -31,8 +31,7 @@ defmodule Tui.AppTest do
         %{
           model: model,
           uri: "ws://localhost:4000/participant/websocket",
-          media: nil,
-          mic_test: nil
+          media_state: Tui.Media.State.new(false)
         },
         extra
       )
@@ -63,19 +62,24 @@ defmodule Tui.AppTest do
     test "the mic test hint, progress, result, and failure" do
       refute render_text(model("idle")) =~ "t mic test"
 
-      with_media = &render_text(model("idle"), Map.merge(%{media: Tui.Media}, &1))
-      assert with_media.(%{}) =~ "Press t to test your mic"
-      assert with_media.(%{}) =~ "t mic test"
+      with_media = fn mic_test ->
+        render_text(model("idle"), %{
+          media_state: %Tui.Media.State{available?: true, mic_test: mic_test}
+        })
+      end
 
-      assert with_media.(%{mic_test: %{running?: true, stats: nil, error: nil}}) =~
+      assert with_media.(nil) =~ "Press t to test your mic"
+      assert with_media.(nil) =~ "t mic test"
+
+      assert with_media.(%{phase: :starting, stats: nil, error: nil}) =~
                "you should hear yourself"
 
       stats = %{"latency_ms" => 81.2, "input_peak_dbfs" => -40.4}
 
-      assert with_media.(%{mic_test: %{running?: false, stats: stats, error: nil}}) =~
+      assert with_media.(%{phase: :done, stats: stats, error: nil}) =~
                "Mic test done: ≈81 ms delay, input peak -40 dBFS"
 
-      assert with_media.(%{mic_test: %{running?: false, stats: nil, error: "no mic"}}) =~
+      assert with_media.(%{phase: :failed, stats: nil, error: "no mic"}) =~
                "Mic test failed: no mic"
     end
 
@@ -154,9 +158,11 @@ defmodule Tui.AppTest do
       start_supervised!({Tui.Media, name: :app_test_media, notify: app})
 
       key(app, "t")
-      assert_receive {:tui_mic_test, ^app, %{running?: true, stats: nil}}
+      assert_receive {:tui_media, ^app, %{mic_test: %{phase: :starting}}}
+      assert_receive {:tui_media, ^app, %{mic_test: %{phase: :running, stats: nil}}}
 
-      assert_receive {:tui_mic_test, ^app, %{running?: true, stats: %{"codec_ms" => 26.5}}},
+      assert_receive {:tui_media, ^app,
+                      %{mic_test: %{phase: :running, stats: %{"codec_ms" => 26.5}}}},
                      2_000
 
       # The helper dying mid-test is reported, not left showing "running".
@@ -164,21 +170,25 @@ defmodule Tui.AppTest do
       {:os_pid, os_pid} = Port.info(:sys.get_state(media).port, :os_pid)
       System.cmd("kill", ["-9", Integer.to_string(os_pid)])
 
-      assert_receive {:tui_mic_test, ^app,
-                      %{running?: false, error: "the audio helper restarted"}},
+      assert_receive {:tui_media, ^app,
+                      %{mic_test: %{phase: :failed, error: "the audio helper restarted"}}},
                      2_000
     end
 
     test "without a media helper it explains instead of crashing" do
       app = idle_app(nil)
       key(app, "t")
-      assert_receive {:tui_mic_test, ^app, %{error: "no audio helper" <> _}}
+
+      assert_receive {:tui_media, ^app,
+                      %{mic_test: %{phase: :failed, error: "no audio helper" <> _}}}
     end
 
     test "with the helper down it explains instead of crashing" do
       app = idle_app(:no_such_media)
       key(app, "t")
-      assert_receive {:tui_mic_test, ^app, %{error: "the audio helper isn't running"}}
+
+      assert_receive {:tui_media, ^app,
+                      %{mic_test: %{phase: :failed, error: "the audio helper isn't running" <> _}}}
     end
   end
 end

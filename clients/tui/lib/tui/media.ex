@@ -61,6 +61,15 @@ defmodule Tui.Media do
   defp request(media, command, timeout), do: GenServer.call(media, {:request, command}, timeout)
 
   @doc """
+  Sends a request without waiting (what `Tui.App` uses, so the UI never
+  blocks on a device opening). The reply arrives at the caller as
+  `{:media_reply, command, result}`. If the helper dies first there is no
+  reply; the restarted server's `"ready"` event says so.
+  """
+  @spec request_async(GenServer.server(), Protocol.command()) :: :ok
+  def request_async(media, command), do: GenServer.cast(media, {:request, command, self()})
+
+  @doc """
   The helper binary: `RANDOS_MEDIA_BIN` if set, otherwise the workspace's debug
   build (`cargo build -p randos_media` at the repo root). Packaged builds
   (Phase 4.4) will ship it next to the app.
@@ -94,6 +103,14 @@ defmodule Tui.Media do
   end
 
   @impl true
+  def handle_cast({:request, command, reply_to}, state) do
+    id = state.next_id
+    Port.command(state.port, Protocol.encode(id, command))
+    pending = Map.put(state.pending, id, {:async, reply_to, command})
+    {:noreply, %{state | next_id: id + 1, pending: pending}}
+  end
+
+  @impl true
   def handle_info({port, {:data, body}}, %{port: port} = state) do
     {:noreply, handle_incoming(Protocol.decode(body), state)}
   end
@@ -110,6 +127,10 @@ defmodule Tui.Media do
         )
 
         state
+
+      {{:async, reply_to, command}, pending} ->
+        send(reply_to, {:media_reply, command, result})
+        %{state | pending: pending}
 
       {from, pending} ->
         GenServer.reply(from, result)

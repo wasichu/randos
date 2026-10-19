@@ -1,6 +1,8 @@
 defmodule Tui.App do
   @moduledoc """
-  The terminal UI (an ex_ratatui callback-runtime app) over `Tui.Model`.
+  The terminal UI (an ex_ratatui callback-runtime app): a shell over two pure
+  models, `Tui.Model` (the participant channel) and `Tui.Media.State` (local
+  audio). It maps events to them and runs the commands they return.
 
   Options:
 
@@ -23,10 +25,10 @@ defmodule Tui.App do
   alias ExRatatui.Widgets.{Block, List, Paragraph}
   alias Tui.Connection
   alias Tui.Media
+  alias Tui.Media.State, as: MediaState
   alias Tui.Model
 
   @tick_ms 1_000
-  @mic_test_ms 5_000
 
   @impl true
   def mount(opts) do
@@ -50,7 +52,7 @@ defmodule Tui.App do
        uri: Keyword.get(opts, :uri, "(test)"),
        media: Keyword.get(opts, :media),
        mic_test_endpoints: Keyword.get(opts, :mic_test, {"device", "device"}),
-       mic_test: nil,
+       media_state: MediaState.new(Keyword.get(opts, :media) != nil),
        test_pid: Keyword.get(opts, :test_pid)
      }}
   end
@@ -73,20 +75,14 @@ defmodule Tui.App do
     {:noreply, apply_model(state, Model.tick(state.model, now_ms()), [])}
   end
 
-  def handle_info({:media, "loopback_stats", stats}, %{mic_test: %{running?: true}} = state),
-    do: {:noreply, update_mic_test(state, stats: stats)}
+  def handle_info({:media, name, payload}, state),
+    do: {:noreply, put_media_state(state, MediaState.event(state.media_state, name, payload))}
 
-  def handle_info({:media, "loopback_failed", %{"error" => error}}, %{mic_test: %{}} = state),
-    do: {:noreply, update_mic_test(state, running?: false, error: error)}
+  def handle_info({:media_reply, command, result}, state),
+    do: {:noreply, run_media(state, MediaState.reply(state.media_state, command, result))}
 
-  # A fresh helper: whatever test was running died with the old one.
-  def handle_info({:media, "ready", _}, %{mic_test: %{running?: true}} = state),
-    do: {:noreply, update_mic_test(state, running?: false, error: "the audio helper restarted")}
-
-  def handle_info(:mic_test_done, %{mic_test: %{running?: true}} = state) do
-    _ = call_media(state.media, &Media.loopback_stop/1)
-    {:noreply, update_mic_test(state, running?: false)}
-  end
+  def handle_info(:mic_test_done, state),
+    do: {:noreply, run_media(state, MediaState.mic_test_done(state.media_state))}
 
   def handle_info(_message, state), do: {:noreply, state}
 
@@ -98,10 +94,10 @@ defmodule Tui.App do
 
   def handle_event(
         %Event.Key{code: "t", kind: "press"},
-        %{model: %{connection: :connected, status: :idle}, mic_test: test} = state
-      )
-      when test == nil or not test.running? do
-    {:noreply, start_mic_test(state)}
+        %{model: %{connection: :connected, status: :idle}} = state
+      ) do
+    step = MediaState.start_mic_test(state.media_state, state.mic_test_endpoints)
+    {:noreply, run_media(state, step)}
   end
 
   def handle_event(%Event.Key{code: code, kind: "press"}, state) do
@@ -233,23 +229,25 @@ defmodule Tui.App do
   defp help(%{status: :extension_pending}), do: "y continue  n end  q quit"
   defp help(_model), do: "q quit"
 
-  defp mic_help(%{media: nil}), do: ""
+  defp mic_help(%{media_state: %{available?: false}}), do: ""
   defp mic_help(%{model: %{connection: :connected, status: :idle}}), do: "  t mic test"
   defp mic_help(_state), do: ""
 
-  defp mic_test_text(%{media: nil}), do: ""
-  defp mic_test_text(%{mic_test: nil}), do: "\n\nPress t to test your mic (wear headphones)."
+  defp mic_test_text(%{media_state: %{available?: false}}), do: ""
+  defp mic_test_text(%{media_state: %{mic_test: test}}), do: "\n\n" <> mic_test_line(test)
 
-  defp mic_test_text(%{mic_test: %{error: error}}) when is_binary(error),
-    do: "\n\nMic test failed: " <> error
+  defp mic_test_line(nil), do: "Press t to test your mic (wear headphones)."
+  defp mic_test_line(%{phase: :failed, error: error}), do: "Mic test failed: " <> error
 
-  defp mic_test_text(%{mic_test: %{running?: true, stats: nil}}),
-    do: "\n\nMic test: say something; you should hear yourself…"
+  defp mic_test_line(%{phase: phase, stats: nil}) when phase in [:starting, :running],
+    do: "Mic test: say something; you should hear yourself…"
 
-  defp mic_test_text(%{mic_test: %{running?: running?, stats: stats}}) do
-    prefix = if running?, do: "Mic test:", else: "Mic test done:"
+  defp mic_test_line(%{phase: :done, stats: nil}), do: "Mic test done."
 
-    "\n\n#{prefix} ≈#{round(stats["latency_ms"])} ms delay, " <>
+  defp mic_test_line(%{phase: phase, stats: stats}) do
+    prefix = if phase == :done, do: "Mic test done:", else: "Mic test:"
+
+    "#{prefix} ≈#{round(stats["latency_ms"])} ms delay, " <>
       "input peak #{round(stats["input_peak_dbfs"])} dBFS"
   end
 
@@ -259,35 +257,32 @@ defmodule Tui.App do
 
   ## Helpers
 
-  defp start_mic_test(state) do
-    {input, output} = state.mic_test_endpoints
+  defp run_media(state, {media_state, commands}) do
+    Enum.reduce(commands, put_media_state(state, media_state), &run_media_command/2)
+  end
 
-    case call_media(state.media, &Media.loopback_start(&1, input, output)) do
-      {:ok, _started} ->
-        Process.send_after(self(), :mic_test_done, @mic_test_ms)
-        notify_test(%{state | mic_test: %{running?: true, stats: nil, error: nil}})
+  # Media is optional and restartable. A request to a helper that isn't
+  # running is answered here as an error, so nothing waits on a dead process.
+  defp run_media_command({:request, command}, state) do
+    if state.media && GenServer.whereis(state.media) do
+      Media.request_async(state.media, command)
+      state
+    else
+      reply =
+        {:error, "the audio helper isn't running (is it built? cargo build -p randos_media)"}
 
-      {:error, reason} ->
-        notify_test(%{state | mic_test: %{running?: false, stats: nil, error: reason}})
+      run_media(state, MediaState.reply(state.media_state, command, reply))
     end
   end
 
-  defp update_mic_test(state, changes),
-    do: notify_test(%{state | mic_test: Map.merge(state.mic_test, Map.new(changes))})
-
-  # Media is optional and restartable: a missing or restarting helper is an
-  # error to show, not a crash.
-  defp call_media(nil, _fun), do: {:error, "no audio helper (cargo build -p randos_media)"}
-
-  defp call_media(media, fun) do
-    fun.(media)
-  catch
-    :exit, _reason -> {:error, "the audio helper isn't running"}
+  defp run_media_command({:after, ms, message}, state) do
+    Process.send_after(self(), message, ms)
+    state
   end
 
-  defp notify_test(state) do
-    if state.test_pid, do: send(state.test_pid, {:tui_mic_test, self(), state.mic_test})
-    state
+  defp put_media_state(state, media_state) do
+    if state.test_pid, do: send(state.test_pid, {:tui_media, self(), media_state})
+    %{state | media_state: media_state}
   end
 
   defp apply_model(state, model, commands) do
