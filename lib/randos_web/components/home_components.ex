@@ -19,8 +19,10 @@ defmodule RandosWeb.HomeComponents do
 
   def hero_panel(assigns) do
     ~H"""
-    <div id="hero-panel" class="flex flex-col justify-between gap-10">
-      <div>
+    <%!-- In the one-column layout (below lg) the hero's parts are grid items
+         of the page, so the form can sit between the title and the steps. --%>
+    <div id="hero-panel" class="contents lg:flex lg:flex-col lg:justify-between lg:gap-10">
+      <div class="order-1 lg:order-none">
         <div class="flex items-center gap-3 sm:gap-4">
           <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
           <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
@@ -46,7 +48,7 @@ defmodule RandosWeb.HomeComponents do
     ~H"""
     <div
       id="state-progress"
-      class="grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 sm:grid-cols-5 lg:grid-cols-1"
+      class="order-3 grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 sm:grid-cols-5 lg:order-none lg:grid-cols-1"
     >
       <div
         :for={state <- [:idle, :looking, :connecting, :in_call, :extension_pending]}
@@ -76,7 +78,7 @@ defmodule RandosWeb.HomeComponents do
 
   def conversation_card(assigns) do
     ~H"""
-    <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
+    <div class="order-2 grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3 lg:order-none">
       <%!-- Keyed by call: a new call (even an instant rematch, in the same
            render) gets a new element and a fresh WebRTC hook, never the
            previous call's (#webrtc-audio itself is phx-update="ignore"). --%>
