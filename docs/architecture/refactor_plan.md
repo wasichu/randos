@@ -255,6 +255,119 @@ eye, before anything touches a real call. (Design reviewed with the advisor
    gives (a speaker-similarity check belongs in the lab once there's a
    candidate model).
 
+## Proposal: one call policy for both clients (2026-10-20, awaiting decisions)
+
+Goal: the TUI and the browser are different UIs over the same behaviour.
+The server side is already shared (`Randos.Participant`, `ParticipantShell`,
+matchmaking, `CallCoordinator`, `Randos.Signaling`, `Lifecycle`). The
+duplication is the clients' call-health policy: `Tui.Media.State` and
+`webrtc_client.js` each run a small state machine about connection health,
+in two languages. The fix isn't sharing code between Elixir and JS; it's
+moving the policy to the one place both clients already trust. Reviewed
+with the advisor. **No code until the decisions below are made.**
+
+### Findings (verified in code)
+
+- **The server never decides a call failed.** `CallCoordinator` relays
+  `connection_established` but ignores it, starts the call clock 750 ms
+  after the match whether or not media connected, and has no
+  "never connected" timeout. A call whose media never comes up runs its
+  full segment unless a client reports `connection_failed`.
+- **The TUI can't self-report a hard failure.** str0m's ICE has no `Failed`
+  state ("we never end trickle ice"), so a TUI call that never connects sits
+  in `Checking` forever; only the TUI's own 5 s grace (after a
+  `disconnected`) can fail it.
+- **The clients disagree on local failure, and the browser's choice loops.**
+  If the browser can't start (mic denied, no mic), it sends
+  `connection_failed`. That ends the call without `stop_after_call?`, so
+  both participants go back to `:looking` and rejoin the queue
+  (`Randos.Participant`): the mic-denied user is rematched and fails again,
+  dragging each partner through it. The TUI sends `end_call` for the same
+  case (only the peer is requeued). Read from the code, not yet reproduced.
+- **Neither client drops stale signals.** Signals carry `call_id`; neither
+  the browser nor the TUI checks it, so after "Next" a late `ice_candidate`
+  from the old call can reach the new one.
+- **Duplicated policy:** the 5 s disconnected grace (`DISCONNECTED_GRACE_MS`
+  and `@disconnected_grace_ms`); "send `connection_established` once";
+  tearing down on a peer's `connection_failed` / `peer_disconnected`
+  (`TEARDOWN_SIGNALS` and `remote_signal/3`), which duplicates the server
+  ending the call and pushing the new status anyway; the browser's
+  `DEFAULT_ICE_SERVERS` fallback, which duplicates `RandosWeb.IceServers`
+  and hides misconfiguration. The lifecycle payloads also differ
+  (`{[source]: state}` vs `{helper: "connected"}`); harmless only because
+  the server ignores them.
+- **Already single-sourced:** the language list (server-rendered for the
+  browser, join reply for the TUI); status strings (server-rendered, or
+  parsed per `participant_channel.md`); call timing (`Lifecycle`).
+- **Legitimately client-specific:** countdown rendering from
+  `*_deadline_unix_ms`; buffering candidates until the remote description
+  is set (a WebRTC API requirement); the media stack (Opus settings, mute,
+  devices); how "I left" is detected (page unload vs channel close). The
+  server maps those two to different `ended_reason`s (`peer_disconnected`,
+  `disconnected`) for the same human event; it could unify them.
+
+### Proposal (recommended: option A, staged)
+
+- **A. The server owns call health; clients report raw media state.** One
+  signal type replaces `connection_established` / `connection_failed`:
+  `media_state` with `{"state": "connected" | "disconnected" | "failed",
+  "reason"?}`. `CallCoordinator` keeps each participant's media state and
+  owns the timers (following its `@overridable` millisecond settings, so
+  tests stay fast and deterministic):
+  - a connect timeout: not both `connected` within N s → ends `:connection_failed`;
+  - the disconnected grace (5 s) → ends `:connection_failed`;
+  - `failed` → ends `:connection_failed`.
+  The `state` push's `call` map gains `media: %{self, peer}`, so both UIs show
+  "peer connecting…" from server state, and the server stops relaying
+  lifecycle signals to the peer. Clients tear down only on the server's
+  status change; `TEARDOWN_SIGNALS` and the TUI's equivalent go away. The
+  old signal types stay accepted for one release (a cached page can outlive
+  a deploy).
+- **B (not recommended): the server pushes the constants** (grace, timeouts)
+  and clients keep their logic. That still leaves two copies of the logic.
+- **Protocol simplifications either way:**
+  - `ice_servers` move into the `state` push's `call` map, so the TUI gets
+    them atomically like the browser does (today it handles either arrival
+    order);
+  - a documented rule to drop signals whose `call_id` isn't the current
+    call;
+  - one payload shape for media-state reports.
+- **`participant_channel.md` gains "Client obligations"**: the single list of
+  what a client must report and when (start on `in_call`, report media
+  state, local failure → `end_call`, drop stale `call_id`s, tear down on
+  status change). Both clients are tested against that list.
+
+### Drift guards
+
+Once the policy is on the server, the end-to-end harnesses test the
+clients' *obligations*, the same scenarios for both, asserting the
+server-observed status on both sides:
+- peer hangs up;
+- media dies mid-call (`kill -9` the helper; `pc.close()` in Chrome via the
+  `__randosPeers` hook);
+- never connects (an unreachable `bind_ip` for the TUI; Chrome with
+  non-proxied UDP disabled);
+- local start failure (getUserMedia rejecting via the page init script; the
+  TUI without a helper).
+
+These run in `just smoke` and `just tui-smoke` (and CI); the scenario lists
+must match "Client obligations". The coordinator gets unit tests for each
+timer.
+
+### Decisions for the owner
+
+1. **Option A** (server owns call health) vs B vs status quo.
+2. **Local start failure → `end_call` in both clients.** This changes
+   production browser behaviour (mic denied sends `connection_failed` today,
+   and requeues both people).
+3. **Connect timeout value** (e.g. 20–30 s), and **when the call clock
+   starts**: at the match (today, plus 750 ms) or once both sides report
+   `connected`. In other words, does connecting time count against the
+   10 minutes?
+4. **Drop the browser's `DEFAULT_ICE_SERVERS`** (the server always pushes;
+   a silent fallback hides misconfiguration).
+5. **Order:** do this before STUN/TURN (recommended; Stage 1 paused here).
+
 ## Open items
 
 Not scheduled; pick up when relevant.
