@@ -157,10 +157,13 @@ defmodule Tui.AppTest do
     test "runs a loopback through Tui.Media and shows its stats" do
       app = idle_app(:app_test_media, mic_test: {"sine", "null"})
       start_supervised!({Tui.Media, name: :app_test_media, notify: app})
+      # The helper's "ready" reaches the app before we press t.
+      assert_receive {:tui_media, ^app, %{mic_test: nil}}
 
       key(app, "t")
       assert_receive {:tui_media, ^app, %{mic_test: %{phase: :starting}}}
-      assert_receive {:tui_media, ^app, %{mic_test: %{phase: :running, stats: nil}}}
+      # Spawning devices takes a moment under load (precommit, CI).
+      assert_receive {:tui_media, ^app, %{mic_test: %{phase: :running, stats: nil}}}, 2_000
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :running, stats: %{"codec_ms" => 26.5}}}},

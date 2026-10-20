@@ -3,15 +3,19 @@
 #![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
 
 use std::io::{Read, Write};
-use std::process::{Child, ChildStdin, ChildStdout, Command, Stdio};
-use std::time::Duration;
+use std::process::{Child, ChildStdin, Command, Stdio};
+use std::sync::mpsc::{self, Receiver};
+use std::thread;
+use std::time::{Duration, Instant};
 
 use serde_json::{Value, json};
 
+/// One helper process. A reader thread decodes its stdout frames into a
+/// channel, so a test can watch several helpers at once.
 struct Helper {
     child: Child,
     stdin: Option<ChildStdin>,
-    stdout: ChildStdout,
+    messages: Receiver<Value>,
 }
 
 impl Helper {
@@ -22,11 +26,27 @@ impl Helper {
             .spawn()
             .unwrap();
         let stdin = child.stdin.take();
-        let stdout = child.stdout.take().unwrap();
+        let mut stdout = child.stdout.take().unwrap();
+        let (tx, messages) = mpsc::channel();
+
+        thread::spawn(move || {
+            loop {
+                let mut header = [0u8; 4];
+                if stdout.read_exact(&mut header).is_err() {
+                    return;
+                }
+                let mut body = vec![0u8; u32::from_be_bytes(header) as usize];
+                stdout.read_exact(&mut body).unwrap();
+                if tx.send(serde_json::from_slice(&body).unwrap()).is_err() {
+                    return;
+                }
+            }
+        });
+
         Self {
             child,
             stdin,
-            stdout,
+            messages,
         }
     }
 
@@ -40,11 +60,9 @@ impl Helper {
     }
 
     fn receive(&mut self) -> Value {
-        let mut header = [0u8; 4];
-        self.stdout.read_exact(&mut header).unwrap();
-        let mut body = vec![0u8; u32::from_be_bytes(header) as usize];
-        self.stdout.read_exact(&mut body).unwrap();
-        serde_json::from_slice(&body).unwrap()
+        self.messages
+            .recv_timeout(Duration::from_secs(10))
+            .expect("a message from the helper")
     }
 
     /// Sends a request and returns its reply, collecting events seen first.
@@ -58,6 +76,11 @@ impl Helper {
                 return message;
             }
         }
+    }
+
+    /// Events that have arrived so far, without waiting.
+    fn events(&mut self) -> Vec<Value> {
+        self.messages.try_iter().collect()
     }
 
     fn close(mut self) -> i32 {
@@ -138,6 +161,122 @@ fn closing_stdin_stops_a_running_loopback() {
 
     let start = json!({"id": 1, "cmd": "loopback_start", "in": "sine", "out": "null"});
     assert!(helper.request(start, &mut events).get("ok").is_some());
+
+    assert_eq!(helper.close(), 0);
+}
+
+#[test]
+fn two_helpers_call_each_other_through_a_relay() {
+    let (mut offerer, mut answerer) = (Helper::spawn(), Helper::spawn());
+    let mut ignored = Vec::new();
+
+    for (helper, role) in [(&mut offerer, "offerer"), (&mut answerer, "answerer")] {
+        let start = json!({
+            "id": 1, "cmd": "call_start", "role": role, "ice_servers": [],
+            "in": "sine", "out": "null", "bind_ip": "127.0.0.1"
+        });
+        let reply = helper.request(start, &mut ignored);
+        assert_eq!(reply["ok"]["input"], "sine 440 Hz", "{role}: {reply}");
+    }
+
+    // Play the server: relay each helper's call_signal events to the other
+    // as call_signal requests, and keep everything else.
+    let (mut offerer_seen, mut answerer_seen) = (Vec::new(), Vec::new());
+    let mut next_id = 100;
+    let until = Instant::now() + Duration::from_millis(3_500);
+    while Instant::now() < until {
+        let from_offerer = offerer.events();
+        let from_answerer = answerer.events();
+        for (events, seen, to) in [
+            (from_offerer, &mut offerer_seen, &mut answerer),
+            (from_answerer, &mut answerer_seen, &mut offerer),
+        ] {
+            for event in events {
+                if event["event"] == "call_signal" {
+                    next_id += 1;
+                    let relayed = json!({
+                        "id": next_id, "cmd": "call_signal",
+                        "type": event["type"], "payload": event["payload"]
+                    });
+                    let reply = to.request(relayed, seen);
+                    assert_eq!(reply["ok"], true, "relaying {event}: {reply}");
+                }
+                seen.push(event);
+            }
+        }
+        thread::sleep(Duration::from_millis(10));
+    }
+
+    for (name, seen) in [("offerer", &offerer_seen), ("answerer", &answerer_seen)] {
+        assert!(
+            seen.iter()
+                .any(|e| e["event"] == "call_state" && e["state"] == "connected"),
+            "{name} never connected: {seen:?}"
+        );
+        let stats = seen
+            .iter()
+            .rev()
+            .find(|e| e["event"] == "call_stats")
+            .unwrap_or_else(|| panic!("{name} sent no call_stats"));
+        assert!(
+            stats["packets_received"].as_u64().unwrap() > 50,
+            "{name}: {stats}"
+        );
+        assert!(
+            stats["output_peak_dbfs"].as_f64().unwrap() > -15.0,
+            "{name} heard: {stats}"
+        );
+    }
+
+    for helper in [&mut offerer, &mut answerer] {
+        let reply = helper.request(json!({"id": 999, "cmd": "call_stop"}), &mut ignored);
+        assert_eq!(reply["ok"], true);
+    }
+    assert_eq!(offerer.close(), 0);
+    assert_eq!(answerer.close(), 0);
+}
+
+#[test]
+fn call_signals_without_a_call_and_double_starts_are_errors() {
+    let mut helper = Helper::spawn();
+    let mut events = Vec::new();
+
+    let signal = json!({"id": 1, "cmd": "call_signal", "type": "offer", "payload": {}});
+    assert_eq!(
+        helper.request(signal, &mut events)["error"],
+        "no call running"
+    );
+
+    let start = json!({"id": 2, "cmd": "call_start", "role": "answerer", "in": "sine", "out": "null", "bind_ip": "127.0.0.1"});
+    assert!(
+        helper
+            .request(start.clone(), &mut events)
+            .get("ok")
+            .is_some()
+    );
+    assert_eq!(
+        helper.request(
+            json!({"id": 3, "cmd": "loopback_start", "in": "sine", "out": "null"}),
+            &mut events
+        )["error"],
+        "call already running"
+    );
+    assert_eq!(
+        helper.request(start, &mut events)["error"],
+        "call already running"
+    );
+
+    let bad_role = json!({"id": 4, "cmd": "call_start", "role": "dancer"});
+    assert_eq!(
+        helper.request(json!({"id": 5, "cmd": "call_stop"}), &mut events)["ok"],
+        true
+    );
+    assert!(
+        helper.request(bad_role, &mut events)["error"]
+            .as_str()
+            .unwrap()
+            .contains("unknown role")
+    );
 
     assert_eq!(helper.close(), 0);
 }

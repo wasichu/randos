@@ -46,6 +46,12 @@ unsolicited and carry `event` instead.
 | `ping` | | `"pong"` |
 | `loopback_start` | `in`: `device`\|`sine`; `out`: `device`\|`null`\|`wav:PATH` | `{"input": "...", "output": "..."}`: what was opened |
 | `loopback_stop` | | `true` (also when none was running) |
+| `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the channel's push; accepted, used once STUN/TURN lands); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address) | `{"input", "output"}` |
+| `call_signal` | `type` and `payload` of a peer's signal, exactly as the channel's `signal` push has them (`offer`, `answer`, `ice_candidate`; others are ignored) | `true` |
+| `call_stop` | | `true` (also when none was running) |
+
+One loopback or one call at a time (`loopback already running`, `call
+already running`); `call_signal` without a call is `no call running`.
 
 Errors: `loopback already running`, `unknown input ...`, device failures
 (e.g. no 48 kHz config), and `invalid request: ...` for anything that doesn't
@@ -56,6 +62,20 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 | `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `resample_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
 | `loopback_failed` | `error`; the loopback stopped on its own |
 | `stream_error` | `error`; a device stream reported a problem |
+| `call_signal` | `type`, `payload`: a signal for the peer in the channel's shape; push it as the channel's `signal` event unchanged |
+| `call_state` | `state`: `connected`, `disconnected` (may recover), or `failed` (the call stopped; `reason`) |
+| `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed`, `dropped`, `skipped_candidates` (cumulative), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
+
+**Calls.** The helper binds one UDP socket and offers it as its host
+candidate, which is in the offer or answer SDP (no local trickle yet). Remote
+`ice_candidate`s are applied once the remote description is set (earlier
+ones are buffered); end-of-candidates and browsers' mDNS `.local` host
+candidates are skipped (counted in `skipped_candidates`), since the
+browser's own checks still reach our host candidate. Mic audio is dropped
+until `connected`. Received frames are decoded, with Opus concealment for
+gaps, and played. STUN (server-reflexive) and TURN (relayed) candidates are
+next; until then calls connect only where the two hosts can reach each
+other directly.
 
 The helper exits when its stdin closes (the Port is closed or the TUI dies),
 stopping any loopback. It never writes to stderr in Port mode except a fatal
@@ -75,6 +95,7 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `cpal` 0.18 | Mic and speaker I/O | Apache-2.0 | Links the OS audio APIs (CoreAudio via `objc2`; ALSA via `alsa-sys` on Linux, which needs alsa-lib headers to build) |
 | `opus` 0.4 (+ `opusic-sys`) | Opus encode/decode, the codec browsers offer by default | MIT/Apache-2.0; libopus BSD-3-Clause | Yes: `opusic-sys` builds the reference libopus from bundled source and links it statically. Needs `cmake` at build time (pinned in `mise.toml`) |
 | `ringbuf` 0.5 | Lock-free SPSC rings between the real-time callbacks and the worker | MIT/Apache-2.0 | No |
+| `str0m` 0.24 (+ `str0m-proto`, `str0m-rust-crypto`, `is`) | WebRTC: ICE (`is`), DTLS, SRTP, RTP, SDP. Sans-IO (no threads, async, or callbacks), so the call is one plain loop we own. Built with `--no-default-features --features rust-crypto` | MIT/Apache-2.0 | No: `rust-crypto` is pure Rust (no OpenSSL) |
 | `serde` 1, `serde_json` 1 | The Port's JSON messages (the TUI side already uses Jason) | MIT/Apache-2.0 | No |
 | `rubato` 5 | Sample-rate conversion between a device's rate (e.g. 44.1 kHz Bluetooth) and Opus's 48 kHz; pulls in `audioadapter`, `realfft`/`rustfft`, `windowfunctions` | MIT/Apache-2.0 (deps MIT, Apache, Zlib) | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |

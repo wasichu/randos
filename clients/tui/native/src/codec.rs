@@ -60,6 +60,12 @@ impl Decoder {
         Self::whole_frame(self.opus.decode_float(packet, frame, false)?)
     }
 
+    /// Fills a frame for a packet that never arrived (Opus packet-loss
+    /// concealment: an empty packet).
+    pub fn conceal(&mut self, frame: &mut [f32; FRAME]) -> Result<(), Error> {
+        Self::whole_frame(self.opus.decode_float(&[], frame, false)?)
+    }
+
     fn whole_frame(decoded: usize) -> Result<(), Error> {
         if decoded == FRAME {
             Ok(())
@@ -133,5 +139,21 @@ mod tests {
         }
 
         assert!(rms(&output) < 1e-3);
+    }
+
+    #[test]
+    fn a_lost_packet_is_concealed_not_an_error() {
+        let (mut encoder, mut decoder) = (Encoder::new().unwrap(), Decoder::new().unwrap());
+        let mut sine = Sine::new(440.0);
+        let (mut input, mut output) = ([0.0; FRAME], [0.0; FRAME]);
+
+        for _ in 0..5 {
+            sine.fill(&mut input);
+            let packet = encoder.encode(&input).unwrap();
+            decoder.decode(packet, &mut output).unwrap();
+        }
+        decoder.conceal(&mut output).unwrap();
+        // Concealment extrapolates the tone rather than going silent.
+        assert!(rms(&output) > 0.05);
     }
 }

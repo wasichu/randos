@@ -25,6 +25,32 @@ pub enum Command {
         out: String,
     },
     LoopbackStop,
+    /// Starts a call. `ice_servers` is the channel's `ice_servers` push,
+    /// accepted now and used once STUN/TURN gathering lands. `bind_ip` is for
+    /// tests (`127.0.0.1`); by default the default route's address is used.
+    CallStart {
+        role: String,
+        #[serde(default)]
+        ice_servers: serde_json::Value,
+        #[serde(rename = "in", default = "device")]
+        input: String,
+        #[serde(default = "device")]
+        out: String,
+        #[serde(default)]
+        bind_ip: Option<String>,
+    },
+    /// A signal from the peer, exactly as the channel's `signal` push has it.
+    CallSignal {
+        #[serde(rename = "type")]
+        kind: String,
+        #[serde(default)]
+        payload: serde_json::Value,
+    },
+    CallStop,
+}
+
+fn device() -> String {
+    "device".into()
 }
 
 #[derive(Debug, PartialEq, Serialize)]
@@ -51,6 +77,37 @@ pub enum Event {
     LoopbackFailed { error: String },
     /// A device stream reported an error (it may recover).
     StreamError { error: String },
+    /// A WebRTC signal for the peer, in the participant channel's shape
+    /// (`type` is `offer`, `answer`, or `ice_candidate`); relay it as-is.
+    CallSignal {
+        #[serde(rename = "type")]
+        kind: String,
+        payload: serde_json::Value,
+    },
+    /// `connected`, `disconnected` (may recover), or `failed` (the call's
+    /// session has stopped; `reason` says why).
+    CallState {
+        state: String,
+        reason: Option<String>,
+    },
+    /// Once a second during a call.
+    CallStats(CallStats),
+}
+
+/// Packets each way, concealment, and levels, so audio flow is visible
+/// (and testable) in both directions. Counters are cumulative; peaks cover
+/// the last second.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct CallStats {
+    pub packets_sent: u64,
+    pub packets_received: u64,
+    pub concealed: u64,
+    pub dropped: u64,
+    pub skipped_candidates: u64,
+    pub input_peak_dbfs: f64,
+    pub output_peak_dbfs: f64,
+    pub capture_ring_ms: f64,
+    pub playback_ring_ms: f64,
 }
 
 /// Where the loopback's latency goes, in milliseconds, plus health counters.
@@ -108,6 +165,20 @@ impl fmt::Display for Event {
             ),
             Event::LoopbackFailed { error } => write!(f, "loopback failed: {error}"),
             Event::StreamError { error } => write!(f, "stream error: {error}"),
+            Event::CallSignal { kind, .. } => write!(f, "signal out: {kind}"),
+            Event::CallState { state, reason } => match reason {
+                Some(reason) => write!(f, "call {state}: {reason}"),
+                None => write!(f, "call {state}"),
+            },
+            Event::CallStats(s) => write!(
+                f,
+                "call: sent {} received {} concealed {} | in {:.0} dBFS out {:.0} dBFS",
+                s.packets_sent,
+                s.packets_received,
+                s.concealed,
+                s.input_peak_dbfs,
+                s.output_peak_dbfs
+            ),
         }
     }
 }
