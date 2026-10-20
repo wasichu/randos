@@ -9,20 +9,11 @@ use std::thread::{self, JoinHandle};
 use std::time::{Duration, Instant};
 
 use cpal::Stream;
-use cpal::traits::StreamTrait;
-use serde::Serialize;
 
 use crate::Error;
-use crate::audio::{Capture, DeviceStats, Input, Notify, Output, Playback};
-use crate::codec::{self, CODEC_DELAY_MS, Decoder, Encoder, FRAME};
+use crate::audio::{Capture, DeviceStats, Devices, Input, Notify, Output, Playback, Started};
+use crate::codec::{CODEC_DELAY_MS, Decoder, Encoder, FRAME, Peak};
 use crate::protocol::{Event, LoopbackStats};
-
-/// What a started loopback is actually using, for the reply and the CLI.
-#[derive(Debug, Serialize)]
-pub struct Started {
-    pub input: String,
-    pub output: String,
-}
 
 /// A running loopback. Dropping the streams stops the devices; `stop`
 /// also joins the worker and surfaces its error, if any.
@@ -34,14 +25,13 @@ pub struct Loopback {
 
 impl Loopback {
     pub fn start(input: Input, output: Output, notify: Notify) -> Result<(Self, Started), Error> {
-        let stats = Arc::new(DeviceStats::default());
-        let (capture, capture_stream, input_name) = Capture::open(input, &stats, &notify)?;
-        let (playback, playback_stream, output_name) = Playback::open(output, &stats, &notify)?;
-
-        let streams: Vec<Stream> = capture_stream.into_iter().chain(playback_stream).collect();
-        for stream in &streams {
-            stream.play()?;
-        }
+        let Devices {
+            capture,
+            playback,
+            stats,
+            streams,
+            started,
+        } = Devices::open(input, output, &notify)?;
 
         let stop = Arc::new(AtomicBool::new(false));
         let worker = {
@@ -59,10 +49,6 @@ impl Loopback {
                 })?
         };
 
-        let started = Started {
-            input: input_name,
-            output: output_name,
-        };
         Ok((
             Self {
                 _streams: streams,
@@ -119,7 +105,7 @@ fn run_worker(
 struct Report {
     since: Instant,
     bytes: usize,
-    peak: f32,
+    peak: Peak,
     dropped: u64,
 }
 
@@ -128,7 +114,7 @@ impl Report {
         Self {
             since: Instant::now(),
             bytes: 0,
-            peak: 0.0,
+            peak: Peak::default(),
             dropped: 0,
         }
     }
@@ -143,7 +129,7 @@ impl Report {
         notify: &Notify,
     ) {
         self.bytes += bytes;
-        self.peak = self.peak.max(codec::rms(input));
+        self.peak.add(input);
 
         let elapsed = self.since.elapsed();
         if elapsed < Duration::from_secs(1) {
@@ -170,7 +156,7 @@ impl Report {
             playback_ring_ms,
             playback_device_ms,
             kbps: self.bytes as f64 * 8.0 / elapsed.as_secs_f64() / 1000.0,
-            input_peak_dbfs: f64::from(20.0 * self.peak.max(1e-6).log10()),
+            input_peak_dbfs: self.peak.dbfs(),
             underruns: stats.playback_underruns.load(Relaxed),
             overruns: stats.capture_overruns.load(Relaxed),
             dropped: self.dropped,

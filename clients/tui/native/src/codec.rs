@@ -97,6 +97,22 @@ impl Sine {
     }
 }
 
+/// The loudest frame (by rms) since the last reset, for once-a-second
+/// level reports.
+#[derive(Debug, Default, Clone, Copy)]
+pub struct Peak(f32);
+
+impl Peak {
+    pub fn add(&mut self, frame: &[f32]) {
+        self.0 = self.0.max(rms(frame));
+    }
+
+    /// In dBFS; silence reads as -120.
+    pub fn dbfs(&self) -> f64 {
+        f64::from(20.0 * self.0.max(1e-6).log10())
+    }
+}
+
 pub fn rms(samples: &[f32]) -> f32 {
     let sum: f32 = samples.iter().map(|s| s * s).sum();
     (sum / samples.len().max(1) as f32).sqrt()
@@ -155,5 +171,15 @@ mod tests {
         decoder.conceal(&mut output).unwrap();
         // Concealment extrapolates the tone rather than going silent.
         assert!(rms(&output) > 0.05);
+    }
+
+    #[test]
+    fn peak_tracks_the_loudest_frame_in_dbfs() {
+        let mut peak = Peak::default();
+        assert!((peak.dbfs() + 120.0).abs() < 1e-6, "silence");
+        peak.add(&[0.1; 4]);
+        peak.add(&[1.0; 4]);
+        peak.add(&[0.5; 4]);
+        assert!(peak.dbfs().abs() < 1e-6, "full scale is 0 dBFS");
     }
 }

@@ -16,7 +16,6 @@ use std::thread::{self, JoinHandle};
 use std::time::{Duration, Instant};
 
 use cpal::Stream;
-use cpal::traits::StreamTrait;
 use serde_json::{Value, json};
 use str0m::change::{SdpAnswer, SdpOffer, SdpPendingOffer};
 use str0m::media::{Direction, Frequency, MediaKind, MediaTime, Mid, Pt};
@@ -27,9 +26,8 @@ use str0m::{
 };
 
 use crate::Error;
-use crate::audio::{Capture, DeviceStats, Input, Notify, Output, Playback};
-use crate::codec::{self, Decoder, Encoder, FRAME};
-use crate::loopback::Started;
+use crate::audio::{Capture, Devices, Input, Notify, Output, Playback, Started};
+use crate::codec::{Decoder, Encoder, FRAME, Peak};
 use crate::protocol::{CallStats, Event};
 
 /// The longest the loop waits on the socket, so mic frames and commands are
@@ -88,15 +86,14 @@ impl Call {
         output: Output,
         notify: Notify,
     ) -> Result<(Self, Started), Error> {
-        let stats = Arc::new(DeviceStats::default());
-        let (capture, capture_stream, input_name) = Capture::open(input, &stats, &notify)?;
-        let (playback, playback_stream, output_name) = Playback::open(output, &stats, &notify)?;
+        let Devices {
+            capture,
+            playback,
+            streams,
+            started,
+            ..
+        } = Devices::open(input, output, &notify)?;
         let mut session = Session::new(&config, capture, playback, Arc::clone(&notify))?;
-
-        let streams: Vec<Stream> = capture_stream.into_iter().chain(playback_stream).collect();
-        for stream in &streams {
-            stream.play()?;
-        }
 
         let (commands, inbox) = mpsc::channel();
         let worker = thread::Builder::new().name("call".into()).spawn(move || {
@@ -116,10 +113,7 @@ impl Call {
                 commands,
                 worker,
             },
-            Started {
-                input: input_name,
-                output: output_name,
-            },
+            started,
         ))
     }
 
@@ -501,8 +495,8 @@ struct Report {
     concealed: u64,
     dropped: u64,
     skipped_candidates: u64,
-    input_peak: f32,
-    output_peak: f32,
+    input_peak: Peak,
+    output_peak: Peak,
 }
 
 impl Report {
@@ -514,18 +508,18 @@ impl Report {
             concealed: 0,
             dropped: 0,
             skipped_candidates: 0,
-            input_peak: 0.0,
-            output_peak: 0.0,
+            input_peak: Peak::default(),
+            output_peak: Peak::default(),
         }
     }
 
     fn sent(&mut self, frame: &[f32; FRAME]) {
-        self.input_peak = self.input_peak.max(codec::rms(frame));
+        self.input_peak.add(frame);
     }
 
     fn received(&mut self, frame: &[f32; FRAME]) {
         self.packets_received += 1;
-        self.output_peak = self.output_peak.max(codec::rms(frame));
+        self.output_peak.add(frame);
     }
 
     fn tick(&mut self, capture: &Capture, playback: &Playback, notify: &Notify) {
@@ -538,20 +532,16 @@ impl Report {
             concealed: self.concealed,
             dropped: self.dropped,
             skipped_candidates: self.skipped_candidates,
-            input_peak_dbfs: dbfs(self.input_peak),
-            output_peak_dbfs: dbfs(self.output_peak),
+            input_peak_dbfs: self.input_peak.dbfs(),
+            output_peak_dbfs: self.output_peak.dbfs(),
             capture_ring_ms: capture.queued_ms(),
             playback_ring_ms: playback.queued_ms(),
         }));
         // Counters are cumulative; peaks are per report.
         self.since = Instant::now();
-        self.input_peak = 0.0;
-        self.output_peak = 0.0;
+        self.input_peak = Peak::default();
+        self.output_peak = Peak::default();
     }
-}
-
-fn dbfs(level: f32) -> f64 {
-    f64::from(20.0 * level.max(1e-6).log10())
 }
 
 #[cfg(test)]

@@ -17,10 +17,11 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering::Relaxed};
 use std::time::{Duration, Instant};
 
-use cpal::traits::{DeviceTrait, HostTrait};
+use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{SampleFormat, Stream, StreamConfig, SupportedStreamConfig, SupportedStreamConfigRange};
 use ringbuf::traits::{Consumer, Observer, Producer, Split};
 use ringbuf::{HeapCons, HeapProd, HeapRb};
+use serde::Serialize;
 
 use crate::Error;
 use crate::codec::{FRAME, SAMPLE_RATE, Sine};
@@ -74,6 +75,49 @@ impl FromStr for Output {
                 _ => Err(format!("unknown output {other:?} (device|null|wav:PATH)")),
             },
         }
+    }
+}
+
+/// What a started loopback or call is actually using, for the reply and the CLI.
+#[derive(Debug, Serialize)]
+pub struct Started {
+    pub input: String,
+    pub output: String,
+}
+
+/// Both audio ends, opened and playing: what the loopback and the call
+/// workers start from.
+pub struct Devices {
+    pub capture: Capture,
+    pub playback: Playback,
+    pub stats: Arc<DeviceStats>,
+    /// Must stay alive, on the thread that opened them, while audio runs;
+    /// dropping them stops the devices.
+    pub streams: Vec<Stream>,
+    pub started: Started,
+}
+
+impl Devices {
+    pub fn open(input: Input, output: Output, notify: &Notify) -> Result<Self, Error> {
+        let stats = Arc::new(DeviceStats::default());
+        let (capture, capture_stream, input_name) = Capture::open(input, &stats, notify)?;
+        let (playback, playback_stream, output_name) = Playback::open(output, &stats, notify)?;
+
+        let streams: Vec<Stream> = capture_stream.into_iter().chain(playback_stream).collect();
+        for stream in &streams {
+            stream.play()?;
+        }
+
+        Ok(Self {
+            capture,
+            playback,
+            stats,
+            streams,
+            started: Started {
+                input: input_name,
+                output: output_name,
+            },
+        })
     }
 }
 
