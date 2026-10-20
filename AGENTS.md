@@ -147,6 +147,9 @@ are product requirements, not suggestions. Don't add features that violate them.
   - Test browsers are muted (`--mute-audio` in `cdp.mjs`): the tests must
     never play sound on the developer's machine. The TUI's helper plays to
     `null` in tests for the same reason.
+  - Tests never reach the internet: the e2e test server hands out no ICE
+    servers (`RANDOS_ICE_SERVERS='[]'`, host candidates connect locally) and
+    drops any TURN env; only `just turn-check` talks to coturn, on purpose.
   - The only long-lived process we start on purpose is the dev server
     (`just serve`, from the session hook); stop it with `just serve-stop`.
 

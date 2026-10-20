@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Runs a command against a throwaway dev server on :4010, then stops it.
 # Used by `just smoke` and `just tui-smoke`, so both start the server the same
-# way: 8 s call segments (to reach the extension vote quickly) and a 4 s
-# connect timeout (so the never-connects scenarios finish fast).
+# way: 8 s call segments (to reach the extension vote quickly), a 4 s
+# connect timeout (so the never-connects scenarios finish fast), and no ICE
+# servers (nothing reaches the internet; host candidates connect locally).
 #
 #   test/e2e/with_test_server.sh <server log> <command> [args...]
 #
@@ -33,7 +34,9 @@ end)
 '
 
 mkdir -p "$(dirname "$log")"
-export RANDOS_CONNECT_TIMEOUT_MS=4000
+export RANDOS_CONNECT_TIMEOUT_MS=4000 RANDOS_ICE_SERVERS='[]'
+# A developer's TURN settings (`just dev-turn`) must not leak into tests.
+unset TURN_SHARED_SECRET TURN_HOST TURN_SERVER_URL TURNS_SERVER_URL TURN_STUN_URL
 RANDOS_TEST_PARENT_PID=$$ PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS=8000 \
   elixir -e "$watchdog" -S mix phx.server > "$log" 2>&1 &
 server=$!

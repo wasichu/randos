@@ -26,6 +26,20 @@ if connect_timeout_ms = System.get_env("RANDOS_CONNECT_TIMEOUT_MS") do
   config :randos, :call_options, connect_timeout_ms: String.to_integer(connect_timeout_ms)
 end
 
+# The ICE servers to hand out when TURN isn't configured, as JSON (default:
+# Google's STUN, in config.exs). The e2e test server sets `[]` so tests never
+# reach the internet: on one machine, host candidates connect.
+if ice_servers = System.get_env("RANDOS_ICE_SERVERS") do
+  servers =
+    ice_servers
+    |> JSON.decode!()
+    |> Enum.map(fn server ->
+      Map.new(server, fn {k, v} -> {String.to_existing_atom(k), v} end)
+    end)
+
+  config :randos, RandosWeb.IceServers, servers: servers
+end
+
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
