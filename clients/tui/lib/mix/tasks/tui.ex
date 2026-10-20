@@ -11,9 +11,8 @@ defmodule Mix.Tasks.Tui do
   Logs go to `tmp/tui.log` (anything printed would garble the screen).
   With the media helper built (`cargo build -p randos_media`), calls carry
   audio and `t` on the idle screen tests the mic; without it the client is
-  text-only. Calls connect only where the two machines can reach each other
-  directly until STUN/TURN land (Phase 4.3 Stage 1), so point it at a dev
-  server, not production.
+  text-only. Calls use the server's STUN/TURN servers, so production works
+  too: `--url wss://randos.slowinput.org/participant/websocket`.
   """
   use Mix.Task
 
@@ -24,8 +23,10 @@ defmodule Mix.Tasks.Tui do
     {opts, _rest} = OptionParser.parse!(args, strict: [url: :string])
     url = opts[:url] || System.get_env("RANDOS_URL") || @default_url
 
-    log_to_file("tmp/tui.log")
+    # After app.start, which re-adds the console log handler: logging to the
+    # terminal would draw over the TUI until the next redraw.
     Mix.Task.run("app.start")
+    log_to_file("tmp/tui.log")
 
     {:ok, supervisor} = Tui.Supervisor.start_link(uri: url)
     app = Process.whereis(Tui.App)
