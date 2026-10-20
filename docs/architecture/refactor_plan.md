@@ -398,6 +398,82 @@ gets a fresh hook. **All four steps are done.**
    a silent fallback hides misconfiguration).
 5. **Order:** do this before STUN/TURN (recommended; Stage 1 paused here).
 
+## Proposal: DRY pass over Phase 4.3 Stage 1 (2026-10-20, awaiting decisions)
+
+Before STUN/TURN; no behaviour changes. Rule: shared logic in one place,
+environment-specific code only where the environment differs. Reviewed with
+the advisor. Each item: **extract**, **merge**, **link**, or **leave** (with why).
+
+**Rust helper**
+- **Extract `audio::Devices::open`**: `Loopback::start` and `Call::start`
+  repeat ~20 lines (open capture and playback, play the streams, name them),
+  and the call imports `Started` from the loopback. `Started` moves to `audio`.
+- **Extract a `Peak` level tracker** (max rms, `dbfs`, reset per report) next to
+  `codec::rms`: the loopback inlines the dB formula, the call has a function.
+- **Leave the two `Report`s**: they report different facts (latency breakdown
+  vs packets and levels each way); a generic report would be the wrong
+  abstraction. The once-a-second gate is four lines.
+- **Leave the two thread lifecycles**: different stop mechanisms (a flag vs a
+  command channel); revisit if Stage 2 adds a third worker.
+- **Leave** the dropped-frame rule: it already lives once (`Playback::write`).
+
+**TUI (Elixir)**
+- **Leave `Tui.Media.State` as one module** (decision 1): the one shared rule
+  (a helper restart fails both features) is already a single clause, and a
+  split adds a facade with no behaviour.
+- **Verify `pending_signals`** (buffering signals that arrive before the call
+  starts): with ICE servers now in the `state` push, a peer's signal may never
+  beat our `connecting` push. Prove that with a channel-level test before
+  deleting anything; otherwise leave it.
+- **Leave `Tui.App`'s routing**: clean, nothing to merge.
+
+**Tests and harnesses**
+- **Extract `Tui.TestSupport`** (`clients/tui/test/support/`): `kill_helper`,
+  `eventually`, `keys`, `await_model`, and the language-picking `find`,
+  repeated across five test files.
+- **Extract the smoke server start** in the `Justfile`: `smoke` and `tui-smoke`
+  repeat the env, port, trap, and wait-for-server lines verbatim.
+- **Leave the three signal-relay loops** (`call.rs` tests, `tests/port.rs`,
+  `app_test.exs`): three interfaces in two languages, and each loop is its
+  test's subject.
+- **Leave the e2e scripts**: `cdp.mjs` is the shared part; the scripts are
+  different scenarios.
+
+**Docs: one source per fact, others link**
+- Timing values: the code (`Randos.Calls.Lifecycle`). `participant_channel.md`
+  states them for client authors and points there; `AGENTS.md` and this
+  roadmap stop restating numbers.
+- Measurements (≈81 ms, ≈290 ms): `tui_audio.md` only.
+- Stage status: this roadmap only. `tui_audio.md`'s Stage 1 "Progress" block
+  (already stale: it still says the TUI mirrors the browser's grace) becomes
+  a link.
+- Port protocol: the crate README only.
+- The one-call-policy proposal above is now history: condense it to the
+  decisions and outcome (decision 3).
+
+**Browser vs TUI, still different**
+- **"I left" has two `ended_reason`s**: the browser's page-hide sends
+  `peer_disconnected`; the TUI closing its channel ends `disconnected`. Same
+  human event. Unifying them changes server behaviour, so it's outside this
+  pass (decision 2).
+- **Leave**: both clients now get `media.peer` and neither shows it yet (same
+  in both); `end_call` reason strings exist in three languages by necessity,
+  guarded by the channel's validation and the obligation-6 tests; mute
+  (browser only, Stage 2 for the TUI); the TUI holding mic audio until
+  connected (a media detail).
+
+**Decisions for the owner**
+1. `Tui.Media.State`: one module (recommended) or split into mic test and call.
+2. Unify the two "I left" `ended_reason`s: defer (recommended, it's a
+   behaviour change) or schedule it.
+3. The retired proposal text: condense it in this roadmap (recommended) or move
+   it to a dated note under `docs/architecture/`.
+
+Everything else follows the stated rule and needs no decision. Order:
+test support, Rust extractions, the Justfile, docs; `just precommit`,
+`just smoke` and `just tui-smoke` after each commit. Then the call-flow
+diagrams (`docs/architecture/call_flow.md`), so they name the final modules.
+
 ## Open items
 
 Not scheduled; pick up when relevant.
