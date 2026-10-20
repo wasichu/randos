@@ -88,7 +88,7 @@ defmodule RandosWeb.AboutLive do
               </h2>
               <p>
                 {gettext(
-                  "It is not a social network, a content platform, or a metrics-driven language app. It is a simple audio room for brief practice with another person."
+                  "It is not a social network, a content platform, or a gamified language app. It's a simple meeting place for brief language practice with another human."
                 )}
               </p>
             </section>
