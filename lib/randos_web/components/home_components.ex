@@ -8,6 +8,7 @@ defmodule RandosWeb.HomeComponents do
   """
   use RandosWeb, :html
 
+  alias Randos.Calls.Lifecycle
   alias Randos.ConversationLanguages
 
   @doc "Whether the form's 18+ acknowledgment is checked."
@@ -438,7 +439,9 @@ defmodule RandosWeb.HomeComponents do
     ~H"""
     <div id="extension-panel" class="col-span-full space-y-6 p-4 sm:p-7">
       <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
-        {gettext("Time is up. Continue for another 10 minutes?")}
+        {gettext("Time is up. Continue for another %{minutes} minutes?",
+          minutes: div(Lifecycle.extension_duration_seconds(), 60)
+        )}
       </h2>
 
       <div class="grid gap-2 sm:grid-cols-2 sm:gap-3">

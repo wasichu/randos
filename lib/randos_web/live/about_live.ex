@@ -1,9 +1,17 @@
 defmodule RandosWeb.AboutLive do
   use RandosWeb, :live_view
 
+  alias Randos.Calls.Lifecycle
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :page_title, gettext("About"))}
+    {:ok,
+     assign(socket,
+       page_title: gettext("About"),
+       call_minutes: div(Lifecycle.call_duration_seconds(), 60),
+       extension_minutes: div(Lifecycle.extension_duration_seconds(), 60),
+       max_call_minutes: div(Lifecycle.max_call_duration_seconds(), 60)
+     )}
   end
 
   @impl true
@@ -75,20 +83,12 @@ defmodule RandosWeb.AboutLive do
                   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with."
                 )}
               </p>
-              <p>
+              <p id="about-call-length">
                 {gettext(
-                  "You can leave instantly at any time. When time is up, a conversation only continues if both people choose to extend it."
-                )}
-              </p>
-            </section>
-
-            <section class="space-y-3 rounded-md border border-stone-200 bg-white p-5">
-              <h2 class="text-xl font-semibold tracking-normal text-stone-950">
-                {gettext("What randos is not")}
-              </h2>
-              <p>
-                {gettext(
-                  "It is not a social network, a content platform, or a gamified language app. It's a simple meeting place for brief language practice with another human."
+                  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+                  call: @call_minutes,
+                  extension: @extension_minutes,
+                  max: @max_call_minutes
                 )}
               </p>
             </section>
