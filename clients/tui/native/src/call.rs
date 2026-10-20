@@ -240,8 +240,10 @@ impl Session {
                 .tick(&self.capture, &self.playback, &self.notify);
         }
 
+        // Send the teardown packets too, so the peer sees a clean close
+        // instead of waiting out its own disconnect timer.
         self.rtc.disconnect();
-        Ok(())
+        self.drain()
     }
 
     fn send_offer(&mut self) -> Result<(), Error> {
@@ -306,11 +308,11 @@ impl Session {
     }
 
     fn send_frame(&mut self, frame: &[f32; FRAME]) -> Result<(), Error> {
-        self.report.sent(frame);
         let (Some(mid), true) = (self.mid, self.connected) else {
             // Not connected yet: drop mic audio rather than queue it.
             return Ok(());
         };
+        self.report.sent(frame);
         let Some(writer) = self.rtc.writer(mid) else {
             return Ok(());
         };
