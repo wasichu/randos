@@ -3,30 +3,24 @@
 //! us. Plain STUN Binding (RFC 8489): the call session sends the requests
 //! from its call socket and hands back any reply before str0m sees it.
 //!
-//! A small codec of our own, not str0m's: str0m's STUN parser is written for
-//! ICE connectivity checks and rejects any Binding reply without
-//! MESSAGE-INTEGRITY, which public STUN servers never send.
+//! Messages come from `stun-types` (already here for TURN), not str0m: str0m's
+//! STUN parser is written for ICE connectivity checks and rejects any Binding
+//! reply without MESSAGE-INTEGRITY, which public STUN servers never send.
 //!
 //! Sans-IO like str0m: this module never touches a socket or a clock; the
 //! session passes `now` in and sends what `poll_transmit` returns.
 
-use std::collections::hash_map::RandomState;
-use std::hash::{BuildHasher, Hasher};
-use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, ToSocketAddrs};
+use std::net::{SocketAddr, ToSocketAddrs};
 use std::time::{Duration, Instant};
 
 use serde_json::Value;
+use stun_types::attribute::{AttributeType, MappedSocketAddr, XorMappedAddress};
+use stun_types::message::{BINDING, Message, MessageClass, MessageWriteVec, TransactionId};
+use stun_types::prelude::{MessageWrite, MessageWriteExt};
 
-use crate::Error;
-
-const MAGIC_COOKIE: u32 = 0x2112_A442;
-const BINDING_REQUEST: u16 = 0x0001;
-const BINDING_SUCCESS: u16 = 0x0101;
-const BINDING_ERROR: u16 = 0x0111;
-const MAPPED_ADDRESS: u16 = 0x0001;
-const XOR_MAPPED_ADDRESS: u16 = 0x0020;
-
-type TransId = [u8; 12];
+/// MAPPED-ADDRESS (RFC 5389 §15.1), which only old servers send instead of
+/// XOR-MAPPED-ADDRESS; `stun-types` has the value type but no attribute.
+const MAPPED_ADDRESS: AttributeType = AttributeType::new(0x0001);
 
 /// Resend an unanswered request this often, this many times in all.
 const RETRY_EVERY: Duration = Duration::from_millis(500);
@@ -84,7 +78,9 @@ pub enum Reply {
 
 struct Pending {
     server: SocketAddr,
-    trans_id: TransId,
+    trans_id: TransactionId,
+    /// Built once; every resend is the same request (same transaction).
+    request: Vec<u8>,
     next_send: Instant,
     attempts: u8,
 }
@@ -98,11 +94,15 @@ impl Gatherer {
     pub fn new(servers: Vec<SocketAddr>, now: Instant) -> Self {
         let pending = servers
             .into_iter()
-            .map(|server| Pending {
-                server,
-                trans_id: new_trans_id(),
-                next_send: now,
-                attempts: 0,
+            .map(|server| {
+                let (trans_id, request) = binding_request();
+                Pending {
+                    server,
+                    trans_id,
+                    request,
+                    next_send: now,
+                    attempts: 0,
+                }
             })
             .collect();
         Self { pending }
@@ -110,7 +110,7 @@ impl Gatherer {
 
     /// Requests due now, as `(server, datagram)`. Servers that never answer
     /// are dropped after `ATTEMPTS` sends.
-    pub fn poll_transmit(&mut self, now: Instant) -> Result<Vec<(SocketAddr, Vec<u8>)>, Error> {
+    pub fn poll_transmit(&mut self, now: Instant) -> Vec<(SocketAddr, Vec<u8>)> {
         let mut due = Vec::new();
         self.pending.retain_mut(|request| {
             if now < request.next_send {
@@ -121,14 +121,10 @@ impl Gatherer {
             }
             request.attempts += 1;
             request.next_send = now + RETRY_EVERY;
-            due.push((request.server, request.trans_id));
+            due.push((request.server, request.request.clone()));
             true
         });
-
-        Ok(due
-            .into_iter()
-            .map(|(server, trans_id)| (server, binding_request(trans_id)))
-            .collect())
+        due
     }
 
     /// Whether `datagram` answers one of our requests (and stops it if so).
@@ -153,85 +149,35 @@ impl Gatherer {
     }
 }
 
-/// A plain Binding request: just the header (RFC 8489 §5), no attributes.
-fn binding_request(trans_id: TransId) -> Vec<u8> {
-    let mut request = Vec::with_capacity(20);
-    request.extend_from_slice(&BINDING_REQUEST.to_be_bytes());
-    request.extend_from_slice(&0u16.to_be_bytes());
-    request.extend_from_slice(&MAGIC_COOKIE.to_be_bytes());
-    request.extend_from_slice(&trans_id);
-    request
-}
-
-/// A random transaction id (std's per-process random hash keys; unguessable
-/// enough that an off-path host can't forge a reply).
-fn new_trans_id() -> TransId {
-    let mut id = [0u8; 12];
-    let a = RandomState::new().build_hasher().finish().to_be_bytes();
-    let b = RandomState::new().build_hasher().finish().to_be_bytes();
-    id[..8].copy_from_slice(&a);
-    id[8..].copy_from_slice(&b[..4]);
-    id
+/// A plain Binding request (no attributes) and its transaction id.
+fn binding_request() -> (TransactionId, Vec<u8>) {
+    let request = Message::builder_request(BINDING, MessageWriteVec::new());
+    (request.transaction_id(), request.finish())
 }
 
 /// A Binding response's transaction id and mapped address (`None` for an
 /// error response, or a success without an address we can read).
-fn parse_binding_response(datagram: &[u8]) -> Option<(TransId, Option<SocketAddr>)> {
-    let header = datagram.get(..20)?;
-    let kind = u16::from_be_bytes([header[0], header[1]]);
-    let len = usize::from(u16::from_be_bytes([header[2], header[3]]));
-    let cookie = u32::from_be_bytes([header[4], header[5], header[6], header[7]]);
-    if cookie != MAGIC_COOKIE || datagram.len() != 20 + len {
+fn parse_binding_response(datagram: &[u8]) -> Option<(TransactionId, Option<SocketAddr>)> {
+    let message = Message::from_bytes(datagram).ok()?;
+    if !message.has_method(BINDING) {
         return None;
     }
-    let trans_id: TransId = header[8..20].try_into().ok()?;
-    match kind {
-        BINDING_ERROR => return Some((trans_id, None)),
-        BINDING_SUCCESS => {}
-        _ => return None,
-    }
-
-    let mut attributes = datagram.get(20..)?;
-    let (mut xor_mapped, mut mapped) = (None, None);
-    while attributes.len() >= 4 {
-        let kind = u16::from_be_bytes([attributes[0], attributes[1]]);
-        let len = usize::from(u16::from_be_bytes([attributes[2], attributes[3]]));
-        let value = attributes.get(4..4 + len)?;
-        match kind {
-            XOR_MAPPED_ADDRESS => xor_mapped = address(value, Some(&trans_id)),
-            MAPPED_ADDRESS => mapped = address(value, None),
-            _ => {}
+    let trans_id = message.transaction_id();
+    match message.class() {
+        MessageClass::Error => Some((trans_id, None)),
+        MessageClass::Success => {
+            let mapped = message
+                .attribute::<XorMappedAddress>()
+                .map(|xor| xor.addr(trans_id))
+                .ok()
+                .or_else(|| {
+                    let raw = message.raw_attribute(MAPPED_ADDRESS)?;
+                    Some(MappedSocketAddr::from_raw(&raw).ok()?.addr())
+                });
+            Some((trans_id, mapped))
         }
-        // Attributes are padded to a multiple of 4 bytes.
-        attributes = attributes
-            .get(4 + len.div_ceil(4) * 4..)
-            .unwrap_or_default();
+        _ => None,
     }
-    Some((trans_id, xor_mapped.or(mapped)))
-}
-
-/// A (XOR-)MAPPED-ADDRESS value; `xor` is the transaction id when the address
-/// is XORed with the magic cookie (and, for IPv6, the transaction id).
-fn address(value: &[u8], xor: Option<&TransId>) -> Option<SocketAddr> {
-    let family = *value.get(1)?;
-    let cookie = MAGIC_COOKIE.to_be_bytes();
-    let mut port = u16::from_be_bytes([*value.get(2)?, *value.get(3)?]);
-    if xor.is_some() {
-        port ^= u16::from_be_bytes([cookie[0], cookie[1]]);
-    }
-
-    let mut ip = value.get(4..)?.to_vec();
-    if let Some(trans_id) = xor {
-        let mask: Vec<u8> = cookie.iter().chain(trans_id.iter()).copied().collect();
-        ip.iter_mut().zip(mask).for_each(|(byte, m)| *byte ^= m);
-    }
-
-    let ip = match (family, ip.len()) {
-        (0x01, 4) => IpAddr::V4(Ipv4Addr::from(<[u8; 4]>::try_from(ip).ok()?)),
-        (0x02, 16) => IpAddr::V6(Ipv6Addr::from(<[u8; 16]>::try_from(ip).ok()?)),
-        _ => return None,
-    };
-    Some(SocketAddr::new(ip, port))
 }
 
 #[cfg(test)]
@@ -266,7 +212,7 @@ pub(crate) mod tests {
         let now = Instant::now();
         let mut gatherer = Gatherer::new(vec![server], now);
 
-        let sent = gatherer.poll_transmit(now).unwrap();
+        let sent = gatherer.poll_transmit(now);
         assert_eq!(sent.len(), 1);
         let request = &sent[0].1;
         assert_eq!(request.len(), 20);
@@ -289,10 +235,7 @@ pub(crate) mod tests {
 
         let mut sends = 0;
         for tick in 0..20 {
-            sends += gatherer
-                .poll_transmit(start + RETRY_EVERY * tick)
-                .unwrap()
-                .len();
+            sends += gatherer.poll_transmit(start + RETRY_EVERY * tick).len();
         }
         assert_eq!(sends, usize::from(ATTEMPTS));
         assert!(gatherer.is_done());
@@ -312,14 +255,34 @@ pub(crate) mod tests {
     #[test]
     fn parses_the_rfc_5769_sample_response() {
         let (trans_id, mapped) = parse_binding_response(&RFC5769_IPV4_RESPONSE).unwrap();
-        assert_eq!(trans_id, RFC5769_IPV4_RESPONSE[8..20]);
+        assert_eq!(
+            trans_id,
+            TransactionId::from(u128::from_be_bytes(
+                [&[0; 4], &RFC5769_IPV4_RESPONSE[8..20]]
+                    .concat()
+                    .try_into()
+                    .unwrap()
+            ))
+        );
         assert_eq!(mapped, Some("192.0.2.1:32853".parse().unwrap()));
+    }
+
+    #[test]
+    fn an_old_servers_plain_mapped_address_is_read_too() {
+        let mut reply = vec![0x01, 0x01, 0x00, 0x0c, 0x21, 0x12, 0xa4, 0x42];
+        reply.extend_from_slice(&[9; 12]);
+        // MAPPED-ADDRESS, IPv4, 198.51.100.4:3479, not XORed.
+        reply.extend_from_slice(&[
+            0x00, 0x01, 0x00, 0x08, 0x00, 0x01, 0x0d, 0x97, 198, 51, 100, 4,
+        ]);
+        let (_, mapped) = parse_binding_response(&reply).unwrap();
+        assert_eq!(mapped, Some("198.51.100.4:3479".parse().unwrap()));
     }
 
     #[test]
     fn junk_and_other_stun_messages_are_not_responses() {
         assert_eq!(parse_binding_response(b"not stun"), None);
-        assert_eq!(parse_binding_response(&binding_request([7; 12])), None);
+        assert_eq!(parse_binding_response(&binding_request().1), None);
         let mut truncated = RFC5769_IPV4_RESPONSE.to_vec();
         truncated.pop();
         assert_eq!(parse_binding_response(&truncated), None);

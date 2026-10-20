@@ -552,7 +552,7 @@ impl Session {
     /// once our SDP is out.
     fn gather(&mut self) -> Result<(), Error> {
         if !self.stun.is_done() {
-            for (server, request) in self.stun.poll_transmit(Instant::now())? {
+            for (server, request) in self.stun.poll_transmit(Instant::now()) {
                 if self.socket.send_to(&request, server).is_err() {
                     self.report.send_errors += 1;
                 }
