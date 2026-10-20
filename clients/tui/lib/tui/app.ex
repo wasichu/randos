@@ -225,11 +225,18 @@ defmodule Tui.App do
   end
 
   defp main_text(%{status: :extension_pending} = model) do
-    "Time is up. Continue for another 10 minutes?#{time_left(model, " to decide")}\n\n" <>
+    "Time is up. #{continue_question(model.call)}#{time_left(model, " to decide")}\n\n" <>
       "y: continue    n: end"
   end
 
   defp main_text(_model), do: ""
+
+  # The length comes from the server (`extension_duration_seconds`), never a
+  # constant of our own; an older server that doesn't send it gets no number.
+  defp continue_question(%{"extension_duration_seconds" => seconds}) when is_integer(seconds),
+    do: "Continue for another #{div(seconds, 60)} minutes?"
+
+  defp continue_question(_call), do: "Continue?"
 
   defp time_left(model, suffix) do
     case Model.seconds_left(model) do

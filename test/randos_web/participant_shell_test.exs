@@ -2,6 +2,7 @@ defmodule RandosWeb.ParticipantShellTest do
   use ExUnit.Case, async: true
 
   alias Randos.Calls.Call
+  alias Randos.Calls.Lifecycle
   alias Randos.Matchmaking.{Entry, Match}
   alias Randos.Participant
   alias RandosWeb.ParticipantShell
@@ -57,6 +58,7 @@ defmodule RandosWeb.ParticipantShellTest do
                call_deadline_unix_ms: 5,
                extension_deadline_unix_ms: nil,
                extension_count: 0,
+               extension_duration_seconds: Lifecycle.extension_duration_seconds(),
                ended_reason: nil,
                # Built without Call.new/2, so no media has been reported.
                media: %{self: nil, peer: nil}

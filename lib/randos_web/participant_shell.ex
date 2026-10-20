@@ -20,6 +20,7 @@ defmodule RandosWeb.ParticipantShell do
 
   alias Randos.Calls.Call
   alias Randos.Calls.CallCoordinator
+  alias Randos.Calls.Lifecycle
   alias Randos.Matchmaking.Match
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
@@ -58,6 +59,9 @@ defmodule RandosWeb.ParticipantShell do
       :ended_reason
     ])
     |> Map.put(:media, media_view(call, participant_id))
+    # So clients can say "continue for another N minutes" without their own
+    # copy of the constant.
+    |> Map.put(:extension_duration_seconds, Lifecycle.extension_duration_seconds())
   end
 
   defp media_view(call, participant_id) do

@@ -93,12 +93,25 @@ defmodule Tui.AppTest do
 
       vote =
         model("extension_pending", %{
-          "call" => %{"status" => "extension_pending", "extension_deadline_unix_ms" => 21_000}
+          "call" => %{
+            "status" => "extension_pending",
+            "extension_deadline_unix_ms" => 21_000,
+            # Not 10, so the number visibly comes from the server.
+            "extension_duration_seconds" => 300
+          }
         })
 
       text = render_text(vote)
-      assert text =~ "Continue for another 10 minutes?"
+      assert text =~ "Continue for another 5 minutes?"
       assert text =~ "0:20 to decide"
+
+      # An older server that doesn't send the length: no made-up number.
+      older =
+        model("extension_pending", %{
+          "call" => %{"status" => "extension_pending", "extension_deadline_unix_ms" => 21_000}
+        })
+
+      assert render_text(older) =~ "Time is up. Continue?"
     end
 
     test "the status panel shows the current state, the connection, and the latest notice" do

@@ -89,6 +89,7 @@ e.g. `"in_call"`.
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
+    "extension_duration_seconds": 600,
     "ended_reason": null
   }
 }
@@ -107,6 +108,8 @@ e.g. `"in_call"`.
 - `call_deadline_unix_ms`: when the current segment ends (10 min, then 10
   more per extension, max 2 extensions / 30 min).
   `extension_deadline_unix_ms`: when the vote closes (20 s).
+  `extension_duration_seconds`: how long a continued call runs on, for the
+  vote's wording ("continue for another 10 minutes?"); don't hardcode it.
 - `error_message`: show this rather than wording your own, so every client
   says the same thing.
 - After a call ends, `call` becomes `null` and status becomes `idle` (if you
