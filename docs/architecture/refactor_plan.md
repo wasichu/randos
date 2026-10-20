@@ -104,8 +104,11 @@ WebRTC calls (str0m), the TUI drives them from the pure `Tui.Media.State`,
 and `just tui-smoke` runs an automated TUI ↔ headless Chrome call in both
 roles with audio checked both ways. STUN is done: the helper gathers a
 server-reflexive candidate and trickles it (checked against Google's STUN
-server and a hermetic fake one). Next: TURN (relayed candidates, real coturn),
-the str0m-vs-webrtc-rs checkpoint, then a live call. See `tui_audio.md` Stage 1.
+server and a hermetic fake one). TURN is done too: one relay allocation per
+call via `turn-client-proto`, trickled as a `relay` candidate (hermetic fake
+TURN server; coturn checked with bogus credentials). Next: a real call through
+coturn (`just dev-turn`, needs the owner), the str0m-vs-webrtc-rs checkpoint,
+then a live call. See `tui_audio.md` Stage 1.
 
 Stage 0 code is done:
 - the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port

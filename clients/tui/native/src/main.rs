@@ -11,6 +11,7 @@ mod codec;
 mod frame;
 mod loopback;
 mod protocol;
+mod relay;
 mod resample;
 mod stun;
 

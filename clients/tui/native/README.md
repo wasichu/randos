@@ -46,7 +46,7 @@ unsolicited and carry `event` instead.
 | `ping` | | `"pong"` |
 | `loopback_start` | `in`: `device`\|`sine`; `out`: `device`\|`null`\|`wav:PATH` | `{"input": "...", "output": "..."}`: what was opened |
 | `loopback_stop` | | `true` (also when none was running) |
-| `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the call's, from the channel's `state`; `stun:` URLs are used for server-reflexive candidates, TURN is next); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address) | `{"input", "output"}` |
+| `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the call's, from the channel's `state`; `stun:` URLs give server-reflexive candidates, the first UDP `turn:` URL with credentials a relayed one); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address) | `{"input", "output"}` |
 | `call_signal` | `type` and `payload` of a peer's signal, exactly as the channel's `signal` push has them (`offer`, `answer`, `ice_candidate`; others are ignored) | `true` |
 | `call_stop` | | `true` (also when none was running) |
 
@@ -64,7 +64,7 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 | `stream_error` | `error`; a device stream reported a problem |
 | `call_signal` | `type`, `payload`: a signal for the peer in the channel's shape; push it as the channel's `signal` event unchanged |
 | `call_state` | `state`: `connected`, `disconnected` (may recover), or `failed` (the call stopped; `reason`) |
-| `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed`, `dropped`, `skipped_candidates`, `send_errors` (cumulative), `local_candidates` (kinds offered so far: `host`, then `srflx`), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
+| `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed`, `dropped`, `skipped_candidates`, `send_errors` (cumulative), `local_candidates` (kinds offered so far: `host`, then `srflx` and/or `relay` as they arrive), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
 
 **Calls.** The helper binds one UDP socket and offers it as its host
 candidate, which is in the offer or answer SDP (no local trickle yet). Remote
@@ -79,8 +79,17 @@ str0m's STUN parser requires MESSAGE-INTEGRITY, which public STUN servers
 don't send), and trickles the mapped address as a `srflx` `ice_candidate`
 once the media id is known. That lets peers on other networks reach us
 through most NATs. A failed UDP send (an unreachable candidate) is counted
-in `send_errors`, never fatal. TURN (relayed candidates, for symmetric NATs
-and strict firewalls) is next.
+in `send_errors`, never fatal.
+
+For networks where that isn't enough (symmetric NATs, strict firewalls) the
+helper allocates a relay on the first UDP `turn:` server (`src/relay.rs`,
+over `turn-client-proto`): one allocation per call, freed when the call
+stops; data goes in Send/Data indications (no channel binding). It trickles
+the relayed address as a `relay` candidate, installs a permission for each
+remote candidate's IP, and wraps str0m's packets from the relay candidate
+for the TURN server. A relay that fails (or credentials coturn refuses) only
+means no relay candidate; the call never waits on it. `turns:` and TCP
+TURN aren't supported.
 
 The helper exits when its stdin closes (the Port is closed or the TUI dies),
 stopping any loopback. It never writes to stderr in Port mode except a fatal
@@ -103,6 +112,8 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `str0m` 0.24 (+ `str0m-proto`, `str0m-rust-crypto`, `is`) | WebRTC: ICE (`is`), DTLS, SRTP, RTP, SDP. Sans-IO (no threads, async, or callbacks), so the call is one plain loop we own. Built with `--no-default-features --features rust-crypto` | MIT/Apache-2.0 | No: `rust-crypto` is pure Rust (no OpenSSL) |
 | `serde` 1, `serde_json` 1 | The Port's JSON messages (the TUI side already uses Jason) | MIT/Apache-2.0 | No |
 | `rubato` 5 | Sample-rate conversion between a device's rate (e.g. 44.1 kHz Bluetooth) and Opus's 48 kHz; pulls in `audioadapter`, `realfft`/`rustfft`, `windowfunctions` | MIT/Apache-2.0 (deps MIT, Apache, Zlib) | No |
+| `turn-client-proto` 0.7 (+ `turn-types`, `stun-proto`, `stun-types`, `sans-io-time`) | TURN client (RFC 8656): allocate, refresh, permissions, Send/Data indications, long-term credentials. Sans-IO like str0m, so it runs inside the call loop. Pulls in `rand`, `hashbrown`, `smallvec`, `base64`, `tracing` and pure-Rust hashes for MESSAGE-INTEGRITY | MIT/Apache-2.0 | No |
+| `turn-server-proto` 0.7 (dev only) | A fake TURN server for the hermetic relay tests; pulls in `pnet_packet` | MIT/Apache-2.0 | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |
 
 The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,
