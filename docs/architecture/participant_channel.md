@@ -72,16 +72,20 @@ call; a non-boolean value replies `invalid_message`.
 
 Pushed whenever the participant's state changes (the initial one comes in
 the join reply). JSON strings throughout: `status`, `webrtc_role`, `error`,
-and `call.status` / `call.ended_reason` arrive as strings, e.g. `"in_call"`.
+`call.status`, `call.ended_reason` and `call.media.*` arrive as strings,
+e.g. `"in_call"`.
 
 ```json
 {
   "status": "idle | looking | connecting | in_call | extension_pending",
   "webrtc_role": "offerer | answerer | null",
-  "error": "adult_terms_required | unsupported_language | call_start_failed | null",
+  "error": "adult_terms_required | unsupported_language | call_start_failed | microphone_denied | microphone_not_found | audio_unavailable | audio_failed | null",
+  "error_message": "…the same words the browser shows… | null",
   "call": null | {
     "id": "call-…",
     "status": "connecting | active | extension_pending | ended",
+    "media": {"self": "connecting | connected | disconnected", "peer": "…"},
+    "ice_servers": [{"urls": "stun:…"}, {"urls": "turn:…", "username": "…", "credential": "…"}],
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
@@ -90,24 +94,27 @@ and `call.status` / `call.ended_reason` arrive as strings, e.g. `"in_call"`.
 }
 ```
 
-- `connecting` → `in_call` happens ~750 ms after a match. Start WebRTC when
-  `in_call` arrives (that's when the browser does).
+- `connecting` is the match: start WebRTC now (see
+  [Client obligations](#client-obligations)). It becomes `in_call` once both
+  sides' `media` is `connected`, and that's when the call clock starts. A call
+  between two clients without audio becomes `in_call` ~750 ms after the
+  match.
+- `media`: each side's connection as it last reported it (`self` is you),
+  so a client can show "peer connecting…".
+- `ice_servers`: this call's STUN/TURN servers (fresh TURN credentials,
+  valid for at least the longest possible call). Use them for this call's
+  peer connection.
 - `call_deadline_unix_ms`: when the current segment ends (10 min, then 10
   more per extension, max 2 extensions / 30 min).
   `extension_deadline_unix_ms`: when the vote closes (20 s).
+- `error_message`: show this rather than wording your own, so every client
+  says the same thing.
 - After a call ends, `call` becomes `null` and status becomes `idle` (if you
   chose to stop) or `looking` (you were requeued automatically).
 - The state never contains the peer, the match, or any participant id.
 
-### `ice_servers`
-
-```json
-{"ice_servers": [{"urls": "stun:…"}, {"urls": "turn:…", "username": "…", "credential": "…"}]}
-```
-
-Pushed when a new call starts (fresh TURN credentials, valid for at least the
-longest possible call), and `{"ice_servers": null}` once there's no call. Use
-them for that call's `RTCPeerConnection`.
+(There is no separate `ice_servers` push any more: the servers come with
+the call in `state`.)
 
 ### `signal`
 
@@ -123,31 +130,41 @@ Same flow as the browser (`assets/js/randos/webrtc_client.js`). **Call health
 is the server's job**: clients report their raw media state, and the server
 (`CallCoordinator`) decides when a call is up or has failed.
 
-1. On `connecting` (the match), capture the mic, create the peer connection
-   with the pushed `ice_servers`, and add the audio track. (`in_call` comes
-   later: once both sides' media is connected.)
-2. **Offerer** creates an offer and sends `signal` `offer`
-   (`{"sdp": {"type", "sdp"}}`); **answerer** waits for it, then sends
-   `answer`. Both trickle `ice_candidate`
+The server also drops any signal that isn't for your current call, so a
+late signal from a previous call never reaches you.
+
+### Client obligations
+
+Every client with audio (the browser, the TUI) does exactly this. The
+end-to-end tests (`just smoke`, `just tui-smoke`) check these, by number,
+for both.
+
+1. **Start at the match.** On `connecting`, capture the mic and create the
+   peer connection with the call's `ice_servers`, and add the audio track.
+2. **Negotiate.** The **offerer** creates an offer and sends `signal`
+   `offer` (`{"sdp": {"type", "sdp"}}`); the **answerer** waits for it, then
+   sends `answer`. Both trickle `ice_candidate`
    (`{"candidate": {"candidate", "sdpMid", "sdpMLineIndex", "usernameFragment"}}`,
    i.e. `RTCIceCandidate.toJSON()`). Buffer remote candidates until the
    remote description is set.
-3. On every change of your connection, send `signal` `media_state`:
-   `{"state": "connected" | "disconnected" | "failed", ...}` (extra keys,
-   like a `reason` or `source`, are allowed). Send each change once.
-4. The server then:
-   - makes the call `in_call` (and starts its clock) once both sides are
-     `connected`;
-   - ends it `connection_failed` if that doesn't happen within the connect
-     timeout (15 s), if a side stays `disconnected` past the grace (5 s), or
-     on `failed`.
-   You see the result as `state` pushes. **Tear down when the status leaves
-   the call**; the server doesn't relay lifecycle signals to the peer.
-5. If you can't start (no mic, mic denied, no audio support), send
-   `end_call` with a `reason`, not `media_state` `failed`: only the peer is
-   requeued, and you're told why.
-6. Leaving the page or app: `signal` `peer_disconnected`, or just close the
-   channel. Either ends the call.
+3. **Report media state.** On every change of your connection, send
+   `signal` `media_state`: `{"state": "connected" | "disconnected" |
+   "failed", ...}` (extra keys, like a `reason` or `source`, are allowed).
+   Send each change once.
+4. **Let the server decide.** It makes the call `in_call` (and starts its
+   clock) once both sides are `connected`, and ends it `connection_failed` if
+   that doesn't happen within the connect timeout (15 s), if a side stays
+   `disconnected` past the grace (5 s), or on `failed`. Don't run your own
+   timers for these.
+5. **Tear down when the status leaves the call** (`call` becomes `null`).
+   The server doesn't relay lifecycle signals to the peer.
+6. **Can't start? `end_call` with a reason.** No mic, mic denied, or no
+   audio support: send `end_call` with a `reason`
+   (`microphone_denied`, `microphone_not_found`, `audio_unavailable`,
+   `audio_failed`), not `media_state` `failed`. Only the peer is requeued,
+   and you get the reason back as your `error` and `error_message`.
+7. **Leaving.** Closing the page or app: `signal` `peer_disconnected`, or
+   just close the channel. Either ends the call.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media

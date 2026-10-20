@@ -284,9 +284,10 @@ with the advisor.
   (`Randos.Participant`): the mic-denied user is rematched and fails again,
   dragging each partner through it. The TUI sends `end_call` for the same
   case (only the peer is requeued). Read from the code, not yet reproduced.
-- **Neither client drops stale signals.** Signals carry `call_id`; neither
-  the browser nor the TUI checks it, so after "Next" a late `ice_candidate`
-  from the old call can reach the new one.
+- ~~Neither client drops stale signals.~~ Corrected on implementation:
+  `Randos.Participant` already pushes a signal only if its `call_id` is the
+  participant's current call, so stale signals never reach either client.
+  One filter, in the shared core; no client-side copies needed.
 - **Duplicated policy:** the 5 s disconnected grace (`DISCONNECTED_GRACE_MS`
   and `@disconnected_grace_ms`); "send `connection_established` once";
   tearing down on a peer's `connection_failed` / `peer_disconnected`
@@ -371,7 +372,11 @@ Implementation order (advisor): (a) clients start media on `connecting`, not
 clients reporting raw state, `end_call` with a reason; (c) `ice_servers` in
 each participant's state push, stale `call_id` filtering, "Client
 obligations" in the protocol doc; (d) drift-guard scenarios in both e2e
-harnesses. Done: (a), (b).
+harnesses. Done: (a), (b), (c): the call's `ice_servers` and both sides'
+`media` now come in each participant's `state` push (the separate
+`ice_servers` push is gone), error text comes from the server
+(`RandosWeb.ParticipantErrors`, sent as `error_message`), and
+`participant_channel.md` has a numbered "Client obligations" section.
 
 ### Proposal as reviewed
 

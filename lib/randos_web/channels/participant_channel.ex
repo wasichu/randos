@@ -32,6 +32,7 @@ defmodule RandosWeb.ParticipantChannel do
       assign(socket,
         participant: participant,
         client_state: state,
+        ice_servers: nil,
         find_tokens: @find_capacity,
         find_refilled_at: System.monotonic_time(:millisecond)
       )
@@ -109,7 +110,7 @@ defmodule RandosWeb.ParticipantChannel do
 
   defp run(socket, event) do
     {participant, client_effects} = ParticipantShell.run(socket.assigns.participant, event)
-    Enum.each(client_effects, &deliver(socket, &1))
+    socket = Enum.reduce(client_effects, socket, &deliver(&2, &1))
     socket = assign(socket, :participant, participant)
     push_state_if_changed(socket)
   end
@@ -119,13 +120,20 @@ defmodule RandosWeb.ParticipantChannel do
     Enum.map(ConversationLanguages.all(), fn {name, code} -> %{code: code, name: name} end)
   end
 
-  defp deliver(socket, {:push_signal, message}), do: push(socket, "signal", message)
+  defp deliver(socket, {:push_signal, message}) do
+    push(socket, "signal", message)
+    socket
+  end
 
-  defp deliver(socket, {:ice_servers, servers}),
-    do: push(socket, "ice_servers", %{ice_servers: servers})
+  # Minted once per call (fresh TURN credentials); every state push for that
+  # call carries them in its `call` map.
+  defp deliver(socket, {:ice_servers, servers}), do: assign(socket, :ice_servers, servers)
 
   defp push_state_if_changed(socket) do
-    state = ParticipantShell.client_state(socket.assigns.participant)
+    state =
+      socket.assigns.participant
+      |> ParticipantShell.client_state()
+      |> with_ice_servers(socket.assigns.ice_servers)
 
     if state == socket.assigns.client_state do
       socket
@@ -134,6 +142,11 @@ defmodule RandosWeb.ParticipantChannel do
       assign(socket, :client_state, state)
     end
   end
+
+  defp with_ice_servers(%{call: %{} = call} = state, servers),
+    do: %{state | call: Map.put(call, :ice_servers, servers)}
+
+  defp with_ice_servers(state, _servers), do: state
 
   defp take_find_token(socket) do
     now = System.monotonic_time(:millisecond)

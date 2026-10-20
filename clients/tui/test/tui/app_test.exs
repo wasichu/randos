@@ -226,12 +226,10 @@ defmodule Tui.AppTest do
 
       assert_receive {:tui_model, ^app, %Model{status: :idle, audio?: true}}
 
-      send(app, {:randos, {:push, "ice_servers", %{"ice_servers" => []}}})
-
-      send(
-        app,
-        {:randos, {:push, "state", server_state("in_call", %{"webrtc_role" => "offerer"})}}
-      )
+      # One state push: matched (connecting), with the call's ICE servers.
+      call = %{"id" => "call-1", "status" => "connecting", "ice_servers" => []}
+      state = server_state("connecting", %{"webrtc_role" => "offerer", "call" => call})
+      send(app, {:randos, {:push, "state", state}})
 
       assert {:ok, _} =
                GenServer.call(peer, {:request, {:call_start, "answerer", [], "sine", "null"}})

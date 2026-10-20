@@ -69,7 +69,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | --- | --- | --- |
 | Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership, keyed by `{speaks, listens}` |
-| Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, signal relay |
+| Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, media signal relay, and **call health** (connect timeout, disconnected grace, failure) from clients' raw `media_state` reports. Clients follow "Client obligations" in `participant_channel.md` and run no health timers of their own |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
 | Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back. `handle(participant, event) :: {participant, [effect]}` |
 | Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
@@ -82,7 +82,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 - **No database.** All state lives in processes and vanishes on restart.
   Don't add Ecto/Postgres without asking.
 - Call timing constants live in `Randos.Calls.Lifecycle` (10-min segments,
-  max 2 extensions, 30-min cap, 20 s vote timeout). Reuse them; don't hardcode.
+  max 2 extensions, 30-min cap, 20 s vote timeout, 15 s connect timeout,
+  5 s disconnected grace). Reuse them; don't hardcode, in the server or in
+  a client.
 - ICE/TURN config: `RandosWeb.IceServers` (env-driven; see README "TURN And STUN").
 - A participant hears about its call only from the call's coordinator:
   `{:call_updated, %Randos.Calls.Call{}}` on every status change (starting with

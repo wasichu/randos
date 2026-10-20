@@ -25,7 +25,7 @@ defmodule RandosWeb.ParticipantShellTest do
     match = %Match{
       id: "match-1",
       participant_a: entry.(participant.id),
-      participant_b: entry.("peer")
+      participant_b: entry.("anon-the-peers-id")
     }
 
     call = %Call{
@@ -50,19 +50,23 @@ defmodule RandosWeb.ParticipantShellTest do
              status: :in_call,
              webrtc_role: :offerer,
              error: nil,
+             error_message: nil,
              call: %{
                id: "call-1",
                status: :active,
                call_deadline_unix_ms: 5,
                extension_deadline_unix_ms: nil,
                extension_count: 0,
-               ended_reason: nil
+               ended_reason: nil,
+               # Built without Call.new/2, so no media has been reported.
+               media: %{self: nil, peer: nil}
              }
            }
 
     encoded = Jason.encode!(state)
     refute encoded =~ participant.id
-    refute encoded =~ "peer"
+    # The peer's id never appears (`media.peer` is a label, not an id).
+    refute encoded =~ "anon-the-peers-id"
     refute encoded =~ "match-1"
   end
 

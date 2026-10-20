@@ -13,11 +13,14 @@ defmodule RandosWeb.ParticipantShell do
       once there is no call
 
   `client_state/1` is the JSON-safe view of a participant for clients. It
-  never includes the match, the peer, or any participant id or pid.
+  never includes the match, the peer, or any participant id or pid; the
+  call's `media` says how this participant's (`self`) and the peer's
+  connection are doing, as each last reported it.
   """
 
   alias Randos.Calls.Call
   alias Randos.Calls.CallCoordinator
+  alias Randos.Matchmaking.Match
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
   alias RandosWeb.IceServers
@@ -37,14 +40,16 @@ defmodule RandosWeb.ParticipantShell do
       status: participant.status,
       webrtc_role: participant.webrtc_role,
       error: participant.error,
-      call: client_call(participant.call)
+      error_message: RandosWeb.ParticipantErrors.message(participant.error),
+      call: client_call(participant.call, participant.id)
     }
   end
 
-  defp client_call(nil), do: nil
+  defp client_call(nil, _participant_id), do: nil
 
-  defp client_call(%Call{} = call) do
-    Map.take(call, [
+  defp client_call(%Call{} = call, participant_id) do
+    call
+    |> Map.take([
       :id,
       :status,
       :call_deadline_unix_ms,
@@ -52,6 +57,17 @@ defmodule RandosWeb.ParticipantShell do
       :extension_count,
       :ended_reason
     ])
+    |> Map.put(:media, media_view(call, participant_id))
+  end
+
+  defp media_view(call, participant_id) do
+    peer_id =
+      case Match.peer(call.match, participant_id) do
+        {:ok, peer} -> peer.id
+        {:error, _} -> nil
+      end
+
+    %{self: Map.get(call.media, participant_id), peer: Map.get(call.media, peer_id)}
   end
 
   defp apply_event(participant, event) do

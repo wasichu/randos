@@ -184,17 +184,19 @@ defmodule Tui.Model do
   defp put_state(model, state) do
     # Unknown statuses (a newer server) keep the current one rather than crash.
     status = Map.get(@statuses, state["status"], model.status)
+    # The server's words for the error (the same text the browser shows).
+    error = state["error_message"] || state["error"]
 
     updated = %{
       model
       | status: status,
         webrtc_role: state["webrtc_role"],
-        error: state["error"],
+        error: error,
         call: state["call"]
     }
 
     cond do
-      state["error"] && state["error"] != model.error -> log(updated, "error: #{state["error"]}")
+      error && error != model.error -> log(updated, "error: #{error}")
       status != model.status and model.status != nil -> log(updated, status_line(status))
       true -> updated
     end

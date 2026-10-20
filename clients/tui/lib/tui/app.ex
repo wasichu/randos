@@ -330,9 +330,6 @@ defmodule Tui.App do
   defp follow_call(state, {:push, "state", _}), do: run_media(state, server_state(state))
   defp follow_call(state, :disconnected), do: run_media(state, server_state(state))
 
-  defp follow_call(state, {:push, "ice_servers", payload}),
-    do: run_media(state, MediaState.ice_servers(state.media_state, payload["ice_servers"]))
-
   defp follow_call(
          %{model: %{audio?: true}} = state,
          {:push, "signal", %{"type" => type} = signal}
@@ -345,8 +342,8 @@ defmodule Tui.App do
 
   defp follow_call(state, _message), do: state
 
-  defp server_state(state),
-    do: MediaState.server_state(state.media_state, state.model.status, state.model.webrtc_role)
+  defp server_state(%{model: model} = state),
+    do: MediaState.server_state(state.media_state, model.status, model.webrtc_role, model.call)
 
   defp media_running?(nil), do: false
   defp media_running?(media), do: GenServer.whereis(media) != nil

@@ -77,48 +77,40 @@ defmodule Tui.Media.StateTest do
     @ice [%{"urls" => "stun:stun.example:3478"}]
     @start {:call_start, "offerer", @ice, "sine", "null"}
     @offer %{"sdp" => %{"type" => "offer", "sdp" => "v=0"}}
+    # The call map from the server's state push.
+    @call %{"id" => "call-1", "ice_servers" => @ice}
 
     defp audio, do: State.new(true, {"sine", "null"})
 
     # In a call, role and ICE servers known, call_start replied ok.
     defp in_call do
-      {state, _} = State.server_state(audio(), :in_call, "offerer")
-      {state, _} = State.ice_servers(state, @ice)
+      {state, _} = State.server_state(audio(), :in_call, "offerer", @call)
       {state, []} = State.reply(state, @start, {:ok, %{}})
       state
     end
 
-    test "starts once in_call with a role and ICE servers, in either order" do
-      {state, []} = State.server_state(audio(), :in_call, "offerer")
-      assert {%{call: %{phase: :starting}}, [{:request, @start}]} = State.ice_servers(state, @ice)
-
-      {state, []} = State.ice_servers(audio(), @ice)
-
+    test "starts from one state push carrying the role and the call's ICE servers" do
       assert {%{call: %{phase: :starting}}, [{:request, @start}]} =
-               State.server_state(state, :in_call, "offerer")
+               State.server_state(audio(), :connecting, "offerer", @call)
     end
 
     test "starts at the match (connecting), not before, and only once" do
-      {state, []} = State.ice_servers(audio(), @ice)
-      assert {_, []} = State.server_state(state, :looking, nil)
-
-      assert {%{call: %{}}, [{:request, @start}]} =
-               State.server_state(state, :connecting, "offerer")
-
-      assert {_, []} = State.server_state(in_call(), :in_call, "offerer")
-      assert {_, []} = State.server_state(in_call(), :extension_pending, "offerer")
+      assert {_, []} = State.server_state(audio(), :looking, nil)
+      # A call map without ICE servers (shouldn't happen) starts nothing.
+      assert {_, []} = State.server_state(audio(), :connecting, "offerer", %{"id" => "call-1"})
+      assert {_, []} = State.server_state(in_call(), :in_call, "offerer", @call)
+      assert {_, []} = State.server_state(in_call(), :extension_pending, "offerer", @call)
     end
 
     test "signals that arrive before the call starts follow call_start" do
-      # Matched, but the ICE servers haven't arrived yet: no call to start.
-      {state, []} = State.server_state(audio(), :connecting, "answerer")
-      {state, []} = State.remote_signal(state, "offer", @offer)
+      # A peer's offer that beats our state push is held, then follows call_start.
+      {state, []} = State.remote_signal(audio(), "offer", @offer)
 
       assert {_,
               [
                 {:request, {:call_start, "answerer", @ice, "sine", "null"}},
                 {:request, {:call_signal, "offer", @offer}}
-              ]} = State.ice_servers(state, @ice)
+              ]} = State.server_state(state, :connecting, "answerer", @call)
     end
 
     test "relays media signals both ways" do
@@ -171,8 +163,7 @@ defmodule Tui.Media.StateTest do
     end
 
     test "when the helper can't carry the call: end_call with a reason" do
-      {starting, _} = State.server_state(State.new(true, {"sine", "null"}), :in_call, "offerer")
-      {starting, _} = State.ice_servers(starting, @ice)
+      {starting, _} = State.server_state(audio(), :connecting, "offerer", @call)
 
       assert {%{call: nil},
               [{:request, :call_stop}, {:push, "end_call", %{reason: "audio_unavailable"}}]} =
@@ -186,10 +177,9 @@ defmodule Tui.Media.StateTest do
     test "a call stops a running mic test; the mic test waits during a call" do
       {state, _} = State.start_mic_test(audio(), {"sine", "null"})
       {state, _} = State.reply(state, {:loopback_start, "sine", "null"}, {:ok, %{}})
-      {state, []} = State.ice_servers(state, @ice)
 
       assert {%{mic_test: %{phase: :done}}, [{:request, :loopback_stop}, {:request, @start}]} =
-               State.server_state(state, :in_call, "offerer")
+               State.server_state(state, :connecting, "offerer", @call)
 
       assert State.start_mic_test(in_call(), {"sine", "null"}) == {in_call(), []}
     end

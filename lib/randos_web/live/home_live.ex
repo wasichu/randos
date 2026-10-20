@@ -12,6 +12,7 @@ defmodule RandosWeb.HomeLive do
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
+  alias RandosWeb.ParticipantErrors
   alias RandosWeb.ParticipantShell
 
   import RandosWeb.HomeComponents
@@ -96,32 +97,8 @@ defmodule RandosWeb.HomeLive do
     |> assign(:webrtc_role, participant.webrtc_role)
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
-    |> assign(:matchmaking_error, error_message(participant.error))
+    |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
   end
-
-  defp error_message(nil), do: nil
-
-  defp error_message(:adult_terms_required),
-    do: gettext("Accept the 18+ acknowledgment before looking for a rando.")
-
-  defp error_message(:unsupported_language),
-    do: gettext("Choose supported conversation languages.")
-
-  defp error_message(:call_start_failed),
-    do: gettext("We couldn't start that call. Please try again.")
-
-  defp error_message(:microphone_denied),
-    do:
-      gettext("The call ended because microphone access was blocked. Allow it, then look again.")
-
-  defp error_message(:microphone_not_found),
-    do: gettext("The call ended because no microphone was found.")
-
-  defp error_message(:audio_unavailable),
-    do: gettext("The call ended because audio isn't available here.")
-
-  defp error_message(:audio_failed),
-    do: gettext("The call ended because audio stopped working on this device.")
 
   @impl true
   def render(assigns) do

@@ -40,7 +40,7 @@ defmodule RandosWeb.ParticipantChannelTest do
 
   test "joining gives an idle participant with no call or identifiers" do
     {state, _socket} = join_participant()
-    assert state == %{status: :idle, webrtc_role: nil, error: nil, call: nil}
+    assert state == %{status: :idle, webrtc_role: nil, error: nil, error_message: nil, call: nil}
   end
 
   test "the join reply lists the supported languages" do
@@ -159,9 +159,15 @@ defmodule RandosWeb.ParticipantChannelTest do
 
     view = browser_find("ko", "ja")
 
-    # The channel participant was waiting first, so it offers.
-    assert_push "ice_servers", %{ice_servers: [_ | _]}
-    assert_push "state", %{status: :connecting, webrtc_role: :offerer}
+    # The channel participant was waiting first, so it offers. The call's
+    # ICE servers and both sides' media state come with the state push.
+    assert_push "state", %{
+      status: :connecting,
+      webrtc_role: :offerer,
+      call: %{id: call_id, ice_servers: [_ | _], media: %{self: :connecting, peer: :connecting}}
+    }
+
+    assert "call-" <> _ = call_id
 
     # Both report their media connected; then the call becomes active.
     ref =
@@ -171,7 +177,12 @@ defmodule RandosWeb.ParticipantChannelTest do
 
     render_hook(view, "signal", %{"type" => "media_state", "payload" => %{"state" => "connected"}})
 
-    assert_push "state", %{status: :in_call, call: %{status: :active}}, 2_000
+    assert_push "state",
+                %{
+                  status: :in_call,
+                  call: %{status: :active, media: %{self: :connected, peer: :connected}}
+                },
+                2_000
 
     # Channel -> browser
     ref = push(socket, "signal", %{"type" => "offer", "payload" => %{"sdp" => "v=0"}})
@@ -187,6 +198,6 @@ defmodule RandosWeb.ParticipantChannelTest do
     ref = push(socket, "end_call", %{})
     assert_reply ref, :ok
     assert_push "state", %{status: :idle, call: nil}, 1_000
-    assert_push "ice_servers", %{ice_servers: nil}
+    refute_push "ice_servers", _
   end
 end

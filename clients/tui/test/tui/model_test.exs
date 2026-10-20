@@ -74,6 +74,18 @@ defmodule Tui.ModelTest do
     assert ["error: unsupported_language", "looking for a rando", "connected"] = model.log
   end
 
+  test "errors show the server's words when it sends them" do
+    {model, []} =
+      Model.push(joined("in_call"), "state", %{
+        "status" => "idle",
+        "error" => "microphone_denied",
+        "error_message" => "The call ended because microphone access was blocked."
+      })
+
+    assert model.error == "The call ended because microphone access was blocked."
+    assert hd(model.log) =~ "microphone access was blocked"
+  end
+
   test "an unknown status from a newer server keeps the current one" do
     {model, []} = Model.push(joined("looking"), "state", state("teleporting"))
     assert model.status == :looking

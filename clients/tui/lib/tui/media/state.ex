@@ -101,23 +101,19 @@ defmodule Tui.Media.State do
 
   ## Call: inputs from the server
 
-  @doc "The server's state push: `status` and `webrtc_role` (as strings or atoms)."
-  @spec server_state(t(), atom() | nil, String.t() | nil) :: {t(), [command()]}
-  def server_state(state, status, role) do
-    state = %{state | status: status, role: role}
+  @doc """
+  The server's state push: `status`, `webrtc_role`, and the call map, whose
+  `ice_servers` are this call's STUN/TURN servers.
+  """
+  @spec server_state(t(), atom() | nil, String.t() | nil, map() | nil) :: {t(), [command()]}
+  def server_state(state, status, role, call \\ nil) do
+    state = %{state | status: status, role: role, ice_servers: call && call["ice_servers"]}
 
     cond do
       status in @call_statuses -> maybe_start_call(state)
       state.call != nil -> stop_call(state)
       true -> {%{state | pending_signals: []}, []}
     end
-  end
-
-  @doc "The server's `ice_servers` push (`nil` once there's no call)."
-  @spec ice_servers(t(), list() | nil) :: {t(), [command()]}
-  def ice_servers(state, servers) do
-    state = %{state | ice_servers: servers}
-    if state.status in @call_statuses, do: maybe_start_call(state), else: {state, []}
   end
 
   @doc "A `signal` push from the peer."
