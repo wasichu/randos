@@ -398,7 +398,7 @@ gets a fresh hook. **All four steps are done.**
    a silent fallback hides misconfiguration).
 5. **Order:** do this before STUN/TURN (recommended; Stage 1 paused here).
 
-## Proposal: DRY pass over Phase 4.3 Stage 1 (2026-10-20, awaiting decisions)
+## DRY pass over Phase 4.3 Stage 1 (2026-10-20, decided; in progress)
 
 Before STUN/TURN; no behaviour changes. Rule: shared logic in one place,
 environment-specific code only where the environment differs. Reviewed with
@@ -462,12 +462,15 @@ the advisor. Each item: **extract**, **merge**, **link**, or **leave** (with why
   (browser only, Stage 2 for the TUI); the TUI holding mic audio until
   connected (a media detail).
 
-**Decisions for the owner**
-1. `Tui.Media.State`: one module (recommended) or split into mic test and call.
-2. Unify the two "I left" `ended_reason`s: defer (recommended, it's a
-   behaviour change) or schedule it.
-3. The retired proposal text: condense it in this roadmap (recommended) or move
-   it to a dated note under `docs/architecture/`.
+**Decisions (owner, 2026-10-20)**
+1. `Tui.Media.State` stays one module (no layers that only add indirection).
+2. **Unify "I left"**, as a server-behaviour change. Done as: the TUI sends
+   `peer_disconnected` when it quits, like the browser's page hide, so the
+   same human event gives the same reason from both clients. `disconnected`
+   keeps meaning a lost connection (network drop, crash), which a future
+   reconnect grace (the "socket blip" open item) needs to tell apart.
+   Obligation 7 says so.
+3. The one-call-policy proposal is condensed in this roadmap.
 
 Everything else follows the stated rule and needs no decision. Order:
 test support, Rust extractions, the Justfile, docs; `just precommit`,

@@ -1,8 +1,8 @@
 defmodule Tui.AppTest do
   use ExUnit.Case, async: true
 
-  alias ExRatatui.Event
-  alias ExRatatui.Runtime
+  import Tui.TestSupport
+
   alias Tui.App
   alias Tui.Media.State, as: MediaState
   alias Tui.Model
@@ -41,8 +41,6 @@ defmodule Tui.AppTest do
     :ok = ExRatatui.draw(terminal, App.render(state, %ExRatatui.Frame{width: 100, height: 24}))
     ExRatatui.get_buffer_content(terminal)
   end
-
-  defp key(pid, code), do: Runtime.inject_event(pid, %Event.Key{code: code, kind: "press"})
 
   describe "screens" do
     test "connecting" do
@@ -113,7 +111,7 @@ defmodule Tui.AppTest do
     send(pid, {:randos, {:joined, %{"state" => server_state("idle"), "languages" => @languages}}})
     assert_receive {:tui_model, ^pid, %Model{status: :idle}}
 
-    for code <- [" ", "enter"], do: key(pid, code)
+    keys(pid, [" ", "enter"])
 
     assert_receive {:"$gen_cast",
                     {:push, "find",
@@ -126,11 +124,11 @@ defmodule Tui.AppTest do
 
     assert_receive {:"$gen_cast", {:push, "end_call", %{reason: "audio_unavailable"}}}
 
-    key(pid, "n")
+    keys(pid, ["n"])
     assert_receive {:"$gen_cast", {:push, "next", %{}}}
 
     ref = Process.monitor(pid)
-    key(pid, "q")
+    keys(pid, ["q"])
     assert_receive {:DOWN, ^ref, :process, ^pid, _reason}
   end
 
@@ -160,7 +158,7 @@ defmodule Tui.AppTest do
       # The helper's "ready" reaches the app before we press t.
       assert_receive {:tui_media, ^app, %{mic_test: nil}}
 
-      key(app, "t")
+      keys(app, ["t"])
       assert_receive {:tui_media, ^app, %{mic_test: %{phase: :starting}}}
       # Spawning devices takes a moment under load (precommit, CI).
       assert_receive {:tui_media, ^app, %{mic_test: %{phase: :running, stats: nil}}}, 2_000
@@ -171,8 +169,7 @@ defmodule Tui.AppTest do
 
       # The helper dying mid-test is reported, not left showing "running".
       media = Process.whereis(:app_test_media)
-      {:os_pid, os_pid} = Port.info(:sys.get_state(media).port, :os_pid)
-      System.cmd("kill", ["-9", Integer.to_string(os_pid)])
+      kill_helper(media)
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :failed, error: "the audio helper restarted"}}},
@@ -181,7 +178,7 @@ defmodule Tui.AppTest do
 
     test "without a media helper it explains instead of crashing" do
       app = idle_app(nil)
-      key(app, "t")
+      keys(app, ["t"])
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :failed, error: "no audio helper" <> _}}}
@@ -189,7 +186,7 @@ defmodule Tui.AppTest do
 
     test "with the helper down it explains instead of crashing" do
       app = idle_app(:no_such_media)
-      key(app, "t")
+      keys(app, ["t"])
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :failed, error: "the audio helper isn't running" <> _}}}

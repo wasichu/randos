@@ -6,11 +6,11 @@ defmodule Tui.Integration.TwoClientsTest do
   """
   use ExUnit.Case, async: false
 
+  import Tui.TestSupport
+
   @moduletag :integration
   @moduletag timeout: 60_000
 
-  alias ExRatatui.Event
-  alias ExRatatui.Runtime
   alias Tui.Model
 
   defp start_app(id) do
@@ -22,56 +22,28 @@ defmodule Tui.Integration.TwoClientsTest do
     )
   end
 
-  defp keys(pid, codes),
-    do: Enum.each(codes, &Runtime.inject_event(pid, %Event.Key{code: &1, kind: "press"}))
-
-  # Waits for `pid`'s model to satisfy `fun`.
-  defp await(pid, fun, timeout \\ 20_000) do
-    receive do
-      {:tui_model, ^pid, model} -> if fun.(model), do: model, else: await(pid, fun, timeout)
-    after
-      timeout -> flunk("timed out waiting for #{inspect(pid)}")
-    end
-  end
-
-  defp language_index(model, code), do: Enum.find_index(model.languages, &(&1.code == code))
-
-  # Pick the pair on the form, tick 18+, and press Enter.
-  defp find(pid, model, speaks, listens) do
-    move = fn from, to ->
-      List.duplicate("right", Integer.mod(to - from, length(model.languages)))
-    end
-
-    keys(
-      pid,
-      move.(model.speaks, language_index(model, speaks)) ++
-        ["tab"] ++
-        move.(model.listens, language_index(model, listens)) ++ ["tab", " ", "enter"]
-    )
-  end
-
   test "two terminal clients match, reach the vote, and one ends the call" do
     a = start_app(:a)
     b = start_app(:b)
 
-    a_model = await(a, &(&1.status == :idle))
-    b_model = await(b, &(&1.status == :idle))
+    a_model = await_model(a, &(&1.status == :idle))
+    b_model = await_model(b, &(&1.status == :idle))
 
     # A rarely used pair, so a stray browser on the dev server won't interfere.
     find(a, a_model, "id", "tr")
-    await(a, &(&1.status == :looking))
+    await_model(a, &(&1.status == :looking))
     find(b, b_model, "tr", "id")
 
-    await(a, &(&1.status == :in_call))
-    await(b, &(&1.status == :in_call))
+    await_model(a, &(&1.status == :in_call))
+    await_model(b, &(&1.status == :in_call))
 
     # Terminal clients send no offers, so the call stays up until time is up.
-    await(a, &(&1.status == :extension_pending))
-    await(b, &(&1.status == :extension_pending))
+    await_model(a, &(&1.status == :extension_pending))
+    await_model(b, &(&1.status == :extension_pending))
 
     keys(a, ["n"])
 
-    assert %Model{status: :idle} = await(a, &(&1.status == :idle))
-    assert %Model{status: :looking} = await(b, &(&1.status == :looking))
+    assert %Model{status: :idle} = await_model(a, &(&1.status == :idle))
+    assert %Model{status: :looking} = await_model(b, &(&1.status == :looking))
   end
 end

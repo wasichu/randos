@@ -97,6 +97,32 @@ are product requirements, not suggestions. Don't add features that violate them.
   `docs/architecture/` has design notes (dated ones say so at the top); `docs/prompts/` is the historical
   prompt log of how features were built (context, not spec).
 
+## Code-quality passes (milestones and triggers, not a schedule)
+
+- **At milestones**, a full pass (DRY, architecture, tests, docs) before the
+  next stage builds on this one: the end of Phase 4.3 Stage 1 (after STUN/TURN
+  and the str0m-vs-webrtc-rs checkpoint), the start of Phase 5's voice lab,
+  and before 4.4/4.5 packaging. After any refactor lands, briefly check it
+  delivered what it promised.
+- **On triggers**, a focused mini-pass:
+  - a third media worker appears in the Rust helper;
+  - a new protocol message or client obligation is added (check it reached
+    `participant_channel.md`, both clients, and the obligation tests);
+  - a client gains its own timer, constant, or policy (ask whether it belongs
+    on the server);
+  - a test needs a timing fix more than once.
+- **How:** inventory before changing code; for each item propose extract,
+  merge, link, or leave, with a one-line reason (some duplication is cheaper
+  than a wrong abstraction); get the advisor's view; tell the owner which
+  decisions are theirs; record the outcome in `docs/architecture/refactor_plan.md`.
+- **Implementing:** no behaviour changes unless the owner approves them. After
+  each commit run `just precommit` (check its exit code), `just smoke`, and
+  `just tui-smoke`; keep CI green.
+- **Between passes**, rely on the automated guards (precommit, CI, the
+  obligation tests in both harnesses) rather than reviewing after every
+  feature. When a milestone or trigger is reached, raise it with the owner;
+  never skip it silently.
+
 ## Testing
 
 - Tests mirror `lib/` under `test/`. LiveView tests use `Phoenix.LiveViewTest`

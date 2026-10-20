@@ -12,12 +12,12 @@ defmodule Tui.Integration.BrowserCallTest do
   """
   use ExUnit.Case, async: false
 
+  import Tui.TestSupport
+
   @moduletag :integration
   @moduletag :native
   @moduletag timeout: 120_000
 
-  alias ExRatatui.Event
-  alias ExRatatui.Runtime
   alias Tui.Model
 
   @repo_root Path.expand("../../../..", __DIR__)
@@ -68,17 +68,6 @@ defmodule Tui.Integration.BrowserCallTest do
     ])
   end
 
-  defp keys(pid, codes),
-    do: Enum.each(codes, &Runtime.inject_event(pid, %Event.Key{code: &1, kind: "press"}))
-
-  defp await_model(pid, fun) do
-    receive do
-      {:tui_model, ^pid, model} -> if fun.(model), do: model, else: await_model(pid, fun)
-    after
-      20_000 -> flunk("timed out waiting for the TUI's model")
-    end
-  end
-
   defp await_browser(port, event) do
     receive do
       {^port, {:data, {:eol, line}}} ->
@@ -90,21 +79,6 @@ defmodule Tui.Integration.BrowserCallTest do
     after
       30_000 -> flunk("timed out waiting for the browser to report #{event}")
     end
-  end
-
-  # Pick the pair on the TUI's form, tick 18+, and press Enter.
-  defp find(pid, model, speaks, listens) do
-    index = fn code -> Enum.find_index(model.languages, &(&1.code == code)) end
-
-    move = fn from, to ->
-      List.duplicate("right", Integer.mod(to - from, length(model.languages)))
-    end
-
-    keys(
-      pid,
-      move.(model.speaks, index.(speaks)) ++
-        ["tab"] ++ move.(model.listens, index.(listens)) ++ ["tab", " ", "enter"]
-    )
   end
 
   # Until the browser's result arrives: the TUI must push

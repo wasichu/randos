@@ -1,6 +1,8 @@
 defmodule Tui.MediaTest do
   use ExUnit.Case, async: true
 
+  import Tui.TestSupport
+
   alias Tui.Media
 
   # Runs against the real helper (`cargo build -p randos_media`; `just
@@ -73,21 +75,5 @@ defmodule Tui.MediaTest do
   @tag :capture_log
   test "a missing helper binary means no audio, not a crash" do
     assert :ignore = Media.start_link(helper_path: "/nonexistent/randos_media")
-  end
-
-  defp kill_helper(media) do
-    {:os_pid, os_pid} = Port.info(:sys.get_state(media).port, :os_pid)
-    System.cmd("kill", ["-9", Integer.to_string(os_pid)])
-  end
-
-  defp wait_for_restart(name, old, attempts \\ 50) do
-    case Process.whereis(name) do
-      pid when is_pid(pid) and pid != old ->
-        pid
-
-      _ when attempts > 0 ->
-        Process.sleep(20)
-        wait_for_restart(name, old, attempts - 1)
-    end
   end
 end
