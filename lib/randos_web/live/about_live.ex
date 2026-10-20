@@ -20,7 +20,7 @@ defmodule RandosWeb.AboutLive do
               </h1>
             </div>
             <p class="text-xl leading-8 text-stone-700">
-              {gettext("Randos is a small place for anonymous, audio-only language conversation.")}
+              {gettext("Randos is a place for anonymous, audio-only language conversation.")}
             </p>
           </header>
 
