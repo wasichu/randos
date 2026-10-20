@@ -54,6 +54,16 @@ randos is intentionally constrained:
 
 Audio-only is a permanent product constraint.
 
+## Free, No Ads
+
+randos is basic infrastructure for the language-learning community, run as a service.
+
+It is free to use. It does not advertise, sell anything, or charge for features.
+
+It never shows ads, never tracks visitors, and never adds video or anything else that turns a conversation into a product.
+
+Donations may be welcome someday. They will never buy anything: no perks, no priority, no extra features.
+
 ## Privacy and Ephemerality
 
 Conversations are private and ephemeral by default.

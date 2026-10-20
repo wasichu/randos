@@ -2,7 +2,8 @@
 
 randos is an anonymous, audio-only language-practice app (Phoenix LiveView +
 browser WebRTC). Read `README.md` for product philosophy; the constraints there
-(no accounts, no recording, no server-side audio, no persistent social graph)
+(no accounts, no recording, no server-side audio, no persistent social graph;
+free, with no ads, no tracking or analytics, no paid features, never video)
 are product requirements, not suggestions. Don't add features that violate them.
 
 ## Toolchain & commands

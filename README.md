@@ -24,6 +24,10 @@ randos is intentionally constrained:
 - no recording
 - no server-side audio access
 - no permanent social graph
+- no ads, no tracking, no charging
+
+randos is free infrastructure for the language-learning community, run as a
+service. Donations may be welcome someday, but they will never buy anything.
 
 Users choose the language they will speak and the language they want to hear.
 randos then pairs compatible strangers for a short WebRTC audio conversation.
