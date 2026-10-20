@@ -34,7 +34,7 @@ defmodule Tui.ModelTest do
     assert model.status == :idle
     assert Model.language_name(model, :speaks) == "English (EN)"
     assert Model.language_name(model, :listens) == "Español (ES)"
-    assert model.log == ["connected"]
+    assert model.log == ["connected to the server"]
   end
 
   test "keys are ignored until connected" do
@@ -71,7 +71,9 @@ defmodule Tui.ModelTest do
 
     assert model.status == :idle
     assert model.error == "unsupported_language"
-    assert ["error: unsupported_language", "looking for a rando", "connected"] = model.log
+
+    assert ["error: unsupported_language", "looking for a rando", "connected to the server"] =
+             model.log
   end
 
   test "errors show the server's words when it sends them" do

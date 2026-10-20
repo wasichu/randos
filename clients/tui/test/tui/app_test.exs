@@ -100,6 +100,19 @@ defmodule Tui.AppTest do
       assert text =~ "Continue for another 10 minutes?"
       assert text =~ "0:20 to decide"
     end
+
+    test "the status panel shows the current state, the connection, and the latest notice" do
+      text = render_text(model("idle"))
+      assert text =~ "Status:     not looking"
+      assert text =~ "Connection: no call"
+      assert text =~ "Last:       connected to the server"
+
+      assert render_text(model("looking")) =~ "Status:     looking for a rando"
+      assert render_text(model("in_call")) =~ "Connection: text only (no audio)"
+
+      audio = %{model("in_call") | audio?: true}
+      assert render_text(audio) =~ "Connection: starting audio…"
+    end
   end
 
   test "the running app turns keys into protocol pushes and ends calls offering audio" do

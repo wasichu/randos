@@ -82,7 +82,7 @@ defmodule Tui.Model do
 
     model =
       if first_join?,
-        do: log(model, "connected"),
+        do: log(model, "connected to the server"),
         else: log(model, "reconnected as a new participant")
 
     {put_state(model, state), []}

@@ -28,6 +28,8 @@ defmodule Tui.App do
   alias Tui.Media.State, as: MediaState
   alias Tui.Model
 
+  require Logger
+
   @tick_ms 1_000
 
   @impl true
@@ -138,8 +140,8 @@ defmodule Tui.App do
   def render(state, frame) do
     area = %Rect{x: 0, y: 0, width: frame.width, height: frame.height}
 
-    [header_area, main_area, log_area, help_area] =
-      Layout.split(area, :vertical, [{:length, 3}, {:min, 8}, {:length, 8}, {:length, 1}])
+    [header_area, main_area, status_area, help_area] =
+      Layout.split(area, :vertical, [{:length, 3}, {:min, 8}, {:length, 5}, {:length, 1}])
 
     model = state.model
 
@@ -148,7 +150,7 @@ defmodule Tui.App do
       | main(model, main_area, extra_text(state))
     ] ++
       [
-        {%List{items: model.log, block: panel(" Events ")}, log_area},
+        {%Paragraph{text: status_text(state), block: panel(" Status "), wrap: true}, status_area},
         {%Paragraph{text: " " <> help(model) <> mic_help(state), style: %Style{fg: :dark_gray}},
          help_area}
       ]
@@ -256,28 +258,50 @@ defmodule Tui.App do
   defp mic_help(_state), do: ""
 
   defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
-
-  defp extra_text(%{model: %{status: status, audio?: true}} = state)
-       when status in [:in_call, :extension_pending],
-       do: "\n\n" <> call_line(state.media_state)
-
   defp extra_text(_state), do: ""
 
-  defp call_line(%{call: nil, last_call_error: error}) when is_binary(error),
-    do: "Audio: #{error}"
+  # The current state at a glance, like the website's status label and its
+  # "Connection:" line, plus the latest notice (full history: tmp/tui.log).
+  defp status_text(%{model: model} = state) do
+    [
+      "Status:     " <> status_label(model),
+      "Connection: " <> connection_line(state),
+      "Last:       " <> (Elixir.List.first(model.log) || "—")
+    ]
+    |> Enum.join("\n")
+  end
 
-  defp call_line(%{call: nil}), do: "Audio: starting…"
-  defp call_line(%{call: %{connection: :disconnected}}), do: "Audio: reconnecting…"
-  defp call_line(%{call: %{connection: :failed}}), do: "Audio: failed"
-  defp call_line(%{call: %{connection: :connecting}}), do: "Audio: connecting…"
+  defp status_label(%{connection: :connecting}), do: "connecting to the server…"
+  defp status_label(%{status: :idle}), do: "not looking"
+  defp status_label(%{status: :looking}), do: "looking for a rando"
+  defp status_label(%{status: :connecting}), do: "matched, preparing the call"
+  defp status_label(%{status: :in_call}), do: "in a call"
+  defp status_label(%{status: :extension_pending}), do: "time is up: continue?"
+  defp status_label(_model), do: "—"
+
+  defp connection_line(%{model: %{status: status, audio?: true}} = state)
+       when status in [:connecting, :in_call, :extension_pending],
+       do: call_line(state.media_state)
+
+  defp connection_line(%{model: %{status: status}})
+       when status in [:connecting, :in_call, :extension_pending],
+       do: "text only (no audio)"
+
+  defp connection_line(_state), do: "no call"
+
+  defp call_line(%{call: nil, last_call_error: error}) when is_binary(error), do: error
+  defp call_line(%{call: nil}), do: "starting audio…"
+  defp call_line(%{call: %{connection: :disconnected}}), do: "reconnecting…"
+  defp call_line(%{call: %{connection: :failed}}), do: "failed"
+  defp call_line(%{call: %{connection: :connecting}}), do: "connecting…"
 
   defp call_line(%{call: %{stats: %{} = s}}) do
-    "Audio: connected · you #{round(s["input_peak_dbfs"])} dBFS · " <>
+    "connected · you #{round(s["input_peak_dbfs"])} dBFS · " <>
       "peer #{round(s["output_peak_dbfs"])} dBFS · " <>
       "#{s["packets_sent"]} sent / #{s["packets_received"]} received"
   end
 
-  defp call_line(%{call: %{}}), do: "Audio: connected"
+  defp call_line(%{call: %{}}), do: "connected"
 
   defp mic_test_text(%{media_state: %{available?: false}}), do: ""
   defp mic_test_text(%{media_state: %{mic_test: test}}), do: "\n\n" <> mic_test_line(test)
@@ -363,6 +387,12 @@ defmodule Tui.App do
     Enum.each(commands, fn {:push, event, payload} ->
       Connection.push(state.connection, event, payload)
     end)
+
+    # The screen shows only the latest notice; the full history goes to the
+    # log file (`tmp/tui.log`), for debugging a call afterwards.
+    with [line | _] when model.log != state.model.log <- model.log do
+      Logger.info("tui: " <> line)
+    end
 
     if state.test_pid, do: send(state.test_pid, {:tui_model, self(), model})
     %{state | model: model}
