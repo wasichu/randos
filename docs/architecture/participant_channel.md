@@ -121,7 +121,7 @@ A WebRTC signal from the peer:
 
 Same flow as the browser (`assets/js/randos/webrtc_client.js`):
 
-1. On `in_call`, capture the mic, create the peer connection with the pushed
+1. On `connecting` (the match), capture the mic, create the peer connection with the pushed
    `ice_servers`, and add the audio track.
 2. **Offerer** creates an offer and sends `signal` `offer`
    (`{"sdp": {"type", "sdp"}}`); **answerer** waits for it, then sends

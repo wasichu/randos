@@ -98,24 +98,27 @@ defmodule Tui.Media.StateTest do
                State.server_state(state, :in_call, "offerer")
     end
 
-    test "doesn't start before in_call, or twice" do
+    test "starts at the match (connecting), not before, and only once" do
       {state, []} = State.ice_servers(audio(), @ice)
-      assert {_, []} = State.server_state(state, :connecting, "offerer")
+      assert {_, []} = State.server_state(state, :looking, nil)
+
+      assert {%{call: %{}}, [{:request, @start}]} =
+               State.server_state(state, :connecting, "offerer")
+
       assert {_, []} = State.server_state(in_call(), :in_call, "offerer")
       assert {_, []} = State.server_state(in_call(), :extension_pending, "offerer")
     end
 
     test "signals that arrive before the call starts follow call_start" do
+      # Matched, but the ICE servers haven't arrived yet: no call to start.
       {state, []} = State.server_state(audio(), :connecting, "answerer")
       {state, []} = State.remote_signal(state, "offer", @offer)
-      {state, []} = State.ice_servers(state, @ice)
 
       assert {_,
               [
                 {:request, {:call_start, "answerer", @ice, "sine", "null"}},
                 {:request, {:call_signal, "offer", @offer}}
-              ]} =
-               State.server_state(state, :in_call, "answerer")
+              ]} = State.ice_servers(state, @ice)
     end
 
     test "relays signals both ways and reports connection_established once" do

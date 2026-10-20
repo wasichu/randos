@@ -255,7 +255,7 @@ eye, before anything touches a real call. (Design reviewed with the advisor
    gives (a speaker-similarity check belongs in the lab once there's a
    candidate model).
 
-## Proposal: one call policy for both clients (2026-10-20, awaiting decisions)
+## One call policy for both clients (2026-10-20, decided; in progress)
 
 Goal: the TUI and the browser are different UIs over the same behaviour.
 The server side is already shared (`Randos.Participant`, `ParticipantShell`,
@@ -264,7 +264,7 @@ duplication is the clients' call-health policy: `Tui.Media.State` and
 `webrtc_client.js` each run a small state machine about connection health,
 in two languages. The fix isn't sharing code between Elixir and JS; it's
 moving the policy to the one place both clients already trust. Reviewed
-with the advisor. **No code until the decisions below are made.**
+with the advisor.
 
 ### Findings (verified in code)
 
@@ -354,7 +354,26 @@ These run in `just smoke` and `just tui-smoke` (and CI); the scenario lists
 must match "Client obligations". The coordinator gets unit tests for each
 timer.
 
-### Decisions for the owner
+### Decisions (owner, 2026-10-20)
+
+- **Option A**, accepting that the server now manages call health.
+- **Local start failure → `end_call` in both clients** (no drift).
+- **Connect timeout: configurable, default 15 s.** The 10-minute clock
+  starts **once both sides report `connected`** (`in_call` then means audio is
+  up), replacing the fixed 750 ms activation. Text-only pairs (both
+  `audio?: false`) activate as before, since they never connect media.
+- **Drop the browser's `DEFAULT_ICE_SERVERS`** (the TUI doesn't share it).
+- **Before STUN/TURN.**
+
+Implementation order (advisor): (a) clients start media on `connecting`, not
+`in_call` (otherwise clients and server would wait on each other); (b)
+`Lifecycle` timers, `media_state` in `Signaling`, the coordinator, both
+clients reporting raw state, `end_call` with a reason; (c) `ice_servers` in
+each participant's state push, stale `call_id` filtering, "Client
+obligations" in the protocol doc; (d) drift-guard scenarios in both e2e
+harnesses. Done: (a).
+
+### Proposal as reviewed
 
 1. **Option A** (server owns call health) vs B vs status quo.
 2. **Local start failure → `end_call` in both clients.** This changes

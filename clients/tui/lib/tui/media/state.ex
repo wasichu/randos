@@ -6,7 +6,7 @@ defmodule Tui.Media.State do
   commands and never blocks on the helper.
 
   Two features live here: the mic test (`t`), and call audio. A call
-  mirrors the browser's `WebRTCClient`: when the server says `in_call` and
+  mirrors the browser's `WebRTCClient`: when the server says `connecting` and
   the role and ICE servers are known, start the helper's WebRTC session;
   relay signals both ways untouched; report `connection_established` once,
   and `connection_failed` on failure or after a 5 s `disconnected` grace;
@@ -27,7 +27,9 @@ defmodule Tui.Media.State do
   @mic_test_ms 5_000
   # Same grace as the browser (`DISCONNECTED_GRACE_MS`).
   @disconnected_grace_ms 5_000
-  @in_call [:in_call, :extension_pending]
+  # Media starts at the match (`connecting`), not `in_call`: the server only
+  # reports `in_call` once both sides' audio is up.
+  @call_statuses [:connecting, :in_call, :extension_pending]
 
   @type phase :: :starting | :running | :done | :failed
   @type mic_test :: %{phase: phase(), stats: map() | nil, error: String.t() | nil}
@@ -107,7 +109,7 @@ defmodule Tui.Media.State do
     state = %{state | status: status, role: role}
 
     cond do
-      status in @in_call -> maybe_start_call(state)
+      status in @call_statuses -> maybe_start_call(state)
       state.call != nil -> stop_call(state)
       true -> {%{state | pending_signals: []}, []}
     end
@@ -117,7 +119,7 @@ defmodule Tui.Media.State do
   @spec ice_servers(t(), list() | nil) :: {t(), [command()]}
   def ice_servers(state, servers) do
     state = %{state | ice_servers: servers}
-    if state.status in @in_call, do: maybe_start_call(state), else: {state, []}
+    if state.status in @call_statuses, do: maybe_start_call(state), else: {state, []}
   end
 
   @doc "A `signal` push from the peer."

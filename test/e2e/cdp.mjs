@@ -158,6 +158,16 @@ export class Page {
     await this.waitFor(`!!document.querySelector("[data-phx-main].phx-connected")`, "LiveView connect")
   }
 
+  // Hang up from whichever phase the call is in: "connecting" shows a cancel
+  // button, the call itself an End button (both send end_call).
+  async hangUp() {
+    await this.waitFor(
+      `!!document.querySelector("#end-call-button, #cancel-connection-button")`,
+      "a hang-up button",
+    )
+    return this.eval(`document.querySelector("#end-call-button, #cancel-connection-button").click()`)
+  }
+
   click(selector) {
     return this.eval(`document.querySelector(${JSON.stringify(selector)}).click()`)
   }

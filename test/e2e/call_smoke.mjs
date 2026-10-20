@@ -75,6 +75,8 @@ try {
     await f.findRando("ko", "ja")
     await Promise.all([e.webrtcStateIs("connected"), f.webrtcStateIs("connected")])
 
+    // Media connects during "connecting"; the End button comes with the call.
+    await e.waitFor(`!!document.querySelector("#end-call-button")`, "the in-call UI")
     const streams = await e.streamCount()
     await e.eval(`window.__sameDocument = true`)
     await e.click("#end-call-button")
@@ -93,7 +95,7 @@ try {
     await d.findRando("de", "fr")
     await c.webrtcStateIs("requesting_microphone")
     await d.webrtcStateIs("waiting_for_offer")
-    await d.click("#end-call-button")
+    await d.hangUp()
     await c.waitFor(`!document.querySelector("#webrtc-audio")`, "C's call teardown")
     await sleep(3_500)
     const streams = await c.streamCount()

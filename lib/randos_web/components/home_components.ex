@@ -76,7 +76,7 @@ defmodule RandosWeb.HomeComponents do
     ~H"""
     <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
       <.call_media_panel
-        :if={@call_status in [:active, :extension_pending] && @webrtc_role}
+        :if={@call_status in [:connecting, :active, :extension_pending] && @webrtc_role}
         webrtc_role={@webrtc_role}
         ice_servers={@ice_servers}
       />
