@@ -51,7 +51,6 @@ defmodule Tui.Media.State do
           ice_servers: list() | nil,
           call: call() | nil,
           calls: non_neg_integer(),
-          pending_signals: [{String.t(), map()}],
           last_call_error: String.t() | nil
         }
 
@@ -63,7 +62,6 @@ defmodule Tui.Media.State do
             ice_servers: nil,
             call: nil,
             calls: 0,
-            pending_signals: [],
             last_call_error: nil
 
   @doc """
@@ -112,15 +110,17 @@ defmodule Tui.Media.State do
     cond do
       status in @call_statuses -> maybe_start_call(state)
       state.call != nil -> stop_call(state)
-      true -> {%{state | pending_signals: []}, []}
+      true -> {state, []}
     end
   end
 
-  @doc "A `signal` push from the peer."
+  @doc """
+  A `signal` push from the peer. One never arrives before our call starts:
+  the server forwards only signals for the participant's current call, which
+  it learns from the same coordinator message that produces our `connecting`
+  push (and messages from one process arrive in order).
+  """
   @spec remote_signal(t(), String.t(), map()) :: {t(), [command()]}
-  def remote_signal(%{call: nil} = state, type, payload) when type in ["offer", "ice_candidate"],
-    do: {%{state | pending_signals: [{type, payload} | state.pending_signals]}, []}
-
   def remote_signal(%{call: %{}} = state, type, payload)
       when type in ["offer", "answer", "ice_candidate"],
       do: {state, [{:request, {:call_signal, type, payload}}]}
@@ -193,15 +193,8 @@ defmodule Tui.Media.State do
     # The mic test would hold the devices; the call wins.
     {state, stop_test} = stop_mic_test_for_call(state)
 
-    # The helper takes requests in order, so signals that arrived before
-    # the call can follow call_start straight away.
-    pending =
-      state.pending_signals
-      |> Enum.reverse()
-      |> Enum.map(fn {type, payload} -> {:request, {:call_signal, type, payload}} end)
-
-    {%{state | call: call, calls: seq, pending_signals: [], last_call_error: nil},
-     stop_test ++ [{:request, {:call_start, role, ice, input, output}}] ++ pending}
+    {%{state | call: call, calls: seq, last_call_error: nil},
+     stop_test ++ [{:request, {:call_start, role, ice, input, output}}]}
   end
 
   defp maybe_start_call(state), do: {state, []}
@@ -213,7 +206,7 @@ defmodule Tui.Media.State do
   defp stop_mic_test_for_call(state), do: {state, []}
 
   defp stop_call(state),
-    do: {%{state | call: nil, pending_signals: []}, [{:request, :call_stop}]}
+    do: {%{state | call: nil}, [{:request, :call_stop}]}
 
   # Each change of the helper's connection goes to the server, which decides
   # what it means for the call. A failed session has stopped on its own.
@@ -228,7 +221,7 @@ defmodule Tui.Media.State do
   # The helper can't carry this call: end it with a reason (the documented
   # list), so only the peer is requeued and the server tells us why.
   defp give_up(state, reason) do
-    {%{state | call: nil, pending_signals: [], last_call_error: reason},
+    {%{state | call: nil, last_call_error: reason},
      [{:request, :call_stop}, {:push, "end_call", %{reason: reason}}]}
   end
 

@@ -102,15 +102,8 @@ defmodule Tui.Media.StateTest do
       assert {_, []} = State.server_state(in_call(), :extension_pending, "offerer", @call)
     end
 
-    test "signals that arrive before the call starts follow call_start" do
-      # A peer's offer that beats our state push is held, then follows call_start.
-      {state, []} = State.remote_signal(audio(), "offer", @offer)
-
-      assert {_,
-              [
-                {:request, {:call_start, "answerer", @ice, "sine", "null"}},
-                {:request, {:call_signal, "offer", @offer}}
-              ]} = State.server_state(state, :connecting, "answerer", @call)
+    test "a signal with no call running is ignored (the server never sends one)" do
+      assert State.remote_signal(audio(), "offer", @offer) == {audio(), []}
     end
 
     test "relays media signals both ways" do
