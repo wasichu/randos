@@ -58,7 +58,9 @@ dev-turn:
 
 # Generate local HTTPS certs with mkcert (for mic/WebRTC testing)
 certs:
-    mkcert -install
+    # Trusting the CA on this Mac needs sudo (a real terminal). Other devices
+    # never trust it anyway (they click through a warning), so it's optional.
+    mkcert -install || echo "warning: CA not trusted on this machine (run 'mkcert -install' in a terminal); generating the certificates anyway" >&2
     mkdir -p priv/cert
     mkcert \
       -key-file priv/cert/randos_dev_key.pem \
