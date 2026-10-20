@@ -5,6 +5,7 @@
 //! `loopback_stop`) for checking audio before WebRTC exists. Run with
 //! `--loopback` for the same loopback straight from a terminal.
 
+mod audio;
 mod codec;
 mod frame;
 mod loopback;
@@ -18,7 +19,8 @@ use std::sync::mpsc::{self, Receiver, Sender};
 use std::thread;
 use std::time::Duration;
 
-use loopback::{Loopback, Notify};
+use audio::Notify;
+use loopback::Loopback;
 use protocol::{Command, Event, Outgoing};
 
 pub type Error = Box<dyn std::error::Error + Send + Sync>;

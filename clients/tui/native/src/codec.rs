@@ -1,12 +1,13 @@
-//! Opus encode → decode at 48 kHz mono in 20 ms frames: the loopback's codec
-//! stage. It knows nothing about audio devices, so `cargo test` covers it.
+//! Opus at 48 kHz mono in 20 ms frames: an `Encoder` (mic → network) and a
+//! `Decoder` (network → speaker), used by the call and, back to back, by the
+//! loopback. They know nothing about audio devices, so `cargo test` covers
+//! them.
 
-use opus::{Application, Bitrate, Channels, Decoder, Encoder};
+use opus::{Application, Bitrate, Channels};
 
 use crate::Error;
 
-/// Opus doesn't accept 44.1 kHz; until Stage 2 adds resampling, devices must
-/// run at this rate.
+/// Opus's rate; devices at other rates are resampled (`resample`).
 pub const SAMPLE_RATE: u32 = 48_000;
 /// Samples in one 20 ms frame at `SAMPLE_RATE`.
 pub const FRAME: usize = 960;
@@ -14,42 +15,54 @@ pub const FRAME: usize = 960;
 pub const BITRATE_BPS: i32 = 24_000;
 /// libopus's recommended upper bound for one packet.
 const MAX_PACKET: usize = 4_000;
+/// A whole 20 ms frame is buffered before encoding, plus 6.5 ms of Opus
+/// lookahead.
+pub const CODEC_DELAY_MS: f64 = 26.5;
 
-pub struct OpusLoop {
-    encoder: Encoder,
-    decoder: Decoder,
+pub struct Encoder {
+    opus: opus::Encoder,
     packet: [u8; MAX_PACKET],
 }
 
-impl OpusLoop {
+impl Encoder {
     pub fn new() -> Result<Self, Error> {
-        let mut encoder = Encoder::new(SAMPLE_RATE, Channels::Mono, Application::Voip)?;
-        encoder.set_bitrate(Bitrate::Bits(BITRATE_BPS))?;
-        let decoder = Decoder::new(SAMPLE_RATE, Channels::Mono)?;
-
+        let mut opus = opus::Encoder::new(SAMPLE_RATE, Channels::Mono, Application::Voip)?;
+        opus.set_bitrate(Bitrate::Bits(BITRATE_BPS))?;
         Ok(Self {
-            encoder,
-            decoder,
+            opus,
             packet: [0; MAX_PACKET],
         })
     }
 
-    /// Encodes one frame and decodes it back into `output`. Returns the Opus
-    /// packet size in bytes.
-    pub fn process(
-        &mut self,
-        input: &[f32; FRAME],
-        output: &mut [f32; FRAME],
-    ) -> Result<usize, Error> {
-        let len = self.encoder.encode_float(input, &mut self.packet)?;
-        let packet = self
+    /// Encodes one frame; the packet borrows the encoder's buffer.
+    pub fn encode(&mut self, frame: &[f32; FRAME]) -> Result<&[u8], Error> {
+        let len = self.opus.encode_float(frame, &mut self.packet)?;
+        Ok(self
             .packet
             .get(..len)
-            .ok_or("opus packet overran its buffer")?;
-        let decoded = self.decoder.decode_float(packet, output, false)?;
+            .ok_or("opus packet overran its buffer")?)
+    }
+}
 
+pub struct Decoder {
+    opus: opus::Decoder,
+}
+
+impl Decoder {
+    pub fn new() -> Result<Self, Error> {
+        Ok(Self {
+            opus: opus::Decoder::new(SAMPLE_RATE, Channels::Mono)?,
+        })
+    }
+
+    /// Decodes one packet into a frame.
+    pub fn decode(&mut self, packet: &[u8], frame: &mut [f32; FRAME]) -> Result<(), Error> {
+        Self::whole_frame(self.opus.decode_float(packet, frame, false)?)
+    }
+
+    fn whole_frame(decoded: usize) -> Result<(), Error> {
         if decoded == FRAME {
-            Ok(len)
+            Ok(())
         } else {
             Err(format!("opus decoded {decoded} samples, expected {FRAME}").into())
         }
@@ -89,14 +102,16 @@ mod tests {
 
     #[test]
     fn a_tone_survives_the_round_trip() {
-        let mut codec = OpusLoop::new().unwrap();
+        let (mut encoder, mut decoder) = (Encoder::new().unwrap(), Decoder::new().unwrap());
         let mut sine = Sine::new(440.0);
         let (mut input, mut output) = ([0.0; FRAME], [0.0; FRAME]);
 
         // Opus has ~6.5 ms of lookahead, so judge a frame after it settles.
         for _ in 0..10 {
             sine.fill(&mut input);
-            let bytes = codec.process(&input, &mut output).unwrap();
+            let packet = encoder.encode(&input).unwrap();
+            let bytes = packet.len();
+            decoder.decode(packet, &mut output).unwrap();
             assert!(
                 bytes > 0 && bytes < 200,
                 "24 kbps is ~60 bytes per frame, got {bytes}"
@@ -109,11 +124,12 @@ mod tests {
 
     #[test]
     fn silence_stays_silent() {
-        let mut codec = OpusLoop::new().unwrap();
+        let (mut encoder, mut decoder) = (Encoder::new().unwrap(), Decoder::new().unwrap());
         let mut output = [1.0; FRAME];
 
         for _ in 0..5 {
-            codec.process(&[0.0; FRAME], &mut output).unwrap();
+            let packet = encoder.encode(&[0.0; FRAME]).unwrap();
+            decoder.decode(packet, &mut output).unwrap();
         }
 
         assert!(rms(&output) < 1e-3);
