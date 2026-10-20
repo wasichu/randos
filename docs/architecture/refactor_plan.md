@@ -455,6 +455,12 @@ Not scheduled; pick up when relevant.
 
 All 2026-10-19 unless noted.
 
+- **Order after Stage 1 (2026-10-20):** 4.3 Stage 2 (hardening, scoped by
+  what the live call shows), then Stage 3 (echo cancellation), then
+  packaging (4.4, 4.5); Phase 5's voice lab after that, which the owner
+  works on freely. Quality passes stay at their milestones (before 4.4/4.5,
+  and at the start of the voice lab).
+
 - **Ash removed**; plain Elixir/OTP first, justify every dependency. Call
   coordinator is a `:gen_statem`.
 - **The TUI never attaches to Erlang nodes or uses SSH**; it uses the public
