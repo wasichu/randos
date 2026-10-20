@@ -144,6 +144,9 @@ are product requirements, not suggestions. Don't add features that violate them.
   - Scripts an Elixir test drives over a Port exit when their stdin closes
     (the Port closing), like `tui_browser_call.mjs`; the media helper does
     the same.
+  - Test browsers are muted (`--mute-audio` in `cdp.mjs`): the tests must
+    never play sound on the developer's machine. The TUI's helper plays to
+    `null` in tests for the same reason.
   - The only long-lived process we start on purpose is the dev server
     (`just serve`, from the session hook); stop it with `just serve-stop`.
 

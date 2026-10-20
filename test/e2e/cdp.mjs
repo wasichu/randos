@@ -43,6 +43,10 @@ export class Browser {
       `--user-data-dir=${profile}`,
       "--use-fake-device-for-media-stream",
       "--use-fake-ui-for-media-stream",
+      // Never make a sound on the machine running the tests (the fake mic is
+      // a beep, and each page plays its peer). Audio still flows and is
+      // measured; only the output is silent.
+      "--mute-audio",
       "--autoplay-policy=no-user-gesture-required",
       "--disable-gpu",
       "--no-first-run",
@@ -94,8 +98,8 @@ export class Browser {
   // Options simulate a client's failure modes (see "Client obligations" in
   // participant_channel.md): `getUserMediaError` makes the mic prompt reject
   // with that DOMException name (e.g. "NotAllowedError" = denied);
-  // `relayOnly` forces relay-only ICE with no TURN server, so this page can
-  // never connect.
+  // `relayOnly` forces relay-only ICE and drops the ICE servers, so this page
+  // can never connect, with or without TURN.
   async newPage(name, {getUserMediaDelayMs = 0, getUserMediaError = null, relayOnly = false} = {}) {
     const {browserContextId} = await this.send("Target.createBrowserContext")
     const {targetId} = await this.send("Target.createTarget", {url: "about:blank", browserContextId})
@@ -122,7 +126,10 @@ export class Browser {
         window.__randosPeers = [];
         const OriginalPeer = window.RTCPeerConnection;
         window.RTCPeerConnection = function (config = {}, ...rest) {
-          if (${relayOnly}) config = {...config, iceTransportPolicy: "relay"};
+          // Relay-only with no ICE servers: no candidates at all, so this page
+          // can't connect anywhere (with TURN servers, relay-only would still
+          // connect, as it does in production).
+          if (${relayOnly}) config = {...config, iceServers: [], iceTransportPolicy: "relay"};
           const pc = new OriginalPeer(config, ...rest);
           window.__randosPeers.push(pc);
           return pc;
@@ -180,6 +187,13 @@ export class Page {
   async open(url = BASE_URL) {
     await this.send("Page.navigate", {url})
     await this.waitFor(`!!document.querySelector("[data-phx-main].phx-connected")`, "LiveView connect")
+  }
+
+  // The server has put this page in the call (in_call: both sides' media is
+  // connected). A page's own WebRTC "connected" comes a moment earlier, so
+  // wait for this before using in-call controls (End, Next).
+  inCall() {
+    return this.waitFor(`!!document.querySelector("#call-panel")`, "the in-call UI")
   }
 
   // Hang up from whichever phase the call is in: "connecting" shows a cancel

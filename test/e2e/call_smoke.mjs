@@ -64,6 +64,7 @@ try {
   await scenario("next rando releases the microphone", async () => {
     const streams = await a.streamCount()
     assert(streams > 0, "page A never captured a mic stream")
+    await a.inCall()
     await a.click("#next-rando-button")
     await sleep(1_000)
     const live = await a.liveMicTracks(streams)
@@ -78,8 +79,7 @@ try {
     await f.findRando("ko", "ja")
     await Promise.all([e.webrtcStateIs("connected"), f.webrtcStateIs("connected")])
 
-    // Media connects during "connecting"; the End button comes with the call.
-    await e.waitFor(`!!document.querySelector("#end-call-button")`, "the in-call UI")
+    await e.inCall()
     const streams = await e.streamCount()
     await e.eval(`window.__sameDocument = true`)
     await e.click("#end-call-button")
