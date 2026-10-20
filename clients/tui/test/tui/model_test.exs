@@ -79,6 +79,16 @@ defmodule Tui.ModelTest do
     assert model.status == :looking
   end
 
+  test "with audio, an offer is left to the media layer and find says audio: true" do
+    model = Model.set_audio(joined("in_call"), true)
+    offer = %{"type" => "offer", "call_id" => "call-1", "payload" => %{}}
+    assert {^model, []} = Model.push(model, "signal", offer)
+
+    idle = Model.set_audio(joined("idle"), true)
+    {idle, []} = Model.key(idle, " ")
+    assert {_, [{:push, "find", %{audio: true}}]} = Model.key(idle, "enter")
+  end
+
   test "a peer's offer ends the call with end_call, so only the peer is requeued" do
     offer = %{"type" => "offer", "call_id" => "call-1", "payload" => %{}}
     {model, commands} = Model.push(joined("in_call"), "signal", offer)

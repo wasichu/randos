@@ -46,13 +46,17 @@ defmodule Tui.App do
 
     {:ok,
      %{
-       model: Model.new(now_ms()),
+       model: Model.set_audio(Model.new(now_ms()), media_running?(Keyword.get(opts, :media))),
        connection: connection,
        owned?: owned?,
        uri: Keyword.get(opts, :uri, "(test)"),
        media: Keyword.get(opts, :media),
        mic_test_endpoints: Keyword.get(opts, :mic_test, {"device", "device"}),
-       media_state: MediaState.new(Keyword.get(opts, :media) != nil),
+       media_state:
+         MediaState.new(
+           Keyword.get(opts, :media) != nil,
+           Keyword.get(opts, :call_audio, {"device", "device"})
+         ),
        test_pid: Keyword.get(opts, :test_pid)
      }}
   end
@@ -67,7 +71,8 @@ defmodule Tui.App do
         :disconnected -> Model.disconnected(state.model)
       end
 
-    {:noreply, apply_model(state, model, commands)}
+    state = apply_model(state, model, commands)
+    {:noreply, follow_call(state, message)}
   end
 
   def handle_info(:tick, state) do
@@ -75,8 +80,16 @@ defmodule Tui.App do
     {:noreply, apply_model(state, Model.tick(state.model, now_ms()), [])}
   end
 
-  def handle_info({:media, name, payload}, state),
-    do: {:noreply, put_media_state(state, MediaState.event(state.media_state, name, payload))}
+  def handle_info({:media, name, payload}, state) do
+    # A (re)started helper can carry calls again.
+    state =
+      if name == "ready", do: %{state | model: Model.set_audio(state.model, true)}, else: state
+
+    {:noreply, run_media(state, MediaState.event(state.media_state, name, payload))}
+  end
+
+  def handle_info({:media_call_grace, seq}, state),
+    do: {:noreply, run_media(state, MediaState.call_grace(state.media_state, seq))}
 
   def handle_info({:media_reply, command, result}, state),
     do: {:noreply, run_media(state, MediaState.reply(state.media_state, command, result))}
@@ -127,7 +140,7 @@ defmodule Tui.App do
 
     [
       {header(state), header_area}
-      | main(model, main_area, mic_test_text(state))
+      | main(model, main_area, extra_text(state))
     ] ++
       [
         {%List{items: model.log, block: panel(" Events ")}, log_area},
@@ -163,15 +176,16 @@ defmodule Tui.App do
     ]
   end
 
-  defp main(model, area, _mic_test) do
-    [{%Paragraph{text: main_text(model), block: panel(title(model)), wrap: true}, area}]
+  defp main(model, area, extra) do
+    [{%Paragraph{text: main_text(model) <> extra, block: panel(title(model)), wrap: true}, area}]
   end
 
   defp header(%{model: model, uri: uri}) do
     connection = if model.connection == :connected, do: "connected", else: "connecting…"
 
     %Paragraph{
-      text: "Text-only client: no audio yet.  #{connection} to #{uri}",
+      text:
+        "#{if model.audio?, do: "Audio on", else: "Text only (no audio helper)"}.  #{connection} to #{uri}",
       block: panel(" Randos ")
     }
   end
@@ -192,6 +206,9 @@ defmodule Tui.App do
   end
 
   defp main_text(%{status: :connecting}), do: "Matched! Starting the call…"
+
+  defp main_text(%{status: :in_call, audio?: true} = model),
+    do: "You're in a call.#{time_left(model, " remaining")}"
 
   defp main_text(%{status: :in_call} = model) do
     "You're in a call.#{time_left(model, " remaining")}\n\n" <>
@@ -232,6 +249,29 @@ defmodule Tui.App do
   defp mic_help(%{media_state: %{available?: false}}), do: ""
   defp mic_help(%{model: %{connection: :connected, status: :idle}}), do: "  t mic test"
   defp mic_help(_state), do: ""
+
+  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
+
+  defp extra_text(%{model: %{status: status, audio?: true}} = state)
+       when status in [:in_call, :extension_pending],
+       do: "\n\n" <> call_line(state.media_state)
+
+  defp extra_text(_state), do: ""
+
+  defp call_line(%{call: nil, last_call_error: error}) when is_binary(error),
+    do: "Audio: #{error}"
+
+  defp call_line(%{call: nil}), do: "Audio: starting…"
+  defp call_line(%{call: %{connection: :disconnected}}), do: "Audio: reconnecting…"
+  defp call_line(%{call: %{connection: :connecting}}), do: "Audio: connecting…"
+
+  defp call_line(%{call: %{stats: %{} = s}}) do
+    "Audio: connected · you #{round(s["input_peak_dbfs"])} dBFS · " <>
+      "peer #{round(s["output_peak_dbfs"])} dBFS · " <>
+      "#{s["packets_sent"]} sent / #{s["packets_received"]} received"
+  end
+
+  defp call_line(%{call: %{}}), do: "Audio: connected"
 
   defp mic_test_text(%{media_state: %{available?: false}}), do: ""
   defp mic_test_text(%{media_state: %{mic_test: test}}), do: "\n\n" <> mic_test_line(test)
@@ -275,10 +315,41 @@ defmodule Tui.App do
     end
   end
 
+  defp run_media_command({:push, event, payload}, state) do
+    Connection.push(state.connection, event, payload)
+    state
+  end
+
   defp run_media_command({:after, ms, message}, state) do
     Process.send_after(self(), message, ms)
     state
   end
+
+  # Server messages that matter to call audio, after the model has them.
+  defp follow_call(state, {:joined, _reply}), do: run_media(state, server_state(state))
+  defp follow_call(state, {:push, "state", _}), do: run_media(state, server_state(state))
+  defp follow_call(state, :disconnected), do: run_media(state, server_state(state))
+
+  defp follow_call(state, {:push, "ice_servers", payload}),
+    do: run_media(state, MediaState.ice_servers(state.media_state, payload["ice_servers"]))
+
+  defp follow_call(
+         %{model: %{audio?: true}} = state,
+         {:push, "signal", %{"type" => type} = signal}
+       ),
+       do:
+         run_media(
+           state,
+           MediaState.remote_signal(state.media_state, type, signal["payload"] || %{})
+         )
+
+  defp follow_call(state, _message), do: state
+
+  defp server_state(state),
+    do: MediaState.server_state(state.media_state, state.model.status, state.model.webrtc_role)
+
+  defp media_running?(nil), do: false
+  defp media_running?(media), do: GenServer.whereis(media) != nil
 
   defp put_media_state(state, media_state) do
     if state.test_pid, do: send(state.test_pid, {:tui_media, self(), media_state})

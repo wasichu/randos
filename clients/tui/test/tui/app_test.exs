@@ -48,7 +48,7 @@ defmodule Tui.AppTest do
     test "connecting" do
       text = render_text(Model.new())
       assert text =~ "Connecting to the server"
-      assert text =~ "no audio yet"
+      assert text =~ "Text only (no audio helper)"
     end
 
     test "idle form shows languages, the 18+ box, and key help" do
@@ -193,6 +193,91 @@ defmodule Tui.AppTest do
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :failed, error: "the audio helper isn't running" <> _}}}
+    end
+  end
+
+  describe "call audio" do
+    # The test plays the server: it feeds the app server pushes, receives
+    # the app's channel pushes as casts, and relays signals to a second
+    # helper playing the browser.
+    @tag :native
+    @tag :capture_log
+    test "an app with a helper calls a peer helper: signals relayed, connected, audio both ways" do
+      app =
+        start_supervised!(
+          {App,
+           name: nil,
+           test_mode: {100, 24},
+           connection: self(),
+           test_pid: self(),
+           media: :app_call_media,
+           call_audio: {"sine", "null"}},
+          id: :app
+        )
+
+      start_supervised!({Tui.Media, name: :app_call_media, notify: app}, id: :app_media)
+      assert_receive {:tui_media, ^app, %{call: nil}}
+      peer = start_supervised!({Tui.Media, name: :peer_media, notify: self()}, id: :peer_media)
+
+      send(
+        app,
+        {:randos, {:joined, %{"state" => server_state("idle"), "languages" => @languages}}}
+      )
+
+      assert_receive {:tui_model, ^app, %Model{status: :idle, audio?: true}}
+
+      send(app, {:randos, {:push, "ice_servers", %{"ice_servers" => []}}})
+
+      send(
+        app,
+        {:randos, {:push, "state", server_state("in_call", %{"webrtc_role" => "offerer"})}}
+      )
+
+      assert {:ok, _} =
+               GenServer.call(peer, {:request, {:call_start, "answerer", [], "sine", "null"}})
+
+      relay_until(app, peer, System.monotonic_time(:millisecond) + 8_000, %{
+        established?: false,
+        heard?: false
+      })
+
+      # Hanging up stops the helper's call.
+      send(app, {:randos, {:push, "state", server_state("idle")}})
+      assert_receive {:tui_media, ^app, %{call: nil}}
+    end
+
+    defp relay_until(_app, _peer, _deadline, %{established?: true, heard?: true}), do: :ok
+
+    defp relay_until(app, peer, deadline, seen) do
+      remaining = deadline - System.monotonic_time(:millisecond)
+
+      receive do
+        {:"$gen_cast", {:push, "signal", %{type: "connection_established"}}} ->
+          relay_until(app, peer, deadline, %{seen | established?: true})
+
+        {:"$gen_cast", {:push, "signal", %{type: type, payload: payload}}} ->
+          :ok = request(peer, {:call_signal, type, payload})
+          relay_until(app, peer, deadline, seen)
+
+        {:media, "call_signal", %{"type" => type, "payload" => payload}} ->
+          send(app, {:randos, {:push, "signal", %{"type" => type, "payload" => payload}}})
+          relay_until(app, peer, deadline, seen)
+
+        {:tui_media, ^app,
+         %{call: %{stats: %{"packets_received" => n, "output_peak_dbfs" => db}}}}
+        when n > 20 and db > -15 ->
+          relay_until(app, peer, deadline, %{seen | heard?: true})
+
+        _other ->
+          relay_until(app, peer, deadline, seen)
+      after
+        max(remaining, 0) -> flunk("call didn't connect with audio in time: #{inspect(seen)}")
+      end
+    end
+
+    defp request(peer, command) do
+      {:ok, true} = GenServer.call(peer, {:request, command})
+      :ok
     end
   end
 end

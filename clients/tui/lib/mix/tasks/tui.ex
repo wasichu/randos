@@ -9,8 +9,11 @@ defmodule Mix.Tasks.Tui do
       RANDOS_URL=ws://localhost:4000/participant/websocket mix tui
 
   Logs go to `tmp/tui.log` (anything printed would garble the screen).
-  Calls have no audio yet (`t` on the idle screen tests the mic through the
-  media helper, if built): point it at a dev server, not production.
+  With the media helper built (`cargo build -p randos_media`), calls carry
+  audio and `t` on the idle screen tests the mic; without it the client is
+  text-only. Calls connect only where the two machines can reach each other
+  directly until STUN/TURN land (Phase 4.3 Stage 1), so point it at a dev
+  server, not production.
   """
   use Mix.Task
 

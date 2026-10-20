@@ -23,14 +23,14 @@ defmodule Tui.Media.StateTest do
   end
 
   test "stats show while running; time up stops the helper and keeps the result" do
-    state = State.event(running(), "loopback_stats", %{"latency_ms" => 81.0})
+    {state, []} = State.event(running(), "loopback_stats", %{"latency_ms" => 81.0})
 
     {state, commands} = State.mic_test_done(state)
     assert %{phase: :done, stats: %{"latency_ms" => 81.0}} = state.mic_test
     assert commands == [{:request, :loopback_stop}]
 
     # Late stats from a stopped test are ignored.
-    assert State.event(state, "loopback_stats", %{"latency_ms" => 99.0}) == state
+    assert State.event(state, "loopback_stats", %{"latency_ms" => 99.0}) == {state, []}
   end
 
   test "pressing t again during a test does nothing" do
@@ -46,10 +46,10 @@ defmodule Tui.Media.StateTest do
     {state, []} = State.reply(starting, @start, {:error, "no 48 kHz config"})
     assert %{phase: :failed, error: "no 48 kHz config"} = state.mic_test
 
-    state = State.event(running(), "loopback_failed", %{"error" => "device gone"})
+    {state, []} = State.event(running(), "loopback_failed", %{"error" => "device gone"})
     assert %{phase: :failed, error: "device gone"} = state.mic_test
 
-    state = State.event(starting, "ready", %{})
+    {state, []} = State.event(starting, "ready", %{})
     assert %{phase: :failed, error: "the audio helper restarted"} = state.mic_test
   end
 
@@ -67,9 +67,136 @@ defmodule Tui.Media.StateTest do
 
   test "events and replies with no test in progress change nothing" do
     idle = State.new(true)
-    assert State.event(idle, "ready", %{}) == idle
-    assert State.event(idle, "loopback_stats", %{}) == idle
+    assert State.event(idle, "ready", %{}) == {idle, []}
+    assert State.event(idle, "loopback_stats", %{}) == {idle, []}
     assert State.reply(idle, :loopback_stop, {:ok, true}) == {idle, []}
     assert State.mic_test_done(idle) == {idle, []}
+  end
+
+  describe "call audio" do
+    @ice [%{"urls" => "stun:stun.example:3478"}]
+    @start {:call_start, "offerer", @ice, "sine", "null"}
+    @offer %{"sdp" => %{"type" => "offer", "sdp" => "v=0"}}
+
+    defp audio, do: State.new(true, {"sine", "null"})
+
+    # In a call, role and ICE servers known, call_start replied ok.
+    defp in_call do
+      {state, _} = State.server_state(audio(), :in_call, "offerer")
+      {state, _} = State.ice_servers(state, @ice)
+      {state, []} = State.reply(state, @start, {:ok, %{}})
+      state
+    end
+
+    test "starts once in_call with a role and ICE servers, in either order" do
+      {state, []} = State.server_state(audio(), :in_call, "offerer")
+      assert {%{call: %{phase: :starting}}, [{:request, @start}]} = State.ice_servers(state, @ice)
+
+      {state, []} = State.ice_servers(audio(), @ice)
+
+      assert {%{call: %{phase: :starting}}, [{:request, @start}]} =
+               State.server_state(state, :in_call, "offerer")
+    end
+
+    test "doesn't start before in_call, or twice" do
+      {state, []} = State.ice_servers(audio(), @ice)
+      assert {_, []} = State.server_state(state, :connecting, "offerer")
+      assert {_, []} = State.server_state(in_call(), :in_call, "offerer")
+      assert {_, []} = State.server_state(in_call(), :extension_pending, "offerer")
+    end
+
+    test "signals that arrive before the call starts follow call_start" do
+      {state, []} = State.server_state(audio(), :connecting, "answerer")
+      {state, []} = State.remote_signal(state, "offer", @offer)
+      {state, []} = State.ice_servers(state, @ice)
+
+      assert {_,
+              [
+                {:request, {:call_start, "answerer", @ice, "sine", "null"}},
+                {:request, {:call_signal, "offer", @offer}}
+              ]} =
+               State.server_state(state, :in_call, "answerer")
+    end
+
+    test "relays signals both ways and reports connection_established once" do
+      state = in_call()
+
+      assert {_, [{:request, {:call_signal, "answer", @offer}}]} =
+               State.remote_signal(state, "answer", @offer)
+
+      assert {_, [{:push, "signal", %{type: "ice_candidate", payload: %{"c" => 1}}}]} =
+               State.event(state, "call_signal", %{
+                 "type" => "ice_candidate",
+                 "payload" => %{"c" => 1}
+               })
+
+      {state, [{:push, "signal", %{type: "connection_established"}}]} =
+        State.event(state, "call_state", %{"state" => "connected"})
+
+      assert {%{call: %{connection: :connected}}, []} =
+               State.event(state, "call_state", %{"state" => "connected"})
+    end
+
+    test "disconnected gets a 5 s grace; reconnecting cancels it, timing out fails the call" do
+      {state, _} = State.event(in_call(), "call_state", %{"state" => "connected"})
+
+      {state, [{:after, 5_000, {:media_call_grace, seq}}]} =
+        State.event(state, "call_state", %{"state" => "disconnected"})
+
+      {recovered, []} = State.event(state, "call_state", %{"state" => "connected"})
+      assert State.call_grace(recovered, seq) == {recovered, []}
+
+      assert {%{call: nil},
+              [
+                {:push, "signal",
+                 %{type: "connection_failed", payload: %{reason: "disconnected_timeout"}}},
+                {:request, :call_stop}
+              ]} =
+               State.call_grace(state, seq)
+    end
+
+    test "a failed session reports connection_failed and stops" do
+      assert {%{call: nil, last_call_error: "ice timeout"},
+              [{:push, "signal", %{type: "connection_failed"}}, {:request, :call_stop}]} =
+               State.event(in_call(), "call_state", %{
+                 "state" => "failed",
+                 "reason" => "ice timeout"
+               })
+    end
+
+    test "the call ending, or the peer leaving, stops the helper's call" do
+      assert {%{call: nil}, [{:request, :call_stop}]} = State.server_state(in_call(), :idle, nil)
+
+      assert {%{call: nil}, [{:request, :call_stop}]} =
+               State.remote_signal(in_call(), "peer_disconnected", %{})
+    end
+
+    test "when the helper can't carry the call: end_call, not connection_failed" do
+      {starting, _} = State.server_state(State.new(true, {"sine", "null"}), :in_call, "offerer")
+      {starting, _} = State.ice_servers(starting, @ice)
+
+      assert {%{call: nil, last_call_error: "no mic"},
+              [{:request, :call_stop}, {:push, "end_call", %{}}]} =
+               State.reply(starting, @start, {:error, "no mic"})
+
+      assert {%{call: nil}, [{:request, :call_stop}, {:push, "end_call", %{}}]} =
+               State.event(in_call(), "ready", %{})
+    end
+
+    test "a call stops a running mic test; the mic test waits during a call" do
+      {state, _} = State.start_mic_test(audio(), {"sine", "null"})
+      {state, _} = State.reply(state, {:loopback_start, "sine", "null"}, {:ok, %{}})
+      {state, []} = State.ice_servers(state, @ice)
+
+      assert {%{mic_test: %{phase: :done}}, [{:request, :loopback_stop}, {:request, @start}]} =
+               State.server_state(state, :in_call, "offerer")
+
+      assert State.start_mic_test(in_call(), {"sine", "null"}) == {in_call(), []}
+    end
+
+    test "stats are kept for display" do
+      assert {%{call: %{stats: %{"packets_received" => 9}}}, []} =
+               State.event(in_call(), "call_stats", %{"packets_received" => 9})
+    end
   end
 end

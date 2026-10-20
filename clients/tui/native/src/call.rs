@@ -152,6 +152,9 @@ struct Session {
     /// Remote candidates that arrived before the remote description.
     early_candidates: Vec<Candidate>,
     remote_description_set: bool,
+    /// ICE and DTLS came up at least once (`Event::Connected`).
+    dtls_up: bool,
+    /// Currently connected: media flows. False again while ICE is disconnected.
     connected: bool,
     encoder: Encoder,
     decoder: Decoder,
@@ -193,6 +196,7 @@ impl Session {
             pending_offer: None,
             early_candidates: Vec::new(),
             remote_description_set: false,
+            dtls_up: false,
             connected: false,
             encoder: Encoder::new()?,
             decoder: Decoder::new()?,
@@ -394,12 +398,21 @@ impl Session {
     fn handle_event(&mut self, event: RtcEvent) -> Result<(), Error> {
         match event {
             RtcEvent::Connected => {
+                self.dtls_up = true;
                 self.connected = true;
                 self.state("connected", None);
             }
             RtcEvent::IceConnectionStateChange(IceConnectionState::Disconnected) => {
                 self.connected = false;
                 self.state("disconnected", None);
+            }
+            // ICE recovered after a disconnect (DTLS is still up): report it,
+            // so the TUI cancels its grace timer like the browser does.
+            RtcEvent::IceConnectionStateChange(
+                IceConnectionState::Connected | IceConnectionState::Completed,
+            ) if self.dtls_up && !self.connected => {
+                self.connected = true;
+                self.state("connected", None);
             }
             RtcEvent::MediaAdded(added) => {
                 self.mid.get_or_insert(added.mid);

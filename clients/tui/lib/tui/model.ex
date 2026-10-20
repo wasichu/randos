@@ -8,9 +8,11 @@ defmodule Tui.Model do
   short event log. Every function returns `{model, commands}`, where commands
   are channel pushes for the caller to send: `{:push, event, payload}`.
 
-  This client has no audio yet, so it refuses WebRTC: when a peer's `offer`
-  arrives it sends `end_call`, which ends the call with this client going
-  idle and only the peer requeued.
+  `audio?` says whether this client can carry call audio (its media helper
+  is running). `find` sends it, so the server only pairs compatible
+  clients. With audio, WebRTC signals are the media layer's business
+  (`Tui.Media.State`). Without it, a peer's `offer` gets `end_call`, which
+  ends the call with this client going idle and only the peer requeued.
   """
 
   @max_log 30
@@ -24,6 +26,7 @@ defmodule Tui.Model do
           speaks: non_neg_integer(),
           listens: non_neg_integer(),
           adult_acknowledged?: boolean(),
+          audio?: boolean(),
           focus: :speaks | :listens | :ack,
           status: status() | nil,
           webrtc_role: String.t() | nil,
@@ -38,6 +41,7 @@ defmodule Tui.Model do
             speaks: 0,
             listens: 1,
             adult_acknowledged?: false,
+            audio?: false,
             focus: :speaks,
             status: nil,
             webrtc_role: nil,
@@ -58,6 +62,10 @@ defmodule Tui.Model do
   def new(now_ms \\ 0), do: %__MODULE__{now_ms: now_ms}
 
   ## Server messages
+
+  @doc "Whether this client can carry call audio (sent with `find`)."
+  @spec set_audio(t(), boolean()) :: t()
+  def set_audio(model, audio?), do: %{model | audio?: audio?}
 
   @doc "The join reply: initial state and the supported languages."
   @spec joined(t(), map()) :: {t(), [command()]}
@@ -91,7 +99,7 @@ defmodule Tui.Model do
 
   def push(model, "ice_servers", _payload), do: {model, []}
 
-  def push(model, "signal", %{"type" => "offer"}) do
+  def push(%{audio?: false} = model, "signal", %{"type" => "offer"}) do
     # end_call (not connection_failed): it ends the call with us stopping, so
     # only the peer is requeued. Any other ending requeues both of us, and
     # we'd rematch and refuse again in a loop.
@@ -198,15 +206,14 @@ defmodule Tui.Model do
   defp status_line(:in_call), do: "in call"
   defp status_line(:extension_pending), do: "time is up: continue? (y/n)"
 
-  # `audio: false` until the media helper can carry a call (Phase 4.3
-  # Stage 1): the server then pairs us only with other text-only clients,
+  # Without audio the server pairs us only with other text-only clients,
   # never with a browser user who would sit through a silent call.
   defp find_payload(model) do
     %{
       speaks: Enum.at(model.languages, model.speaks).code,
       listens: Enum.at(model.languages, model.listens).code,
       adult_acknowledged: model.adult_acknowledged?,
-      audio: false
+      audio: model.audio?
     }
   end
 
