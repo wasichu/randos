@@ -34,6 +34,16 @@ _free-dev-port:
         exit 1
       fi
     done
+    # HTTPS (only with `just certs`): nothing of ours to stop there, so just
+    # say who has it and how to pick another port.
+    https_port="${HTTPS_PORT:-4001}"
+    if ls priv/cert/*.pem >/dev/null 2>&1; then
+      pid=$(lsof -t -nP -iTCP:"${https_port}" -sTCP:LISTEN | head -1 || true)
+      if [ -n "$pid" ]; then
+        echo "error: HTTPS port :${https_port} is taken by pid ${pid} ($(ps -o comm= -p "$pid" | xargs basename)); pick another, e.g. HTTPS_PORT=4443 just dev-turn" >&2
+        exit 1
+      fi
+    fi
 
 # Reuses a running server: if something already answers on $PORT (default
 # 4000), it says so and exits instead of starting a second one.
