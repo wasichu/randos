@@ -42,8 +42,13 @@ are product requirements, not suggestions. Don't add features that violate them.
     manager) and `TF_VAR_do_token`. Never commit plaintext state (`just precommit` checks).
 - MCP servers (`.mcp.json`): `graft` (code graph, always on) and `tidewave`
   (runtime: eval in the running app, logs, docs, SQL-free introspection).
-  Tidewave only answers while a dev server is running on :4000 — prefer it over
-  `mix run` scripts for poking at live process state (Matchmaker, calls).
+  Prefer Tidewave over `mix run` scripts for poking at live process state
+  (Matchmaker, calls). Tidewave is served by the dev server on :4000, so:
+  - Claude Code reaches it through `mcp-proxy` (pinned in `mise.toml`), a stdio
+    proxy that waits for the server and reconnects when it restarts, so the
+    connection survives a server that isn't up yet;
+  - a `SessionStart` hook in `.claude/settings.json` runs `just serve` in the
+    background (logs in `tmp/serve.log`; it reuses a running server).
 - **Standing rule: start the dev server yourself when needed.** If Tidewave,
   the TUI (`just tui`), or a test needs the dev server and nothing is
   listening on :4000, run `just serve` in the background (exactly that
@@ -81,10 +86,9 @@ are product requirements, not suggestions. Don't add features that violate them.
   `"matchmaking:participant:<id>"`.
 - **No database.** All state lives in processes and vanishes on restart.
   Don't add Ecto/Postgres without asking.
-- Call timing constants live in `Randos.Calls.Lifecycle` (10-min segments,
-  max 2 extensions, 30-min cap, 20 s vote timeout, 15 s connect timeout,
-  5 s disconnected grace). Reuse them; don't hardcode, in the server or in
-  a client.
+- Call timing constants (segments, extensions, the vote timeout, the connect
+  timeout, the disconnected grace) live in `Randos.Calls.Lifecycle`, the one
+  source of truth. Reuse them; don't hardcode them in the server or a client.
 - ICE/TURN config: `RandosWeb.IceServers` (env-driven; see README "TURN And STUN").
 - A participant hears about its call only from the call's coordinator:
   `{:call_updated, %Randos.Calls.Call{}}` on every status change (starting with
