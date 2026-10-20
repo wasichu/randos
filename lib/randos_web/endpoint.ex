@@ -35,7 +35,10 @@ defmodule RandosWeb.Endpoint do
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if Mix.env() == :dev do
-    plug Tidewave
+    # MCP only (the agent's runtime tools). No toolbar: it injects a script
+    # from tidewave.ai into every dev page, against our first-party rule, and
+    # we don't use its web app. Non-local clients are refused either way.
+    plug Tidewave, toolbar: false
   end
 
   if code_reloading? do
