@@ -92,7 +92,7 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (Stage 1 built; a live two-person call is next)
+### 4.3 Audio (Stage 1 done; Stage 2 next)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
@@ -109,8 +109,14 @@ call via `turn-client-proto`, trickled as a `relay` candidate (hermetic fake
 TURN server; coturn checked with bogus credentials). The str0m-vs-webrtc-rs checkpoint
 passed: a whole relay-only call runs through our coturn (`just turn-check`),
 so we stay on str0m (see `tui_audio.md`). The end-of-Stage-1 code-quality
-pass is done (below). Next: a live call with a person on each end, which
-closes Stage 1. See `tui_audio.md` Stage 1.
+pass is done (below). **Live call: done (2026-10-20)**, TUI ↔ Safari on an
+iPad through `just dev-turn` on the same network, with each side answering
+once: both worked, connected quickly, no dropouts. Within earshot (and with
+noise-cancelling headphones) each person also heard the other through the
+air, slightly offset: expected without echo cancellation (Stage 3), and
+worth a line in the headphones advice. Still to try: the same call across
+real networks (iPad on cellular, against production), which is what
+exercises STUN/TURN. See `tui_audio.md` Stage 1.
 
 Stage 0 code is done:
 - the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port
