@@ -12,7 +12,8 @@ are product requirements, not suggestions. Don't add features that violate them.
   - `just setup` — toolchain + deps + assets
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
   - `just serve` — the same server without IEx, for running in the background;
-    if something already answers on :4000 it reuses it and exits
+    if something already answers on :4000 it reuses it and exits.
+    `just serve-stop` stops it (only a BEAM on the port)
   - `just tui` — the terminal client against the local dev server (`RANDOS_URL`/`--url`
     to override); `just tui-smoke` — through a throwaway server, two real TUI clients call
     each other, and a TUI (helper playing a tone) calls headless Chrome in both
@@ -130,6 +131,21 @@ are product requirements, not suggestions. Don't add features that violate them.
   never skip it silently.
 
 ## Testing
+
+- **Nothing a test starts may outlive its starter**, however the starter dies
+  (`kill -9` included; a stranded headless Chrome once kept reconnecting to
+  test servers and stopped them from shutting down). The mechanisms:
+  - Chrome is driven over `--remote-debugging-pipe` (`test/e2e/cdp.mjs`),
+    never a DevTools port: it exits when the pipe closes, which the OS does
+    when its parent dies. Don't add a `--remote-debugging-port`.
+  - Test servers start through `test/e2e/with_test_server.sh`: a watchdog in
+    the server halts it once the script is gone, and a busy :4010 is an
+    error (never reused, so tests can't hit stale code).
+  - Scripts an Elixir test drives over a Port exit when their stdin closes
+    (the Port closing), like `tui_browser_call.mjs`; the media helper does
+    the same.
+  - The only long-lived process we start on purpose is the dev server
+    (`just serve`, from the session hook); stop it with `just serve-stop`.
 
 - Tests mirror `lib/` under `test/`. LiveView tests use `Phoenix.LiveViewTest`
   + `LazyHTML`; assert on element IDs (`has_element?(view, "#id")`), not raw HTML

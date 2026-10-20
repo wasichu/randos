@@ -16,9 +16,9 @@ setup:
 dev:
     iex -S mix phx.server
 
-# Dev server without IEx (for background use: Tidewave, the TUI, tests).
 # Reuses a running server: if something already answers on $PORT (default
 # 4000), it says so and exits instead of starting a second one.
+# Dev server without IEx, for the background (Tidewave, the TUI, tests)
 serve:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -28,6 +28,23 @@ serve:
       exit 0
     fi
     exec mix phx.server
+
+# e.g. the one the SessionStart hook starts for Tidewave. Only stops a BEAM,
+# never something else on the port.
+# Stop the dev server on $PORT (default 4000)
+serve-stop:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    port="${PORT:-4000}"
+    pids=$(lsof -t -nP -iTCP:"${port}" -sTCP:LISTEN || true)
+    if [ -z "$pids" ]; then echo "nothing is serving :${port}"; exit 0; fi
+    for pid in $pids; do
+      if ps -o command= -p "$pid" | grep -q beam.smp; then
+        kill "$pid" && echo "stopped the dev server on :${port} (pid ${pid})"
+      else
+        echo "leaving pid ${pid} on :${port} alone: it isn't a BEAM" >&2
+      fi
+    done
 
 # Run the dev server against the coturn TURN server managed by infra/coturn
 # (the shared secret comes from the encrypted state via `just tofu`, so the

@@ -31,13 +31,15 @@ function findChrome() {
 // --- Minimal CDP client (flattened sessions over one browser socket) -------
 
 export class Browser {
-  // `port`: the DevTools port (one per concurrently running test);
-  // `extraArgs`: more Chrome flags.
-  static async launch({port = 9334, extraArgs = []} = {}) {
+  // DevTools runs over a pipe (fds 3 and 4), not a port: Chrome exits as soon
+  // as the pipe closes, which the OS does when this process dies, however it
+  // dies (even kill -9). So a Chrome can never outlive the run that started
+  // it, and concurrent runs can't collide on a port. `extraArgs`: more flags.
+  static async launch({extraArgs = []} = {}) {
     const {bin, headlessFlag} = findChrome()
     const profile = mkdtempSync(join(tmpdir(), "randos-smoke-"))
     const args = [
-      `--remote-debugging-port=${port}`,
+      "--remote-debugging-pipe",
       `--user-data-dir=${profile}`,
       "--use-fake-device-for-media-stream",
       "--use-fake-ui-for-media-stream",
@@ -48,37 +50,43 @@ export class Browser {
       "about:blank",
     ]
     if (headlessFlag) args.unshift(headlessFlag)
-    const proc = spawn(bin, args, {stdio: "ignore"})
+    const proc = spawn(bin, args, {stdio: ["ignore", "ignore", "ignore", "pipe", "pipe"]})
 
-    let version
-    for (let i = 0; i < 50 && !version; i++) {
-      try {
-        version = await (await fetch(`http://127.0.0.1:${port}/json/version`)).json()
-      } catch {
-        await sleep(200)
-      }
-    }
-    if (!version) throw new Error("Chrome did not start")
-
-    const browser = new Browser(proc, profile, new WebSocket(version.webSocketDebuggerUrl))
-    await new Promise(resolve => browser.ws.addEventListener("open", resolve))
+    const browser = new Browser(proc, profile)
+    // Chrome answers once it's up; fail clearly if it can't start.
+    await Promise.race([
+      browser.send("Browser.getVersion"),
+      new Promise((_, reject) => proc.once("exit", code => reject(new Error(`Chrome exited (${code}) at startup`)))),
+      sleep(20_000).then(() => Promise.reject(new Error("Chrome did not start"))),
+    ])
     return browser
   }
 
-  constructor(proc, profile, ws) {
-    Object.assign(this, {proc, profile, ws, nextId: 0, pending: new Map()})
-    ws.addEventListener("message", event => {
-      const msg = JSON.parse(event.data)
-      const waiter = msg.id && this.pending.get(msg.id)
-      if (!waiter) return
-      this.pending.delete(msg.id)
-      msg.error ? waiter.reject(new Error(msg.error.message)) : waiter.resolve(msg.result)
+  constructor(proc, profile) {
+    Object.assign(this, {proc, profile, nextId: 0, pending: new Map(), buffer: ""})
+    // Messages from Chrome arrive on fd 4, each terminated by a NUL byte.
+    proc.stdio[4].setEncoding("utf8")
+    proc.stdio[4].on("data", chunk => {
+      this.buffer += chunk
+      let end
+      while ((end = this.buffer.indexOf("\0")) >= 0) {
+        const msg = JSON.parse(this.buffer.slice(0, end))
+        this.buffer = this.buffer.slice(end + 1)
+        const waiter = msg.id && this.pending.get(msg.id)
+        if (!waiter) continue
+        this.pending.delete(msg.id)
+        msg.error ? waiter.reject(new Error(msg.error.message)) : waiter.resolve(msg.result)
+      }
+    })
+    proc.once("exit", () => {
+      for (const {reject} of this.pending.values()) reject(new Error("Chrome exited"))
+      this.pending.clear()
     })
   }
 
   send(method, params = {}, sessionId) {
     const id = ++this.nextId
-    this.ws.send(JSON.stringify({id, method, params, sessionId}))
+    this.proc.stdio[3].write(JSON.stringify({id, method, params, sessionId}) + "\0")
     return new Promise((resolve, reject) => this.pending.set(id, {resolve, reject}))
   }
 
@@ -133,8 +141,8 @@ export class Browser {
   }
 
   async close() {
-    this.ws.close()
     const exited = new Promise(resolve => this.proc.once("exit", resolve))
+    this.proc.stdio[3].end()
     this.proc.kill()
     await exited
     rmSync(this.profile, {recursive: true, force: true, maxRetries: 5, retryDelay: 100})

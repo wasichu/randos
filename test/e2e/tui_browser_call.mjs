@@ -30,11 +30,15 @@ const connectTimeoutMs = Number(process.env.RANDOS_CONNECT_TIMEOUT_MS ?? 15_000)
 const report = event => console.log(JSON.stringify(event))
 
 let browser
+
+// Driven by an Elixir test over a Port: when the test ends (passed, failed,
+// or timed out), the Port closes our stdin. Leave then, instead of carrying
+// on unwatched; Chrome follows us (its DevTools pipe closes).
+process.stdin.on("end", () => process.exit(1))
+process.stdin.resume()
+
 try {
-  browser = await Browser.launch({
-    port: 9335,
-    extraArgs: ["--disable-features=WebRtcHideLocalIpsWithMdns"],
-  })
+  browser = await Browser.launch({extraArgs: ["--disable-features=WebRtcHideLocalIpsWithMdns"]})
   const page = await browser.newPage("browser", {
     getUserMediaError: process.env.MIC_ERROR || null,
     relayOnly: process.env.RELAY_ONLY === "1",
