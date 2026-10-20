@@ -30,6 +30,19 @@ defmodule Tui.Connection do
   @spec push(GenServer.server(), String.t(), map()) :: :ok
   def push(connection, event, payload), do: GenServer.cast(connection, {:push, event, payload})
 
+  @doc """
+  Says we're leaving the call on purpose (`signal` `peer_disconnected`,
+  Client obligation 7) and waits for the server's reply, so it's sent
+  before the channel closes. `:ok`, or `{:error, reason}` on a timeout or
+  refusal (closing the channel still ends the call, as a lost connection).
+  """
+  @spec leave(GenServer.server(), timeout()) :: :ok | {:error, term()}
+  def leave(connection, timeout \\ 1_000) do
+    GenServer.call(connection, :leave, timeout)
+  catch
+    :exit, reason -> {:error, reason}
+  end
+
   @impl Slipstream
   def init(opts) do
     owner = Keyword.fetch!(opts, :owner)
@@ -56,8 +69,29 @@ defmodule Tui.Connection do
   @impl Slipstream
   def handle_reply(ref, reply, socket) do
     {event, pending} = Map.pop(socket.assigns.pending, ref)
-    if event, do: notify(socket, {:reply, event, reply})
+
+    case event do
+      {:leave, from} ->
+        GenServer.reply(from, if(match?({:ok, _}, reply), do: :ok, else: {:error, reply}))
+
+      nil ->
+        :ok
+
+      event ->
+        notify(socket, {:reply, event, reply})
+    end
+
     {:ok, assign(socket, :pending, pending)}
+  end
+
+  @impl Slipstream
+  def handle_call(:leave, from, socket) do
+    payload = %{type: "peer_disconnected", payload: %{reason: "quit"}}
+
+    case push(socket, @topic, "signal", payload) do
+      {:ok, ref} -> {:noreply, update(socket, :pending, &Map.put(&1, ref, {:leave, from}))}
+      {:error, reason} -> {:reply, {:error, reason}, socket}
+    end
   end
 
   @impl Slipstream

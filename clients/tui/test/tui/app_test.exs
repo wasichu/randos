@@ -127,8 +127,11 @@ defmodule Tui.AppTest do
     keys(pid, ["n"])
     assert_receive {:"$gen_cast", {:push, "next", %{}}}
 
+    # Quitting mid-call leaves on purpose first (obligation 7).
     ref = Process.monitor(pid)
     keys(pid, ["q"])
+    assert_receive {:"$gen_call", from, :leave}
+    GenServer.reply(from, :ok)
     assert_receive {:DOWN, ^ref, :process, ^pid, _reason}
   end
 

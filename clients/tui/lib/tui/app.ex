@@ -121,6 +121,12 @@ defmodule Tui.App do
 
   @impl true
   def terminate(_reason, state) do
+    # Quitting mid-call is leaving on purpose: say so (as the browser does on
+    # page hide), so the call ends `peer_disconnected` rather than looking
+    # like a lost connection.
+    if state.model.status in [:connecting, :in_call, :extension_pending],
+      do: Connection.leave(state.connection)
+
     # Closing the channel ends our participant: the server takes us out of
     # the queue and ends any call.
     if state.owned?, do: GenServer.stop(state.connection)

@@ -126,6 +126,8 @@ A WebRTC signal from the peer:
 
 ## WebRTC signaling
 
+(Diagrams of this flow, shared and per client: [`call_flow.md`](call_flow.md).)
+
 Same flow as the browser (`assets/js/randos/webrtc_client.js`). **Call health
 is the server's job**: clients report their raw media state, and the server
 (`CallCoordinator`) decides when a call is up or has failed.
@@ -147,7 +149,7 @@ end-to-end tests check these, by number, for both clients
 | 4: disconnected past the grace | (unit tests: `call_coordinator_test.exs`; hard to cause from a real client) | (same) |
 | 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
-| 7: leaving | page hide / end call | channel close |
+| 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
 
 1. **Start at the match.** On `connecting`, capture the mic and create the
    peer connection with the call's `ice_servers`, and add the audio track.
@@ -173,8 +175,11 @@ end-to-end tests check these, by number, for both clients
    (`microphone_denied`, `microphone_not_found`, `audio_unavailable`,
    `audio_failed`), not `media_state` `failed`. Only the peer is requeued,
    and you get the reason back as your `error` and `error_message`.
-7. **Leaving.** Closing the page or app: `signal` `peer_disconnected`, or
-   just close the channel. Either ends the call.
+7. **Leaving on purpose? Say so.** When the person closes the page or quits
+   the app during a call, send `signal` `peer_disconnected` (and wait for its
+   reply if you're about to close the channel). The call ends
+   `peer_disconnected`. A channel that just goes away ends it `disconnected`,
+   which means a lost connection (network, crash), not a choice.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media

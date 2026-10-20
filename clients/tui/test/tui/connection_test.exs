@@ -37,6 +37,25 @@ defmodule Tui.ConnectionTest do
     assert_receive {:randos, {:reply, "find", {:error, %{"reason" => "rate_limited"}}}}
   end
 
+  test "leave says peer_disconnected and waits for the server's reply", %{client: client} do
+    connect_and_assert_join client, "participant", %{}, {:ok, %{}}
+
+    leaving = Task.async(fn -> Connection.leave(client) end)
+
+    assert_push "participant",
+                "signal",
+                %{type: "peer_disconnected", payload: %{reason: "quit"}},
+                ref
+
+    reply(client, ref, {:ok, %{}})
+    assert Task.await(leaving) == :ok
+  end
+
+  test "leave gives up after its timeout instead of blocking a quit", %{client: client} do
+    connect_and_assert_join client, "participant", %{}, {:ok, %{}}
+    assert {:error, _} = Connection.leave(client, 50)
+  end
+
   test "reports disconnects", %{client: client} do
     connect_and_assert_join client, "participant", %{}, {:ok, %{}}
 
