@@ -30,8 +30,9 @@ defmodule Tui.Integration.BrowserCallTest do
     "http://#{host}:#{port}"
   end
 
-  # A TUI with a helper playing a test tone and discarding what it hears.
-  defp start_tui(id) do
+  # A TUI with a helper playing a test tone and discarding what it hears
+  # (`audio` overrides the helper's {input, output}).
+  defp start_tui(id, audio \\ {"sine", "null"}) do
     media = :"#{id}_media"
 
     app =
@@ -42,7 +43,7 @@ defmodule Tui.Integration.BrowserCallTest do
          uri: ws_url(),
          test_pid: self(),
          media: media,
-         call_audio: {"sine", "null"}},
+         call_audio: audio},
         id: id
       )
 
@@ -50,7 +51,8 @@ defmodule Tui.Integration.BrowserCallTest do
     app
   end
 
-  defp start_browser(speaks, listens) do
+  # `env`: the script's failure modes (EXPECT, MIC_ERROR, RELAY_ONLY).
+  defp start_browser(speaks, listens, env \\ []) do
     node = System.find_executable("node") || flunk("node not found")
 
     Port.open({:spawn_executable, node}, [
@@ -58,7 +60,10 @@ defmodule Tui.Integration.BrowserCallTest do
       :exit_status,
       {:line, 64_000},
       {:cd, @repo_root},
-      {:env, [{~c"BASE_URL", String.to_charlist(base_url())}]},
+      {:env,
+       Enum.map([{"BASE_URL", base_url()} | env], fn {k, v} ->
+         {String.to_charlist(k), String.to_charlist(v)}
+       end)},
       args: ["test/e2e/tui_browser_call.mjs", speaks, listens, Integer.to_string(@hold_ms)]
     ])
   end
@@ -159,5 +164,53 @@ defmodule Tui.Integration.BrowserCallTest do
 
     assert %Model{webrtc_role: "answerer"} = await_model(app, &(&1.status == :in_call))
     assert_audio_both_ways(await_call(app, port))
+  end
+
+  ## Client obligations (docs/architecture/participant_channel.md): the same
+  ## scenarios run browser-to-browser in test/e2e/call_smoke.mjs.
+
+  defp requeued(app) do
+    await_model(app, &(&1.status == :connecting))
+    await_model(app, &(&1.status == :looking))
+  end
+
+  test "obligation 6: the TUI can't start audio; it ends the call with a reason, the browser is requeued" do
+    app = start_tui(:mute_tui, {"no-such-input", "null"})
+    model = await_model(app, &(&1.status == :idle and &1.audio?))
+    find(app, model, "pt", "zh")
+    await_model(app, &(&1.status == :looking))
+
+    port = start_browser("zh", "pt", [{"EXPECT", "call_ends"}])
+
+    assert %Model{error: error} = await_model(app, &(&1.status == :idle and &1.error != nil))
+    assert error =~ "audio isn't available"
+    assert %{"looking" => true} = await_browser(port, "call_ended")
+  end
+
+  test "obligation 6: the browser's mic is denied; it ends the call with a reason, the TUI is requeued" do
+    app = start_tui(:denied_peer_tui)
+    model = await_model(app, &(&1.status == :idle and &1.audio?))
+    find(app, model, "ko", "it")
+    await_model(app, &(&1.status == :looking))
+
+    port = start_browser("it", "ko", [{"EXPECT", "call_ends"}, {"MIC_ERROR", "NotAllowedError"}])
+
+    requeued(app)
+    assert %{"idle" => true, "error" => error} = await_browser(port, "call_ended")
+    assert error =~ "microphone"
+    keys(app, ["c"])
+  end
+
+  test "obligation 4: the browser never connects; the connect timeout ends the call for both" do
+    app = start_tui(:stuck_peer_tui)
+    model = await_model(app, &(&1.status == :idle and &1.audio?))
+    find(app, model, "de", "ja")
+    await_model(app, &(&1.status == :looking))
+
+    port = start_browser("ja", "de", [{"EXPECT", "call_ends"}, {"RELAY_ONLY", "1"}])
+
+    requeued(app)
+    assert %{"event" => "call_ended"} = await_browser(port, "call_ended")
+    keys(app, ["c"])
   end
 end

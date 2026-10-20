@@ -63,6 +63,7 @@ defmodule RandosWeb.HomeComponents do
   end
 
   attr :ui_state, :atom, required: true
+  attr :call_id, :string, default: nil
   attr :call_status, :atom, default: nil
   attr :call_deadline_unix_ms, :integer, default: nil
   attr :webrtc_role, :atom, default: nil
@@ -75,11 +76,16 @@ defmodule RandosWeb.HomeComponents do
   def conversation_card(assigns) do
     ~H"""
     <div class="grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3">
-      <.call_media_panel
+      <%!-- Keyed by call: a new call (even an instant rematch, in the same
+           render) gets a new element and a fresh WebRTC hook, never the
+           previous call's (#webrtc-audio itself is phx-update="ignore"). --%>
+      <div
         :if={@call_status in [:connecting, :active, :extension_pending] && @webrtc_role}
-        webrtc_role={@webrtc_role}
-        ice_servers={@ice_servers}
-      />
+        id={"call-media-#{@call_id}"}
+        class="contents"
+      >
+        <.call_media_panel call_id={@call_id} webrtc_role={@webrtc_role} ice_servers={@ice_servers} />
+      </div>
 
       <%= case @ui_state do %>
         <% :idle -> %>
@@ -343,6 +349,7 @@ defmodule RandosWeb.HomeComponents do
     """
   end
 
+  attr :call_id, :string, default: nil
   attr :webrtc_role, :atom, required: true
 
   attr :ice_servers, :string, default: nil
@@ -354,6 +361,7 @@ defmodule RandosWeb.HomeComponents do
       phx-hook="WebRTCAudio"
       phx-update="ignore"
       data-webrtc-role={@webrtc_role}
+      data-call-id={@call_id}
       data-ice-servers={@ice_servers}
       data-webrtc-state="not_started"
       data-microphone-muted="false"

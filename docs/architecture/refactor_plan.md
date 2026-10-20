@@ -376,7 +376,13 @@ harnesses. Done: (a), (b), (c): the call's `ice_servers` and both sides'
 `media` now come in each participant's `state` push (the separate
 `ice_servers` push is gone), error text comes from the server
 (`RandosWeb.ParticipantErrors`, sent as `error_message`), and
-`participant_channel.md` has a numbered "Client obligations" section.
+`participant_channel.md` has a numbered "Client obligations" section; (d):
+the obligations are checked in both e2e harnesses (table in
+`participant_channel.md`); `just smoke` / `just tui-smoke` run the server with
+a 4 s connect timeout. Writing them found a real bug: an instant rematch
+(same render) kept the previous call's `#webrtc-audio` element and WebRTC
+hook; the element is now wrapped in `#call-media-<call id>`, so every call
+gets a fresh hook. **All four steps are done.**
 
 ### Proposal as reviewed
 

@@ -32,6 +32,7 @@ defmodule RandosWeb.HomeLive do
      |> assign(:preferences, preferences)
      |> assign_form(preferences)
      |> assign(:ice_servers, nil)
+     |> assign(:call_id, nil)
      |> assign_participant(participant)}
   end
 
@@ -95,6 +96,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:participant, participant)
     |> assign(:ui_state, participant.status)
     |> assign(:webrtc_role, participant.webrtc_role)
+    |> assign(:call_id, participant.call && participant.call.id)
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
@@ -109,6 +111,7 @@ defmodule RandosWeb.HomeLive do
           <.hero_panel ui_state={@ui_state} />
           <.conversation_card
             ui_state={@ui_state}
+            call_id={@call_id}
             call_status={@call_status}
             call_deadline_unix_ms={@call_deadline_unix_ms}
             webrtc_role={@webrtc_role}

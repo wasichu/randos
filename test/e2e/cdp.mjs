@@ -83,7 +83,12 @@ export class Browser {
   }
 
   // A page in its own browser context (separate cookies/storage = separate person).
-  async newPage(name, {getUserMediaDelayMs = 0} = {}) {
+  // Options simulate a client's failure modes (see "Client obligations" in
+  // participant_channel.md): `getUserMediaError` makes the mic prompt reject
+  // with that DOMException name (e.g. "NotAllowedError" = denied);
+  // `relayOnly` forces relay-only ICE with no TURN server, so this page can
+  // never connect.
+  async newPage(name, {getUserMediaDelayMs = 0, getUserMediaError = null, relayOnly = false} = {}) {
     const {browserContextId} = await this.send("Target.createBrowserContext")
     const {targetId} = await this.send("Target.createTarget", {url: "about:blank", browserContextId})
     const {sessionId} = await this.send("Target.attachToTarget", {targetId, flatten: true})
@@ -99,6 +104,8 @@ export class Browser {
         const original = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
         navigator.mediaDevices.getUserMedia = async constraints => {
           await new Promise(r => setTimeout(r, ${getUserMediaDelayMs}));
+          const failWith = ${JSON.stringify(getUserMediaError)};
+          if (failWith) throw new DOMException("simulated", failWith);
           const stream = await original(constraints);
           window.__randosStreams.push(stream);
           return stream;
@@ -106,12 +113,21 @@ export class Browser {
         // Record peer connections so tests can read getStats().
         window.__randosPeers = [];
         const OriginalPeer = window.RTCPeerConnection;
-        window.RTCPeerConnection = function (...args) {
-          const pc = new OriginalPeer(...args);
+        window.RTCPeerConnection = function (config = {}, ...rest) {
+          if (${relayOnly}) config = {...config, iceTransportPolicy: "relay"};
+          const pc = new OriginalPeer(config, ...rest);
           window.__randosPeers.push(pc);
           return pc;
         };
-        window.RTCPeerConnection.prototype = OriginalPeer.prototype;`,
+        window.RTCPeerConnection.prototype = OriginalPeer.prototype;
+        // Each time this page's call element goes away, the call ended for
+        // this page (even if it's requeued and rematched straight away).
+        window.__randosCallEnds = 0;
+        new MutationObserver(records => {
+          for (const record of records)
+            for (const node of record.removedNodes)
+              if (node.id === "webrtc-audio" || node.querySelector?.("#webrtc-audio")) window.__randosCallEnds++;
+        }).observe(document, {childList: true, subtree: true});`,
     })
     return page
   }
@@ -166,6 +182,15 @@ export class Page {
       "a hang-up button",
     )
     return this.eval(`document.querySelector("#end-call-button, #cancel-connection-button").click()`)
+  }
+
+  callEnds() {
+    return this.eval(`window.__randosCallEnds`)
+  }
+
+  // Stop looking, so a requeued page doesn't keep rematching.
+  async stopLooking() {
+    await this.eval(`document.querySelector("#cancel-search-button")?.click()`)
   }
 
   click(selector) {

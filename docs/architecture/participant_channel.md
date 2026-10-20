@@ -136,8 +136,18 @@ late signal from a previous call never reaches you.
 ### Client obligations
 
 Every client with audio (the browser, the TUI) does exactly this. The
-end-to-end tests (`just smoke`, `just tui-smoke`) check these, by number,
-for both.
+end-to-end tests check these, by number, for both clients
+(`test/e2e/call_smoke.mjs` browser-to-browser,
+`clients/tui/test/integration/browser_call_test.exs` TUI-to-browser):
+
+| Obligation | Browser ↔ browser | TUI ↔ browser |
+| --- | --- | --- |
+| 1–4: start at the match, negotiate, report, `in_call` once both connect | "two people match and connect audio" | both roles, audio checked both ways |
+| 4: never connects → ends at the connect timeout | relay-only page | relay-only browser |
+| 4: disconnected past the grace | (unit tests: `call_coordinator_test.exs`; hard to cause from a real client) | (same) |
+| 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
+| 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
+| 7: leaving | page hide / end call | channel close |
 
 1. **Start at the match.** On `connecting`, capture the mic and create the
    peer connection with the call's `ice_servers`, and add the audio track.

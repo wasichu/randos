@@ -61,6 +61,7 @@ smoke:
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p tmp
+    export RANDOS_CONNECT_TIMEOUT_MS=4000
     PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS=8000 mix phx.server > tmp/smoke-server.log 2>&1 &
     server=$!
     trap 'kill $server 2>/dev/null; wait $server 2>/dev/null || true' EXIT
@@ -78,6 +79,7 @@ tui-smoke:
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p tmp
+    export RANDOS_CONNECT_TIMEOUT_MS=4000
     PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS=8000 mix phx.server > tmp/tui-smoke-server.log 2>&1 &
     server=$!
     trap 'kill $server 2>/dev/null; wait $server 2>/dev/null || true' EXIT

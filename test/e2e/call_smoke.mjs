@@ -10,6 +10,9 @@
 
 import {Browser, BASE_URL, sleep} from "./cdp.mjs"
 
+// The server's connect timeout; just smoke shortens it (RANDOS_CONNECT_TIMEOUT_MS).
+const CONNECT_TIMEOUT_MS = Number(process.env.RANDOS_CONNECT_TIMEOUT_MS ?? 15_000)
+
 // --- Scenarios ---------------------------------------------------------------
 
 const results = []
@@ -101,6 +104,42 @@ try {
     const streams = await c.streamCount()
     const live = await c.liveMicTracks()
     assert(live === 0, `${live} mic track(s) left live (${streams} captured after teardown)`)
+  })
+
+  // --- Client obligations (docs/architecture/participant_channel.md) -------
+  // The same scenarios run for the TUI in clients/tui/test/integration.
+
+  await scenario("obligation 6: mic denied ends the call with a reason; only the peer is requeued", async () => {
+    const denied = await browser.newPage("denied", {getUserMediaError: "NotAllowedError"})
+    const peer = await browser.newPage("peer6")
+    await Promise.all([denied.open(), peer.open()])
+    await denied.findRando("zh", "it")
+    await peer.findRando("it", "zh")
+
+    await denied.waitFor(
+      `document.querySelector("#matchmaking-error")?.textContent.includes("microphone")`,
+      "the reason on the idle page",
+    )
+    assert(await denied.eval(`!!document.querySelector("#idle-panel")`), "denied page isn't idle")
+    await peer.waitFor(`!!document.querySelector("#looking-panel")`, "the peer requeued")
+    await peer.stopLooking()
+  })
+
+  await scenario("obligation 4: a call that never connects ends for both at the connect timeout", async () => {
+    const stuck = await browser.newPage("stuck", {relayOnly: true})
+    const peer = await browser.newPage("peer4")
+    await Promise.all([stuck.open(), peer.open()])
+    await stuck.findRando("id", "ar")
+    await peer.findRando("ar", "id")
+
+    const limitMs = CONNECT_TIMEOUT_MS + 6_000
+    await stuck.waitFor(`window.__randosCallEnds > 0`, "the stuck page's call to end", limitMs)
+    await peer.waitFor(`window.__randosCallEnds > 0`, "the peer's call to end", limitMs)
+
+    // Both were requeued (connection_failed) and keep rematching; stop that.
+    await stuck.hangUp()
+    await peer.waitFor(`!!document.querySelector("#looking-panel")`, "the peer looking")
+    await peer.stopLooking()
   })
 } finally {
   await browser.close()
