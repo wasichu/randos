@@ -1,6 +1,6 @@
 # Randos roadmap
 
-Verified against the code at `9862e67` (2026-10-20). Update this line, and
+Verified against the code at `54ee3ea` (2026-10-20). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -92,7 +92,7 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (design accepted; Stage 0 in progress)
+### 4.3 Audio (Stage 1 built; a live two-person call is next)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
@@ -377,6 +377,42 @@ the advisor. Each item: **extract**, **merge**, **link**, or **leave** (with why
   Port scripts exit on stdin EOF); see "Testing" in AGENTS.md.
 Every commit passed `just precommit`, `just smoke`, and `just tui-smoke`.
 
+## Quality pass at the end of Phase 4.3 Stage 1 (done 2026-10-20)
+
+The milestone pass after STUN/TURN and the str0m checkpoint; no behaviour
+changes, reviewed with the advisor. Each gate ran `just precommit`,
+`just smoke`, `just tui-smoke`, and `just turn-check` (the only proof of the
+relay path).
+
+**Rust helper**
+- **Extract `candidates.rs`**: `call.rs`'s session also gathered candidates
+  and routed every datagram (STUN interception, TURN wrapping, the trickle
+  queue). Now `Candidates` (sans-IO) owns the STUN `Gatherer`, the `Relay`,
+  and the trickle; the session keeps the socket, the `Rtc`, and audio. The
+  receive order and "relayed data arrives at the relayed address" moved with
+  it, with unit tests.
+- **Regression guard for the late trickle**: `Candidates::trickle` is tested
+  with "SDP sent, mid unknown" directly (the bug once reached `main` with all
+  gates green; a timing-based call test couldn't pin it, this can). Checked
+  by reintroducing the bug: the test fails.
+- **Merge onto `stun-types`**: one STUN codec instead of our own plus the TURN
+  crate's; the RFC 5769 vector, a hand-built reply, and a new MAPPED-ADDRESS
+  test guard it.
+- **Extract `test_support.rs`**: the hand-built STUN reply and the fake STUN
+  and TURN servers; relay-only tests moved into `relay.rs`.
+- **Leave** the TURN crate's clock and `Transmit` types (contained in
+  `relay.rs`), and `Gatherer`'s retransmit timer (a STUN transaction detail,
+  not call policy; browsers do the same internally).
+
+**Docs**: the helper README, `call_flow.md` (the TUI diagram and the
+same/different table), and AGENTS' TUI row now cover STUN/TURN.
+
+**Owner decisions**
+- Bad TURN credentials surface after the crate's ~40 s transaction timeout,
+  by design; kept (the server's 15 s connect timeout decides the call first).
+- `relay_only` stays test-only (`CallConfig`), not a Port field; it's a
+  one-line field if a user's network ever needs diagnosing.
+
 ## Open items
 
 Not scheduled; pick up when relevant.
@@ -398,6 +434,14 @@ Not scheduled; pick up when relevant.
   a new connection is a new participant, by design).
 - **`boundary` library.** Deferred during cleanup; now that core vs web is a
   real split, reconsider enforcing it.
+- **Permissions before the allocation.** A remote candidate that arrives
+  before our TURN allocation is up gets no permission then (`Relay::permit`
+  fails quietly); it's installed on demand when ICE first sends to it.
+  Works (the checkpoint passed), but re-permitting known remote IPs on
+  `Allocated` would make relay connects faster. Watch for slow relay
+  connects in the live call.
+- **`turns:` (TLS) TURN** is unbuilt (`turn-client-rustls`), for networks
+  that block UDP; browsers already get `turns:` from the server.
 - **coturn follow-ups** for its next intentional rebuild: see
   [`coturn_audit.md`](coturn_audit.md).
 

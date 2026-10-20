@@ -7,6 +7,7 @@
 
 mod audio;
 mod call;
+mod candidates;
 mod codec;
 mod frame;
 mod loopback;
@@ -14,6 +15,8 @@ mod protocol;
 mod relay;
 mod resample;
 mod stun;
+#[cfg(test)]
+mod test_support;
 
 use std::io::{self, BufReader, BufWriter};
 use std::process::ExitCode;

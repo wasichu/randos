@@ -143,9 +143,11 @@ flowchart LR
     subgraph Helper["randos_media (Rust, clients/tui/native)"]
         Port["Port server<br/>(main.rs, protocol.rs:<br/>JSON in {:packet, 4} frames)"]
         Call["call session thread (call.rs):<br/>str0m Rtc, UDP socket,<br/>Opus encode/decode"]
+        Cand["candidates.rs: STUN (stun.rs),<br/>TURN relay (relay.rs),<br/>trickle, datagram routing"]
         Dev["audio::Devices<br/>(capture, playback, resample)"]
         Cpal["cpal callbacks<br/>(lock-free rings only)"]
         Port --> Call --> Dev --> Cpal
+        Call --> Cand
     end
 
     Server[("Server<br/>participant channel")] <--> Conn
@@ -200,6 +202,7 @@ sequenceDiagram
 | Client obligations | `participant_channel.md` | same, same tests |
 | ICE servers arrive in | a DOM attribute on the call element | the `state` push's call map |
 | WebRTC stack | the browser's | str0m in the Rust helper |
+| STUN / TURN candidates | the browser's ICE agent | the helper's own (`stun.rs`, `relay.rs` over `turn-client-proto`), one relay allocation per call |
 | Mic, speaker, codec | browser (Opus) | cpal + libopus + resampling in the helper |
 | "I'm leaving" | `pagehide` → `peer_disconnected` | quit → `peer_disconnected` (`Tui.Connection.leave/2`) |
 | Error text | from the server (`ParticipantErrors`) | same, via `error_message` |

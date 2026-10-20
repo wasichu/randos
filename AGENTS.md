@@ -81,7 +81,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
 | Channel API | `RandosWeb.ParticipantSocket`/`ParticipantChannel` (shared `RandosWeb.ParticipantShell`) | Anonymous JSON API for non-browser clients (the TUI). Protocol: `docs/architecture/participant_channel.md`; keep it in sync with the channel |
 | Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
-| TUI client | `clients/tui` (separate Mix project: `Tui.Supervisor` over `Tui.App`, `Tui.Model`, `Tui.Connection`, and `Tui.Media`, which owns the Rust media helper over a Port; local audio state is the pure `Tui.Media.State`) | Terminal client over the participant channel (call audio is Phase 4.3). **Written against `participant_channel.md` only, never the channel source**; anything it needs that the doc lacks is a doc bug. Renders server state; no state machine of its own |
+| TUI client | `clients/tui` (separate Mix project: `Tui.Supervisor` over `Tui.App`, `Tui.Model`, `Tui.Connection`, and `Tui.Media`, which owns the Rust media helper over a Port; local audio state is the pure `Tui.Media.State`) | Terminal client over the participant channel, with call audio (Phase 4.3) in the Rust helper `clients/tui/native`. **Written against `participant_channel.md` only, never the channel source**; anything it needs that the doc lacks is a doc bug. Renders server state; no state machine of its own |
 
 - Processes notify LiveViews over `Randos.PubSub`. Topic per participant:
   `"matchmaking:participant:<id>"`.

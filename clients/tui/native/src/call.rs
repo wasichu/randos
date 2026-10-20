@@ -27,10 +27,9 @@ use str0m::{
 
 use crate::Error;
 use crate::audio::{Capture, Devices, Input, Notify, Output, Playback, Started};
+use crate::candidates::{Candidates, Found, Inbound, Outbound};
 use crate::codec::{Decoder, Encoder, FRAME, Peak};
 use crate::protocol::{CallStats, Event};
-use crate::relay::{self, Relay, RelayEvent};
-use crate::stun::{self, Gatherer, Reply};
 
 /// The longest the loop waits on the socket, so mic frames and commands are
 /// serviced well inside one 20 ms frame.
@@ -170,13 +169,9 @@ struct Session {
     buf: Vec<u8>,
     ice_servers: Value,
     relay_only: bool,
-    stun: Gatherer,
-    /// Our TURN allocation, if the call has a `turn:` server.
-    relay: Option<Relay>,
-    /// Our candidates found since the last `gather`, trickled once our SDP
-    /// (offer or answer) has gone out.
-    unsent_candidates: Vec<String>,
-    sdp_sent: bool,
+    /// Server-reflexive and relayed candidates, and the datagram routing
+    /// they need (set up in `run`).
+    candidates: Candidates,
 }
 
 impl Session {
@@ -227,28 +222,15 @@ impl Session {
             buf: vec![0; 2000],
             ice_servers: config.ice_servers.clone(),
             relay_only: config.relay_only,
-            stun: Gatherer::new(Vec::new(), Instant::now()),
-            relay: None,
-            unsent_candidates: Vec::new(),
-            sdp_sent: false,
+            candidates: Candidates::new(local, Vec::new(), None),
         })
     }
 
     fn run(&mut self, role: Role, inbox: &Receiver<Command>) -> Result<(), Error> {
-        // Resolve the STUN servers here, not in `Call::start`: DNS can be
-        // slow, and the Port must keep answering meanwhile.
-        let servers = if self.relay_only {
-            Vec::new()
-        } else {
-            stun::resolve(&stun::stun_servers(&self.ice_servers), self.local)
-        };
-        self.stun = Gatherer::new(servers, Instant::now());
-        self.relay = relay::turn_servers(&self.ice_servers)
-            .first()
-            .and_then(|server| {
-                let addr = relay::resolve(server, self.local)?;
-                Some(Relay::allocate(self.local, addr, server))
-            });
+        // Resolve the STUN and TURN servers here, not in `Call::start`: DNS
+        // can be slow, and the Port must keep answering meanwhile.
+        self.candidates =
+            Candidates::from_ice_servers(&self.ice_servers, self.local, self.relay_only);
 
         if role == Role::Offerer {
             self.send_offer()?;
@@ -285,10 +267,8 @@ impl Session {
         // instead of waiting out its own disconnect timer.
         self.rtc.disconnect();
         let drained = self.drain();
-        if let Some(relay) = self.relay.as_mut() {
-            for message in relay.close() {
-                let _ = self.socket.send_to(&message, relay.server());
-            }
+        for (to, message) in self.candidates.close() {
+            let _ = self.socket.send_to(&message, to);
         }
         drained
     }
@@ -299,7 +279,7 @@ impl Session {
         let (offer, pending) = change.apply().ok_or("no offer to send")?;
         self.mid = Some(mid);
         self.pending_offer = Some(pending);
-        self.sdp_sent = true;
+        self.candidates.sdp_sent();
         self.signal_out(
             "offer",
             json!({"sdp": {"type": "offer", "sdp": offer.to_sdp_string()}}),
@@ -318,7 +298,7 @@ impl Session {
                     "answer",
                     json!({"sdp": {"type": "answer", "sdp": answer.to_sdp_string()}}),
                 );
-                self.sdp_sent = true;
+                self.candidates.sdp_sent();
                 self.remote_description_set()
             }
             "answer" => {
@@ -334,9 +314,7 @@ impl Session {
                 let Some(candidate) = remote_candidate(&signal.payload, &mut self.report) else {
                     return Ok(());
                 };
-                if let Some(relay) = self.relay.as_mut() {
-                    relay.permit(candidate.addr().ip());
-                }
+                self.candidates.permit(candidate.addr().ip());
                 if self.remote_description_set {
                     self.rtc.add_remote_candidate(candidate);
                 } else {
@@ -402,23 +380,15 @@ impl Session {
         let input = match self.socket.recv_from(&mut self.buf) {
             Ok((n, source)) => {
                 self.buf.truncate(n);
-                // A STUN server answering us, not something for str0m.
-                match self.stun.handle(&self.buf) {
-                    Reply::Mapped(mapped) => return self.add_server_reflexive(mapped),
-                    Reply::Failed => return Ok(()),
-                    Reply::NotOurs => {}
-                }
-                // From the TURN server: its own business, or a peer's packet
-                // relayed to us, which str0m sees as arriving at the relayed
-                // address (so it pairs it with our relay candidate).
-                if let Some(relay) = self.relay.as_mut().filter(|r| r.server() == source) {
-                    let relayed = relay.relayed();
-                    return match (relay.recv(&self.buf), relayed) {
-                        (Some((peer, data)), Some(destination)) => {
-                            self.handle_datagram(peer, destination, &data)
-                        }
-                        _ => Ok(()),
-                    };
+                match self.candidates.inbound(source, &self.buf)? {
+                    Inbound::Handled => return Ok(()),
+                    Inbound::Found(found) => return self.add_local(found),
+                    Inbound::Relayed {
+                        source,
+                        destination,
+                        data,
+                    } => return self.handle_datagram(source, destination, &data),
+                    Inbound::Direct => {}
                 }
                 RtcInput::Receive(
                     Instant::now(),
@@ -481,25 +451,11 @@ impl Session {
                     return Ok(());
                 }
                 RtcOutput::Transmit(transmit) => {
-                    // From our relay candidate: wrap it for the TURN server.
-                    let (contents, destination) = match self.relay.as_mut() {
-                        Some(relay) if relay.relayed() == Some(transmit.source) => {
-                            match relay.send(transmit.destination, &transmit.contents) {
-                                Ok(Some(wrapped)) => (wrapped, relay.server()),
-                                // No permission yet (or a relay error): ICE
-                                // retries the check.
-                                Ok(None) | Err(_) => {
-                                    self.report.send_errors += 1;
-                                    continue;
-                                }
-                            }
-                        }
-                        _ => (transmit.contents.to_vec(), transmit.destination),
-                    };
-                    // UDP is best-effort: an unreachable candidate (or a
-                    // network change) fails one send, not the call.
-                    if self.socket.send_to(&contents, destination).is_err() {
-                        self.report.send_errors += 1;
+                    let (source, to) = (transmit.source, transmit.destination);
+                    match self.candidates.outbound(source, to, &transmit.contents) {
+                        Outbound::Direct => self.send(&transmit.contents, to),
+                        Outbound::Wrapped(wrapped, server) => self.send(&wrapped, server),
+                        Outbound::Dropped => self.report.send_errors += 1,
                     }
                 }
                 RtcOutput::Event(event) => self.handle_event(event)?,
@@ -548,78 +504,38 @@ impl Session {
         Ok(())
     }
 
-    /// Sends due STUN and TURN messages and trickles our new candidates
-    /// once our SDP is out.
+    /// Sends due STUN and TURN messages, adds the relay candidate once it's
+    /// allocated, and trickles our new candidates.
     fn gather(&mut self) -> Result<(), Error> {
-        if !self.stun.is_done() {
-            for (server, request) in self.stun.poll_transmit(Instant::now()) {
-                if self.socket.send_to(&request, server).is_err() {
-                    self.report.send_errors += 1;
-                }
-            }
+        let (messages, found) = self.candidates.poll(Instant::now())?;
+        for (to, message) in messages {
+            self.send(&message, to);
         }
-
-        if let Some(relay) = self.relay.as_mut() {
-            let (messages, _wake) = relay.poll_transmit();
-            for message in messages {
-                if self.socket.send_to(&message, relay.server()).is_err() {
-                    self.report.send_errors += 1;
-                }
-            }
-            match relay.poll_event() {
-                Some(RelayEvent::Allocated(addr)) => self.add_relayed(addr)?,
-                Some(RelayEvent::Failed) => {
-                    eprintln!("randos_media: TURN allocation failed; no relay candidate");
-                    self.relay = None;
-                }
-                None => {}
-            }
+        if let Some(found) = found {
+            self.add_local(found)?;
         }
-
-        // Not gated on knowing the mid: an answerer learns it only later
-        // (str0m's `MediaAdded`), and a candidate held back until then
-        // never reaches the peer, who then never permits it on TURN. One
-        // m-line, so `sdpMLineIndex` 0 identifies it.
-        if self.sdp_sent && !self.unsent_candidates.is_empty() {
-            let mid = self.mid.map(|mid| mid.to_string());
-            for candidate in std::mem::take(&mut self.unsent_candidates) {
-                self.signal_out(
-                    "ice_candidate",
-                    json!({"candidate": {
-                        "candidate": candidate,
-                        "sdpMid": mid,
-                        "sdpMLineIndex": 0,
-                        "usernameFragment": null,
-                    }}),
-                );
-            }
+        for payload in self.candidates.trickle(self.mid) {
+            self.signal_out("ice_candidate", payload);
         }
         Ok(())
     }
 
-    /// A STUN server told us our outside address: offer it as a candidate,
-    /// trickled (`gather`).
-    fn add_server_reflexive(&mut self, mapped: SocketAddr) -> Result<(), Error> {
-        // Not behind a NAT (or a test): the host candidate already covers it.
-        if mapped == self.local {
-            return Ok(());
-        }
-        let candidate = Candidate::server_reflexive(mapped, self.local, "udp")?;
-        if let Some(added) = self.rtc.add_local_candidate(candidate) {
-            self.unsent_candidates.push(added.to_sdp_string());
-            self.report.local_candidates.push("srflx".into());
+    /// A server-reflexive or relayed candidate of ours: offer it (trickled
+    /// by `gather`).
+    fn add_local(&mut self, found: Found) -> Result<(), Error> {
+        if let Some(added) = self.rtc.add_local_candidate(found.candidate) {
+            self.candidates.added(added.to_sdp_string());
+            self.report.local_candidates.push(found.kind.into());
         }
         self.drain()
     }
 
-    /// The TURN server gave us a relayed address: offer it (trickled).
-    fn add_relayed(&mut self, addr: SocketAddr) -> Result<(), Error> {
-        let candidate = Candidate::relayed(addr, self.local, "udp")?;
-        if let Some(added) = self.rtc.add_local_candidate(candidate) {
-            self.unsent_candidates.push(added.to_sdp_string());
-            self.report.local_candidates.push("relay".into());
+    /// UDP is best-effort: an unreachable candidate (or a network change)
+    /// fails one send, not the call.
+    fn send(&mut self, datagram: &[u8], to: SocketAddr) {
+        if self.socket.send_to(datagram, to).is_err() {
+            self.report.send_errors += 1;
         }
-        self.drain()
     }
 
     fn signal_out(&self, kind: &str, payload: Value) {
@@ -744,9 +660,9 @@ impl Report {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::net::ToSocketAddrs;
+    use crate::test_support;
     use std::sync::Mutex;
-    use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::atomic::Ordering;
 
     /// What one test peer reported, collected from its `Notify`.
     #[derive(Default)]
@@ -856,25 +772,10 @@ mod tests {
         answerer.stop().unwrap();
     }
 
-    /// A STUN server on loopback that answers every Binding request with
-    /// `mapped` (as a NAT would report an outside address).
-    fn fake_stun_server(mapped: SocketAddr) -> SocketAddr {
-        let socket = UdpSocket::bind("127.0.0.1:0").unwrap();
-        let addr = socket.local_addr().unwrap();
-        thread::spawn(move || {
-            let mut buf = [0u8; 1500];
-            while let Ok((n, from)) = socket.recv_from(&mut buf) {
-                let reply = crate::stun::tests::reply_to(&buf[..n], mapped);
-                let _ = socket.send_to(&reply, from);
-            }
-        });
-        addr
-    }
-
     #[test]
     fn a_stun_server_gives_a_trickled_srflx_candidate_and_the_call_still_connects() {
         let outside: SocketAddr = "203.0.113.7:45678".parse().unwrap();
-        let stun = fake_stun_server(outside);
+        let stun = test_support::fake_stun_server(outside);
         let ice = json!([{"urls": format!("stun:{stun}")}]);
 
         let (offerer, offerer_seen) = peer_with(Role::Offerer, ice);
@@ -921,105 +822,9 @@ mod tests {
         answerer.stop().unwrap();
     }
 
-    /// What the fake TURN server saw from its client.
-    #[derive(Default)]
-    struct TurnSeen {
-        create_permissions: AtomicUsize,
-        send_indications: AtomicUsize,
-    }
-
-    /// A TURN server on loopback (`turn-server-proto`, the same sans-IO
-    /// family as our client), user `user`/`pass`. Returns its address.
-    fn fake_turn_server() -> (SocketAddr, Arc<TurnSeen>) {
-        use turn_server_proto::api::{Transmit, TurnServerApi, TurnServerPollRet};
-        use turn_server_proto::server::TurnServer;
-        use turn_server_proto::stun::types::TransportType;
-        use turn_server_proto::types::Instant as TurnInstant;
-
-        let listen = UdpSocket::bind("127.0.0.1:0").unwrap();
-        let listen_addr = listen.local_addr().unwrap();
-        listen.set_nonblocking(true).unwrap();
-        let seen = Arc::new(TurnSeen::default());
-        let counts = Arc::clone(&seen);
-        thread::spawn(move || {
-            let base = Instant::now();
-            let mut server = TurnServer::new(TransportType::Udp, listen_addr, "randos".into());
-            server.add_user("user".into(), "pass".into());
-            let mut relayed: Option<UdpSocket> = None;
-            let mut buf = [0u8; 1500];
-            loop {
-                let now = TurnInstant::from_std(base);
-                let mut got = Vec::new();
-                if let Ok((n, from)) = listen.recv_from(&mut buf) {
-                    match u16::from_be_bytes([buf[0], buf[1]]) {
-                        0x0008 => counts.create_permissions.fetch_add(1, Ordering::Relaxed),
-                        0x0016 => counts.send_indications.fetch_add(1, Ordering::Relaxed),
-                        _ => 0,
-                    };
-                    got.push((buf[..n].to_vec(), from, listen_addr));
-                }
-                if let Some(socket) = &relayed
-                    && let Ok((n, from)) = socket.recv_from(&mut buf)
-                {
-                    got.push((buf[..n].to_vec(), from, socket.local_addr().unwrap()));
-                }
-                let mut out = Vec::new();
-                for (data, from, to) in got {
-                    let transmit = Transmit {
-                        data,
-                        transport: TransportType::Udp,
-                        from,
-                        to,
-                    };
-                    if let Some(reply) = server.recv(transmit, now) {
-                        let reply = reply.build();
-                        out.push((reply.data, reply.from, reply.to));
-                    }
-                }
-                if let TurnServerPollRet::AllocateSocket {
-                    transport,
-                    listen_addr,
-                    client_addr,
-                    allocation_transport,
-                    family,
-                } = server.poll(now)
-                {
-                    let socket = UdpSocket::bind("127.0.0.1:0").unwrap();
-                    socket.set_nonblocking(true).unwrap();
-                    let addr = socket.local_addr().unwrap();
-                    relayed = Some(socket);
-                    server.allocated_socket(
-                        transport,
-                        listen_addr,
-                        client_addr,
-                        allocation_transport,
-                        family,
-                        Ok(addr),
-                        now,
-                    );
-                }
-                while let Some(transmit) = server.poll_transmit(now) {
-                    out.push((transmit.data, transmit.from, transmit.to));
-                }
-                for (data, from, to) in out {
-                    let socket = if from == listen_addr {
-                        Some(&listen)
-                    } else {
-                        relayed.as_ref()
-                    };
-                    if let Some(socket) = socket {
-                        let _ = socket.send_to(&data, to);
-                    }
-                }
-                thread::sleep(Duration::from_millis(1));
-            }
-        });
-        (listen_addr, seen)
-    }
-
     #[test]
     fn a_turn_server_gives_a_trickled_relay_candidate_and_the_call_still_connects() {
-        let (turn, turn_seen) = fake_turn_server();
+        let (turn, turn_seen) = test_support::fake_turn_server();
         let ice =
             json!([{"urls": format!("turn:{turn}"), "username": "user", "credential": "pass"}]);
 
@@ -1060,147 +865,6 @@ mod tests {
 
         offerer.stop().unwrap();
         answerer.stop().unwrap();
-    }
-
-    /// Drives a lone `Relay` over a real socket for up to `time`, until it
-    /// reports an event. Also returns how many datagrams the server sent us.
-    fn allocate(
-        server: SocketAddr,
-        user: &str,
-        pass: &str,
-        time: Duration,
-    ) -> (Option<RelayEvent>, usize) {
-        let bind = if server.ip().is_loopback() {
-            "127.0.0.1:0"
-        } else {
-            "0.0.0.0:0"
-        };
-        let socket = UdpSocket::bind(bind).unwrap();
-        socket
-            .set_read_timeout(Some(Duration::from_millis(20)))
-            .unwrap();
-        let local = socket.local_addr().unwrap();
-        let creds = relay::TurnServer {
-            host: server.to_string(),
-            username: user.into(),
-            credential: pass.into(),
-        };
-        let mut relay = Relay::allocate(local, server, &creds);
-        let deadline = Instant::now() + time;
-        let (mut buf, mut received) = ([0u8; 1500], 0);
-        while Instant::now() < deadline {
-            for message in relay.poll_transmit().0 {
-                socket.send_to(&message, server).unwrap();
-            }
-            if let Some(event) = relay.poll_event() {
-                return (Some(event), received);
-            }
-            if let Ok((n, _)) = socket.recv_from(&mut buf) {
-                received += 1;
-                relay.recv(&buf[..n]);
-            }
-        }
-        (None, received)
-    }
-
-    #[test]
-    fn a_relay_needs_the_right_credentials() {
-        let (turn, _) = fake_turn_server();
-        let (event, _) = allocate(turn, "user", "pass", Duration::from_secs(2));
-        assert!(matches!(event, Some(RelayEvent::Allocated(_))), "{event:?}");
-        // Refused: no relay (the failure itself is reported only after the
-        // crate's ~40 s transaction timeout; see `RelayEvent::Failed`).
-        let (event, received) = allocate(turn, "user", "wrong", Duration::from_secs(1));
-        assert_eq!(event, None);
-        assert!(received >= 2, "the server answered both requests");
-    }
-
-    /// The reachability check that needs no secret: coturn answers, and
-    /// refuses made-up credentials.
-    #[test]
-    #[ignore = "talks to the real coturn (bogus credentials, no secret)"]
-    fn production_turn_answers_and_refuses_bogus_credentials() {
-        let server = "turn.slowinput.org:3478"
-            .to_socket_addrs()
-            .unwrap()
-            .find(SocketAddr::is_ipv4)
-            .unwrap();
-        let (event, received) = allocate(server, "0:bogus", "bogus", Duration::from_secs(3));
-        assert_eq!(event, None);
-        assert!(received >= 2, "coturn answered {received} times");
-    }
-
-    /// The checkpoint: two relays on the real coturn, one sending to the
-    /// other's relayed address (allocate, permissions, Send/Data
-    /// indications, all against the server we run). Credentials from
-    /// `TURN_TEST_USERNAME`/`TURN_TEST_CREDENTIAL` (TURN REST, as the
-    /// server issues them); see the README for the command.
-    #[test]
-    #[ignore = "needs coturn credentials in the environment"]
-    fn production_turn_relays_data_between_two_allocations() {
-        let user = std::env::var("TURN_TEST_USERNAME").unwrap();
-        let pass = std::env::var("TURN_TEST_CREDENTIAL").unwrap();
-        let server = "turn.slowinput.org:3478"
-            .to_socket_addrs()
-            .unwrap()
-            .find(SocketAddr::is_ipv4)
-            .unwrap();
-        let creds = relay::TurnServer {
-            host: server.to_string(),
-            username: user,
-            credential: pass,
-        };
-
-        let peers: Vec<(UdpSocket, Relay)> = (0..2)
-            .map(|_| {
-                let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
-                socket.set_nonblocking(true).unwrap();
-                let relay = Relay::allocate(socket.local_addr().unwrap(), server, &creds);
-                (socket, relay)
-            })
-            .collect();
-        let mut peers = peers;
-        let mut buf = [0u8; 1500];
-        let mut received = None;
-        let deadline = Instant::now() + Duration::from_secs(10);
-        while Instant::now() < deadline && received.is_none() {
-            let relayed: Vec<Option<SocketAddr>> = peers.iter().map(|(_, r)| r.relayed()).collect();
-            for (i, (socket, relay)) in peers.iter_mut().enumerate() {
-                for message in relay.poll_transmit().0 {
-                    socket.send_to(&message, server).unwrap();
-                }
-                if let Some(RelayEvent::Failed) = relay.poll_event() {
-                    panic!("allocation {i} failed");
-                }
-                if let Ok((n, _)) = socket.recv_from(&mut buf)
-                    && let Some((from, data)) = relay.recv(&buf[..n])
-                {
-                    received = Some((i, from, data));
-                }
-                // Each lets the other in; peer 0 keeps sending to peer 1.
-                if let Some(other) = relayed[1 - i] {
-                    relay.permit(other.ip());
-                    if i == 0
-                        && let Some(wrapped) = relay.send(other, b"hello through coturn").unwrap()
-                    {
-                        socket.send_to(&wrapped, server).unwrap();
-                    }
-                }
-            }
-            thread::sleep(Duration::from_millis(20));
-        }
-
-        let (to, from, data) = received.expect("no data relayed within 10 s");
-        assert_eq!(
-            (to, data.as_slice()),
-            (1, b"hello through coturn".as_slice())
-        );
-        assert_eq!(Some(from), peers[0].1.relayed());
-        for (socket, relay) in &mut peers {
-            for message in relay.close() {
-                let _ = socket.send_to(&message, server);
-            }
-        }
     }
 
     /// The checkpoint, end to end: two relay-only peers (no host or STUN

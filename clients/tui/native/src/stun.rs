@@ -181,8 +181,9 @@ fn parse_binding_response(datagram: &[u8]) -> Option<(TransactionId, Option<Sock
 }
 
 #[cfg(test)]
-pub(crate) mod tests {
+mod tests {
     use super::*;
+    use crate::test_support::stun_reply;
     use serde_json::json;
 
     #[test]
@@ -219,7 +220,7 @@ pub(crate) mod tests {
         assert_eq!(&request[0..2], &[0x00, 0x01], "a Binding request");
 
         let mapped: SocketAddr = "203.0.113.7:40000".parse().unwrap();
-        let reply = reply_to(request, mapped);
+        let reply = stun_reply(request, mapped);
         assert_eq!(gatherer.handle(&reply), Reply::Mapped(mapped));
         assert!(gatherer.is_done());
         // A duplicate (a retransmit's answer) is no longer ours.
@@ -286,22 +287,5 @@ pub(crate) mod tests {
         let mut truncated = RFC5769_IPV4_RESPONSE.to_vec();
         truncated.pop();
         assert_eq!(parse_binding_response(&truncated), None);
-    }
-
-    /// A Binding success response to `request` (RFC 8489 §5, §14.2), built by
-    /// hand from the spec rather than by the library under test: the header
-    /// with the request's transaction id, and XOR-MAPPED-ADDRESS (IPv4).
-    pub(crate) fn reply_to(request: &[u8], mapped: SocketAddr) -> Vec<u8> {
-        const COOKIE: u32 = 0x2112_A442;
-        let SocketAddr::V4(mapped) = mapped else {
-            panic!("IPv4 only")
-        };
-        let mut reply = vec![0x01, 0x01, 0x00, 0x0C]; // success response, 12 bytes of attributes
-        reply.extend_from_slice(&COOKIE.to_be_bytes());
-        reply.extend_from_slice(&request[8..20]); // transaction id
-        reply.extend_from_slice(&[0x00, 0x20, 0x00, 0x08, 0x00, 0x01]); // XOR-MAPPED-ADDRESS, IPv4
-        reply.extend_from_slice(&(mapped.port() ^ (COOKIE >> 16) as u16).to_be_bytes());
-        reply.extend_from_slice(&(u32::from(*mapped.ip()) ^ COOKIE).to_be_bytes());
-        reply
     }
 }

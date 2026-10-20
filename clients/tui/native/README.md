@@ -84,14 +84,21 @@ For networks where that isn't enough (symmetric NATs, strict firewalls) the
 helper allocates a relay on the first UDP `turn:` server (`src/relay.rs`,
 over `turn-client-proto`): one allocation per call, freed when the call
 stops; data goes in Send/Data indications (no channel binding). It trickles
-the relayed address as a `relay` candidate (candidates are trickled once our
-SDP is out, with `sdpMLineIndex` 0 and `sdpMid` once known: an answerer
-learns its mid only later, and a relay candidate the peer never hears of
-gets no TURN permission, so the peer's checks are dropped), installs a permission for each
+the relayed address as a `relay` candidate, installs a permission for each
 remote candidate's IP, and wraps str0m's packets from the relay candidate
 for the TURN server. A relay that fails (or credentials coturn refuses) only
 means no relay candidate; the call never waits on it. `turns:` and TCP
 TURN aren't supported.
+
+`src/candidates.rs` ties the two together for the call session (sans-IO):
+it owns the STUN gatherer and the relay, trickles our new candidates, and
+routes datagrams on the shared call socket. Incoming: a reply to our STUN
+request (by transaction id), then anything from the TURN server (unwrapped
+peer data is handed to str0m as arriving at the *relayed* address, so ICE
+pairs it with the relay candidate), then str0m. Candidates are trickled once
+our SDP is out, with `sdpMLineIndex` 0 and `sdpMid` once known: an answerer
+learns its mid only later, and a relay candidate the peer never hears of
+gets no TURN permission, so the peer's checks are dropped.
 
 The helper exits when its stdin closes (the Port is closed or the TUI dies),
 stopping any loopback. It never writes to stderr in Port mode except a fatal

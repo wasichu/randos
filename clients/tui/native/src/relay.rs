@@ -230,6 +230,9 @@ impl Relay {
 mod tests {
     use super::*;
     use serde_json::json;
+    use std::net::UdpSocket;
+    use std::thread;
+    use std::time::{Duration, Instant};
 
     #[test]
     fn udp_turn_servers_with_credentials_from_the_channels_ice_servers() {
@@ -249,5 +252,146 @@ mod tests {
         assert_eq!(servers[0].username, "1700000000:anon");
         assert_eq!(servers[0].credential, "secret");
         assert!(turn_servers(&json!(null)).is_empty());
+    }
+
+    /// Drives a lone `Relay` over a real socket for up to `time`, until it
+    /// reports an event. Also returns how many datagrams the server sent us.
+    fn allocate(
+        server: SocketAddr,
+        user: &str,
+        pass: &str,
+        time: Duration,
+    ) -> (Option<RelayEvent>, usize) {
+        let bind = if server.ip().is_loopback() {
+            "127.0.0.1:0"
+        } else {
+            "0.0.0.0:0"
+        };
+        let socket = UdpSocket::bind(bind).unwrap();
+        socket
+            .set_read_timeout(Some(Duration::from_millis(20)))
+            .unwrap();
+        let local = socket.local_addr().unwrap();
+        let creds = TurnServer {
+            host: server.to_string(),
+            username: user.into(),
+            credential: pass.into(),
+        };
+        let mut relay = Relay::allocate(local, server, &creds);
+        let deadline = Instant::now() + time;
+        let (mut buf, mut received) = ([0u8; 1500], 0);
+        while Instant::now() < deadline {
+            for message in relay.poll_transmit().0 {
+                socket.send_to(&message, server).unwrap();
+            }
+            if let Some(event) = relay.poll_event() {
+                return (Some(event), received);
+            }
+            if let Ok((n, _)) = socket.recv_from(&mut buf) {
+                received += 1;
+                relay.recv(&buf[..n]);
+            }
+        }
+        (None, received)
+    }
+
+    #[test]
+    fn a_relay_needs_the_right_credentials() {
+        let (turn, _) = crate::test_support::fake_turn_server();
+        let (event, _) = allocate(turn, "user", "pass", Duration::from_secs(2));
+        assert!(matches!(event, Some(RelayEvent::Allocated(_))), "{event:?}");
+        // Refused: no relay (the failure itself is reported only after the
+        // crate's ~40 s transaction timeout; see `RelayEvent::Failed`).
+        let (event, received) = allocate(turn, "user", "wrong", Duration::from_secs(1));
+        assert_eq!(event, None);
+        assert!(received >= 2, "the server answered both requests");
+    }
+
+    /// The reachability check that needs no secret: coturn answers, and
+    /// refuses made-up credentials.
+    #[test]
+    #[ignore = "talks to the real coturn (bogus credentials, no secret)"]
+    fn production_turn_answers_and_refuses_bogus_credentials() {
+        let server = "turn.slowinput.org:3478"
+            .to_socket_addrs()
+            .unwrap()
+            .find(SocketAddr::is_ipv4)
+            .unwrap();
+        let (event, received) = allocate(server, "0:bogus", "bogus", Duration::from_secs(3));
+        assert_eq!(event, None);
+        assert!(received >= 2, "coturn answered {received} times");
+    }
+
+    /// The checkpoint: two relays on the real coturn, one sending to the
+    /// other's relayed address (allocate, permissions, Send/Data
+    /// indications, all against the server we run). Credentials from
+    /// `TURN_TEST_USERNAME`/`TURN_TEST_CREDENTIAL` (TURN REST, as the
+    /// server issues them); see the README for the command.
+    #[test]
+    #[ignore = "needs coturn credentials in the environment"]
+    fn production_turn_relays_data_between_two_allocations() {
+        let user = std::env::var("TURN_TEST_USERNAME").unwrap();
+        let pass = std::env::var("TURN_TEST_CREDENTIAL").unwrap();
+        let server = "turn.slowinput.org:3478"
+            .to_socket_addrs()
+            .unwrap()
+            .find(SocketAddr::is_ipv4)
+            .unwrap();
+        let creds = TurnServer {
+            host: server.to_string(),
+            username: user,
+            credential: pass,
+        };
+
+        let peers: Vec<(UdpSocket, Relay)> = (0..2)
+            .map(|_| {
+                let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
+                socket.set_nonblocking(true).unwrap();
+                let relay = Relay::allocate(socket.local_addr().unwrap(), server, &creds);
+                (socket, relay)
+            })
+            .collect();
+        let mut peers = peers;
+        let mut buf = [0u8; 1500];
+        let mut received = None;
+        let deadline = Instant::now() + Duration::from_secs(10);
+        while Instant::now() < deadline && received.is_none() {
+            let relayed: Vec<Option<SocketAddr>> = peers.iter().map(|(_, r)| r.relayed()).collect();
+            for (i, (socket, relay)) in peers.iter_mut().enumerate() {
+                for message in relay.poll_transmit().0 {
+                    socket.send_to(&message, server).unwrap();
+                }
+                if let Some(RelayEvent::Failed) = relay.poll_event() {
+                    panic!("allocation {i} failed");
+                }
+                if let Ok((n, _)) = socket.recv_from(&mut buf)
+                    && let Some((from, data)) = relay.recv(&buf[..n])
+                {
+                    received = Some((i, from, data));
+                }
+                // Each lets the other in; peer 0 keeps sending to peer 1.
+                if let Some(other) = relayed[1 - i] {
+                    relay.permit(other.ip());
+                    if i == 0
+                        && let Some(wrapped) = relay.send(other, b"hello through coturn").unwrap()
+                    {
+                        socket.send_to(&wrapped, server).unwrap();
+                    }
+                }
+            }
+            thread::sleep(Duration::from_millis(20));
+        }
+
+        let (to, from, data) = received.expect("no data relayed within 10 s");
+        assert_eq!(
+            (to, data.as_slice()),
+            (1, b"hello through coturn".as_slice())
+        );
+        assert_eq!(Some(from), peers[0].1.relayed());
+        for (socket, relay) in &mut peers {
+            for message in relay.close() {
+                let _ = socket.send_to(&message, server);
+            }
+        }
     }
 }
