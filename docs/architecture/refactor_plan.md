@@ -207,6 +207,14 @@ bn, ru, ja, fr, de, ko, it, tr, id. Arabic needs right-to-left layout.
    - reference-free quality estimation (e.g. COMET-Kiwi; check its license,
      though eval-only use is different from shipping);
    - an LLM judge for tone (calm, informal) as a tiebreaker.
+   **Hardware bound:** everything runs locally on the owner's machine (Apple
+   M5 Pro, 48 GB unified memory, ~36 GB usable by the GPU): dedicated
+   translation models at any size listed, LLMs up to ~32B at 4-bit (MLX),
+   nothing 70B-class. ~1,100 short strings in all, so memory, not speed, is
+   the limit. The LLM tone judge comes from a different family than any LLM
+   contestant (models favour their own output). Tooling (Python,
+   `transformers` on MPS, `mlx-lm`) lives in its own directory and pinned
+   environment, never in the app's dependencies.
 3. **Results as documentation.** A page or diagram of the shootout: scores per
    model and language, where models disagree, what failed the checks. It
    doubles as the record of why each language uses the model it does.
