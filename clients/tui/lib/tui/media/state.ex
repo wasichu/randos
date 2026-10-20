@@ -33,6 +33,7 @@ defmodule Tui.Media.State do
   @type phase :: :starting | :running | :done | :failed
   @type mic_test :: %{phase: phase(), stats: map() | nil, error: String.t() | nil}
   @type call :: %{
+          optional(:levels) => %{you: [float()], peer: [float()]},
           seq: pos_integer(),
           phase: :starting | :active,
           connection: :connecting | :connected | :disconnected | :failed,
@@ -164,6 +165,10 @@ defmodule Tui.Media.State do
       do: report_media(state, String.to_existing_atom(helper_state), payload["reason"])
 
   def event(%{call: %{}} = state, "call_stats", stats), do: {put_call(state, stats: stats), []}
+
+  # The audio meters' bars (20 a second): only drawn, never acted on.
+  def event(%{call: %{}} = state, "call_levels", %{"you" => you, "peer" => peer}),
+    do: {put_call(state, levels: %{you: you, peer: peer}), []}
 
   # A fresh helper: whatever was running died with the old one.
   def event(state, "ready", _payload) do

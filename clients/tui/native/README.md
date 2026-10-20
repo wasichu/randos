@@ -65,6 +65,7 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 | `call_signal` | `type`, `payload`: a signal for the peer in the channel's shape; push it as the channel's `signal` event unchanged |
 | `call_state` | `state`: `connected`, `disconnected` (may recover), or `failed` (the call stopped; `reason`) |
 | `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed`, `dropped`, `skipped_candidates`, `send_errors` (cumulative), `local_candidates` (kinds offered so far: `host`, then `srflx` and/or `relay` as they arrive), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
+| `call_levels` | every 50 ms: `you` (as sent) and `peer` (as played), 12 bars each, 0..1, lowest frequencies first: the website visualizer's numbers (`src/spectrum.rs` does what its `AnalyserNode` does), drawn as the TUI's audio meters |
 
 **Calls.** The helper binds one UDP socket and offers it as its host
 candidate, which is in the offer or answer SDP (no local trickle yet). Remote
@@ -124,6 +125,7 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `str0m` 0.24 (+ `str0m-proto`, `str0m-rust-crypto`, `is`) | WebRTC: ICE (`is`), DTLS, SRTP, RTP, SDP. Sans-IO (no threads, async, or callbacks), so the call is one plain loop we own. Built with `--no-default-features --features rust-crypto` | MIT/Apache-2.0 | No: `rust-crypto` is pure Rust (no OpenSSL) |
 | `serde` 1, `serde_json` 1 | The Port's JSON messages (the TUI side already uses Jason) | MIT/Apache-2.0 | No |
 | `rubato` 5 | Sample-rate conversion between a device's rate (e.g. 44.1 kHz Bluetooth) and Opus's 48 kHz; pulls in `audioadapter`, `realfft`/`rustfft`, `windowfunctions` | MIT/Apache-2.0 (deps MIT, Apache, Zlib) | No |
+| `realfft` 3.5 | The audio meters' FFT (`src/spectrum.rs`); already in the tree through `rubato`, now used directly | MIT/Apache-2.0 | No |
 | `turn-client-proto` 0.7 (+ `turn-types`, `stun-proto`, `stun-types`, `sans-io-time`) | TURN client (RFC 8656): allocate, refresh, permissions, Send/Data indications, long-term credentials. `stun-types` 2 is also a direct dependency: our STUN Binding requests and replies (`src/stun.rs`), so there is one STUN codec, not two. Sans-IO like str0m, so it runs inside the call loop. Pulls in `rand`, `hashbrown`, `smallvec`, `base64`, `tracing` and pure-Rust hashes for MESSAGE-INTEGRITY | MIT/Apache-2.0 | No |
 | `turn-server-proto` 0.7 (dev only) | A fake TURN server for the hermetic relay tests; pulls in `pnet_packet` | MIT/Apache-2.0 | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |

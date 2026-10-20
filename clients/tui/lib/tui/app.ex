@@ -32,6 +32,11 @@ defmodule Tui.App do
 
   @tick_ms 1_000
 
+  # The audio meters use the website's colours: cyan-600 for you, violet-600
+  # for your rando (`assets/js/randos/audio_visualizer.js`).
+  @you_color {:rgb, 8, 145, 178}
+  @peer_color {:rgb, 124, 58, 237}
+
   @impl true
   def mount(opts) do
     {connection, owned?} =
@@ -149,7 +154,7 @@ defmodule Tui.App do
 
     [
       {header(state), header_area}
-      | main(model, main_area, extra_text(state))
+      | main_with_meters(state, main_area)
     ] ++
       [
         {%Paragraph{text: status_text(state, status_area.width - 2), block: panel(" Status ")},
@@ -189,6 +194,103 @@ defmodule Tui.App do
   defp main(model, area, extra) do
     [{%Paragraph{text: main_text(model) <> extra, block: panel(title(model)), wrap: true}, area}]
   end
+
+  # During a call with audio, the main panel also shows the two meters (like
+  # the website's waveforms) once the helper sends levels, when there's room.
+  defp main_with_meters(
+         %{
+           model: %{status: status, audio?: true} = model,
+           media_state: %{call: %{levels: levels}}
+         },
+         area
+       )
+       when status in [:in_call, :extension_pending] do
+    inner = %Rect{
+      x: area.x + 1,
+      y: area.y + 1,
+      width: max(area.width - 2, 0),
+      height: max(area.height - 2, 0)
+    }
+
+    # The call text is one line; the vote's is three ("Time is up…", a blank,
+    # the keys).
+    text_rows = if status == :extension_pending, do: 3, else: 1
+
+    case meter_rows(inner.height - text_rows - 1) do
+      nil ->
+        main(model, area, "")
+
+      rows ->
+        # Bottom of the panel: you, a blank line, your rando.
+        height = 1 + 2 * rows
+        peer_y = inner.y + inner.height - height
+        you_y = peer_y - height - 1
+
+        main(model, area, "") ++
+          meter("You", Model.language_name(model, :speaks), levels.you, @you_color, rows, %{
+            inner
+            | y: you_y,
+              height: height
+          }) ++
+          meter(
+            "Your rando",
+            Model.language_name(model, :listens),
+            levels.peer,
+            @peer_color,
+            rows,
+            %{inner | y: peer_y, height: height}
+          )
+    end
+  end
+
+  defp main_with_meters(state, area), do: main(state.model, area, extra_text(state))
+
+  # Bar rows on each side of the centre line (up to 3) that fit in `height`:
+  # two meters of (label + 2 × rows) and a blank line between them. `nil`
+  # if not even one fits, and the meters are left out.
+  defp meter_rows(height),
+    do: Enum.find(3..1//-1, fn rows -> 2 * (1 + 2 * rows) + 1 <= height end)
+
+  defp meter(label, language, bars, color, rows, %Rect{} = area) do
+    label_area = %{area | height: 1}
+    bars_area = %{area | y: area.y + 1, height: 2 * rows}
+
+    [
+      {%Paragraph{text: "#{label} · #{language}", style: %Style{fg: color, modifiers: [:bold]}},
+       label_area},
+      {%Paragraph{
+         text: bars_text(bars, rows, area.width),
+         style: %Style{fg: color},
+         alignment: :center
+       }, bars_area}
+    ]
+  end
+
+  # Like the website: the lowest frequencies at the centre, mirrored out to
+  # both sides, each bar centred on the middle line. Half-row resolution:
+  # "▄" and "▀" are the half steps above and below the line.
+  defp bars_text(bars, rows, width) do
+    count = min(length(bars), max(div(width, 2), 1))
+    {gap, count} = if width >= 4 * count - 1, do: {" ", count}, else: {"", count}
+    halves = bars |> Enum.take(count) |> Enum.map(&bar_halves(&1, rows))
+    columns = Enum.reverse(halves) ++ halves
+
+    upper =
+      for row <- (rows - 1)..0//-1,
+          do: Enum.map_join(columns, gap, &cell(&1 - 2 * row, "▄"))
+
+    lower = for row <- 0..(rows - 1), do: Enum.map_join(columns, gap, &cell(&1 - 2 * row, "▀"))
+    Enum.join(upper ++ lower, "\n")
+  end
+
+  # How many half-rows a bar reaches on each side of the line (at least 1,
+  # the website's thin floor; 86% of full height at most, as there).
+  defp bar_halves(level, rows),
+    do: (level * 0.86 * 2 * rows) |> round() |> max(1) |> min(2 * rows)
+
+  defp cell(fill, _half) when fill >= 2, do: "█"
+  defp cell(1, half), do: half
+  defp cell(_fill, _half), do: " "
 
   defp header(%{model: model, uri: uri}) do
     connection = if model.connection == :connected, do: "connected", else: "connecting…"

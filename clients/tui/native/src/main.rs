@@ -14,6 +14,7 @@ mod loopback;
 mod protocol;
 mod relay;
 mod resample;
+mod spectrum;
 mod stun;
 #[cfg(test)]
 mod test_support;

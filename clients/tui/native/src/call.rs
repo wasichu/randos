@@ -30,6 +30,7 @@ use crate::audio::{Capture, Devices, Input, Notify, Output, Playback, Started};
 use crate::candidates::{Candidates, Found, Inbound, Outbound};
 use crate::codec::{Decoder, Encoder, FRAME, Peak};
 use crate::protocol::{CallStats, Event};
+use crate::spectrum::Analyser;
 
 /// The longest the loop waits on the socket, so mic frames and commands are
 /// serviced well inside one 20 ms frame.
@@ -606,7 +607,14 @@ struct Report {
     local_candidates: Vec<String>,
     input_peak: Peak,
     output_peak: Peak,
+    /// The meters' bars, each way, sent every `LEVELS_EVERY`.
+    input_bars: Analyser,
+    output_bars: Analyser,
+    levels_since: Instant,
 }
+
+/// How often `call_levels` goes out: the website's visualizer frame rate.
+const LEVELS_EVERY: Duration = Duration::from_millis(50);
 
 impl Report {
     fn new() -> Self {
@@ -621,19 +629,34 @@ impl Report {
             local_candidates: vec!["host".into()],
             input_peak: Peak::default(),
             output_peak: Peak::default(),
+            input_bars: Analyser::new(),
+            output_bars: Analyser::new(),
+            levels_since: Instant::now(),
         }
     }
 
     fn sent(&mut self, frame: &[f32; FRAME]) {
         self.input_peak.add(frame);
+        self.input_bars.push(frame);
     }
 
     fn received(&mut self, frame: &[f32; FRAME]) {
         self.packets_received += 1;
         self.output_peak.add(frame);
+        self.output_bars.push(frame);
     }
 
     fn tick(&mut self, capture: &Capture, playback: &Playback, notify: &Notify) {
+        if self.levels_since.elapsed() >= LEVELS_EVERY {
+            self.levels_since = Instant::now();
+            // A failed FFT only skips one meter frame; it never ends the call.
+            if let (Ok(you), Ok(peer)) = (self.input_bars.bars(), self.output_bars.bars()) {
+                notify(Event::CallLevels {
+                    you: rounded(&you),
+                    peer: rounded(&peer),
+                });
+            }
+        }
         if self.since.elapsed() < Duration::from_secs(1) {
             return;
         }
@@ -657,6 +680,13 @@ impl Report {
     }
 }
 
+/// Two decimals are plenty for a meter, and keep the Port messages short.
+fn rounded(bars: &[f32]) -> Vec<f32> {
+    bars.iter()
+        .map(|bar| (bar * 100.0).round() / 100.0)
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -673,6 +703,8 @@ mod tests {
         trickled: Vec<String>,
         states: Vec<String>,
         stats: Vec<CallStats>,
+        /// The latest `call_levels`: (you, peer).
+        levels: Option<(Vec<f32>, Vec<f32>)>,
     }
 
     fn peer(role: Role) -> (Call, Arc<Mutex<Seen>>) {
@@ -706,6 +738,7 @@ mod tests {
                     }
                     Event::CallState { state, .. } => seen.states.push(state),
                     Event::CallStats(stats) => seen.stats.push(stats),
+                    Event::CallLevels { you, peer } => seen.levels = Some((you, peer)),
                     _ => {}
                 }
             })
@@ -766,6 +799,14 @@ mod tests {
                 "{name} heard {} dBFS",
                 last.output_peak_dbfs
             );
+            // The meters: both tones are 440 Hz, the lowest bar (0-940 Hz).
+            let (you, peer) = seen.levels.clone().expect("call_levels");
+            assert_eq!((you.len(), peer.len()), (12, 12));
+            assert!(
+                you[0] > 0.5 && peer[0] > 0.5,
+                "{name}: you {you:?} peer {peer:?}"
+            );
+            assert!(peer[11] < 0.3, "{name}: high bars stay low: {peer:?}");
         }
 
         offerer.stop().unwrap();

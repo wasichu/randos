@@ -130,6 +130,34 @@ defmodule Tui.AppTest do
       assert render_text(audio) =~ "Connection: starting audio…"
     end
 
+    test "in a call the meters show both sides' bars, mirrored like the website" do
+      loud = [0.9, 0.8 | List.duplicate(0.04, 10)]
+      quiet = List.duplicate(0.04, 12)
+
+      media = %{
+        MediaState.new(true)
+        | call: %{
+            connection: :connected,
+            phase: :active,
+            stats: nil,
+            levels: %{you: loud, peer: quiet}
+          }
+      }
+
+      text = render_text(%{model("in_call") | audio?: true}, %{media_state: media}, {80, 30})
+      assert text =~ "You · English (EN)"
+      assert text =~ "Your rando · Español (ES)"
+      # The loud low bars, at the centre: full blocks, mirrored.
+      assert text =~ "█ █ █ █"
+      # A silent meter is the thin floor line, top and bottom halves.
+      assert text =~ "▄ ▄ ▄ ▄"
+      assert text =~ "▀ ▀ ▀ ▀"
+
+      # No room on a tiny terminal: the meters step aside.
+      refute render_text(%{model("in_call") | audio?: true}, %{media_state: media}, {45, 14}) =~
+               "Your rando ·"
+    end
+
     test "on a small terminal (a tmux split) the status lines all stay, shortened" do
       media = %{
         MediaState.new(true)

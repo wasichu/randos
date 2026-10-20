@@ -181,5 +181,12 @@ defmodule Tui.Media.StateTest do
       assert {%{call: %{stats: %{"packets_received" => 9}}}, []} =
                State.event(in_call(), "call_stats", %{"packets_received" => 9})
     end
+
+    test "meter levels are kept for display, and nothing is sent" do
+      levels = %{"you" => [0.5, 0.04], "peer" => [0.2, 0.04]}
+
+      assert {%{call: %{levels: %{you: [0.5, 0.04], peer: [0.2, 0.04]}}}, []} =
+               State.event(in_call(), "call_levels", levels)
+    end
   end
 end

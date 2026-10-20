@@ -92,6 +92,10 @@ pub enum Event {
     },
     /// Once a second during a call.
     CallStats(CallStats),
+    /// Every 50 ms during a call: the audio meters' bars, each 0..1, lowest
+    /// frequencies first (12 each, the website visualizer's numbers): `you`
+    /// as sent, `peer` as played.
+    CallLevels { you: Vec<f32>, peer: Vec<f32> },
 }
 
 /// Packets each way, concealment, and levels, so audio flow is visible
@@ -184,6 +188,7 @@ impl fmt::Display for Event {
                 s.input_peak_dbfs,
                 s.output_peak_dbfs
             ),
+            Event::CallLevels { .. } => write!(f, "call levels"),
         }
     }
 }
