@@ -3,8 +3,11 @@ import Config
 dev_ssl_keyfile = System.get_env("DEV_SSL_KEYFILE") || "priv/cert/randos_dev_key.pem"
 dev_ssl_certfile = System.get_env("DEV_SSL_CERTFILE") || "priv/cert/randos_dev.pem"
 
+# HTTPS (for other devices: `just certs`) whenever certificates exist, except
+# with RANDOS_DEV_HTTPS=false: the background `just serve` needs only HTTP.
 dev_https =
-  if File.exists?(dev_ssl_keyfile) and File.exists?(dev_ssl_certfile) do
+  if System.get_env("RANDOS_DEV_HTTPS") != "false" and File.exists?(dev_ssl_keyfile) and
+       File.exists?(dev_ssl_certfile) do
     [
       https: [
         ip: {0, 0, 0, 0},

@@ -57,7 +57,9 @@ serve:
       echo "dev server already running on :${port}; reusing it"
       exit 0
     fi
-    exec mix phx.server
+    # HTTP only: Tidewave and the TUI need nothing more, and it can't clash
+    # with whatever holds the HTTPS port (`just dev` / `dev-turn` serve HTTPS).
+    RANDOS_DEV_HTTPS=false exec mix phx.server
 
 # e.g. the one the SessionStart hook starts for Tidewave. Only stops a BEAM,
 # never something else on the port.
