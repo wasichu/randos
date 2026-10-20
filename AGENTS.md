@@ -14,8 +14,10 @@ are product requirements, not suggestions. Don't add features that violate them.
   - `just serve` — the same server without IEx, for running in the background;
     if something already answers on :4000 it reuses it and exits
   - `just tui` — the terminal client against the local dev server (`RANDOS_URL`/`--url`
-    to override); `just tui-smoke` — two real TUI clients call each other through a
-    throwaway server (run after changing `clients/tui` or the channel)
+    to override); `just tui-smoke` — through a throwaway server, two real TUI clients call
+    each other, and a TUI (helper playing a tone) calls headless Chrome in both
+    WebRTC roles with audio checked both ways (run after changing `clients/tui`,
+    the helper, the channel, or the browser call; needs the helper built, node, Chrome)
   - `just top` — dev server plus a terminal dashboard (`RandosDev.Monitor`, in `dev/`):
     queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
   - `just test [path]`, `just test-failed`

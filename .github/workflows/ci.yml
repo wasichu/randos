@@ -71,9 +71,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: ALSA headers (cpal, for the media helper)
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev
+
       - uses: jdx/mise-action@v5
         with:
-          install_args: erlang elixir just node
+          install_args: erlang elixir just node rust cmake
+
+      - uses: Swatinem/rust-cache@v2
 
       - name: Cache Mix deps and builds
         uses: actions/cache@v6
@@ -91,12 +96,13 @@ jobs:
           mix local.hex --force --if-missing
           mix setup
           (cd clients/tui && mix deps.get)
+          cargo build --quiet -p randos_media
 
       - name: Browser smoke (two headless Chromes, fake mics)
         run: CHROME_BIN="$(command -v google-chrome)" just smoke
 
-      - name: TUI smoke (two terminal clients)
-        run: just tui-smoke
+      - name: TUI smoke (two terminal clients; TUI <-> headless Chrome calls, both roles)
+        run: CHROME_BIN="$(command -v google-chrome)" just tui-smoke
 
       - name: Server log on failure
         if: failure()

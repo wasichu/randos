@@ -69,7 +69,9 @@ smoke:
 tui *args:
     cd clients/tui && mix tui {{args}}
 
-# Two real TUI clients call each other through a throwaway server with 8s segments
+# Through a throwaway server with 8s segments: two real TUI clients call each other,
+# and a TUI (helper with a test tone) calls headless Chrome in both roles (needs the
+# helper built, node, and Chrome)
 tui-smoke:
     #!/usr/bin/env bash
     set -euo pipefail

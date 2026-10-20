@@ -83,7 +83,9 @@ defmodule Tui.App do
   def handle_info({:media, name, payload}, state) do
     # A (re)started helper can carry calls again.
     state =
-      if name == "ready", do: %{state | model: Model.set_audio(state.model, true)}, else: state
+      if name == "ready",
+        do: apply_model(state, Model.set_audio(state.model, true), []),
+        else: state
 
     {:noreply, run_media(state, MediaState.event(state.media_state, name, payload))}
   end
