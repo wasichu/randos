@@ -13,8 +13,27 @@ setup:
     mix setup
 
 # Run the dev server (HTTP :4000, HTTPS :4001 when certs exist)
-dev:
+dev: _free-dev-port
     iex -S mix phx.server
+
+# Stops a background dev server (`just serve`, run by the session hook) so an
+# interactive one can take :4000. An interactive server (IEx, e.g. another
+# `just dev`) is never stopped: that's an error instead.
+_free-dev-port:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    port="${PORT:-4000}"
+    for pid in $(lsof -t -nP -iTCP:"${port}" -sTCP:LISTEN || true); do
+      cmd=$(ps -o command= -p "$pid")
+      if [[ $cmd == *beam.smp* && $cmd == *-noshell* ]]; then
+        kill "$pid"
+        while kill -0 "$pid" 2>/dev/null; do sleep 0.2; done
+        echo "stopped the background dev server on :${port} (pid ${pid})"
+      else
+        echo "error: :${port} is taken by pid ${pid}, not a background dev server (an IEx session?); stop it first" >&2
+        exit 1
+      fi
+    done
 
 # Reuses a running server: if something already answers on $PORT (default
 # 4000), it says so and exits instead of starting a second one.
@@ -49,7 +68,7 @@ serve-stop:
 # Run the dev server against the coturn TURN server managed by infra/coturn
 # (the shared secret comes from the encrypted state via `just tofu`, so the
 # Keychain passphrase is used and the secret is never printed)
-dev-turn:
+dev-turn: _free-dev-port
     TURN_HOST="turn.slowinput.org" \
     TURN_REALM="turn.slowinput.org" \
     TURN_SHARED_SECRET="$(just tofu output -raw turn_shared_secret)" \

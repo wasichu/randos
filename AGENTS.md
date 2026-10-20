@@ -11,6 +11,8 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
   - `just setup` — toolchain + deps + assets
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
+    `just dev` and `just dev-turn` first stop a background `just serve` on the port
+    (never an interactive IEx server: that's an error)
   - `just serve` — the same server without IEx, for running in the background;
     if something already answers on :4000 it reuses it and exits.
     `just serve-stop` stops it (only a BEAM on the port)
