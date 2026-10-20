@@ -157,8 +157,9 @@ end-to-end tests check these, by number, for both clients
    `offer` (`{"sdp": {"type", "sdp"}}`); the **answerer** waits for it, then
    sends `answer`. Both trickle `ice_candidate`
    (`{"candidate": {"candidate", "sdpMid", "sdpMLineIndex", "usernameFragment"}}`,
-   i.e. `RTCIceCandidate.toJSON()`). Buffer remote candidates until the
-   remote description is set.
+   i.e. `RTCIceCandidate.toJSON()`; `sdpMid` may be `null`, with
+   `sdpMLineIndex` 0 naming the one audio m-line). Buffer remote candidates
+   until the remote description is set.
 3. **Report media state.** On every change of your connection, send
    `signal` `media_state`: `{"state": "connected" | "disconnected" |
    "failed", ...}` (extra keys, like a `reason` or `source`, are allowed).

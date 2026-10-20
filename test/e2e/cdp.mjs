@@ -54,15 +54,22 @@ export class Browser {
       "about:blank",
     ]
     if (headlessFlag) args.unshift(headlessFlag)
-    const proc = spawn(bin, args, {stdio: ["ignore", "ignore", "ignore", "pipe", "pipe"]})
+    const proc = spawn(bin, args, {stdio: ["ignore", "ignore", "pipe", "pipe", "pipe"]})
+    // Keep the end of Chrome's stderr, to say why if it can't start.
+    let stderr = ""
+    proc.stderr.setEncoding("utf8")
+    proc.stderr.on("data", chunk => { stderr = (stderr + chunk).slice(-2000) })
+    const failed = why => new Error(`${why}; Chrome's stderr ends:\n${stderr}`)
 
     const browser = new Browser(proc, profile)
     // Chrome answers once it's up; fail clearly if it can't start.
     await Promise.race([
       browser.send("Browser.getVersion"),
-      new Promise((_, reject) => proc.once("exit", code => reject(new Error(`Chrome exited (${code}) at startup`)))),
-      sleep(20_000).then(() => Promise.reject(new Error("Chrome did not start"))),
+      new Promise((_, reject) => proc.once("exit", code => reject(failed(`Chrome exited (${code}) at startup`)))),
+      sleep(20_000).then(() => Promise.reject(failed("Chrome did not start"))),
     ])
+    proc.stderr.removeAllListeners("data")
+    proc.stderr.resume()
     return browser
   }
 

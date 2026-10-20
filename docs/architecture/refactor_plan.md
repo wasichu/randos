@@ -1,6 +1,6 @@
 # Randos roadmap
 
-Verified against the code at `0071e72` (2026-10-20). Update this line, and
+Verified against the code at `9862e67` (2026-10-20). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
