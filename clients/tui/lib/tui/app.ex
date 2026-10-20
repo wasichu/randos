@@ -140,8 +140,10 @@ defmodule Tui.App do
   def render(state, frame) do
     area = %Rect{x: 0, y: 0, width: frame.width, height: frame.height}
 
+    # The main panel gives way first on a short terminal (a tmux split):
+    # the status lines must stay visible.
     [header_area, main_area, status_area, help_area] =
-      Layout.split(area, :vertical, [{:length, 3}, {:min, 8}, {:length, 5}, {:length, 1}])
+      Layout.split(area, :vertical, [{:length, 3}, {:min, 3}, {:length, 5}, {:length, 1}])
 
     model = state.model
 
@@ -150,7 +152,8 @@ defmodule Tui.App do
       | main(model, main_area, extra_text(state))
     ] ++
       [
-        {%Paragraph{text: status_text(state), block: panel(" Status "), wrap: true}, status_area},
+        {%Paragraph{text: status_text(state, status_area.width - 2), block: panel(" Status ")},
+         status_area},
         {%Paragraph{text: " " <> help(model) <> mic_help(state), style: %Style{fg: :dark_gray}},
          help_area}
       ]
@@ -269,13 +272,25 @@ defmodule Tui.App do
 
   # The current state at a glance, like the website's status label and its
   # "Connection:" line, plus the latest notice (full history: tmp/tui.log).
-  defp status_text(%{model: model} = state) do
+  # One line each, never wrapped (a wrapped line pushes the next one out of
+  # the box): the connection line drops detail to fit `width`, and anything
+  # still too long is cut with "…".
+  defp status_text(%{model: model} = state, width) do
+    connection = "Connection: "
+    room = width - String.length(connection)
+
     [
       "Status:     " <> status_label(model),
-      "Connection: " <> connection_line(state),
+      connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…"),
       "Last:       " <> (Elixir.List.first(model.log) || "—")
     ]
-    |> Enum.join("\n")
+    |> Enum.map_join("\n", &fit(&1, width))
+  end
+
+  defp fit(line, width) do
+    if String.length(line) <= width,
+      do: line,
+      else: String.slice(line, 0, max(width - 1, 0)) <> "…"
   end
 
   defp status_label(%{connection: :connecting}), do: "connecting to the server…"
@@ -286,29 +301,37 @@ defmodule Tui.App do
   defp status_label(%{status: :extension_pending}), do: "time is up: continue?"
   defp status_label(_model), do: "—"
 
+  # Each returns its versions from most to least detailed; `status_text`
+  # shows the first that fits.
   defp connection_line(%{model: %{status: status, audio?: true}} = state)
        when status in [:connecting, :in_call, :extension_pending],
        do: call_line(state.media_state)
 
   defp connection_line(%{model: %{status: status}})
        when status in [:connecting, :in_call, :extension_pending],
-       do: "text only (no audio)"
+       do: ["text only (no audio)", "text only"]
 
-  defp connection_line(_state), do: "no call"
+  defp connection_line(_state), do: ["no call"]
 
-  defp call_line(%{call: nil, last_call_error: error}) when is_binary(error), do: error
-  defp call_line(%{call: nil}), do: "starting audio…"
-  defp call_line(%{call: %{connection: :disconnected}}), do: "reconnecting…"
-  defp call_line(%{call: %{connection: :failed}}), do: "failed"
-  defp call_line(%{call: %{connection: :connecting}}), do: "connecting…"
+  defp call_line(%{call: nil, last_call_error: error}) when is_binary(error), do: [error]
+  defp call_line(%{call: nil}), do: ["starting audio…"]
+  defp call_line(%{call: %{connection: :disconnected}}), do: ["reconnecting…"]
+  defp call_line(%{call: %{connection: :failed}}), do: ["failed"]
+  defp call_line(%{call: %{connection: :connecting}}), do: ["connecting…"]
 
   defp call_line(%{call: %{stats: %{} = s}}) do
-    "connected · you #{round(s["input_peak_dbfs"])} dBFS · " <>
-      "peer #{round(s["output_peak_dbfs"])} dBFS · " <>
-      "#{s["packets_sent"]} sent / #{s["packets_received"]} received"
+    levels =
+      "connected · you #{round(s["input_peak_dbfs"])} dBFS · " <>
+        "peer #{round(s["output_peak_dbfs"])} dBFS"
+
+    [
+      levels <> " · #{s["packets_sent"]} sent / #{s["packets_received"]} received",
+      levels,
+      "connected"
+    ]
   end
 
-  defp call_line(%{call: %{}}), do: "connected"
+  defp call_line(%{call: %{}}), do: ["connected"]
 
   defp mic_test_text(%{media_state: %{available?: false}}), do: ""
   defp mic_test_text(%{media_state: %{mic_test: test}}), do: "\n\n" <> mic_test_line(test)

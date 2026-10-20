@@ -26,7 +26,7 @@ defmodule Tui.AppTest do
     model
   end
 
-  defp render_text(model, extra \\ %{}) do
+  defp render_text(model, extra \\ %{}, {width, height} \\ {100, 24}) do
     state =
       Map.merge(
         %{
@@ -37,8 +37,11 @@ defmodule Tui.AppTest do
         extra
       )
 
-    terminal = ExRatatui.init_test_terminal(100, 24)
-    :ok = ExRatatui.draw(terminal, App.render(state, %ExRatatui.Frame{width: 100, height: 24}))
+    terminal = ExRatatui.init_test_terminal(width, height)
+
+    :ok =
+      ExRatatui.draw(terminal, App.render(state, %ExRatatui.Frame{width: width, height: height}))
+
     ExRatatui.get_buffer_content(terminal)
   end
 
@@ -125,6 +128,32 @@ defmodule Tui.AppTest do
 
       audio = %{model("in_call") | audio?: true}
       assert render_text(audio) =~ "Connection: starting audio…"
+    end
+
+    test "on a small terminal (a tmux split) the status lines all stay, shortened" do
+      media = %{
+        MediaState.new(true)
+        | call: %{
+            connection: :connected,
+            phase: :active,
+            stats: %{
+              "input_peak_dbfs" => -18.0,
+              "output_peak_dbfs" => -22.0,
+              "packets_sent" => 1520,
+              "packets_received" => 1498
+            }
+          }
+      }
+
+      in_call = %{model("in_call") | audio?: true}
+      wide = render_text(in_call, %{media_state: media})
+      assert wide =~ "1520 sent / 1498 received"
+
+      small = render_text(in_call, %{media_state: media}, {45, 14})
+      assert small =~ "Status:     in a call"
+      assert small =~ "Connection: connected"
+      refute small =~ "sent /"
+      assert small =~ "Last:       connected to the server"
     end
   end
 
