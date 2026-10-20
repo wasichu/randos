@@ -1,6 +1,6 @@
 # Randos roadmap
 
-Verified against the code at `df93b46` (2026-10-19). Update this line, and
+Verified against the code at `caa6f77` (2026-10-20). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -282,7 +282,7 @@ instant rematch reused the previous call's browser WebRTC hook (fixed by
 keying the element by call id). Stale signals were never a client problem:
 `Randos.Participant` already drops signals for other calls.
 
-## DRY pass over Phase 4.3 Stage 1 (2026-10-20, decided; in progress)
+## DRY pass over Phase 4.3 Stage 1 (done 2026-10-20)
 
 Before STUN/TURN; no behaviour changes. Rule: shared logic in one place,
 environment-specific code only where the environment differs. Reviewed with
@@ -356,10 +356,21 @@ the advisor. Each item: **extract**, **merge**, **link**, or **leave** (with why
    Obligation 7 says so.
 3. The one-call-policy proposal is condensed in this roadmap (done).
 
-Everything else follows the stated rule and needs no decision. Order:
-test support, Rust extractions, the Justfile, docs; `just precommit`,
-`just smoke` and `just tui-smoke` after each commit. Then the call-flow
-diagrams (`docs/architecture/call_flow.md`), so they name the final modules.
+**Delivered (checked after landing):**
+- `audio::Devices::open` and `codec::Peak`: both workers use them; `Started`
+  lives in `audio`; no copies left.
+- `Tui.TestSupport`: the five files import it; no inline helper copies or
+  `kill -9` snippets remain outside it.
+- `test/e2e/with_test_server.sh`: the only place the throwaway server starts.
+- `pending_signals`: proved unreachable (the server only forwards signals for
+  the current call) and removed.
+- "I left": the TUI sends `peer_disconnected` on quit (obligation 7).
+- Docs: one source per fact; `call_flow.md` has the diagrams.
+- Found along the way: a headless Chrome stranded by an interrupted run kept
+  reconnecting to test servers. Fixed at the root: nothing a test starts can
+  outlive its starter (Chrome over a DevTools pipe, a test-server watchdog,
+  Port scripts exit on stdin EOF); see "Testing" in AGENTS.md.
+Every commit passed `just precommit`, `just smoke`, and `just tui-smoke`.
 
 ## Open items
 
