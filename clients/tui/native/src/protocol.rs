@@ -104,6 +104,11 @@ pub struct CallStats {
     pub concealed: u64,
     pub dropped: u64,
     pub skipped_candidates: u64,
+    /// UDP sends that failed (e.g. to an unreachable candidate); not fatal.
+    pub send_errors: u64,
+    /// Kinds of our candidates offered so far: "host", then "srflx" once a
+    /// STUN server answered.
+    pub local_candidates: Vec<String>,
     pub input_peak_dbfs: f64,
     pub output_peak_dbfs: f64,
     pub capture_ring_ms: f64,

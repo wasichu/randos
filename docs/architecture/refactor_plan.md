@@ -102,9 +102,10 @@ machines. Staged: skeleton → browser interop with real TURN → hardening → 
 Stage 1 (browser interop) is in progress: the helper places and answers
 WebRTC calls (str0m), the TUI drives them from the pure `Tui.Media.State`,
 and `just tui-smoke` runs an automated TUI ↔ headless Chrome call in both
-roles with audio checked both ways. Next: STUN/TURN candidates (calls across
-NATs, real coturn), the str0m-vs-webrtc-rs checkpoint, then a live call. See
-`tui_audio.md` Stage 1.
+roles with audio checked both ways. STUN is done: the helper gathers a
+server-reflexive candidate and trickles it (checked against Google's STUN
+server and a hermetic fake one). Next: TURN (relayed candidates, real coturn),
+the str0m-vs-webrtc-rs checkpoint, then a live call. See `tui_audio.md` Stage 1.
 
 Stage 0 code is done:
 - the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port

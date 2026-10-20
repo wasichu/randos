@@ -12,6 +12,7 @@ mod frame;
 mod loopback;
 mod protocol;
 mod resample;
+mod stun;
 
 use std::io::{self, BufReader, BufWriter};
 use std::process::ExitCode;
@@ -155,13 +156,14 @@ fn handle(
         }
         Command::CallStart {
             role,
-            ice_servers: _,
+            ice_servers,
             input,
             out,
             bind_ip,
         } => {
             media.ensure_idle()?;
             let config = CallConfig {
+                ice_servers,
                 role: role.parse()?,
                 bind_ip: bind_ip.map(|ip| ip.parse()).transpose()?,
             };

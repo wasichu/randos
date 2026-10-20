@@ -29,6 +29,7 @@ use crate::Error;
 use crate::audio::{Capture, Devices, Input, Notify, Output, Playback, Started};
 use crate::codec::{Decoder, Encoder, FRAME, Peak};
 use crate::protocol::{CallStats, Event};
+use crate::stun::{self, Gatherer, Reply};
 
 /// The longest the loop waits on the socket, so mic frames and commands are
 /// serviced well inside one 20 ms frame.
@@ -58,6 +59,9 @@ pub struct CallConfig {
     /// The local address to bind and advertise. `None` picks the address of
     /// the default route; tests pass loopback.
     pub bind_ip: Option<IpAddr>,
+    /// The channel's `ice_servers` for this call: `stun:` servers give us a
+    /// server-reflexive candidate (our address outside the NAT).
+    pub ice_servers: Value,
 }
 
 /// A signal from the peer, as the participant channel delivers it.
@@ -159,6 +163,11 @@ struct Session {
     report: Report,
     notify: Notify,
     buf: Vec<u8>,
+    ice_servers: Value,
+    stun: Gatherer,
+    /// Our candidates found after the SDP went out, waiting for the media id
+    /// they're trickled under.
+    unsent_candidates: Vec<String>,
 }
 
 impl Session {
@@ -201,16 +210,26 @@ impl Session {
             report: Report::new(),
             notify,
             buf: vec![0; 2000],
+            ice_servers: config.ice_servers.clone(),
+            stun: Gatherer::new(Vec::new(), Instant::now()),
+            unsent_candidates: Vec::new(),
         })
     }
 
     fn run(&mut self, role: Role, inbox: &Receiver<Command>) -> Result<(), Error> {
+        // Resolve the STUN servers here, not in `Call::start`: DNS can be
+        // slow, and the Port must keep answering meanwhile.
+        let servers = stun::resolve(&stun::stun_servers(&self.ice_servers), self.local);
+        self.stun = Gatherer::new(servers, Instant::now());
+
         if role == Role::Offerer {
             self.send_offer()?;
         }
         self.drain()?;
 
         loop {
+            self.gather()?;
+
             match inbox.try_recv() {
                 Ok(Command::Remote(signal)) => {
                     self.apply_remote(signal)?;
@@ -344,6 +363,12 @@ impl Session {
         let input = match self.socket.recv_from(&mut self.buf) {
             Ok((n, source)) => {
                 self.buf.truncate(n);
+                // A STUN server answering us, not something for str0m.
+                match self.stun.handle(&self.buf) {
+                    Reply::Mapped(mapped) => return self.add_server_reflexive(mapped),
+                    Reply::Failed => return Ok(()),
+                    Reply::NotOurs => {}
+                }
                 RtcInput::Receive(
                     Instant::now(),
                     Receive {
@@ -383,8 +408,15 @@ impl Session {
                     return Ok(());
                 }
                 RtcOutput::Transmit(transmit) => {
-                    self.socket
-                        .send_to(&transmit.contents, transmit.destination)?;
+                    // UDP is best-effort: an unreachable candidate (or a
+                    // network change) fails one send, not the call.
+                    if self
+                        .socket
+                        .send_to(&transmit.contents, transmit.destination)
+                        .is_err()
+                    {
+                        self.report.send_errors += 1;
+                    }
                 }
                 RtcOutput::Event(event) => self.handle_event(event)?,
             }
@@ -430,6 +462,48 @@ impl Session {
             _ => {}
         }
         Ok(())
+    }
+
+    /// Sends due STUN requests and trickles any of our candidates still
+    /// waiting for the media id.
+    fn gather(&mut self) -> Result<(), Error> {
+        if !self.stun.is_done() {
+            for (server, request) in self.stun.poll_transmit(Instant::now())? {
+                if self.socket.send_to(&request, server).is_err() {
+                    self.report.send_errors += 1;
+                }
+            }
+        }
+
+        if let (Some(mid), false) = (self.mid, self.unsent_candidates.is_empty()) {
+            for candidate in std::mem::take(&mut self.unsent_candidates) {
+                self.signal_out(
+                    "ice_candidate",
+                    json!({"candidate": {
+                        "candidate": candidate,
+                        "sdpMid": mid.to_string(),
+                        "sdpMLineIndex": 0,
+                        "usernameFragment": null,
+                    }}),
+                );
+            }
+        }
+        Ok(())
+    }
+
+    /// A STUN server told us our outside address: offer it as a candidate.
+    /// The SDP has already gone out, so it's trickled (`gather`).
+    fn add_server_reflexive(&mut self, mapped: SocketAddr) -> Result<(), Error> {
+        // Not behind a NAT (or a test): the host candidate already covers it.
+        if mapped == self.local {
+            return Ok(());
+        }
+        let candidate = Candidate::server_reflexive(mapped, self.local, "udp")?;
+        if let Some(added) = self.rtc.add_local_candidate(candidate) {
+            self.unsent_candidates.push(added.to_sdp_string());
+            self.report.local_candidates.push("srflx".into());
+        }
+        self.drain()
     }
 
     fn signal_out(&self, kind: &str, payload: Value) {
@@ -495,6 +569,9 @@ struct Report {
     concealed: u64,
     dropped: u64,
     skipped_candidates: u64,
+    send_errors: u64,
+    /// Kinds of our candidates offered so far ("host", "srflx").
+    local_candidates: Vec<String>,
     input_peak: Peak,
     output_peak: Peak,
 }
@@ -508,6 +585,8 @@ impl Report {
             concealed: 0,
             dropped: 0,
             skipped_candidates: 0,
+            send_errors: 0,
+            local_candidates: vec!["host".into()],
             input_peak: Peak::default(),
             output_peak: Peak::default(),
         }
@@ -532,6 +611,8 @@ impl Report {
             concealed: self.concealed,
             dropped: self.dropped,
             skipped_candidates: self.skipped_candidates,
+            send_errors: self.send_errors,
+            local_candidates: self.local_candidates.clone(),
             input_peak_dbfs: self.input_peak.dbfs(),
             output_peak_dbfs: self.output_peak.dbfs(),
             capture_ring_ms: capture.queued_ms(),
@@ -553,11 +634,18 @@ mod tests {
     #[derive(Default)]
     struct Seen {
         signals: Vec<RemoteSignal>,
+        /// Every candidate string this peer trickled (signals are consumed by
+        /// the relay).
+        trickled: Vec<String>,
         states: Vec<String>,
         stats: Vec<CallStats>,
     }
 
     fn peer(role: Role) -> (Call, Arc<Mutex<Seen>>) {
+        peer_with(role, json!([]))
+    }
+
+    fn peer_with(role: Role, ice_servers: Value) -> (Call, Arc<Mutex<Seen>>) {
         let seen = Arc::new(Mutex::new(Seen::default()));
         let notify: Notify = {
             let seen = Arc::clone(&seen);
@@ -565,6 +653,12 @@ mod tests {
                 let mut seen = seen.lock().unwrap();
                 match event {
                     Event::CallSignal { kind, payload } => {
+                        if let Some(c) = payload
+                            .pointer("/candidate/candidate")
+                            .and_then(Value::as_str)
+                        {
+                            seen.trickled.push(c.to_owned());
+                        }
                         seen.signals.push(RemoteSignal { kind, payload })
                     }
                     Event::CallState { state, .. } => seen.states.push(state),
@@ -576,6 +670,7 @@ mod tests {
         let config = CallConfig {
             role,
             bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+            ice_servers,
         };
         let (call, _started) = Call::start(config, Input::Sine, Output::Null, notify).unwrap();
         (call, seen)
@@ -635,6 +730,71 @@ mod tests {
             );
         }
 
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
+    }
+
+    /// A STUN server on loopback that answers every Binding request with
+    /// `mapped` (as a NAT would report an outside address).
+    fn fake_stun_server(mapped: SocketAddr) -> SocketAddr {
+        let socket = UdpSocket::bind("127.0.0.1:0").unwrap();
+        let addr = socket.local_addr().unwrap();
+        thread::spawn(move || {
+            let mut buf = [0u8; 1500];
+            while let Ok((n, from)) = socket.recv_from(&mut buf) {
+                let reply = crate::stun::tests::reply_to(&buf[..n], mapped);
+                let _ = socket.send_to(&reply, from);
+            }
+        });
+        addr
+    }
+
+    #[test]
+    fn a_stun_server_gives_a_trickled_srflx_candidate_and_the_call_still_connects() {
+        let outside: SocketAddr = "203.0.113.7:45678".parse().unwrap();
+        let stun = fake_stun_server(outside);
+        let ice = json!([{"urls": format!("stun:{stun}")}]);
+
+        let (offerer, offerer_seen) = peer_with(Role::Offerer, ice);
+        let (answerer, answerer_seen) = peer(Role::Answerer);
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_millis(3_500),
+        );
+
+        let seen = offerer_seen.lock().unwrap();
+        assert!(
+            seen.trickled
+                .iter()
+                .any(|c| c.contains("typ srflx") && c.contains("203.0.113.7 45678")),
+            "trickled: {:?}",
+            seen.trickled
+        );
+        let last = seen.stats.last().expect("stats");
+        assert_eq!(last.local_candidates, vec!["host", "srflx"]);
+        assert!(
+            seen.states.contains(&"connected".to_owned()),
+            "states: {:?}",
+            seen.states
+        );
+        assert!(
+            last.output_peak_dbfs > -15.0,
+            "heard {} dBFS",
+            last.output_peak_dbfs
+        );
+
+        // The answerer tried the unreachable srflx address: counted, not fatal.
+        let answerer_last = answerer_seen
+            .lock()
+            .unwrap()
+            .stats
+            .last()
+            .cloned()
+            .expect("stats");
+        assert!(answerer_last.packets_received > 50);
+
+        drop(seen);
         offerer.stop().unwrap();
         answerer.stop().unwrap();
     }
