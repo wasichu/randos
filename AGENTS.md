@@ -100,6 +100,8 @@ are product requirements, not suggestions. Don't add features that violate them.
 - `docs/architecture/call_flow.md`: Mermaid diagrams of the call flow (shared,
   then where the browser and the TUI differ); keep it in step with the code.
 - `docs/architecture/coturn_audit.md`: TURN server findings and proposed hardening.
+- `docs/architecture/translation_models.md`: Phase 6 research (translation models,
+  evaluators, licenses, memory on the owner's Mac).
 - `docs/architecture/refactor_plan.md` is the living roadmap (status, how the
   pieces fit, Phase 4 TUI and 5 voice anonymization, open items, decisions).
   Keep it in sync: symbols not line numbers, and update its "Verified" line.

@@ -197,15 +197,18 @@ bn, ru, ja, fr, de, ko, it, tr, id. Arabic needs right-to-left layout.
    concatenation), translator comments (`#.`) where context matters.
 2. **Translation shootout** (the AI-engineering part). Several open models
    translate every string into every locale; automated checks score them; the
-   winner per language ships. Candidates to verify on their model cards:
-   MADLAD-400 (Apache-2.0), M2M100 (MIT), Opus-MT (CC-BY-4.0), a small
-   instruction-tuned LLM (e.g. Qwen, Apache-2.0); NLLB-200 is CC-BY-NC, so
-   likely out for shipping. Checks, none needing a human:
+   winner per language ships. Candidates, evaluators, licenses, and memory
+   needs are in [`translation_models.md`](translation_models.md) (researched
+   2026-10-20): front-runners Hy-MT2 (Apache-2.0, all 14 languages) and
+   TranslateGemma (Gemma terms), with MADLAD-400, M2M100 and Opus-MT as
+   baselines and a general LLM; NLLB, Tower, and Aya are out (non-commercial).
+   Checks, none needing a human:
    - placeholders (`%{count}`) and glossary terms ("rando", "Randos") intact,
      length sane (buttons), script correct for the locale;
    - back-translation to English, compared with the source (chrF);
-   - reference-free quality estimation (e.g. COMET-Kiwi; check its license,
-     though eval-only use is different from shipping);
+   - reference-free quality estimation with two independent models
+     (MetricX-24 and COMET-Kiwi): TranslateGemma was trained on MetricX, so
+     never rank on MetricX alone;
    - an LLM judge for tone (calm, informal) as a tiebreaker.
    **Hardware bound:** everything runs locally on the owner's machine (Apple
    M5 Pro, 48 GB unified memory, ~36 GB usable by the GPU): dedicated
