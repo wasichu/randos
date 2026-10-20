@@ -121,7 +121,8 @@ whole relay-only call (ICE, DTLS, Opus both ways) runs through our coturn
 to str0m with the *relayed* address as its destination; permissions
 installed per remote candidate; candidates trickled even before the
 answerer knows its mid. One crate quirk: with bad credentials it reports
-failure only after its transaction timeout (~40 s), by design. `turns:` (TLS)
+failure only after its transaction timeout (~40 s), by design; our wrapper
+fails fast instead (it recognises coturn's refusal). `turns:` (TLS)
 is still unbuilt; `turn-client-rustls` is the path if a network needs it.
 
 #### Codec: Opus, statically linked reference libopus

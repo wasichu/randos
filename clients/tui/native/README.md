@@ -87,7 +87,10 @@ stops; data goes in Send/Data indications (no channel binding). It trickles
 the relayed address as a `relay` candidate, installs a permission for each
 remote candidate's IP, and wraps str0m's packets from the relay candidate
 for the TURN server. A relay that fails (or credentials coturn refuses) only
-means no relay candidate; the call never waits on it. `turns:` and TCP
+means no relay candidate; the call never waits on it. Refused credentials
+fail at once: the crate ignores an unsigned 401 to its authenticated
+Allocate and would retry for ~40 s, so the wrapper spots that 401 itself
+(but not a late copy of the first, unauthenticated challenge). `turns:` and TCP
 TURN aren't supported.
 
 `src/candidates.rs` ties the two together for the call session (sans-IO):

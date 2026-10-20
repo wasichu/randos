@@ -19,12 +19,15 @@ use std::net::{IpAddr, SocketAddr, ToSocketAddrs};
 use std::time::Instant as StdInstant;
 
 use serde_json::Value;
+use stun_types::attribute::ErrorCode;
+use stun_types::message::{Message, MessageClass, TransactionId};
 use turn_client_proto::api::{TurnConfig, TurnEvent, TurnPollRet, TurnRecvRet};
 use turn_client_proto::prelude::TurnClientApi;
 use turn_client_proto::stun::Instant as TurnInstant;
 use turn_client_proto::stun::agent::Transmit;
 use turn_client_proto::stun::types::TransportType;
 use turn_client_proto::types::TurnCredentials;
+use turn_client_proto::types::message::ALLOCATE;
 use turn_client_proto::udp::TurnClientUdp;
 
 use crate::Error;
@@ -95,10 +98,8 @@ pub fn resolve(server: &TurnServer, local: SocketAddr) -> Option<SocketAddr> {
 pub enum RelayEvent {
     /// The relay is up: peers can reach us at this address.
     Allocated(SocketAddr),
-    /// The server refused or never answered. A wrong password shows up only
-    /// after the crate's transaction timeout (~40 s): once it has sent
-    /// credentials it ignores unauthenticated error replies, so a forged
-    /// 401 can't knock the relay out. The call never waits on the relay.
+    /// The server refused our credentials, or never answered (after the
+    /// crate's transaction timeout, ~40 s). The call never waits on the relay.
     Failed,
 }
 
@@ -110,6 +111,11 @@ pub struct Relay {
     /// The TURN crate's clock counts from here.
     base: StdInstant,
     relayed: Option<SocketAddr>,
+    /// The 401 that answered our first, unauthenticated Allocate (the
+    /// normal start: it carries the realm and nonce).
+    challenge: Option<TransactionId>,
+    /// coturn refused our credentials: reported as `Failed` right away.
+    refused: bool,
 }
 
 impl Relay {
@@ -124,6 +130,8 @@ impl Relay {
             local,
             base: StdInstant::now(),
             relayed: None,
+            challenge: None,
+            refused: false,
         }
     }
 
@@ -156,6 +164,10 @@ impl Relay {
     }
 
     pub fn poll_event(&mut self) -> Option<RelayEvent> {
+        if self.refused && self.relayed.is_none() {
+            self.refused = false;
+            return Some(RelayEvent::Failed);
+        }
         loop {
             return match self.client.poll_event()? {
                 TurnEvent::AllocationCreated(TransportType::Udp, addr) => {
@@ -183,8 +195,24 @@ impl Relay {
             from: self.server,
             to: self.local,
         };
+        let unauthorized = allocate_unauthorized(datagram);
         match self.client.recv(transmit, now) {
             TurnRecvRet::PeerData(peer_data) => Some((peer_data.peer, peer_data.data().to_vec())),
+            TurnRecvRet::Handled if self.challenge.is_none() => {
+                self.challenge = unauthorized;
+                None
+            }
+            // Fail fast on refused credentials. The crate ignores a 401 to
+            // its authenticated Allocate (it can't verify an unsigned reply)
+            // and retries until its transaction timeout, ~40 s; coturn holds
+            // no allocation either way, so we stop now. A 401 for the first
+            // transaction is only a late reply to a resend of it.
+            TurnRecvRet::Ignored(_) => {
+                if unauthorized.is_some() && unauthorized != self.challenge {
+                    self.refused = true;
+                }
+                None
+            }
             _ => None,
         }
     }
@@ -224,6 +252,17 @@ impl Relay {
             .map_err(|err| format!("relay send: {err:?}"))?
             .map(|transmit| transmit.build().data))
     }
+}
+
+/// The transaction of an Allocate error response with 401 Unauthorized.
+fn allocate_unauthorized(datagram: &[u8]) -> Option<TransactionId> {
+    let message = Message::from_bytes(datagram).ok()?;
+    let unauthorized = message.has_method(ALLOCATE)
+        && message.has_class(MessageClass::Error)
+        && message
+            .attribute::<ErrorCode>()
+            .is_ok_and(|error| error.code() == ErrorCode::UNAUTHORIZED);
+    unauthorized.then(|| message.transaction_id())
 }
 
 #[cfg(test)]
@@ -300,11 +339,38 @@ mod tests {
         let (turn, _) = crate::test_support::fake_turn_server();
         let (event, _) = allocate(turn, "user", "pass", Duration::from_secs(2));
         assert!(matches!(event, Some(RelayEvent::Allocated(_))), "{event:?}");
-        // Refused: no relay (the failure itself is reported only after the
-        // crate's ~40 s transaction timeout; see `RelayEvent::Failed`).
-        let (event, received) = allocate(turn, "user", "wrong", Duration::from_secs(1));
-        assert_eq!(event, None);
-        assert!(received >= 2, "the server answered both requests");
+        // Refused: reported at once, not after the crate's ~40 s timeout.
+        let (event, _) = allocate(turn, "user", "wrong", Duration::from_secs(1));
+        assert_eq!(event, Some(RelayEvent::Failed));
+    }
+
+    #[test]
+    fn a_late_copy_of_the_first_challenge_is_not_a_refusal() {
+        let (turn, _) = crate::test_support::fake_turn_server();
+        let socket = UdpSocket::bind("127.0.0.1:0").unwrap();
+        socket
+            .set_read_timeout(Some(Duration::from_secs(1)))
+            .unwrap();
+        let creds = TurnServer {
+            host: turn.to_string(),
+            username: "user".into(),
+            credential: "pass".into(),
+        };
+        let mut relay = Relay::allocate(socket.local_addr().unwrap(), turn, &creds);
+        let mut buf = [0u8; 1500];
+
+        // The unauthenticated Allocate and its 401 challenge.
+        for message in relay.poll_transmit().0 {
+            socket.send_to(&message, turn).unwrap();
+        }
+        let n = socket.recv_from(&mut buf).unwrap().0;
+        let challenge = buf[..n].to_vec();
+        assert!(allocate_unauthorized(&challenge).is_some());
+        relay.recv(&challenge);
+
+        // The same 401 again (a reply to a resend of the first request).
+        relay.recv(&challenge);
+        assert_eq!(relay.poll_event(), None);
     }
 
     /// The reachability check that needs no secret: coturn answers, and
@@ -318,8 +384,11 @@ mod tests {
             .find(SocketAddr::is_ipv4)
             .unwrap();
         let (event, received) = allocate(server, "0:bogus", "bogus", Duration::from_secs(3));
-        assert_eq!(event, None);
-        assert!(received >= 2, "coturn answered {received} times");
+        assert_eq!(
+            event,
+            Some(RelayEvent::Failed),
+            "coturn answered {received} times"
+        );
     }
 
     /// The checkpoint: two relays on the real coturn, one sending to the

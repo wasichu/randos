@@ -408,8 +408,13 @@ relay path).
 same/different table), and AGENTS' TUI row now cover STUN/TURN.
 
 **Owner decisions**
-- Bad TURN credentials surface after the crate's ~40 s transaction timeout,
-  by design; kept (the server's 15 s connect timeout decides the call first).
+- Bad TURN credentials: **fail fast** (the owner's call). The crate would
+  retry for ~40 s; `Relay` now reports `Failed` on coturn's first refusal.
+  No user-visible change (the server's 15 s connect timeout decides the
+  call either way), no library patch; it gives up the crate's guard against
+  a forged 401, which only an on-path attacker could send.
+- e2e tests never reach the internet: the test server hands out no ICE
+  servers (`RANDOS_ICE_SERVERS='[]'`); srflx is covered by the Rust tests.
 - `relay_only` stays test-only (`CallConfig`), not a Port field; it's a
   one-line field if a user's network ever needs diagnosing.
 
