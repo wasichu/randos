@@ -30,10 +30,12 @@ serve:
     exec mix phx.server
 
 # Run the dev server against the coturn TURN server managed by infra/coturn
+# (the shared secret comes from the encrypted state via `just tofu`, so the
+# Keychain passphrase is used and the secret is never printed)
 dev-turn:
     TURN_HOST="turn.slowinput.org" \
     TURN_REALM="turn.slowinput.org" \
-    TURN_SHARED_SECRET="$(tofu -chdir=infra/coturn output -raw turn_shared_secret)" \
+    TURN_SHARED_SECRET="$(just tofu output -raw turn_shared_secret)" \
     TURN_CREDENTIAL_TTL_SECONDS="3600" \
     iex -S mix phx.server
 
