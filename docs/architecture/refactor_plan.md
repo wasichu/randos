@@ -172,6 +172,51 @@ off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
   4.3 Stage 0 mic-permission findings show an unsigned helper is treated
   differently.
 
+## Phase 6: UI translations (after the first release; alongside Phase 5)
+
+Numbered after Phase 5 but started first: after 4.4/4.5 ship, before the
+voice lab gets going, and worked on in parallel with it. Scoped 2026-10-20;
+design details when we get there.
+
+**Where it starts.** The web UI already wraps ~80 strings in `gettext`
+(home components, About, layout, `ParticipantErrors`); only `errors.pot` has
+ever been extracted, and there are no translations or locale selection.
+Language names are already endonyms (`Randos.ConversationLanguages`), so they
+need no translation. The TUI's own strings aren't in gettext (decide whether
+it gets translated, or stays English).
+
+**Languages.** The 14 non-English practice languages: es, zh, hi, ar, pt,
+bn, ru, ja, fr, de, ko, it, tr, id. Arabic needs right-to-left layout.
+
+**Plan**
+1. **Plumbing.** `mix gettext.extract --merge` into `default.pot` and one
+   `.po` per locale; a CI check that the template is current. Locale from an
+   explicit choice (a small switcher kept in the browser: no account, no
+   tracking), then `Accept-Language`, then English; missing strings fall back
+   to English. RTL for Arabic. Interpolation only via `%{name}` (no string
+   concatenation), translator comments (`#.`) where context matters.
+2. **Translation shootout** (the AI-engineering part). Several open models
+   translate every string into every locale; automated checks score them; the
+   winner per language ships. Candidates to verify on their model cards:
+   MADLAD-400 (Apache-2.0), M2M100 (MIT), Opus-MT (CC-BY-4.0), a small
+   instruction-tuned LLM (e.g. Qwen, Apache-2.0); NLLB-200 is CC-BY-NC, so
+   likely out for shipping. Checks, none needing a human:
+   - placeholders (`%{count}`) and glossary terms ("rando", "Randos") intact,
+     length sane (buttons), script correct for the locale;
+   - back-translation to English, compared with the source (chrF);
+   - reference-free quality estimation (e.g. COMET-Kiwi; check its license,
+     though eval-only use is different from shipping);
+   - an LLM judge for tone (calm, informal) as a tiebreaker.
+3. **Results as documentation.** A page or diagram of the shootout: scores per
+   model and language, where models disagree, what failed the checks. It
+   doubles as the record of why each language uses the model it does.
+4. **No human review, so make fixes easy.** Machine translations ship as
+   they are (check how gettext treats `fuzzy` entries at runtime: don't mark
+   shipped strings fuzzy if that hides them); a short "help fix a
+   translation" note points to the `.po` files on GitHub (a PR or an issue).
+   Human fixes must survive re-runs: the pipeline only fills untranslated
+   entries unless asked to redo a language.
+
 ## Phase 5: Voice anonymization
 
 The most experimental phase, so it's built around a **voice lab** that
@@ -457,8 +502,9 @@ All 2026-10-19 unless noted.
 
 - **Order after Stage 1 (2026-10-20):** 4.3 Stage 2 (hardening, scoped by
   what the live call shows), then Stage 3 (echo cancellation), then
-  packaging (4.4, 4.5); Phase 5's voice lab after that, which the owner
-  works on freely. Quality passes stay at their milestones (before 4.4/4.5,
+  packaging (4.4, 4.5); then Phase 6 (UI translations), with Phase 5's
+  voice lab starting after it and running alongside; the owner works on
+  the voice lab freely. Quality passes stay at their milestones (before 4.4/4.5,
   and at the start of the voice lab).
 
 - **Ash removed**; plain Elixir/OTP first, justify every dependency. Call
