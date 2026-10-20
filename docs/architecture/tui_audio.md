@@ -307,25 +307,7 @@ The browser's matching seam is unchanged: `processLocalStream` in
    - Headphones required.
    - Ends with the str0m-vs-webrtc-rs checkpoint and an automated TUI↔browser
      call in `just tui-smoke`.
-   - **Progress (2026-10-20).** Done and tested without hardware:
-     - the helper's call session (`call.rs`, str0m with pure-Rust crypto):
-       both roles, Opus over RTP, buffered early candidates, mDNS
-       candidates skipped, concealment for gaps [run: two in-process peers,
-       and two helper processes through a relay];
-     - the Port protocol (`call_start`/`call_signal`/`call_stop`, events
-       `call_signal`/`call_state`/`call_stats`) and the TUI's call lifecycle
-       in the pure `Tui.Media.State`, mirroring the browser's
-       `WebRTCClient` (5 s disconnected grace, `end_call` fallback);
-     - **the automated TUI ↔ headless Chrome call, both roles, in
-       `just tui-smoke` and CI** [run, 3 of 3 green locally]: Chrome offers
-       and str0m answers, and the reverse; audio checked both ways (the TUI's
-       stats, and Chrome's own inbound-rtp energy). This is host-candidate
-       connectivity on one machine (Chrome's mDNS hiding is off in the test).
-     - Not yet: STUN (server-reflexive) and TURN (relayed) candidates, so no
-       calls across NATs; the TURN glue is still the biggest unverified risk,
-       and the str0m-vs-webrtc-rs checkpoint waits on it. Also not yet:
-       Firefox (installed here, but the test harness speaks Chrome's
-       protocol), and a live call with a person on each end.
+   - **Status:** tracked in `refactor_plan.md` (4.3), not here.
    - **Moved up from Stage 2 (done 2026-10-19): resampling.** The first
      headphone test failed on Shokz OpenRun Bluetooth headphones, whose
      output offers only 44.1 kHz (music mode) or 16 kHz (call mode) [run].
