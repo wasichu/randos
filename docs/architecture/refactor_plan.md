@@ -273,7 +273,8 @@ languages. The fix moved that policy to the one place both trust.
   sides' `media`; error text comes from the server (`error_message`,
   `RandosWeb.ParticipantErrors`). The browser has no default STUN server.
 - The spec is "Client obligations" in `participant_channel.md`, checked for
-  both clients in both e2e harnesses (coverage table there).
+  both clients in both e2e harnesses (coverage table there); diagrams in
+  `call_flow.md`.
 
 **Found along the way:** the server never decided a call failed; str0m has
 no ICE `Failed` state (a TUI call could sit in `Checking` forever); and an
