@@ -25,7 +25,8 @@ _free-dev-port:
     port="${PORT:-4000}"
     for pid in $(lsof -t -nP -iTCP:"${port}" -sTCP:LISTEN || true); do
       cmd=$(ps -o command= -p "$pid")
-      if [[ $cmd == *beam.smp* && $cmd == *-noshell* ]]; then
+      # IEx runs with -noshell too; it's told apart by its +iex flag.
+      if [[ $cmd == *beam.smp* && $cmd == *-noshell* && $cmd != *+iex* ]]; then
         kill "$pid"
         while kill -0 "$pid" 2>/dev/null; do sleep 0.2; done
         echo "stopped the background dev server on :${port} (pid ${pid})"
