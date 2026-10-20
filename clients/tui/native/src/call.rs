@@ -63,6 +63,10 @@ pub struct CallConfig {
     /// The channel's `ice_servers` for this call: `stun:` servers give us a
     /// server-reflexive candidate (our address outside the NAT).
     pub ice_servers: Value,
+    /// Offer only the relay candidate (no host or STUN), like a browser's
+    /// `iceTransportPolicy: "relay"`, so every packet goes through TURN.
+    /// Not in the Port protocol: tests use it to prove the relay path.
+    pub relay_only: bool,
 }
 
 /// A signal from the peer, as the participant channel delivers it.
@@ -165,12 +169,14 @@ struct Session {
     notify: Notify,
     buf: Vec<u8>,
     ice_servers: Value,
+    relay_only: bool,
     stun: Gatherer,
     /// Our TURN allocation, if the call has a `turn:` server.
     relay: Option<Relay>,
-    /// Our candidates found after the SDP went out, waiting for the media id
-    /// they're trickled under.
+    /// Our candidates found since the last `gather`, trickled once our SDP
+    /// (offer or answer) has gone out.
     unsent_candidates: Vec<String>,
+    sdp_sent: bool,
 }
 
 impl Session {
@@ -191,7 +197,13 @@ impl Session {
             .clear_codecs()
             .enable_opus(true, false)
             .build(Instant::now());
-        rtc.add_local_candidate(Candidate::host(local, "udp")?);
+        if !config.relay_only {
+            rtc.add_local_candidate(Candidate::host(local, "udp")?);
+        }
+        let mut report = Report::new();
+        if config.relay_only {
+            report.local_candidates.clear();
+        }
 
         Ok(Self {
             rtc,
@@ -210,20 +222,26 @@ impl Session {
             playback,
             rtp_time: 0,
             next_timeout: Instant::now(),
-            report: Report::new(),
+            report,
             notify,
             buf: vec![0; 2000],
             ice_servers: config.ice_servers.clone(),
+            relay_only: config.relay_only,
             stun: Gatherer::new(Vec::new(), Instant::now()),
             relay: None,
             unsent_candidates: Vec::new(),
+            sdp_sent: false,
         })
     }
 
     fn run(&mut self, role: Role, inbox: &Receiver<Command>) -> Result<(), Error> {
         // Resolve the STUN servers here, not in `Call::start`: DNS can be
         // slow, and the Port must keep answering meanwhile.
-        let servers = stun::resolve(&stun::stun_servers(&self.ice_servers), self.local);
+        let servers = if self.relay_only {
+            Vec::new()
+        } else {
+            stun::resolve(&stun::stun_servers(&self.ice_servers), self.local)
+        };
         self.stun = Gatherer::new(servers, Instant::now());
         self.relay = relay::turn_servers(&self.ice_servers)
             .first()
@@ -281,6 +299,7 @@ impl Session {
         let (offer, pending) = change.apply().ok_or("no offer to send")?;
         self.mid = Some(mid);
         self.pending_offer = Some(pending);
+        self.sdp_sent = true;
         self.signal_out(
             "offer",
             json!({"sdp": {"type": "offer", "sdp": offer.to_sdp_string()}}),
@@ -299,6 +318,7 @@ impl Session {
                     "answer",
                     json!({"sdp": {"type": "answer", "sdp": answer.to_sdp_string()}}),
                 );
+                self.sdp_sent = true;
                 self.remote_description_set()
             }
             "answer" => {
@@ -528,8 +548,8 @@ impl Session {
         Ok(())
     }
 
-    /// Sends due STUN requests and trickles any of our candidates still
-    /// waiting for the media id.
+    /// Sends due STUN and TURN messages and trickles our new candidates
+    /// once our SDP is out.
     fn gather(&mut self) -> Result<(), Error> {
         if !self.stun.is_done() {
             for (server, request) in self.stun.poll_transmit(Instant::now())? {
@@ -556,13 +576,18 @@ impl Session {
             }
         }
 
-        if let (Some(mid), false) = (self.mid, self.unsent_candidates.is_empty()) {
+        // Not gated on knowing the mid: an answerer learns it only later
+        // (str0m's `MediaAdded`), and a candidate held back until then
+        // never reaches the peer, who then never permits it on TURN. One
+        // m-line, so `sdpMLineIndex` 0 identifies it.
+        if self.sdp_sent && !self.unsent_candidates.is_empty() {
+            let mid = self.mid.map(|mid| mid.to_string());
             for candidate in std::mem::take(&mut self.unsent_candidates) {
                 self.signal_out(
                     "ice_candidate",
                     json!({"candidate": {
                         "candidate": candidate,
-                        "sdpMid": mid.to_string(),
+                        "sdpMid": mid,
                         "sdpMLineIndex": 0,
                         "usernameFragment": null,
                     }}),
@@ -572,8 +597,8 @@ impl Session {
         Ok(())
     }
 
-    /// A STUN server told us our outside address: offer it as a candidate.
-    /// The SDP has already gone out, so it's trickled (`gather`).
+    /// A STUN server told us our outside address: offer it as a candidate,
+    /// trickled (`gather`).
     fn add_server_reflexive(&mut self, mapped: SocketAddr) -> Result<(), Error> {
         // Not behind a NAT (or a test): the host candidate already covers it.
         if mapped == self.local {
@@ -739,6 +764,15 @@ mod tests {
     }
 
     fn peer_with(role: Role, ice_servers: Value) -> (Call, Arc<Mutex<Seen>>) {
+        peer_from(CallConfig {
+            role,
+            bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+            ice_servers,
+            relay_only: false,
+        })
+    }
+
+    fn peer_from(config: CallConfig) -> (Call, Arc<Mutex<Seen>>) {
         let seen = Arc::new(Mutex::new(Seen::default()));
         let notify: Notify = {
             let seen = Arc::clone(&seen);
@@ -759,11 +793,6 @@ mod tests {
                     _ => {}
                 }
             })
-        };
-        let config = CallConfig {
-            role,
-            bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
-            ice_servers,
         };
         let (call, _started) = Call::start(config, Input::Sine, Output::Null, notify).unwrap();
         (call, seen)
@@ -1099,5 +1128,130 @@ mod tests {
         let (event, received) = allocate(server, "0:bogus", "bogus", Duration::from_secs(3));
         assert_eq!(event, None);
         assert!(received >= 2, "coturn answered {received} times");
+    }
+
+    /// The checkpoint: two relays on the real coturn, one sending to the
+    /// other's relayed address (allocate, permissions, Send/Data
+    /// indications, all against the server we run). Credentials from
+    /// `TURN_TEST_USERNAME`/`TURN_TEST_CREDENTIAL` (TURN REST, as the
+    /// server issues them); see the README for the command.
+    #[test]
+    #[ignore = "needs coturn credentials in the environment"]
+    fn production_turn_relays_data_between_two_allocations() {
+        let user = std::env::var("TURN_TEST_USERNAME").unwrap();
+        let pass = std::env::var("TURN_TEST_CREDENTIAL").unwrap();
+        let server = "turn.slowinput.org:3478"
+            .to_socket_addrs()
+            .unwrap()
+            .find(SocketAddr::is_ipv4)
+            .unwrap();
+        let creds = relay::TurnServer {
+            host: server.to_string(),
+            username: user,
+            credential: pass,
+        };
+
+        let peers: Vec<(UdpSocket, Relay)> = (0..2)
+            .map(|_| {
+                let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
+                socket.set_nonblocking(true).unwrap();
+                let relay = Relay::allocate(socket.local_addr().unwrap(), server, &creds);
+                (socket, relay)
+            })
+            .collect();
+        let mut peers = peers;
+        let mut buf = [0u8; 1500];
+        let mut received = None;
+        let deadline = Instant::now() + Duration::from_secs(10);
+        while Instant::now() < deadline && received.is_none() {
+            let relayed: Vec<Option<SocketAddr>> = peers.iter().map(|(_, r)| r.relayed()).collect();
+            for (i, (socket, relay)) in peers.iter_mut().enumerate() {
+                for message in relay.poll_transmit().0 {
+                    socket.send_to(&message, server).unwrap();
+                }
+                if let Some(RelayEvent::Failed) = relay.poll_event() {
+                    panic!("allocation {i} failed");
+                }
+                if let Ok((n, _)) = socket.recv_from(&mut buf)
+                    && let Some((from, data)) = relay.recv(&buf[..n])
+                {
+                    received = Some((i, from, data));
+                }
+                // Each lets the other in; peer 0 keeps sending to peer 1.
+                if let Some(other) = relayed[1 - i] {
+                    relay.permit(other.ip());
+                    if i == 0
+                        && let Some(wrapped) = relay.send(other, b"hello through coturn").unwrap()
+                    {
+                        socket.send_to(&wrapped, server).unwrap();
+                    }
+                }
+            }
+            thread::sleep(Duration::from_millis(20));
+        }
+
+        let (to, from, data) = received.expect("no data relayed within 10 s");
+        assert_eq!(
+            (to, data.as_slice()),
+            (1, b"hello through coturn".as_slice())
+        );
+        assert_eq!(Some(from), peers[0].1.relayed());
+        for (socket, relay) in &mut peers {
+            for message in relay.close() {
+                let _ = socket.send_to(&message, server);
+            }
+        }
+    }
+
+    /// The checkpoint, end to end: two relay-only peers (no host or STUN
+    /// candidates), so the whole call, ICE, DTLS and audio, goes through
+    /// the real coturn. Credentials as in the test above.
+    #[test]
+    #[ignore = "needs coturn credentials in the environment"]
+    fn production_turn_carries_a_whole_relay_only_call() {
+        let ice = json!([{
+            "urls": "turn:turn.slowinput.org:3478",
+            "username": std::env::var("TURN_TEST_USERNAME").unwrap(),
+            "credential": std::env::var("TURN_TEST_CREDENTIAL").unwrap(),
+        }]);
+        // The default route's address: coturn must be reachable.
+        let relay_only = |role| {
+            peer_from(CallConfig {
+                role,
+                bind_ip: None,
+                ice_servers: ice.clone(),
+                relay_only: true,
+            })
+        };
+        let (offerer, offerer_seen) = relay_only(Role::Offerer);
+        let (answerer, answerer_seen) = relay_only(Role::Answerer);
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_secs(8),
+        );
+
+        for seen in [&offerer_seen, &answerer_seen] {
+            let seen = seen.lock().unwrap();
+            assert!(
+                seen.states.contains(&"connected".to_owned()),
+                "states: {:?}",
+                seen.states
+            );
+            let last = seen.stats.last().expect("stats");
+            assert_eq!(last.local_candidates, vec!["relay"]);
+            assert!(
+                last.packets_received > 100,
+                "received {}",
+                last.packets_received
+            );
+            assert!(
+                last.output_peak_dbfs > -15.0,
+                "heard {} dBFS",
+                last.output_peak_dbfs
+            );
+        }
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
     }
 }

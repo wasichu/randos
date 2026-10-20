@@ -114,6 +114,16 @@ sans-IO crates (`turn-client-proto` 0.7.3 covering RFC 5766/6062/6156/8656;
 allocation by the end of Stage 1, switch to webrtc-rs and accept UDP-only
 `turn:` (which matches our coturn's UDP relaying) and ring's C build.
 
+**Checkpoint passed (2026-10-20): staying on str0m.** `turn-client-proto`
+0.7 glued to str0m in ~250 lines (`src/relay.rs` plus the call loop); a
+whole relay-only call (ICE, DTLS, Opus both ways) runs through our coturn
+(`just turn-check`). What the integration needed: relayed peer data handed
+to str0m with the *relayed* address as its destination; permissions
+installed per remote candidate; candidates trickled even before the
+answerer knows its mid. One crate quirk: with bad credentials it reports
+failure only after its transaction timeout (~40 s), by design. `turns:` (TLS)
+is still unbuilt; `turn-client-rustls` is the path if a network needs it.
+
 #### Codec: Opus, statically linked reference libopus
 
 - **G.711 is not good enough as the main codec for pronunciation.**

@@ -114,6 +114,19 @@ media-loopback seconds="20":
 native-check:
     cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny --log-level error check --hide-inclusion-graph
 
+# The helper against the real coturn: allocations, relayed data, and a whole
+# relay-only call. Derives short-lived TURN REST credentials from the shared
+# secret (via `just tofu`, so the Keychain passphrase) without printing it
+turn-check:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    secret="$(just tofu output -raw turn_shared_secret 2>/dev/null)" \
+      || { echo "could not read the TURN secret (just tofu)" >&2; exit 1; }
+    export TURN_TEST_USERNAME="$(( $(date +%s) + 600 ))"
+    export TURN_TEST_CREDENTIAL="$(printf %s "$TURN_TEST_USERNAME" | openssl dgst -sha1 -hmac "$secret" -binary | base64)"
+    unset secret
+    cd clients/tui/native && cargo test --quiet -- --ignored production_turn
+
 # Refuse a plaintext infra/coturn/terraform.tfstate (it holds the TURN secret)
 check-state-encrypted:
     #!/usr/bin/env bash

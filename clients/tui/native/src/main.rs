@@ -167,6 +167,7 @@ fn handle(
                 ice_servers,
                 role: role.parse()?,
                 bind_ip: bind_ip.map(|ip| ip.parse()).transpose()?,
+                relay_only: false,
             };
             let (running, started) =
                 Call::start(config, input.parse()?, out.parse()?, Arc::clone(notify))?;

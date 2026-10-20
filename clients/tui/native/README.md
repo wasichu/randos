@@ -85,7 +85,10 @@ For networks where that isn't enough (symmetric NATs, strict firewalls) the
 helper allocates a relay on the first UDP `turn:` server (`src/relay.rs`,
 over `turn-client-proto`): one allocation per call, freed when the call
 stops; data goes in Send/Data indications (no channel binding). It trickles
-the relayed address as a `relay` candidate, installs a permission for each
+the relayed address as a `relay` candidate (candidates are trickled once our
+SDP is out, with `sdpMLineIndex` 0 and `sdpMid` once known: an answerer
+learns its mid only later, and a relay candidate the peer never hears of
+gets no TURN permission, so the peer's checks are dropped), installs a permission for each
 remote candidate's IP, and wraps str0m's packets from the relay candidate
 for the TURN server. A relay that fails (or credentials coturn refuses) only
 means no relay candidate; the call never waits on it. `turns:` and TCP
@@ -123,3 +126,13 @@ The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,
 
 `just native-check` (part of `just precommit`): `cargo fmt --check`,
 `cargo clippy --all-targets -- -D warnings`, `cargo test`, `cargo deny check`.
+
+`just turn-check` (by hand, needs the coturn state passphrase in the
+Keychain): the ignored `production_turn_*` tests against the real coturn,
+with short-lived TURN REST credentials derived from the shared secret
+without printing it. Two allocations relay data to each other, and a whole
+call runs relay-only (no host or STUN candidates, like a browser's
+`iceTransportPolicy: "relay"`; `CallConfig::relay_only`, not in the Port
+protocol), so ICE, DTLS and audio all go through TURN. The hermetic tests
+use a fake TURN server and can't prove that: on one machine the host pair
+always wins.

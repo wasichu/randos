@@ -1,6 +1,6 @@
 # Randos roadmap
 
-Verified against the code at `caa6f77` (2026-10-20). Update this line, and
+Verified against the code at `0071e72` (2026-10-20). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -106,9 +106,10 @@ roles with audio checked both ways. STUN is done: the helper gathers a
 server-reflexive candidate and trickles it (checked against Google's STUN
 server and a hermetic fake one). TURN is done too: one relay allocation per
 call via `turn-client-proto`, trickled as a `relay` candidate (hermetic fake
-TURN server; coturn checked with bogus credentials). Next: a real call through
-coturn (`just dev-turn`, needs the owner), the str0m-vs-webrtc-rs checkpoint,
-then a live call. See `tui_audio.md` Stage 1.
+TURN server; coturn checked with bogus credentials). The str0m-vs-webrtc-rs checkpoint
+passed: a whole relay-only call runs through our coturn (`just turn-check`),
+so we stay on str0m (see `tui_audio.md`). Next: a live call with a person on
+each end, then the end-of-Stage-1 code-quality pass. See `tui_audio.md` Stage 1.
 
 Stage 0 code is done:
 - the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port
