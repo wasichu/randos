@@ -99,7 +99,7 @@ run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
 `ex_webrtc` rejected for its in-VM NIFs (OpenSSL, libsrtp) compiled on users'
 machines. Staged: skeleton → browser interop with real TURN → hardening → AEC.
 
-Stage 1 (browser interop) is in progress: the helper places and answers
+Stage 1 (browser interop) is built: the helper places and answers
 WebRTC calls (str0m), the TUI drives them from the pure `Tui.Media.State`,
 and `just tui-smoke` runs an automated TUI ↔ headless Chrome call in both
 roles with audio checked both ways. STUN is done: the helper gathers a
@@ -108,8 +108,9 @@ server and a hermetic fake one). TURN is done too: one relay allocation per
 call via `turn-client-proto`, trickled as a `relay` candidate (hermetic fake
 TURN server; coturn checked with bogus credentials). The str0m-vs-webrtc-rs checkpoint
 passed: a whole relay-only call runs through our coturn (`just turn-check`),
-so we stay on str0m (see `tui_audio.md`). Next: a live call with a person on
-each end, then the end-of-Stage-1 code-quality pass. See `tui_audio.md` Stage 1.
+so we stay on str0m (see `tui_audio.md`). The end-of-Stage-1 code-quality
+pass is done (below). Next: a live call with a person on each end, which
+closes Stage 1. See `tui_audio.md` Stage 1.
 
 Stage 0 code is done:
 - the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port
