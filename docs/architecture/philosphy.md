@@ -6,7 +6,7 @@ It is not a social network.
 
 It is not a content platform.
 
-It is not a metrics-driven language app.
+It is not a gamified language app.
 
 randos is closer to public conversational infrastructure: a calm, minimal place where adults can briefly meet through language and then disappear.
 
@@ -62,7 +62,7 @@ It is free to use. It does not advertise, sell anything, or charge for features.
 
 It never shows ads, never tracks visitors, and never adds video or anything else that turns a conversation into a product.
 
-Donations may be welcome someday. They will never buy anything: no perks, no priority, no extra features.
+Donations may be welcome someday.
 
 ## Privacy and Ephemerality
 
