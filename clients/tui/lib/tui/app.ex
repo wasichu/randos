@@ -90,9 +90,6 @@ defmodule Tui.App do
     {:noreply, run_media(state, MediaState.event(state.media_state, name, payload))}
   end
 
-  def handle_info({:media_call_grace, seq}, state),
-    do: {:noreply, run_media(state, MediaState.call_grace(state.media_state, seq))}
-
   def handle_info({:media_reply, command, result}, state),
     do: {:noreply, run_media(state, MediaState.reply(state.media_state, command, result))}
 
@@ -265,6 +262,7 @@ defmodule Tui.App do
 
   defp call_line(%{call: nil}), do: "Audio: starting…"
   defp call_line(%{call: %{connection: :disconnected}}), do: "Audio: reconnecting…"
+  defp call_line(%{call: %{connection: :failed}}), do: "Audio: failed"
   defp call_line(%{call: %{connection: :connecting}}), do: "Audio: connecting…"
 
   defp call_line(%{call: %{stats: %{} = s}}) do

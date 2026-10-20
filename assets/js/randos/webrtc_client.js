@@ -7,8 +7,10 @@ import {
 import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
 
-const DISCONNECTED_GRACE_MS = 5000
-const TEARDOWN_SIGNALS = new Set(["peer_disconnected", "connection_failed"])
+// Call health is the server's job (CallCoordinator): this client only
+// reports its raw media state (`media_state` signals) and tears down when the
+// server ends the call, which unmounts the hook. See "Client obligations" in
+// docs/architecture/participant_channel.md.
 
 export const WebRTCClientState = Object.freeze({
   NOT_STARTED: "not_started",
@@ -40,8 +42,7 @@ export class WebRTCClient {
     this.ready = Promise.resolve()
     this.signalChain = Promise.resolve()
     this.pendingIceCandidates = []
-    this.disconnectedTimeout = null
-    this.connectionEstablishedSent = false
+    this.reportedMediaState = null
     this.cleaned = false
   }
 
@@ -120,12 +121,6 @@ export class WebRTCClient {
   receiveSignal(signal) {
     if (this.cleaned) return Promise.resolve()
 
-    // Teardown signals act immediately rather than waiting their turn.
-    if (TEARDOWN_SIGNALS.has(signal.type)) {
-      this.close()
-      return Promise.resolve()
-    }
-
     const handled = this.signalChain.then(async () => {
       await this.ready.catch(() => {})
       if (this.cleaned || !this.peerConnection) return
@@ -186,10 +181,12 @@ export class WebRTCClient {
     logEvent("webrtc.closed")
   }
 
+  // The connection itself failed (not a local start problem: those end the
+  // call with a reason, see the hook). The server ends the call.
   failConnection(payload) {
     if (this.cleaned) return
 
-    this.pushSignal("connection_failed", payload)
+    this.reportMediaState("failed", payload)
     this.teardown()
     // Keep the more specific state if the mic was the problem.
     if (this.state !== WebRTCClientState.MICROPHONE_DENIED) {
@@ -203,7 +200,6 @@ export class WebRTCClient {
     if (this.cleaned) return
 
     this.cleaned = true
-    this.clearDisconnectedTimeout()
     stopStream(this.localStream)
     this.localStream = null
 
@@ -260,11 +256,15 @@ export class WebRTCClient {
         break
       case "connected":
       case "completed":
-        this.markConnected(source, state)
+        this.setState(WebRTCClientState.CONNECTED)
+        this.reportMediaState("connected", {source})
+        logEvent("webrtc.connected", {source, state})
         break
       case "disconnected":
+        // May recover; the server decides how long to wait.
         this.setState(WebRTCClientState.ICE_CHECKING)
-        this.scheduleDisconnectedFailure({[source]: state})
+        this.reportMediaState("disconnected", {source})
+        logWarning("webrtc.disconnected", {source})
         break
       case "failed":
         this.failConnection({[source]: state})
@@ -272,33 +272,12 @@ export class WebRTCClient {
     }
   }
 
-  markConnected(source, state) {
-    this.clearDisconnectedTimeout()
+  // Tells the server about a change in our media state (once per change).
+  reportMediaState(state, details = {}) {
+    if (this.reportedMediaState === state) return
 
-    if (!this.connectionEstablishedSent) {
-      this.pushSignal("connection_established", {[source]: state})
-      this.connectionEstablishedSent = true
-    }
-
-    this.setState(WebRTCClientState.CONNECTED)
-    logEvent("webrtc.connected", {source, state})
-  }
-
-  scheduleDisconnectedFailure(payload) {
-    if (this.disconnectedTimeout || this.cleaned) return
-
-    logWarning("webrtc.disconnected", payload)
-    this.disconnectedTimeout = window.setTimeout(() => {
-      this.disconnectedTimeout = null
-      this.failConnection({...payload, reason: "disconnected_timeout"})
-    }, DISCONNECTED_GRACE_MS)
-  }
-
-  clearDisconnectedTimeout() {
-    if (!this.disconnectedTimeout) return
-
-    window.clearTimeout(this.disconnectedTimeout)
-    this.disconnectedTimeout = null
+    this.reportedMediaState = state
+    this.pushSignal("media_state", {state, ...details})
   }
 
   setState(state) {

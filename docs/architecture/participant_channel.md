@@ -47,7 +47,7 @@ show up as [`state`](#state) pushes, not in the reply.
 | --- | --- | --- | --- |
 | `find` | `{"speaks": "en", "listens": "es", "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone whose languages mirror yours **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
-| `end_call` | `{}` | in a call | Hang up and go `idle`. The peer goes back to `looking`. |
+| `end_call` | `{}`, or `{"reason": …}` | in a call | Hang up and go `idle`. The peer goes back to `looking`. A client that can't carry the call sends a `reason`: `microphone_denied`, `microphone_not_found`, `audio_unavailable`, or `audio_failed` (anything else replies `invalid_message`); it comes back as this participant's `error`. |
 | `next` | `{}` | in a call | Hang up and go straight back to `looking`. |
 | `vote` | `{"vote": "continue" \| "end"}` | `extension_pending` | Vote on extending. Both `continue` → another segment; any `end` → call ends (voter goes `idle`). |
 | `signal` | `{"type": <signal type>, "payload": {…}}` | in a call | Relay a WebRTC signal to the peer (see [signals](#webrtc-signaling)). |
@@ -119,30 +119,49 @@ A WebRTC signal from the peer:
 
 ## WebRTC signaling
 
-Same flow as the browser (`assets/js/randos/webrtc_client.js`):
+Same flow as the browser (`assets/js/randos/webrtc_client.js`). **Call health
+is the server's job**: clients report their raw media state, and the server
+(`CallCoordinator`) decides when a call is up or has failed.
 
-1. On `connecting` (the match), capture the mic, create the peer connection with the pushed
-   `ice_servers`, and add the audio track.
+1. On `connecting` (the match), capture the mic, create the peer connection
+   with the pushed `ice_servers`, and add the audio track. (`in_call` comes
+   later: once both sides' media is connected.)
 2. **Offerer** creates an offer and sends `signal` `offer`
    (`{"sdp": {"type", "sdp"}}`); **answerer** waits for it, then sends
    `answer`. Both trickle `ice_candidate`
    (`{"candidate": {"candidate", "sdpMid", "sdpMLineIndex", "usernameFragment"}}`,
-   i.e. `RTCIceCandidate.toJSON()`). Buffer
-   remote candidates until the remote description is set.
-3. When ICE connects, send `connection_established` once.
-4. On failure send `connection_failed` (`{"reason": …}`); if you lose the peer
-   send `peer_disconnected`. Either ends the call for both people.
-5. Receiving `connection_failed` or `peer_disconnected` means tear down.
+   i.e. `RTCIceCandidate.toJSON()`). Buffer remote candidates until the
+   remote description is set.
+3. On every change of your connection, send `signal` `media_state`:
+   `{"state": "connected" | "disconnected" | "failed", ...}` (extra keys,
+   like a `reason` or `source`, are allowed). Send each change once.
+4. The server then:
+   - makes the call `in_call` (and starts its clock) once both sides are
+     `connected`;
+   - ends it `connection_failed` if that doesn't happen within the connect
+     timeout (15 s), if a side stays `disconnected` past the grace (5 s), or
+     on `failed`.
+   You see the result as `state` pushes. **Tear down when the status leaves
+   the call**; the server doesn't relay lifecycle signals to the peer.
+5. If you can't start (no mic, mic denied, no audio support), send
+   `end_call` with a `reason`, not `media_state` `failed`: only the peer is
+   requeued, and you're told why.
+6. Leaving the page or app: `signal` `peer_disconnected`, or just close the
+   channel. Either ends the call.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
-matched with each other. If one still receives an `offer`, it must answer
-with the `end_call` event, never `connection_failed`. `end_call` ends the call with this client
-stopping, so only the peer is requeued; any other ending requeues both
-participants, and two incompatible clients would rematch in a loop.
+matched with each other, and their calls go `in_call` without any media
+reports. If one still receives an `offer`, it must answer with `end_call`
+(reason `audio_unavailable`), never `media_state` `failed`: `end_call` ends the
+call with this client stopping, so only the peer is requeued; any other
+ending requeues both participants, and two incompatible clients would
+rematch in a loop.
 
-Signal types: `offer`, `answer`, `ice_candidate`, `connection_established`,
-`connection_failed`, `peer_disconnected`. The server relays payloads as-is
-and never touches media.
+Signal types: `offer`, `answer`, `ice_candidate` (relayed to the peer as-is;
+the server never touches media), `media_state` (validated and acted on;
+`invalid_media_state` if malformed), and `peer_disconnected`.
+`connection_established` / `connection_failed` are older spellings of
+`media_state` connected / failed, still accepted.
 
 ## Not provided (yet)
 

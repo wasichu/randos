@@ -17,7 +17,8 @@ defmodule Randos.Calls.Call do
           extension_count: non_neg_integer(),
           call_deadline_unix_ms: integer() | nil,
           extension_deadline_unix_ms: integer() | nil,
-          ended_reason: Randos.Calls.Lifecycle.ended_reason() | nil
+          ended_reason: Randos.Calls.Lifecycle.ended_reason() | nil,
+          media: %{String.t() => Randos.Calls.Lifecycle.media_state()}
         }
 
   @enforce_keys [:id, :pid, :match]
@@ -29,7 +30,8 @@ defmodule Randos.Calls.Call do
     :extension_deadline_unix_ms,
     :ended_reason,
     status: :connecting,
-    extension_count: 0
+    extension_count: 0,
+    media: %{}
   ]
 
   @doc """
@@ -40,7 +42,8 @@ defmodule Randos.Calls.Call do
     %__MODULE__{
       id: "call-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false),
       pid: pid,
-      match: match
+      match: match,
+      media: %{match.participant_a.id => :connecting, match.participant_b.id => :connecting}
     }
   end
 end

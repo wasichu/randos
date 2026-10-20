@@ -3,9 +3,22 @@ defmodule Randos.Calls.LifecycleTest do
 
   alias Randos.Calls.Call
   alias Randos.Calls.Lifecycle
+  alias Randos.Matchmaking.{Entry, Match}
 
-  defp call(attrs \\ []) do
-    struct!(Call.new(self(), %{id: "match-1"}), attrs)
+  defp entry(id, audio?) do
+    %Entry{
+      id: id,
+      pid: self(),
+      topic: "t:#{id}",
+      speaks_language: "en",
+      listens_language: "es",
+      audio?: audio?
+    }
+  end
+
+  defp call(attrs \\ [], audio? \\ true) do
+    match = Match.new(entry("a", audio?), entry("b", audio?))
+    struct!(Call.new(self(), match), attrs)
   end
 
   test "new calls start connecting with no extensions and a random id" do
@@ -72,6 +85,31 @@ defmodule Randos.Calls.LifecycleTest do
   test "accepts every documented ended reason" do
     for reason <- Lifecycle.ended_reasons() do
       assert %Call{ended_reason: ^reason} = Lifecycle.end_call(call(), reason)
+    end
+  end
+
+  describe "media" do
+    test "a new call has both participants connecting" do
+      assert call().media == %{"a" => :connecting, "b" => :connecting}
+    end
+
+    test "connected only once both participants report connected" do
+      one = Lifecycle.put_media(call(), "a", :connected)
+      refute Lifecycle.media_connected?(one)
+
+      both = Lifecycle.put_media(one, "b", :connected)
+      assert Lifecycle.media_connected?(both)
+      refute Lifecycle.media_connected?(Lifecycle.put_media(both, "b", :disconnected))
+    end
+
+    test "a call carries audio only when both clients do" do
+      assert Lifecycle.audio?(call())
+      refute Lifecycle.audio?(call([], false))
+    end
+
+    test "connect timeout and disconnected grace are the decided values" do
+      assert Lifecycle.connect_timeout_seconds() == 15
+      assert Lifecycle.disconnected_grace_seconds() == 5
     end
   end
 end

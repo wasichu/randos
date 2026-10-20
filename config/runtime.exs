@@ -20,6 +20,12 @@ if System.get_env("PHX_SERVER") do
   config :randos, RandosWeb.Endpoint, server: true
 end
 
+# How long a call with audio may take to connect both sides before it ends
+# (default `Randos.Calls.Lifecycle.connect_timeout_seconds/0`, 15 s).
+if connect_timeout_ms = System.get_env("RANDOS_CONNECT_TIMEOUT_MS") do
+  config :randos, :call_options, connect_timeout_ms: String.to_integer(connect_timeout_ms)
+end
+
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

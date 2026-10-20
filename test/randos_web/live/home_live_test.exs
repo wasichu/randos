@@ -120,6 +120,10 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#connecting-panel[data-webrtc-role='offerer']")
     refute has_element?(view_a, "#call-countdown")
 
+    # The call becomes active (and the clock starts) once both browsers'
+    # media is connected; their WebRTC hooks report it as a signal.
+    connect_media(view_a)
+    connect_media(view_b)
     assert eventually_has_element?(view_a, "#call-panel")
     assert has_element?(view_a, "#call-countdown")
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
@@ -177,6 +181,10 @@ defmodule RandosWeb.HomeLiveTest do
     )
     |> render_submit()
 
+    # The call becomes active (and the clock starts) once both browsers'
+    # media is connected; their WebRTC hooks report it as a signal.
+    connect_media(view_a)
+    connect_media(view_b)
     assert eventually_has_element?(view_a, "#call-panel")
 
     view_a |> element("#end-call-button") |> render_click()
@@ -206,6 +214,13 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#call-countdown")
     refute has_element?(view, "#extension-countdown")
   end
+
+  defp connect_media(view),
+    do:
+      render_hook(view, "signal", %{
+        "type" => "media_state",
+        "payload" => %{"state" => "connected"}
+      })
 
   defp eventually_has_element?(view, selector, attempts \\ 120)
 

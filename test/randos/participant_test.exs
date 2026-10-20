@@ -238,6 +238,17 @@ defmodule Randos.ParticipantTest do
       end
     end
 
+    test "end_call with a reason: only I stop, and I'm told why" do
+      {p, m} = in_call(:connecting)
+      pid = m.call_pid
+
+      assert {%{stop_after_call?: true, error: :microphone_denied}, [{:hang_up, ^pid}]} =
+               Participant.handle(p, {:end_call, :microphone_denied})
+
+      assert {:ok, :audio_failed} = Participant.cast_end_call_reason("audio_failed")
+      assert :error = Participant.cast_end_call_reason("dancing")
+    end
+
     test "end_call and next do nothing outside a call" do
       for event <- [:end_call, :next] do
         p = participant(status: :looking)

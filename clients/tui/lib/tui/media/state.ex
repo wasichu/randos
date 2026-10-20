@@ -5,14 +5,15 @@ defmodule Tui.Media.State do
   event, a timer) and returns `{state, commands}`. `Tui.App` runs the
   commands and never blocks on the helper.
 
-  Two features live here: the mic test (`t`), and call audio. A call
-  mirrors the browser's `WebRTCClient`: when the server says `connecting` and
-  the role and ICE servers are known, start the helper's WebRTC session;
-  relay signals both ways untouched; report `connection_established` once,
-  and `connection_failed` on failure or after a 5 s `disconnected` grace;
-  stop when the call ends. If the helper can't carry the call (it won't
-  start, or it restarts mid-call), send `end_call`, the 4.2 fallback, so
-  only the peer is requeued.
+  Two features live here: the mic test (`t`), and call audio. Call health
+  is the server's job; this module meets the client obligations in
+  `participant_channel.md`, like the browser's `WebRTCClient`: when the
+  server says `connecting` and the role and ICE servers are known, start
+  the helper's WebRTC session; relay media signals both ways untouched;
+  report each change of the helper's connection as a `media_state` signal;
+  stop when the server's status leaves the call. If the helper can't carry
+  the call (it won't start, or it restarts mid-call), send `end_call` with
+  a reason, so only the peer is requeued.
 
   Commands:
 
@@ -25,8 +26,6 @@ defmodule Tui.Media.State do
   alias Tui.Media.Protocol
 
   @mic_test_ms 5_000
-  # Same grace as the browser (`DISCONNECTED_GRACE_MS`).
-  @disconnected_grace_ms 5_000
   # Media starts at the match (`connecting`), not `in_call`: the server only
   # reports `in_call` once both sides' audio is up.
   @call_statuses [:connecting, :in_call, :extension_pending]
@@ -36,8 +35,7 @@ defmodule Tui.Media.State do
   @type call :: %{
           seq: pos_integer(),
           phase: :starting | :active,
-          connection: :connecting | :connected | :disconnected,
-          established_sent?: boolean(),
+          connection: :connecting | :connected | :disconnected | :failed,
           stats: map() | nil
         }
   @type command ::
@@ -131,10 +129,6 @@ defmodule Tui.Media.State do
       when type in ["offer", "answer", "ice_candidate"],
       do: {state, [{:request, {:call_signal, type, payload}}]}
 
-  def remote_signal(%{call: %{}} = state, type, _payload)
-      when type in ["connection_failed", "peer_disconnected"],
-      do: stop_call(state)
-
   def remote_signal(state, _type, _payload), do: {state, []}
 
   ## Helper replies, events, timers
@@ -152,8 +146,8 @@ defmodule Tui.Media.State do
   def reply(%{call: %{phase: :starting}} = state, {:call_start, _, _, _, _}, {:ok, _opened}),
     do: {put_call(state, phase: :active), []}
 
-  def reply(%{call: %{}} = state, {:call_start, _, _, _, _}, {:error, error}),
-    do: give_up(state, error)
+  def reply(%{call: %{}} = state, {:call_start, _, _, _, _}, {:error, _error}),
+    do: give_up(state, "audio_unavailable")
 
   def reply(state, _command, _result), do: {state, []}
 
@@ -169,24 +163,9 @@ defmodule Tui.Media.State do
   def event(%{call: %{}} = state, "call_signal", %{"type" => type, "payload" => payload}),
     do: {state, [{:push, "signal", %{type: type, payload: payload}}]}
 
-  def event(%{call: %{}} = state, "call_state", %{"state" => "connected"}) do
-    commands =
-      if state.call.established_sent?,
-        do: [],
-        else: [
-          {:push, "signal", %{type: "connection_established", payload: %{helper: "connected"}}}
-        ]
-
-    {put_call(state, connection: :connected, established_sent?: true), commands}
-  end
-
-  def event(%{call: %{}} = state, "call_state", %{"state" => "disconnected"}) do
-    {put_call(state, connection: :disconnected),
-     [{:after, @disconnected_grace_ms, {:media_call_grace, state.call.seq}}]}
-  end
-
-  def event(%{call: %{}} = state, "call_state", %{"state" => "failed"} = payload),
-    do: fail_call(state, %{helper: "failed", reason: payload["reason"]})
+  def event(%{call: %{}} = state, "call_state", %{"state" => helper_state} = payload)
+      when helper_state in ["connected", "disconnected", "failed"],
+      do: report_media(state, String.to_existing_atom(helper_state), payload["reason"])
 
   def event(%{call: %{}} = state, "call_stats", stats), do: {put_call(state, stats: stats), []}
 
@@ -201,17 +180,10 @@ defmodule Tui.Media.State do
           state
       end
 
-    if state.call, do: give_up(state, "the audio helper restarted"), else: {state, []}
+    if state.call, do: give_up(state, "audio_failed"), else: {state, []}
   end
 
   def event(state, _name, _payload), do: {state, []}
-
-  @doc "The `disconnected` grace timer for call `seq` fired."
-  @spec call_grace(t(), pos_integer()) :: {t(), [command()]}
-  def call_grace(%{call: %{seq: seq, connection: :disconnected}} = state, seq),
-    do: fail_call(state, %{helper: "disconnected", reason: "disconnected_timeout"})
-
-  def call_grace(state, _seq), do: {state, []}
 
   ## Internals
 
@@ -220,13 +192,7 @@ defmodule Tui.Media.State do
     {input, output} = state.endpoints
     seq = state.calls + 1
 
-    call = %{
-      seq: seq,
-      phase: :starting,
-      connection: :connecting,
-      established_sent?: false,
-      stats: nil
-    }
+    call = %{seq: seq, phase: :starting, connection: :connecting, stats: nil}
 
     # The mic test would hold the devices; the call wins.
     {state, stop_test} = stop_mic_test_for_call(state)
@@ -253,17 +219,21 @@ defmodule Tui.Media.State do
   defp stop_call(state),
     do: {%{state | call: nil, pending_signals: []}, [{:request, :call_stop}]}
 
-  defp fail_call(state, payload) do
-    {state, stop} = stop_call(state)
+  # Each change of the helper's connection goes to the server, which decides
+  # what it means for the call. A failed session has stopped on its own.
+  defp report_media(%{call: %{connection: same}} = state, same, _reason), do: {state, []}
 
-    {%{state | last_call_error: payload.reason || "call failed"},
-     [{:push, "signal", %{type: "connection_failed", payload: payload}} | stop]}
+  defp report_media(state, connection, reason) do
+    payload = if reason, do: %{state: connection, reason: reason}, else: %{state: connection}
+    state = put_call(state, connection: connection)
+    {state, [{:push, "signal", %{type: "media_state", payload: payload}}]}
   end
 
-  # The helper can't carry this call: end it so only the peer is requeued.
+  # The helper can't carry this call: end it with a reason (the documented
+  # list), so only the peer is requeued and the server tells us why.
   defp give_up(state, reason) do
     {%{state | call: nil, pending_signals: [], last_call_error: reason},
-     [{:request, :call_stop}, {:push, "end_call", %{}}]}
+     [{:request, :call_stop}, {:push, "end_call", %{reason: reason}}]}
   end
 
   defp fail_mic_test(state, error) do

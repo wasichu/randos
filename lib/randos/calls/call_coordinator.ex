@@ -6,13 +6,22 @@ defmodule Randos.Calls.CallCoordinator do
   `:extension_pending`); the process stops when the call ends. Every timer is a
   `state_timeout`, so leaving a state cancels its timer automatically:
 
-    * `:connecting` — waits `activation_delay_ms`, then becomes `:active`
+    * `:connecting` — for a call with audio, waits until both participants
+      report their media `connected` (then `:active`, and the call clock
+      starts), or ends `:connection_failed` after `connect_timeout_ms`. A
+      text-only call (neither client has audio) becomes `:active` after
+      `activation_delay_ms`.
     * `:active` — runs the call segment, then asks for an extension
     * `:extension_pending` — waits for both votes, or times out and ends
 
-  The coordinator also monitors both participants, relays WebRTC signaling
-  between them, and broadcasts `{:call_updated, %Call{}}` to both on every
-  status change; that and `{:signaling, message}` are the only messages
+  It owns call health: participants report their raw `media_state`
+  (`Randos.Signaling.classify/2`); a participant `disconnected` longer than
+  `disconnected_grace_ms` (a per-participant timer that survives status
+  changes), or reporting `failed`, ends the call `:connection_failed`.
+
+  The coordinator also monitors both participants, relays WebRTC media
+  signaling between them, and broadcasts `{:call_updated, %Call{}}` to both
+  on every status or media change; that and `{:signaling, message}` are the only messages
   participants receive about a call. It never touches
   audio. It is `:temporary`: a finished call is never restarted.
   """
@@ -29,6 +38,8 @@ defmodule Randos.Calls.CallCoordinator do
   @overridable [
     :pubsub,
     :activation_delay_ms,
+    :connect_timeout_ms,
+    :disconnected_grace_ms,
     :call_duration_ms,
     :extension_duration_ms,
     :extension_response_timeout_ms
@@ -41,6 +52,8 @@ defmodule Randos.Calls.CallCoordinator do
     extension_votes: %{},
     monitors: %{},
     activation_delay_ms: 750,
+    connect_timeout_ms: Lifecycle.connect_timeout_seconds() * 1_000,
+    disconnected_grace_ms: Lifecycle.disconnected_grace_seconds() * 1_000,
     call_duration_ms: Lifecycle.call_duration_seconds() * 1_000,
     extension_duration_ms: Lifecycle.extension_duration_seconds() * 1_000,
     extension_response_timeout_ms: Lifecycle.extension_response_timeout_seconds() * 1_000
@@ -125,7 +138,10 @@ defmodule Randos.Calls.CallCoordinator do
   # Entering a state: arm its timer and tell both participants.
   def handle_event(:enter, _old, :connecting, data) do
     broadcast(data)
-    {:keep_state_and_data, [{:state_timeout, data.activation_delay_ms, :activate}]}
+
+    if Lifecycle.audio?(data.call),
+      do: {:keep_state_and_data, [{:state_timeout, data.connect_timeout_ms, :connect_timeout}]},
+      else: {:keep_state_and_data, [{:state_timeout, data.activation_delay_ms, :activate}]}
   end
 
   def handle_event(:enter, old, :active, data) do
@@ -152,6 +168,20 @@ defmodule Randos.Calls.CallCoordinator do
   def handle_event(:state_timeout, :activate, :connecting, data) do
     Logger.info("call activated")
     {:next_state, :active, %{data | call: Lifecycle.activate(data.call)}}
+  end
+
+  def handle_event(:state_timeout, :connect_timeout, :connecting, data) do
+    Logger.info("call media never connected", media: inspect(data.call.media))
+    {:stop, :normal, end_call(data, :connection_failed)}
+  end
+
+  def handle_event({:timeout, {:grace, participant_id}}, :grace, _state, data) do
+    if Map.get(data.call.media, participant_id) == :disconnected do
+      Logger.info("call media stayed disconnected")
+      {:stop, :normal, end_call(data, :connection_failed)}
+    else
+      :keep_state_and_data
+    end
   end
 
   def handle_event(event_type, :time_up, :active, data)
@@ -196,21 +226,12 @@ defmodule Randos.Calls.CallCoordinator do
     {:keep_state_and_data, [{:reply, from, {:error, :not_extension_pending}}]}
   end
 
-  def handle_event({:call, from}, {:relay_signal, participant_id, type, payload}, _state, data) do
-    case Signaling.build_message(data.call, participant_id, type, payload) do
-      {:ok, message} ->
-        Logger.debug("call signal relayed", status: message.type)
-
-        relay_signal_to_peer(data, message)
-
-        if message.type in [:connection_failed, :peer_disconnected] do
-          {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, message.type)}
-        else
-          {:keep_state_and_data, [{:reply, from, :ok}]}
-        end
-
-      {:error, reason} ->
-        {:keep_state_and_data, [{:reply, from, {:error, reason}}]}
+  def handle_event({:call, from}, {:relay_signal, participant_id, type, payload}, state, data) do
+    with {:ok, message} <- Signaling.build_message(data.call, participant_id, type, payload),
+         {:ok, action} <- Signaling.classify(message.type, message.payload) do
+      handle_signal(action, message, from, state, data)
+    else
+      {:error, reason} -> {:keep_state_and_data, [{:reply, from, {:error, reason}}]}
     end
   end
 
@@ -225,6 +246,50 @@ defmodule Randos.Calls.CallCoordinator do
   def handle_event(_event_type, _event, _state, _data), do: :keep_state_and_data
 
   ## Helpers
+
+  defp handle_signal(:relay, message, from, _state, data) do
+    Logger.debug("call signal relayed", status: message.type)
+    relay_signal_to_peer(data, message)
+    {:keep_state_and_data, [{:reply, from, :ok}]}
+  end
+
+  defp handle_signal(:leave, _message, from, _state, data),
+    do: {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :peer_disconnected)}
+
+  defp handle_signal({:media, :failed}, _message, from, _state, data),
+    do: {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :connection_failed)}
+
+  defp handle_signal({:media, media}, message, from, state, data) do
+    id = message.from_participant_id
+    unchanged? = Map.get(data.call.media, id) == media
+    data = %{data | call: Lifecycle.put_media(data.call, id, media)}
+    # Only a change arms or cancels the grace timer (a repeated
+    # `disconnected` must not extend it).
+    timers = if unchanged?, do: [], else: grace_timer(id, media, state, data)
+    actions = [{:reply, from, :ok} | timers]
+
+    cond do
+      state == :connecting and Lifecycle.audio?(data.call) and
+          Lifecycle.media_connected?(data.call) ->
+        Logger.info("call media connected")
+        {:next_state, :active, %{data | call: Lifecycle.activate(data.call)}, actions}
+
+      unchanged? ->
+        {:keep_state, data, actions}
+
+      true ->
+        broadcast(data)
+        {:keep_state, data, actions}
+    end
+  end
+
+  # While connecting, the connect timeout covers a disconnect.
+  defp grace_timer(_id, _media, :connecting, _data), do: []
+
+  defp grace_timer(id, :disconnected, _state, data),
+    do: [{{:timeout, {:grace, id}}, data.disconnected_grace_ms, :grace}]
+
+  defp grace_timer(id, :connected, _state, _data), do: [{{:timeout, {:grace, id}}, :cancel}]
 
   defp extend_call(from, data) do
     case Lifecycle.extend(data.call) do

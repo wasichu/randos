@@ -124,7 +124,7 @@ defmodule Tui.AppTest do
 
     send(pid, {:randos, {:push, "signal", %{"type" => "offer", "call_id" => "call-1"}}})
 
-    assert_receive {:"$gen_cast", {:push, "end_call", %{}}}
+    assert_receive {:"$gen_cast", {:push, "end_call", %{reason: "audio_unavailable"}}}
 
     key(pid, "n")
     assert_receive {:"$gen_cast", {:push, "next", %{}}}
@@ -202,7 +202,7 @@ defmodule Tui.AppTest do
     # helper playing the browser.
     @tag :native
     @tag :capture_log
-    test "an app with a helper calls a peer helper: signals relayed, connected, audio both ways" do
+    test "an app with a helper calls a peer helper: signals relayed, media_state reported, audio both ways" do
       app =
         start_supervised!(
           {App,
@@ -252,8 +252,11 @@ defmodule Tui.AppTest do
       remaining = deadline - System.monotonic_time(:millisecond)
 
       receive do
-        {:"$gen_cast", {:push, "signal", %{type: "connection_established"}}} ->
+        {:"$gen_cast", {:push, "signal", %{type: "media_state", payload: %{state: :connected}}}} ->
           relay_until(app, peer, deadline, %{seen | established?: true})
+
+        {:"$gen_cast", {:push, "signal", %{type: "media_state"}}} ->
+          relay_until(app, peer, deadline, seen)
 
         {:"$gen_cast", {:push, "signal", %{type: type, payload: payload}}} ->
           :ok = request(peer, {:call_signal, type, payload})

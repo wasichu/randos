@@ -83,6 +83,15 @@ defmodule RandosWeb.ParticipantChannelTest do
     refute Map.has_key?(Matchmaker.snapshot().queues, {"tr", "id", false})
   end
 
+  test "end_call takes an optional reason from the documented list" do
+    {_state, socket} = join_participant()
+    ref = push(socket, "end_call", %{"reason" => "dancing"})
+    assert_reply ref, :error, %{reason: "invalid_message"}
+
+    ref = push(socket, "end_call", %{"reason" => "microphone_denied"})
+    assert_reply ref, :ok
+  end
+
   test "malformed messages are rejected without touching state" do
     {_state, socket} = join_participant()
 
@@ -153,6 +162,15 @@ defmodule RandosWeb.ParticipantChannelTest do
     # The channel participant was waiting first, so it offers.
     assert_push "ice_servers", %{ice_servers: [_ | _]}
     assert_push "state", %{status: :connecting, webrtc_role: :offerer}
+
+    # Both report their media connected; then the call becomes active.
+    ref =
+      push(socket, "signal", %{"type" => "media_state", "payload" => %{"state" => "connected"}})
+
+    assert_reply ref, :ok
+
+    render_hook(view, "signal", %{"type" => "media_state", "payload" => %{"state" => "connected"}})
+
     assert_push "state", %{status: :in_call, call: %{status: :active}}, 2_000
 
     # Channel -> browser

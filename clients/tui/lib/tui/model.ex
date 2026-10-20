@@ -109,7 +109,7 @@ defmodule Tui.Model do
         "peer offered audio; this client has none, so the call ended (Enter to look again)"
       )
 
-    {model, [{:push, "end_call", %{}}]}
+    {model, [{:push, "end_call", %{reason: "audio_unavailable"}}]}
   end
 
   def push(model, "signal", _signal), do: {model, []}

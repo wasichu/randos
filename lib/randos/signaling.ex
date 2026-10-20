@@ -8,11 +8,18 @@ defmodule Randos.Signaling do
 
   alias Randos.Matchmaking.Match
 
+  # Relayed to the peer untouched.
   @media_types [:offer, :answer, :ice_candidate]
 
-  # What the client reports about its own connection. The server relays these
-  # to the peer, and connection_failed / peer_disconnected also end the call.
-  @lifecycle_types [:connection_established, :connection_failed, :peer_disconnected]
+  # What a client reports about itself; the server acts on these and never
+  # relays them. `media_state` is the client's raw connection state (the
+  # call coordinator owns timeouts and failure); `peer_disconnected` means
+  # "I'm leaving". `connection_established` / `connection_failed` are the
+  # older spelling of `media_state` connected / failed, still accepted for
+  # pages loaded before the change.
+  @lifecycle_types [:media_state, :peer_disconnected, :connection_established, :connection_failed]
+
+  @media_states ~w(connected disconnected failed)
 
   @types @media_types ++ @lifecycle_types
 
@@ -20,6 +27,7 @@ defmodule Randos.Signaling do
           :offer
           | :answer
           | :ice_candidate
+          | :media_state
           | :connection_established
           | :connection_failed
           | :peer_disconnected
@@ -79,4 +87,24 @@ defmodule Randos.Signaling do
        }}
     end
   end
+
+  @typedoc "What a signal means for the call (see `classify/2`)."
+  @type action :: :relay | :leave | {:media, :connected | :disconnected | :failed}
+
+  @doc """
+  What the call coordinator should do with a signal: relay media signals to
+  the peer, end the call when a participant leaves, or apply a media state
+  report. `media_state` payloads are validated (`{"state": "connected" |
+  "disconnected" | "failed"}`); the server acts on them.
+  """
+  @spec classify(type(), map()) :: {:ok, action()} | {:error, :invalid_media_state}
+  def classify(type, _payload) when type in @media_types, do: {:ok, :relay}
+  def classify(:peer_disconnected, _payload), do: {:ok, :leave}
+  def classify(:connection_established, _payload), do: {:ok, {:media, :connected}}
+  def classify(:connection_failed, _payload), do: {:ok, {:media, :failed}}
+
+  def classify(:media_state, %{"state" => state}) when state in @media_states,
+    do: {:ok, {:media, String.to_existing_atom(state)}}
+
+  def classify(:media_state, _payload), do: {:error, :invalid_media_state}
 end

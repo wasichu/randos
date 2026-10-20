@@ -93,7 +93,7 @@ defmodule Tui.ModelTest do
     offer = %{"type" => "offer", "call_id" => "call-1", "payload" => %{}}
     {model, commands} = Model.push(joined("in_call"), "signal", offer)
 
-    assert commands == [{:push, "end_call", %{}}]
+    assert commands == [{:push, "end_call", %{reason: "audio_unavailable"}}]
     assert hd(model.log) =~ "peer offered audio"
 
     assert {_, []} =

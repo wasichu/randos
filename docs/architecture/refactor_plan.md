@@ -371,7 +371,7 @@ Implementation order (advisor): (a) clients start media on `connecting`, not
 clients reporting raw state, `end_call` with a reason; (c) `ice_servers` in
 each participant's state push, stale `call_id` filtering, "Client
 obligations" in the protocol doc; (d) drift-guard scenarios in both e2e
-harnesses. Done: (a).
+harnesses. Done: (a), (b).
 
 ### Proposal as reviewed
 

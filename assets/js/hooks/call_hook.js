@@ -7,6 +7,9 @@ import {WebRTCClient, WebRTCClientState} from "../randos/webrtc_client"
 
 // Distinguish "the mic was refused or missing" from network/peer failures so
 // the server and the peer see a meaningful reason.
+// Why this browser can't carry the call: an `end_call` reason (the
+// documented list in participant_channel.md), so only the peer is requeued
+// and this person is told why.
 const startFailureReason = error => {
   switch (error?.name) {
     case "NotAllowedError":
@@ -16,7 +19,7 @@ const startFailureReason = error => {
     case "OverconstrainedError":
       return "microphone_not_found"
     default:
-      return error?.message || "peer_connection_start_failed"
+      return "audio_failed"
   }
 }
 
@@ -42,10 +45,7 @@ export const WebRTCAudio = {
     this.handleEvent("randos:signal", signal => this.receiveSignal(signal))
 
     if (!window.RTCPeerConnection) {
-      this.pushEvent("signal", {
-        type: "connection_failed",
-        payload: {reason: "rtc_peer_connection_unavailable"},
-      })
+      this.pushEvent("end_call", {reason: "audio_unavailable"})
       this.setState(WebRTCClientState.FAILED)
       return
     }
@@ -63,7 +63,12 @@ export const WebRTCAudio = {
 
     this.peer
       .start()
-      .catch(error => this.peer?.failConnection({reason: startFailureReason(error)}))
+      .catch(error => {
+        const reason = startFailureReason(error)
+        logEvent("call.start_failed", {reason})
+        this.pushEvent("end_call", {reason})
+        this.peer?.close()
+      })
   },
 
   destroyed() {

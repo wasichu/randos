@@ -67,6 +67,14 @@ defmodule RandosWeb.ParticipantChannel do
   end
 
   def handle_in("cancel_search", _payload, socket), do: {:reply, :ok, run(socket, :cancel_search)}
+
+  def handle_in("end_call", %{"reason" => reason}, socket) when is_binary(reason) do
+    case Participant.cast_end_call_reason(reason) do
+      {:ok, reason} -> {:reply, :ok, run(socket, {:end_call, reason})}
+      :error -> {:reply, {:error, %{reason: "invalid_message"}}, socket}
+    end
+  end
+
   def handle_in("end_call", _payload, socket), do: {:reply, :ok, run(socket, :end_call)}
   def handle_in("next", _payload, socket), do: {:reply, :ok, run(socket, :next)}
 

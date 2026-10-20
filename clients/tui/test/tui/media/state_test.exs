@@ -121,7 +121,7 @@ defmodule Tui.Media.StateTest do
               ]} = State.ice_servers(state, @ice)
     end
 
-    test "relays signals both ways and reports connection_established once" do
+    test "relays media signals both ways" do
       state = in_call()
 
       assert {_, [{:request, {:call_signal, "answer", @offer}}]} =
@@ -132,57 +132,54 @@ defmodule Tui.Media.StateTest do
                  "type" => "ice_candidate",
                  "payload" => %{"c" => 1}
                })
-
-      {state, [{:push, "signal", %{type: "connection_established"}}]} =
-        State.event(state, "call_state", %{"state" => "connected"})
-
-      assert {%{call: %{connection: :connected}}, []} =
-               State.event(state, "call_state", %{"state" => "connected"})
     end
 
-    test "disconnected gets a 5 s grace; reconnecting cancels it, timing out fails the call" do
-      {state, _} = State.event(in_call(), "call_state", %{"state" => "connected"})
+    test "reports each change of the helper's connection to the server, once" do
+      media = fn state, helper_state ->
+        State.event(state, "call_state", %{"state" => helper_state})
+      end
 
-      {state, [{:after, 5_000, {:media_call_grace, seq}}]} =
-        State.event(state, "call_state", %{"state" => "disconnected"})
+      push = fn s -> [{:push, "signal", %{type: "media_state", payload: %{state: s}}}] end
 
-      {recovered, []} = State.event(state, "call_state", %{"state" => "connected"})
-      assert State.call_grace(recovered, seq) == {recovered, []}
+      {state, commands} = media.(in_call(), "connected")
+      assert commands == push.(:connected)
+      assert {_, []} = media.(state, "connected")
 
-      assert {%{call: nil},
+      {state, commands} = media.(state, "disconnected")
+      assert commands == push.(:disconnected)
+      assert {_, commands} = media.(state, "connected")
+      assert commands == push.(:connected)
+    end
+
+    test "a failed session is reported with its reason; the server ends the call" do
+      assert {%{call: %{connection: :failed}},
               [
                 {:push, "signal",
-                 %{type: "connection_failed", payload: %{reason: "disconnected_timeout"}}},
-                {:request, :call_stop}
+                 %{type: "media_state", payload: %{state: :failed, reason: "ice timeout"}}}
               ]} =
-               State.call_grace(state, seq)
-    end
-
-    test "a failed session reports connection_failed and stops" do
-      assert {%{call: nil, last_call_error: "ice timeout"},
-              [{:push, "signal", %{type: "connection_failed"}}, {:request, :call_stop}]} =
                State.event(in_call(), "call_state", %{
                  "state" => "failed",
                  "reason" => "ice timeout"
                })
     end
 
-    test "the call ending, or the peer leaving, stops the helper's call" do
+    test "the call ending (the server's status) stops the helper's call" do
       assert {%{call: nil}, [{:request, :call_stop}]} = State.server_state(in_call(), :idle, nil)
 
       assert {%{call: nil}, [{:request, :call_stop}]} =
-               State.remote_signal(in_call(), "peer_disconnected", %{})
+               State.server_state(in_call(), :looking, nil)
     end
 
-    test "when the helper can't carry the call: end_call, not connection_failed" do
+    test "when the helper can't carry the call: end_call with a reason" do
       {starting, _} = State.server_state(State.new(true, {"sine", "null"}), :in_call, "offerer")
       {starting, _} = State.ice_servers(starting, @ice)
 
-      assert {%{call: nil, last_call_error: "no mic"},
-              [{:request, :call_stop}, {:push, "end_call", %{}}]} =
+      assert {%{call: nil},
+              [{:request, :call_stop}, {:push, "end_call", %{reason: "audio_unavailable"}}]} =
                State.reply(starting, @start, {:error, "no mic"})
 
-      assert {%{call: nil}, [{:request, :call_stop}, {:push, "end_call", %{}}]} =
+      assert {%{call: nil},
+              [{:request, :call_stop}, {:push, "end_call", %{reason: "audio_failed"}}]} =
                State.event(in_call(), "ready", %{})
     end
 

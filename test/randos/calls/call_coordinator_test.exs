@@ -12,9 +12,11 @@ defmodule Randos.Calls.CallCoordinatorTest do
     end)
   end
 
-  defp participant(id, pid, speaks_language, listens_language) do
+  # Text-only by default: those calls activate on a short delay, which is
+  # what the timer tests need. Media tests pass `audio?: true`.
+  defp participant(id, pid, speaks_language, listens_language, audio? \\ false) do
     %Entry{
-      audio?: true,
+      audio?: audio?,
       id: id,
       pid: pid,
       topic: "test:call:#{id}:#{System.unique_integer([:positive])}",
@@ -23,11 +25,11 @@ defmodule Randos.Calls.CallCoordinatorTest do
     }
   end
 
-  defp match do
+  defp match(audio? \\ false) do
     pid_a = waiting_pid()
     pid_b = waiting_pid()
-    participant_a = participant("a", pid_a, "en", "es")
-    participant_b = participant("b", pid_b, "es", "en")
+    participant_a = participant("a", pid_a, "en", "es", audio?)
+    participant_b = participant("b", pid_b, "es", "en", audio?)
 
     match = Match.new(participant_a, participant_b)
 
@@ -206,7 +208,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
     Enum.each(pids, &send(&1, :stop))
   end
 
-  test "connection failure signal notifies peer and ends call" do
+  test "lifecycle signals are acted on, never relayed: failed ends the call" do
     {match, pids} = match()
     call_pid = start_call(match)
 
@@ -214,22 +216,103 @@ defmodule Randos.Calls.CallCoordinatorTest do
     assert_receive {:call_updated, %{status: :active}}
 
     assert :ok =
-             CallCoordinator.relay_signal(call_pid, "a", "connection_failed", %{
-               "reason" => "ice_failed"
-             })
-
-    assert_receive {:signaling,
-                    %{
-                      type: :connection_failed,
-                      from_participant_id: "a",
-                      to_participant_id: "b",
-                      payload: %{"reason" => "ice_failed"}
-                    }}
+             CallCoordinator.relay_signal(call_pid, "a", "media_state", %{"state" => "failed"})
 
     assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
     assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
+    refute_received {:signaling, _}
 
     Enum.each(pids, &send(&1, :stop))
+  end
+
+  describe "call health (calls with audio)" do
+    defp start_audio_call(opts \\ []) do
+      {match, pids} = match(true)
+
+      call_pid =
+        start_call(
+          match,
+          Keyword.merge([connect_timeout_ms: 300, disconnected_grace_ms: 100], opts)
+        )
+
+      assert_receive {:call_updated, %{status: :connecting}}
+      assert_receive {:call_updated, %{status: :connecting}}
+      {call_pid, pids}
+    end
+
+    defp report(call_pid, id, state),
+      do: CallCoordinator.relay_signal(call_pid, id, "media_state", %{"state" => state})
+
+    defp connect_both(call_pid) do
+      :ok = report(call_pid, "a", "connected")
+      assert_receive {:call_updated, %{status: :connecting, media: %{"a" => :connected}}}
+      assert_receive {:call_updated, %{status: :connecting, media: %{"a" => :connected}}}
+      :ok = report(call_pid, "b", "connected")
+      assert_receive {:call_updated, %{status: :active, call_deadline_unix_ms: deadline}}
+      assert_receive {:call_updated, %{status: :active}}
+      deadline
+    end
+
+    test "stays connecting until both report connected; then the clock starts" do
+      {call_pid, pids} = start_audio_call()
+      before = System.system_time(:millisecond)
+      deadline = connect_both(call_pid)
+      # The call clock (20 ms in these tests) starts at connection, not the match.
+      assert deadline >= before + 20
+      refute_received {:signaling, _}
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "never connecting ends the call after the connect timeout" do
+      {call_pid, pids} = start_audio_call()
+      :ok = report(call_pid, "a", "connected")
+
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "a disconnect past the grace ends the call" do
+      {call_pid, pids} = start_audio_call(call_duration_ms: 5_000)
+      connect_both(call_pid)
+
+      :ok = report(call_pid, "b", "disconnected")
+      assert_receive {:call_updated, %{status: :active, media: %{"b" => :disconnected}}}
+
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "reconnecting within the grace keeps the call" do
+      {call_pid, pids} = start_audio_call(call_duration_ms: 5_000, disconnected_grace_ms: 200)
+      connect_both(call_pid)
+
+      :ok = report(call_pid, "b", "disconnected")
+      :ok = report(call_pid, "b", "disconnected")
+      :ok = report(call_pid, "b", "connected")
+
+      refute_receive {:call_updated, %{status: :ended}}, 400
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "the older connection_established / connection_failed still count" do
+      {call_pid, pids} = start_audio_call()
+      :ok = CallCoordinator.relay_signal(call_pid, "a", "connection_established", %{})
+      assert_receive {:call_updated, %{media: %{"a" => :connected}}}
+
+      :ok = CallCoordinator.relay_signal(call_pid, "b", "connection_failed", %{"reason" => "x"})
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "a malformed media_state is rejected" do
+      {call_pid, pids} = start_audio_call()
+      assert {:error, :invalid_media_state} = report(call_pid, "a", "great")
+
+      assert {:error, :invalid_media_state} =
+               CallCoordinator.relay_signal(call_pid, "a", "media_state", %{})
+
+      Enum.each(pids, &send(&1, :stop))
+    end
   end
 
   test "participant disconnect ends the call" do

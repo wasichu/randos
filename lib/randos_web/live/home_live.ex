@@ -46,6 +46,14 @@ defmodule RandosWeb.HomeLive do
   end
 
   def handle_event("cancel_search", _params, socket), do: {:noreply, run(socket, :cancel_search)}
+  # The WebRTC hook sends a reason when it can't carry the call (mic denied…).
+  def handle_event("end_call", %{"reason" => reason}, socket) when is_binary(reason) do
+    case Participant.cast_end_call_reason(reason) do
+      {:ok, reason} -> {:noreply, run(socket, {:end_call, reason})}
+      :error -> {:noreply, run(socket, :end_call)}
+    end
+  end
+
   def handle_event("end_call", _params, socket), do: {:noreply, run(socket, :end_call)}
   def handle_event("next_rando", _params, socket), do: {:noreply, run(socket, :next)}
 
@@ -101,6 +109,19 @@ defmodule RandosWeb.HomeLive do
 
   defp error_message(:call_start_failed),
     do: gettext("We couldn't start that call. Please try again.")
+
+  defp error_message(:microphone_denied),
+    do:
+      gettext("The call ended because microphone access was blocked. Allow it, then look again.")
+
+  defp error_message(:microphone_not_found),
+    do: gettext("The call ended because no microphone was found.")
+
+  defp error_message(:audio_unavailable),
+    do: gettext("The call ended because audio isn't available here.")
+
+  defp error_message(:audio_failed),
+    do: gettext("The call ended because audio stopped working on this device.")
 
   @impl true
   def render(assigns) do

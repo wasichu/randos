@@ -49,7 +49,16 @@ defmodule Randos.Participant do
           audio?: boolean()
         }
 
-  @type error :: :adult_terms_required | :unsupported_language | :call_start_failed
+  @typedoc """
+  Shown to the person. The `end_call_reason`s say why their own client
+  ended a call it couldn't carry (no mic, no audio); they go back to idle,
+  and only the peer is requeued.
+  """
+  @type error ::
+          :adult_terms_required | :unsupported_language | :call_start_failed | end_call_reason()
+
+  @type end_call_reason ::
+          :microphone_denied | :microphone_not_found | :audio_unavailable | :audio_failed
 
   @type join_result :: Randos.Matchmaking.Matchmaker.join_result()
 
@@ -58,6 +67,7 @@ defmodule Randos.Participant do
           | {:find, preferences()}
           | :cancel_search
           | :end_call
+          | {:end_call, end_call_reason()}
           | :next
           | {:vote, :continue | :end}
           | {:client_signal, String.t(), map()}
@@ -101,6 +111,8 @@ defmodule Randos.Participant do
     status: :idle,
     stop_after_call?: false
   ]
+
+  @end_call_reasons [:microphone_denied, :microphone_not_found, :audio_unavailable, :audio_failed]
 
   @in_call [:connecting, :in_call, :extension_pending]
 
@@ -150,6 +162,11 @@ defmodule Randos.Participant do
 
   def handle(%{status: status} = p, :end_call) when status in @in_call do
     {%{p | stop_after_call?: true}, [{:hang_up, p.call_pid}]}
+  end
+
+  def handle(%{status: status} = p, {:end_call, reason})
+      when status in @in_call and reason in @end_call_reasons do
+    {%{p | stop_after_call?: true, error: reason}, [{:hang_up, p.call_pid}]}
   end
 
   def handle(%{status: status} = p, :next) when status in @in_call do
@@ -243,5 +260,14 @@ defmodule Randos.Participant do
       payload: message.payload,
       sent_at_unix_ms: message.sent_at_unix_ms
     }
+  end
+
+  @doc "Reads a client's `end_call` reason (from JSON); only the documented ones."
+  @spec cast_end_call_reason(String.t()) :: {:ok, end_call_reason()} | :error
+  def cast_end_call_reason(reason) when is_binary(reason) do
+    case Enum.find(@end_call_reasons, &(Atom.to_string(&1) == reason)) do
+      nil -> :error
+      atom -> {:ok, atom}
+    end
   end
 end
