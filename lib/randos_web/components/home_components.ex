@@ -23,7 +23,7 @@ defmodule RandosWeb.HomeComponents do
         <div class="flex items-center gap-3 sm:gap-4">
           <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
           <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
-            {gettext("Randos")}
+            {gettext("randos")}
           </h1>
         </div>
         <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">

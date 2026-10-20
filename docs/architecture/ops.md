@@ -1,7 +1,7 @@
-# Randos Operations
+# randos Operations
 
 This document summarizes the environment variables and basic operating commands
-used by the Randos application.
+used by the randos application.
 
 ## Environment Variables
 

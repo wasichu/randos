@@ -1,6 +1,6 @@
 ---
 name: phoenix-framework
-description: "Use when working on the Randos web layer: Phoenix, HEEx templates, LiveView (streams, forms, hooks, tests). Consult before editing lib/randos_web."
+description: "Use when working on the randos web layer: Phoenix, HEEx templates, LiveView (streams, forms, hooks, tests). Consult before editing lib/randos_web."
 metadata:
   managed-by: usage-rules
 ---

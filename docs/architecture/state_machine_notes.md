@@ -1,6 +1,6 @@
 # State Machine Notes
 
-Randos uses explicit state machines to avoid ad hoc realtime lifecycle behavior.
+randos uses explicit state machines to avoid ad hoc realtime lifecycle behavior.
 
 The goal is to make matchmaking, call coordination, and UI transitions predictable and debuggable.
 

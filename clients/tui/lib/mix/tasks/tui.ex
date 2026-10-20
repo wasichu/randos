@@ -1,8 +1,8 @@
 defmodule Mix.Tasks.Tui do
-  @shortdoc "Runs the Randos terminal client"
+  @shortdoc "Runs the randos terminal client"
 
   @moduledoc """
-  Runs the text-only Randos client in this terminal:
+  Runs the text-only randos client in this terminal:
 
       mix tui                                   # local dev server
       mix tui --url wss://example.org/participant/websocket

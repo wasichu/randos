@@ -1,4 +1,4 @@
-//! Randos media helper, run by the TUI as an Erlang Port (`{:packet, 4}`,
+//! randos media helper, run by the TUI as an Erlang Port (`{:packet, 4}`,
 //! JSON bodies). The protocol is documented in `clients/tui/native/README.md`.
 //!
 //! Stage 0: `ping`, and a mic → Opus → speaker loopback (`loopback_start`/

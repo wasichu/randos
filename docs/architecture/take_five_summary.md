@@ -3,11 +3,11 @@
 > [`refactor_plan.md`](refactor_plan.md) ("How it fits together") and
 > [`participant_channel.md`](participant_channel.md).
 
-# Randos Architecture Summary After Step 5
+# randos Architecture Summary After Step 5
 
 ## 1. High-level architecture
 
-Randos is currently a Phoenix LiveView application with three deliberately separate layers:
+randos is currently a Phoenix LiveView application with three deliberately separate layers:
 
 - `Randos.Comms` is the Ash domain. It defines the domain resources and lifecycle rules.
 - `Randos.Matchmaking.Matchmaker` owns the live matchmaking queue in one GenServer.

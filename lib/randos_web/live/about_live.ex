@@ -16,11 +16,11 @@ defmodule RandosWeb.AboutLive do
             <div class="flex items-center gap-3">
               <img src={~p"/images/logo.svg"} alt="" class="size-11" />
               <h1 class="text-4xl font-semibold tracking-normal text-stone-950">
-                {gettext("About Randos")}
+                {gettext("About randos")}
               </h1>
             </div>
             <p class="text-xl leading-8 text-stone-700">
-              {gettext("Randos is a place for anonymous, audio-only language conversation.")}
+              {gettext("randos is a place for anonymous, audio-only language conversation.")}
             </p>
           </header>
 
@@ -31,7 +31,7 @@ defmodule RandosWeb.AboutLive do
               </h2>
               <p>
                 {gettext(
-                  "You choose the language you want to speak and the language you want to hear. Randos pairs you with someone compatible for a short conversation, then gets out of the way."
+                  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
                 )}
               </p>
               <p>
@@ -56,7 +56,7 @@ defmodule RandosWeb.AboutLive do
               </h2>
               <p>
                 {gettext(
-                  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. Randos is closer to conversational infrastructure than social media."
+                  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
                 )}
               </p>
               <p>
@@ -84,7 +84,7 @@ defmodule RandosWeb.AboutLive do
 
             <section class="space-y-3 rounded-md border border-stone-200 bg-white p-5">
               <h2 class="text-xl font-semibold tracking-normal text-stone-950">
-                {gettext("What Randos is not")}
+                {gettext("What randos is not")}
               </h2>
               <p>
                 {gettext(
@@ -95,7 +95,7 @@ defmodule RandosWeb.AboutLive do
 
             <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
               <p class="text-stone-500">
-                {gettext("Randos is open source and built in public.")}
+                {gettext("randos is open source and built in public.")}
               </p>
               <a
                 href="https://github.com/wasichu/randos"

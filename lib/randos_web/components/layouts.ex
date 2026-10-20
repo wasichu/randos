@@ -41,7 +41,7 @@ defmodule RandosWeb.Layouts do
         class="inline-flex items-center gap-3 text-sm font-semibold text-stone-950 dark:text-stone-50"
       >
         <img src={~p"/images/logo.svg"} alt="" class="size-9" />
-        <span>{gettext("Randos")}</span>
+        <span>{gettext("randos")}</span>
       </a>
       <nav class="flex items-center gap-3 text-sm font-medium text-stone-600 dark:text-stone-300">
         <.link

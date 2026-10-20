@@ -6,7 +6,7 @@ defmodule RandosWeb.AboutLiveTest do
   test "renders a minimal public about page", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/about")
 
-    assert has_element?(view, "h1", "About Randos")
+    assert has_element?(view, "h1", "About randos")
     assert has_element?(view, "img[src='/images/logo.svg']")
     assert has_element?(view, "a[href='/about']", "About")
     assert has_element?(view, "a[href='https://github.com/wasichu/randos']", "View on GitHub")

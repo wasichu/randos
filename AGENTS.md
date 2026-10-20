@@ -1,6 +1,6 @@
-# Randos — agent guide
+# randos — agent guide
 
-Randos is an anonymous, audio-only language-practice app (Phoenix LiveView +
+randos is an anonymous, audio-only language-practice app (Phoenix LiveView +
 browser WebRTC). Read `README.md` for product philosophy; the constraints there
 (no accounts, no recording, no server-side audio, no persistent social graph)
 are product requirements, not suggestions. Don't add features that violate them.

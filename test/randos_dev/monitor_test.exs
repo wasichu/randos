@@ -37,7 +37,7 @@ defmodule RandosDev.MonitorTest do
     state = %{data: data, call_rows: State.call_rows(data, now), now: now}
     text = render_to_text(state)
 
-    assert text =~ "Randos dev monitor"
+    assert text =~ "randos dev monitor"
     assert text =~ "waiting 2"
     assert text =~ "live calls 1"
     assert text =~ ~r/en\s+es\s+yes\s+2/

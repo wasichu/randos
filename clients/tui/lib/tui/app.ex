@@ -191,7 +191,7 @@ defmodule Tui.App do
     %Paragraph{
       text:
         "#{if model.audio?, do: "Audio on", else: "Text only (no audio helper)"}.  #{connection} to #{uri}",
-      block: panel(" Randos ")
+      block: panel(" randos ")
     }
   end
 
@@ -201,7 +201,7 @@ defmodule Tui.App do
   defp title(%{status: :connecting}), do: " Matched "
   defp title(%{status: :in_call}), do: " In call "
   defp title(%{status: :extension_pending}), do: " Time is up "
-  defp title(_model), do: " Randos "
+  defp title(_model), do: " randos "
 
   defp main_text(%{connection: :connecting}), do: "Connecting to the server…"
 

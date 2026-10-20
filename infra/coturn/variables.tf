@@ -95,7 +95,7 @@ variable "assign_reserved_ip" {
 }
 
 variable "turn_credential_ttl_seconds" {
-  description = "Suggested TTL for Randos-generated temporary TURN credentials."
+  description = "Suggested TTL for randos-generated temporary TURN credentials."
   type        = number
   default     = 3600
 }

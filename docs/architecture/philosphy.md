@@ -1,6 +1,6 @@
-# Randos Philosophy
+# randos Philosophy
 
-Randos is an anonymous, audio-only language conversation app built around low pressure human interaction.
+randos is an anonymous, audio-only language conversation app built around low pressure human interaction.
 
 It is not a social network.
 
@@ -8,7 +8,7 @@ It is not a content platform.
 
 It is not a metrics-driven language app.
 
-Randos is closer to public conversational infrastructure: a calm, minimal place where adults can briefly meet through language and then disappear.
+randos is closer to public conversational infrastructure: a calm, minimal place where adults can briefly meet through language and then disappear.
 
 ## Core Experience
 
@@ -17,7 +17,7 @@ The user chooses:
 - the language they will speak
 - the language they want to hear
 
-Then Randos pairs them with a compatible stranger for a short audio conversation.
+Then randos pairs them with a compatible stranger for a short audio conversation.
 
 Example:
 
@@ -35,7 +35,7 @@ without forcing users into rigid modes or labels.
 
 ## Product Constraints
 
-Randos is intentionally constrained:
+randos is intentionally constrained:
 
 - no accounts
 - no profiles
@@ -76,11 +76,11 @@ The maximum total call duration is thirty minutes.
 
 After that, users must return to the queue.
 
-This keeps Randos focused on brief, low pressure encounters rather than becoming a private calling app.
+This keeps randos focused on brief, low pressure encounters rather than becoming a private calling app.
 
 ## Adult Use
 
-Randos is intended for adults 18 and older.
+randos is intended for adults 18 and older.
 
 Before entering the queue, users must acknowledge:
 
@@ -88,11 +88,11 @@ Before entering the queue, users must acknowledge:
 
 This is intentionally lightweight.
 
-Randos does not use invasive age verification, accounts, identity checks, or surveillance mechanisms.
+randos does not use invasive age verification, accounts, identity checks, or surveillance mechanisms.
 
 ## Design Values
 
-Randos prioritizes:
+randos prioritizes:
 
 - spontaneity
 - emotional safety

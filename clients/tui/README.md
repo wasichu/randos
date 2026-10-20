@@ -1,6 +1,6 @@
-# Randos terminal client (text-only)
+# randos terminal client (text-only)
 
-A terminal client for [Randos](../../README.md): choose languages, get matched,
+A terminal client for [randos](../../README.md): choose languages, get matched,
 see the call timer, vote on extensions, hang up or go next. **No audio yet**
 (roadmap Phase 4.3). When a peer offers audio (a browser that matched second),
 the client ends the call and goes idle; two terminal clients can hold a call.

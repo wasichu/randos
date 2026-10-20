@@ -1,4 +1,4 @@
-# Randos roadmap
+# randos roadmap
 
 Verified against the code at `54ee3ea` (2026-10-20). Update this line, and
 check that every module/function named below still exists, whenever the plan
@@ -203,7 +203,7 @@ bn, ru, ja, fr, de, ko, it, tr, id. Arabic needs right-to-left layout.
    TranslateGemma (Gemma terms), with MADLAD-400, M2M100 and Opus-MT as
    baselines and a general LLM; NLLB, Tower, and Aya are out (non-commercial).
    Checks, none needing a human:
-   - placeholders (`%{count}`) and glossary terms ("rando", "Randos") intact,
+   - placeholders (`%{count}`) and glossary terms ("rando", "randos") intact,
      length sane (buttons), script correct for the locale;
    - back-translation to English, compared with the source (chrF);
    - reference-free quality estimation with two independent models

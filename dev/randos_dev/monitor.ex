@@ -111,7 +111,7 @@ defmodule RandosDev.Monitor do
       "waiting #{data.queued_count}   live calls #{map_size(data.calls)}   " <>
         "ended #{data.ended_count}   joins: #{if joins == "", do: "none", else: joins}"
 
-    %Paragraph{text: text, block: panel(" Randos dev monitor ")}
+    %Paragraph{text: text, block: panel(" randos dev monitor ")}
   end
 
   defp queues_table(data) do

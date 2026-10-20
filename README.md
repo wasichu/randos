@@ -1,21 +1,21 @@
 <p align="center">
-  <img src="priv/static/images/logo.svg" alt="Randos logo" width="96" height="96">
+  <img src="priv/static/images/logo.svg" alt="randos logo" width="96" height="96">
 </p>
 
-# Randos
+# randos
 
-Randos is an anonymous, audio-only language conversation app for low-pressure
+randos is an anonymous, audio-only language conversation app for low-pressure
 human practice.
 
 It is not a social network, content platform, or metrics-driven dopamine delivery system.
 It is closer to public conversational infrastructure: a calm place where adults
 can briefly meet to converse and then disappear.
 
-[Try Randos][live-site].
+[Try randos][live-site].
 
 ## Philosophy
 
-Randos is intentionally constrained:
+randos is intentionally constrained:
 
 - no accounts
 - no profiles
@@ -26,7 +26,7 @@ Randos is intentionally constrained:
 - no permanent social graph
 
 Users choose the language they will speak and the language they want to hear.
-Randos then pairs compatible strangers for a short WebRTC audio conversation.
+randos then pairs compatible strangers for a short WebRTC audio conversation.
 
 This supports crosstalk, language exchange, listening practice, and casual
 conversation without forcing people into rigid modes or gamified progress loops.
@@ -38,7 +38,7 @@ The product should feel like a doorway, not a platform.
 
 ## Current Shape
 
-Randos is a Phoenix LiveView application with:
+randos is a Phoenix LiveView application with:
 
 - anonymous matchmaking
 - WebRTC microphone capture and peer audio
@@ -122,7 +122,7 @@ certificate name list, then restart the app.
 
 ## TURN And STUN
 
-Without TURN env vars, Randos falls back to public STUN:
+Without TURN env vars, randos falls back to public STUN:
 
 ```text
 stun:stun.l.google.com:19302
@@ -147,7 +147,7 @@ turns:turn.slowinput.org:5349
 ```
 
 TURN relays encrypted WebRTC packets only when direct peer-to-peer connectivity
-fails. It does not give Randos server-side audio access.
+fails. It does not give randos server-side audio access.
 
 ## Infrastructure
 

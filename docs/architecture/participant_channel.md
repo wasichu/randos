@@ -1,6 +1,6 @@
 # Participant channel protocol
 
-The public API for non-browser Randos clients (the TUI). Browsers use the
+The public API for non-browser randos clients (the TUI). Browsers use the
 LiveView at `/` instead; both run the same `Randos.Participant` core through
 `RandosWeb.ParticipantShell`, so a channel participant and a browser
 participant can be matched with each other.

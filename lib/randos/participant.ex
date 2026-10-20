@@ -1,6 +1,6 @@
 defmodule Randos.Participant do
   @moduledoc """
-  The UI-agnostic core of one person using Randos: their flow from choosing
+  The UI-agnostic core of one person using randos: their flow from choosing
   languages, through the queue, into calls and back.
 
   Pure and process-free. A shell (the LiveView today; a Channel/TUI later)

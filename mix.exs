@@ -38,7 +38,7 @@ defmodule Randos.MixProject do
         build: [
           "phoenix-framework": [
             description:
-              "Use when working on the Randos web layer: Phoenix, HEEx templates, LiveView (streams, forms, hooks, tests). Consult before editing lib/randos_web.",
+              "Use when working on the randos web layer: Phoenix, HEEx templates, LiveView (streams, forms, hooks, tests). Consult before editing lib/randos_web.",
             usage_rules: [
               {:phoenix, sub_rules: ["phoenix", "elixir", "html", "liveview"]},
               ~r/^phoenix_/

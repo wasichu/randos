@@ -1,4 +1,4 @@
-# Integration tests need a running Randos server (just tui-smoke starts one).
+# Integration tests need a running randos server (just tui-smoke starts one).
 #
 # :native tests need the media helper built (cargo build -p randos_media;
 # just precommit does). They're skipped when it isn't, unless

@@ -1,6 +1,6 @@
 # WebRTC Notes
 
-Randos uses browser-to-browser WebRTC for audio.
+randos uses browser-to-browser WebRTC for audio.
 
 Phoenix coordinates calls, but audio should flow directly between browsers whenever possible.
 

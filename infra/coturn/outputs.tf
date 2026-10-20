@@ -35,7 +35,7 @@ output "turn_shared_secret" {
 }
 
 output "randos_environment" {
-  description = "Example environment variables for configuring Randos once TURN support is wired into the app."
+  description = "Example environment variables for configuring randos once TURN support is wired into the app."
   sensitive   = true
   value       = <<-EOT
     TURN_HOST=${var.turn_hostname}

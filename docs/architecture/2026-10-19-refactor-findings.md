@@ -140,7 +140,7 @@ justify every dependency. Next: the coordinator becomes a `:gen_statem`, whose
 `state_timeout`s replace the manual timer bookkeeping. The analysis below is
 kept for the record.
 
-What Ash does in Randos today, after Phase 1: one resource (`CallSession`) on
+What Ash does in randos today, after Phase 1: one resource (`CallSession`) on
 the ETS data layer, five actions, an AshStateMachine with six transitions, five
 `one_of` validations and an extension-count check. `CallCoordinator` creates
 the record, transitions it, and (since the leak fix) destroys it. **Nothing ever
@@ -155,7 +155,7 @@ reads it back**; every consumer reads the coordinator's own struct.
   extension cap are enforced at the action boundary with typed errors. That's
   useful if the Phase 3 Channel takes untrusted input: an Ash action (with
   typed arguments) is a ready-made input contract.
-- **Room to grow without rewrites.** If Randos ever needs abuse reports, rate
+- **Room to grow without rewrites.** If randos ever needs abuse reports, rate
   limits as policies, a moderation/admin view, a JSON API, or *any*
   persistence (even short-lived Postgres for reports), Ash is already wired
   and those are its strengths (policies, AshJsonApi, AshAdmin, AshPostgres).
@@ -176,7 +176,7 @@ reads it back**; every consumer reads the coordinator's own struct.
 - **The product philosophy rules out its biggest wins.** No accounts, no
   persistence, no profiles, no history means no policies-over-records, no
   generated APIs over stored data, no migrations. Ash's leverage comes from
-  exactly the things Randos deliberately refuses to have.
+  exactly the things randos deliberately refuses to have.
 - **Weight and surface area.** Roughly a dozen extra runtime packages (ash,
   ash_state_machine, spark, reactor, ecto, splode, decimal, ets, crux,
   iterex, multigraph, yaml stack, …), ~215k lines of dependency source, and

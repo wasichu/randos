@@ -52,7 +52,7 @@ defmodule RandosWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
 
-      # Randos: calls and matchmaking (emitted by CallCoordinator / Matchmaker)
+      # randos: calls and matchmaking (emitted by CallCoordinator / Matchmaker)
       counter("randos.call.start.system_time", description: "Calls started"),
       counter("randos.call.status.count", tags: [:status], description: "Call status changes"),
       summary("randos.call.stop.duration",

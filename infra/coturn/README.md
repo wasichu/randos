@@ -1,7 +1,7 @@
-# Randos coturn (OpenTofu)
+# randos coturn (OpenTofu)
 
 This directory contains OpenTofu (Terraform-compatible) config and cloud-init for a reproducible
-DigitalOcean Droplet that runs coturn for Randos WebRTC calls.
+DigitalOcean Droplet that runs coturn for randos WebRTC calls.
 
 ## What It Provisions
 
@@ -13,7 +13,7 @@ DigitalOcean Droplet that runs coturn for Randos WebRTC calls.
 - Optional reserved IP assigned to the Droplet
 - Generated TURN shared secret when one is not supplied
 - Rendered cloud-init `user_data` that bootstraps Docker, certbot, and coturn
-- Outputs for DNS and future Randos TURN configuration
+- Outputs for DNS and future randos TURN configuration
 
 ## DNS
 
@@ -265,7 +265,7 @@ OpenTofu outputs:
 - TURN realm
 - UDP relay port range
 - Sensitive TURN shared secret
-- Sensitive example Randos environment variables
+- Sensitive example randos environment variables
 
 To display sensitive outputs after apply:
 
@@ -380,5 +380,5 @@ The Phoenix app will later use the same shared secret to generate temporary TURN
 credentials for browsers.
 
 TURN relays encrypted WebRTC packets only when direct peer-to-peer connectivity
-fails. TURN does not give Randos server-side audio access, and it is not
+fails. TURN does not give randos server-side audio access, and it is not
 recording infrastructure. It is fallback relay infrastructure.
