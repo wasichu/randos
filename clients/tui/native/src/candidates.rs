@@ -20,8 +20,8 @@ use std::net::{IpAddr, SocketAddr};
 use std::time::Instant;
 
 use serde_json::{Value, json};
-use str0m::Candidate;
 use str0m::media::Mid;
+use str0m::{Candidate, CandidateKind};
 
 use crate::Error;
 use crate::relay::{self, Relay, RelayEvent};
@@ -74,6 +74,12 @@ pub struct Candidates {
     /// Every remote candidate's IP so far, to permit on the relay as soon
     /// as it's allocated (a permission asked for earlier fails quietly).
     remote_ips: Vec<IpAddr>,
+    /// The peer's relayed addresses: sending to one means the call is
+    /// relayed even when we aren't.
+    remote_relays: Vec<SocketAddr>,
+    /// Bytes str0m sent each way since the last `take_path`.
+    sent_relayed: u64,
+    sent_direct: u64,
 }
 
 impl Candidates {
@@ -104,6 +110,9 @@ impl Candidates {
             unsent: Vec::new(),
             sdp_sent: false,
             remote_ips: Vec::new(),
+            remote_relays: Vec::new(),
+            sent_relayed: 0,
+            sent_direct: 0,
         }
     }
 
@@ -180,6 +189,12 @@ impl Candidates {
         destination: SocketAddr,
         data: &[u8],
     ) -> Outbound {
+        let ours = self.relay.as_ref().and_then(Relay::relayed) == Some(source);
+        if ours || self.remote_relays.contains(&destination) {
+            self.sent_relayed += data.len() as u64;
+        } else {
+            self.sent_direct += data.len() as u64;
+        }
         match self.relay.as_mut() {
             Some(relay) if relay.relayed() == Some(source) => match relay.send(destination, data) {
                 Ok(Some(wrapped)) => Outbound::Wrapped(wrapped, relay.server()),
@@ -190,13 +205,32 @@ impl Candidates {
     }
 
     /// A remote candidate: let it reach our relayed address (coturn drops
-    /// anything from an IP without a permission).
-    pub fn permit(&mut self, peer: IpAddr) {
+    /// anything from an IP without a permission), and note whether it's the
+    /// peer's relay (for `take_path`).
+    pub fn remote(&mut self, candidate: &Candidate) {
+        let peer = candidate.addr().ip();
         if !self.remote_ips.contains(&peer) {
             self.remote_ips.push(peer);
         }
+        if candidate.kind() == CandidateKind::Relayed {
+            self.remote_relays.push(candidate.addr());
+        }
         if let Some(relay) = self.relay.as_mut() {
             relay.permit(peer);
+        }
+    }
+
+    /// How the call's packets went since the last call: "relay" when most
+    /// bytes went through a TURN server (ours or the peer's), "direct"
+    /// otherwise, `None` if nothing was sent. str0m doesn't say which pair
+    /// ICE chose, so this goes by what was actually sent.
+    pub fn take_path(&mut self) -> Option<&'static str> {
+        let (relayed, direct) = (self.sent_relayed, self.sent_direct);
+        (self.sent_relayed, self.sent_direct) = (0, 0);
+        match (relayed, direct) {
+            (0, 0) => None,
+            (relayed, direct) if relayed > direct => Some("relay"),
+            _ => Some("direct"),
         }
     }
 
@@ -335,7 +369,8 @@ mod tests {
             Candidates::new(local, vec![], Some(Relay::allocate(local, server, &creds)));
 
         // The peer's candidate arrives before our allocation is up.
-        candidates.permit("127.0.0.1".parse().unwrap());
+        let host = Candidate::host("127.0.0.1:9".parse().unwrap(), "udp").unwrap();
+        candidates.remote(&host);
 
         let mut buf = [0u8; 1500];
         let mut allocated = false;
@@ -356,5 +391,26 @@ mod tests {
             seen.create_permissions.load(Ordering::Relaxed) >= 1,
             "the early candidate's permission was asked for, with nothing sent to it"
         );
+    }
+
+    #[test]
+    fn the_path_follows_the_bytes_through_the_peers_relay_too() {
+        let mut candidates = Candidates::new(local(), vec![], None);
+        assert_eq!(candidates.take_path(), None, "nothing sent yet");
+
+        let peer_relay: SocketAddr = "198.51.100.9:50000".parse().unwrap();
+        let peer_host: SocketAddr = "192.0.2.4:6000".parse().unwrap();
+        let relayed = Candidate::relayed(peer_relay, "192.0.2.4:1".parse().unwrap(), "udp");
+        candidates.remote(&relayed.unwrap());
+        candidates.remote(&Candidate::host(peer_host, "udp").unwrap());
+
+        // We have no relay, but the peer's relay candidate carries the media.
+        candidates.outbound(local(), peer_relay, &[0; 160]);
+        candidates.outbound(local(), peer_host, &[0; 40]);
+        assert_eq!(candidates.take_path(), Some("relay"));
+
+        candidates.outbound(local(), peer_host, &[0; 160]);
+        assert_eq!(candidates.take_path(), Some("direct"));
+        assert_eq!(candidates.take_path(), None, "counts reset each time");
     }
 }

@@ -189,6 +189,9 @@ defmodule Tui.AppTest do
       wide = render_text(in_call, %{media_state: media})
       assert wide =~ "1520 sent / 1498 received"
 
+      relayed = put_in(media.call.stats["path"], "relay")
+      assert render_text(in_call, %{media_state: relayed}) =~ "Connection: connected via relay ·"
+
       small = render_text(in_call, %{media_state: media}, {45, 14})
       assert small =~ "Status:     in a call"
       assert small =~ "Connection: connected"

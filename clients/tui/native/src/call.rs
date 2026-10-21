@@ -275,8 +275,12 @@ impl Session {
 
             self.receive()?;
             self.drain()?;
-            self.report
-                .tick(&self.capture, &self.playback, &self.notify);
+            self.report.tick(
+                &self.capture,
+                &self.playback,
+                &self.notify,
+                &mut self.candidates,
+            );
         }
 
         // Send the teardown packets too, so the peer sees a clean close
@@ -330,7 +334,7 @@ impl Session {
                 let Some(candidate) = remote_candidate(&signal.payload, &mut self.report) else {
                     return Ok(());
                 };
-                self.candidates.permit(candidate.addr().ip());
+                self.candidates.remote(&candidate);
                 if self.remote_description_set {
                     self.rtc.add_remote_candidate(candidate);
                 } else {
@@ -665,7 +669,13 @@ impl Report {
         self.output_bars.push(frame);
     }
 
-    fn tick(&mut self, capture: &Capture, playback: &Playback, notify: &Notify) {
+    fn tick(
+        &mut self,
+        capture: &Capture,
+        playback: &Playback,
+        notify: &Notify,
+        candidates: &mut Candidates,
+    ) {
         if self.levels_since.elapsed() >= LEVELS_EVERY {
             self.levels_since = Instant::now();
             // A failed FFT only skips one meter frame; it never ends the call.
@@ -691,6 +701,7 @@ impl Report {
             output_peak_dbfs: self.output_peak.dbfs(),
             capture_ring_ms: capture.queued_ms(),
             playback_ring_ms: playback.queued_ms(),
+            path: candidates.take_path().map(String::from),
         }));
         // Counters are cumulative; peaks are per report.
         self.since = Instant::now();
@@ -853,6 +864,11 @@ mod tests {
                 "{name} heard {} dBFS",
                 last.output_peak_dbfs
             );
+            assert_eq!(
+                last.path.as_deref(),
+                Some("direct"),
+                "{name}: loopback is direct"
+            );
             // The meters: both tones are 440 Hz, the lowest bar (0-940 Hz).
             let (you, peer) = seen.levels.clone().expect("call_levels");
             assert_eq!((you.len(), peer.len()), (12, 12));
@@ -999,6 +1015,7 @@ mod tests {
             );
             let last = seen.stats.last().expect("stats");
             assert_eq!(last.local_candidates, vec!["relay"]);
+            assert_eq!(last.path.as_deref(), Some("relay"));
             assert!(
                 last.packets_received > 100,
                 "received {}",

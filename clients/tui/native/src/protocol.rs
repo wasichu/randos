@@ -118,6 +118,9 @@ pub struct CallStats {
     /// Kinds of our candidates offered so far: "host", then "srflx" once a
     /// STUN server answered.
     pub local_candidates: Vec<String>,
+    /// How this second's packets went: "direct", or "relay" (through a TURN
+    /// server, ours or the peer's); `null` if nothing was sent.
+    pub path: Option<String>,
     pub input_peak_dbfs: f64,
     pub output_peak_dbfs: f64,
     pub capture_ring_ms: f64,

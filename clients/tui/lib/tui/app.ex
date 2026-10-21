@@ -440,18 +440,26 @@ defmodule Tui.App do
   defp call_line(%{call: %{connection: :connecting}}), do: ["connecting…"]
 
   defp call_line(%{call: %{stats: %{} = s}}) do
+    connected = connected_via(s["path"])
+
     levels =
-      "connected · you #{round(s["input_peak_dbfs"])} dBFS · " <>
+      "#{connected} · you #{round(s["input_peak_dbfs"])} dBFS · " <>
         "peer #{round(s["output_peak_dbfs"])} dBFS"
 
     [
       levels <> " · #{s["packets_sent"]} sent / #{s["packets_received"]} received",
       levels,
+      connected,
       "connected"
     ]
   end
 
   defp call_line(%{call: %{}}), do: ["connected"]
+
+  # The helper's `path`: whether the call goes through a TURN server.
+  defp connected_via("relay"), do: "connected via relay"
+  defp connected_via("direct"), do: "connected directly"
+  defp connected_via(_path), do: "connected"
 
   defp mic_test_text(%{media_state: %{available?: false}}), do: ""
   defp mic_test_text(%{media_state: %{mic_test: test}}), do: "\n\n" <> mic_test_line(test)
