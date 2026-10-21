@@ -300,7 +300,7 @@ defmodule Tui.View do
   defp mic_help(%{model: %{status_page: %{}}}), do: ""
 
   defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}),
-    do: "  t mic test" <> if(media.devices, do: "  i/o devices", else: "")
+    do: "  t mic test" <> if(media.devices, do: "  i mic  o speaker", else: "")
 
   defp mic_help(%{model: %{status: status, audio?: true}, media_state: %{call: call}})
        when status in [:connecting, :in_call, :extension_pending] and is_map(call),

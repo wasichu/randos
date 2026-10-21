@@ -225,7 +225,7 @@ defmodule Tui.AppTest do
       text = render_text(model("idle"), %{media_state: media})
       assert text =~ "Mic:        Mic A (system default)"
       assert text =~ "Speaker:    Speakers (system default)"
-      assert text =~ "i/o devices"
+      assert text =~ "i mic  o speaker"
 
       # In the Status panel, so a call shows them too.
       assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:        Mic A"
