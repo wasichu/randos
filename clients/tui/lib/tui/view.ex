@@ -18,17 +18,25 @@ defmodule Tui.View do
   @you_color {:rgb, 8, 145, 178}
   @peer_color {:rgb, 124, 58, 237}
 
+  # Narrower than this, Status and Devices share one panel.
+  @side_by_side_min 90
+
   @doc "The screen for the app's `state`."
   def render(state, frame) do
     area = %Rect{x: 0, y: 0, width: frame.width, height: frame.height}
 
-    # The main panel gives way first on a short terminal (a tmux split):
-    # the status lines must stay visible.
+    # Status and Devices side by side when there's room; on a narrow
+    # terminal (a tmux split) the devices go inside the Status panel.
+    side_by_side? = device_lines(state) != [] and frame.width >= @side_by_side_min
+    status_rows = if side_by_side?, do: 2, else: length(status_lines(state, 80, true))
+
+    # The main panel gives way first on a short terminal: the status lines
+    # must stay visible.
     [header_area, main_area, status_area, help_area] =
       Layout.split(area, :vertical, [
         {:length, 3},
         {:min, 3},
-        {:length, length(status_lines(state)) + 2},
+        {:length, status_rows + 2},
         {:length, 1}
       ])
 
@@ -38,12 +46,33 @@ defmodule Tui.View do
       {header(state), header_area}
       | main_with_meters(state, main_area)
     ] ++
+      bottom_panels(state, status_area, side_by_side?) ++
       [
-        {%Paragraph{text: status_text(state, status_area.width - 2), block: panel(" Status ")},
-         status_area},
         {%Paragraph{text: " " <> help(model) <> mic_help(state), style: %Style{fg: :dark_gray}},
          help_area}
       ]
+  end
+
+  defp bottom_panels(state, area, true) do
+    [status_area, devices_area] =
+      Layout.split(area, :horizontal, [{:percentage, 55}, {:percentage, 45}])
+
+    [
+      {%Paragraph{
+         text: status_text(state, status_area.width - 2, false),
+         block: panel(" Status ")
+       }, status_area},
+      {%Paragraph{
+         text: state |> device_lines("") |> Enum.map_join("\n", &fit(&1, devices_area.width - 2)),
+         block: panel(" Devices ")
+       }, devices_area}
+    ]
+  end
+
+  defp bottom_panels(state, area, false) do
+    [
+      {%Paragraph{text: status_text(state, area.width - 2, true), block: panel(" Status ")}, area}
+    ]
   end
 
   # The server status screen (`s` on the idle screen).
@@ -318,30 +347,37 @@ defmodule Tui.View do
   # show in the main panel). One line each, never wrapped (a wrapped line
   # pushes the next one out of the box): the connection line drops detail to
   # fit `width`, and anything still too long is cut with "…".
-  defp status_text(state, width) do
-    state |> status_lines(width) |> Enum.map_join("\n", &fit(&1, width))
+  defp status_text(state, width, devices?) do
+    state |> status_lines(width, devices?) |> Enum.map_join("\n", &fit(&1, width))
   end
 
-  # Status and connection, then the mic and speaker once the helper has
-  # said what devices there are (on every screen, calls included).
-  defp status_lines(%{model: model} = state, width \\ 80) do
+  # Status and connection, then (when they share the panel) the mic and
+  # speaker once the helper has said what devices there are, on every
+  # screen, calls included.
+  defp status_lines(%{model: model} = state, width, devices?) do
     connection = "Connection: "
     room = width - String.length(connection)
 
     [
       "Status:     " <> status_label(model),
       connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…")
-    ] ++ device_lines(state)
+    ] ++ if(devices?, do: device_lines(state, "   "), else: [])
   end
 
-  defp device_lines(%{media_state: %{available?: true, devices: %{} = devices, choice: choice}}) do
+  # `pad` lines the values up with the Status panel's when they share it.
+  defp device_lines(state, pad \\ "")
+
+  defp device_lines(
+         %{media_state: %{available?: true, devices: %{} = devices, choice: choice}},
+         pad
+       ) do
     [
-      "Mic:        " <> device_label(choice.input, devices.default_input),
-      "Speaker:    " <> device_label(choice.output, devices.default_output)
+      "Mic:     " <> pad <> device_label(choice.input, devices.default_input),
+      "Speaker: " <> pad <> device_label(choice.output, devices.default_output)
     ]
   end
 
-  defp device_lines(_state), do: []
+  defp device_lines(_state, _pad), do: []
 
   defp fit(line, width) do
     if String.length(line) <= width,
@@ -426,7 +462,7 @@ defmodule Tui.View do
   defp mic_test_text(_state), do: ""
 
   defp device_label(nil, nil), do: "system default"
-  defp device_label(nil, default), do: "#{default} (system default)"
+  defp device_label(nil, default), do: "#{default} (default)"
   defp device_label(name, _default), do: name
 
   defp mic_test_line(%{phase: :failed, error: error}), do: "Mic test failed: " <> error

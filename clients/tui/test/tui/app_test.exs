@@ -208,7 +208,7 @@ defmodule Tui.AppTest do
       assert render_text(older) =~ "Time is up. Continue?"
     end
 
-    test "the status panel shows the mic and speaker on every screen; the idle screen says how to change them" do
+    test "a Devices panel beside Status shows the mic and speaker on every screen (inside Status when narrow)" do
       {media, []} =
         MediaState.reply(
           MediaState.new(true),
@@ -222,16 +222,24 @@ defmodule Tui.AppTest do
            }}
         )
 
+      # Wide enough: a Devices panel beside Status.
       text = render_text(model("idle"), %{media_state: media})
-      assert text =~ "Mic:        Mic A (system default)"
-      assert text =~ "Speaker:    Speakers (system default)"
+      assert text =~ "Devices"
+      assert text =~ "Mic:     Mic A (default)"
+      assert text =~ "Speaker: Speakers (default)"
       assert text =~ "i mic  o speaker"
 
-      # In the Status panel, so a call shows them too.
-      assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:        Mic A"
+      # On every screen, so a call shows them too.
+      assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:     Mic A"
 
       chosen = media |> MediaState.cycle_device(:input) |> MediaState.cycle_device(:input)
-      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic:        Mic B"
+      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic:     Mic B"
+
+      # Narrow (a tmux split): no Devices panel; the lines join Status, lined up.
+      narrow = render_text(model("idle"), %{media_state: media}, {80, 24})
+      refute narrow =~ "Devices"
+      assert narrow =~ "Status:     not looking"
+      assert narrow =~ "Mic:        Mic A (default)"
     end
 
     test "the status panel shows the current state, the connection, and the latest notice" do
