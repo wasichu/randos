@@ -25,3 +25,7 @@ cargo-deny = "0.20.2"
 # device on the network gets a secure context (browsers allow the mic only
 # on localhost or HTTPS).
 mkcert = "1.4.4"
+# Python tooling outside the app: the translation shootout (tools/translate)
+# and the voice benchmark (tools/voice-eval), each its own pinned uv project
+# (uv also fetches their Python). Their offline tests run in `just precommit`.
+uv = "0.13.1"

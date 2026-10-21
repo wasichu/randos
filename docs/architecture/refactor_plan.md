@@ -710,8 +710,10 @@ Not scheduled; pick up when relevant.
 - **Approved 2026-10-21 (Phases 5 and 6 follow-ups):** hide the language
   switcher during a call (switching reloads the page); make it a small form
   (POST) rather than a link, so prefetching can't switch the language;
-  validate `RANDOS_VOICE_PROCESSOR` at boot. Running the Python harnesses'
-  tests in CI: explained to the owner, pending.
+  validate `RANDOS_VOICE_PROCESSOR` at boot (all done). The Python harnesses'
+  offline tests run in `just precommit` (so in CI), with uv pinned in
+  `mise.toml` (done). The full translation run waits for the owner's go-ahead
+  (their compute is busy for now).
 - **coturn follow-ups** for its next intentional rebuild: see
   [`coturn_audit.md`](coturn_audit.md).
 

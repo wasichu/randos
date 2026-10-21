@@ -76,7 +76,7 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 | Command | What it checks |
 | --- | --- |
 | `just test [path]` | The server's tests (`just test-tui` for the terminal client's) |
-| `just precommit` | Everything CI checks per platform: compile with warnings as errors, format, Credo, both test suites, and the Rust helper (fmt, clippy, tests, cargo-deny). **Run it before calling a change done**, and check its exit status. |
+| `just precommit` | Everything CI checks per platform: compile with warnings as errors, format, Credo, both test suites, the Rust crates (fmt, clippy, tests, cargo-deny), and the Python harnesses' offline tests (`tools/translate`, `tools/voice-eval`; no models). **Run it before calling a change done**, and check its exit status. |
 | `just smoke` | Two headless Chromes with fake mics place a real call (`mix test` can't see the browser). Run after changing `assets/js/` or the call flow. |
 | `just tui-smoke` | Real terminal clients call each other and headless Chrome, with audio checked both ways. Run after changing the terminal client, the helper, or the channel. |
 | `just check-privacy` | That the coturn settings [privacy.md](privacy.md) promises are still in its config (part of precommit). |

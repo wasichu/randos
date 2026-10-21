@@ -136,12 +136,14 @@ test-failed:
 format:
     mix format
 
-# Full pre-commit check: server, clients/tui, the Rust helper, and the encrypted-state guard
+# Full pre-commit check: server, clients/tui, the Rust crates, the Python harnesses' offline tests, and the guards
 precommit: check-state-encrypted check-privacy
     mix precommit
     just native-check
     cargo build --quiet -p randos_media
     cd clients/tui && mix precommit
+    just translate-test
+    just voice-eval-test
 
 # Media helper loopback: default mic → Opus → default speaker; latency on stderr (use headphones)
 media-loopback seconds="20":
