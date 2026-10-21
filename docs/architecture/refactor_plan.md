@@ -23,7 +23,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 2 | UI-agnostic participant core; LiveView becomes a shell | Done |
 | 3 | Public participant channel (browser stays on LiveView) | Done |
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
-| 4 | TUI | 4.1, 4.2 done; 4.3 Stage 0 done (headphone check pending), **next: 4.3 Stage 1**; then 4.4 release binaries and 4.5 Homebrew tap |
+| 4 | TUI | 4.1, 4.2 done; 4.3 Stages 0 and 1 done, **next: 4.3 Stage 2** (see 4.3 below); then 4.4 release binaries and 4.5 Homebrew tap |
 | 5 | Voice anonymization | Planned |
 
 ## How it fits together
