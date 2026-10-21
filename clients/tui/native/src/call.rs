@@ -29,6 +29,7 @@ use crate::Error;
 use crate::audio::{Capture, Devices, Input, Notify, Output, Playback, Started};
 use crate::candidates::{Candidates, Found, Inbound, Outbound};
 use crate::codec::{Decoder, Encoder, FRAME, Peak};
+use crate::echo::EchoCanceller;
 use crate::protocol::{CallStats, Event};
 use crate::spectrum::Analyser;
 
@@ -191,6 +192,10 @@ struct Session {
     muted: bool,
     /// The last RTP sequence number decoded, to size gaps.
     last_seq: Option<u64>,
+    /// Takes the peer's voice, played on our speaker, out of our mic. Only
+    /// with a real mic and speaker: a synthetic input or a file/null output
+    /// has no sound path between them, so nothing to cancel.
+    echo: Option<EchoCanceller>,
 }
 
 impl Session {
@@ -200,6 +205,8 @@ impl Session {
         playback: Playback,
         notify: Notify,
     ) -> Result<Self, Error> {
+        let acoustic =
+            matches!(capture, Capture::Device(_)) && matches!(playback, Playback::Device(_));
         let ip = match config.bind_ip {
             Some(ip) => ip,
             None => default_route_ip()?,
@@ -246,6 +253,7 @@ impl Session {
             candidates: Candidates::new(local, Vec::new(), None),
             muted: false,
             last_seq: None,
+            echo: acoustic.then(EchoCanceller::new),
         })
     }
 
@@ -279,6 +287,11 @@ impl Session {
 
             let mut frame = [0.0; FRAME];
             if self.capture.read(&mut frame)? {
+                // The peer's voice, played on our speaker, out of the mic.
+                if let Some(echo) = self.echo.as_mut() {
+                    let queued = self.capture.queued_ms() + self.playback.queued_ms();
+                    echo.capture(&mut frame, queued)?;
+                }
                 self.send_frame(&frame)?;
                 self.drain()?;
                 continue;
@@ -531,23 +544,33 @@ impl Session {
                 // gap), then the last rebuilt from this packet's FEC data.
                 for _ in 0..missing.saturating_sub(1).min(MAX_CONCEALED) {
                     self.decoder.conceal(&mut frame)?;
-                    self.playback.write(&frame)?;
+                    self.play(&frame)?;
                     self.report.concealed += 1;
                 }
                 if missing > 0 {
                     self.decoder.recover(&data.data, &mut frame)?;
-                    self.playback.write(&frame)?;
+                    self.play(&frame)?;
                     self.report.recovered += 1;
                 }
                 self.decoder.decode(&data.data, &mut frame)?;
                 self.report.received(&frame);
-                if !self.playback.write(&frame)? {
+                if !self.play(&frame)? {
                     self.report.dropped += 1;
                 }
             }
             _ => {}
         }
         Ok(())
+    }
+
+    /// Plays a frame, telling the echo canceller first (it must know what
+    /// the mic may hear back). `false` if playback dropped it (too far
+    /// behind).
+    fn play(&mut self, frame: &[f32; FRAME]) -> Result<bool, Error> {
+        if let Some(echo) = self.echo.as_mut() {
+            echo.render(frame)?;
+        }
+        self.playback.write(frame)
     }
 
     /// `loss_every`: whether to drop the datagram just read (RTP only, once

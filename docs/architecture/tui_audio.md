@@ -354,7 +354,7 @@ The browser's matching seam is unchanged: `processLocalStream` in
    implementation; see the roadmap's Phase 5). Not tied to Nx/Bumblebee.
 3. **v1 platforms:** macOS arm64 and Linux glibc x86_64; Intel Mac, musl and
    Windows with 4.4 packaging.
-4. **Headphones required in v1** (plus ducking); echo cancellation in Stage 3.
+4. **Headphones required in v1** (plus ducking); echo cancellation in Stage 3. Done (2026-10-20): calls cancel echo (sonora's AEC3), so headphones are now recommended, not required; no ducking.
 5. **Capability-aware matching before Stage 1**, so the TUI and the browser
    offer equivalently good experiences: `find` carries `audio`, and the
    matchmaker only pairs compatible clients.

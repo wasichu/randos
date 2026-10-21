@@ -96,6 +96,17 @@ Allocate and would retry for ~40 s, so the wrapper spots that 401 itself
 (but not a late copy of the first, unauthenticated challenge). `turns:` and TCP
 TURN aren't supported.
 
+Calls cancel echo (`src/echo.rs`, sonora's AEC3), so headphones are
+optional: every frame about to be played is fed to the canceller, and each
+mic frame is cleaned before it's muted or encoded, with the audio queued in
+the rings as a delay hint (AEC3 also estimates the delay itself). Only when
+both ends are real devices: a synthetic input or a `null`/`wav` output has no
+sound path to cancel (and two test peers sending the same steady tone would
+look like echo). Never on the mic test's loopback, which plays your own
+voice back on purpose. Measured on synthetic audio (tests): 43 dB of echo
+removed after convergence, your voice through within 1 dB, and about
+−3.5 dB of it kept while both people talk at once.
+
 `src/candidates.rs` ties the two together for the call session (sans-IO):
 it owns the STUN gatherer and the relay, trickles our new candidates, and
 routes datagrams on the shared call socket. Incoming: a reply to our STUN
@@ -128,6 +139,7 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `serde` 1, `serde_json` 1 | The Port's JSON messages (the TUI side already uses Jason) | MIT/Apache-2.0 | No |
 | `rubato` 5 | Sample-rate conversion between a device's rate (e.g. 44.1 kHz Bluetooth) and Opus's 48 kHz; pulls in `audioadapter`, `realfft`/`rustfft`, `windowfunctions` | MIT/Apache-2.0 (deps MIT, Apache, Zlib) | No |
 | `realfft` 3.5 | The audio meters' FFT (`src/spectrum.rs`); already in the tree through `rubato`, now used directly | MIT/Apache-2.0 | No |
+| `sonora` 0.2 (+ `sonora-aec3`, `-agc2`, `-ns`, `-fft`, `-simd`, `-common-audio`) | Echo cancellation on calls (`src/echo.rs`): a pure-Rust port of WebRTC's audio processing, the AEC3 canceller browsers use. Only echo cancellation (and the high-pass filter it requires) is on. Pulls in `bytemuck`, `derive_more`, `tracing` | BSD-3-Clause | No |
 | `turn-client-proto` 0.7 (+ `turn-types`, `stun-proto`, `stun-types`, `sans-io-time`) | TURN client (RFC 8656): allocate, refresh, permissions, Send/Data indications, long-term credentials. `stun-types` 2 is also a direct dependency: our STUN Binding requests and replies (`src/stun.rs`), so there is one STUN codec, not two. Sans-IO like str0m, so it runs inside the call loop. Pulls in `rand`, `hashbrown`, `smallvec`, `base64`, `tracing` and pure-Rust hashes for MESSAGE-INTEGRITY | MIT/Apache-2.0 | No |
 | `turn-server-proto` 0.7 (dev only) | A fake TURN server for the hermetic relay tests; pulls in `pnet_packet` | MIT/Apache-2.0 | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |

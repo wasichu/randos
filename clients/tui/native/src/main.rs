@@ -9,6 +9,7 @@ mod audio;
 mod call;
 mod candidates;
 mod codec;
+mod echo;
 mod frame;
 mod loopback;
 mod protocol;
