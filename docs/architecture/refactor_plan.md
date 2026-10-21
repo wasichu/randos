@@ -616,6 +616,18 @@ No behaviour changes.
 
 Not scheduled; pick up when relevant.
 
+- **Hearing several languages (designed 2026-10-21; next after the
+  benchmark and review-page lanes).** Each person speaks one language and
+  picks any number they're comfortable hearing. Two people match when each
+  one's speaking language is among the other's hearing languages: the same
+  language both ways, or crosstalk. Owner's decisions: the speaking
+  language is pre-checked among the hearing languages (and can be
+  unchecked); among several compatible people, whoever has waited longest
+  is matched. The Matchmaker's `{speaks, listens}` keys become a scan of
+  the waiting list (fine at 15 languages); the browser form gets
+  checkboxes; the TUI a multi-select; the channel's `find` accepts a list
+  while still taking a single language from v0.2.0 TUIs (a protocol change:
+  the mini-pass applies).
 - **Relay regions (designed 2026-10-21; build when users far from New
   York appear).** One relay per region (New York now; Frankfurt, then
   Singapore), each person given the one nearest them.
