@@ -13,6 +13,7 @@ defmodule RandosWeb.AboutLiveTest do
     assert has_element?(view, "a[href='/about']", "About")
     assert has_element?(view, "a[href='https://github.com/wasichu/randos']", "View on GitHub")
     assert has_element?(view, "#theme-toggle[data-theme-toggle]")
+    assert has_element?(view, "svg#about-illustration[aria-hidden='true']")
   end
 
   test "states the call length from the lifecycle, not hardcoded", %{conn: conn} do

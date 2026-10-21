@@ -1,6 +1,8 @@
 defmodule RandosWeb.AboutLive do
   use RandosWeb, :live_view
 
+  import RandosWeb.Illustrations
+
   alias Randos.Calls.Lifecycle
 
   @impl true
@@ -30,6 +32,7 @@ defmodule RandosWeb.AboutLive do
             <p class="text-xl leading-8 text-stone-700">
               {gettext("randos is a place for anonymous, audio-only language conversation.")}
             </p>
+            <.meet_then_disappear id="about-illustration" class="h-10 w-auto sm:h-12" />
           </header>
 
           <div class="mt-10 space-y-9 text-base leading-7 text-stone-700">
