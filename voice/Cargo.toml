@@ -1,0 +1,29 @@
+[package]
+name = "randos_voice"
+version = "0.1.0"
+edition = "2024"
+description = "randos's voice processors, written once: compiled to WASM for the browser's AudioWorklet and natively into the TUI's media helper."
+license = "AGPL-3.0-or-later"
+publish = false
+
+# cdylib: the .wasm for the browser; rlib: linked into the media helper.
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+# No dependencies: plain Rust in, plain WASM out (no wasm-bindgen). See README.md.
+[dependencies]
+
+[lints.rust]
+# The one exception is the `#[unsafe(no_mangle)]` attribute on the WASM
+# exports (src/wasm.rs), which exporting a symbol requires; there is no
+# unsafe block anywhere. See README.md.
+unsafe_code = "deny"
+
+[lints.clippy]
+# A panic in the worklet silences the call; in the helper it kills it.
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+dbg_macro = "deny"
+indexing_slicing = "deny"

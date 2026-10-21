@@ -54,6 +54,8 @@ export const WebRTCAudio = {
       role: this.el.dataset.webrtcRole,
       iceServers: iceServersFrom(this.el),
       iceTransportPolicy: iceTransportPolicyFrom(this.el),
+      // The server's choice (RANDOS_VOICE_PROCESSOR); empty means none.
+      voiceProcessor: this.el.dataset.voiceProcessor || null,
       pushSignal: (type, payload) => this.pushEvent("signal", {type, payload}),
       onStateChange: state => this.setState(state),
       onLocalStream: stream => this.setLocalStream(stream),

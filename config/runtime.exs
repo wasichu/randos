@@ -26,6 +26,14 @@ if connect_timeout_ms = System.get_env("RANDOS_CONNECT_TIMEOUT_MS") do
   config :randos, :call_options, connect_timeout_ms: String.to_integer(connect_timeout_ms)
 end
 
+# The voice processor every browser call's audio goes through (Phase 5): a
+# key of VOICE_PROCESSORS in assets/js/randos/voice/seam.js, such as
+# "passthrough". Unset: none, the mic is sent as it is. An unknown name makes
+# calls end with audio_failed rather than send unprocessed audio.
+if voice_processor = System.get_env("RANDOS_VOICE_PROCESSOR") do
+  config :randos, :voice_processor, voice_processor
+end
+
 # The ICE servers to hand out when TURN isn't configured, as JSON (default:
 # Google's STUN, in config.exs). The e2e test server sets `[]` so tests never
 # reach the internet: on one machine, host candidates connect.

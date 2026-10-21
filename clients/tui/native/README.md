@@ -157,6 +157,7 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `webpki-roots` 1 | Mozilla's root certificates, to check the TURN server's TLS certificate the same way on every machine | CDLA-Permissive-2.0 (a permissive data license; allowed in `deny.toml` for this) | No |
 | `turn-server-proto` 0.7 (dev only) | A fake TURN server for the hermetic relay tests; pulls in `pnet_packet` | MIT/Apache-2.0 | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |
+| `randos_voice` (this repo, `voice/`) | The voice processors (Phase 5), shared with the browser as WASM: the call's seam runs one on every mic frame after echo cancellation, before mute, the meter and the encoder (`CallConfig::voice`, passthrough by default) | AGPL-3.0-or-later (ours) | No |
 
 The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,
 `jni-sys`); cargo-deny reports them as warnings and they don't fail the check.

@@ -76,6 +76,7 @@ defmodule RandosWeb.HomeComponents do
 
   attr :ice_servers, :string, default: nil
   attr :ice_transport_policy, :string, default: nil
+  attr :voice_processor, :string, default: nil
 
   def conversation_card(assigns) do
     ~H"""
@@ -93,6 +94,7 @@ defmodule RandosWeb.HomeComponents do
           webrtc_role={@webrtc_role}
           ice_servers={@ice_servers}
           ice_transport_policy={@ice_transport_policy}
+          voice_processor={@voice_processor}
         />
       </div>
 
@@ -363,6 +365,7 @@ defmodule RandosWeb.HomeComponents do
 
   attr :ice_servers, :string, default: nil
   attr :ice_transport_policy, :string, default: nil
+  attr :voice_processor, :string, default: nil
 
   defp call_media_panel(assigns) do
     ~H"""
@@ -374,6 +377,7 @@ defmodule RandosWeb.HomeComponents do
       data-call-id={@call_id}
       data-ice-servers={@ice_servers}
       data-ice-transport-policy={@ice_transport_policy}
+      data-voice-processor={@voice_processor}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
       class="contents"

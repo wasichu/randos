@@ -34,6 +34,7 @@ use crate::echo::EchoCanceller;
 use crate::protocol::Event;
 use crate::report::Report;
 use crate::tls_stream::TlsStream;
+use randos_voice::{Processor, Variant};
 
 /// The longest the loop waits on the socket, so mic frames and commands are
 /// serviced well inside one 20 ms frame.
@@ -73,6 +74,12 @@ pub struct CallConfig {
     /// Drop every Nth incoming RTP packet once connected (0: none), to test
     /// loss handling. Not in the Port protocol.
     pub loss_every: u32,
+    /// The voice processor between the mic (after echo cancellation) and the
+    /// encoder, with its parameters by index (randos_voice, the same code
+    /// the browser runs as WASM): Phase 5's seam. Passthrough by default.
+    /// Not in the Port protocol yet.
+    pub voice: Variant,
+    pub voice_params: Vec<f32>,
 }
 
 impl CallConfig {
@@ -85,6 +92,8 @@ impl CallConfig {
             ice_servers: Value::Array(Vec::new()),
             relay_only: false,
             loss_every: 0,
+            voice: Variant::Passthrough,
+            voice_params: Vec::new(),
         }
     }
 }
@@ -214,6 +223,9 @@ struct Session {
     /// with a real mic and speaker: a synthetic input or a file/null output
     /// has no sound path between them, so nothing to cancel.
     echo: Option<EchoCanceller>,
+    /// Phase 5's seam: runs on every mic frame before it's muted, metered,
+    /// and encoded, so all three see the processed voice (as in the browser).
+    voice: Processor,
 }
 
 impl Session {
@@ -272,6 +284,7 @@ impl Session {
             muted: false,
             last_seq: None,
             echo: acoustic.then(EchoCanceller::new),
+            voice: voice_processor(config),
             tls: TlsStream::default(),
         })
     }
@@ -311,7 +324,9 @@ impl Session {
                     let queued = self.capture.queued_ms() + self.playback.queued_ms();
                     echo.capture(&mut frame, queued)?;
                 }
-                self.send_frame(&frame)?;
+                let mut voice = [0.0; FRAME];
+                self.voice.process(&frame, &mut voice);
+                self.send_frame(&voice)?;
                 self.drain()?;
                 continue;
             }
@@ -737,6 +752,14 @@ fn remote_candidate(payload: &Value, report: &mut Report) -> Option<Candidate> {
 
 /// The local address of the default route: what peers on the network can
 /// reach. Connecting a UDP socket sends nothing; it only picks a route.
+fn voice_processor(config: &CallConfig) -> Processor {
+    let mut processor = Processor::new(config.voice, crate::codec::SAMPLE_RATE as f32);
+    for (index, value) in config.voice_params.iter().enumerate() {
+        processor.set_param(index, *value);
+    }
+    processor
+}
+
 fn default_route_ip() -> Result<IpAddr, Error> {
     let probe = UdpSocket::bind((Ipv4Addr::UNSPECIFIED, 0))?;
     match probe.connect((Ipv4Addr::new(192, 0, 2, 1), 9)) {
@@ -784,6 +807,11 @@ mod tests {
     }
 
     fn peer_from(config: CallConfig) -> (Call, Arc<Mutex<Seen>>) {
+        peer_into(config, Output::Null)
+    }
+
+    /// A peer whose speaker is `output` (a WAV file, to check what it heard).
+    fn peer_into(config: CallConfig, output: Output) -> (Call, Arc<Mutex<Seen>>) {
         let seen = Arc::new(Mutex::new(Seen::default()));
         let notify: Notify = {
             let seen = Arc::clone(&seen);
@@ -806,7 +834,7 @@ mod tests {
                 }
             })
         };
-        let (call, _started) = Call::start(config, Input::Sine, Output::Null, notify).unwrap();
+        let (call, _started) = Call::start(config, Input::Sine, output, notify).unwrap();
         (call, seen)
     }
 
@@ -886,6 +914,51 @@ mod tests {
 
         offerer.stop().unwrap();
         answerer.stop().unwrap();
+    }
+
+    #[test]
+    fn the_voice_processor_runs_on_what_is_sent() {
+        // The offerer's 440 Hz tone goes an octave down through the seam;
+        // the answerer records what it hears.
+        let heard =
+            std::env::temp_dir().join(format!("randos-voice-seam-{}.wav", std::process::id()));
+        let (offerer, offerer_seen) = peer_from(CallConfig {
+            bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+            voice: Variant::PitchShift,
+            voice_params: vec![-12.0],
+            ..CallConfig::new(Role::Offerer)
+        });
+        let (answerer, answerer_seen) = peer_into(
+            CallConfig {
+                bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+                ..CallConfig::new(Role::Answerer)
+            },
+            Output::Wav(heard.clone()),
+        );
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_millis(3_000),
+        );
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
+
+        // Rising zero crossings per second over the last second heard.
+        let samples: Vec<f32> = hound::WavReader::open(&heard)
+            .unwrap()
+            .into_samples::<f32>()
+            .map(Result::unwrap)
+            .collect();
+        std::fs::remove_file(&heard).unwrap();
+        let last = &samples[samples.len() - crate::codec::SAMPLE_RATE as usize..];
+        let rising = last
+            .windows(2)
+            .filter(|w| w[0] < 0.0 && w[1] >= 0.0)
+            .count();
+        assert!(
+            (200..=240).contains(&rising),
+            "heard about {rising} Hz, expected 220 (440 an octave down)"
+        );
     }
 
     #[test]
