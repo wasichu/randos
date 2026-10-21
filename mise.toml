@@ -15,7 +15,7 @@ opentofu = "1.13.1"
 expert = "0.1.11"
 # Rust: builds the TUI's media helper (clients/tui/native). Build-time only;
 # users get prebuilt binaries (Phase 4.4).
-rust = { version = "1.99.1", components = "rustfmt,clippy,rust-analyzer" }
+rust = { version = "1.99.1", components = "rustfmt,clippy,rust-analyzer", targets = "wasm32-unknown-unknown" }
 # Builds libopus from source for the helper's `opus` crate (build-time only).
 cmake = "4.4.4"
 # Dependency advisories, license policy, and duplicate checks for the helper.

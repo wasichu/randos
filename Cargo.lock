@@ -1537,6 +1537,7 @@ dependencies = [
  "cpal",
  "hound",
  "opus",
+ "randos_voice",
  "realfft",
  "ringbuf",
  "rubato",
@@ -1551,6 +1552,10 @@ dependencies = [
  "turn-server-proto",
  "webpki-roots",
 ]
+
+[[package]]
+name = "randos_voice"
+version = "0.1.0"
 
 [[package]]
 name = "rcgen"

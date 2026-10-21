@@ -28,11 +28,21 @@ config :randos, RandosWeb.Endpoint,
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.28.2",
+  # app.js, plus one entry per voice-processor worklet (browsers load each
+  # AudioWorklet module by its own URL); the worklets embed the voice
+  # processors' .wasm (binary loader).
   randos: [
     args:
-      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
+      ~w(js/app.js js/randos/voice/passthrough.js js/randos/voice/pitch_shift.js --bundle --target=es2022 --outdir=../priv/static/assets/js --loader:.wasm=binary --external:/fonts/* --external:/images/* --alias:@=.),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
+  ],
+  # The voice lab's page script: dev only (its watcher is in config/dev.exs;
+  # `mix assets.deploy` never builds it).
+  voice_lab: [
+    args:
+      ~w(js/voice_lab/lab.js --bundle --target=es2022 --outfile=../priv/static/assets/js/voice_lab.js),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configure tailwind (the version is required)

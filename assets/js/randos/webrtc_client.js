@@ -6,6 +6,7 @@ import {
 } from "./media"
 import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
+import {processLocalStream} from "./voice/seam"
 
 // Call health is the server's job (CallCoordinator): this client only
 // reports its raw media state (`media_state` signals) and tears down when the
@@ -27,16 +28,31 @@ export const WebRTCClientState = Object.freeze({
 })
 
 export class WebRTCClient {
-  constructor({role, iceServers, iceTransportPolicy = "all", pushSignal, onStateChange, onLocalStream, onRemoteStream}) {
+  constructor({
+    role,
+    iceServers,
+    iceTransportPolicy = "all",
+    voiceProcessor = null,
+    pushSignal,
+    onStateChange,
+    onLocalStream,
+    onRemoteStream,
+  }) {
     this.role = role
     this.iceServers = iceServers
     this.iceTransportPolicy = iceTransportPolicy
+    // A key of VOICE_PROCESSORS (voice/seam.js), or null: send the mic as is.
+    this.voiceProcessor = voiceProcessor
     this.pushSignal = pushSignal
     this.onStateChange = onStateChange
     this.onLocalStream = onLocalStream
     this.onRemoteStream = onRemoteStream
     this.peerConnection = null
+    // The mic as captured, and what's sent (the same stream unless a voice
+    // processor runs between them).
+    this.rawStream = null
     this.localStream = null
+    this.voice = null
     this.remoteStream = null
     this.state = WebRTCClientState.NOT_STARTED
     // Signals are handled strictly in order, and only after start() settles.
@@ -59,6 +75,7 @@ export class WebRTCClient {
       role: this.role,
       iceServerCount: this.iceServers.length,
       iceTransportPolicy: this.iceTransportPolicy,
+      voiceProcessor: this.voiceProcessor,
     })
     const stream = await this.captureLocalAudio()
 
@@ -69,8 +86,16 @@ export class WebRTCClient {
       return
     }
 
-    this.localStream = stream
-    this.onLocalStream?.(stream)
+    // The seam: what's sent, muted, and drawn is the processed stream.
+    this.rawStream = stream
+    this.voice = await processLocalStream(stream, this.voiceProcessor)
+    if (this.cleaned) {
+      this.releaseLocalAudio()
+      return
+    }
+
+    this.localStream = this.voice.stream
+    this.onLocalStream?.(this.localStream)
 
     this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
     // "relay": only the TURN relay, so the peer never sees our IP address.
@@ -209,8 +234,7 @@ export class WebRTCClient {
     if (this.cleaned) return
 
     this.cleaned = true
-    stopStream(this.localStream)
-    this.localStream = null
+    this.releaseLocalAudio()
 
     if (this.peerConnection) {
       this.peerConnection.onicecandidate = null
@@ -226,6 +250,16 @@ export class WebRTCClient {
     this.onLocalStream?.(null)
     this.onRemoteStream?.(null)
     logEvent("cleanup.webrtc_client")
+  }
+
+  // Stops the mic itself (the raw tracks) and whatever processing made.
+  releaseLocalAudio() {
+    this.voice?.close()
+    this.voice = null
+    stopStream(this.localStream)
+    stopStream(this.rawStream)
+    this.localStream = null
+    this.rawStream = null
   }
 
   async flushPendingIceCandidates() {

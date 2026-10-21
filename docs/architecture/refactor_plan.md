@@ -306,6 +306,19 @@ makes trying an approach cheap and comparing approaches easy, by ear and by
 eye, before anything touches a real call. (Design reviewed with the advisor
 2026-10-19.)
 
+**Status (2026-10-21):** the seam is done in both clients (browser:
+`processLocalStream` in `assets/js/randos/voice/seam.js`, off unless
+`RANDOS_VOICE_PROCESSOR` names a processor; the TUI helper: `CallConfig`'s
+voice step, passthrough, not yet selectable over the Port), processors
+are written once in `voice/` (`randos_voice`: Rust, no dependencies,
+compiled natively and to a committed 31 KB WASM), and lab v0 is done at
+`/dev/voice-lab` (offline renders through the call's own worklets,
+switching, spectrograms, real-time factor, delay, live seam latency) with
+three public-domain clips spanning low to high voices. Measured in
+headless Chrome: the passthrough seam adds ~20 ms to a call, the pitch
+shifter ~20 ms more, at well under 1% of real time. Next: the owner
+listens; re-measure the seam on real devices.
+
 ### Decisions (2026-10-19)
 
 1. **Processors are written once, in Rust** (one implementation, no

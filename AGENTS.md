@@ -182,9 +182,15 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 ## Rust (the TUI media helper, `clients/tui/native`)
 
-- The root `Cargo.toml` is a Cargo workspace whose only member is the helper
-  (so rust-analyzer and `cargo` work from the repo root; build output goes to
-  `/target`, the lockfile is the root `Cargo.lock`).
+- The root `Cargo.toml` is a Cargo workspace with two members: the media
+  helper and `voice/` (the voice processors, `randos_voice`, also compiled
+  to WASM for the browser by `just voice-wasm`; the committed `.wasm` is
+  checked fresh by `just voice-wasm-check` in `native-check`). The voice
+  crate uses `deny(unsafe_code)`, not `forbid`; its README explains the one
+  exception (the WASM exports' `no_mangle`). The rest of this section's
+  rules apply to it too. The workspace lets rust-analyzer and `cargo` work
+  from the repo root; build output goes to `/target`, the lockfile is the
+  root `Cargo.lock`.
 - Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,
   cargo-deny). `just native-check` runs fmt, clippy with warnings as errors,
   tests, and `cargo deny check`; it is part of `just precommit`.

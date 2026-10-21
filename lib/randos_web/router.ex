@@ -46,6 +46,11 @@ defmodule RandosWeb.Router do
       pipe_through :browser
 
       live_dashboard "/dashboard", metrics: RandosWeb.Telemetry
+
+      # The voice lab (Phase 5): dev only, modules in dev/.
+      live "/voice-lab", RandosDev.VoiceLabLive, :index
+      get "/voice-lab/clips", RandosDev.VoiceLabClips, :index
+      get "/voice-lab/clips/:name", RandosDev.VoiceLabClips, :show
     end
   end
 end

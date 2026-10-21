@@ -111,6 +111,7 @@ test *args:
 smoke:
     test/e2e/with_test_server.sh tmp/smoke-server.log env BASE_URL=http://localhost:4010 node test/e2e/call_smoke.mjs
     RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/smoke-relay-server.log env BASE_URL=http://localhost:4010 node test/e2e/relay_only_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-voice-lab-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_lab_smoke.mjs
 
 # Terminal client (text-only) against the local dev server; RANDOS_URL or --url to override
 tui *args:
@@ -146,9 +147,36 @@ precommit: check-state-encrypted check-privacy
 media-loopback seconds="20":
     cargo run --quiet -p randos_media -- --loopback --seconds {{seconds}}
 
-# Rust media helper checks: format, clippy (warnings are errors), tests, cargo-deny
-native-check:
+# Rust checks: the media helper and the voice processors (format, clippy with
+# warnings as errors, tests, cargo-deny), and that the committed .wasm is
+# the voice processors' current build
+native-check: voice-wasm-check
     cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny --log-level error check --hide-inclusion-graph
+    cd voice && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo clippy --target wasm32-unknown-unknown -- -D warnings && cargo test --quiet
+
+# Build the voice processors (voice/) to WASM for the browser's worklets:
+# assets/js/randos/voice/randos_voice.wasm, committed (production builds
+# have no Rust). std's paths are remapped to rustc's own, so the build is the
+# same on every machine; needs the wasm32-unknown-unknown target (mise.toml)
+voice-wasm out="assets/js/randos/voice/randos_voice.wasm":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    sysroot="$(rustc --print sysroot)"
+    commit="$(rustc -vV | sed -n 's/commit-hash: //p')"
+    RUSTFLAGS="--remap-path-prefix=$sysroot/lib/rustlib/src/rust=/rustc/$commit" \
+      cargo build --quiet -p randos_voice --target wasm32-unknown-unknown --release --target-dir target/voice-wasm
+    cp target/voice-wasm/wasm32-unknown-unknown/release/randos_voice.wasm "{{out}}"
+
+# Fail if the committed .wasm isn't the current build of voice/ (run `just voice-wasm`)
+voice-wasm-check:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p tmp
+    just voice-wasm tmp/randos_voice.wasm
+    if ! cmp -s tmp/randos_voice.wasm assets/js/randos/voice/randos_voice.wasm; then
+      echo "ERROR: assets/js/randos/voice/randos_voice.wasm is stale: run 'just voice-wasm' and commit it" >&2
+      exit 1
+    fi
 
 # The TUI as an installable archive (Phase 4.4): ERTS, the app, bin/randos,
 # and the media helper, in dist/randos-VERSION-OS-ARCH.tar.gz (+ .sha256).

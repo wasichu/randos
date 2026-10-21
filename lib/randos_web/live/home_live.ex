@@ -32,6 +32,7 @@ defmodule RandosWeb.HomeLive do
      |> assign(:preferences, preferences)
      |> assign_form(preferences)
      |> assign(:ice_servers, nil)
+     |> assign(:voice_processor, Application.get_env(:randos, :voice_processor))
      |> assign(:call_id, nil)
      |> assign_participant(participant)}
   end
@@ -118,6 +119,7 @@ defmodule RandosWeb.HomeLive do
             webrtc_role={@webrtc_role}
             ice_servers={@ice_servers}
             ice_transport_policy={@ice_transport_policy}
+            voice_processor={@voice_processor}
             preferences={@preferences}
             form={@form}
             matchmaking_error={@matchmaking_error}

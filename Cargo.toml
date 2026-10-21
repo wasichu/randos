@@ -1,8 +1,8 @@
 # Cargo workspace for the repo's Rust code (so rust-analyzer and cargo find it
-# from the repo root). The only member is the TUI's media helper; see
-# clients/tui/native/README.md.
+# from the repo root): the TUI's media helper (clients/tui/native/README.md)
+# and the voice processors it shares with the browser (voice/README.md).
 [workspace]
-members = ["clients/tui/native"]
+members = ["clients/tui/native", "voice"]
 resolver = "3"
 
 [profile.release]
