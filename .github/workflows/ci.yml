@@ -18,7 +18,7 @@ concurrency:
 env:
   # A missing media helper fails the :native tests instead of skipping them.
   RANDOS_REQUIRE_NATIVE: "1"
-  MISE_TOOLS: erlang elixir just rust cmake cargo-deny
+  MISE_TOOLS: erlang elixir just rust cmake cargo-deny uv
 
 jobs:
   precommit:
