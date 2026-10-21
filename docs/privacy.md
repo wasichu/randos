@@ -56,6 +56,12 @@ something can't be checked from the outside, this says so.
   files are kept, as a history of totals; they hold nothing about anyone.
   The terminal client shows the same data, fetched over its channel
   (`status`); asking sends nothing about the asker.
+- **Resume tickets.** During a call, each person's client holds a
+  one-time resume ticket, 128 random bits that name only their seat in
+  that call, so a dropped connection can rejoin without ending the call.
+  The client keeps it in memory only (never stored; a reload starts
+  fresh). The server keeps only a hash of it, in the call's own process,
+  gone when the call ends. It identifies no one and is never logged.
 - **What it briefly remembers:** after a call, the server remembers for 90
   seconds that the two of you just talked (by the anonymous ids of that
   visit only), so "Next" finds someone new. A call that never connected

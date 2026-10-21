@@ -120,25 +120,33 @@ defmodule Tui.Model do
   @spec set_audio(t(), boolean()) :: t()
   def set_audio(model, audio?), do: %{model | audio?: audio?}
 
-  @doc "The join reply: initial state and the supported languages."
+  @doc """
+  The join reply: initial state and the supported languages. After a
+  dropped connection, `"resumed" => true` means we're the same participant,
+  back in our call.
+  """
   @spec joined(t(), map()) :: {t(), [command()]}
-  def joined(model, %{"state" => state, "languages" => languages}) do
+  def joined(model, %{"state" => state, "languages" => languages} = reply) do
     first_join? = model.languages == []
+    resumed? = reply["resumed"] == true
 
     model =
       %{
         model
         | connection: :connected,
           languages: Enum.map(languages, &%{code: &1["code"], name: &1["name"]}),
-          # A (re)join is a brand-new participant; don't log it as a transition.
-          status: nil
+          # A (re)join is a brand-new participant, unless it resumed;
+          # don't log it as a transition.
+          status: if(resumed?, do: model.status)
       }
       |> offered_languages_only()
 
     model =
-      if first_join?,
-        do: log(model, "connected to the server"),
-        else: log(model, "reconnected as a new participant")
+      cond do
+        first_join? -> log(model, "connected to the server")
+        resumed? -> log(model, "reconnected; back in the call")
+        true -> log(model, "reconnected as a new participant")
+      end
 
     {put_state(model, state), []}
   end

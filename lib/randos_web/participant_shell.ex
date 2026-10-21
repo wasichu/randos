@@ -21,17 +21,41 @@ defmodule RandosWeb.ParticipantShell do
   alias Randos.Calls.Call
   alias Randos.Calls.CallCoordinator
   alias Randos.Calls.Lifecycle
+  alias Randos.Calls.ResumeTicket
   alias Randos.Matchmaking.Match
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
   alias RandosWeb.IceServers
 
-  @type client_effect :: {:push_signal, map()} | {:ice_servers, [map()] | nil}
+  @type client_effect ::
+          {:push_signal, map()}
+          | {:ice_servers, [map()] | nil}
+          | {:resume_ticket, String.t()}
+          | :detach
 
   @spec run(Participant.t(), Participant.event()) :: {Participant.t(), [client_effect()]}
   def run(%Participant{} = participant, event) do
     {next, client_effects} = apply_event(participant, event)
     {next, ice_servers(participant, next) ++ client_effects}
+  end
+
+  @doc """
+  Takes over the participant a resume `ticket` belongs to, for this
+  process: their connection dropped mid-call and their client came back
+  with the ticket it was given (`ResumeTicket`). Returns the
+  participant (same id and topic, back in the call) and a fresh ticket for
+  the client, or `:error` (unknown, used, or the call is over: start fresh).
+  The caller subscribes to the participant's topic.
+  """
+  @spec resume(term()) :: {:ok, Participant.t(), String.t()} | :error
+  def resume(ticket) do
+    with {:ok, call_pid, id} <- ResumeTicket.lookup(ticket),
+         {:ok, %{call: call, entry: entry, ticket: fresh}} <-
+           CallCoordinator.resume(call_pid, id, ticket, self()) do
+      {:ok, Participant.resumed(entry, call), fresh}
+    else
+      _invalid -> :error
+    end
   end
 
   @doc "The participant as its client sees it."
@@ -63,9 +87,21 @@ defmodule RandosWeb.ParticipantShell do
     # The language the rando speaks (with several hearing languages, the
     # client can't know which): a language code, nothing that identifies them.
     |> Map.put(:peer_speaks, peer_speaks(call, participant_id))
+    # The rando's connection to the server dropped and the call is waiting
+    # for them to come back (Lifecycle.reconnect_grace_seconds/0).
+    |> Map.put(:peer_reconnecting, peer_reconnecting?(call, participant_id))
     # So clients can say "continue for another N minutes" without their own
     # copy of the constant.
     |> Map.put(:extension_duration_seconds, Lifecycle.extension_duration_seconds())
+  end
+
+  @doc "Whether the participant's rando dropped out of the call and may come back."
+  @spec peer_reconnecting?(Call.t(), String.t()) :: boolean()
+  def peer_reconnecting?(call, participant_id) do
+    case Match.peer(call.match, participant_id) do
+      {:ok, peer} -> peer.id in call.away
+      {:error, _} -> false
+    end
   end
 
   defp media_view(call, participant_id) do
@@ -123,6 +159,11 @@ defmodule RandosWeb.ParticipantShell do
   defp run_effect({:push_signal, message}, participant) do
     {participant, [{:push_signal, message}]}
   end
+
+  defp run_effect({:push_resume_ticket, ticket}, participant),
+    do: {participant, [{:resume_ticket, ticket}]}
+
+  defp run_effect(:detach, participant), do: {participant, [:detach]}
 
   # Fresh credentials for every new call, so they can never be older than the
   # call that uses them.

@@ -82,7 +82,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | --- | --- | --- |
 | Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership: one waiting list, oldest first; a match needs each person's speaking language among the other's hearing languages (`Entry.compatible?/2`); recently matched pairs are kept apart for `Lifecycle.rematch_window_seconds/0` |
-| Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, media signal relay, and **call health** (connect timeout, disconnected grace, failure) from clients' raw `media_state` reports. Clients follow "Client obligations" in `participant_channel.md` and run no health timers of their own |
+| Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, (a participant whose process goes away is marked away and may resume within `Lifecycle.reconnect_grace_seconds/0` with its one-time ticket, `Randos.Calls.ResumeTicket`; `CallCoordinator.resume/4`) media signal relay, and **call health** (connect timeout, disconnected grace, failure) from clients' raw `media_state` reports. Clients follow "Client obligations" in `participant_channel.md` and run no health timers of their own |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation, and the relay-only filter (server never touches media) |
 | Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back. `handle(participant, event) :: {participant, [effect]}` |
 | Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
@@ -95,7 +95,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 - **No database.** All state lives in processes and vanishes on restart.
   Don't add Ecto/Postgres without asking.
 - Call timing constants (segments, extensions, the vote timeout, the connect
-  timeout, the disconnected grace, the rematch window) live in `Randos.Calls.Lifecycle`, the one
+  timeout, the disconnected grace, the rematch window, the reconnect grace) live in `Randos.Calls.Lifecycle`, the one
   source of truth. Reuse them; don't hardcode them in the server or a client.
 - ICE/TURN config: `RandosWeb.IceServers` (env-driven; see `docs/self-hosting.md`).
   Calls are relay-only whenever a TURN server is configured: the policy is

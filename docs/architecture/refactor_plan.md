@@ -699,13 +699,20 @@ Not scheduled; pick up when relevant.
 - **`RandosWeb.IceServers` reads env vars per call (done 2026-10-21).**
   `config/runtime.exs` reads the TURN settings once at boot (`:turn`), so
   with the boot check a missing relay fails at startup.
-- **Socket blip ends the call (decided 2026-10-21: fix, not yet
-  scheduled).** `call_hook.js`'s `disconnected()` tears down on any LiveView
-  reconnect, and a new connection is a new participant. The owner: we can't
-  assume the network is reliable. Plan: keep the call through a short grace
-  (about 10 s) and let the same page or TUI rejoin it with a random
-  one-time ticket from the call (no identity), in both clients; the
-  coordinator's disconnected grace is the natural place.
+- **Surviving a connection blip (done 2026-10-21).** A participant whose
+  connection drops mid-call is marked away (`call.away`; the rando sees
+  `peer_reconnecting`), and the call waits
+  `Lifecycle.reconnect_grace_seconds/0` (10 s). The client rejoins with a
+  one-time resume ticket (`Randos.Calls.ResumeTicket`: hash kept in a
+  Registry owned by the coordinator; memory-only in clients) and takes
+  the same seat. The browser's LiveSocket params carry it and its WebRTC
+  hook survives the drop; the TUI's `Tui.Connection` rejoins with it.
+  Client obligation 9, with tests in both harnesses; mini-pass done
+  (protocol doc, both clients, obligation tests). Open: no ICE restart if
+  the media path broke too; v0.4.0 TUIs ignore the ticket (they rejoin
+  fresh, and their rando waits 10 s for nothing); the browser stops the
+  mic if the server stays unreachable past the grace plus 2 s, a client
+  timer derived from the server's constant (raised with the owner).
 - **`boundary` library (decided 2026-10-21: no dependency).** The one rule
   (the core never calls the web layer) is enforced by
   `test/randos/boundary_test.exs`, from the compiled modules' import

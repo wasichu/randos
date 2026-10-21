@@ -36,7 +36,9 @@ you both disappear. No accounts, no profiles, no video, no pressure.
    again straight away.
 4. You talk for ten minutes. When time is up, you both choose whether to
    keep going, ten more minutes at a time, up to thirty. Either of you can
-   end the call or move on to the next rando at any moment.
+   end the call or move on to the next rando at any moment. If a
+   connection drops for a moment, the call waits a few seconds for it to
+   come back.
 
 That's all there is. Nothing about the call is kept. The site itself is
 in English for now, with a language switcher in the header; translations

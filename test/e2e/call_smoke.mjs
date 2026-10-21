@@ -8,7 +8,7 @@
 // No npm dependencies: drives headless Chrome over the DevTools protocol
 // (see cdp.mjs; CHROME_BIN picks the browser).
 
-import {Browser, BASE_URL, sleep} from "./cdp.mjs"
+import {Browser, BASE_URL, inboundAudio, sleep} from "./cdp.mjs"
 
 // The server's connect timeout; just smoke shortens it (RANDOS_CONNECT_TIMEOUT_MS).
 const CONNECT_TIMEOUT_MS = Number(process.env.RANDOS_CONNECT_TIMEOUT_MS ?? 15_000)
@@ -141,6 +141,45 @@ try {
     await stuck.hangUp()
     await peer.waitFor(`!!document.querySelector("#looking-panel")`, "the peer looking")
     await peer.stopLooking()
+  })
+
+  await scenario("obligation 9: a dropped connection to the server keeps the call", async () => {
+    const dropper = await browser.newPage("dropper")
+    const stayer = await browser.newPage("stayer")
+    await Promise.all([dropper.open(), stayer.open()])
+    await dropper.findRando("ko", "it")
+    await stayer.findRando("it", "ko")
+    await Promise.all([dropper.webrtcStateIs("connected"), stayer.webrtcStateIs("connected")])
+
+    const callElement = `document.querySelector("[id^='call-media-']")?.id`
+    const before = await dropper.eval(callElement)
+    const peersBefore = await dropper.eval(`window.__randosPeers.length`)
+    const heardBefore = (await inboundAudio(stayer))?.packetsReceived ?? 0
+
+    // The page's socket to the server drops (the network, a sleeping
+    // laptop); its WebRTC call doesn't need the server, so it keeps going.
+    await dropper.eval(`window.liveSocket.disconnect()`)
+    await stayer.waitFor(`!!document.querySelector("#peer-reconnecting")`, "the rando shown reconnecting")
+    await sleep(1_500)
+    const heardDuring = (await inboundAudio(stayer))?.packetsReceived ?? 0
+    assert(heardDuring > heardBefore, `audio stopped while the socket was down (${heardBefore} → ${heardDuring})`)
+
+    // Back, with its resume ticket: the same call, the same element and
+    // peer connection (nothing restarted), audio still both ways.
+    await dropper.eval(`window.liveSocket.connect()`)
+    await stayer.waitFor(`!document.querySelector("#peer-reconnecting")`, "the rando back")
+    await dropper.waitFor(`!!document.querySelector("#call-panel, #extension-panel")`, "the dropper back in the call")
+    assert((await dropper.eval(callElement)) === before, "the dropper's call element changed (a new call?)")
+    assert((await dropper.eval(`window.__randosPeers.length`)) === peersBefore, "a new peer connection was made")
+    await sleep(1_000)
+    const heardAfter = (await inboundAudio(dropper))?.packetsReceived ?? 0
+    await sleep(500)
+    assert(((await inboundAudio(dropper))?.packetsReceived ?? 0) > heardAfter, "the dropper hears nothing after coming back")
+
+    // It still talks to the server for this call: ending works.
+    await dropper.hangUp()
+    await stayer.waitFor(`window.__randosCallEnds > 0`, "the call to end for the rando")
+    await stayer.stopLooking()
   })
 } finally {
   await browser.close()

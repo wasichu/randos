@@ -75,6 +75,8 @@ defmodule Randos.Participant do
           | {:join_result, join_result()}
           | {:call_updated, Call.t()}
           | {:signaling, Signaling.message()}
+          | {:resume_ticket, pid(), String.t()}
+          | {:resumed_elsewhere, pid()}
 
   @typedoc """
   Work for the shell. `{:join_queue, attrs}`'s result must be fed back as
@@ -87,6 +89,8 @@ defmodule Randos.Participant do
           | {:vote, pid(), :continue | :end}
           | {:relay_signal, pid(), String.t(), map()}
           | {:push_signal, map()}
+          | {:push_resume_ticket, String.t()}
+          | :detach
 
   @type t :: %__MODULE__{
           id: String.t(),
@@ -124,6 +128,33 @@ defmodule Randos.Participant do
   def new(preferences) do
     id = "anon-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false)
     %__MODULE__{id: id, topic: "participant:#{id}", preferences: preferences}
+  end
+
+  @doc """
+  The participant a resumed connection takes over (`RandosWeb.ParticipantShell.resume/1`):
+  the same id and topic, in the same call, from the call's own record of
+  them (`entry`, their queue entry). They had agreed to the terms to be
+  matched at all.
+  """
+  @spec resumed(Randos.Matchmaking.Entry.t(), Call.t()) :: t()
+  def resumed(entry, %Call{} = call) do
+    preferences = %{
+      speaks: entry.speaks_language,
+      hears: entry.hears_languages,
+      adult_acknowledged?: true,
+      audio?: entry.audio?
+    }
+
+    p = %__MODULE__{
+      id: entry.id,
+      topic: entry.topic,
+      preferences: preferences,
+      call_pid: call.pid,
+      webrtc_role: Match.webrtc_role(call.match, entry.id)
+    }
+
+    {p, []} = update_call(p, call)
+    p
   end
 
   @doc "Applies one event, returning the new participant and the effects to run."
@@ -187,6 +218,15 @@ defmodule Randos.Participant do
   def handle(%{call: %Call{id: call_id}} = p, {:signaling, %{call_id: call_id} = message}) do
     {p, [{:push_signal, client_signal(message)}]}
   end
+
+  # Resuming after a dropped connection: the current call's ticket goes to
+  # the client (it holds it in memory only); if another connection took
+  # this participant's seat, this one steps aside.
+  def handle(%{call_pid: pid} = p, {:resume_ticket, pid, ticket}) when is_pid(pid),
+    do: {p, [{:push_resume_ticket, ticket}]}
+
+  def handle(%{call_pid: pid} = p, {:resumed_elsewhere, pid}) when is_pid(pid),
+    do: {%{p | call_pid: nil, call: nil, webrtc_role: nil, status: :idle}, [:detach]}
 
   # Anything else doesn't apply in the current status.
   def handle(p, _event), do: {p, []}

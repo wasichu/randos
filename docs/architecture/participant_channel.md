@@ -17,8 +17,12 @@ Tests: `test/randos_web/channels/participant_channel_test.exs`.
 - **Websocket only** (no long-polling). Frames are capped at **64 KB**;
   larger frames close the socket with code 1009.
 - **Anonymous.** No params, no auth, no ids. **A new channel is a new
-  participant**: there is no resume. If the socket drops, the participant
-  leaves the queue and any call ends (`disconnected`) for both people.
+  participant**, with one exception: during a call, a client whose socket
+  dropped can rejoin with the call's resume ticket and take its place in
+  the call again ([Resuming](#resuming-after-a-dropped-connection)). If the
+  socket drops while queued, the participant leaves the queue; during a
+  call, the call waits `Lifecycle.reconnect_grace_seconds/0` (10 s) for it
+  to come back before ending (`disconnected`) for both people.
 
 ## Joining
 
@@ -34,8 +38,38 @@ Join topic `"participant"` with `{}`. The reply carries the initial
   }}]
 ```
 
-A reconnect (e.g. Slipstream rejoining) is a new participant: the join reply
-is a fresh `idle` state.
+The reply also says `"resumed": false`. A reconnect (e.g. Slipstream
+rejoining) is a new participant, a fresh `idle` state, unless it joins with
+a live resume ticket (below), in which case `"resumed": true` and the state
+is the call it's back in.
+
+### Resuming after a dropped connection
+
+At the match, the server pushes each participant a `resume_ticket` (after
+the first `state` push of the call):
+
+```json
+["1", null, "participant", "resume_ticket", {"ticket": "q7X…"}]
+```
+
+Keep only the latest one, **in memory only** (never stored), and forget it
+when the call ends (`call` becomes `null`). If the socket drops during the
+call, rejoin with it:
+
+```json
+["2", "2", "participant", "phx_join", {"resume_ticket": "q7X…"}]
+→ reply: {"state": {"status": "in_call", "call": {…}, …}, "languages": […], "resumed": true}
+```
+
+and you're the same participant in the same call (same role, same call
+id); the reply's `call` carries fresh `ice_servers`, and a new
+`resume_ticket` follows (each works once). Keep your WebRTC connection,
+mic and audio running across the drop: the call never needed the server
+to carry audio. If the ticket is refused (used, or the call ended
+meanwhile: the grace is `Lifecycle.reconnect_grace_seconds/0`, 10 s), the
+reply is `"resumed": false` with a fresh `idle` state: end your local
+call. A ticket is 128 random bits that name only this seat of this call;
+the server keeps only its hash, for as long as the call lasts.
 
 ## Client → server events
 
@@ -188,6 +222,9 @@ e.g. `"in_call"`.
   vote's wording ("continue for another 10 minutes?"); don't hardcode it.
 - `error_message`: show this rather than wording your own, so every client
   says the same thing.
+- `peer_reconnecting`: `true` while the rando's connection to the server
+  is down and the call is waiting for them to come back (show it; don't
+  end the call yourself). Their audio may well still be flowing.
 - After a call ends, `call` becomes `null` and status becomes `idle` (if you
   chose to stop) or `looking` (you were requeued automatically).
 - The state never contains the peer, the match, or any participant id.
@@ -230,6 +267,7 @@ end-to-end tests check these, by number, for both clients
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
 | 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
 | 8: relay-only means relay only | `relay_only_smoke.mjs` (and a page that ignores the policy, which the server's filter must stop) | TUI ↔ TUI: `relay_only_test.exs` |
+| 9: survive a dropped connection | "obligation 9: a dropped connection to the server keeps the call" (the page's socket drops and comes back; same call, same peer connection, audio both ways) | TUI ↔ TUI: `resume_test.exs` (the websocket's TCP socket shut down mid-call) |
 
 (Obligation 8's tests run against a server whose only TURN server never
 answers, `RANDOS_TEST_UNREACHABLE_RELAY=1`, so a call can connect only by
@@ -282,6 +320,13 @@ going direct: `just smoke` and `just tui-smoke` run them.)
    test checks). So an older or broken client can't reveal its owner's
    address; a client following this obligation loses nothing.
 
+9. **Survive a dropped connection.** If your socket to the server drops
+   during a call, keep the call's media running and rejoin with the latest
+   `resume_ticket` ([Resuming](#resuming-after-a-dropped-connection)). If
+   the server takes you back, carry on; if it refuses, the call is over:
+   end it locally. A page unload or quitting is leaving on purpose
+   (obligation 7), not a drop.
+
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media
 reports. If one still receives an `offer`, it must answer with `end_call`
@@ -300,6 +345,9 @@ the server never touches media), `media_state` (validated and acted on;
 
 ## Not provided (yet)
 
-- No reconnect/resume (see above).
+- Resuming covers a dropped connection during a call only: a client
+  dropped while idle or queued starts fresh (and is out of the queue).
+- No ICE restart: if a drop also broke the media path, the usual
+  `media_state` reports and the disconnected grace apply.
 - No IP-level rate limiting; that belongs at the edge (Fly).
 - No identity of any kind, by design.

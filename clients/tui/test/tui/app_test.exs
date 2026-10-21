@@ -169,6 +169,13 @@ defmodule Tui.AppTest do
                "Mic test failed: no mic"
     end
 
+    test "a rando whose connection dropped is shown reconnecting" do
+      call = %{"status" => "active", "peer_reconnecting" => true}
+
+      assert render_text(model("in_call", %{"call" => call}), %{}, {140, 24}) =~
+               "your rando's connection dropped; waiting for them to come back"
+    end
+
     test "looking, matched, in call with a countdown, and the vote" do
       assert render_text(model("looking")) =~ "Looking for a rando"
       # Up to three hearing languages are named; past that, a count.

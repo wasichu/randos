@@ -6,7 +6,9 @@ defmodule RandosWeb.ParticipantChannel do
 
   The protocol (events, payloads, pushes) is documented in
   `docs/architecture/participant_channel.md`, which is the client contract.
-  A new channel is a new participant; there is no resume.
+  A new channel is a new participant, unless it joins with the resume
+  ticket of a call its connection dropped out of (`resume_ticket` in the
+  join params): then it takes that participant's place in the call.
   """
   use Phoenix.Channel
 
@@ -25,22 +27,35 @@ defmodule RandosWeb.ParticipantChannel do
   @default_preferences %{speaks: "en", hears: ["en"], adult_acknowledged?: false, audio?: false}
 
   @impl true
-  def join("participant", _params, socket) do
-    participant = Participant.new(@default_preferences)
+  def join("participant", params, socket) do
+    {participant, ticket, ice_servers} =
+      case resume(params) do
+        {:ok, participant, ticket} -> {participant, ticket, RandosWeb.IceServers.list()}
+        :error -> {Participant.new(@default_preferences), nil, nil}
+      end
+
     Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
-    state = ParticipantShell.client_state(participant)
+    state = participant |> ParticipantShell.client_state() |> with_ice_servers(ice_servers)
 
     socket =
       assign(socket,
         participant: participant,
         client_state: state,
-        ice_servers: nil,
+        ice_servers: ice_servers,
         find_tokens: @find_capacity,
         find_refilled_at: System.monotonic_time(:millisecond)
       )
 
-    {:ok, %{state: state, languages: languages()}, socket}
+    # The fresh ticket comes right after the join reply, as tickets always do.
+    if ticket, do: send(self(), {:push_resume_ticket, ticket})
+
+    {:ok, %{state: state, languages: languages(), resumed: ticket != nil}, socket}
   end
+
+  defp resume(%{"resume_ticket" => ticket}) when is_binary(ticket),
+    do: ParticipantShell.resume(ticket)
+
+  defp resume(_params), do: :error
 
   @impl true
   def handle_in(
@@ -107,6 +122,17 @@ defmodule RandosWeb.ParticipantChannel do
   @impl true
   def handle_info({:call_updated, _call} = event, socket), do: {:noreply, run(socket, event)}
   def handle_info({:signaling, _message} = event, socket), do: {:noreply, run(socket, event)}
+
+  def handle_info({:resume_ticket, _pid, _ticket} = event, socket),
+    do: {:noreply, run(socket, event)}
+
+  def handle_info({:resumed_elsewhere, _pid} = event, socket), do: {:noreply, run(socket, event)}
+
+  def handle_info({:push_resume_ticket, ticket}, socket) do
+    push(socket, "resume_ticket", %{ticket: ticket})
+    {:noreply, socket}
+  end
+
   def handle_info(_message, socket), do: {:noreply, socket}
 
   @impl true
@@ -119,8 +145,9 @@ defmodule RandosWeb.ParticipantChannel do
 
   defp run(socket, event) do
     {participant, client_effects} = ParticipantShell.run(socket.assigns.participant, event)
-    socket = Enum.reduce(client_effects, socket, &deliver(&2, &1))
+    # The participant first: an effect may replace it (`:detach`).
     socket = assign(socket, :participant, participant)
+    socket = Enum.reduce(client_effects, socket, &deliver(&2, &1))
     push_state_if_changed(socket)
   end
 
@@ -132,6 +159,19 @@ defmodule RandosWeb.ParticipantChannel do
   defp deliver(socket, {:push_signal, message}) do
     push(socket, "signal", message)
     socket
+  end
+
+  defp deliver(socket, {:resume_ticket, ticket}) do
+    push(socket, "resume_ticket", %{ticket: ticket})
+    socket
+  end
+
+  # Another connection took this participant's seat: let go and start over.
+  defp deliver(socket, :detach) do
+    Phoenix.PubSub.unsubscribe(Randos.PubSub, socket.assigns.participant.topic)
+    participant = Participant.new(@default_preferences)
+    Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
+    assign(socket, participant: participant, ice_servers: nil)
   end
 
   # Minted once per call (fresh TURN credentials); every state push for that

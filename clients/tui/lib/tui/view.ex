@@ -395,6 +395,10 @@ defmodule Tui.View do
 
   # Each returns its versions from most to least detailed; `status_text`
   # shows the first that fits.
+  # The rando's connection to the server dropped; the call waits for them.
+  defp connection_line(%{model: %{call: %{"peer_reconnecting" => true}}}),
+    do: ["your rando's connection dropped; waiting for them to come back", "rando reconnecting…"]
+
   defp connection_line(%{model: %{status: status, audio?: true}} = state)
        when status in [:connecting, :in_call, :extension_pending] do
     lines = call_line(state.media_state)

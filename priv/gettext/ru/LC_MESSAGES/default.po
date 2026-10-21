@@ -636,7 +636,7 @@ msgid "under 1 min"
 msgstr ""
 
 #: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then."
 msgstr ""
 
@@ -646,7 +646,7 @@ msgid "Counting since %{time} UTC on %{date}: today's calls so far."
 msgstr ""
 
 #: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
 msgstr ""
 
@@ -678,4 +678,9 @@ msgstr ""
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "privacy"
+msgstr ""
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando's connection dropped; waiting a few seconds for them to come back."
 msgstr ""

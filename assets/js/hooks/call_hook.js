@@ -80,14 +80,33 @@ export const WebRTCAudio = {
     this.cleanup()
   },
 
+  // The page's connection to the server dropped. The call itself (WebRTC,
+  // the mic, the audio) doesn't need the server to keep flowing, so keep it:
+  // the LiveSocket reconnects with this call's resume ticket, and if the
+  // server takes us back the same element (and this hook) carries on;
+  // otherwise the element goes and destroyed() cleans up. If the server
+  // stays out of reach past the call's reconnect grace, it has ended the
+  // call by then: stop the mic rather than keep it on for nobody.
   disconnected() {
-    this.cleanup()
+    if (this.cleaned) return
+    const graceMs = Number(this.el.dataset.reconnectGraceMs) || 0
+    logEvent("call.socket_disconnected", {graceMs})
+    clearTimeout(this.offlineTimer)
+    this.offlineTimer = setTimeout(() => this.cleanup(), graceMs + 2_000)
+  },
+
+  reconnected() {
+    clearTimeout(this.offlineTimer)
+    logEvent("call.socket_reconnected", {})
   },
 
   cleanup({notify = false} = {}) {
     if (this.cleaned) return
 
     this.cleaned = true
+    clearTimeout(this.offlineTimer)
+    // The ticket stays: once this call is over the server refuses it, and
+    // clearing it here could race the next call's ticket (an instant rematch).
 
     if (notify && this.peer) {
       this.pushEvent("signal", {

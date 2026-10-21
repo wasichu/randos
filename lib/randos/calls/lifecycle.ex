@@ -55,6 +55,7 @@ defmodule Randos.Calls.Lifecycle do
   @connect_timeout_seconds 15
   @disconnected_grace_seconds 5
   @rematch_window_seconds 90
+  @reconnect_grace_seconds 10
 
   @typedoc "One participant's media, as they last reported it."
   @type media_state :: :connecting | :connected | :disconnected
@@ -89,6 +90,14 @@ defmodule Randos.Calls.Lifecycle do
   """
   @spec rematch_window_seconds() :: pos_integer()
   def rematch_window_seconds, do: @rematch_window_seconds
+
+  @doc """
+  How long a call waits for a participant whose connection to the server
+  dropped (a network blip, a sleeping laptop) to come back with its resume
+  ticket before ending the call `:disconnected`.
+  """
+  @spec reconnect_grace_seconds() :: pos_integer()
+  def reconnect_grace_seconds, do: @reconnect_grace_seconds
 
   @spec ended_reasons() :: [ended_reason()]
   def ended_reasons, do: @ended_reasons

@@ -19,6 +19,14 @@ defmodule Randos.Calls.CallCoordinator do
   `disconnected_grace_ms` (a per-participant timer that survives status
   changes), or reporting `failed`, ends the call `:connection_failed`.
 
+  A participant whose process goes away mid-call (their connection to the
+  server dropped) is marked away (`call.away`) rather than ending the call:
+  their media may well still be flowing. If they come back within
+  `reconnect_grace_ms` with their resume ticket (`resume/4`,
+  `Randos.Calls.ResumeTicket`), the new process takes their place;
+  otherwise the call ends `:disconnected`. Leaving on purpose
+  (`peer_disconnected`, hanging up) still ends it at once.
+
   The coordinator also monitors both participants, relays WebRTC media
   signaling between them, and broadcasts `{:call_updated, %Call{}}` to both
   on every status or media change; that and `{:signaling, message}` are the only messages
@@ -32,6 +40,8 @@ defmodule Randos.Calls.CallCoordinator do
 
   alias Randos.Calls.Call
   alias Randos.Calls.Lifecycle
+  alias Randos.Calls.ResumeTicket
+  alias Randos.Matchmaking.Entry
   alias Randos.Matchmaking.Match
   alias Randos.Signaling
 
@@ -42,6 +52,8 @@ defmodule Randos.Calls.CallCoordinator do
 
   @overridable [
     :pubsub,
+    :tickets,
+    :reconnect_grace_ms,
     :ice_transport_policy,
     :activation_delay_ms,
     :connect_timeout_ms,
@@ -59,6 +71,10 @@ defmodule Randos.Calls.CallCoordinator do
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
+    # Participant id => the registry key of their current resume ticket.
+    resume_keys: %{},
+    tickets: ResumeTicket.registry(),
+    reconnect_grace_ms: Lifecycle.reconnect_grace_seconds() * 1_000,
     ice_transport_policy: "all",
     activation_delay_ms: 750,
     connect_timeout_ms: Lifecycle.connect_timeout_seconds() * 1_000,
@@ -109,6 +125,20 @@ defmodule Randos.Calls.CallCoordinator do
     safe_call(call_pid, {:relay_signal, participant_id, type, payload})
   end
 
+  @doc """
+  Puts `pid` in the seat of `participant_id`, whose resume `ticket` this is
+  (its previous process went away, or is about to be replaced): the call
+  monitors `pid` from now on and sends it this participant's messages.
+  Replies with the call, the participant's queue entry, and a fresh ticket
+  (each works once). `{:error, :invalid_ticket}` otherwise.
+  """
+  @spec resume(pid(), String.t(), String.t(), pid()) ::
+          {:ok, %{call: Call.t(), entry: Entry.t(), ticket: String.t()}}
+          | {:error, :invalid_ticket | :call_unavailable}
+  def resume(call_pid, participant_id, ticket, pid) when is_binary(ticket) do
+    safe_call(call_pid, {:resume, participant_id, ResumeTicket.key(ticket), pid})
+  end
+
   @doc false
   # Test helper: jump straight to the end of the current call segment.
   def force_time_up(call_pid) do
@@ -151,10 +181,12 @@ defmodule Randos.Calls.CallCoordinator do
   # Entering a state: arm its timer and tell both participants.
   def handle_event(:enter, _old, :connecting, data) do
     broadcast(data)
+    # After the broadcast, so each participant already knows this call.
+    data = Enum.reduce(participant_ids(data), data, &issue_ticket(&2, &1))
 
     if Lifecycle.audio?(data.call),
-      do: {:keep_state_and_data, [{:state_timeout, data.connect_timeout_ms, :connect_timeout}]},
-      else: {:keep_state_and_data, [{:state_timeout, data.activation_delay_ms, :activate}]}
+      do: {:keep_state, data, [{:state_timeout, data.connect_timeout_ms, :connect_timeout}]},
+      else: {:keep_state, data, [{:state_timeout, data.activation_delay_ms, :activate}]}
   end
 
   def handle_event(:enter, old, :active, data) do
@@ -250,11 +282,50 @@ defmodule Randos.Calls.CallCoordinator do
     end
   end
 
-  # A participant's LiveView went away.
+  # A participant's process went away (its connection dropped): wait for
+  # them to come back with their ticket rather than ending the call.
   def handle_event(:info, {:DOWN, ref, :process, _pid, reason}, _state, data)
       when is_map_key(data.monitors, ref) do
-    Logger.info("call participant went away", reason: inspect(reason))
-    {:stop, :normal, end_call(data, :disconnected)}
+    {role, monitors} = Map.pop(data.monitors, ref)
+    id = Map.fetch!(data.call.match, role).id
+    Logger.info("call participant went away; waiting for them", reason: inspect(reason))
+
+    data = %{
+      data
+      | monitors: monitors,
+        call: %{data.call | away: Enum.uniq([id | data.call.away])}
+    }
+
+    broadcast(data)
+    {:keep_state, data, [{{:timeout, {:away, id}}, data.reconnect_grace_ms, :away}]}
+  end
+
+  def handle_event({:timeout, {:away, participant_id}}, :away, _state, data) do
+    if participant_id in data.call.away do
+      Logger.info("call participant didn't come back")
+      {:stop, :normal, end_call(data, :disconnected)}
+    else
+      :keep_state_and_data
+    end
+  end
+
+  def handle_event({:call, from}, {:resume, participant_id, key, pid}, _state, data) do
+    with ^key <- Map.get(data.resume_keys, participant_id),
+         role when role != nil <- role_of(data.call.match, participant_id) do
+      data = take_seat(data, role, participant_id, pid)
+      {data, ticket} = issue_ticket(data, participant_id, :reply)
+      Logger.info("call participant came back")
+      broadcast(data)
+      entry = Map.fetch!(data.call.match, role)
+
+      {:keep_state, data,
+       [
+         {:reply, from, {:ok, %{call: data.call, entry: entry, ticket: ticket}}},
+         {{:timeout, {:away, participant_id}}, :cancel}
+       ]}
+    else
+      _invalid -> {:keep_state_and_data, [{:reply, from, {:error, :invalid_ticket}}]}
+    end
   end
 
   # Stale casts (e.g. time_up outside :active) and unrelated messages.
@@ -317,6 +388,54 @@ defmodule Randos.Calls.CallCoordinator do
     do: [{{:timeout, {:grace, id}}, data.disconnected_grace_ms, :grace}]
 
   defp grace_timer(id, :connected, _state, _data), do: [{{:timeout, {:grace, id}}, :cancel}]
+
+  defp participant_ids(%{call: %Call{match: match}}),
+    do: [match.participant_a.id, match.participant_b.id]
+
+  defp role_of(match, id) do
+    cond do
+      match.participant_a.id == id -> :participant_a
+      match.participant_b.id == id -> :participant_b
+      true -> nil
+    end
+  end
+
+  # The new process takes the participant's seat: monitored from now on, and
+  # the old one (if it's still around, not yet noticed gone) is let go and
+  # told, so it stops acting for this participant.
+  defp take_seat(data, role, participant_id, pid) do
+    {old_refs, monitors} = Enum.split_with(data.monitors, fn {_ref, r} -> r == role end)
+    old_pid = Map.fetch!(data.call.match, role).pid
+
+    Enum.each(old_refs, fn {ref, _role} -> Process.demonitor(ref, [:flush]) end)
+    if old_pid != pid, do: send(old_pid, {:resumed_elsewhere, self()})
+
+    monitors = Map.put(Map.new(monitors), Process.monitor(pid), role)
+    match = Map.update!(data.call.match, role, &%{&1 | pid: pid})
+    call = %{data.call | match: match, away: List.delete(data.call.away, participant_id)}
+    %{data | monitors: monitors, call: call}
+  end
+
+  # A fresh, single-use ticket for a participant, replacing their last one:
+  # sent to them (when the call starts), or returned for a resume's reply.
+  defp issue_ticket(data, participant_id),
+    do: issue_ticket(data, participant_id, :send) |> elem(0)
+
+  defp issue_ticket(data, participant_id, how) do
+    {ticket, key} = ResumeTicket.new()
+
+    if old = data.resume_keys[participant_id], do: Registry.unregister(data.tickets, old)
+    {:ok, _owner} = Registry.register(data.tickets, key, participant_id)
+    data = %{data | resume_keys: Map.put(data.resume_keys, participant_id, key)}
+
+    if how == :send do
+      role = role_of(data.call.match, participant_id)
+      topic = Map.fetch!(data.call.match, role).topic
+      Phoenix.PubSub.broadcast(data.pubsub, topic, {:resume_ticket, self(), ticket})
+    end
+
+    {data, ticket}
+  end
 
   defp extend_call(from, data) do
     case Lifecycle.extend(data.call) do
