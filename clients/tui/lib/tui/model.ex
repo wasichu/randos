@@ -13,9 +13,16 @@ defmodule Tui.Model do
   clients. With audio, WebRTC signals are the media layer's business
   (`Tui.Media.State`). Without it, a peer's `offer` gets `end_call`, which
   ends the call with this client going idle and only the peer requeued.
+
+  `status_page` is the server status screen (`s` on the idle screen): `nil`
+  when closed; when open, the latest `status` reply (`snapshot`, the same
+  data as the website's /status page), or `unavailable?` for a server that
+  doesn't know the request, and when it was last asked for (refreshed every
+  30 s while open, see `refresh_status/1`).
   """
 
   @max_log 30
+  @status_refresh_ms 30_000
 
   @type status :: :connecting | :idle | :looking | :in_call | :extension_pending
   @type command :: {:push, String.t(), map()}
@@ -42,8 +49,11 @@ defmodule Tui.Model do
           error: String.t() | nil,
           call: map() | nil,
           now_ms: integer(),
-          log: [String.t()]
+          log: [String.t()],
+          status_page: status_page() | nil
         }
+
+  @type status_page :: %{snapshot: map() | nil, unavailable?: boolean(), asked_ms: integer()}
 
   defstruct connection: :connecting,
             languages: [],
@@ -59,7 +69,8 @@ defmodule Tui.Model do
             error: nil,
             call: nil,
             now_ms: 0,
-            log: []
+            log: [],
+            status_page: nil
 
   @statuses %{
     "idle" => :idle,
@@ -162,8 +173,20 @@ defmodule Tui.Model do
   def push(model, "signal", _signal), do: {model, []}
   def push(model, _event, _payload), do: {model, []}
 
-  @doc "A reply to one of our pushes; only errors are worth showing."
+  @doc """
+  A reply to one of our pushes: a `status` reply fills the status screen
+  (if it's still open); otherwise only errors are worth showing.
+  """
   @spec reply(t(), String.t(), {:ok, map()} | {:error, map()}) :: {t(), [command()]}
+  def reply(%{status_page: %{} = page} = model, "status", {:ok, %{"relay" => _} = snapshot}),
+    do: {%{model | status_page: %{page | snapshot: snapshot, unavailable?: false}}, []}
+
+  # A server from before the `status` request: say so on the screen.
+  def reply(%{status_page: %{} = page} = model, "status", {:error, _reply}),
+    do: {%{model | status_page: %{page | unavailable?: true}}, []}
+
+  def reply(model, "status", _reply), do: {model, []}
+
   def reply(model, event, {:error, %{"reason" => reason}}),
     do: {log(model, "#{event} refused: #{reason}"), []}
 
@@ -172,11 +195,33 @@ defmodule Tui.Model do
   @spec tick(t(), integer()) :: t()
   def tick(model, now_ms), do: %{model | now_ms: now_ms}
 
+  @doc "While the status screen is open, asks again once its data is 30 s old."
+  @spec refresh_status(t()) :: {t(), [command()]}
+  def refresh_status(%{status_page: %{asked_ms: asked}} = model)
+      when model.now_ms - asked >= @status_refresh_ms,
+      do: ask_status(model)
+
+  def refresh_status(model), do: {model, []}
+
+  defp ask_status(model) do
+    page = model.status_page || %{snapshot: nil, unavailable?: false}
+    {%{model | status_page: Map.put(page, :asked_ms, model.now_ms)}, [{:push, "status", %{}}]}
+  end
+
   ## Keys
 
   @doc "A key press (ex_ratatui key code string) in the current status."
   @spec key(t(), String.t()) :: {t(), [command()]}
   def key(%{connection: :connecting} = model, _key), do: {model, []}
+
+  # The status screen: s or esc goes back, r asks again now.
+  def key(%{status: :idle, status_page: %{}} = model, k) when k in ["s", "esc"],
+    do: {%{model | status_page: nil}, []}
+
+  def key(%{status: :idle, status_page: %{}} = model, "r"), do: ask_status(model)
+  def key(%{status: :idle, status_page: %{}} = model, _key), do: {model, []}
+
+  def key(%{status: :idle} = model, "s"), do: ask_status(model)
 
   def key(%{status: :idle} = model, key) do
     case key do

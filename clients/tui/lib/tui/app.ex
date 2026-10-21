@@ -12,6 +12,7 @@ defmodule Tui.App do
       themselves and receive pushes as casts)
     * `:media` — the `Tui.Media` server (pid or name), if audio is available;
       `t` on the idle screen runs a short mic → speaker test through it
+      (`s` there opens the server's status screen, `Tui.Model`'s `status_page`)
     * `:mic_test` — `{input, output}` for that test (default
       `{"device", "device"}`; tests use `{"sine", "null"}`)
     * `:config` — the settings file (`Tui.Config`): the languages, the 18+
@@ -92,7 +93,8 @@ defmodule Tui.App do
 
   def handle_info(:tick, state) do
     Process.send_after(self(), :tick, @tick_ms)
-    {:noreply, apply_model(state, Model.tick(state.model, now_ms()), [])}
+    {model, commands} = state.model |> Model.tick(now_ms()) |> Model.refresh_status()
+    {:noreply, apply_model(state, model, commands)}
   end
 
   def handle_info({:media, name, payload}, state) do
@@ -124,7 +126,7 @@ defmodule Tui.App do
 
   def handle_event(
         %Event.Key{code: "t", kind: "press"},
-        %{model: %{connection: :connected, status: :idle}} = state
+        %{model: %{connection: :connected, status: :idle, status_page: nil}} = state
       ) do
     step = MediaState.start_mic_test(state.media_state, state.mic_test_endpoints)
     {:noreply, run_media(state, step)}
@@ -133,7 +135,7 @@ defmodule Tui.App do
   # Choose the mic (i) and speaker (o) on the idle screen.
   def handle_event(
         %Event.Key{code: code, kind: "press"},
-        %{model: %{connection: :connected, status: :idle}} = state
+        %{model: %{connection: :connected, status: :idle, status_page: nil}} = state
       )
       when code in ["i", "o"] do
     which = if code == "i", do: :input, else: :output
