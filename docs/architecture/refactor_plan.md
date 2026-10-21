@@ -682,24 +682,36 @@ Not scheduled; pick up when relevant.
 - **CI (done).** `.github/workflows/ci.yml`: `just precommit` on macOS and
   Linux (with `RANDOS_REQUIRE_NATIVE=1`), plus `just smoke` and
   `just tui-smoke`. Deploys stay manual (`just deploy`).
-- **Same pair rematching on "Next"** when they're the only two queued
-  (product decision: a short "recently matched" exclusion?).
+- **Same pair rematching on "Next" (decided 2026-10-21: fix).** Two people
+  who just ended a call aren't matched again for a short while (a minute or
+  two), remembered in the Matchmaker's memory only and forgotten after.
 - **`RandosWeb.IceServers` reads env vars per call.** Move them to
   `config/runtime.exs` so misconfiguration fails at boot instead of silently
   falling back to Google STUN.
-- **Socket blip ends the call.** `call_hook.js`'s `disconnected()` tears down on
-  any LiveView reconnect; revisit if reconnect/resume is ever designed (today
-  a new connection is a new participant, by design).
+- **Socket blip ends the call (decided 2026-10-21: fix, not yet
+  scheduled).** `call_hook.js`'s `disconnected()` tears down on any LiveView
+  reconnect, and a new connection is a new participant. The owner: we can't
+  assume the network is reliable. Plan: keep the call through a short grace
+  (about 10 s) and let the same page or TUI rejoin it with a random
+  one-time ticket from the call (no identity), in both clients; the
+  coordinator's disconnected grace is the natural place.
 - **`boundary` library.** Deferred during cleanup; now that core vs web is a
   real split, reconsider enforcing it.
 - **Upstream reports (the owner's call: it means posting on other
   projects).** `turn-client-rustls` 0.1.2 gives rustls one `read_tls` per
   chunk, losing bytes past 4 KiB (worked around in `Relay::recv`); and
   `str0m-rust-crypto` pulls in AWS-LC through `dimpl`'s `rcgen` feature.
-- **Revisit at 4.4:** keep the TUI's device choice between sessions (a config
-  file, once installed users have a config dir); today it's per session.
+- **TUI config file (decided 2026-10-21: do it).** A small file in the
+  user's config directory (`~/.config/randos/`, or the platform's) keeping
+  the chosen mic and speaker, the languages, and that the 18+ notice was
+  agreed to. Local only; nothing goes to the server.
 - **Decide after a real call:** sonora's noise suppression and gain control
   (only echo cancellation is on).
+- **Approved 2026-10-21 (Phases 5 and 6 follow-ups):** hide the language
+  switcher during a call (switching reloads the page); make it a small form
+  (POST) rather than a link, so prefetching can't switch the language;
+  validate `RANDOS_VOICE_PROCESSOR` at boot. Running the Python harnesses'
+  tests in CI: explained to the owner, pending.
 - **coturn follow-ups** for its next intentional rebuild: see
   [`coturn_audit.md`](coturn_audit.md).
 
