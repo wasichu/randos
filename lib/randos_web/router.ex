@@ -11,6 +11,14 @@ defmodule RandosWeb.Router do
     plug RandosWeb.Locale
   end
 
+  # The language switcher's POST: the session and cookies only. No CSRF
+  # token, on purpose: the switcher sits in the LiveView layout, and the
+  # worst a forged request can do is change someone's interface language.
+  pipeline :locale do
+    plug :fetch_session
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -22,10 +30,15 @@ defmodule RandosWeb.Router do
       live "/", HomeLive, :home
       live "/about", AboutLive, :about
     end
+  end
 
-    # The language switcher: a plain link (works without JavaScript); it
-    # only remembers the choice and goes back.
-    get "/locale/:locale", LocaleController, :update
+  # The language switcher: a small form (works without JavaScript; a POST,
+  # so a browser prefetching links can't switch the language). It only
+  # remembers the choice and goes back.
+  scope "/", RandosWeb do
+    pipe_through :locale
+
+    post "/locale", LocaleController, :update
   end
 
   # Other scopes may use custom stacks.

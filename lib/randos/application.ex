@@ -8,6 +8,7 @@ defmodule Randos.Application do
   @impl true
   def start(_type, _args) do
     :ok = RandosWeb.IceServers.check!()
+    :ok = RandosWeb.VoiceProcessor.check!()
     # Every call's policy, on the call itself: what clients are told and what
     # the coordinator enforces are the same value.
     call_options =

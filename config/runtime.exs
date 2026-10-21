@@ -58,6 +58,9 @@ if config_env() == :prod do
   # Relay-only needs a relay: refuse to boot without one (IceServers.check!/0)
   # rather than silently making calls direct.
   config :randos, :require_relay, not allow_direct_calls
+  # A misspelled RANDOS_VOICE_PROCESSOR would fail every call: refuse to boot
+  # (RandosWeb.VoiceProcessor.check!/0).
+  config :randos, :require_built_voice_processor, true
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

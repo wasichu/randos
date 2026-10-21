@@ -32,7 +32,7 @@ defmodule RandosWeb.HomeLive do
      |> assign(:preferences, preferences)
      |> assign_form(preferences)
      |> assign(:ice_servers, nil)
-     |> assign(:voice_processor, Application.get_env(:randos, :voice_processor))
+     |> assign(:voice_processor, RandosWeb.VoiceProcessor.configured())
      |> assign(:call_id, nil)
      |> assign_participant(participant)}
   end
@@ -107,7 +107,7 @@ defmodule RandosWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash}>
+    <Layouts.app flash={@flash} in_call={@call_status in [:connecting, :active, :extension_pending]}>
       <div class="min-h-[calc(100vh-5rem)] overflow-x-hidden bg-stone-50 text-stone-950">
         <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
           <.hero_panel ui_state={@ui_state} />

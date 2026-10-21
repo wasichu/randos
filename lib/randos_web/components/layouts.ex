@@ -31,6 +31,10 @@ defmodule RandosWeb.Layouts do
     default: nil,
     doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
 
+  attr :in_call, :boolean,
+    default: false,
+    doc: "hides the language switcher (switching reloads the page, ending the call)"
+
   slot :inner_block, required: true
 
   def app(assigns) do
@@ -51,7 +55,10 @@ defmodule RandosWeb.Layouts do
           <.icon name="hero-information-circle" class="size-4" />
           {gettext("About")}
         </.link>
-        <.locale_switcher />
+        <%!-- Hidden during a call: switching reloads the page, which would end it. --%>
+        <div id="locale-switcher-slot" class={@in_call && "hidden"}>
+          <.locale_switcher />
+        </div>
         <button
           id="theme-toggle"
           type="button"
@@ -75,9 +82,9 @@ defmodule RandosWeb.Layouts do
     """
   end
 
-  # The interface language: a <details> menu of plain links, so it works
-  # without JavaScript. Each link goes to RandosWeb.LocaleController, which
-  # remembers the choice and comes back here. Ignored by LiveView's patches
+  # The interface language: a <details> menu of buttons in one small POST
+  # form, so it works without JavaScript and prefetching can't trigger it.
+  # RandosWeb.LocaleController remembers the choice and comes back here. Ignored by LiveView's patches
   # (it changes only on a full page load), so an open menu stays open.
   defp locale_switcher(assigns) do
     assigns =
@@ -97,27 +104,28 @@ defmodule RandosWeb.Layouts do
         <span class="uppercase">{@current}</span>
         <span class="sr-only">{gettext("Language")}</span>
       </summary>
-      <ul
+      <form
         id="locale-options"
+        method="post"
+        action={~p"/locale"}
         class="absolute end-0 z-20 mt-2 max-h-80 w-48 overflow-y-auto rounded-md border border-stone-200 bg-white py-1 shadow-lg dark:border-stone-700 dark:bg-stone-900"
       >
-        <li :for={{code, name} <- @locales}>
-          <a
-            id={"locale-option-#{code}"}
-            href={~p"/locale/#{code}"}
-            hreflang={code}
-            lang={code}
-            rel="nofollow"
-            aria-current={if code == @current, do: "true"}
-            class={[
-              "block px-3 py-1.5 transition hover:bg-stone-100 dark:hover:bg-stone-800",
-              code == @current && "font-semibold text-teal-700 dark:text-teal-300"
-            ]}
-          >
-            {name}
-          </a>
-        </li>
-      </ul>
+        <button
+          :for={{code, name} <- @locales}
+          id={"locale-option-#{code}"}
+          type="submit"
+          name="locale"
+          value={code}
+          lang={code}
+          aria-current={if code == @current, do: "true"}
+          class={[
+            "block w-full px-3 py-1.5 text-start transition hover:bg-stone-100 dark:hover:bg-stone-800",
+            code == @current && "font-semibold text-teal-700 dark:text-teal-300"
+          ]}
+        >
+          {name}
+        </button>
+      </form>
     </details>
     """
   end

@@ -21,6 +21,9 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#conversation-form")
     assert has_element?(view, "#find-rando-button[disabled]")
     assert has_element?(view, "#theme-toggle[data-theme-toggle]")
+    # Outside a call, the language switcher shows.
+    assert has_element?(view, "#locale-switcher-slot")
+    refute has_element?(view, "#locale-switcher-slot.hidden")
     assert has_element?(view, "#conversation_speaking_language option[value='zh']")
     assert has_element?(view, "#conversation_speaking_language option[value='hi']")
     assert has_element?(view, "#conversation_speaking_language option[value='ar']")
@@ -125,6 +128,8 @@ defmodule RandosWeb.HomeLiveTest do
     connect_media(view_a)
     connect_media(view_b)
     assert eventually_has_element?(view_a, "#call-panel")
+    # Switching language reloads the page, which would end the call.
+    assert has_element?(view_a, "#locale-switcher-slot.hidden")
     assert has_element?(view_a, "#call-countdown")
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
     assert has_element?(view_a, "#webrtc-audio[data-ice-servers*='stun:']")

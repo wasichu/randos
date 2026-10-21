@@ -67,10 +67,13 @@ defmodule RandosWeb.LocaleTest do
 
       assert has_element?(view, "#locale-switcher #locale-switcher-toggle")
 
+      # One POST form of buttons: a prefetching browser can't trigger it.
+      assert has_element?(view, "form#locale-options[method='post'][action='/locale']")
+
       for {code, _name} <- Locale.all() do
         assert has_element?(
                  view,
-                 "#locale-option-#{code}[href='/locale/#{code}'][lang='#{code}']"
+                 "#locale-option-#{code}[type='submit'][name='locale'][value='#{code}'][lang='#{code}']"
                )
       end
 
@@ -82,7 +85,7 @@ defmodule RandosWeb.LocaleTest do
       conn =
         conn
         |> put_req_header("referer", "http://www.example.com/about")
-        |> get(~p"/locale/ja")
+        |> post(~p"/locale", %{"locale" => "ja"})
 
       assert redirected_to(conn) == "/about"
 
@@ -94,19 +97,27 @@ defmodule RandosWeb.LocaleTest do
 
     test "never follows another site's address back, and ignores unknown languages", %{conn: conn} do
       conn =
-        conn |> put_req_header("referer", "https://evil.example/about") |> get(~p"/locale/es")
+        conn
+        |> put_req_header("referer", "https://evil.example/about")
+        |> post(~p"/locale", %{"locale" => "es"})
 
       assert redirected_to(conn) == "/"
 
       conn =
         build_conn()
         |> put_req_header("referer", "http://www.example.com//evil")
-        |> get(~p"/locale/es")
+        |> post(~p"/locale", %{"locale" => "es"})
 
       assert redirected_to(conn) == "/"
 
-      conn = build_conn() |> get(~p"/locale/xx")
+      conn = build_conn() |> post(~p"/locale", %{"locale" => "xx"})
       assert redirected_to(conn) == "/"
+      refute Map.has_key?(conn.resp_cookies, Locale.cookie())
+    end
+
+    test "a GET can't switch the language (only the form's POST)", %{conn: conn} do
+      conn = get(conn, "/locale/ja")
+      assert conn.status == 404
       refute Map.has_key?(conn.resp_cookies, Locale.cookie())
     end
   end
