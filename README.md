@@ -86,9 +86,11 @@ desktop distributions have).
   to decrypt it.
 - **No recording, no ads, no tracking.** The site loads nothing from other
   companies: no analytics, no fonts, no CDNs.
-- **What's still visible:** like any website, the server sees your IP
-  address while you're connected. And as with any direct call, your rando's
-  device can see your IP address, unless the call goes through the relay.
+- **What's still visible:** your IP address. Like any website, the server
+  sees it while you're connected. And because the audio goes directly
+  between you, the person you're talking to can see it too (their browser
+  or terminal needs it to reach you), unless the call goes through the
+  relay, in which case they see only the relay's address.
 
 ## Why randos is like this
 
