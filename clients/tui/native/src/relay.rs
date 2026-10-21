@@ -12,11 +12,18 @@
 //!
 //! One allocation per call, on the first UDP `turn:` server: one relay is
 //! enough to reach any peer, and each allocation holds a port on coturn.
-//! Data goes in Send/Data indications (no channel binding: 36 bytes more per
-//! packet is nothing at 50 packets a second).
+//! TLS (`turns:`, over TCP) is the fallback for networks that block UDP
+//! (see `Candidates`): its stream bytes come and go through `recv` and the
+//! messages to send, like datagrams; the allocated address is still UDP, so
+//! peers can't tell. Data goes in Send/Data indications (no channel binding:
+//! 36 bytes more per packet is nothing at 50 packets a second).
 
 use std::net::{IpAddr, SocketAddr, ToSocketAddrs};
+use std::sync::{Arc, OnceLock};
 use std::time::Instant as StdInstant;
+
+use rustls::pki_types::ServerName;
+use rustls::{ClientConfig, RootCertStore};
 
 use serde_json::Value;
 use stun_types::attribute::ErrorCode;
@@ -29,22 +36,36 @@ use turn_client_proto::stun::types::TransportType;
 use turn_client_proto::types::TurnCredentials;
 use turn_client_proto::types::message::ALLOCATE;
 use turn_client_proto::udp::TurnClientUdp;
+use turn_client_rustls::TurnClientRustls;
 
 use crate::Error;
 
-/// A `turn:` server from the call's `ice_servers`, with its credentials.
+/// A `turn:` or `turns:` server from the call's `ice_servers`, with its
+/// credentials.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct TurnServer {
     /// `host:port`.
     pub host: String,
     pub username: String,
     pub credential: String,
+    /// `turns:`: TURN over TLS (TCP), checked against `host`'s certificate.
+    pub tls: bool,
 }
 
-/// Every UDP `turn:` server in the channel's `ice_servers`
-/// (`[{"urls": "turn:…" | ["…"], "username", "credential"}]`). `turns:`
-/// (TLS) and `?transport=tcp` aren't UDP and are skipped; the default port
-/// is 3478. Entries without credentials are skipped (TURN requires them).
+impl TurnServer {
+    /// The host name alone, for TLS's certificate check.
+    fn name(&self) -> &str {
+        self.host
+            .rsplit_once(':')
+            .map_or(self.host.as_str(), |(name, _)| name)
+    }
+}
+
+/// Every `turn:` (UDP, default port 3478) and `turns:` (TLS, default 5349)
+/// server in the channel's `ice_servers`
+/// (`[{"urls": "turn:…" | ["…"], "username", "credential"}]`), in order.
+/// `turn:…?transport=tcp` is skipped (plain TCP, which TLS covers); entries
+/// without credentials are too (TURN requires them).
 pub fn turn_servers(ice_servers: &Value) -> Vec<TurnServer> {
     let mut servers = Vec::new();
     for entry in ice_servers.as_array().into_iter().flatten() {
@@ -60,11 +81,13 @@ pub fn turn_servers(ice_servers: &Value) -> Vec<TurnServer> {
             _ => vec![],
         };
         for url in urls {
-            let Some(rest) = url.strip_prefix("turn:") else {
-                continue;
+            let (rest, tls, port) = match (url.strip_prefix("turn:"), url.strip_prefix("turns:")) {
+                (Some(rest), _) => (rest, false, 3478),
+                (_, Some(rest)) => (rest, true, 5349),
+                _ => continue,
             };
             let (host, query) = rest.split_once('?').unwrap_or((rest, ""));
-            if query.split('&').any(|param| param == "transport=tcp") {
+            if !tls && query.split('&').any(|param| param == "transport=tcp") {
                 continue;
             }
             let has_port = host
@@ -74,10 +97,11 @@ pub fn turn_servers(ice_servers: &Value) -> Vec<TurnServer> {
                 host: if has_port {
                     host.to_owned()
                 } else {
-                    format!("{host}:3478")
+                    format!("{host}:{port}")
                 },
                 username: username.to_owned(),
                 credential: credential.to_owned(),
+                tls,
             });
         }
     }
@@ -103,9 +127,35 @@ pub enum RelayEvent {
     Failed,
 }
 
+turn_client_proto::impl_client!(TurnClient, (Udp, TurnClientUdp), (Tls, TurnClientRustls));
+
+/// The TLS settings for `turns:`: AWS-LC (already in the build for str0m's
+/// DTLS) and Mozilla's root certificates, so trust doesn't vary by machine.
+fn tls_config() -> Result<Arc<ClientConfig>, Error> {
+    static CONFIG: OnceLock<Arc<ClientConfig>> = OnceLock::new();
+    if let Some(config) = CONFIG.get() {
+        return Ok(Arc::clone(config));
+    }
+    let roots = RootCertStore {
+        roots: webpki_roots::TLS_SERVER_ROOTS.to_vec(),
+    };
+    let provider = Arc::new(rustls::crypto::aws_lc_rs::default_provider());
+    let config = ClientConfig::builder_with_provider(provider)
+        .with_safe_default_protocol_versions()
+        .map_err(|err| format!("TLS setup: {err}"))?
+        .with_root_certificates(roots)
+        .with_no_client_auth();
+    Ok(Arc::clone(CONFIG.get_or_init(|| Arc::new(config))))
+}
+
+/// The most TLS bytes handed to the client at once (see `Relay::recv`).
+const TLS_FEED: usize = 1024;
+
 /// One TURN allocation.
 pub struct Relay {
-    client: TurnClientUdp,
+    client: TurnClient,
+    /// UDP for `turn:`, TCP for `turns:` (how we reach the server).
+    transport: TransportType,
     server: SocketAddr,
     local: SocketAddr,
     /// The TURN crate's clock counts from here.
@@ -125,7 +175,8 @@ impl Relay {
             &credentials.credential,
         ));
         Self {
-            client: TurnClientUdp::allocate(local, server, config),
+            client: TurnClient::Udp(TurnClientUdp::allocate(local, server, config)),
+            transport: TransportType::Udp,
             server,
             local,
             base: StdInstant::now(),
@@ -133,6 +184,32 @@ impl Relay {
             challenge: None,
             refused: false,
         }
+    }
+
+    /// A relay over TLS (`turns:`): `local` is the TCP stream's own address,
+    /// already connected to `server`.
+    pub fn allocate_tls(
+        local: SocketAddr,
+        server: SocketAddr,
+        credentials: &TurnServer,
+    ) -> Result<Self, Error> {
+        let config = TurnConfig::new(TurnCredentials::new(
+            &credentials.username,
+            &credentials.credential,
+        ));
+        let name = ServerName::try_from(credentials.name().to_owned())
+            .map_err(|err| format!("TURN server name: {err}"))?;
+        let client = TurnClientRustls::allocate(local, server, config, name, tls_config()?);
+        Ok(Self {
+            client: TurnClient::Tls(client),
+            transport: TransportType::Tcp,
+            server,
+            local,
+            base: StdInstant::now(),
+            relayed: None,
+            challenge: None,
+            refused: false,
+        })
     }
 
     fn now(&self) -> TurnInstant {
@@ -185,22 +262,42 @@ impl Relay {
         }
     }
 
-    /// A datagram from the TURN server. Returns peer data relayed to us, as
-    /// `(peer, data)`, for str0m; `None` if it was TURN's own business.
-    pub fn recv(&mut self, datagram: &[u8]) -> Option<(SocketAddr, Vec<u8>)> {
+    /// A datagram (or, over TLS, stream bytes) from the TURN server. Returns
+    /// the peer data relayed to us, as `(peer, data)`, for str0m; empty if it
+    /// was TURN's own business. One read of a TLS stream can hold several.
+    pub fn recv(&mut self, bytes: &[u8]) -> Vec<(SocketAddr, Vec<u8>)> {
+        match self.transport {
+            TransportType::Udp => self.recv_one(bytes),
+            // turn-client-rustls hands each chunk to rustls's `read_tls`
+            // once, which takes at most its read size (4 KiB): the rest of a
+            // bigger chunk would be lost (it lost half of coturn's
+            // certificate flight, so the handshake never finished).
+            TransportType::Tcp => bytes
+                .chunks(TLS_FEED)
+                .flat_map(|chunk| self.recv_one(chunk))
+                .collect(),
+        }
+    }
+
+    fn recv_one(&mut self, bytes: &[u8]) -> Vec<(SocketAddr, Vec<u8>)> {
         let now = self.now();
         let transmit = Transmit {
-            data: datagram,
-            transport: TransportType::Udp,
+            data: bytes,
+            transport: self.transport,
             from: self.server,
             to: self.local,
         };
-        let unauthorized = allocate_unauthorized(datagram);
-        match self.client.recv(transmit, now) {
-            TurnRecvRet::PeerData(peer_data) => Some((peer_data.peer, peer_data.data().to_vec())),
+        // Over TLS the bytes are encrypted: the fast refusal check reads
+        // plaintext STUN, so TLS relies on the crate's timeout.
+        let unauthorized = match self.transport {
+            TransportType::Udp => allocate_unauthorized(bytes),
+            TransportType::Tcp => None,
+        };
+        let mut relayed = match self.client.recv(transmit, now) {
+            TurnRecvRet::PeerData(peer_data) => vec![(peer_data.peer, peer_data.data().to_vec())],
             TurnRecvRet::Handled if self.challenge.is_none() => {
                 self.challenge = unauthorized;
-                None
+                vec![]
             }
             // Fail fast on refused credentials. The crate ignores a 401 to
             // its authenticated Allocate (it can't verify an unsigned reply)
@@ -211,10 +308,14 @@ impl Relay {
                 if unauthorized.is_some() && unauthorized != self.challenge {
                     self.refused = true;
                 }
-                None
+                vec![]
             }
-            _ => None,
+            _ => vec![],
+        };
+        while let Some(peer_data) = self.client.poll_recv(now) {
+            relayed.push((peer_data.peer, peer_data.data().to_vec()));
         }
+        relayed
     }
 
     /// Lets `peer` send to our relayed address (coturn drops anything from
@@ -274,20 +375,30 @@ mod tests {
     use std::time::{Duration, Instant};
 
     #[test]
-    fn udp_turn_servers_with_credentials_from_the_channels_ice_servers() {
+    fn turn_and_turns_servers_with_credentials_from_the_channels_ice_servers() {
         let ice = json!([
             {"urls": "stun:stun.l.google.com:19302"},
             {"urls": ["turn:turn.example.org", "turn:turn.example.org:3478?transport=udp",
-                      "turn:turn.example.org:3478?transport=tcp", "turns:turn.example.org:5349"],
+                      "turn:turn.example.org:3478?transport=tcp", "turns:turn.example.org",
+                      "turns:turn.example.org:443"],
              "username": "1700000000:anon", "credential": "secret"},
             {"urls": "turn:no-credentials.example.org"},
         ]);
 
         let servers = turn_servers(&ice);
         assert_eq!(
-            servers.iter().map(|s| s.host.as_str()).collect::<Vec<_>>(),
-            vec!["turn.example.org:3478", "turn.example.org:3478"]
+            servers
+                .iter()
+                .map(|s| (s.host.as_str(), s.tls))
+                .collect::<Vec<_>>(),
+            vec![
+                ("turn.example.org:3478", false),
+                ("turn.example.org:3478", false),
+                ("turn.example.org:5349", true),
+                ("turn.example.org:443", true),
+            ]
         );
+        assert_eq!(servers[2].name(), "turn.example.org", "the name TLS checks");
         assert_eq!(servers[0].username, "1700000000:anon");
         assert_eq!(servers[0].credential, "secret");
         assert!(turn_servers(&json!(null)).is_empty());
@@ -315,6 +426,7 @@ mod tests {
             host: server.to_string(),
             username: user.into(),
             credential: pass.into(),
+            tls: false,
         };
         let mut relay = Relay::allocate(local, server, &creds);
         let deadline = Instant::now() + time;
@@ -355,6 +467,7 @@ mod tests {
             host: turn.to_string(),
             username: "user".into(),
             credential: "pass".into(),
+            tls: false,
         };
         let mut relay = Relay::allocate(socket.local_addr().unwrap(), turn, &creds);
         let mut buf = [0u8; 1500];
@@ -410,6 +523,7 @@ mod tests {
             host: server.to_string(),
             username: user,
             credential: pass,
+            tls: false,
         };
 
         let peers: Vec<(UdpSocket, Relay)> = (0..2)
@@ -434,7 +548,7 @@ mod tests {
                     panic!("allocation {i} failed");
                 }
                 if let Ok((n, _)) = socket.recv_from(&mut buf)
-                    && let Some((from, data)) = relay.recv(&buf[..n])
+                    && let Some((from, data)) = relay.recv(&buf[..n]).pop()
                 {
                     received = Some((i, from, data));
                 }

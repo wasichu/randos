@@ -93,8 +93,20 @@ for the TURN server. A relay that fails (or credentials coturn refuses) only
 means no relay candidate; the call never waits on it. Refused credentials
 fail at once: the crate ignores an unsigned 401 to its authenticated
 Allocate and would retry for ~40 s, so the wrapper spots that 401 itself
-(but not a late copy of the first, unauthenticated challenge). `turns:` and TCP
-TURN aren't supported.
+(but not a late copy of the first, unauthenticated challenge).
+
+For networks that block UDP altogether, `turns:` (TURN over TLS, coturn's
+port 5349) is the fallback: used right away when there's no `turn:` URL,
+or when the UDP allocation isn't up within 3 s (`TLS_FALLBACK_AFTER`; UDP
+keeps trying, and whichever relay comes up is offered). The session opens
+the TCP connection on a thread of its own (a blocking connect mustn't stall
+the call), then reads and writes it without blocking; the TLS bytes go
+through `Relay` like datagrams, fed to the client in 1 KiB slices
+(`turn-client-rustls` hands rustls one `read_tls` per chunk, which takes at
+most 4 KiB: a bigger chunk lost part of coturn's certificate flight). The
+allocated address is still UDP, so peers can't tell; certificates are
+checked against Mozilla's roots (`webpki-roots`). Plain TCP TURN
+(`turn:…?transport=tcp`) isn't used.
 
 Calls cancel echo (`src/echo.rs`, sonora's AEC3), so headphones are
 optional: every frame about to be played is fed to the canceller, and each
@@ -141,6 +153,8 @@ Each one must be justified here (purpose, license, whether it pulls in C);
 | `realfft` 3.5 | The audio meters' FFT (`src/spectrum.rs`); already in the tree through `rubato`, now used directly | MIT/Apache-2.0 | No |
 | `sonora` 0.2 (+ `sonora-aec3`, `-agc2`, `-ns`, `-fft`, `-simd`, `-common-audio`) | Echo cancellation on calls (`src/echo.rs`): a pure-Rust port of WebRTC's audio processing, the AEC3 canceller browsers use. Only echo cancellation (and the high-pass filter it requires) is on. Pulls in `bytemuck`, `derive_more`, `tracing` | BSD-3-Clause | No |
 | `turn-client-proto` 0.7 (+ `turn-types`, `stun-proto`, `stun-types`, `sans-io-time`) | TURN client (RFC 8656): allocate, refresh, permissions, Send/Data indications, long-term credentials. `stun-types` 2 is also a direct dependency: our STUN Binding requests and replies (`src/stun.rs`), so there is one STUN codec, not two. Sans-IO like str0m, so it runs inside the call loop. Pulls in `rand`, `hashbrown`, `smallvec`, `base64`, `tracing` and pure-Rust hashes for MESSAGE-INTEGRITY | MIT/Apache-2.0 | No |
+| `turn-client-rustls` 0.1 (+ `rustls` 0.23, `rustls-webpki`, `untrusted`) | TURN over TLS (`turns:`), the fallback when UDP is blocked. rustls uses the AWS-LC provider only (no `ring`): AWS-LC is already built for str0m's DTLS | MIT/Apache-2.0, ISC | No new C (AWS-LC, see `str0m`) |
+| `webpki-roots` 1 | Mozilla's root certificates, to check the TURN server's TLS certificate the same way on every machine | CDLA-Permissive-2.0 (a permissive data license; allowed in `deny.toml` for this) | No |
 | `turn-server-proto` 0.7 (dev only) | A fake TURN server for the hermetic relay tests; pulls in `pnet_packet` | MIT/Apache-2.0 | No |
 | `hound` 3.5 | WAV output for `--out wav:PATH` (hardware-free checks) | Apache-2.0 | No |
 
@@ -155,9 +169,11 @@ The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,
 `just turn-check` (by hand, needs the coturn state passphrase in the
 Keychain): the ignored `production_turn_*` tests against the real coturn,
 with short-lived TURN REST credentials derived from the shared secret
-without printing it. Two allocations relay data to each other, and a whole
-call runs relay-only (no host or STUN candidates, like a browser's
-`iceTransportPolicy: "relay"`; `CallConfig::relay_only`, not in the Port
-protocol), so ICE, DTLS and audio all go through TURN. The hermetic tests
+without printing it. Coturn refuses made-up credentials; two allocations
+relay data to each other; and two whole calls run relay-only (no host or
+STUN candidates, like a browser's `iceTransportPolicy: "relay"`;
+`CallConfig::relay_only`, not in the Port protocol), one through UDP TURN
+and one through TLS TURN (`turns:` only), so ICE, DTLS and audio all go
+through coturn. The hermetic tests
 use a fake TURN server and can't prove that: on one machine the host pair
 always wins.

@@ -1,8 +1,11 @@
-//! Our candidates beyond the host one, and the datagram routing they need.
+//! Our candidates beyond the host one, and the routing they need.
 //!
 //! - **Server-reflexive** (`stun.rs`): our address outside the NAT, from the
 //!   call's STUN servers.
-//! - **Relayed** (`relay.rs`): an allocation on the call's TURN server.
+//! - **Relayed** (`relay.rs`): an allocation on the call's TURN server, over
+//!   UDP (`turn:`), or over TLS (`turns:`) when UDP isn't there: no `turn:`
+//!   URL, or no UDP allocation within `TLS_FALLBACK_AFTER` (networks that
+//!   block UDP; the UDP one keeps trying, and whichever comes up is used).
 //! - **Trickle**: each new candidate goes to the peer as an `ice_candidate`
 //!   once our SDP is out.
 //!
@@ -10,22 +13,30 @@
 //! also routes datagrams both ways. Incoming, in this order: a reply to our
 //! STUN request (by transaction id), then anything from the TURN server
 //! (TURN's own business, or a peer's packet relayed to us), then str0m.
-//! Outgoing: str0m's packets from the relay candidate are wrapped for the
-//! TURN server; everything else goes out as is.
+//! Outgoing: str0m's packets from a relay candidate are wrapped for its TURN
+//! server; everything else goes out as is. The TLS relay's traffic is a byte
+//! stream instead (`Polled::stream`, `inbound_stream`, `Outbound::Stream`).
 //!
 //! Sans-IO like str0m: no socket, no `Rtc`. The session sends what this
-//! returns and adds the candidates it finds to its `Rtc`.
+//! returns, opens the TLS connection when asked, and adds the candidates it
+//! finds to its `Rtc`.
 
 use std::net::{IpAddr, SocketAddr};
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 use serde_json::{Value, json};
 use str0m::media::Mid;
 use str0m::{Candidate, CandidateKind};
 
 use crate::Error;
-use crate::relay::{self, Relay, RelayEvent};
+use crate::relay::{self, Relay, RelayEvent, TurnServer};
 use crate::stun::{self, Gatherer, Reply};
+
+/// How long a UDP allocation may take before TLS is tried as well. A
+/// client-side timer that can't live on the server: it's about this
+/// network's path to the TURN server. UDP answers in well under a second
+/// when it works at all.
+pub const TLS_FALLBACK_AFTER: Duration = Duration::from_secs(3);
 
 /// Datagrams to send, as `(to, datagram)`.
 pub type Datagrams = Vec<(SocketAddr, Vec<u8>)>;
@@ -36,18 +47,31 @@ pub struct Found {
     pub kind: &'static str,
 }
 
-/// What to do with a datagram that arrived on the call socket.
+/// What `poll` has for the session.
+#[derive(Default)]
+pub struct Polled {
+    pub datagrams: Datagrams,
+    /// Bytes for the TLS relay's stream.
+    pub stream: Vec<u8>,
+    /// Our new candidates (a relay, once allocated).
+    pub found: Vec<Found>,
+    /// Open a TCP connection to this `turns:` server, then report back with
+    /// `tls_connected` (or `tls_failed`).
+    pub connect_tls: Option<SocketAddr>,
+}
+
+/// What to do with something that arrived from the network.
 pub enum Inbound {
     /// STUN or TURN business, done here.
     Handled,
     /// A new candidate of ours.
     Found(Found),
-    /// A peer's packet relayed by TURN: str0m must see it as arriving at our
-    /// relayed address, so ICE pairs it with the relay candidate.
+    /// Peers' packets relayed by TURN, as `(peer, data)`: str0m must see them
+    /// as arriving at our relayed address, so ICE pairs them with the relay
+    /// candidate.
     Relayed {
-        source: SocketAddr,
         destination: SocketAddr,
-        data: Vec<u8>,
+        packets: Vec<(SocketAddr, Vec<u8>)>,
     },
     /// For str0m, as it came.
     Direct,
@@ -57,22 +81,42 @@ pub enum Inbound {
 pub enum Outbound {
     /// As is, to its destination.
     Direct,
-    /// Wrapped for the TURN server (str0m sent it from the relay candidate).
+    /// Wrapped for the UDP TURN server (str0m sent it from that relay).
     Wrapped(Vec<u8>, SocketAddr),
+    /// Bytes for the TLS relay's stream (str0m sent it from that relay).
+    Stream(Vec<u8>),
     /// Not sendable yet (the peer's TURN permission is pending); ICE retries.
     Dropped,
+}
+
+/// The `turns:` relay, from "a server we might use" to "up".
+enum Tls {
+    None,
+    /// Used if UDP isn't up by `TLS_FALLBACK_AFTER` after `since`.
+    Standby {
+        server: TurnServer,
+        addr: SocketAddr,
+        since: Instant,
+    },
+    /// The session is opening the TCP connection.
+    Connecting {
+        server: TurnServer,
+        addr: SocketAddr,
+    },
+    Up(Box<Relay>),
 }
 
 pub struct Candidates {
     local: SocketAddr,
     stun: Gatherer,
-    /// Our TURN allocation, if the call has a `turn:` server.
+    /// Our UDP TURN allocation, if the call has a `turn:` server.
     relay: Option<Relay>,
+    tls: Tls,
     /// Added to the `Rtc` but not yet sent to the peer.
     unsent: Vec<String>,
     sdp_sent: bool,
-    /// Every remote candidate's IP so far, to permit on the relay as soon
-    /// as it's allocated (a permission asked for earlier fails quietly).
+    /// Every remote candidate's IP so far, to permit on a relay as soon as
+    /// it's allocated (a permission asked for earlier fails quietly).
     remote_ips: Vec<IpAddr>,
     /// The peer's relayed addresses: sending to one means the call is
     /// relayed even when we aren't.
@@ -84,22 +128,39 @@ pub struct Candidates {
 
 impl Candidates {
     /// From the call's `ice_servers`: resolves the servers (DNS, so call it on
-    /// the session thread) and starts STUN and the TURN allocation.
-    /// `relay_only`: no STUN (only the relay candidate is wanted).
+    /// the session thread) and starts STUN and the UDP TURN allocation; a
+    /// `turns:` server waits as the fallback. `relay_only`: no STUN (only
+    /// the relay candidate is wanted).
     pub fn from_ice_servers(ice_servers: &Value, local: SocketAddr, relay_only: bool) -> Self {
         let stun_servers = if relay_only {
             Vec::new()
         } else {
             stun::resolve(&stun::stun_servers(ice_servers), local)
         };
-        let relay = relay::turn_servers(ice_servers).first().and_then(|server| {
-            Some(Relay::allocate(
-                local,
-                relay::resolve(server, local)?,
+        let servers = relay::turn_servers(ice_servers);
+        let relay = servers
+            .iter()
+            .find(|server| !server.tls)
+            .and_then(|server| {
+                Some(Relay::allocate(
+                    local,
+                    relay::resolve(server, local)?,
+                    server,
+                ))
+            });
+        let mut candidates = Self::new(local, stun_servers, relay);
+        if let Some((server, addr)) = servers
+            .into_iter()
+            .filter(|server| server.tls)
+            .find_map(|server| Some((relay::resolve(&server, local)?, server)).map(|(a, s)| (s, a)))
+        {
+            candidates.tls = Tls::Standby {
                 server,
-            ))
-        });
-        Self::new(local, stun_servers, relay)
+                addr,
+                since: Instant::now(),
+            };
+        }
+        candidates
     }
 
     pub fn new(local: SocketAddr, stun_servers: Vec<SocketAddr>, relay: Option<Relay>) -> Self {
@@ -107,6 +168,7 @@ impl Candidates {
             local,
             stun: Gatherer::new(stun_servers, Instant::now()),
             relay,
+            tls: Tls::None,
             unsent: Vec::new(),
             sdp_sent: false,
             remote_ips: Vec::new(),
@@ -116,41 +178,97 @@ impl Candidates {
         }
     }
 
-    /// STUN and TURN messages due now, and the relay
-    /// candidate once the allocation is up.
-    pub fn poll(&mut self, now: Instant) -> Result<(Datagrams, Option<Found>), Error> {
-        let mut out = if self.stun.is_done() {
-            Vec::new()
-        } else {
-            self.stun.poll_transmit(now)
-        };
-        let Some(relay) = self.relay.as_mut() else {
-            return Ok((out, None));
-        };
-        let server = relay.server();
-        out.extend(relay.poll_transmit().0.into_iter().map(|m| (server, m)));
-        let found = match relay.poll_event() {
+    /// STUN and TURN messages due now, relay candidates once allocated, and
+    /// whether to open the TLS fallback.
+    pub fn poll(&mut self, now: Instant) -> Result<Polled, Error> {
+        let mut polled = Polled::default();
+        if !self.stun.is_done() {
+            polled.datagrams = self.stun.poll_transmit(now);
+        }
+
+        if let Some(relay) = self.relay.as_mut() {
+            let server = relay.server();
+            polled
+                .datagrams
+                .extend(relay.poll_transmit().0.into_iter().map(|m| (server, m)));
+            match Self::relay_event(relay, &self.remote_ips, self.local)? {
+                Some(Ok(found)) => polled.found.push(found),
+                Some(Err(())) => {
+                    eprintln!("randos_media: TURN allocation failed (UDP)");
+                    self.relay = None;
+                }
+                None => {}
+            }
+        }
+
+        let udp_up = self.relay.as_ref().and_then(Relay::relayed).is_some();
+        match std::mem::replace(&mut self.tls, Tls::None) {
+            Tls::Standby {
+                server,
+                addr,
+                since,
+            } if !udp_up && (self.relay.is_none() || now >= since + TLS_FALLBACK_AFTER) => {
+                polled.connect_tls = Some(addr);
+                self.tls = Tls::Connecting { server, addr };
+            }
+            Tls::Up(mut relay) => {
+                for message in relay.poll_transmit().0 {
+                    polled.stream.extend(message);
+                }
+                match Self::relay_event(&mut relay, &self.remote_ips, self.local)? {
+                    Some(Ok(found)) => polled.found.push(found),
+                    Some(Err(())) => {
+                        eprintln!("randos_media: TURN allocation failed (TLS)");
+                        return Ok(polled);
+                    }
+                    None => {}
+                }
+                self.tls = Tls::Up(relay);
+            }
+            other => self.tls = other,
+        }
+        Ok(polled)
+    }
+
+    /// A relay's news: its candidate once allocated (permitting the remote
+    /// candidates already known), or `Err` if it failed.
+    fn relay_event(
+        relay: &mut Relay,
+        remote_ips: &[IpAddr],
+        local: SocketAddr,
+    ) -> Result<Option<Result<Found, ()>>, Error> {
+        Ok(match relay.poll_event() {
             Some(RelayEvent::Allocated(addr)) => {
                 // Candidates that arrived before the allocation: their
                 // permissions couldn't be installed then. Without them the
                 // peer's checks to our relayed address are dropped until
                 // ICE happens to send to them first.
-                for &ip in &self.remote_ips {
+                for &ip in remote_ips {
                     relay.permit(ip);
                 }
-                Some(Found {
-                    candidate: Candidate::relayed(addr, self.local, "udp")?,
+                Some(Ok(Found {
+                    candidate: Candidate::relayed(addr, local, "udp")?,
                     kind: "relay",
-                })
+                }))
             }
-            Some(RelayEvent::Failed) => {
-                eprintln!("randos_media: TURN allocation failed; no relay candidate");
-                self.relay = None;
-                None
-            }
+            Some(RelayEvent::Failed) => Some(Err(())),
             None => None,
-        };
-        Ok((out, found))
+        })
+    }
+
+    /// The session's TCP connection to the `turns:` server is open, from
+    /// `local`: start the TLS allocation over it.
+    pub fn tls_connected(&mut self, local: SocketAddr) -> Result<(), Error> {
+        if let Tls::Connecting { server, addr } = std::mem::replace(&mut self.tls, Tls::None) {
+            self.tls = Tls::Up(Box::new(Relay::allocate_tls(local, addr, &server)?));
+        }
+        Ok(())
+    }
+
+    /// The TCP connection to the `turns:` server couldn't be opened.
+    pub fn tls_failed(&mut self) {
+        eprintln!("randos_media: couldn't reach the TURN server over TLS");
+        self.tls = Tls::None;
     }
 
     /// Routes a datagram that arrived from `source` (see the module docs).
@@ -171,15 +289,26 @@ impl Candidates {
         let Some(relay) = self.relay.as_mut().filter(|r| r.server() == source) else {
             return Ok(Inbound::Direct);
         };
-        let relayed = relay.relayed();
-        Ok(match (relay.recv(datagram), relayed) {
-            (Some((source, data)), Some(destination)) => Inbound::Relayed {
-                source,
+        Ok(Self::relayed(relay, datagram))
+    }
+
+    /// Bytes that arrived on the TLS relay's stream.
+    pub fn inbound_stream(&mut self, bytes: &[u8]) -> Inbound {
+        match &mut self.tls {
+            Tls::Up(relay) => Self::relayed(relay, bytes),
+            _ => Inbound::Handled,
+        }
+    }
+
+    fn relayed(relay: &mut Relay, bytes: &[u8]) -> Inbound {
+        let packets = relay.recv(bytes);
+        match relay.relayed() {
+            Some(destination) if !packets.is_empty() => Inbound::Relayed {
                 destination,
-                data,
+                packets,
             },
             _ => Inbound::Handled,
-        })
+        }
     }
 
     /// Routes one of str0m's packets (see the module docs).
@@ -189,22 +318,34 @@ impl Candidates {
         destination: SocketAddr,
         data: &[u8],
     ) -> Outbound {
-        let ours = self.relay.as_ref().and_then(Relay::relayed) == Some(source);
+        let tls_relay = match &mut self.tls {
+            Tls::Up(relay) if relay.relayed() == Some(source) => Some(relay),
+            _ => None,
+        };
+        let udp_relay = self
+            .relay
+            .as_mut()
+            .filter(|relay| relay.relayed() == Some(source));
+        let ours = tls_relay.is_some() || udp_relay.is_some();
         if ours || self.remote_relays.contains(&destination) {
             self.sent_relayed += data.len() as u64;
         } else {
             self.sent_direct += data.len() as u64;
         }
-        match self.relay.as_mut() {
-            Some(relay) if relay.relayed() == Some(source) => match relay.send(destination, data) {
+        match (udp_relay, tls_relay) {
+            (Some(relay), _) => match relay.send(destination, data) {
                 Ok(Some(wrapped)) => Outbound::Wrapped(wrapped, relay.server()),
                 Ok(None) | Err(_) => Outbound::Dropped,
             },
-            _ => Outbound::Direct,
+            (None, Some(relay)) => match relay.send(destination, data) {
+                Ok(Some(bytes)) => Outbound::Stream(bytes),
+                Ok(None) | Err(_) => Outbound::Dropped,
+            },
+            (None, None) => Outbound::Direct,
         }
     }
 
-    /// A remote candidate: let it reach our relayed address (coturn drops
+    /// A remote candidate: let it reach our relayed addresses (coturn drops
     /// anything from an IP without a permission), and note whether it's the
     /// peer's relay (for `take_path`).
     pub fn remote(&mut self, candidate: &Candidate) {
@@ -216,6 +357,9 @@ impl Candidates {
             self.remote_relays.push(candidate.addr());
         }
         if let Some(relay) = self.relay.as_mut() {
+            relay.permit(peer);
+        }
+        if let Tls::Up(relay) = &mut self.tls {
             relay.permit(peer);
         }
     }
@@ -266,13 +410,21 @@ impl Candidates {
             .collect()
     }
 
-    /// Frees the TURN allocation: the messages to send before the socket goes.
-    pub fn close(&mut self) -> Datagrams {
-        let Some(relay) = self.relay.as_mut() else {
-            return Vec::new();
+    /// Frees the TURN allocations: what to send (datagrams, and TLS stream
+    /// bytes) before the sockets go.
+    pub fn close(&mut self) -> (Datagrams, Vec<u8>) {
+        let datagrams = match self.relay.as_mut() {
+            Some(relay) => {
+                let server = relay.server();
+                relay.close().into_iter().map(|m| (server, m)).collect()
+            }
+            None => Vec::new(),
         };
-        let server = relay.server();
-        relay.close().into_iter().map(|m| (server, m)).collect()
+        let stream = match &mut self.tls {
+            Tls::Up(relay) => relay.close().concat(),
+            _ => Vec::new(),
+        };
+        (datagrams, stream)
     }
 }
 
@@ -304,7 +456,7 @@ mod tests {
     fn a_stun_reply_is_ours_anything_else_goes_to_str0m() {
         let server: SocketAddr = "192.0.2.10:3478".parse().unwrap();
         let mut candidates = Candidates::new(local(), vec![server], None);
-        let (sent, _) = candidates.poll(Instant::now()).unwrap();
+        let sent = candidates.poll(Instant::now()).unwrap().datagrams;
         let request = &sent[0].1;
 
         let reply = stun_reply(request, "203.0.113.7:4000".parse().unwrap());
@@ -329,7 +481,7 @@ mod tests {
     fn our_own_address_back_from_stun_adds_nothing() {
         let server: SocketAddr = "192.0.2.10:3478".parse().unwrap();
         let mut candidates = Candidates::new(local(), vec![server], None);
-        let (sent, _) = candidates.poll(Instant::now()).unwrap();
+        let sent = candidates.poll(Instant::now()).unwrap().datagrams;
         let reply = stun_reply(&sent[0].1, local());
         assert!(matches!(
             candidates.inbound(server, &reply).unwrap(),
@@ -345,7 +497,8 @@ mod tests {
             candidates.outbound(local(), peer, b"x"),
             Outbound::Direct
         ));
-        assert!(candidates.close().is_empty());
+        let (datagrams, stream) = candidates.close();
+        assert!(datagrams.is_empty() && stream.is_empty());
     }
 
     #[test]
@@ -364,6 +517,7 @@ mod tests {
             host: server.to_string(),
             username: "user".into(),
             credential: "pass".into(),
+            tls: false,
         };
         let mut candidates =
             Candidates::new(local, vec![], Some(Relay::allocate(local, server, &creds)));
@@ -376,9 +530,9 @@ mod tests {
         let mut allocated = false;
         let deadline = Instant::now() + Duration::from_secs(3);
         while Instant::now() < deadline && seen.create_permissions.load(Ordering::Relaxed) == 0 {
-            let (out, found) = candidates.poll(Instant::now()).unwrap();
-            allocated |= found.is_some_and(|f| f.kind == "relay");
-            for (to, datagram) in out {
+            let polled = candidates.poll(Instant::now()).unwrap();
+            allocated |= polled.found.iter().any(|f| f.kind == "relay");
+            for (to, datagram) in polled.datagrams {
                 socket.send_to(&datagram, to).unwrap();
             }
             if let Ok((n, from)) = socket.recv_from(&mut buf) {
@@ -412,5 +566,44 @@ mod tests {
         candidates.outbound(local(), peer_host, &[0; 160]);
         assert_eq!(candidates.take_path(), Some("direct"));
         assert_eq!(candidates.take_path(), None, "counts reset each time");
+    }
+
+    #[test]
+    fn tls_is_tried_only_if_udp_isnt_up_in_time() {
+        // TEST-NET addresses: nothing answers (and nothing is contacted:
+        // the session would open the TCP connection, not this).
+        let ice = json!([{
+            "urls": ["turn:192.0.2.1:3478", "turns:192.0.2.1:5349"],
+            "username": "u", "credential": "c"
+        }]);
+        let mut candidates = Candidates::from_ice_servers(&ice, local(), true);
+        let start = Instant::now();
+        assert_eq!(
+            candidates.poll(start).unwrap().connect_tls,
+            None,
+            "UDP gets its chance"
+        );
+        let later = start + TLS_FALLBACK_AFTER + Duration::from_millis(10);
+        assert_eq!(
+            candidates.poll(later).unwrap().connect_tls,
+            Some("192.0.2.1:5349".parse().unwrap())
+        );
+        assert_eq!(
+            candidates.poll(later).unwrap().connect_tls,
+            None,
+            "asked once"
+        );
+
+        // No turn: at all: TLS right away.
+        let tls_only =
+            json!([{"urls": "turns:192.0.2.1:5349", "username": "u", "credential": "c"}]);
+        let mut candidates = Candidates::from_ice_servers(&tls_only, local(), true);
+        assert!(
+            candidates
+                .poll(Instant::now())
+                .unwrap()
+                .connect_tls
+                .is_some()
+        );
     }
 }

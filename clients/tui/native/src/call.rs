@@ -9,7 +9,8 @@
 //! the 20 ms audio cadence is kept). Every change to the `Rtc` is followed
 //! by `drain`, str0m's one rule (mutate, then poll until `Timeout`).
 
-use std::net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket};
+use std::io::{ErrorKind, Read, Write};
+use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpStream, UdpSocket};
 use std::sync::Arc;
 use std::sync::mpsc::{self, Receiver, Sender, TryRecvError};
 use std::thread::{self, JoinHandle};
@@ -192,6 +193,8 @@ struct Session {
     muted: bool,
     /// The last RTP sequence number decoded, to size gaps.
     last_seq: Option<u64>,
+    /// The TCP stream for a TLS relay (`turns:`), when there is one.
+    tls: TlsStream,
     /// Takes the peer's voice, played on our speaker, out of our mic. Only
     /// with a real mic and speaker: a synthetic input or a file/null output
     /// has no sound path between them, so nothing to cancel.
@@ -254,6 +257,7 @@ impl Session {
             muted: false,
             last_seq: None,
             echo: acoustic.then(EchoCanceller::new),
+            tls: TlsStream::default(),
         })
     }
 
@@ -311,8 +315,14 @@ impl Session {
         // instead of waiting out its own disconnect timer.
         self.rtc.disconnect();
         let drained = self.drain();
-        for (to, message) in self.candidates.close() {
+        let (datagrams, stream) = self.candidates.close();
+        for (to, message) in datagrams {
             let _ = self.socket.send_to(&message, to);
+        }
+        if let Some(tcp) = self.tls.stream.as_mut() {
+            self.tls.out.extend(stream);
+            let _ = tcp.set_nonblocking(false);
+            let _ = tcp.write_all(&self.tls.out);
         }
         drained
     }
@@ -431,11 +441,7 @@ impl Session {
                 match self.candidates.inbound(source, &self.buf)? {
                     Inbound::Handled => return Ok(()),
                     Inbound::Found(found) => return self.add_local(found),
-                    Inbound::Relayed {
-                        source,
-                        destination,
-                        data,
-                    } => return self.handle_datagram(source, destination, &data),
+                    relayed @ Inbound::Relayed { .. } => return self.handle_relayed(relayed),
                     Inbound::Direct => {}
                 }
                 if self.drops_for_test() {
@@ -506,6 +512,7 @@ impl Session {
                     match self.candidates.outbound(source, to, &transmit.contents) {
                         Outbound::Direct => self.send(&transmit.contents, to),
                         Outbound::Wrapped(wrapped, server) => self.send(&wrapped, server),
+                        Outbound::Stream(bytes) => self.tls.out.extend(bytes),
                         Outbound::Dropped => self.report.send_errors += 1,
                     }
                 }
@@ -603,15 +610,51 @@ impl Session {
     /// Sends due STUN and TURN messages, adds the relay candidate once it's
     /// allocated, and trickles our new candidates.
     fn gather(&mut self) -> Result<(), Error> {
-        let (messages, found) = self.candidates.poll(Instant::now())?;
-        for (to, message) in messages {
+        let polled = self.candidates.poll(Instant::now())?;
+        for (to, message) in polled.datagrams {
             self.send(&message, to);
         }
-        if let Some(found) = found {
+        self.tls.out.extend(polled.stream);
+        if let Some(server) = polled.connect_tls {
+            self.tls.connect(server);
+        }
+        for found in polled.found {
             self.add_local(found)?;
         }
+        self.service_tls()?;
         for payload in self.candidates.trickle(self.mid) {
             self.signal_out("ice_candidate", payload);
+        }
+        Ok(())
+    }
+
+    /// The TLS relay's stream: the connection coming up, bytes to read (fed
+    /// to `Candidates`), and bytes waiting to be written. Never blocks.
+    fn service_tls(&mut self) -> Result<(), Error> {
+        match self.tls.connected() {
+            Some(Ok(local)) => self.candidates.tls_connected(local)?,
+            Some(Err(())) => self.candidates.tls_failed(),
+            None => {}
+        }
+        let read = self.tls.read();
+        if !read.is_empty() {
+            let inbound = self.candidates.inbound_stream(&read);
+            self.handle_relayed(inbound)?;
+        }
+        self.tls.flush();
+        Ok(())
+    }
+
+    /// Peers' packets a relay delivered, for str0m (anything else: nothing).
+    fn handle_relayed(&mut self, inbound: Inbound) -> Result<(), Error> {
+        if let Inbound::Relayed {
+            destination,
+            packets,
+        } = inbound
+        {
+            for (source, data) in packets {
+                self.handle_datagram(source, destination, &data)?;
+            }
         }
         Ok(())
     }
@@ -708,6 +751,101 @@ struct Report {
     input_bars: Analyser,
     output_bars: Analyser,
     levels_since: Instant,
+}
+
+/// The TCP side of a TLS relay: connected on a thread of its own (a
+/// blocking connect mustn't stall the call loop), then read and written
+/// without blocking. The bytes are TLS; `Candidates` makes sense of them.
+#[derive(Default)]
+struct TlsStream {
+    connecting: Option<Receiver<std::io::Result<TcpStream>>>,
+    stream: Option<TcpStream>,
+    /// Waiting to be written (a full socket buffer can't take it all at once).
+    out: Vec<u8>,
+}
+
+/// Give up on reaching a `turns:` server after this long.
+const TLS_CONNECT_TIMEOUT: Duration = Duration::from_secs(5);
+
+impl TlsStream {
+    fn connect(&mut self, server: SocketAddr) {
+        let (done, connecting) = mpsc::channel();
+        let started = thread::Builder::new()
+            .name("turns-connect".into())
+            .spawn(move || {
+                let _ = done.send(TcpStream::connect_timeout(&server, TLS_CONNECT_TIMEOUT));
+            });
+        if started.is_ok() {
+            self.connecting = Some(connecting);
+        }
+    }
+
+    /// The connection's outcome, once: our local address, or a failure.
+    fn connected(&mut self) -> Option<Result<SocketAddr, ()>> {
+        let outcome = match self.connecting.as_ref()?.try_recv() {
+            Err(TryRecvError::Empty) => return None,
+            Ok(Ok(stream)) => stream
+                .set_nonblocking(true)
+                .and_then(|()| stream.set_nodelay(true))
+                .and_then(|()| stream.local_addr())
+                .map(|local| (stream, local)),
+            Ok(Err(err)) => Err(err),
+            Err(TryRecvError::Disconnected) => Err(ErrorKind::Other.into()),
+        };
+        self.connecting = None;
+        Some(match outcome {
+            Ok((stream, local)) => {
+                self.stream = Some(stream);
+                Ok(local)
+            }
+            Err(_) => Err(()),
+        })
+    }
+
+    /// Whatever has arrived (empty if nothing, or the stream closed).
+    fn read(&mut self) -> Vec<u8> {
+        let Some(stream) = self.stream.as_mut() else {
+            return Vec::new();
+        };
+        let mut read = Vec::new();
+        let mut buf = [0u8; 4096];
+        loop {
+            match stream.read(&mut buf) {
+                Ok(0) => {
+                    self.stream = None;
+                    break;
+                }
+                Ok(n) => read.extend_from_slice(&buf[..n]),
+                Err(err) if err.kind() == ErrorKind::WouldBlock => break,
+                Err(_) => {
+                    self.stream = None;
+                    break;
+                }
+            }
+        }
+        read
+    }
+
+    fn flush(&mut self) {
+        let Some(stream) = self.stream.as_mut() else {
+            self.out.clear();
+            return;
+        };
+        while !self.out.is_empty() {
+            match stream.write(&self.out) {
+                Ok(0) => break,
+                Ok(n) => {
+                    self.out.drain(..n);
+                }
+                Err(err) if err.kind() == ErrorKind::WouldBlock => break,
+                Err(_) => {
+                    self.stream = None;
+                    self.out.clear();
+                    break;
+                }
+            }
+        }
+    }
 }
 
 /// At most this many frames of concealment for one gap (100 ms); longer
@@ -1086,6 +1224,59 @@ mod tests {
         assert!(turn_seen.create_permissions.load(Ordering::Relaxed) >= 1);
         assert!(turn_seen.send_indications.load(Ordering::Relaxed) >= 1);
 
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
+    }
+
+    /// TURN over TLS, end to end: two relay-only peers whose only TURN
+    /// server is coturn's `turns:` endpoint (TLS on 5349), so the whole
+    /// call (allocation, permissions, every packet) goes over TLS streams.
+    #[test]
+    #[ignore = "needs coturn credentials in the environment"]
+    fn production_turns_carries_a_whole_relay_only_call() {
+        let ice = json!([{
+            "urls": "turns:turn.slowinput.org:5349",
+            "username": std::env::var("TURN_TEST_USERNAME").unwrap(),
+            "credential": std::env::var("TURN_TEST_CREDENTIAL").unwrap(),
+        }]);
+        let relay_only = |role| {
+            peer_from(CallConfig {
+                role,
+                bind_ip: None,
+                ice_servers: ice.clone(),
+                relay_only: true,
+                loss_every: 0,
+            })
+        };
+        let (offerer, offerer_seen) = relay_only(Role::Offerer);
+        let (answerer, answerer_seen) = relay_only(Role::Answerer);
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_secs(10),
+        );
+
+        for seen in [&offerer_seen, &answerer_seen] {
+            let seen = seen.lock().unwrap();
+            assert!(
+                seen.states.contains(&"connected".to_owned()),
+                "states: {:?}",
+                seen.states
+            );
+            let last = seen.stats.last().expect("stats");
+            assert_eq!(last.local_candidates, vec!["relay"]);
+            assert_eq!(last.path.as_deref(), Some("relay"));
+            assert!(
+                last.packets_received > 100,
+                "received {}",
+                last.packets_received
+            );
+            assert!(
+                last.output_peak_dbfs > -15.0,
+                "heard {} dBFS",
+                last.output_peak_dbfs
+            );
+        }
         offerer.stop().unwrap();
         answerer.stop().unwrap();
     }
