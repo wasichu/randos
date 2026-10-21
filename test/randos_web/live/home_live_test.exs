@@ -21,9 +21,6 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#conversation-form")
     assert has_element?(view, "#find-rando-button[disabled]")
     assert has_element?(view, "#theme-toggle[data-theme-toggle]")
-    # Decorative: one copy for wide screens, one beside the title on phones.
-    assert has_element?(view, "svg#hero-illustration[aria-hidden='true']")
-    assert has_element?(view, "svg#hero-illustration-compact[aria-hidden='true']")
     assert has_element?(view, "#conversation_speaking_language option[value='zh']")
     assert has_element?(view, "#conversation_speaking_language option[value='hi']")
     assert has_element?(view, "#conversation_speaking_language option[value='ar']")

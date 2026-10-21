@@ -8,8 +8,6 @@ defmodule RandosWeb.HomeComponents do
   """
   use RandosWeb, :html
 
-  import RandosWeb.Illustrations
-
   alias Randos.Calls.Lifecycle
   alias Randos.ConversationLanguages
 
@@ -25,18 +23,11 @@ defmodule RandosWeb.HomeComponents do
          of the page, so the form can sit between the title and the steps. --%>
     <div id="hero-panel" class="contents lg:flex lg:flex-col lg:justify-between lg:gap-10">
       <div class="order-1 lg:order-none">
-        <div class="flex items-center justify-between gap-4">
-          <div class="flex items-center gap-3 sm:gap-4">
-            <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
-            <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
-              {gettext("randos")}
-            </h1>
-          </div>
-          <%!-- One-column screens: small, beside the title, so the form stays high. --%>
-          <.short_conversations
-            id="hero-illustration-compact"
-            class="size-14 shrink-0 sm:size-20 lg:hidden"
-          />
+        <div class="flex items-center gap-3 sm:gap-4">
+          <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
+          <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
+            {gettext("randos")}
+          </h1>
         </div>
         <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
           {gettext("Short anonymous conversations for language practice.")}
@@ -44,7 +35,6 @@ defmodule RandosWeb.HomeComponents do
         <p class="mt-3 text-base text-stone-500">
           {gettext("No accounts. No profiles. No video. No pressure.")}
         </p>
-        <.short_conversations id="hero-illustration" class="mt-10 hidden size-32 lg:block" />
       </div>
 
       <.state_progress ui_state={@ui_state} />
