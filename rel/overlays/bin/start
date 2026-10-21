@@ -1,0 +1,15 @@
+#!/bin/sh
+# The container's entry point. It runs as root only to give the app its
+# directory on the Fly volume (mounted root-owned): RANDOS_STATS_DIR, where
+# the status page's daily counters are kept. Then it drops to nobody for
+# good (setpriv: no capabilities, no way back) and starts the server.
+set -eu
+
+if [ -n "${RANDOS_STATS_DIR:-}" ]; then
+  mkdir -p "$RANDOS_STATS_DIR"
+  chown nobody:nogroup "$RANDOS_STATS_DIR"
+  chmod 0700 "$RANDOS_STATS_DIR"
+fi
+
+exec setpriv --reuid=nobody --regid=nogroup --clear-groups --inh-caps=-all \
+  "$(dirname "$0")/server"

@@ -40,9 +40,8 @@ something can't be checked from the outside, this says so.
   ([`config/prod.exs`](../config/prod.exs)). Phoenix's request logs
   include no client addresses. We checked production's logs on
   2026-10-21: no line contained an IP address.
-- **The status page** (`/status`): counted in the server's memory only,
-  for the current UTC day (reset at midnight and whenever the server
-  restarts): calls started and connected, how they ended (finished,
+- **The status page** (`/status`): counted for each UTC day (reset at
+  midnight): calls started and connected, how they ended (finished,
   couldn't connect, connection lost, canceled), calls continued past 10
   minutes, connected lengths in whole minutes (for the typical length),
   and calls per language pair (the two speaking languages, unordered). No
@@ -50,7 +49,11 @@ something can't be checked from the outside, this says so.
   small counts: a language pair shows once it has 3 calls (smaller ones are
   summed under "other"), and the typical length once 3 calls connected.
   The relay check sets up and releases a test allocation with fresh
-  credentials; it involves no one's call.
+  credentials; it involves no one's call. Each day's counts are kept in a
+  small JSON file on the server's disk (a Fly volume), so they survive
+  restarts: exactly the aggregates above, and nothing else
+  ([`Randos.Stats.FileStore`](../lib/randos/stats/file_store.ex)). Old days'
+  files are kept, as a history of totals; they hold nothing about anyone.
 - **What it briefly remembers:** after a call, the server remembers for 90
   seconds that the two of you just talked (by the anonymous ids of that
   visit only), so "Next" finds someone new. A call that never connected

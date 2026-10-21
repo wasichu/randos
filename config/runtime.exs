@@ -48,6 +48,13 @@ if ice_servers = System.get_env("RANDOS_ICE_SERVERS") do
   config :randos, RandosWeb.IceServers, servers: servers
 end
 
+# Where the status page's daily counters are kept across restarts
+# (Randos.Stats.FileStore): aggregate counts only. Production mounts a Fly
+# volume for it (fly.toml); unset, they're in memory only.
+if stats_dir = System.get_env("RANDOS_STATS_DIR") do
+  config :randos, :stats_dir, stats_dir
+end
+
 # Calls go through the TURN relay only, so neither person learns the other's
 # IP address (RandosWeb.IceServers). RANDOS_ALLOW_DIRECT_CALLS=true allows
 # direct calls, with the relay as the fallback.

@@ -21,7 +21,7 @@ defmodule Randos.Application do
       {Phoenix.PubSub, name: Randos.PubSub},
       {Task.Supervisor, name: Randos.TaskSupervisor},
       # The public status page: aggregate call counts and the relay's health.
-      Randos.Stats,
+      {Randos.Stats, store: stats_store()},
       RandosWeb.RelayHealth,
       {DynamicSupervisor, strategy: :one_for_one, name: Randos.Calls.CallSupervisor},
       {Randos.Matchmaking.Matchmaker, call_options: call_options},
@@ -34,6 +34,11 @@ defmodule Randos.Application do
     opts = [strategy: :one_for_one, name: Randos.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  # Daily counters survive restarts only where there's somewhere to keep
+  # them (RANDOS_STATS_DIR: a Fly volume in production).
+  defp stats_store,
+    do: if(Application.get_env(:randos, :stats_dir), do: Randos.Stats.FileStore)
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.

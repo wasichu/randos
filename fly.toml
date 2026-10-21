@@ -10,6 +10,15 @@ primary_region = 'ord'
 [env]
   PHX_HOST = 'randos.fly.dev'
   PORT = '8080'
+  # The status page's daily counters (aggregate counts only), on the volume
+  # below, so they survive the machine sleeping and deploys.
+  RANDOS_STATS_DIR = '/data/stats'
+
+# A 1 GB volume (about $0.15/month) for those counters. One per machine:
+# with more machines, each keeps its own, and /status sums them.
+[mounts]
+  source = 'randos_data'
+  destination = '/data'
 
 [http_service]
   auto_start_machines = true

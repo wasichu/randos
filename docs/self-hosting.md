@@ -51,6 +51,7 @@ the app itself serves plain HTTP on `PORT`.
 | `PHX_SERVER` | for releases | `true` starts the web server (`bin/server`, which the Docker image runs, sets it). |
 | `RANDOS_ALLOW_DIRECT_CALLS` | | `true` allows direct calls between the two people, with the relay as the fallback. Unset, calls go through the TURN relay only (see below). |
 | `RANDOS_ICE_SERVERS` | | When TURN isn't configured: the ICE servers to hand out, as JSON (default: Google's public STUN). |
+| `RANDOS_STATS_DIR` | | Where the status page keeps each day's aggregate counts across restarts (one small JSON file per day). Unset: memory only. Ours is a 1 GB Fly volume; the container's `bin/start` gives the directory to the app's user. |
 | `RANDOS_CONNECT_TIMEOUT_MS` | | How long a call may take to connect before it ends (default 15 s). |
 | `DNS_CLUSTER_QUERY` | | Erlang clustering via DNS. Clustering alone doesn't share the waiting room (see above). |
 

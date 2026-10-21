@@ -751,8 +751,11 @@ All 2026-10-19 unless noted.
   open items.
 - **Public /status (done 2026-10-21):** relay health (UDP and TLS
   allocation every 5 minutes) and today's aggregate counts, cluster-wide
-  (counters summed over nodes, then filtered). Open: persisting daily
-  totals (the `:store` seam, on the approved volume), the TUI status
+  (counters summed over nodes, then filtered). Daily totals persist on
+  the 1 GB volume (`Randos.Stats.FileStore`, one JSON file per day, saved
+  after each event; `RANDOS_STATS_DIR=/data/stats`); the image's
+  `bin/start` runs as root only to hand the root-owned volume directory to
+  `nobody`, then drops privileges with `setpriv`. Open: the TUI status
   screen (a channel request returning `RandosWeb.Status.snapshot/0`;
   protocol mini-pass), and a status link outside About.
 - **A 1 GB Fly volume for aggregate stats (2026-10-21).** The owner

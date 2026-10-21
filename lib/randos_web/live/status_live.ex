@@ -142,7 +142,7 @@ defmodule RandosWeb.StatusLive do
           label={gettext("Typical length")}
           value={
             if @usage["median_minutes"],
-              do: gettext("%{minutes} min", minutes: @usage["median_minutes"]),
+              do: median_text(@usage["median_minutes"]),
               else: "–"
           }
         />
@@ -241,4 +241,10 @@ defmodule RandosWeb.StatusLive do
       _invalid -> iso
     end
   end
+
+  # The median is a whole-minute bucket: 0 means under a minute, 30 the
+  # catch-all for the longest calls.
+  defp median_text(0), do: gettext("under 1 min")
+  defp median_text(30), do: gettext("30+ min")
+  defp median_text(minutes), do: gettext("%{minutes} min", minutes: minutes)
 end
