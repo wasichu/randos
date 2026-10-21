@@ -17,9 +17,8 @@ in the formula; `brew install` on Linux is untested.
 
 These need you: a new repository, a release, and (optionally) a token.
 
-1. **Pick a license** for randos and add a `LICENSE` file (the repo has
-   none, so it isn't legally open source yet, whatever the About page
-   says); then add `license "…"` to the template.
+1. ~~Pick a license~~: done, AGPL-3.0-or-later (`LICENSE`, and the
+   formula's `license`).
 2. **Create the tap repository** `wasichu/homebrew-randos` on GitHub
    (public; Homebrew finds `wasichu/randos/…` there by that name).
 3. **Release:** bump `version` in `clients/tui/mix.exs` if needed, commit,

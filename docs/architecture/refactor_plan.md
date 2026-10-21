@@ -191,7 +191,7 @@ pushed: releasing is the owner's call.
 **Built:** `packaging/homebrew/` (the formula template, `render.sh`, and the
 owner's remaining steps). The rendered formula installs and passes
 `brew test` through a local tap pointed at a locally built archive. Left
-for the owner: a LICENSE (the repo has none), the `wasichu/homebrew-randos`
+for the owner: the `wasichu/homebrew-randos`
 repository, the first `v*` tag, and publishing the rendered formula there
 (`just homebrew-formula VERSION`); automating that last step needs a token
 for the tap repo. The plan below stands.
@@ -599,6 +599,11 @@ Not scheduled; pick up when relevant.
 ## Decisions
 
 All 2026-10-19 unless noted.
+
+- **License (2026-10-21): AGPL-3.0-or-later.** The owner would mind someone
+  running a closed, modified randos; the AGPL's network clause means anyone
+  who runs a modified copy for others must offer them its source. The site's
+  GitHub link offers ours. Dependencies stay permissive (`deny.toml`).
 
 - **Order after Stage 1 (2026-10-20):** 4.3 Stage 2 (hardening, scoped by
   what the live call shows), then Stage 3 (echo cancellation), then

@@ -95,7 +95,7 @@ defmodule RandosWeb.AboutLive do
 
             <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
               <p class="text-stone-500">
-                {gettext("randos is open source and built in public.")}
+                {gettext("randos is free software (AGPL-3.0) and built in public.")}
               </p>
               <a
                 href="https://github.com/wasichu/randos"

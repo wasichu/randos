@@ -219,4 +219,11 @@ Run a single app instance until matchmaking and call coordination are moved to
 shared/distributed infrastructure. The current in-memory state model is not
 safe for horizontally scaled app instances.
 
+## License
+
+randos is free software under the GNU Affero General Public License,
+version 3 or (at your option) any later version: see [`LICENSE`](LICENSE).
+Anyone may use, change, and share it; if you run a modified randos for
+others to use over a network, you must offer them its source too.
+
 [live-site]: https://randos.slowinput.org
