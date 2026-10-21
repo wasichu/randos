@@ -53,7 +53,9 @@ defmodule Tui.Media.State do
           ice_servers: list() | nil,
           call: call() | nil,
           calls: non_neg_integer(),
-          last_call_error: String.t() | nil
+          last_call_error: String.t() | nil,
+          devices: map() | nil,
+          choice: %{input: String.t() | nil, output: String.t() | nil}
         }
 
   defstruct available?: false,
@@ -64,7 +66,9 @@ defmodule Tui.Media.State do
             ice_servers: nil,
             call: nil,
             calls: 0,
-            last_call_error: nil
+            last_call_error: nil,
+            devices: nil,
+            choice: %{input: nil, output: nil}
 
   @doc """
   `available?`: whether this TUI was started with a media helper at all.
@@ -87,10 +91,38 @@ defmodule Tui.Media.State do
   def start_mic_test(%{available?: false} = state, _endpoints),
     do: {fail_mic_test(state, "no audio helper (cargo build -p randos_media)"), []}
 
-  def start_mic_test(state, {input, output}) do
+  def start_mic_test(state, endpoints) do
+    {input, output} = with_choice(state, endpoints)
+
     {%{state | mic_test: %{phase: :starting, stats: nil, error: nil}},
      [{:request, {:loopback_start, input, output}}]}
   end
+
+  ## Devices
+
+  @doc """
+  Steps the chosen input or output to the next device: the system default
+  (`nil`), then each device by name, then back to the default. Takes effect
+  for the next mic test or call.
+  """
+  @spec cycle_device(t(), :input | :output) :: t()
+  def cycle_device(%{devices: %{inputs: inputs, outputs: outputs}} = state, which) do
+    names = if which == :input, do: inputs, else: outputs
+    options = [nil | names]
+    current = Enum.find_index(options, &(&1 == state.choice[which])) || 0
+    next = Enum.at(options, rem(current + 1, length(options)))
+    %{state | choice: Map.put(state.choice, which, next)}
+  end
+
+  def cycle_device(state, _which), do: state
+
+  # A chosen device replaces "device" (the default); test endpoints like
+  # "sine" and "null" are left alone.
+  defp with_choice(state, {input, output}),
+    do: {choose(input, state.choice.input), choose(output, state.choice.output)}
+
+  defp choose("device", name) when is_binary(name), do: "device:" <> name
+  defp choose(endpoint, _name), do: endpoint
 
   @doc "The mic test's time is up."
   @spec mic_test_done(t()) :: {t(), [command()]}
@@ -147,6 +179,17 @@ defmodule Tui.Media.State do
   def reply(%{call: %{}} = state, {:call_start, _, _, _, _}, {:error, _error}),
     do: give_up(state, "audio_unavailable")
 
+  def reply(state, :devices, {:ok, %{"inputs" => inputs, "outputs" => outputs} = list}) do
+    devices = %{
+      inputs: inputs,
+      outputs: outputs,
+      default_input: list["default_input"],
+      default_output: list["default_output"]
+    }
+
+    {%{state | devices: devices}, []}
+  end
+
   def reply(state, _command, _result), do: {state, []}
 
   @doc """
@@ -193,7 +236,9 @@ defmodule Tui.Media.State do
           state
       end
 
-    if state.call, do: give_up(state, "audio_failed"), else: {state, []}
+    # Ask what devices there are (they may have changed with the restart).
+    {state, commands} = if state.call, do: give_up(state, "audio_failed"), else: {state, []}
+    {state, commands ++ [{:request, :devices}]}
   end
 
   def event(state, _name, _payload), do: {state, []}
@@ -202,7 +247,7 @@ defmodule Tui.Media.State do
 
   defp maybe_start_call(%{call: nil, available?: true, role: role, ice_servers: ice} = state)
        when is_binary(role) and is_list(ice) do
-    {input, output} = state.endpoints
+    {input, output} = with_choice(state, state.endpoints)
     seq = state.calls + 1
 
     call = %{seq: seq, phase: :starting, connection: :connecting, stats: nil}

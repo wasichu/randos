@@ -117,6 +117,29 @@ defmodule Tui.AppTest do
       assert render_text(older) =~ "Time is up. Continue?"
     end
 
+    test "the idle screen shows the mic and speaker, and how to change them" do
+      {media, []} =
+        MediaState.reply(
+          MediaState.new(true),
+          :devices,
+          {:ok,
+           %{
+             "inputs" => ["Mic A", "Mic B"],
+             "outputs" => ["Speakers"],
+             "default_input" => "Mic A",
+             "default_output" => "Speakers"
+           }}
+        )
+
+      text = render_text(model("idle"), %{media_state: media})
+      assert text =~ "Mic: Mic A (system default)"
+      assert text =~ "Speaker: Speakers (system default)"
+      assert text =~ "i/o devices"
+
+      chosen = media |> MediaState.cycle_device(:input) |> MediaState.cycle_device(:input)
+      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic: Mic B"
+    end
+
     test "the status panel shows the current state, the connection, and the latest notice" do
       text = render_text(model("idle"))
       assert text =~ "Status:     not looking"

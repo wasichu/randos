@@ -44,7 +44,8 @@ unsolicited and carry `event` instead.
 | Request (`cmd`) | Fields | `ok` result |
 | --- | --- | --- |
 | `ping` | | `"pong"` |
-| `loopback_start` | `in`: `device`\|`sine`; `out`: `device`\|`null`\|`wav:PATH` | `{"input": "...", "output": "..."}`: what was opened |
+| `devices` | | `{"inputs": [...], "outputs": [...], "default_input", "default_output"}`: device names, to pass as `device:NAME` |
+| `loopback_start` | `in`: `device`\|`device:NAME`\|`sine`; `out`: `device`\|`device:NAME`\|`null`\|`wav:PATH` (`device` is the system default; a `device:NAME` that isn't there falls back to the default, and the reply's name says so) | `{"input": "...", "output": "..."}`: what was opened |
 | `loopback_stop` | | `true` (also when none was running) |
 | `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the call's, from the channel's `state`; `stun:` URLs give server-reflexive candidates, the first UDP `turn:` URL with credentials a relayed one); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address) | `{"input", "output"}` |
 | `call_signal` | `type` and `payload` of a peer's signal, exactly as the channel's `signal` push has them (`offer`, `answer`, `ice_candidate`; others are ignored) | `true` |

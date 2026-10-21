@@ -40,25 +40,39 @@ const MAX_PLAYBACK_QUEUE: Duration = Duration::from_millis(40);
 
 const FRAME_TIME: Duration = Duration::from_millis(20);
 
+/// `Device(None)` is the system default; `Device(Some(name))` a device by
+/// name (`device:NAME`), falling back to the default if it isn't there.
 pub enum Input {
-    Device,
+    Device(Option<String>),
     Sine,
 }
 
 pub enum Output {
-    Device,
+    Device(Option<String>),
     Null,
     Wav(PathBuf),
+}
+
+/// `device` or `device:NAME`.
+fn device_choice(s: &str) -> Option<Option<String>> {
+    match s.strip_prefix("device") {
+        Some("") => Some(None),
+        Some(rest) => rest
+            .strip_prefix(':')
+            .filter(|name| !name.is_empty())
+            .map(|name| Some(name.to_owned())),
+        None => None,
+    }
 }
 
 impl FromStr for Input {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "device" => Ok(Input::Device),
-            "sine" => Ok(Input::Sine),
-            other => Err(format!("unknown input {other:?} (device|sine)")),
+        match (s, device_choice(s)) {
+            (_, Some(name)) => Ok(Input::Device(name)),
+            ("sine", None) => Ok(Input::Sine),
+            (other, None) => Err(format!("unknown input {other:?} (device|device:NAME|sine)")),
         }
     }
 }
@@ -67,12 +81,16 @@ impl FromStr for Output {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Some(name) = device_choice(s) {
+            return Ok(Output::Device(name));
+        }
         match s {
-            "device" => Ok(Output::Device),
             "null" => Ok(Output::Null),
             other => match other.strip_prefix("wav:") {
                 Some(path) if !path.is_empty() => Ok(Output::Wav(PathBuf::from(path))),
-                _ => Err(format!("unknown output {other:?} (device|null|wav:PATH)")),
+                _ => Err(format!(
+                    "unknown output {other:?} (device|device:NAME|null|wav:PATH)"
+                )),
             },
         }
     }
@@ -202,8 +220,9 @@ impl Capture {
                 None,
                 "sine 440 Hz".to_owned(),
             )),
-            Input::Device => {
-                let (stream, ring, channels, rate, name) = open_capture(stats, notify)?;
+            Input::Device(wanted) => {
+                let (stream, ring, channels, rate, name) =
+                    open_capture(wanted.as_deref(), stats, notify)?;
                 let resampler = FrameResampler::new(rate, SAMPLE_RATE)?;
                 let len = resampler.input_len();
                 let end = DeviceEnd::new(ring, channels, rate, resampler, len);
@@ -281,8 +300,9 @@ impl Playback {
                     name,
                 ))
             }
-            Output::Device => {
-                let (stream, ring, channels, rate, name) = open_playback(stats, notify)?;
+            Output::Device(wanted) => {
+                let (stream, ring, channels, rate, name) =
+                    open_playback(wanted.as_deref(), stats, notify)?;
                 let resampler = FrameResampler::new(SAMPLE_RATE, rate)?;
                 let len = resampler.output_len();
                 let end = DeviceEnd::new(ring, channels, rate, resampler, len);
@@ -340,14 +360,20 @@ impl Playback {
 }
 
 fn open_capture(
+    wanted: Option<&str>,
     stats: &Arc<DeviceStats>,
     notify: &Notify,
 ) -> Result<(Stream, HeapCons<f32>, usize, u32, String), Error> {
-    let device = cpal::default_host()
-        .default_input_device()
-        .ok_or("no default input device")?;
+    let host = cpal::default_host();
+    let (device, note) = pick(
+        wanted,
+        host.input_devices()?,
+        host.default_input_device(),
+        "input",
+    )?;
     let config = pick_config(device.supported_input_configs()?, "input")?;
     let (config, name) = describe(&device, &config);
+    let name = name + &note;
     let channels = usize::from(config.channels);
     let rate = config.sample_rate;
 
@@ -373,14 +399,20 @@ fn open_capture(
 }
 
 fn open_playback(
+    wanted: Option<&str>,
     stats: &Arc<DeviceStats>,
     notify: &Notify,
 ) -> Result<(Stream, HeapProd<f32>, usize, u32, String), Error> {
-    let device = cpal::default_host()
-        .default_output_device()
-        .ok_or("no default output device")?;
+    let host = cpal::default_host();
+    let (device, note) = pick(
+        wanted,
+        host.output_devices()?,
+        host.default_output_device(),
+        "output",
+    )?;
     let config = pick_config(device.supported_output_configs()?, "output")?;
     let (config, name) = describe(&device, &config);
+    let name = name + &note;
     let channels = usize::from(config.channels);
     let rate = config.sample_rate;
 
@@ -466,11 +498,59 @@ fn pick_config(
     })
 }
 
-fn describe(device: &cpal::Device, config: &SupportedStreamConfig) -> (StreamConfig, String) {
-    let name = device
+/// The device named `wanted` among `devices`, or the default (with a note
+/// for the reply when a named one wasn't found: unplugged headphones mustn't
+/// stop a call).
+fn pick(
+    wanted: Option<&str>,
+    mut devices: impl Iterator<Item = cpal::Device>,
+    default: Option<cpal::Device>,
+    kind: &str,
+) -> Result<(cpal::Device, String), Error> {
+    if let Some(wanted) = wanted {
+        if let Some(device) = devices.find(|device| device_name(device) == wanted) {
+            return Ok((device, String::new()));
+        }
+        let device = default.ok_or_else(|| format!("no default {kind} device"))?;
+        return Ok((
+            device,
+            format!(" ({wanted:?} not found; using the default)"),
+        ));
+    }
+    Ok((
+        default.ok_or_else(|| format!("no default {kind} device"))?,
+        String::new(),
+    ))
+}
+
+fn device_name(device: &cpal::Device) -> String {
+    device
         .description()
         .map(|d| d.name().to_owned())
-        .unwrap_or_else(|_| "unknown device".into());
+        .unwrap_or_else(|_| "unknown device".into())
+}
+
+/// The audio devices there are, for choosing one (`devices` on the Port).
+#[derive(Debug, Serialize)]
+pub struct DeviceList {
+    pub inputs: Vec<String>,
+    pub outputs: Vec<String>,
+    pub default_input: Option<String>,
+    pub default_output: Option<String>,
+}
+
+pub fn list_devices() -> Result<DeviceList, Error> {
+    let host = cpal::default_host();
+    Ok(DeviceList {
+        inputs: host.input_devices()?.map(|d| device_name(&d)).collect(),
+        outputs: host.output_devices()?.map(|d| device_name(&d)).collect(),
+        default_input: host.default_input_device().map(|d| device_name(&d)),
+        default_output: host.default_output_device().map(|d| device_name(&d)),
+    })
+}
+
+fn describe(device: &cpal::Device, config: &SupportedStreamConfig) -> (StreamConfig, String) {
+    let name = device_name(device);
     let description = format!(
         "{name}, {}ch {} Hz {}, buffer {:?}",
         config.channels(),
@@ -499,4 +579,29 @@ fn samples_in(duration: Duration, rate: u32) -> usize {
 
 fn micros(duration: Duration) -> u64 {
     u64::try_from(duration.as_micros()).unwrap_or(u64::MAX)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn devices_by_name_or_the_default() {
+        assert!(matches!("device".parse::<Input>(), Ok(Input::Device(None))));
+        assert!(matches!(
+            "device:MacBook Pro Microphone".parse::<Input>(),
+            Ok(Input::Device(Some(name))) if name == "MacBook Pro Microphone"
+        ));
+        assert!(matches!(
+            "device:Shokz".parse::<Output>(),
+            Ok(Output::Device(Some(name))) if name == "Shokz"
+        ));
+        assert!(matches!("sine".parse::<Input>(), Ok(Input::Sine)));
+        assert!(matches!("null".parse::<Output>(), Ok(Output::Null)));
+        assert!(
+            "device:".parse::<Input>().is_err(),
+            "a name is required after the colon"
+        );
+        assert!("devices".parse::<Output>().is_err());
+    }
 }

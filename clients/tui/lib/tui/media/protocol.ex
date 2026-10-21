@@ -11,6 +11,7 @@ defmodule Tui.Media.Protocol do
   @type id :: pos_integer()
   @type command ::
           :ping
+          | :devices
           | {:loopback_start, input :: String.t(), output :: String.t()}
           | :loopback_stop
           | {:call_start, role :: String.t(), ice_servers :: list() | nil, input :: String.t(),
@@ -25,6 +26,7 @@ defmodule Tui.Media.Protocol do
 
   @spec encode(id(), command()) :: iodata()
   def encode(id, :ping), do: Jason.encode_to_iodata!(%{id: id, cmd: "ping"})
+  def encode(id, :devices), do: Jason.encode_to_iodata!(%{id: id, cmd: "devices"})
 
   def encode(id, {:loopback_start, input, output}),
     do: Jason.encode_to_iodata!(%{id: id, cmd: "loopback_start", in: input, out: output})

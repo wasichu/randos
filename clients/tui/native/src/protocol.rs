@@ -46,6 +46,8 @@ pub enum Command {
         #[serde(default)]
         payload: serde_json::Value,
     },
+    /// The audio devices there are: names to pass as `device:NAME`.
+    Devices,
     /// Mute or unmute the mic for the running call: while muted, silence is
     /// sent (RTP keeps flowing, so the peer sees a quiet call, not a stall).
     CallMute {
@@ -225,6 +227,13 @@ mod tests {
                     input: "sine".into(),
                     out: "null".into()
                 }
+            })
+        );
+        assert_eq!(
+            parse(br#"{"id":4,"cmd":"devices"}"#),
+            Ok(Request {
+                id: 4,
+                command: Command::Devices
             })
         );
         assert_eq!(

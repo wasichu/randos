@@ -119,6 +119,16 @@ defmodule Tui.App do
     {:noreply, run_media(state, step)}
   end
 
+  # Choose the mic (i) and speaker (o) on the idle screen.
+  def handle_event(
+        %Event.Key{code: code, kind: "press"},
+        %{model: %{connection: :connected, status: :idle}} = state
+      )
+      when code in ["i", "o"] do
+    which = if code == "i", do: :input, else: :output
+    {:noreply, %{state | media_state: MediaState.cycle_device(state.media_state, which)}}
+  end
+
   def handle_event(
         %Event.Key{code: "m", kind: "press"},
         %{model: %{status: status, audio?: true}} = state
@@ -374,7 +384,9 @@ defmodule Tui.App do
   defp help(_model), do: "q quit"
 
   defp mic_help(%{media_state: %{available?: false}}), do: ""
-  defp mic_help(%{model: %{connection: :connected, status: :idle}}), do: "  t mic test"
+
+  defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}),
+    do: "  t mic test" <> if(media.devices, do: "  i/o devices", else: "")
 
   defp mic_help(%{model: %{status: status, audio?: true}, media_state: %{call: call}})
        when status in [:connecting, :in_call, :extension_pending] and is_map(call),
@@ -462,7 +474,20 @@ defmodule Tui.App do
   defp connected_via(_path), do: "connected"
 
   defp mic_test_text(%{media_state: %{available?: false}}), do: ""
-  defp mic_test_text(%{media_state: %{mic_test: test}}), do: "\n\n" <> mic_test_line(test)
+
+  defp mic_test_text(%{media_state: %{mic_test: test} = media}),
+    do: "\n\n" <> mic_test_line(test) <> devices_text(media)
+
+  defp devices_text(%{devices: nil}), do: ""
+
+  defp devices_text(%{devices: devices, choice: choice}) do
+    "\n\nMic: #{device_label(choice.input, devices.default_input)}" <>
+      "\nSpeaker: #{device_label(choice.output, devices.default_output)}"
+  end
+
+  defp device_label(nil, nil), do: "system default"
+  defp device_label(nil, default), do: "#{default} (system default)"
+  defp device_label(name, _default), do: name
 
   defp mic_test_line(nil), do: "Press t to test your mic (wear headphones)."
   defp mic_test_line(%{phase: :failed, error: error}), do: "Mic test failed: " <> error

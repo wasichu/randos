@@ -148,6 +148,7 @@ fn handle(
     media.reap();
     match command {
         Command::Ping => Ok("pong".into()),
+        Command::Devices => Ok(serde_json::to_value(audio::list_devices()?)?),
         Command::LoopbackStart { input, out } => {
             media.ensure_idle()?;
             let (running, started) =

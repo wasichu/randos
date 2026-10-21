@@ -49,7 +49,7 @@ defmodule Tui.Media.StateTest do
     {state, []} = State.event(running(), "loopback_failed", %{"error" => "device gone"})
     assert %{phase: :failed, error: "device gone"} = state.mic_test
 
-    {state, []} = State.event(starting, "ready", %{})
+    {state, [{:request, :devices}]} = State.event(starting, "ready", %{})
     assert %{phase: :failed, error: "the audio helper restarted"} = state.mic_test
   end
 
@@ -67,7 +67,8 @@ defmodule Tui.Media.StateTest do
 
   test "events and replies with no test in progress change nothing" do
     idle = State.new(true)
-    assert State.event(idle, "ready", %{}) == {idle, []}
+    # A fresh helper: ask what devices there are.
+    assert State.event(idle, "ready", %{}) == {idle, [{:request, :devices}]}
     assert State.event(idle, "loopback_stats", %{}) == {idle, []}
     assert State.reply(idle, :loopback_stop, {:ok, true}) == {idle, []}
     assert State.mic_test_done(idle) == {idle, []}
@@ -163,8 +164,11 @@ defmodule Tui.Media.StateTest do
                State.reply(starting, @start, {:error, "no mic"})
 
       assert {%{call: nil},
-              [{:request, :call_stop}, {:push, "end_call", %{reason: "audio_failed"}}]} =
-               State.event(in_call(), "ready", %{})
+              [
+                {:request, :call_stop},
+                {:push, "end_call", %{reason: "audio_failed"}},
+                {:request, :devices}
+              ]} = State.event(in_call(), "ready", %{})
     end
 
     test "a call stops a running mic test; the mic test waits during a call" do
@@ -197,6 +201,40 @@ defmodule Tui.Media.StateTest do
 
       assert {%{call: %{levels: %{you: [0.5, 0.04], peer: [0.2, 0.04]}}}, []} =
                State.event(in_call(), "call_levels", levels)
+    end
+  end
+
+  describe "devices" do
+    @list %{
+      "inputs" => ["MacBook Pro Microphone", "Shokz"],
+      "outputs" => ["MacBook Pro Speakers"],
+      "default_input" => "MacBook Pro Microphone",
+      "default_output" => "MacBook Pro Speakers"
+    }
+
+    test "the list is kept; choices cycle default, each name, default" do
+      {state, []} = State.reply(State.new(true), :devices, {:ok, @list})
+      assert state.devices.inputs == ["MacBook Pro Microphone", "Shokz"]
+
+      state = State.cycle_device(state, :input)
+      assert state.choice.input == "MacBook Pro Microphone"
+      state = state |> State.cycle_device(:input) |> State.cycle_device(:input)
+      assert state.choice.input == nil, "back to the system default"
+    end
+
+    test "a chosen device is used by the mic test; test endpoints are left alone" do
+      {state, []} = State.reply(State.new(true), :devices, {:ok, @list})
+      state = state |> State.cycle_device(:input) |> State.cycle_device(:input)
+
+      assert {_, [{:request, {:loopback_start, "device:Shokz", "device"}}]} =
+               State.start_mic_test(state, {"device", "device"})
+
+      assert {_, [{:request, {:loopback_start, "sine", "null"}}]} =
+               State.start_mic_test(state, {"sine", "null"})
+    end
+
+    test "nothing to cycle before the list arrives" do
+      assert State.cycle_device(State.new(true), :input) == State.new(true)
     end
   end
 end
