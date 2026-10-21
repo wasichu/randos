@@ -71,6 +71,9 @@ pub struct Candidates {
     /// Added to the `Rtc` but not yet sent to the peer.
     unsent: Vec<String>,
     sdp_sent: bool,
+    /// Every remote candidate's IP so far, to permit on the relay as soon
+    /// as it's allocated (a permission asked for earlier fails quietly).
+    remote_ips: Vec<IpAddr>,
 }
 
 impl Candidates {
@@ -100,6 +103,7 @@ impl Candidates {
             relay,
             unsent: Vec::new(),
             sdp_sent: false,
+            remote_ips: Vec::new(),
         }
     }
 
@@ -117,10 +121,19 @@ impl Candidates {
         let server = relay.server();
         out.extend(relay.poll_transmit().0.into_iter().map(|m| (server, m)));
         let found = match relay.poll_event() {
-            Some(RelayEvent::Allocated(addr)) => Some(Found {
-                candidate: Candidate::relayed(addr, self.local, "udp")?,
-                kind: "relay",
-            }),
+            Some(RelayEvent::Allocated(addr)) => {
+                // Candidates that arrived before the allocation: their
+                // permissions couldn't be installed then. Without them the
+                // peer's checks to our relayed address are dropped until
+                // ICE happens to send to them first.
+                for &ip in &self.remote_ips {
+                    relay.permit(ip);
+                }
+                Some(Found {
+                    candidate: Candidate::relayed(addr, self.local, "udp")?,
+                    kind: "relay",
+                })
+            }
             Some(RelayEvent::Failed) => {
                 eprintln!("randos_media: TURN allocation failed; no relay candidate");
                 self.relay = None;
@@ -179,6 +192,9 @@ impl Candidates {
     /// A remote candidate: let it reach our relayed address (coturn drops
     /// anything from an IP without a permission).
     pub fn permit(&mut self, peer: IpAddr) {
+        if !self.remote_ips.contains(&peer) {
+            self.remote_ips.push(peer);
+        }
         if let Some(relay) = self.relay.as_mut() {
             relay.permit(peer);
         }
@@ -296,5 +312,49 @@ mod tests {
             Outbound::Direct
         ));
         assert!(candidates.close().is_empty());
+    }
+
+    #[test]
+    fn candidates_known_before_the_allocation_are_permitted_once_it_is_up() {
+        use std::net::UdpSocket;
+        use std::sync::atomic::Ordering;
+        use std::time::Duration;
+
+        let (server, seen) = crate::test_support::fake_turn_server();
+        let socket = UdpSocket::bind("127.0.0.1:0").unwrap();
+        socket
+            .set_read_timeout(Some(Duration::from_millis(20)))
+            .unwrap();
+        let local = socket.local_addr().unwrap();
+        let creds = crate::relay::TurnServer {
+            host: server.to_string(),
+            username: "user".into(),
+            credential: "pass".into(),
+        };
+        let mut candidates =
+            Candidates::new(local, vec![], Some(Relay::allocate(local, server, &creds)));
+
+        // The peer's candidate arrives before our allocation is up.
+        candidates.permit("127.0.0.1".parse().unwrap());
+
+        let mut buf = [0u8; 1500];
+        let mut allocated = false;
+        let deadline = Instant::now() + Duration::from_secs(3);
+        while Instant::now() < deadline && seen.create_permissions.load(Ordering::Relaxed) == 0 {
+            let (out, found) = candidates.poll(Instant::now()).unwrap();
+            allocated |= found.is_some_and(|f| f.kind == "relay");
+            for (to, datagram) in out {
+                socket.send_to(&datagram, to).unwrap();
+            }
+            if let Ok((n, from)) = socket.recv_from(&mut buf) {
+                candidates.inbound(from, &buf[..n]).unwrap();
+            }
+        }
+
+        assert!(allocated, "the relay came up");
+        assert!(
+            seen.create_permissions.load(Ordering::Relaxed) >= 1,
+            "the early candidate's permission was asked for, with nothing sent to it"
+        );
     }
 }
