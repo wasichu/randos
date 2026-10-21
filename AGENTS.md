@@ -83,7 +83,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 | Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
 | Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership, keyed by `{speaks, listens}` |
 | Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, media signal relay, and **call health** (connect timeout, disconnected grace, failure) from clients' raw `media_state` reports. Clients follow "Client obligations" in `participant_channel.md` and run no health timers of their own |
-| Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation (server never touches media) |
+| Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation, and the relay-only filter (server never touches media) |
 | Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back. `handle(participant, event) :: {participant, [effect]}` |
 | Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
 | Channel API | `RandosWeb.ParticipantSocket`/`ParticipantChannel` (shared `RandosWeb.ParticipantShell`) | Anonymous JSON API for non-browser clients (the TUI). Protocol: `docs/architecture/participant_channel.md`; keep it in sync with the channel |
@@ -97,7 +97,11 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Call timing constants (segments, extensions, the vote timeout, the connect
   timeout, the disconnected grace) live in `Randos.Calls.Lifecycle`, the one
   source of truth. Reuse them; don't hardcode them in the server or a client.
-- ICE/TURN config: `RandosWeb.IceServers` (env-driven; see README "TURN And STUN").
+- ICE/TURN config: `RandosWeb.IceServers` (env-driven; see `docs/self-hosting.md`).
+  Calls are relay-only whenever a TURN server is configured: the policy is
+  on `Randos.Calls.Call` (`ice_transport_policy`), set at boot, and the
+  coordinator enforces it on relayed signals (`Randos.Signaling.relay_only/2`).
+  Production refuses to boot without a relay unless `RANDOS_ALLOW_DIRECT_CALLS=true`.
 - A participant hears about its call only from the call's coordinator:
   `{:call_updated, %Randos.Calls.Call{}}` on every status change (starting with
   `:connecting`) and `{:signaling, msg}` from the peer. `Matchmaker.join/1`

@@ -14,10 +14,8 @@ defmodule Tui.Integration.TwoClientsTest do
   alias Tui.Model
 
   defp start_app(id) do
-    url = System.get_env("RANDOS_URL") || "ws://localhost:4010/participant/websocket"
-
     start_supervised!(
-      {Tui.App, name: nil, test_mode: {100, 24}, uri: url, test_pid: self()},
+      {Tui.App, name: nil, test_mode: {100, 24}, uri: server_url(), test_pid: self()},
       id: id
     )
   end

@@ -9,6 +9,33 @@ defmodule Tui.TestSupport do
   alias ExRatatui.Event
   alias ExRatatui.Runtime
 
+  @doc "The server the integration tests use (`RANDOS_URL`; `just tui-smoke` sets it)."
+  def server_url, do: System.get_env("RANDOS_URL") || "ws://localhost:4010/participant/websocket"
+
+  @doc """
+  Starts (supervised by the test) a TUI against `server_url/0` with its own
+  media helper, which plays `audio` (`{input, output}`; default a test tone
+  into nothing, so tests never make a sound).
+  """
+  def start_audio_tui(id, audio \\ {"sine", "null"}) do
+    media = :"#{id}_media"
+
+    app =
+      ExUnit.Callbacks.start_supervised!(
+        {Tui.App,
+         name: nil,
+         test_mode: {100, 24},
+         uri: server_url(),
+         test_pid: self(),
+         media: media,
+         call_audio: audio},
+        id: id
+      )
+
+    ExUnit.Callbacks.start_supervised!({Tui.Media, name: media, notify: app}, id: media)
+    app
+  end
+
   @doc "Presses keys on a running app."
   def keys(app, codes),
     do: Enum.each(codes, &Runtime.inject_event(app, %Event.Key{code: &1, kind: "press"}))

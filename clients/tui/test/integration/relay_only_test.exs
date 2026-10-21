@@ -14,25 +14,7 @@ defmodule Tui.Integration.RelayOnlyTest do
   @moduletag :relay_only
   @moduletag timeout: 60_000
 
-  defp start_tui(id) do
-    media = :"#{id}_media"
-    url = System.get_env("RANDOS_URL") || "ws://localhost:4010/participant/websocket"
-
-    app =
-      start_supervised!(
-        {Tui.App,
-         name: nil,
-         test_mode: {100, 24},
-         uri: url,
-         test_pid: self(),
-         media: media,
-         call_audio: {"sine", "null"}},
-        id: id
-      )
-
-    start_supervised!({Tui.Media, name: media, notify: app}, id: media)
-    app
-  end
+  defp matches(model), do: Enum.count(model.log, &(&1 == "matched; connecting"))
 
   # Every audio state the app has reported so far.
   defp media_states(app, acc \\ []) do
@@ -44,8 +26,8 @@ defmodule Tui.Integration.RelayOnlyTest do
   end
 
   test "with no reachable relay, two TUIs never connect directly" do
-    a = start_tui(:relay_a)
-    b = start_tui(:relay_b)
+    a = start_audio_tui(:relay_a)
+    b = start_audio_tui(:relay_b)
     a_model = await_model(a, &(&1.status == :idle and &1.audio?))
     b_model = await_model(b, &(&1.status == :idle and &1.audio?))
 
@@ -54,10 +36,13 @@ defmodule Tui.Integration.RelayOnlyTest do
     find(b, b_model, "ko", "fr")
 
     # Matched, then the call ends without connecting (the connect timeout,
-    # or the helper giving up on the relay).
+    # or the helper giving up on the relay). Requeued, the two rematch
+    # within a millisecond, too fast for a model update to show `looking`;
+    # a second match in the model's log (every status change is there)
+    # means the first call ended.
     for app <- [a, b] do
       await_model(app, &(&1.status == :connecting))
-      await_model(app, &(&1.status in [:looking, :idle]))
+      await_model(app, &(&1.status in [:looking, :idle] or matches(&1) >= 2))
     end
 
     for app <- [a, b] do

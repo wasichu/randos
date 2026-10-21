@@ -574,6 +574,23 @@ That's why `just turn-check` is in the gate for relay changes, and why the
 hand checks matter: echo cancellation on real speakers, Firefox, and TLS
 TURN on a network that blocks UDP.
 
+## Quality pass at the start of the voice lab (done 2026-10-21)
+
+Over what landed since the last pass (`13902a9`..: Tui.CLI and the
+release, relay-only and its enforcement, the screenshots, the docs
+split). Done before Phases 5 and 6 run in parallel, so the pass and Phase
+6's template edits don't collide.
+
+| Item | Decision | Why |
+| --- | --- | --- |
+| The test server's URL read in three TUI integration tests; the audio-TUI starter in two | **Merged** into `Tui.TestSupport` (`server_url/0`, `start_audio_tui/2`) | Same lines, same meaning; one place to change the test server |
+| AGENTS.md pointed at a README section that's gone, and didn't mention relay-only enforcement | **Fixed** | Stale docs mislead agents first |
+| Two `scenario` helpers in `call_smoke.mjs` and `relay_only_smoke.mjs` | **Left** | Different shapes (one runs a closure, one a whole call); a shared one would need options for both |
+| Relay-only explained in README, privacy, self-hosting, the channel doc, the roadmap | **Left**, checked consistent | Each is for a different reader at a different depth |
+| `Randos.Signaling`'s candidate parsing vs the helper's own in Rust | **Left** | Different languages and jobs (filter vs gather); nothing to share |
+
+No behaviour changes.
+
 ## Open items
 
 Not scheduled; pick up when relevant.
