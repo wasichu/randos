@@ -5,6 +5,8 @@ defmodule Randos.Application do
 
   use Application
 
+  alias Randos.Calls.ResumeTicket
+
   @impl true
   def start(_type, _args) do
     :ok = RandosWeb.IceServers.check!()
@@ -23,6 +25,8 @@ defmodule Randos.Application do
       # The public status page: aggregate call counts and the relay's health.
       {Randos.Stats, store: stats_store()},
       RandosWeb.RelayHealth,
+      # Resume tickets' hashes, each owned by its call's coordinator.
+      {Registry, keys: :unique, name: ResumeTicket.registry()},
       {DynamicSupervisor, strategy: :one_for_one, name: Randos.Calls.CallSupervisor},
       {Randos.Matchmaking.Matchmaker, call_options: call_options},
       # Start to serve requests, typically the last entry

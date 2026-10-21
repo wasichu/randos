@@ -85,8 +85,42 @@ How a call ends decides who is requeued:
 | `end_call` (incl. "can't start audio", with a reason) | `hangup` | only the peer; the sender goes `idle` (with `error`) |
 | `next` | `hangup` | both |
 | leaving on purpose (`peer_disconnected`) | `peer_disconnected` | the peer |
-| a client's process just goes away | `disconnected` | the peer |
+| a client's connection drops and it doesn't come back within the reconnect grace (10 s) | `disconnected` | the peer |
 | never connects, `failed`, disconnected past the grace | `connection_failed` | both |
+
+## Shared: a dropped connection, and coming back
+
+A client's connection to the server can drop mid-call (the network, a
+sleeping laptop) while its WebRTC call carries on. The call waits for it
+(`Lifecycle.reconnect_grace_seconds/0`), and the client rejoins with the
+one-time resume ticket it was given (client obligation 9). The browser's
+LiveSocket sends the ticket as a connect param; the TUI as a join param.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Client A
+    participant S as Server (CallCoordinator)
+    participant B as Client B
+
+    Note over A,B: At the match
+    S-->>A: resume_ticket (A's, after the first call state)
+    S-->>B: resume_ticket (B's)
+
+    Note over A,B: In the call, audio flowing (not through the server)
+    A--xS: A's socket drops (its process on the server goes away)
+    Note over S: A is away: the call waits up to the reconnect grace
+    S-->>B: state: call.peer_reconnecting = true
+    Note over A,B: A's WebRTC call keeps running
+
+    A->>S: reconnect, join with resume_ticket
+    Note over S: the ticket matches A's seat: the new process takes it
+    S-->>A: join reply: resumed, the same call
+    S-->>A: resume_ticket (a fresh one; each works once)
+    S-->>B: state: call.peer_reconnecting = false
+
+    Note over A,B: No ticket in time (or a used one): the call ends<br/>disconnected, B is requeued, and A's rejoin starts fresh
+```
 
 ## Different: the browser
 

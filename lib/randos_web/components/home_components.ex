@@ -72,6 +72,7 @@ defmodule RandosWeb.HomeComponents do
   attr :webrtc_role, :atom, default: nil
   attr :preferences, :map, required: true
   attr :peer_language, :string, default: nil
+  attr :peer_reconnecting, :boolean, default: false
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
 
@@ -114,6 +115,7 @@ defmodule RandosWeb.HomeComponents do
           <.call_panel
             preferences={@preferences}
             peer_language={@peer_language}
+            peer_reconnecting={@peer_reconnecting}
             webrtc_role={@webrtc_role}
             language_name={&language_name/1}
           />
@@ -316,6 +318,7 @@ defmodule RandosWeb.HomeComponents do
 
   attr :preferences, :map, required: true
   attr :peer_language, :string, default: nil
+  attr :peer_reconnecting, :boolean, default: false
   attr :webrtc_role, :atom, default: nil
   attr :language_name, :any, required: true
 
@@ -330,6 +333,15 @@ defmodule RandosWeb.HomeComponents do
         <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
           {gettext("Current call")}
         </h2>
+        <p
+          :if={@peer_reconnecting}
+          id="peer-reconnecting"
+          role="status"
+          class="mt-3 inline-flex items-center gap-2 rounded-md bg-stone-100 px-3 py-2 text-sm text-stone-700"
+        >
+          <.icon name="hero-arrow-path" class="size-4 text-teal-700 motion-safe:animate-spin" />
+          {gettext("Your rando's connection dropped; waiting a few seconds for them to come back.")}
+        </p>
       </div>
 
       <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
@@ -410,6 +422,7 @@ defmodule RandosWeb.HomeComponents do
       data-call-id={@call_id}
       data-ice-servers={@ice_servers}
       data-ice-transport-policy={@ice_transport_policy}
+      data-reconnect-grace-ms={Randos.Calls.Lifecycle.reconnect_grace_seconds() * 1000}
       data-voice-processor={@voice_processor}
       data-webrtc-state="not_started"
       data-microphone-muted="false"

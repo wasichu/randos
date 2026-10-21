@@ -11,6 +11,7 @@ defmodule RandosWeb.ParticipantChannelTest do
       form: 3,
       render_submit: 1,
       render_hook: 3,
+      render: 1,
       assert_push_event: 3,
       has_element?: 2
     ]
@@ -262,5 +263,81 @@ defmodule RandosWeb.ParticipantChannelTest do
     assert_reply ref, :ok
     assert_push "state", %{status: :idle, call: nil}, 1_000
     refute_push "ice_servers", _
+  end
+
+  describe "resuming after a dropped connection" do
+    defp join_with(params) do
+      ParticipantSocket
+      |> socket(nil, %{})
+      |> subscribe_and_join(RandosWeb.ParticipantChannel, "participant", params)
+    end
+
+    # A channel participant (with audio) in an active call with a browser.
+    defp call_with_browser(speaks, hears) do
+      {_state, socket} = join_participant()
+      find(socket, speaks, hears, true, %{"audio" => true})
+      assert_push "state", %{status: :looking}
+      view = browser_find(hears, speaks)
+
+      assert_push "state", %{status: :connecting, call: %{id: call_id}}
+      # Each participant gets a ticket for this call, only ever its own.
+      assert_push "resume_ticket", %{ticket: ticket}
+
+      connected = %{"type" => "media_state", "payload" => %{"state" => "connected"}}
+      assert_reply push(socket, "signal", connected), :ok
+      render_hook(view, "signal", connected)
+      assert_push "state", %{status: :in_call, call: %{status: :active}}, 2_000
+
+      {socket, view, call_id, ticket}
+    end
+
+    test "a dropped channel comes back into the same call with its ticket" do
+      {socket, view, call_id, ticket} = call_with_browser("tr", "id")
+
+      # The connection drops: the channel process dies without saying it's
+      # leaving. The call waits; the browser shows its rando reconnecting.
+      Process.unlink(socket.channel_pid)
+      ref = Process.monitor(socket.channel_pid)
+      Process.exit(socket.channel_pid, :kill)
+      assert_receive {:DOWN, ^ref, _, _, _}
+
+      render(view)
+      assert has_element?(view, "#peer-reconnecting")
+      assert has_element?(view, "#call-panel")
+
+      # Rejoining with the ticket: the same seat in the same call.
+      assert {:ok, %{state: state, resumed: true}, socket} =
+               join_with(%{"resume_ticket" => ticket})
+
+      assert %{status: :in_call, webrtc_role: :offerer, call: %{id: ^call_id} = call} = state
+      assert call.peer_reconnecting == false
+      assert [_ | _] = call.ice_servers
+      # A fresh ticket for the next blip; the used one is spent.
+      assert_push "resume_ticket", %{ticket: fresh}
+      assert fresh != ticket
+
+      render(view)
+      refute has_element?(view, "#peer-reconnecting")
+
+      # Signals flow again, both ways.
+      render_hook(view, "signal", %{"type" => "answer", "payload" => %{"sdp" => "v=0 back"}})
+      assert_push "signal", %{type: "answer", payload: %{"sdp" => "v=0 back"}}
+
+      assert_reply push(socket, "signal", %{"type" => "offer", "payload" => %{"sdp" => "v=0"}}),
+                   :ok
+
+      assert_push_event(view, "randos:signal", %{type: "offer"})
+
+      # The spent ticket now starts a fresh participant.
+      assert {:ok, %{state: %{status: :idle, call: nil}, resumed: false}, _socket} =
+               join_with(%{"resume_ticket" => ticket})
+    end
+
+    test "a ticket that isn't live starts a fresh participant" do
+      for params <- [%{"resume_ticket" => "not-a-ticket"}, %{"resume_ticket" => 42}, %{}] do
+        assert {:ok, %{state: %{status: :idle, call: nil}, resumed: false}, _socket} =
+                 join_with(params)
+      end
+    end
   end
 end

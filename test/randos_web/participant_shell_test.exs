@@ -64,7 +64,8 @@ defmodule RandosWeb.ParticipantShellTest do
                # Built without Call.new/2, so no media has been reported.
                media: %{self: nil, peer: nil},
                # The rando's language, a code: never who they are.
-               peer_speaks: "en"
+               peer_speaks: "en",
+               peer_reconnecting: false
              }
            }
 

@@ -368,18 +368,136 @@ defmodule Randos.Calls.CallCoordinatorTest do
     end
   end
 
-  test "participant disconnect ends the call" do
-    {match, [pid_a, pid_b]} = match()
-    start_call(match)
+  describe "a participant whose connection drops" do
+    alias Randos.Calls.ResumeTicket
 
-    assert_receive {:call_updated, %{status: :active}}
-    assert_receive {:call_updated, %{status: :active}}
+    # Each participant's ticket, as their topic received it.
+    defp tickets(call_pid) do
+      for _ <- 1..2, into: %{} do
+        assert_receive {:resume_ticket, ^call_pid, ticket}
+        {:ok, ^call_pid, id} = ResumeTicket.lookup(ticket)
+        {id, ticket}
+      end
+    end
 
-    Process.exit(pid_a, :kill)
-    assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
-    assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
+    # A long call, so only the reconnect grace can end it.
+    defp active(match, opts) do
+      call_pid = start_call(match, [call_duration_ms: 60_000] ++ opts)
+      tickets = tickets(call_pid)
+      assert_receive {:call_updated, %{status: :active}}
+      assert_receive {:call_updated, %{status: :active}}
+      {call_pid, tickets}
+    end
 
-    send(pid_b, :stop)
+    test "is waited for, and the call ends if they don't come back in time" do
+      {match, [pid_a, pid_b]} = match()
+      {_call_pid, _tickets} = active(match, reconnect_grace_ms: 50)
+
+      Process.exit(pid_a, :kill)
+      # Not ended: "a" is away, and both hear about it.
+      assert_receive {:call_updated, %{status: :active, away: ["a"]}}
+      refute_received {:call_updated, %{status: :ended}}
+
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}, 500
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
+      send(pid_b, :stop)
+    end
+
+    test "comes back with their ticket within the grace: same seat, a fresh ticket" do
+      {match, [pid_a, pid_b]} = match()
+      {call_pid, %{"a" => ticket}} = active(match, reconnect_grace_ms: 200)
+
+      Process.exit(pid_a, :kill)
+      assert_receive {:call_updated, %{away: ["a"]}}
+
+      new_pid = waiting_pid()
+
+      assert {:ok, %{call: call, entry: %{id: "a", pid: ^new_pid}, ticket: fresh}} =
+               CallCoordinator.resume(call_pid, "a", ticket, new_pid)
+
+      assert call.away == [] and call.status == :active and fresh != ticket
+      assert_receive {:call_updated, %{status: :active, away: []}}
+
+      # Past the old grace, the call goes on.
+      refute_receive {:call_updated, %{status: :ended}}, 300
+
+      # Each ticket works once; the fresh one is live.
+      assert {:error, :invalid_ticket} = CallCoordinator.resume(call_pid, "a", ticket, new_pid)
+      assert {:ok, ^call_pid, "a"} = ResumeTicket.lookup(fresh)
+
+      # The new process is the one the call watches now.
+      Process.exit(new_pid, :kill)
+      assert_receive {:call_updated, %{away: ["a"]}}
+      send(pid_b, :stop)
+    end
+
+    test "a ticket only opens its own seat, and junk is refused" do
+      {match, pids} = match()
+      {call_pid, %{"a" => ticket_a}} = active(match, [])
+
+      assert {:error, :invalid_ticket} = CallCoordinator.resume(call_pid, "b", ticket_a, self())
+      assert {:error, :invalid_ticket} = CallCoordinator.resume(call_pid, "a", "nope", self())
+      assert :error = ResumeTicket.lookup("nope")
+      assert :error = ResumeTicket.lookup(String.duplicate("x", 500))
+      assert :error = ResumeTicket.lookup(nil)
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "an old process not yet noticed gone is told it was replaced, and let go" do
+      {match, [pid_a, pid_b]} = match()
+      observer = self()
+
+      # "a"'s old process: alive, its connection dead but not noticed yet.
+      old =
+        spawn(fn ->
+          receive do
+            msg -> send(observer, {:old_got, msg})
+          end
+
+          receive do
+            :stop -> :ok
+          end
+        end)
+
+      match = %{match | participant_a: %{match.participant_a | pid: old}}
+      {call_pid, %{"a" => ticket}} = active(match, [])
+
+      new_pid = waiting_pid()
+      {:ok, _} = CallCoordinator.resume(call_pid, "a", ticket, new_pid)
+      assert_receive {:old_got, {:resumed_elsewhere, ^call_pid}}
+
+      # The old process going away now means nothing to the call.
+      Process.exit(old, :kill)
+      refute_receive {:call_updated, %{away: ["a"]}}, 100
+      Enum.each([pid_a, pid_b, new_pid], &send(&1, :stop))
+    end
+
+    test "tickets die with the call" do
+      {match, pids} = match()
+      {call_pid, %{"a" => ticket}} = active(match, [])
+
+      :ok = CallCoordinator.hang_up(call_pid, "a")
+      assert_receive {:call_updated, %{status: :ended}}
+      refute Process.alive?(call_pid)
+      # Refused at once (the call is gone)...
+      assert {:error, _} = CallCoordinator.resume(call_pid, "a", ticket, self())
+      # ...and the registry forgets it as soon as it notices the call ended.
+      assert Enum.any?(1..50, fn _ ->
+               Process.sleep(10)
+               ResumeTicket.lookup(ticket) == :error
+             end)
+
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "leaving on purpose still ends the call at once" do
+      {match, pids} = match()
+      {call_pid, _tickets} = active(match, reconnect_grace_ms: 60_000)
+
+      :ok = CallCoordinator.relay_signal(call_pid, "a", "peer_disconnected", %{})
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :peer_disconnected}}
+      Enum.each(pids, &send(&1, :stop))
+    end
   end
 
   test "extension vote after ended call is safe" do

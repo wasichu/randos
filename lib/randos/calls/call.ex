@@ -19,7 +19,8 @@ defmodule Randos.Calls.Call do
           extension_deadline_unix_ms: integer() | nil,
           ended_reason: Randos.Calls.Lifecycle.ended_reason() | nil,
           media: %{String.t() => Randos.Calls.Lifecycle.media_state()},
-          ice_transport_policy: ice_transport_policy()
+          ice_transport_policy: ice_transport_policy(),
+          away: [String.t()]
         }
 
   @typedoc """
@@ -40,7 +41,10 @@ defmodule Randos.Calls.Call do
     status: :connecting,
     extension_count: 0,
     media: %{},
-    ice_transport_policy: "all"
+    ice_transport_policy: "all",
+    # Participants whose connection to the server dropped, waiting for them
+    # to come back (Lifecycle.reconnect_grace_seconds/0).
+    away: []
   ]
 
   @doc """

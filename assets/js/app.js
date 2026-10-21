@@ -26,6 +26,7 @@ import {hooks as colocatedHooks} from "phoenix-colocated/randos"
 import topbar from "../vendor/topbar"
 import {WebRTCAudio} from "./hooks/call_hook"
 import {CallCountdown} from "./hooks/countdown_hook"
+import {resumeTicket, setResumeTicket} from "./randos/resume"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const browserLocale = navigator.languages?.[0] || navigator.language || null
@@ -34,9 +35,13 @@ const Hooks = {
   WebRTCAudio,
 }
 
+// The server hands each call's participants a resume ticket; a reconnect
+// sends it back (a function, so every join reads the current one).
+window.addEventListener("phx:randos:resume_ticket", event => setResumeTicket(event.detail.ticket))
+
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken, browser_locale: browserLocale},
+  params: () => ({_csrf_token: csrfToken, browser_locale: browserLocale, resume_ticket: resumeTicket()}),
   hooks: {...colocatedHooks, ...Hooks},
 })
 

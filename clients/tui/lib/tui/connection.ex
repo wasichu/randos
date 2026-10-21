@@ -5,13 +5,19 @@ defmodule Tui.Connection do
   Joins `"participant"` on connect and forwards everything to an owner
   process as `{:randos, message}`:
 
-    * `{:joined, reply}` — join reply (`%{"state" => _, "languages" => _}`);
-      after a reconnect this is a fresh participant, per the protocol
+    * `{:joined, reply}` — join reply (`%{"state" => _, "languages" => _,
+      "resumed" => _}`); after a reconnect mid-call it's the same
+      participant, back in its call (`"resumed" => true`), else a fresh one
     * `{:push, event, payload}` — server pushes (`state`, `signal`, `ice_servers`)
     * `{:reply, event, {:ok | :error, payload}}` — replies to our pushes
     * `:disconnected` — Slipstream reconnects (and we rejoin) automatically
 
   Send events with `push/3`.
+
+  If the connection drops during a call, it rejoins with the call's latest
+  resume ticket (the server's `resume_ticket` push, kept here in memory
+  only), so the server puts us back in the call (Client obligation 9);
+  the media helper's call keeps running meanwhile.
   """
   use Slipstream
 
@@ -48,21 +54,46 @@ defmodule Tui.Connection do
     owner = Keyword.fetch!(opts, :owner)
 
     {:ok, socket} = connect(Keyword.take(opts, [:uri, :test_mode?]))
-    {:ok, assign(socket, owner: owner, pending: %{})}
+    {:ok, assign(socket, owner: owner, pending: %{}, resume_ticket: nil)}
   end
 
+  @doc false
+  # Tests: the websocket connection's process, to drop it like a network
+  # blip would.
+  def __connection_pid__(connection), do: GenServer.call(connection, :connection_pid)
+
   @impl Slipstream
-  def handle_connect(socket), do: {:ok, join(socket, @topic, %{})}
+  def handle_connect(socket) do
+    params =
+      case socket.assigns.resume_ticket do
+        nil -> %{}
+        ticket -> %{resume_ticket: ticket}
+      end
+
+    {:ok, join(socket, @topic, params)}
+  end
 
   @impl Slipstream
   def handle_join(@topic, reply, socket) do
     notify(socket, {:joined, reply})
+    # A refused ticket (the call is over) is no use any more.
+    socket = if reply["resumed"], do: socket, else: assign(socket, :resume_ticket, nil)
     {:ok, socket}
   end
 
   @impl Slipstream
+  def handle_message(@topic, "resume_ticket", %{"ticket" => ticket}, socket)
+      when is_binary(ticket),
+      do: {:ok, assign(socket, :resume_ticket, ticket)}
+
   def handle_message(@topic, event, payload, socket) do
     notify(socket, {:push, event, payload})
+    # Out of a call: its ticket is spent.
+    socket =
+      if event == "state" and payload["call"] == nil,
+        do: assign(socket, :resume_ticket, nil),
+        else: socket
+
     {:ok, socket}
   end
 
@@ -85,6 +116,9 @@ defmodule Tui.Connection do
   end
 
   @impl Slipstream
+  def handle_call(:connection_pid, _from, socket),
+    do: {:reply, Slipstream.Socket.channel_pid(socket), socket}
+
   def handle_call(:leave, from, socket) do
     payload = %{type: "peer_disconnected", payload: %{reason: "quit"}}
 

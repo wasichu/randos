@@ -19,22 +19,55 @@ defmodule RandosWeb.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    preferences = default_preferences(socket)
+    socket =
+      socket
+      |> assign(:page_title, "randos")
+      |> assign(:ice_servers, nil)
+      |> assign(:voice_processor, RandosWeb.VoiceProcessor.configured())
+      |> assign(:call_id, nil)
+
+    case connected?(socket) && resume(socket) do
+      {:ok, socket} -> {:ok, socket}
+      _fresh -> {:ok, start_fresh(socket, default_preferences(socket))}
+    end
+  end
+
+  # A page whose connection dropped mid-call reconnects with the resume
+  # ticket it was given (held in the page's memory, sent as a connect
+  # param) and takes its place in the call again; the page's WebRTC call
+  # kept running meanwhile.
+  defp resume(socket) do
+    with ticket when is_binary(ticket) <- get_connect_params(socket)["resume_ticket"],
+         {:ok, participant, fresh} <- ParticipantShell.resume(ticket) do
+      Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
+
+      preferences = %{
+        "speaking_language" => participant.preferences.speaks,
+        "hearing_languages" => participant.preferences.hears,
+        "adult_acknowledgment" => "true"
+      }
+
+      {:ok,
+       socket
+       |> assign(:preferences, preferences)
+       |> assign_form(preferences)
+       |> assign(:ice_servers, Jason.encode!(RandosWeb.IceServers.list()))
+       |> assign_participant(participant)
+       |> push_event("randos:resume_ticket", %{ticket: fresh})}
+    end
+  end
+
+  defp start_fresh(socket, preferences) do
     participant = Participant.new(participant_preferences(preferences))
 
     if connected?(socket) do
       Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
     end
 
-    {:ok,
-     socket
-     |> assign(:page_title, "randos")
-     |> assign(:preferences, preferences)
-     |> assign_form(preferences)
-     |> assign(:ice_servers, nil)
-     |> assign(:voice_processor, RandosWeb.VoiceProcessor.configured())
-     |> assign(:call_id, nil)
-     |> assign_participant(participant)}
+    socket
+    |> assign(:preferences, preferences)
+    |> assign_form(preferences)
+    |> assign_participant(participant)
   end
 
   @impl true
@@ -73,6 +106,11 @@ defmodule RandosWeb.HomeLive do
   def handle_info({:call_updated, _call} = event, socket), do: {:noreply, run(socket, event)}
   def handle_info({:signaling, _message} = event, socket), do: {:noreply, run(socket, event)}
 
+  def handle_info({:resume_ticket, _pid, _ticket} = event, socket),
+    do: {:noreply, run(socket, event)}
+
+  def handle_info({:resumed_elsewhere, _pid} = event, socket), do: {:noreply, run(socket, event)}
+
   @impl true
   def terminate(_reason, _socket) do
     Matchmaker.leave(self())
@@ -87,6 +125,16 @@ defmodule RandosWeb.HomeLive do
   end
 
   defp deliver({:push_signal, message}, socket), do: push_event(socket, "randos:signal", message)
+
+  defp deliver({:resume_ticket, ticket}, socket),
+    do: push_event(socket, "randos:resume_ticket", %{ticket: ticket})
+
+  # Another connection took this participant's seat (this one is a ghost of
+  # a dropped connection): let go of it and start over.
+  defp deliver(:detach, socket) do
+    Phoenix.PubSub.unsubscribe(Randos.PubSub, socket.assigns.participant.topic)
+    start_fresh(socket, socket.assigns.preferences)
+  end
 
   defp deliver({:ice_servers, servers}, socket),
     do: assign(socket, :ice_servers, servers && Jason.encode!(servers))
@@ -106,6 +154,11 @@ defmodule RandosWeb.HomeLive do
       participant.call && ParticipantShell.peer_speaks(participant.call, participant.id)
     )
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
+    |> assign(
+      :peer_reconnecting,
+      participant.call != nil and
+        ParticipantShell.peer_reconnecting?(participant.call, participant.id)
+    )
   end
 
   @impl true
@@ -126,6 +179,7 @@ defmodule RandosWeb.HomeLive do
             voice_processor={@voice_processor}
             preferences={@preferences}
             peer_language={@peer_language}
+            peer_reconnecting={@peer_reconnecting}
             form={@form}
             matchmaking_error={@matchmaking_error}
           />

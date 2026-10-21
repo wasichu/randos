@@ -38,6 +38,31 @@ defmodule Tui.ModelTest do
     assert model.log == ["connected to the server"]
   end
 
+  test "after a dropped connection: back in the call, or a fresh participant" do
+    call = %{"id" => "call-1", "status" => "active"}
+    in_call = %{joined("in_call") | call: call}
+    {dropped, []} = Model.disconnected(in_call)
+    assert dropped.connection == :connecting
+
+    # Resumed: the same participant, still in the call, said so in the log.
+    reply = %{"state" => state("in_call", %{"call" => call}), "languages" => @languages}
+    {back, []} = Model.joined(dropped, Map.put(reply, "resumed", true))
+    assert {back.connection, back.status, back.call} == {:connected, :in_call, call}
+    assert hd(back.log) == "reconnected; back in the call"
+    # No "status changed" line: it never left the call.
+    refute "in call" in Enum.take(back.log, 1)
+
+    # Refused (the call ended meanwhile): a fresh participant.
+    {fresh, []} =
+      Model.joined(dropped, %{
+        "state" => state("idle"),
+        "languages" => @languages,
+        "resumed" => false
+      })
+
+    assert {fresh.status, hd(fresh.log)} == {:idle, "reconnected as a new participant"}
+  end
+
   test "keys are ignored until connected" do
     assert {%Model{}, []} = Model.key(Model.new(), "enter")
   end
