@@ -8,6 +8,9 @@
 #
 #   test/e2e/with_test_server.sh <server log> <command> [args...]
 #
+# It never live-reloads the page (RANDOS_TEST_SERVER=1, config/dev.exs): the
+# asset watchers rebuild at startup, and a reload mid-test resets the page.
+#
 # The server can't outlive this script: besides the EXIT trap, a watchdog in
 # the server halts it within a second or two once this script is gone (even
 # after kill -9, which skips the trap). And a server already on :4010 is an
@@ -44,7 +47,7 @@ unset TURN_SHARED_SECRET TURN_HOST TURN_SERVER_URL TURNS_SERVER_URL TURN_STUN_UR
 if [ "${RANDOS_TEST_UNREACHABLE_RELAY:-}" = 1 ]; then
   export TURN_SERVER_URL=turn:127.0.0.1:9 TURN_SHARED_SECRET=test-only-secret
 fi
-RANDOS_TEST_PARENT_PID=$$ PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS="${RANDOS_CALL_SEGMENT_MS:-8000}" \
+RANDOS_TEST_SERVER=1 RANDOS_TEST_PARENT_PID=$$ PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS="${RANDOS_CALL_SEGMENT_MS:-8000}" \
   elixir -e "$watchdog" -S mix phx.server > "$log" 2>&1 &
 server=$!
 trap 'kill $server 2>/dev/null; wait $server 2>/dev/null || true' EXIT

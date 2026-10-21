@@ -47,16 +47,20 @@ endpoint_config =
 
 config :randos, RandosWeb.Endpoint, endpoint_config
 
-# Watch static and templates for browser reloading.
-config :randos, RandosWeb.Endpoint,
-  live_reload: [
-    web_console_logger: true,
-    patterns: [
+# Watch static and templates for browser reloading. Not on the e2e test
+# server (test/e2e/with_test_server.sh sets RANDOS_TEST_SERVER): its asset
+# watchers rebuild at startup, and a reload mid-test resets the page.
+live_reload_patterns =
+  if System.get_env("RANDOS_TEST_SERVER") == "1",
+    do: [],
+    else: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/randos_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
     ]
-  ]
+
+config :randos, RandosWeb.Endpoint,
+  live_reload: [web_console_logger: true, patterns: live_reload_patterns]
 
 # Enable dev routes for dashboard and mailbox
 config :randos, dev_routes: true

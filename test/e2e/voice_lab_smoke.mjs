@@ -25,7 +25,13 @@ try {
   for (const source of sources) {
     await page.eval(`document.querySelector("#voice-lab-source").value = ${JSON.stringify(source)}`)
     await page.click("#voice-lab-render")
-    await page.waitFor(`["rendered", "failed"].includes(document.querySelector("#voice-lab-status").dataset.state)`, `rendering ${source}`, 60_000)
+    try {
+      await page.waitFor(`["rendered", "failed"].includes(document.querySelector("#voice-lab-status").dataset.state)`, `rendering ${source}`, 60_000)
+    } catch (error) {
+      // Say where it stuck: the lab's own status, and whether the button is enabled.
+      const where = await page.eval(`JSON.stringify({state: document.querySelector("#voice-lab-status").dataset.state, text: document.querySelector("#voice-lab-status").textContent, renderDisabled: document.querySelector("#voice-lab-render").disabled, selected: document.querySelector("#voice-lab-source").value})`)
+      throw new Error(`${error.message} (lab: ${where})`)
+    }
     const status = await page.eval(`document.querySelector("#voice-lab-status").textContent`)
     check(!status.startsWith("Render failed"), `${source}: ${status}`)
 

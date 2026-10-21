@@ -188,7 +188,10 @@ are product requirements, not suggestions. Don't add features that violate them.
   checked fresh by `just voice-wasm-check` in `native-check`). The voice
   crate uses `deny(unsafe_code)`, not `forbid`; its README explains the one
   exception (the WASM exports' `no_mangle`). The rest of this section's
-  rules apply to it too. The workspace lets rust-analyzer and `cargo` work
+  rules apply to it too. `tools/voice-eval` is the anonymization benchmark
+  (`just voice-eval`; `just voice-eval-test` offline); it renders through
+  `voice/examples/render.rs`, so a processor change shows up there. Rerun it
+  after changing a processor, and commit `results/benchmark.json`. The workspace lets rust-analyzer and `cargo` work
   from the repo root; build output goes to `/target`, the lockfile is the
   root `Cargo.lock`.
 - Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,

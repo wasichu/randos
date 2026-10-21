@@ -319,6 +319,20 @@ headless Chrome: the passthrough seam adds ~20 ms to a call, the pitch
 shifter ~20 ms more, at well under 1% of real time. Next: the owner
 listens; re-measure the seam on real devices.
 
+**Benchmark (2026-10-21):** `tools/voice-eval` (`just voice-eval`) measures
+identity (ECAPA-TDNN EER against ignorant, informed and shift-back
+attackers) and intelligibility (Whisper WER) on a 20-speaker LibriSpeech
+subset, through the real processors; results show in the lab. First
+results: no pitch-shift setting hides a speaker. Fixed shifts fool only the
+ignorant attacker (informed EER 0–7%, shifted back 0–1%); random per-clip
+shifts fool the informed attacker (38%) but are undone by searching for the
+shift (0%). WER stays at 5–10% (original 5.7%). Next processors must change
+what the speaker model keys on, not just pitch: formant shifting
+independent of pitch, randomized per call; McAdams coefficients (the
+VoicePrivacy DSP baseline); then voice conversion to a fixed target voice
+(the model mini-project). Each future processor needs its own "undo it"
+attacker.
+
 ### Decisions (2026-10-19)
 
 1. **Processors are written once, in Rust** (one implementation, no
