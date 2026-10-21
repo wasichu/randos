@@ -19,6 +19,10 @@ defmodule Randos.Application do
       RandosWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:randos, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Randos.PubSub},
+      {Task.Supervisor, name: Randos.TaskSupervisor},
+      # The public status page: aggregate call counts and the relay's health.
+      Randos.Stats,
+      RandosWeb.RelayHealth,
       {DynamicSupervisor, strategy: :one_for_one, name: Randos.Calls.CallSupervisor},
       {Randos.Matchmaking.Matchmaker, call_options: call_options},
       # Start to serve requests, typically the last entry

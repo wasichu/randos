@@ -54,6 +54,8 @@ defmodule Randos.Calls.CallCoordinator do
   defstruct [
     :call,
     :started_at,
+    # When the call became active (monotonic), for its connected length.
+    :activated_at,
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
@@ -134,8 +136,12 @@ defmodule Randos.Calls.CallCoordinator do
     Logger.metadata(call_id: data.call.id, match_id: match.id)
     Logger.info("call started")
 
+    # The two speaking languages (sorted) feed the public, aggregate counts
+    # (Randos.Stats); nothing about who is in the call.
     :telemetry.execute([:randos, :call, :start], %{system_time: System.system_time()}, %{
-      call_id: data.call.id
+      call_id: data.call.id,
+      languages:
+        Enum.sort([match.participant_a.speaks_language, match.participant_b.speaks_language])
     })
 
     {:ok, :connecting, data}
@@ -174,7 +180,9 @@ defmodule Randos.Calls.CallCoordinator do
   # Timers.
   def handle_event(:state_timeout, :activate, :connecting, data) do
     Logger.info("call activated")
-    {:next_state, :active, %{data | call: Lifecycle.activate(data.call)}}
+
+    {:next_state, :active,
+     %{data | call: Lifecycle.activate(data.call), activated_at: System.monotonic_time()}}
   end
 
   def handle_event(:state_timeout, :connect_timeout, :connecting, data) do
@@ -288,7 +296,10 @@ defmodule Randos.Calls.CallCoordinator do
       state == :connecting and Lifecycle.audio?(data.call) and
           Lifecycle.media_connected?(data.call) ->
         Logger.info("call media connected")
-        {:next_state, :active, %{data | call: Lifecycle.activate(data.call)}, actions}
+
+        {:next_state, :active,
+         %{data | call: Lifecycle.activate(data.call), activated_at: System.monotonic_time()},
+         actions}
 
       unchanged? ->
         {:keep_state, data, actions}
@@ -323,9 +334,12 @@ defmodule Randos.Calls.CallCoordinator do
     demonitor_participants(data)
     data = %{data | call: Lifecycle.end_call(data.call, reason)}
 
+    now = System.monotonic_time()
+
+    # `connected`: how long the call was active (nil if it never was).
     :telemetry.execute(
       [:randos, :call, :stop],
-      %{duration: System.monotonic_time() - data.started_at},
+      %{duration: now - data.started_at, connected: data.activated_at && now - data.activated_at},
       %{call_id: data.call.id, reason: reason, extension_count: data.call.extension_count}
     )
 
