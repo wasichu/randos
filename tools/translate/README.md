@@ -43,11 +43,32 @@ every check. It **fills only empty entries**. With `--redo` it also replaces
 entries that still hold exactly what the machine wrote last time (recorded
 in `state/<locale>.json`); anything a person changed is never overwritten.
 
+## The review page
+
+```bash
+uv run python -m randos_translate.cli review   # results/*.json -> results/review.json
+just dev                                         # then http://localhost:4000/dev/translations
+```
+
+`review` (`review.py`) combines every run (the latest per model, locale,
+and string) and re-runs the checks, so an improved check applies to old
+runs. For each locale and string it puts the models' translations side by
+side and works out how much they **disagree** (1 − mean pairwise chrF,
+strings sorted by it), whether the **evaluators disagree** (a model ranked
+first by one scorer and last by another; needs two scorers, so it lights
+up once MetricX or COMET-Kiwi runs), the **best** translation (passes
+every check, best mean rank), and each locale's **winner** (passes every
+check most often, then mean rank). The dev-only page
+(`RandosDev.TranslationReviewLive`) shows it, with filters for each of
+those.
+
 ## Contestants
 
 Wired: **opus-mt** (Helsinki-NLP Marian models, one per language pair;
-`models/opus_mt.py` lists the pairs, so far `es`). Planned (`models/__init__.py`):
-Hy-MT2, TranslateGemma, MADLAD-400, M2M100. Seq2seq models get placeholders
+`models/opus_mt.py` lists the pairs: `es`, `ar`) and **m2m100**
+(facebook/m2m100_418M, MIT, ~2 GB, one model for all 14 locales and the
+back-translation). Planned (`models/__init__.py`): Hy-MT2, TranslateGemma,
+MADLAD-400. Seq2seq models get placeholders
 and glossary terms swapped for `[0]`, `[1]`... tokens and restored after
 (`protect`/`restore`); instruction models get the same rules in the prompt.
 
@@ -58,3 +79,11 @@ Hugging Face cache) on the first 12 strings: 12/12 pass the checks, mean
 chrF 82.6; chrF singles out the one bad translation ("About randos" →
 "Alrededor de randos", "around randos", 43.9). The proof's output is
 `results/proof-opus-mt-es.json`. No `.po` file has been filled.
+
+Then, for the review page: both small models on all 85 strings for `es`,
+and the first 20 for `ar` (both) and `ja` (M2M100 only; no direct Opus-MT
+pair). Opus-MT wins `es` (85/85 pass, mean chrF 78.3, vs 82/85 and 65.5);
+M2M100 wins `ar` (19/20 vs 10/20: Opus-MT's en→ar returns nothing, "& &
+&", or a loop of "hey" for short strings). Useful catches: M2M100 turned
+"Mute" into "Muerte" (death), and "& & &" passing the script check exposed
+a hole, now closed (no letters at all fails when the source has some).

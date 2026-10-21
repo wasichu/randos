@@ -62,15 +62,21 @@ def _script(char: str) -> str | None:
     return "OTHER"
 
 
-def script(locale: str, text: str) -> tuple[bool, str]:
-    """The letters are in the locale's script (ignoring placeholders and the
-    glossary terms, which stay Latin)."""
+def _letters(text: str) -> list[str]:
     stripped = PLACEHOLDER.sub("", text)
     for term in GLOSSARY:
         stripped = re.sub(term, "", stripped, flags=re.IGNORECASE)
-    letters = [s for s in map(_script, stripped) if s]
+    return [s for s in map(_script, stripped) if s]
+
+
+def script(locale: str, text: str, source: str | None = None) -> tuple[bool, str]:
+    """The letters are in the locale's script (ignoring placeholders and the
+    glossary terms, which stay Latin). A translation with no letters at all
+    fails when the source has some (a model that answered "& & &")."""
+    letters = _letters(text)
     if not letters:
-        return (True, "")
+        ok = source is None or not _letters(source)
+        return (ok, "" if ok else "no letters")
     if locale in LATIN_LOCALES:
         share = sum(s == "LATIN" for s in letters) / len(letters)
     else:
@@ -84,6 +90,6 @@ def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dic
         "placeholders": placeholders(source, text),
         "glossary": glossary(source, text),
         "length": length(source, text, button=button),
-        "script": script(locale, text),
+        "script": script(locale, text, source),
     }
     return {name: {"ok": ok, "detail": detail} for name, (ok, detail) in results.items()}

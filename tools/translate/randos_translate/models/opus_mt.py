@@ -11,6 +11,7 @@ from . import protect, restore
 # locale -> (en->X model, X->en model for back-translation)
 PAIRS = {
     "es": ("Helsinki-NLP/opus-mt-en-es", "Helsinki-NLP/opus-mt-es-en"),
+    "ar": ("Helsinki-NLP/opus-mt-en-ar", "Helsinki-NLP/opus-mt-ar-en"),
 }
 
 

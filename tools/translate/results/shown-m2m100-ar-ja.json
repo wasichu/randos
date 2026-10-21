@@ -1,0 +1,1678 @@
+{
+  "run": {
+    "model": "m2m100",
+    "locales": [
+      "ar",
+      "ja"
+    ],
+    "strings": 20,
+    "at": "20261021T131433Z",
+    "seconds": 10.9
+  },
+  "summary": {
+    "ar": {
+      "strings": 20,
+      "all_checks_pass": 19,
+      "failed": {
+        "placeholders": 0,
+        "glossary": 1,
+        "length": 0,
+        "script": 0
+      },
+      "mean_chrf": 49.9
+    },
+    "ja": {
+      "strings": 20,
+      "all_checks_pass": 15,
+      "failed": {
+        "placeholders": 1,
+        "glossary": 4,
+        "length": 0,
+        "script": 0
+      },
+      "mean_chrf": 52.1
+    }
+  },
+  "entries": [
+    {
+      "key": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+      "msgid": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "وتستمر المحادثة %{call} دقائق، وعندما يصل الوقت، فإنه يستمر لفترة أخرى %{extension} دقائق فقط إذا اختار كلا الشخصين، حتى %{max} دقائق على الإطلاق.",
+      "back_translation": "The conversation lasts %{call} minutes, and when the time comes, it lasts for another period %{extension} minutes only if both people choose, even %{max} minutes at all.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 64.5,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "A doorway, not a platform",
+      "msgid": "A doorway, not a platform",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "الباب وليس منصة",
+      "back_translation": "The door and not the platform.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.5,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "About",
+      "msgid": "About",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "حول",
+      "back_translation": "About",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "About randos",
+      "msgid": "About randos",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "عن [ 0 ]",
+      "back_translation": "by [ 0 ]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['randos', 'rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 2.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Accept the 18+ acknowledgment before looking for a rando.",
+      "msgid": "Accept the 18+ acknowledgment before looking for a rando.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "أقبل الاعتراف 18+ قبل البحث عن rando.",
+      "back_translation": "Accept recognition 18+ before searching for rando.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.5,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Attempting to reconnect",
+      "msgid": "Attempting to reconnect",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "محاولة إعادة الاتصال",
+      "back_translation": "Trying to re-connect",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.9,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Both people choose whether to continue.",
+      "msgid": "Both people choose whether to continue.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "كلاهما يختار ما إذا كان سيستمر.",
+      "back_translation": "Both of them decide whether it will continue.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 46.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Cancel",
+      "msgid": "Cancel",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "إلغاء",
+      "back_translation": "Canceled",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 88.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Choose supported conversation languages.",
+      "msgid": "Choose supported conversation languages.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "اختر لغات المحادثة المدعومة.",
+      "back_translation": "Select the supported language.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.9,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Choose your languages.",
+      "msgid": "Choose your languages.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "اختر لغاتك",
+      "back_translation": "Choose your language.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 90.3,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Connecting",
+      "msgid": "Connecting",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "اتصال",
+      "back_translation": "Contact",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 17.1,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Connection:",
+      "msgid": "Connection:",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "الاتصال :",
+      "back_translation": "Contact to:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 17.8,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Conversation is active.",
+      "msgid": "Conversation is active.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "الحوار نشط.",
+      "back_translation": "Dialogue is active.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 39.4,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+      "msgid": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "المحادثات خاصة ولا يتم تخزينها.الخادم ينسق المكالمة، ولكنها لا تحافظ على التسجيلات أو بناء تاريخ حول من تحدثت مع.",
+      "back_translation": "Speakers are private and are not stored.The server coordinates the call, but they do not keep records or build dates about who you talked with.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 66.2,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Current call",
+      "msgid": "Current call",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "الاتصال الحالي",
+      "back_translation": "current contact",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 49.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Ephemeral by default",
+      "msgid": "Ephemeral by default",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "إيفيمرال حسب الافتراض",
+      "back_translation": "Euphoria as presumed.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 12.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Finding a compatible rando.",
+      "msgid": "Finding a compatible rando.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "العثور على متوافق rando",
+      "back_translation": "Find a compatible rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 72.5,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Finding a rando",
+      "msgid": "Finding a rando",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "العثور على rando",
+      "back_translation": "It is found rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 26.5,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+      "msgid": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "أنا 18 أو أكبر وأدرك أن المحادثات مجهولة ومجهولة.",
+      "back_translation": "I am 18 or older and realize that the conversations are unknown and unknown.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 50.4,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "I want them to speak in",
+      "msgid": "I want them to speak in",
+      "msgctxt": null,
+      "locale": "ar",
+      "text": "أريد منهم أن يتكلموا في",
+      "back_translation": "I want them to speak.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 88.1,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+      "msgid": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "会話は1分間続きますが、時間が上がると、2人が選択した場合にのみ1分間続きますが、2分間まで続きます。",
+      "back_translation": "The conversation lasts for one minute, but when the time increases, it lasts for one minute only if the two have chosen, but it lasts for two minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{call}', '%{extension}', '%{max}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 33.9,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "A doorway, not a platform",
+      "msgid": "A doorway, not a platform",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "プラットフォームではなくドア",
+      "back_translation": "Not the platform, but the door.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 38.7,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "About",
+      "msgid": "About",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "について",
+      "back_translation": "About",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "About randos",
+      "msgid": "About randos",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "について(0)",
+      "back_translation": "About ( 0 )",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['randos', 'rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 28.2,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Accept the 18+ acknowledgment before looking for a rando.",
+      "msgid": "Accept the 18+ acknowledgment before looking for a rando.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "認定を受け入れる前に18+認定を受け入れる。",
+      "back_translation": "Accept 18+ certificates before accepting the certificate.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 24.9,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Attempting to reconnect",
+      "msgid": "Attempting to reconnect",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "再接続しようとする",
+      "back_translation": "I try to connect again.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 31.5,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Both people choose whether to continue.",
+      "msgid": "Both people choose whether to continue.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "どちらも続けるかどうかを決める。",
+      "back_translation": "Decide whether or not they will continue.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 43.3,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Cancel",
+      "msgid": "Cancel",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "キャンセル",
+      "back_translation": "cancelled",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.4,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Choose supported conversation languages.",
+      "msgid": "Choose supported conversation languages.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "サポートされた会話言語を選択します。",
+      "back_translation": "Select the supported language.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.9,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Choose your languages.",
+      "msgid": "Choose your languages.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "あなたの言語を選択します。",
+      "back_translation": "Choose your language.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 90.3,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Connecting",
+      "msgid": "Connecting",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "つながり",
+      "back_translation": "Connected",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 59.3,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Connection:",
+      "msgid": "Connection:",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "つながり:",
+      "back_translation": "The connection:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 81.8,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Conversation is active.",
+      "msgid": "Conversation is active.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "会話は積極的です。",
+      "back_translation": "The conversation is active.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 91.6,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+      "msgid": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "会話はプライベートであり、保存されていません. サーバーは通話を調整しますが、録音を保持したり、あなたが話した人の歴史を構築したりしません。",
+      "back_translation": "The server adjusts the call but does not keep the recording or build the history of the person you’ve spoken.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 39.6,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Current call",
+      "msgid": "Current call",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "現在の通話",
+      "back_translation": "The current call.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 80.0,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Ephemeral by default",
+      "msgid": "Ephemeral by default",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "デフォルトによるデフォルト",
+      "back_translation": "default by default.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 44.6,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Finding a compatible rando.",
+      "msgid": "Finding a compatible rando.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "互換性のあるものを見つける。",
+      "back_translation": "Find something compatible.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.4,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Finding a rando",
+      "msgid": "Finding a rando",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "見つける(0)",
+      "back_translation": "Find it (0)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 23.4,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+      "msgid": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "私は18歳以上で、会話が匿名で不適切であることを理解しています。",
+      "back_translation": "I am over 18 years old and I understand that the conversation is anonymous and inappropriate.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 55.4,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "I want them to speak in",
+      "msgid": "I want them to speak in",
+      "msgctxt": null,
+      "locale": "ja",
+      "text": "僕は彼らに話しかけたい。",
+      "back_translation": "I want to talk to them.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 35.2,
+        "metricx": {
+          "score": null,
+          "pending": "MetricX-24-Hybrid (google/metricx-24-hybrid-xl-v2p6): ~15 GB, ungated"
+        },
+        "comet_kiwi": {
+          "score": null,
+          "pending": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)"
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    }
+  ]
+}

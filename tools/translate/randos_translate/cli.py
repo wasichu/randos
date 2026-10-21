@@ -2,6 +2,7 @@
 
   uv run --group models python -m randos_translate.cli run --model opus-mt --locales es --limit 12
   uv run python -m randos_translate.cli fill results/<run>.json --locale es [--redo]
+  uv run python -m randos_translate.cli review
 
 `run` translates the source strings, back-translates them, runs every check
 and score, and writes results/<model>-<date>.json (what the results page
@@ -19,7 +20,7 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
-from . import checks, po, scoring
+from . import checks, po, review, scoring
 from . import models as contestants
 
 RESULTS = Path(__file__).resolve().parents[1] / "results"
@@ -109,10 +110,13 @@ def main(argv: list[str] | None = None) -> None:
     f.add_argument("results", type=Path)
     f.add_argument("--locale", required=True)
     f.add_argument("--redo", action="store_true")
+    sub.add_parser("review", help="combine results/*.json into results/review.json (the review page's data)")
     args = parser.parse_args(argv)
 
     if args.command == "run":
         print(run(args.model, args.locales.split(","), args.limit))
+    elif args.command == "review":
+        print(review.write(RESULTS))
     else:
         print(fill(args.results, args.locale, args.redo))
 

@@ -27,6 +27,9 @@ def test_script_matches_the_locale():
     assert checks.script("es", "Buscar un rando")[0]
     assert not checks.script("ru", "Find a friend")[0]
     assert not checks.script("ar", "Find")[0]
+    # No letters at all, for a source that has some: a broken translation.
+    assert not checks.script("ar", "& & &", "About")[0]
+    assert checks.script("ar", "%{time}", "%{time}")[0]
 
 
 def test_protect_and_restore_round_trip():
