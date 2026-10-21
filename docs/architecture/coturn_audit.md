@@ -33,6 +33,13 @@ replaces the droplet):
 - No DO monitoring alerts, no uptime checks, no snapshots/backups.
 - TCP 80 times out from outside although the DO firewall allows it, which
   points to an on-host drop. HTTP-01 renewal (next ~2026-11-21) may fail.
+  *Update 2026-10-21:* on this (old) droplet it renewed anyway on
+  2026-09-22, and the rebuilt droplet's certificate was issued over port 80
+  at boot: certbot's standalone listener exists only during a renewal, so
+  the timeout when nothing listens isn't what renewal sees. The rebuilt
+  droplet's certificate runs to 2027-01-17 (renewal ~2026-12-18), and
+  `cert-check.yml` now checks it daily. Still to confirm on the droplet:
+  `sudo certbot renew --dry-run`.
 
 ## From the repo (cloud-init `infra/coturn/cloud-init.yaml.tftpl`)
 

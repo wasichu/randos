@@ -348,6 +348,15 @@ You can test renewal behavior without changing certificates:
 sudo certbot renew --dry-run
 ```
 
+certbot renews over HTTP-01 with `--standalone`: it listens on port 80
+only for the seconds a renewal takes. So port 80 normally doesn't answer
+from outside (connections time out), and that's not a fault: this
+droplet's certificate was issued that way at boot, and the previous one
+renewed that way. Let's Encrypt no longer emails expiry warnings, so
+`.github/workflows/cert-check.yml` checks the live certificate daily and
+fails (emailing the repository owner) once fewer than 21 days are left,
+which means a renewal (due 30 days before expiry) has failed.
+
 ## Security Notes
 
 coturn uses TURN REST API shared-secret authentication:

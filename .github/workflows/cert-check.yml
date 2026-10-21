@@ -1,0 +1,29 @@
+# Daily: the TURN server's TLS certificate (turns:, for networks that block
+# UDP) must have three weeks left. certbot renews it 30 days before expiry,
+# so a failure here means a renewal failed, with time to fix it; Let's
+# Encrypt no longer emails expiry warnings. A failed scheduled run emails
+# the repository's owner.
+name: TURN certificate
+
+on:
+  schedule:
+    - cron: "17 14 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  expiry:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check turn.slowinput.org:5349 has 21+ days left
+        run: |
+          set -euo pipefail
+          end=$(echo | openssl s_client -connect turn.slowinput.org:5349 -servername turn.slowinput.org 2>/dev/null \
+            | openssl x509 -noout -enddate | cut -d= -f2)
+          left=$(( ($(date -d "$end" +%s) - $(date +%s)) / 86400 ))
+          echo "certificate expires $end ($left days left)"
+          if [ "$left" -lt 21 ]; then
+            echo "::error::the TURN certificate expires in $left days: renewal has failed (infra/coturn/README.md, Certificate Renewal)"
+            exit 1
+          fi
