@@ -47,9 +47,13 @@ def get(name: str) -> Translator:
         from .opus_mt import OpusMT
 
         return OpusMT()
+    if name == "m2m100":
+        from .m2m100 import M2M100
+
+        return M2M100()
     if name in PLANNED:
         raise SystemExit(f"{name}: planned for the full shootout, not wired yet ({PLANNED[name]})")
-    raise SystemExit(f"unknown model {name!r}; known: opus-mt, {', '.join(PLANNED)}")
+    raise SystemExit(f"unknown model {name!r}; known: opus-mt, m2m100, {', '.join(PLANNED)}")
 
 
 # The rest of the field (docs/architecture/translation_models.md), to add
@@ -58,5 +62,4 @@ PLANNED = {
     "hy-mt2": "MLX, mlx-community/Hy-MT2-*; ungated, Apache-2.0",
     "translategemma": "MLX, mlx-community/translategemma-*; gated (accept the Gemma terms on Hugging Face)",
     "madlad-400": "transformers T5 on MPS; ungated, Apache-2.0",
-    "m2m100": "transformers on MPS; ungated, MIT",
 }

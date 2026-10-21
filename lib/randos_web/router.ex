@@ -51,6 +51,9 @@ defmodule RandosWeb.Router do
       live "/voice-lab", RandosDev.VoiceLabLive, :index
       get "/voice-lab/clips", RandosDev.VoiceLabClips, :index
       get "/voice-lab/clips/:name", RandosDev.VoiceLabClips, :show
+
+      # The translation shootout's review page (Phase 6): dev only, modules in dev/.
+      live "/translations", RandosDev.TranslationReviewLive, :index
     end
   end
 end

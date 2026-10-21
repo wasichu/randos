@@ -1,0 +1,4688 @@
+{
+  "generated_at": "20261021T132210Z",
+  "runs": [
+    {
+      "model": "opus-mt",
+      "locales": [
+        "es"
+      ],
+      "strings": 12,
+      "at": "20261021T124104Z"
+    },
+    {
+      "model": "opus-mt",
+      "locales": [
+        "es"
+      ],
+      "strings": 85,
+      "at": "20261021T130907Z"
+    },
+    {
+      "model": "opus-mt",
+      "locales": [
+        "ar"
+      ],
+      "strings": 20,
+      "at": "20261021T130940Z"
+    },
+    {
+      "model": "m2m100",
+      "locales": [
+        "es"
+      ],
+      "strings": 85,
+      "at": "20261021T131354Z"
+    },
+    {
+      "model": "m2m100",
+      "locales": [
+        "ar",
+        "ja"
+      ],
+      "strings": 20,
+      "at": "20261021T131433Z"
+    }
+  ],
+  "scorers": {
+    "chrf": {
+      "label": "Back-translation chrF",
+      "higher_is_better": true
+    },
+    "metricx": {
+      "label": "MetricX-24",
+      "higher_is_better": false
+    },
+    "comet_kiwi": {
+      "label": "COMET-Kiwi",
+      "higher_is_better": true
+    },
+    "judge": {
+      "label": "Tone judge",
+      "higher_is_better": true
+    }
+  },
+  "locales": {
+    "ar": {
+      "strings": [
+        {
+          "key": "About",
+          "msgid": "About",
+          "msgctxt": null,
+          "disagreement": 1.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "حول",
+              "back_translation": "About",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "& & &",
+              "back_translation": "& & &",
+              "failed": [
+                {
+                  "check": "script",
+                  "detail": "no letters"
+                }
+              ],
+              "scores": {
+                "chrf": 0.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Cancel",
+          "msgid": "Cancel",
+          "msgctxt": null,
+          "disagreement": 1.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "إلغاء",
+              "back_translation": "Canceled",
+              "failed": [],
+              "scores": {
+                "chrf": 88.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "",
+              "back_translation": "Hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey.",
+              "failed": [
+                {
+                  "check": "length",
+                  "detail": "empty"
+                },
+                {
+                  "check": "script",
+                  "detail": "no letters"
+                }
+              ],
+              "scores": {
+                "chrf": 0.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Connecting",
+          "msgid": "Connecting",
+          "msgctxt": null,
+          "disagreement": 1.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "اتصال",
+              "back_translation": "Contact",
+              "failed": [],
+              "scores": {
+                "chrf": 17.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "",
+              "back_translation": "Hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey.",
+              "failed": [
+                {
+                  "check": "length",
+                  "detail": "empty"
+                },
+                {
+                  "check": "script",
+                  "detail": "no letters"
+                }
+              ],
+              "scores": {
+                "chrf": 0.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Connection:",
+          "msgid": "Connection:",
+          "msgctxt": null,
+          "disagreement": 1.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "الاتصال :",
+              "back_translation": "Contact to:",
+              "failed": [],
+              "scores": {
+                "chrf": 17.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "",
+              "back_translation": "Hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey.",
+              "failed": [
+                {
+                  "check": "length",
+                  "detail": "empty"
+                },
+                {
+                  "check": "script",
+                  "detail": "no letters"
+                }
+              ],
+              "scores": {
+                "chrf": 0.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Current call",
+          "msgid": "Current call",
+          "msgctxt": null,
+          "disagreement": 1.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "الاتصال الحالي",
+              "back_translation": "current contact",
+              "failed": [],
+              "scores": {
+                "chrf": 49.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "",
+              "back_translation": "Hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey.",
+              "failed": [
+                {
+                  "check": "length",
+                  "detail": "empty"
+                },
+                {
+                  "check": "script",
+                  "detail": "no letters"
+                }
+              ],
+              "scores": {
+                "chrf": 0.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Ephemeral by default",
+          "msgid": "Ephemeral by default",
+          "msgctxt": null,
+          "disagreement": 1.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "إيفيمرال حسب الافتراض",
+              "back_translation": "Euphoria as presumed.",
+              "failed": [],
+              "scores": {
+                "chrf": 12.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "EEE",
+              "back_translation": "EEE",
+              "failed": [
+                {
+                  "check": "length",
+                  "detail": "length ratio 0.15"
+                },
+                {
+                  "check": "script",
+                  "detail": "only 0% of letters in the ar script"
+                }
+              ],
+              "scores": {
+                "chrf": 2.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "About randos",
+          "msgid": "About randos",
+          "msgctxt": null,
+          "disagreement": 0.965,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "عن [ 0 ]",
+              "back_translation": "by [ 0 ]",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['randos', 'rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 2.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "[باللغة [باللغة [باللغة]",
+              "back_translation": "[In language [in]",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['randos', 'rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 5.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Finding a rando",
+          "msgid": "Finding a rando",
+          "msgctxt": null,
+          "disagreement": 0.954,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "العثور على rando",
+              "back_translation": "It is found rando",
+              "failed": [],
+              "scores": {
+                "chrf": 26.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "وضع [أ",
+              "back_translation": "Status [a",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 2.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "A doorway, not a platform",
+          "msgid": "A doorway, not a platform",
+          "msgctxt": null,
+          "disagreement": 0.805,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "الباب وليس منصة",
+              "back_translation": "The door and not the platform.",
+              "failed": [],
+              "scores": {
+                "chrf": 41.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "مدخل، لا منصة",
+              "back_translation": "An entrance, no platform.",
+              "failed": [],
+              "scores": {
+                "chrf": 36.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Finding a compatible rando.",
+          "msgid": "Finding a compatible rando.",
+          "msgctxt": null,
+          "disagreement": 0.802,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "العثور على متوافق rando",
+              "back_translation": "Find a compatible rando",
+              "failed": [],
+              "scores": {
+                "chrf": 72.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "(ج) إيجاد متوافق [متوافق.",
+              "back_translation": "(c) Compatible [compatible].",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 36.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Attempting to reconnect",
+          "msgid": "Attempting to reconnect",
+          "msgctxt": null,
+          "disagreement": 0.665,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "محاولة إعادة الاتصال",
+              "back_translation": "Trying to re-connect",
+              "failed": [],
+              "scores": {
+                "chrf": 48.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "جاري إعادة الربط",
+              "back_translation": "Reconnecting.",
+              "failed": [],
+              "scores": {
+                "chrf": 40.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+          "msgid": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+          "msgctxt": null,
+          "disagreement": 0.535,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "وتستمر المحادثة %{call} دقائق، وعندما يصل الوقت، فإنه يستمر لفترة أخرى %{extension} دقائق فقط إذا اختار كلا الشخصين، حتى %{max} دقائق على الإطلاق.",
+              "back_translation": "The conversation lasts %{call} minutes, and when the time comes, it lasts for another period %{extension} minutes only if both people choose, even %{max} minutes at all.",
+              "failed": [],
+              "scores": {
+                "chrf": 64.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "المحادثة تستمر [10 دقائق. عندما ينتهي الوقت، تستمر لمدة %{extension} دقيقة أخرى فقط إذا اختار كل من الناس ذلك، حتى %{max} دقيقة في كل شيء. يمكنك المغادرة في أي وقت.",
+              "back_translation": "The conversation lasts [10 minutes. When the time is up, it lasts for another %{extension} minute only if all the people choose it, until %{max} minutes in everything. You can leave anytime.",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{call}', '%{extension}', '%{max}'], got ['%{extension}', '%{max}']"
+                }
+              ],
+              "scores": {
+                "chrf": 69.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+          "msgid": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+          "msgctxt": null,
+          "disagreement": 0.53,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "المحادثات خاصة ولا يتم تخزينها.الخادم ينسق المكالمة، ولكنها لا تحافظ على التسجيلات أو بناء تاريخ حول من تحدثت مع.",
+              "back_translation": "Speakers are private and are not stored.The server coordinates the call, but they do not keep records or build dates about who you talked with.",
+              "failed": [],
+              "scores": {
+                "chrf": 66.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "المحادثات خاصة وليست مخزنة. الخادوم ينسق النداء، لكنه لا يحتفظ بتسجيلات أو يبني تاريخاً حول من تتحدث معه.",
+              "back_translation": "The server coordinates the call, but it doesn't keep records or build a history of who you're talking to.",
+              "failed": [],
+              "scores": {
+                "chrf": 53.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Both people choose whether to continue.",
+          "msgid": "Both people choose whether to continue.",
+          "msgctxt": null,
+          "disagreement": 0.48,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "كلاهما يختار ما إذا كان سيستمر.",
+              "back_translation": "Both of them decide whether it will continue.",
+              "failed": [],
+              "scores": {
+                "chrf": 46.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "كل من الناس يختار ما إذا كان الاستمرار.",
+              "back_translation": "Both people choose whether to continue.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+          "msgid": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+          "msgctxt": null,
+          "disagreement": 0.478,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "أنا 18 أو أكبر وأدرك أن المحادثات مجهولة ومجهولة.",
+              "back_translation": "I am 18 or older and realize that the conversations are unknown and unknown.",
+              "failed": [],
+              "scores": {
+                "chrf": 50.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "عمري 18 أو أكثر وأفهم أن المحادثات مجهولة وغير مهذبة",
+              "back_translation": "I'm 18 or more, and I understand that conversations are anonymous and impolite.",
+              "failed": [],
+              "scores": {
+                "chrf": 68.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Choose your languages.",
+          "msgid": "Choose your languages.",
+          "msgctxt": null,
+          "disagreement": 0.44,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "اختر لغاتك",
+              "back_translation": "Choose your language.",
+              "failed": [],
+              "scores": {
+                "chrf": 90.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "اختر لغتك.",
+              "back_translation": "Choose your language.",
+              "failed": [],
+              "scores": {
+                "chrf": 90.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Choose supported conversation languages.",
+          "msgid": "Choose supported conversation languages.",
+          "msgctxt": null,
+          "disagreement": 0.375,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "اختر لغات المحادثة المدعومة.",
+              "back_translation": "Select the supported language.",
+              "failed": [],
+              "scores": {
+                "chrf": 41.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "اختيار لغات المحادثـة المدعمة.",
+              "back_translation": "Selection of supported languages of conversation.",
+              "failed": [],
+              "scores": {
+                "chrf": 63.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "I want them to speak in",
+          "msgid": "I want them to speak in",
+          "msgctxt": null,
+          "disagreement": 0.227,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "أريد منهم أن يتكلموا في",
+              "back_translation": "I want them to speak.",
+              "failed": [],
+              "scores": {
+                "chrf": 88.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "أريدهم أن يتكلموا في",
+              "back_translation": "I want them to talk to me.",
+              "failed": [],
+              "scores": {
+                "chrf": 55.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Accept the 18+ acknowledgment before looking for a rando.",
+          "msgid": "Accept the 18+ acknowledgment before looking for a rando.",
+          "msgctxt": null,
+          "disagreement": 0.2,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "أقبل الاعتراف 18+ قبل البحث عن rando.",
+              "back_translation": "Accept recognition 18+ before searching for rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 36.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "اقبل الاعتراف 18+ قبل أن تبحث عن rando.",
+              "back_translation": "Accept the 18+ confession before you look for rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 43.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Conversation is active.",
+          "msgid": "Conversation is active.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "الحوار نشط.",
+              "back_translation": "Dialogue is active.",
+              "failed": [],
+              "scores": {
+                "chrf": 39.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "الحوار نشط.",
+              "back_translation": "Dialogue is active.",
+              "failed": [],
+              "scores": {
+                "chrf": 39.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        }
+      ],
+      "models": [
+        "m2m100",
+        "opus-mt"
+      ],
+      "summary": {
+        "m2m100": {
+          "strings": 20,
+          "all_checks_pass": 19,
+          "mean_chrf": 49.9,
+          "mean_rank": 1.4,
+          "best_count": 13
+        },
+        "opus-mt": {
+          "strings": 20,
+          "all_checks_pass": 10,
+          "mean_chrf": 35.5,
+          "mean_rank": 1.6,
+          "best_count": 6
+        }
+      },
+      "winner": {
+        "model": "m2m100",
+        "why": "passes every check on 19/20 strings, mean rank 1.4"
+      }
+    },
+    "es": {
+      "strings": [
+        {
+          "key": "Language",
+          "msgid": "Language",
+          "msgctxt": null,
+          "disagreement": 0.976,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Lenguaje",
+              "back_translation": "language",
+              "failed": [],
+              "scores": {
+                "chrf": 79.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Idioma",
+              "back_translation": "Language",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004failed",
+          "msgid": "failed",
+          "msgctxt": "connection state",
+          "disagreement": 0.971,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "fracasado",
+              "back_translation": "Failed",
+              "failed": [],
+              "scores": {
+                "chrf": 59.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Falló",
+              "back_translation": "Failed",
+              "failed": [],
+              "scores": {
+                "chrf": 59.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "button\u0004Mute",
+          "msgid": "Mute",
+          "msgctxt": "button",
+          "disagreement": 0.955,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Muerte",
+              "back_translation": "Death",
+              "failed": [],
+              "scores": {
+                "chrf": 11.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Silenciar",
+              "back_translation": "Mute",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Your rando",
+          "msgid": "Your rando",
+          "msgctxt": null,
+          "disagreement": 0.952,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Tuya [ 0 ]",
+              "back_translation": "and yours [ 0 ]",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 23.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Su rando",
+              "back_translation": "Its rando",
+              "failed": [],
+              "scores": {
+                "chrf": 34.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Ready",
+          "msgid": "Ready",
+          "msgctxt": null,
+          "disagreement": 0.944,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Preparados",
+              "back_translation": "Prepared",
+              "failed": [],
+              "scores": {
+                "chrf": 10.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Listo",
+              "back_translation": "Ready.",
+              "failed": [],
+              "scores": {
+                "chrf": 92.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "About",
+          "msgid": "About",
+          "msgctxt": null,
+          "disagreement": 0.937,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Sobre",
+              "back_translation": "About",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Acerca de",
+              "back_translation": "About",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004not started",
+          "msgid": "not started",
+          "msgctxt": "connection state",
+          "disagreement": 0.93,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "No comenzó",
+              "back_translation": "It did not start",
+              "failed": [],
+              "scores": {
+                "chrf": 68.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "no iniciado",
+              "back_translation": "not started",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "In call",
+          "msgid": "In call",
+          "msgctxt": null,
+          "disagreement": 0.919,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "En el llamado",
+              "back_translation": "In the call",
+              "failed": [],
+              "scores": {
+                "chrf": 39.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "En servicio",
+              "back_translation": "In service",
+              "failed": [],
+              "scores": {
+                "chrf": 10.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Switch theme",
+          "msgid": "Switch theme",
+          "msgctxt": null,
+          "disagreement": 0.88,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Temas de Switch",
+              "back_translation": "Themes of Switch",
+              "failed": [],
+              "scores": {
+                "chrf": 52.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Cambiar el tema",
+              "back_translation": "Change Theme",
+              "failed": [],
+              "scores": {
+                "chrf": 18.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004answering",
+          "msgid": "answering",
+          "msgctxt": "connection state",
+          "disagreement": 0.861,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Responder",
+              "back_translation": "Reply",
+              "failed": [],
+              "scores": {
+                "chrf": 2.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "contestando",
+              "back_translation": "Answering",
+              "failed": [],
+              "scores": {
+                "chrf": 83.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "close",
+          "msgid": "close",
+          "msgctxt": null,
+          "disagreement": 0.809,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Cerca",
+              "back_translation": "near",
+              "failed": [],
+              "scores": {
+                "chrf": 5.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "cerrar",
+              "back_translation": "close",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Looking for a rando speaking %{speaking_language} who wants to hear %{listening_language}.",
+          "msgid": "Looking for a rando speaking %{speaking_language} who wants to hear %{listening_language}.",
+          "msgctxt": null,
+          "disagreement": 0.771,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El que quiere oír lo que quiere oír lo que quiere.",
+              "back_translation": "He who wants to hear what he wants to hear what he wants to hear.",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{listening_language}', '%{speaking_language}'], got []"
+                },
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 22.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Buscando un rando hablando %{speaking_language} que quiere oír %{listening_language}.",
+              "back_translation": "Looking for a rando speaking %{speaking_language} who wants to hear %{listening_language}.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Connecting",
+          "msgid": "Connecting",
+          "msgctxt": null,
+          "disagreement": 0.768,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Conexión",
+              "back_translation": "connection",
+              "failed": [],
+              "scores": {
+                "chrf": 59.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Conectando",
+              "back_translation": "Connecting",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Looking",
+          "msgid": "Looking",
+          "msgctxt": null,
+          "disagreement": 0.736,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Mirando",
+              "back_translation": "Looking",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Buscando",
+              "back_translation": "Searching",
+              "failed": [],
+              "scores": {
+                "chrf": 15.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Toggle dark mode",
+          "msgid": "Toggle dark mode",
+          "msgctxt": null,
+          "disagreement": 0.73,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La moda oscura",
+              "back_translation": "The Dark Fashion",
+              "failed": [],
+              "scores": {
+                "chrf": 11.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Conmutar modo oscuro",
+              "back_translation": "Switch Dark Mode",
+              "failed": [],
+              "scores": {
+                "chrf": 15.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "button\u0004End",
+          "msgid": "End",
+          "msgctxt": "button",
+          "disagreement": 0.713,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El fin",
+              "back_translation": "The end",
+              "failed": [],
+              "scores": {
+                "chrf": 31.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Fin",
+              "back_translation": "End",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "button\u0004Find a rando",
+          "msgid": "Find a rando",
+          "msgctxt": "button",
+          "disagreement": 0.682,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Encontrar una rando",
+              "back_translation": "Find one rando",
+              "failed": [],
+              "scores": {
+                "chrf": 46.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Buscar un rando",
+              "back_translation": "Find a rando",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Time is up",
+          "msgid": "Time is up",
+          "msgctxt": null,
+          "disagreement": 0.66,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "El tiempo está arriba",
+              "back_translation": "The time is up",
+              "failed": [],
+              "scores": {
+                "chrf": 73.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Se acabó el tiempo.",
+              "back_translation": "Time's up.",
+              "failed": [],
+              "scores": {
+                "chrf": 37.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Something went wrong!",
+          "msgid": "Something went wrong!",
+          "msgctxt": null,
+          "disagreement": 0.648,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "¡Algo ha ido mal!",
+              "back_translation": "Something has gone wrong!",
+              "failed": [],
+              "scores": {
+                "chrf": 58.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "¡Algo salió mal!",
+              "back_translation": "Something went wrong!",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "View on GitHub",
+          "msgid": "View on GitHub",
+          "msgctxt": null,
+          "disagreement": 0.642,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Ver en GitHub",
+              "back_translation": "See on GitHub",
+              "failed": [],
+              "scores": {
+                "chrf": 59.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Vista sobre GitHub",
+              "back_translation": "View on GitHub",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Both people choose whether to continue.",
+          "msgid": "Both people choose whether to continue.",
+          "msgctxt": null,
+          "disagreement": 0.612,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Ambos optan por continuar.",
+              "back_translation": "Both choose to continue.",
+              "failed": [],
+              "scores": {
+                "chrf": 47.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Ambas personas eligen si continuar.",
+              "back_translation": "Both people choose whether to continue.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Stop looking",
+          "msgid": "Stop looking",
+          "msgctxt": null,
+          "disagreement": 0.609,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Deja de mirar",
+              "back_translation": "Stop looking",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Deja de buscar.",
+              "back_translation": "Stop looking.",
+              "failed": [],
+              "scores": {
+                "chrf": 97.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "I will speak in",
+          "msgid": "I will speak in",
+          "msgctxt": null,
+          "disagreement": 0.575,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Yo hablaré en",
+              "back_translation": "I will talk to",
+              "failed": [],
+              "scores": {
+                "chrf": 27.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Voy a hablar en",
+              "back_translation": "I'm going to talk in",
+              "failed": [],
+              "scores": {
+                "chrf": 13.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004waiting for your rando",
+          "msgid": "waiting for your rando",
+          "msgctxt": "connection state",
+          "disagreement": 0.572,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "A la espera de tu rando",
+              "back_translation": "Waiting for you [10]",
+              "failed": [],
+              "scores": {
+                "chrf": 58.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "esperando por su rando",
+              "back_translation": "waiting for your rando",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "%{time} remaining",
+          "msgid": "%{time} remaining",
+          "msgctxt": null,
+          "disagreement": 0.556,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "%{time} El resto de",
+              "back_translation": "%{time} The rest of",
+              "failed": [],
+              "scores": {
+                "chrf": 35.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "%{time} restantes",
+              "back_translation": "%{time} remaining",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "No accounts. No profiles. No video. No pressure.",
+          "msgid": "No accounts. No profiles. No video. No pressure.",
+          "msgctxt": null,
+          "disagreement": 0.555,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "No hay cuentas, no hay perfiles, no hay video, no hay presión.",
+              "back_translation": "There are no accounts, there are no profiles, there are no videos, there is no pressure.",
+              "failed": [],
+              "scores": {
+                "chrf": 53.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Sin cuentas, sin perfiles, sin vídeo, sin presión.",
+              "back_translation": "No bills, no profiles, no video, no pressure.",
+              "failed": [],
+              "scores": {
+                "chrf": 47.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "About randos",
+          "msgid": "About randos",
+          "msgctxt": null,
+          "disagreement": 0.553,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Acerca de randos",
+              "back_translation": "About the randos",
+              "failed": [],
+              "scores": {
+                "chrf": 60.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Alrededor de randos",
+              "back_translation": "Around randos",
+              "failed": [],
+              "scores": {
+                "chrf": 43.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Choose supported conversation languages.",
+          "msgid": "Choose supported conversation languages.",
+          "msgctxt": null,
+          "disagreement": 0.536,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Seleccione las lenguas de conversación apoyadas.",
+              "back_translation": "Select the supported conversation languages.",
+              "failed": [],
+              "scores": {
+                "chrf": 84.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Elija lenguajes de conversación compatibles.",
+              "back_translation": "Choose compatible conversation languages.",
+              "failed": [],
+              "scores": {
+                "chrf": 67.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004microphone denied",
+          "msgid": "microphone denied",
+          "msgctxt": "connection state",
+          "disagreement": 0.534,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El micrófono rechazado",
+              "back_translation": "The rejected microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 55.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "micrófono denegado",
+              "back_translation": "microphone denied",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Finding a rando",
+          "msgid": "Finding a rando",
+          "msgctxt": null,
+          "disagreement": 0.457,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Encontrar una rando",
+              "back_translation": "Find one rando",
+              "failed": [],
+              "scores": {
+                "chrf": 37.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Encontrando un rando",
+              "back_translation": "Finding a rando",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Ephemeral by default",
+          "msgid": "Ephemeral by default",
+          "msgctxt": null,
+          "disagreement": 0.455,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Ephemeral por defecto",
+              "back_translation": "Ephemeral by default",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Efímero por defecto",
+              "back_translation": "Default ephemer",
+              "failed": [],
+              "scores": {
+                "chrf": 45.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Intentionally minimal",
+          "msgid": "Intentionally minimal",
+          "msgctxt": null,
+          "disagreement": 0.443,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Intencionalmente mínimo",
+              "back_translation": "Intentionally Minimum",
+              "failed": [],
+              "scores": {
+                "chrf": 69.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Mínimo intencionadamente",
+              "back_translation": "At least intentionally",
+              "failed": [],
+              "scores": {
+                "chrf": 57.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "remote audio playing (%{summary})",
+          "msgid": "remote audio playing (%{summary})",
+          "msgctxt": null,
+          "disagreement": 0.425,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Juego de audio remoto (%{summary})",
+              "back_translation": "Remote Audio Game (%{summary})",
+              "failed": [],
+              "scores": {
+                "chrf": 50.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Reproducción remota de audio (%{summary})",
+              "back_translation": "Remote audio playback (%{summary})",
+              "failed": [],
+              "scores": {
+                "chrf": 75.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "button\u0004Unmute",
+          "msgid": "Unmute",
+          "msgctxt": "button",
+          "disagreement": 0.408,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Inmute",
+              "back_translation": "Immute",
+              "failed": [],
+              "scores": {
+                "chrf": 35.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Unmute",
+              "back_translation": "Unmute",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "microphone ready",
+          "msgid": "microphone ready",
+          "msgctxt": null,
+          "disagreement": 0.39,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "El micrófono está listo",
+              "back_translation": "The microphone is ready.",
+              "failed": [],
+              "scores": {
+                "chrf": 71.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "micrófono listo",
+              "back_translation": "mic ready",
+              "failed": [],
+              "scores": {
+                "chrf": 32.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.",
+          "msgid": "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.",
+          "msgctxt": null,
+          "disagreement": 0.382,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El objetivo es la presencia humana de baja presión, no el desempeño o el compromiso.",
+              "back_translation": "The goal is the human presence of low pressure, not performance or commitment.",
+              "failed": [],
+              "scores": {
+                "chrf": 49.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "La interfaz es silenciosa a propósito. El objetivo es la presencia humana de baja presión, no los bucles de rendimiento o compromiso.",
+              "back_translation": "The interface is silent on purpose. The goal is the human presence of low pressure, not the performance loops or compromise.",
+              "failed": [],
+              "scores": {
+                "chrf": 66.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Preparing the call",
+          "msgid": "Preparing the call",
+          "msgctxt": null,
+          "disagreement": 0.375,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Preparando la llamada",
+              "back_translation": "Preparing the call",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Preparación de la llamada",
+              "back_translation": "Preparation of the call",
+              "failed": [],
+              "scores": {
+                "chrf": 55.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Help fix a translation",
+          "msgid": "Help fix a translation",
+          "msgctxt": null,
+          "disagreement": 0.371,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Ayuda a corregir una traducción",
+              "back_translation": "Helps to correct a translation",
+              "failed": [],
+              "scores": {
+                "chrf": 61.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Ayudar a arreglar una traducción",
+              "back_translation": "Help fix a translation",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "waiting for remote audio",
+          "msgid": "waiting for remote audio",
+          "msgctxt": null,
+          "disagreement": 0.354,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "A la espera de audio remoto",
+              "back_translation": "Waiting for remote audio",
+              "failed": [],
+              "scores": {
+                "chrf": 94.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "esperando audio remoto",
+              "back_translation": "waiting for remote audio",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Secure audio connection is starting.",
+          "msgid": "Secure audio connection is starting.",
+          "msgctxt": null,
+          "disagreement": 0.352,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Comienza la conexión de audio segura.",
+              "back_translation": "Safe audio connection begins.",
+              "failed": [],
+              "scores": {
+                "chrf": 52.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "La conexión de audio segura está empezando.",
+              "back_translation": "The secure audio connection is starting.",
+              "failed": [],
+              "scores": {
+                "chrf": 94.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "requesting microphone",
+          "msgid": "requesting microphone",
+          "msgctxt": null,
+          "disagreement": 0.347,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Solicitar micrófono",
+              "back_translation": "Apply for a microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 43.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "solicitando micrófono",
+              "back_translation": "requesting microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004requesting microphone",
+          "msgid": "requesting microphone",
+          "msgctxt": "connection state",
+          "disagreement": 0.347,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Solicitar micrófono",
+              "back_translation": "Apply for a microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 43.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "solicitando micrófono",
+              "back_translation": "requesting microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Choose your languages.",
+          "msgid": "Choose your languages.",
+          "msgctxt": null,
+          "disagreement": 0.337,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Elegir tus idiomas.",
+              "back_translation": "Choose your languages.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Elige tus idiomas.",
+              "back_translation": "Choose your languages.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004connecting",
+          "msgid": "connecting",
+          "msgctxt": "connection state",
+          "disagreement": 0.324,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "conectando",
+              "back_translation": "Connecting",
+              "failed": [],
+              "scores": {
+                "chrf": 85.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "conectar",
+              "back_translation": "connect",
+              "failed": [],
+              "scores": {
+                "chrf": 63.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Starting call with rando.",
+          "msgid": "Starting call with rando.",
+          "msgctxt": null,
+          "disagreement": 0.323,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Comenzar la llamada con rando.",
+              "back_translation": "Start the call with rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 70.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Inicio de la llamada con rando.",
+              "back_translation": "Start of the call with rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 69.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "The call ended because microphone access was blocked. Allow it, then look again.",
+          "msgid": "The call ended because microphone access was blocked. Allow it, then look again.",
+          "msgctxt": null,
+          "disagreement": 0.289,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "La llamada terminó porque el acceso al micrófono fue bloqueado. permítelo, luego vea de nuevo.",
+              "back_translation": "The call ended because the access to the microphone was blocked. allow it, then see again.",
+              "failed": [],
+              "scores": {
+                "chrf": 74.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "La llamada terminó porque el acceso al micrófono estaba bloqueado.",
+              "back_translation": "The call ended because access to the microphone was blocked.",
+              "failed": [],
+              "scores": {
+                "chrf": 62.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Time is up. Continue for another %{minutes} minutes?",
+          "msgid": "Time is up. Continue for another %{minutes} minutes?",
+          "msgctxt": null,
+          "disagreement": 0.288,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El tiempo es alto.Continuar por otro %{minutes} minutos?",
+              "back_translation": "The time is high.Continue for another %{minutes} minutes?",
+              "failed": [],
+              "scores": {
+                "chrf": 85.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Se acabó el tiempo. ¿Continuar por otros %{minutes} minutos?",
+              "back_translation": "Time's up. Continue for another %{minutes} minutes?",
+              "failed": [],
+              "scores": {
+                "chrf": 92.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Connection:",
+          "msgid": "Connection:",
+          "msgctxt": null,
+          "disagreement": 0.276,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La conexión:",
+              "back_translation": "The connection:",
+              "failed": [],
+              "scores": {
+                "chrf": 81.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Conexión:",
+              "back_translation": "Connection:",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "crosstalk",
+          "msgid": "crosstalk",
+          "msgctxt": null,
+          "disagreement": 0.276,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El Crosstalk",
+              "back_translation": "The Crosstalk",
+              "failed": [],
+              "scores": {
+                "chrf": 76.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "crosstalk",
+              "back_translation": "crosstalk",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "We couldn't start that call. Please try again.",
+          "msgid": "We couldn't start that call. Please try again.",
+          "msgctxt": null,
+          "disagreement": 0.271,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "No pudimos empezar esa llamada, por favor, vuelva a intentarlo.",
+              "back_translation": "We couldn’t start that call, please try it again.",
+              "failed": [],
+              "scores": {
+                "chrf": 69.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "No pudimos empezar esa llamada, por favor, inténtalo de nuevo.",
+              "back_translation": "We couldn't start that call, please try again.",
+              "failed": [],
+              "scores": {
+                "chrf": 87.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+          "msgid": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+          "msgctxt": null,
+          "disagreement": 0.252,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Una conversación dura %{call} minutos.Cuando el tiempo está arriba, continúa por otro %{extension} minutos sólo si ambas personas eligen, hasta %{max} minutos en todo.",
+              "back_translation": "A conversation lasts %{call} minutes.When the time is up, continue for another %{extension} minutes only if both people choose, up to %{max} minutes in all.",
+              "failed": [],
+              "scores": {
+                "chrf": 79.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Una conversación dura %{call} minutos. Cuando el tiempo ha terminado, continúa por otros %{extension} minutos sólo si ambas personas lo desean, hasta %{max} minutos en total. Usted puede salir en cualquier momento.",
+              "back_translation": "A conversation lasts %{call} minutes. When the time is over, it continues for another %{extension} minutes only if both people wish, up to %{max} minutes in total. You can leave at any time.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.",
+          "msgid": "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.",
+          "msgctxt": null,
+          "disagreement": 0.244,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Está diseñado para el intercambio de idiomas, la práctica de escucha y la conversación casual ordinaria sin forzar a las personas a modos o etiquetas rígidos.",
+              "back_translation": "It is designed for language exchange, listening practice and ordinary casual conversation without forcing people to rigid modes or labels.",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{crosstalk}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 78.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Está destinado a %{crosstalk}, el intercambio de idiomas, la práctica de escuchar, y la conversación casual ordinaria sin forzar a la gente en modos rígidos o etiquetas.",
+              "back_translation": "It is intended for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.",
+              "failed": [],
+              "scores": {
+                "chrf": 94.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.",
+          "msgid": "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.",
+          "msgctxt": null,
+          "disagreement": 0.238,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Usted elige el idioma que quiere hablar y el idioma que quiere oír. randos se pare con alguien compatible para una conversación corta, luego sale del camino.",
+              "back_translation": "You choose the language you want to speak and the language you want to hear. randos you stop with someone compatible for a short conversation, then you leave the way.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Eliges el idioma que quieres hablar y el idioma que quieres oír. randos Te emparejas con alguien compatible para una conversación corta, y luego te quitas del camino.",
+              "back_translation": "You choose the language you want to speak and the language you want to hear. randos You pair with someone compatible for a short conversation, and then you get out of the way.",
+              "failed": [],
+              "scores": {
+                "chrf": 87.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "remote audio needs a tap (%{summary})",
+          "msgid": "remote audio needs a tap (%{summary})",
+          "msgctxt": null,
+          "disagreement": 0.208,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "El audio remoto necesita un tapón (%{summary})",
+              "back_translation": "The remote audio needs a tapon (%{summary})",
+              "failed": [],
+              "scores": {
+                "chrf": 88.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "audio remoto necesita un toque (%{summary})",
+              "back_translation": "remote audio needs a touch (%{summary})",
+              "failed": [],
+              "scores": {
+                "chrf": 83.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "randos is a place for anonymous, audio-only language conversation.",
+          "msgid": "randos is a place for anonymous, audio-only language conversation.",
+          "msgctxt": null,
+          "disagreement": 0.192,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "randos es un lugar para la conversación anónima, audio-sólo lenguaje.",
+              "back_translation": "randos is a place for anonymous conversation, audio-only language.",
+              "failed": [],
+              "scores": {
+                "chrf": 89.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "randos es un lugar para la conversación anónima, de lenguaje audio-solamente.",
+              "back_translation": "randos is a place for anonymous conversation, audio-only language.",
+              "failed": [],
+              "scores": {
+                "chrf": 89.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "You have matched. Audio starts when the call opens.",
+          "msgid": "You have matched. Audio starts when the call opens.",
+          "msgctxt": null,
+          "disagreement": 0.184,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Comienza el audio cuando se abre la llamada.",
+              "back_translation": "Audio starts when the call is opened.",
+              "failed": [],
+              "scores": {
+                "chrf": 58.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "El audio comienza cuando se abre la llamada.",
+              "back_translation": "Audio starts when the call opens.",
+              "failed": [],
+              "scores": {
+                "chrf": 67.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004ended",
+          "msgid": "ended",
+          "msgctxt": "connection state",
+          "disagreement": 0.166,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Terminado",
+              "back_translation": "ended",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "terminado",
+              "back_translation": "finished",
+              "failed": [],
+              "scores": {
+                "chrf": 15.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Current call",
+          "msgid": "Current call",
+          "msgctxt": null,
+          "disagreement": 0.163,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La llamada actual",
+              "back_translation": "The current call",
+              "failed": [],
+              "scores": {
+                "chrf": 81.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Llamada actual",
+              "back_translation": "Current call",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+          "msgid": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+          "msgctxt": null,
+          "disagreement": 0.162,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Yo soy de 18 o más años y entiendo que las conversaciones son anónimas y no moderadas.",
+              "back_translation": "I am 18 or older and I understand that conversations are anonymous and not moderate.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Tengo 18 años o más y entiendo que las conversaciones son anónimas y no moderadas.",
+              "back_translation": "I am 18 or older and understand that conversations are anonymous and not moderate.",
+              "failed": [],
+              "scores": {
+                "chrf": 90.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: each language is one file you can edit on GitHub, or open an issue there.",
+          "msgid": "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: each language is one file you can edit on GitHub, or open an issue there.",
+          "msgctxt": null,
+          "disagreement": 0.162,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Las traducciones de este sitio fueron hechas por máquina y no han sido revisadas por la gente aún.Si algo lee mal en su lenguaje, por favor ayude a corregirlo: cada lengua es un archivo que puede editar en GitHub, o abrir un problema allí.",
+              "back_translation": "The translations of this site were made by machine and have not been reviewed by people yet.If something is wrong in your language, please help fix it: each language is a file that you can edit on GitHub, or open a problem there.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Las traducciones de este sitio fueron hechas por máquina y no han sido revisadas por la gente todavía. Si algo lee mal en su idioma, por favor ayude a arreglarlo: cada idioma es un archivo que puede editar en GitHub, o abrir un problema allí.",
+              "back_translation": "The translations of this site were machine-made and have not been reviewed by people yet. If something reads wrong in your language, please help fix it: each language is a file that you can edit in GitHub, or open a problem there.",
+              "failed": [],
+              "scores": {
+                "chrf": 83.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "Accept the 18+ acknowledgment before looking for a rando.",
+          "msgid": "Accept the 18+ acknowledgment before looking for a rando.",
+          "msgctxt": null,
+          "disagreement": 0.161,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Aceptar el reconocimiento 18+ antes de buscar un rando.",
+              "back_translation": "Accept the recognition 18+ before searching for a rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 49.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Aceptar el 18+ reconocimiento antes de buscar un rando.",
+              "back_translation": "Accept 18+ recognition before looking for a rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 57.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Finding a compatible rando.",
+          "msgid": "Finding a compatible rando.",
+          "msgctxt": null,
+          "disagreement": 0.148,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Encontrar un compatible rando",
+              "back_translation": "Find a compatible rando",
+              "failed": [],
+              "scores": {
+                "chrf": 72.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Encontrar una compatible rando.",
+              "back_translation": "Find a compatible rando.",
+              "failed": [],
+              "scores": {
+                "chrf": 76.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+          "msgid": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+          "msgctxt": null,
+          "disagreement": 0.138,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Las conversaciones son privadas y no se almacenan.El servidor coordina la llamada, pero no mantiene grabaciones ni construye una historia alrededor de quien hablamos.",
+              "back_translation": "Conversations are private and are not stored.The server coordinates the call, but does not keep records or build a story around whom we talk.",
+              "failed": [],
+              "scores": {
+                "chrf": 81.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Las conversaciones son privadas y no se almacenan. El servidor coordina la llamada, pero no guarda grabaciones ni construye una historia alrededor de con quién habló.",
+              "back_translation": "The conversations are private and not stored. The server coordinates the call, but does not save recordings or build a story around who he spoke to.",
+              "failed": [],
+              "scores": {
+                "chrf": 77.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.",
+          "msgid": "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.",
+          "msgctxt": null,
+          "disagreement": 0.128,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "No hay cuentas, perfiles, contactos, seguidores, feeds, líneas, puntuaciones, o gráficos sociales permanentes. randos es más cerca de la infraestructura de conversación que los medios sociales.",
+              "back_translation": "There are no accounts, profiles, contacts, followers, feeds, lines, scores, or permanent social graphs. randos is closer to the conversation infrastructure than the social media.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "No hay cuentas, perfiles, contactos, seguidores, feeds, rachas, puntuaciones o gráficos sociales permanentes. randos está más cerca de la infraestructura de conversación que las redes sociales.",
+              "back_translation": "There are no accounts, profiles, contacts, followers, feeds, streaks, scores or permanent social graphics. randos is closer to the conversation infrastructure than social networks.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "I want them to speak in",
+          "msgid": "I want them to speak in",
+          "msgctxt": null,
+          "disagreement": 0.108,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Quiero que hablen en",
+              "back_translation": "I want you to talk to",
+              "failed": [],
+              "scores": {
+                "chrf": 21.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Quiero que hablen.",
+              "back_translation": "I want you to talk.",
+              "failed": [],
+              "scores": {
+                "chrf": 21.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "The call ended because audio stopped working on this device.",
+          "msgid": "The call ended because audio stopped working on this device.",
+          "msgctxt": null,
+          "disagreement": 0.091,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La llamada terminó porque el audio cesó de funcionar en este dispositivo.",
+              "back_translation": "The call ended because the audio ceased to work on this device.",
+              "failed": [],
+              "scores": {
+                "chrf": 67.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "La llamada terminó porque el audio dejó de funcionar en este dispositivo.",
+              "back_translation": "The call ended because the audio stopped working on this device.",
+              "failed": [],
+              "scores": {
+                "chrf": 95.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004connected",
+          "msgid": "connected",
+          "msgctxt": "connection state",
+          "disagreement": 0.074,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "conectados",
+              "back_translation": "Connected",
+              "failed": [],
+              "scores": {
+                "chrf": 83.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "conectado",
+              "back_translation": "connected",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "waiting for microphone",
+          "msgid": "waiting for microphone",
+          "msgctxt": null,
+          "disagreement": 0.058,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Esperando el micrófono",
+              "back_translation": "Waiting for the microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 76.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "esperando el micrófono",
+              "back_translation": "Waiting for the microphone",
+              "failed": [],
+              "scores": {
+                "chrf": 76.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Attempting to reconnect",
+          "msgid": "Attempting to reconnect",
+          "msgctxt": null,
+          "disagreement": 0.053,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Intentando reconectarse",
+              "back_translation": "Trying to reconnect",
+              "failed": [],
+              "scores": {
+                "chrf": 64.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Intentando reconectar",
+              "back_translation": "Trying to reconnect",
+              "failed": [],
+              "scores": {
+                "chrf": 64.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "microphone unavailable",
+          "msgid": "microphone unavailable",
+          "msgctxt": null,
+          "disagreement": 0.051,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "El micrófono no disponible",
+              "back_translation": "The microphone is not available",
+              "failed": [],
+              "scores": {
+                "chrf": 70.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "micrófono no disponible",
+              "back_translation": "microphone not available",
+              "failed": [],
+              "scores": {
+                "chrf": 74.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "We can't find the internet",
+          "msgid": "We can't find the internet",
+          "msgctxt": null,
+          "disagreement": 0.021,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "No podemos encontrar Internet",
+              "back_translation": "We cannot find the Internet.",
+              "failed": [],
+              "scores": {
+                "chrf": 61.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "No podemos encontrar Internet.",
+              "back_translation": "We can't find the Internet.",
+              "failed": [],
+              "scores": {
+                "chrf": 80.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "A doorway, not a platform",
+          "msgid": "A doorway, not a platform",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Una puerta, no una plataforma",
+              "back_translation": "A gate, not a platform",
+              "failed": [],
+              "scores": {
+                "chrf": 59.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Una puerta, no una plataforma",
+              "back_translation": "A door, not a platform",
+              "failed": [],
+              "scores": {
+                "chrf": 71.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Cancel",
+          "msgid": "Cancel",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Cancelar",
+              "back_translation": "Canceled",
+              "failed": [],
+              "scores": {
+                "chrf": 88.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Cancelar",
+              "back_translation": "Cancel",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "button\u0004Continue",
+          "msgid": "Continue",
+          "msgctxt": "button",
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Continuar",
+              "back_translation": "continued",
+              "failed": [],
+              "scores": {
+                "chrf": 76.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Continuar",
+              "back_translation": "Continue",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Conversation is active.",
+          "msgid": "Conversation is active.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La conversación es activa.",
+              "back_translation": "The conversation is active.",
+              "failed": [],
+              "scores": {
+                "chrf": 91.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "La conversación es activa.",
+              "back_translation": "The conversation is active.",
+              "failed": [],
+              "scores": {
+                "chrf": 91.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "button\u0004Next rando",
+          "msgid": "Next rando",
+          "msgctxt": "button",
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Siguiente rando",
+              "back_translation": "The following rando",
+              "failed": [],
+              "scores": {
+                "chrf": 29.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Siguiente rando",
+              "back_translation": "Next rando",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Short anonymous conversations for language practice.",
+          "msgid": "Short anonymous conversations for language practice.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Conversaciones anónimas cortas para la práctica del lenguaje.",
+              "back_translation": "Short anonymous conversations for the practice of language.",
+              "failed": [],
+              "scores": {
+                "chrf": 86.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Conversaciones anónimas cortas para la práctica del lenguaje.",
+              "back_translation": "Short anonymous conversations for language practice.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "The call ended because audio isn't available here.",
+          "msgid": "The call ended because audio isn't available here.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La llamada terminó porque el audio no está disponible aquí.",
+              "back_translation": "The call ended because the audio is not available here.",
+              "failed": [],
+              "scores": {
+                "chrf": 85.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "La llamada terminó porque el audio no está disponible aquí.",
+              "back_translation": "The call ended because the audio is not available here.",
+              "failed": [],
+              "scores": {
+                "chrf": 85.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "The call ended because no microphone was found.",
+          "msgid": "The call ended because no microphone was found.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "La llamada terminó porque no se encontró ningún micrófono.",
+              "back_translation": "The call ended because no microphone was found.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "La llamada terminó porque no se encontró ningún micrófono.",
+              "back_translation": "The call ended because no microphone was found.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "Translations",
+          "msgid": "Translations",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "Traducciones",
+              "back_translation": "Translations",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "Traducciones",
+              "back_translation": "Translations",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "You",
+          "msgid": "You",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Tú",
+              "back_translation": "You",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Tú",
+              "back_translation": "You.",
+              "failed": [],
+              "scores": {
+                "chrf": 89.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004calling",
+          "msgid": "calling",
+          "msgctxt": "connection state",
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "llamando",
+              "back_translation": "Calling",
+              "failed": [],
+              "scores": {
+                "chrf": 73.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "llamando",
+              "back_translation": "Calling",
+              "failed": [],
+              "scores": {
+                "chrf": 73.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "randos is free software (AGPL-3.0) and built in public.",
+          "msgid": "randos is free software (AGPL-3.0) and built in public.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "randos es software libre (AGPL-3.0) y construido en público.",
+              "back_translation": "randos is free software (AGPL-3.0) and built in public.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "randos es software libre (AGPL-3.0) y construido en público.",
+              "back_translation": "randos is free software (AGPL-3.0) and built in public.",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "remote audio received (%{summary})",
+          "msgid": "remote audio received (%{summary})",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "opus-mt",
+          "translations": {
+            "m2m100": {
+              "text": "audio remoto recibido (%{summary})",
+              "back_translation": "Remote audio received (%{summary})",
+              "failed": [],
+              "scores": {
+                "chrf": 96.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            },
+            "opus-mt": {
+              "text": "audio remoto recibido (%{summary})",
+              "back_translation": "remote audio received (%{summary})",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            }
+          }
+        },
+        {
+          "key": "connection state\u0004starting",
+          "msgid": "starting",
+          "msgctxt": "connection state",
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": "m2m100",
+          "translations": {
+            "m2m100": {
+              "text": "Inicio",
+              "back_translation": "Started",
+              "failed": [],
+              "scores": {
+                "chrf": 25.1,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 1
+              }
+            },
+            "opus-mt": {
+              "text": "Inicio",
+              "back_translation": "Home",
+              "failed": [],
+              "scores": {
+                "chrf": 0.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {
+                "chrf": 2
+              }
+            }
+          }
+        }
+      ],
+      "models": [
+        "m2m100",
+        "opus-mt"
+      ],
+      "summary": {
+        "m2m100": {
+          "strings": 85,
+          "all_checks_pass": 82,
+          "mean_chrf": 65.5,
+          "mean_rank": 1.74,
+          "best_count": 22
+        },
+        "opus-mt": {
+          "strings": 85,
+          "all_checks_pass": 85,
+          "mean_chrf": 78.3,
+          "mean_rank": 1.26,
+          "best_count": 63
+        }
+      },
+      "winner": {
+        "model": "opus-mt",
+        "why": "passes every check on 85/85 strings, mean rank 1.26"
+      }
+    },
+    "ja": {
+      "strings": [
+        {
+          "key": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+          "msgid": "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "会話は1分間続きますが、時間が上がると、2人が選択した場合にのみ1分間続きますが、2分間まで続きます。",
+              "back_translation": "The conversation lasts for one minute, but when the time increases, it lasts for one minute only if the two have chosen, but it lasts for two minutes.",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{call}', '%{extension}', '%{max}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 33.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "A doorway, not a platform",
+          "msgid": "A doorway, not a platform",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "プラットフォームではなくドア",
+              "back_translation": "Not the platform, but the door.",
+              "failed": [],
+              "scores": {
+                "chrf": 38.7,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "About",
+          "msgid": "About",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "について",
+              "back_translation": "About",
+              "failed": [],
+              "scores": {
+                "chrf": 100.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "About randos",
+          "msgid": "About randos",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "について(0)",
+              "back_translation": "About ( 0 )",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['randos', 'rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 28.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Accept the 18+ acknowledgment before looking for a rando.",
+          "msgid": "Accept the 18+ acknowledgment before looking for a rando.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "認定を受け入れる前に18+認定を受け入れる。",
+              "back_translation": "Accept 18+ certificates before accepting the certificate.",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 24.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Attempting to reconnect",
+          "msgid": "Attempting to reconnect",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "再接続しようとする",
+              "back_translation": "I try to connect again.",
+              "failed": [],
+              "scores": {
+                "chrf": 31.5,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Both people choose whether to continue.",
+          "msgid": "Both people choose whether to continue.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "どちらも続けるかどうかを決める。",
+              "back_translation": "Decide whether or not they will continue.",
+              "failed": [],
+              "scores": {
+                "chrf": 43.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Cancel",
+          "msgid": "Cancel",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "キャンセル",
+              "back_translation": "cancelled",
+              "failed": [],
+              "scores": {
+                "chrf": 51.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Choose supported conversation languages.",
+          "msgid": "Choose supported conversation languages.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "サポートされた会話言語を選択します。",
+              "back_translation": "Select the supported language.",
+              "failed": [],
+              "scores": {
+                "chrf": 41.9,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Choose your languages.",
+          "msgid": "Choose your languages.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "あなたの言語を選択します。",
+              "back_translation": "Choose your language.",
+              "failed": [],
+              "scores": {
+                "chrf": 90.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Connecting",
+          "msgid": "Connecting",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "つながり",
+              "back_translation": "Connected",
+              "failed": [],
+              "scores": {
+                "chrf": 59.3,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Connection:",
+          "msgid": "Connection:",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "つながり:",
+              "back_translation": "The connection:",
+              "failed": [],
+              "scores": {
+                "chrf": 81.8,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Conversation is active.",
+          "msgid": "Conversation is active.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "会話は積極的です。",
+              "back_translation": "The conversation is active.",
+              "failed": [],
+              "scores": {
+                "chrf": 91.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+          "msgid": "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "会話はプライベートであり、保存されていません. サーバーは通話を調整しますが、録音を保持したり、あなたが話した人の歴史を構築したりしません。",
+              "back_translation": "The server adjusts the call but does not keep the recording or build the history of the person you’ve spoken.",
+              "failed": [],
+              "scores": {
+                "chrf": 39.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Current call",
+          "msgid": "Current call",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "現在の通話",
+              "back_translation": "The current call.",
+              "failed": [],
+              "scores": {
+                "chrf": 80.0,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Ephemeral by default",
+          "msgid": "Ephemeral by default",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "デフォルトによるデフォルト",
+              "back_translation": "default by default.",
+              "failed": [],
+              "scores": {
+                "chrf": 44.6,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Finding a compatible rando.",
+          "msgid": "Finding a compatible rando.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "互換性のあるものを見つける。",
+              "back_translation": "Find something compatible.",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 47.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "Finding a rando",
+          "msgid": "Finding a rando",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "見つける(0)",
+              "back_translation": "Find it (0)",
+              "failed": [
+                {
+                  "check": "glossary",
+                  "detail": "missing ['rando']"
+                }
+              ],
+              "scores": {
+                "chrf": 23.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+          "msgid": "I am 18 or older and understand that conversations are anonymous and unmoderated.",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "私は18歳以上で、会話が匿名で不適切であることを理解しています。",
+              "back_translation": "I am over 18 years old and I understand that the conversation is anonymous and inappropriate.",
+              "failed": [],
+              "scores": {
+                "chrf": 55.4,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        },
+        {
+          "key": "I want them to speak in",
+          "msgid": "I want them to speak in",
+          "msgctxt": null,
+          "disagreement": 0.0,
+          "conflict": null,
+          "best": null,
+          "translations": {
+            "m2m100": {
+              "text": "僕は彼らに話しかけたい。",
+              "back_translation": "I want to talk to them.",
+              "failed": [],
+              "scores": {
+                "chrf": 35.2,
+                "metricx": null,
+                "comet_kiwi": null,
+                "judge": null
+              },
+              "ranks": {}
+            }
+          }
+        }
+      ],
+      "models": [
+        "m2m100"
+      ],
+      "summary": {
+        "m2m100": {
+          "strings": 20,
+          "all_checks_pass": 15,
+          "mean_chrf": 52.1,
+          "mean_rank": null,
+          "best_count": 0
+        }
+      },
+      "winner": null
+    }
+  }
+}
