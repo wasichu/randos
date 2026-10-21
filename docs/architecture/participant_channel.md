@@ -45,7 +45,7 @@ show up as [`state`](#state) pushes, not in the reply.
 
 | Event | Payload | Applies when | Effect |
 | --- | --- | --- | --- |
-| `find` | `{"speaks": "en", "listens": "es", "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone whose languages mirror yours **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
+| `find` | `{"speaks": "en", "hears": ["en", "es"], "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone you can talk to **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
 | `end_call` | `{}`, or `{"reason": …}` | in a call | Hang up and go `idle`. The peer goes back to `looking`. A client that can't carry the call sends a `reason`: `microphone_denied`, `microphone_not_found`, `audio_unavailable`, or `audio_failed` (anything else replies `invalid_message`); it comes back as this participant's `error`. |
 | `next` | `{}` | in a call | Hang up and go straight back to `looking`. |
@@ -56,8 +56,22 @@ Events that don't apply in the current status are accepted and ignored.
 Malformed payloads reply `invalid_message`; unknown signal types reply
 `unsupported_signal_type`.
 
-`speaks` and `listens` must be codes from the join reply's `languages`;
-others give `error: "unsupported_language"`.
+`speaks` is the language you'll speak; `hears` the languages you're happy
+to hear (one or more; a browser starts with the speaking language checked
+among them). Two people are matched when **each one's `speaks` is in the
+other's `hears`**: the same language both ways, or crosstalk (you speak
+Spanish and hear English, they the opposite). Among several compatible
+people, whoever has waited longest is matched. All codes must come from
+the join reply's `languages`, and `hears` can't be empty; otherwise the
+state shows `error: "unsupported_language"`. A `hears` that isn't a list of
+strings replies `invalid_message`. Clients from before `hears` send a
+single `"listens": "es"` instead, which means `"hears": ["es"]`.
+
+Two people who just had a call aren't matched with each other again for
+`Randos.Calls.Lifecycle.rematch_window_seconds/0` (90 s) after it ends, so
+`next` finds someone new; if they're still both waiting when it passes,
+they're matched then. The server remembers only the pair's anonymous ids,
+in memory, for that window.
 
 `audio` (boolean, optional, default `false`) says whether this client can
 carry call audio over WebRTC. Browsers always do. A client that sends
@@ -87,6 +101,7 @@ e.g. `"in_call"`.
     "media": {"self": "connecting | connected | disconnected", "peer": "…"},
     "ice_servers": [{"urls": "stun:…"}, {"urls": "turn:…", "username": "…", "credential": "…"}],
     "ice_transport_policy": "relay | all",
+    "peer_speaks": "es",
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
@@ -106,6 +121,9 @@ e.g. `"in_call"`.
 - `ice_servers`: this call's STUN/TURN servers (fresh TURN credentials,
   valid for at least the longest possible call). Use them for this call's
   peer connection.
+- `peer_speaks`: the language your rando speaks in this call (a code from
+  `languages`). With several hearing languages, it's the only way to know.
+  It's a language, never anything that identifies them.
 - `ice_transport_policy`: WebRTC's `iceTransportPolicy` for this call.
   `"relay"` (whenever the server has a TURN server, unless its operator
   allows direct calls): connect only through the TURN relay, so neither

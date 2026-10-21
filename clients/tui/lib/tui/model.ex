@@ -20,14 +20,23 @@ defmodule Tui.Model do
   @type status :: :connecting | :idle | :looking | :in_call | :extension_pending
   @type command :: {:push, String.t(), map()}
 
+  @typedoc """
+  `speaks` is a language code; `hears` the codes the person is happy to
+  hear. The speaking language starts checked, and choosing another speaking
+  language checks it instead (`auto_hears` is the one checked that way, until
+  the person touches it). `hears_cursor` is the language the hearing row
+  points at (space toggles it).
+  """
   @type t :: %__MODULE__{
           connection: :connecting | :connected,
           languages: [%{code: String.t(), name: String.t()}],
-          speaks: non_neg_integer(),
-          listens: non_neg_integer(),
+          speaks: String.t(),
+          hears: [String.t()],
+          hears_cursor: non_neg_integer(),
+          auto_hears: String.t() | nil,
           adult_acknowledged?: boolean(),
           audio?: boolean(),
-          focus: :speaks | :listens | :ack,
+          focus: :speaks | :hears | :ack,
           status: status() | nil,
           webrtc_role: String.t() | nil,
           error: String.t() | nil,
@@ -38,8 +47,10 @@ defmodule Tui.Model do
 
   defstruct connection: :connecting,
             languages: [],
-            speaks: 0,
-            listens: 1,
+            speaks: "en",
+            hears: ["en"],
+            hears_cursor: 0,
+            auto_hears: "en",
             adult_acknowledged?: false,
             audio?: false,
             focus: :speaks,
@@ -61,6 +72,40 @@ defmodule Tui.Model do
   @spec new(integer()) :: t()
   def new(now_ms \\ 0), do: %__MODULE__{now_ms: now_ms}
 
+  @doc """
+  The form as the person left it last time (`Tui.Config`): speaking and
+  hearing languages and the 18+ acknowledgment. Codes the server doesn't
+  offer are dropped when its languages arrive (`joined/2`).
+  """
+  @spec restore(t(), map()) :: t()
+  def restore(model, saved) do
+    speaks = if is_binary(saved["speaks"]), do: saved["speaks"], else: model.speaks
+
+    hears =
+      case saved["hears"] do
+        [_ | _] = codes -> Enum.filter(codes, &is_binary/1)
+        _other -> model.hears
+      end
+
+    # Saved languages are the person's own choice: none is automatic.
+    %{
+      model
+      | speaks: speaks,
+        hears: hears,
+        auto_hears: if(hears == model.hears, do: model.auto_hears),
+        adult_acknowledged?: saved["adult_acknowledged"] == true
+    }
+  end
+
+  @doc "What `Tui.Config` keeps of the form."
+  @spec saved(t()) :: map()
+  def saved(model),
+    do: %{
+      "speaks" => model.speaks,
+      "hears" => model.hears,
+      "adult_acknowledged" => model.adult_acknowledged?
+    }
+
   ## Server messages
 
   @doc "Whether this client can carry call audio (sent with `find`)."
@@ -72,13 +117,15 @@ defmodule Tui.Model do
   def joined(model, %{"state" => state, "languages" => languages}) do
     first_join? = model.languages == []
 
-    model = %{
-      model
-      | connection: :connected,
-        languages: Enum.map(languages, &%{code: &1["code"], name: &1["name"]}),
-        # A (re)join is a brand-new participant; don't log it as a transition.
-        status: nil
-    }
+    model =
+      %{
+        model
+        | connection: :connected,
+          languages: Enum.map(languages, &%{code: &1["code"], name: &1["name"]}),
+          # A (re)join is a brand-new participant; don't log it as a transition.
+          status: nil
+      }
+      |> offered_languages_only()
 
     model =
       if first_join?,
@@ -135,10 +182,10 @@ defmodule Tui.Model do
     case key do
       k when k in ["tab", "down"] -> {%{model | focus: next_focus(model.focus)}, []}
       "up" -> {%{model | focus: prev_focus(model.focus)}, []}
-      "left" -> {cycle_language(model, -1), []}
-      "right" -> {cycle_language(model, 1), []}
-      " " -> {%{model | adult_acknowledged?: not model.adult_acknowledged?}, []}
-      "enter" -> {model, [{:push, "find", find_payload(model)}]}
+      "left" -> {move(model, -1), []}
+      "right" -> {move(model, 1), []}
+      " " -> {toggle(model), []}
+      "enter" -> find(model)
       _ -> {model, []}
     end
   end
@@ -162,9 +209,31 @@ defmodule Tui.Model do
 
   ## Derived view data
 
-  @spec language_name(t(), :speaks | :listens) :: String.t()
-  def language_name(%{languages: []}, _field), do: "…"
-  def language_name(model, field), do: Enum.at(model.languages, Map.fetch!(model, field)).name
+  @doc "A language's name, by code (the code itself if the server didn't offer it)."
+  @spec language_name(t(), String.t() | nil) :: String.t()
+  def language_name(%{languages: []}, _code), do: "…"
+  def language_name(_model, nil), do: "…"
+
+  def language_name(model, code) do
+    case Enum.find(model.languages, &(&1.code == code)) do
+      %{name: name} -> name
+      nil -> code
+    end
+  end
+
+  @doc "The language the hearing row points at, and whether it's checked."
+  @spec hears_cursor(t()) :: {String.t(), boolean()} | nil
+  def hears_cursor(%{languages: []}), do: nil
+
+  def hears_cursor(model) do
+    %{code: code} = Enum.at(model.languages, model.hears_cursor)
+    {code, code in model.hears}
+  end
+
+  @doc "The language the rando speaks in the current call, when the server says."
+  @spec peer_speaks(t()) :: String.t() | nil
+  def peer_speaks(%{call: %{"peer_speaks" => code}}) when is_binary(code), do: code
+  def peer_speaks(_model), do: nil
 
   @doc "Seconds left in the current segment or vote, if any."
   @spec seconds_left(t()) :: non_neg_integer() | nil
@@ -210,29 +279,90 @@ defmodule Tui.Model do
 
   # Without audio the server pairs us only with other text-only clients,
   # never with a browser user who would sit through a silent call.
+  defp find(%{hears: []} = model),
+    do: {log(model, "pick at least one language to hear (space toggles one)"), []}
+
+  defp find(model), do: {model, [{:push, "find", find_payload(model)}]}
+
   defp find_payload(model) do
     %{
-      speaks: Enum.at(model.languages, model.speaks).code,
-      listens: Enum.at(model.languages, model.listens).code,
+      speaks: model.speaks,
+      hears: model.hears,
       adult_acknowledged: model.adult_acknowledged?,
       audio: model.audio?
     }
   end
 
-  defp cycle_language(%{focus: field} = model, step) when field in [:speaks, :listens] do
-    count = length(model.languages)
-    if count == 0, do: model, else: Map.update!(model, field, &Integer.mod(&1 + step, count))
+  defp move(%{languages: []} = model, _step), do: model
+
+  # A new speaking language is checked among the hearing ones too.
+  # The speaking language is checked among the hearing ones, replacing the
+  # one checked for the previous speaking language (unless the person
+  # checked or kept that one themselves), so stepping through the list
+  # doesn't check every language on the way.
+  defp move(%{focus: :speaks} = model, step) do
+    codes = Enum.map(model.languages, & &1.code)
+    index = Enum.find_index(codes, &(&1 == model.speaks)) || 0
+    speaks = Enum.at(codes, Integer.mod(index + step, length(codes)))
+    hears = List.delete(model.hears, model.auto_hears)
+
+    if speaks in hears,
+      do: %{model | speaks: speaks, hears: hears, auto_hears: nil},
+      else: %{
+        model
+        | speaks: speaks,
+          hears: in_order(model, [speaks | hears]),
+          auto_hears: speaks
+      }
   end
 
-  defp cycle_language(model, _step), do: model
+  defp move(%{focus: :hears} = model, step),
+    do: %{model | hears_cursor: Integer.mod(model.hears_cursor + step, length(model.languages))}
 
-  defp next_focus(:speaks), do: :listens
-  defp next_focus(:listens), do: :ack
+  defp move(model, _step), do: model
+
+  defp toggle(%{focus: :hears, languages: [_ | _]} = model) do
+    {code, checked?} = hears_cursor(model)
+
+    hears =
+      if checked?, do: List.delete(model.hears, code), else: in_order(model, [code | model.hears])
+
+    # Touched by hand: it's the person's choice now, not the automatic one.
+    auto_hears = if code == model.auto_hears, do: nil, else: model.auto_hears
+    %{model | hears: hears, auto_hears: auto_hears}
+  end
+
+  defp toggle(%{focus: :ack} = model),
+    do: %{model | adult_acknowledged?: not model.adult_acknowledged?}
+
+  defp toggle(model), do: model
+
+  # Codes in the server's language order (for display), without repeats.
+  defp in_order(model, codes),
+    do: for(%{code: code} <- model.languages, code in codes, do: code)
+
+  # Saved or default codes the server doesn't offer are dropped.
+  defp offered_languages_only(%{languages: languages} = model) do
+    codes = Enum.map(languages, & &1.code)
+    speaks = if model.speaks in codes, do: model.speaks, else: List.first(codes)
+    hears = Enum.filter(model.hears, &(&1 in codes))
+    hears = if hears == [] and speaks, do: [speaks], else: hears
+
+    %{
+      model
+      | speaks: speaks,
+        hears: hears,
+        hears_cursor: min(model.hears_cursor, length(codes) - 1)
+    }
+  end
+
+  defp next_focus(:speaks), do: :hears
+  defp next_focus(:hears), do: :ack
   defp next_focus(:ack), do: :speaks
 
   defp prev_focus(:speaks), do: :ack
-  defp prev_focus(:listens), do: :speaks
-  defp prev_focus(:ack), do: :listens
+  defp prev_focus(:hears), do: :speaks
+  defp prev_focus(:ack), do: :hears
 
   defp log(model, line), do: %{model | log: Enum.take([line | model.log], @max_log)}
 end

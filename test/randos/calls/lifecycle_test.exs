@@ -11,7 +11,7 @@ defmodule Randos.Calls.LifecycleTest do
       pid: self(),
       topic: "t:#{id}",
       speaks_language: "en",
-      listens_language: "es",
+      hears_languages: ["es"],
       audio?: audio?
     }
   end

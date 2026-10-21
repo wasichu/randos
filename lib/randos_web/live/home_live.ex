@@ -101,6 +101,10 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
     |> assign(:ice_transport_policy, participant.call && participant.call.ice_transport_policy)
+    |> assign(
+      :peer_language,
+      participant.call && ParticipantShell.peer_speaks(participant.call, participant.id)
+    )
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
   end
 
@@ -121,6 +125,7 @@ defmodule RandosWeb.HomeLive do
             ice_transport_policy={@ice_transport_policy}
             voice_processor={@voice_processor}
             preferences={@preferences}
+            peer_language={@peer_language}
             form={@form}
             matchmaking_error={@matchmaking_error}
           />
@@ -133,15 +138,15 @@ defmodule RandosWeb.HomeLive do
   defp default_preferences(socket) do
     speaking_language = browser_locale_language(socket)
 
+    # The speaking language starts checked among the hearing languages (the
+    # person can uncheck it): two people who share a language can talk.
     %{
       "speaking_language" => speaking_language,
-      "listening_language" => default_listening_language(speaking_language),
+      "hearing_languages" => [speaking_language],
+      "auto_hearing_language" => speaking_language,
       "adult_acknowledgment" => "false"
     }
   end
-
-  defp default_listening_language("en"), do: "es"
-  defp default_listening_language(_speaking_language), do: "en"
 
   defp browser_locale_language(socket) do
     locale =
@@ -157,10 +162,47 @@ defmodule RandosWeb.HomeLive do
   defp normalize_preferences(params, current) do
     current
     |> Map.merge(
-      Map.take(params, ["speaking_language", "listening_language", "adult_acknowledgment"])
+      Map.take(params, ["speaking_language", "hearing_languages", "adult_acknowledgment"])
     )
     |> Map.update("adult_acknowledgment", "false", &normalize_checkbox/1)
+    |> Map.update("hearing_languages", [], &supported_languages/1)
+    |> follow_speaking_language(current)
   end
+
+  # The form sends a "" placeholder so that unchecking everything still
+  # submits the field; keep only supported codes (the matchmaker checks too).
+  defp supported_languages(codes) when is_list(codes),
+    do: codes |> Enum.filter(&ConversationLanguages.supported?/1) |> Enum.uniq()
+
+  defp supported_languages(_codes), do: []
+
+  # The speaking language is checked among the hearing ones, replacing the
+  # one checked for the previous speaking language ("auto_hearing_language")
+  # unless the person unchecked it meanwhile; languages they checked
+  # themselves stay. The TUI does the same (Tui.Model).
+  defp follow_speaking_language(preferences, current) do
+    hears = preferences["hearing_languages"]
+
+    auto =
+      if preferences["auto_hearing_language"] in hears, do: preferences["auto_hearing_language"]
+
+    new = preferences["speaking_language"]
+
+    cond do
+      new == current["speaking_language"] ->
+        Map.put(preferences, "auto_hearing_language", auto)
+
+      new in hears ->
+        %{preferences | "hearing_languages" => List.delete(hears, auto)}
+        |> Map.put("auto_hearing_language", nil)
+
+      true ->
+        %{preferences | "hearing_languages" => in_order([new | List.delete(hears, auto)])}
+        |> Map.put("auto_hearing_language", new)
+    end
+  end
+
+  defp in_order(codes), do: Enum.filter(ConversationLanguages.codes(), &(&1 in codes))
 
   defp normalize_checkbox(true), do: "true"
   defp normalize_checkbox("true"), do: "true"
@@ -184,7 +226,7 @@ defmodule RandosWeb.HomeLive do
   defp participant_preferences(preferences) do
     %{
       speaks: preferences["speaking_language"],
-      listens: preferences["listening_language"],
+      hears: preferences["hearing_languages"],
       adult_acknowledged?: acknowledged?(preferences),
       # The browser always brings WebRTC audio.
       audio?: true

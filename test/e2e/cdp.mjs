@@ -230,19 +230,30 @@ export class Page {
   }
 
   // Choose languages, accept the terms, and press "Find a rando".
-  async findRando(speaks, listens) {
+  // Speak `speaks`; hear exactly `hears` (a code or a list of codes).
+  async findRando(speaks, hears) {
+    const heard = [hears].flat()
+    // The speaking language first: the server then checks it among the
+    // hearing languages, so wait for that before setting them exactly.
     await this.eval(`(() => {
-      const set = (id, value) => {
-        const el = document.getElementById(id);
-        el.value = value;
-        el.dispatchEvent(new Event("input", {bubbles: true}));
-        el.dispatchEvent(new Event("change", {bubbles: true}));
-      };
-      set("conversation_speaking_language", ${JSON.stringify(speaks)});
-      set("conversation_listening_language", ${JSON.stringify(listens)});
-      const box = document.getElementById("conversation_adult_acknowledgment");
-      if (!box.checked) box.click();
+      const el = document.getElementById("conversation_speaking_language");
+      el.value = ${JSON.stringify(speaks)};
+      el.dispatchEvent(new Event("change", {bubbles: true}));
     })()`)
+    await this.waitFor(`!!document.querySelector("#hearing-language-${speaks}:checked")`, "speaking language checked")
+    await this.eval(`(() => {
+      const heard = ${JSON.stringify(heard)};
+      for (const box of document.querySelectorAll("#hearing-languages input[type=checkbox]"))
+        box.checked = heard.includes(box.value);
+      const ack = document.getElementById("conversation_adult_acknowledgment");
+      ack.checked = true;
+      ack.dispatchEvent(new Event("change", {bubbles: true}));
+    })()`)
+    const exactly = heard.map(code => `#hearing-language-${code}[checked]`).join(", ")
+    await this.waitFor(
+      `document.querySelectorAll("#hearing-languages input[checked]").length === ${heard.length} &&
+       document.querySelectorAll(${JSON.stringify(exactly)}).length === ${heard.length}`,
+      "hearing languages set")
     await this.waitFor(`!document.querySelector("#find-rando-button").disabled`, "find button enabled")
     await this.click("#find-rando-button")
   }

@@ -136,10 +136,11 @@ try {
     await stuck.waitFor(`window.__randosCallEnds > 0`, "the stuck page's call to end", limitMs)
     await peer.waitFor(`window.__randosCallEnds > 0`, "the peer's call to end", limitMs)
 
-    // Both were requeued (connection_failed) and keep rematching; stop that.
-    await stuck.hangUp()
+    // Both were requeued (connection_failed), and aren't matched with each
+    // other again for the rematch window: both wait.
+    await stuck.waitFor(`!!document.querySelector("#looking-panel")`, "the stuck page looking")
     await peer.waitFor(`!!document.querySelector("#looking-panel")`, "the peer looking")
-    await peer.stopLooking()
+    await Promise.all([stuck.stopLooking(), peer.stopLooking()])
   })
 } finally {
   await browser.close()

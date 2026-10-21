@@ -118,6 +118,21 @@ defmodule Tui.Media.State do
 
   def cycle_device(state, _which), do: state
 
+  @doc """
+  The devices chosen last time (`Tui.Config`), by name. A device that's
+  gone by now falls back to the system default when the helper opens it
+  (it says so in a notice).
+  """
+  @spec restore_choice(t(), map()) :: t()
+  def restore_choice(state, saved) do
+    pick = fn key -> if is_binary(saved[key]), do: saved[key] end
+    %{state | choice: %{input: pick.("input"), output: pick.("output")}}
+  end
+
+  @doc "What `Tui.Config` keeps of the device choice."
+  @spec saved_choice(t()) :: map()
+  def saved_choice(state), do: %{"input" => state.choice.input, "output" => state.choice.output}
+
   # A chosen device replaces "device" (the default); test endpoints like
   # "sine" and "null" are left alone.
   defp with_choice(state, {input, output}),

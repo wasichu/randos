@@ -38,13 +38,14 @@ defmodule Randos.Participant do
   @type status :: :idle | :looking | :connecting | :in_call | :extension_pending
 
   @typedoc """
-  What the person asked for. `audio?` is whether their client can carry
-  call audio (WebRTC); only clients that agree on it are matched, so nobody
-  sits through a silent call with a text-only client.
+  What the person asked for: the language they'll speak, and the languages
+  they're happy to hear (`hears`, at least one). `audio?` is whether their
+  client can carry call audio (WebRTC); only clients that agree on it are
+  matched, so nobody sits through a silent call with a text-only client.
   """
   @type preferences :: %{
           speaks: String.t(),
-          listens: String.t(),
+          hears: [String.t()],
           adult_acknowledged?: boolean(),
           audio?: boolean()
         }
@@ -245,7 +246,7 @@ defmodule Randos.Participant do
       id: p.id,
       topic: p.topic,
       speaks_language: p.preferences.speaks,
-      listens_language: p.preferences.listens,
+      hears_languages: p.preferences.hears,
       accepted_adult_terms: p.preferences.adult_acknowledged?,
       audio?: p.preferences.audio?
     }

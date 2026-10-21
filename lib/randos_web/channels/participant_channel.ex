@@ -20,7 +20,7 @@ defmodule RandosWeb.ParticipantChannel do
   @find_capacity 5
   @find_refill_ms 6_000
 
-  @default_preferences %{speaks: "en", listens: "es", adult_acknowledged?: false, audio?: false}
+  @default_preferences %{speaks: "en", hears: ["en"], adult_acknowledged?: false, audio?: false}
 
   @impl true
   def join("participant", _params, socket) do
@@ -43,27 +43,25 @@ defmodule RandosWeb.ParticipantChannel do
   @impl true
   def handle_in(
         "find",
-        %{"speaks" => speaks, "listens" => listens, "adult_acknowledged" => ack} = payload,
+        %{"speaks" => speaks, "adult_acknowledged" => ack} = payload,
         socket
       )
-      when is_binary(speaks) and is_binary(listens) and is_boolean(ack) and
+      when is_binary(speaks) and is_boolean(ack) and
              (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) do
-    case take_find_token(socket) do
-      {:ok, socket} ->
-        # Clients that don't say they carry audio are matched only with each other.
-        audio? = Map.get(payload, "audio", false)
+    with {:ok, hears} <- hears(payload),
+         {:ok, socket} <- take_find_token(socket) do
+      # Clients that don't say they carry audio are matched only with each other.
+      preferences = %{
+        speaks: speaks,
+        hears: hears,
+        adult_acknowledged?: ack,
+        audio?: Map.get(payload, "audio", false)
+      }
 
-        preferences = %{
-          speaks: speaks,
-          listens: listens,
-          adult_acknowledged?: ack,
-          audio?: audio?
-        }
-
-        {:reply, :ok, run(socket, {:find, preferences})}
-
-      {:error, socket} ->
-        {:reply, {:error, %{reason: "rate_limited"}}, socket}
+      {:reply, :ok, run(socket, {:find, preferences})}
+    else
+      :invalid -> {:reply, {:error, %{reason: "invalid_message"}}, socket}
+      {:error, socket} -> {:reply, {:error, %{reason: "rate_limited"}}, socket}
     end
   end
 
@@ -147,6 +145,16 @@ defmodule RandosWeb.ParticipantChannel do
     do: %{state | call: Map.put(call, :ice_servers, servers)}
 
   defp with_ice_servers(state, _servers), do: state
+
+  # The languages the person is happy to hear: `hears`, a list of codes, or
+  # (clients before it, like the v0.2.0 TUI) a single `listens`. The
+  # matchmaker checks they're supported and that there's at least one.
+  defp hears(%{"hears" => hears}) when is_list(hears) and length(hears) <= 32 do
+    if Enum.all?(hears, &is_binary/1), do: {:ok, hears}, else: :invalid
+  end
+
+  defp hears(%{"listens" => listens}) when is_binary(listens), do: {:ok, [listens]}
+  defp hears(_payload), do: :invalid
 
   defp take_find_token(socket) do
     now = System.monotonic_time(:millisecond)

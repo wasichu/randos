@@ -7,7 +7,7 @@ defmodule RandosWeb.ParticipantShellTest do
   alias Randos.Participant
   alias RandosWeb.ParticipantShell
 
-  @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true, audio?: true}
+  @prefs %{speaks: "en", hears: ["es"], adult_acknowledged?: true, audio?: true}
 
   test "client state never exposes the match, the peer, ids, or pids" do
     participant = Participant.new(@prefs)
@@ -18,7 +18,7 @@ defmodule RandosWeb.ParticipantShellTest do
         pid: self(),
         topic: "t:#{id}",
         speaks_language: "en",
-        listens_language: "es",
+        hears_languages: ["es"],
         audio?: true
       }
     end
@@ -62,7 +62,9 @@ defmodule RandosWeb.ParticipantShellTest do
                ended_reason: nil,
                ice_transport_policy: "all",
                # Built without Call.new/2, so no media has been reported.
-               media: %{self: nil, peer: nil}
+               media: %{self: nil, peer: nil},
+               # The rando's language, a code: never who they are.
+               peer_speaks: "en"
              }
            }
 

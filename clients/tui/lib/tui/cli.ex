@@ -74,7 +74,8 @@ defmodule Tui.CLI do
     # terminal would draw over the TUI until the next redraw.
     log_to_file(log_path())
 
-    {:ok, supervisor} = Tui.Supervisor.start_link(uri: url, app: fake_audio())
+    config = Tui.Config.path(Application.get_env(:tui, :config_path))
+    {:ok, supervisor} = Tui.Supervisor.start_link(uri: url, app: [config: config] ++ fake_audio())
     app = Process.whereis(Tui.App)
     ref = Process.monitor(app)
 

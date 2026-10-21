@@ -32,8 +32,9 @@ defmodule Tui.ModelTest do
 
     assert model.connection == :connected
     assert model.status == :idle
-    assert Model.language_name(model, :speaks) == "English (EN)"
-    assert Model.language_name(model, :listens) == "Español (ES)"
+    assert Model.language_name(model, model.speaks) == "English (EN)"
+    # The speaking language starts checked among the hearing ones.
+    assert model.hears == ["en"]
     assert model.log == ["connected to the server"]
   end
 
@@ -41,15 +42,79 @@ defmodule Tui.ModelTest do
     assert {%Model{}, []} = Model.key(Model.new(), "enter")
   end
 
-  test "the idle form picks languages, toggles 18+, and finds" do
-    {model, commands} = keys(joined(), ["right", "tab", "right", "right", "tab", " ", "enter"])
+  test "the idle form picks a speaking language, hearing languages, 18+, and finds" do
+    {model, commands} =
+      keys(joined(), [
+        # Speak Spanish: it's checked among the hearing languages instead of
+        # English (checked only because it was the speaking language).
+        "right",
+        # The hearing row: also check French.
+        "tab",
+        "right",
+        "right",
+        " ",
+        # 18+, then find.
+        "tab",
+        " ",
+        "enter"
+      ])
 
     assert commands == [
              {:push, "find",
-              %{speaks: "es", listens: "en", adult_acknowledged: true, audio: false}}
+              %{speaks: "es", hears: ["es", "fr"], adult_acknowledged: true, audio: false}}
            ]
 
     assert model.adult_acknowledged?
+  end
+
+  test "stepping through speaking languages checks only the current one" do
+    {model, []} = keys(joined(), ["right", "right"])
+    assert {model.speaks, model.hears} == {"fr", ["fr"]}
+
+    # A language checked by hand stays when the speaking language moves on.
+    {model, []} = keys(joined(), ["tab", "right", " ", "up", "right"])
+    assert {model.speaks, model.hears} == {"es", ["es"]}
+    {model, []} = keys(model, ["right"])
+    assert {model.speaks, model.hears} == {"fr", ["es", "fr"]}
+  end
+
+  test "with nothing to hear, Enter says so instead of finding" do
+    {model, commands} = keys(joined(), ["tab", " ", "enter"])
+    assert model.hears == []
+    assert commands == []
+    assert [line | _] = model.log
+    assert line =~ "at least one language"
+  end
+
+  test "settings restore the form; codes the server doesn't offer are dropped" do
+    saved = %{"speaks" => "fr", "hears" => ["es", "xx"], "adult_acknowledged" => true}
+    model = Model.restore(Model.new(), saved)
+
+    {model, []} =
+      Model.joined(model, %{"state" => state("idle"), "languages" => @languages})
+
+    assert {model.speaks, model.hears, model.adult_acknowledged?} == {"fr", ["es"], true}
+
+    assert Model.saved(model) == %{
+             "speaks" => "fr",
+             "hears" => ["es"],
+             "adult_acknowledged" => true
+           }
+
+    # Nothing usable: the defaults.
+    model = Model.restore(Model.new(), %{"speaks" => 7, "hears" => "en"})
+    assert {model.speaks, model.hears, model.adult_acknowledged?} == {"en", ["en"], false}
+  end
+
+  test "the call map says which language the rando speaks" do
+    model = joined("in_call")
+    assert Model.peer_speaks(model) == nil
+
+    {model, []} =
+      Model.push(model, "state", state("in_call", %{"call" => %{"peer_speaks" => "fr"}}))
+
+    assert Model.peer_speaks(model) == "fr"
+    assert Model.language_name(model, "fr") == "Français (FR)"
   end
 
   test "status-specific keys map to protocol events" do

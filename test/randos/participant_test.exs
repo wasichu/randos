@@ -5,7 +5,7 @@ defmodule Randos.ParticipantTest do
   alias Randos.Matchmaking.{Entry, Match}
   alias Randos.Participant
 
-  @prefs %{speaks: "en", listens: "es", adult_acknowledged?: true, audio?: true}
+  @prefs %{speaks: "en", hears: ["es"], adult_acknowledged?: true, audio?: true}
 
   defp participant(attrs \\ []), do: struct!(Participant.new(@prefs), attrs)
 
@@ -19,7 +19,7 @@ defmodule Randos.ParticipantTest do
         pid: self(),
         topic: topic,
         speaks_language: "en",
-        listens_language: "es",
+        hears_languages: ["es"],
         audio?: true
       }
     end
@@ -61,7 +61,7 @@ defmodule Randos.ParticipantTest do
 
   describe "finding someone" do
     test "find asks the shell to join the queue with the chosen languages" do
-      prefs = %{@prefs | speaks: "fr", listens: "de"}
+      prefs = %{@prefs | speaks: "fr", hears: ["de"]}
       {p, effects} = Participant.handle(participant(), {:find, prefs})
 
       assert p.preferences == prefs
@@ -71,7 +71,7 @@ defmodule Randos.ParticipantTest do
                id: p.id,
                topic: p.topic,
                speaks_language: "fr",
-               listens_language: "de",
+               hears_languages: ["de"],
                accepted_adult_terms: true,
                audio?: true
              }
@@ -95,7 +95,7 @@ defmodule Randos.ParticipantTest do
     end
 
     test "preference updates are stored in any status" do
-      prefs = %{@prefs | listens: "ja"}
+      prefs = %{@prefs | hears: ["ja"]}
       {p, []} = Participant.handle(participant(status: :in_call), {:update_preferences, prefs})
       assert p.preferences == prefs
     end

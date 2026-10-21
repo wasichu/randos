@@ -25,16 +25,16 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#conversation_speaking_language option[value='hi']")
     assert has_element?(view, "#conversation_speaking_language option[value='ar']")
     assert has_element?(view, "#conversation_speaking_language option[value='id']")
-    assert has_element?(view, "#conversation_listening_language option[value='zh']")
-    assert has_element?(view, "#conversation_listening_language option[value='hi']")
-    assert has_element?(view, "#conversation_listening_language option[value='ar']")
-    assert has_element?(view, "#conversation_listening_language option[value='id']")
+    assert has_element?(view, "#hearing-languages #hearing-language-zh")
+    assert has_element?(view, "#hearing-languages #hearing-language-hi")
+    assert has_element?(view, "#hearing-languages #hearing-language-ar")
+    assert has_element?(view, "#hearing-languages #hearing-language-id")
 
     view
     |> form("#conversation-form",
       conversation: %{
         speaking_language: "en",
-        listening_language: "es",
+        hearing_languages: ["es"],
         adult_acknowledgment: "true"
       }
     )
@@ -43,36 +43,95 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#find-rando-button[disabled]")
   end
 
-  test "defaults speak language from browser locale and hear language to English", %{conn: conn} do
+  test "defaults the speaking language from the browser locale, checked among the hearing ones",
+       %{conn: conn} do
     conn = put_connect_params(conn, %{"browser_locale" => "pt-BR"})
 
     {:ok, view, _html} = live(conn, ~p"/")
 
     assert has_element?(view, "#conversation_speaking_language option[value='pt'][selected]")
-    assert has_element?(view, "#conversation_listening_language option[value='en'][selected]")
+    assert has_element?(view, "#hearing-language-pt[checked]")
+    refute has_element?(view, "#hearing-language-en[checked]")
   end
 
-  test "defaults hear language to Spanish when speak language is English", %{conn: conn} do
+  test "an unsupported locale falls back to English", %{conn: conn} do
     conn = put_connect_params(conn, %{"browser_locale" => "tl-PH"})
 
     {:ok, view, _html} = live(conn, ~p"/")
 
     assert has_element?(view, "#conversation_speaking_language option[value='en'][selected]")
-    assert has_element?(view, "#conversation_listening_language option[value='es'][selected]")
+    assert has_element?(view, "#hearing-language-en[checked]")
+  end
+
+  test "a new speaking language is checked instead of the one checked for the old", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/")
+    assert has_element?(view, "#hearing-language-en[checked]")
+
+    # English was checked only because it was the speaking language.
+    view
+    |> form("#conversation-form",
+      conversation: %{speaking_language: "es", hearing_languages: ["", "en"]}
+    )
+    |> render_change()
+
+    assert has_element?(view, "#hearing-language-es[checked]")
+    refute has_element?(view, "#hearing-language-en[checked]")
+
+    # Checked by hand, French stays when the speaking language moves on.
+    view
+    |> form("#conversation-form",
+      conversation: %{speaking_language: "es", hearing_languages: ["", "es", "fr"]}
+    )
+    |> render_change()
+
+    view
+    |> form("#conversation-form",
+      conversation: %{speaking_language: "de", hearing_languages: ["", "es", "fr"]}
+    )
+    |> render_change()
+
+    assert has_element?(view, "#hearing-language-fr[checked]")
+    assert has_element?(view, "#hearing-language-de[checked]")
+    refute has_element?(view, "#hearing-language-es[checked]")
+  end
+
+  test "hearing languages are a free choice; a new speaking language is checked too", %{
+    conn: conn
+  } do
+    {:ok, view, _html} = live(conn, ~p"/")
+
+    # Unchecking everything (the browser still sends the "" placeholder).
+    view
+    |> form("#conversation-form", conversation: %{hearing_languages: [""]})
+    |> render_change()
+
+    refute has_element?(view, "#hearing-languages input[type=checkbox][checked]")
+
+    view
+    |> form("#conversation-form", conversation: %{hearing_languages: ["", "fr", "de"]})
+    |> render_change()
+
+    assert has_element?(view, "#hearing-language-fr[checked]")
+    assert has_element?(view, "#hearing-language-de[checked]")
+
+    view
+    |> form("#conversation-form",
+      conversation: %{speaking_language: "ja", hearing_languages: ["", "fr", "de"]}
+    )
+    |> render_change()
+
+    assert has_element?(view, "#hearing-language-ja[checked]")
+    assert has_element?(view, "#hearing-language-fr[checked]")
   end
 
   test "shows validation when searching without the adult acknowledgment", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/")
 
-    view
-    |> form("#conversation-form",
-      conversation: %{
-        speaking_language: "en",
-        listening_language: "es",
-        adult_acknowledgment: "false"
-      }
-    )
-    |> render_submit()
+    submit(view, %{
+      speaking_language: "en",
+      hearing_languages: ["es"],
+      adult_acknowledgment: "false"
+    })
 
     assert has_element?(view, "#idle-panel")
     assert has_element?(view, "#matchmaking-error")
@@ -81,35 +140,27 @@ defmodule RandosWeb.HomeLiveTest do
   test "matches two compatible browser sessions and assigns roles", %{conn: conn} do
     {:ok, view_a, _html} = live(conn, ~p"/")
 
-    view_a
-    |> form("#conversation-form",
-      conversation: %{
-        speaking_language: "en",
-        listening_language: "es",
-        adult_acknowledgment: "true"
-      }
-    )
-    |> render_submit()
+    submit(view_a, %{
+      speaking_language: "en",
+      hearing_languages: ["es"],
+      adult_acknowledgment: "true"
+    })
 
     assert has_element?(view_a, "#looking-panel")
 
     assert has_element?(
              view_a,
              "#looking-status",
-             "Looking for a rando speaking Español (ES) who wants to hear English (EN)."
+             "Looking for a rando who speaks Español (ES) and wants to hear English (EN)."
            )
 
     {:ok, view_b, _html} = live(conn, ~p"/")
 
-    view_b
-    |> form("#conversation-form",
-      conversation: %{
-        speaking_language: "es",
-        listening_language: "en",
-        adult_acknowledgment: "true"
-      }
-    )
-    |> render_submit()
+    submit(view_b, %{
+      speaking_language: "es",
+      hearing_languages: ["en"],
+      adult_acknowledgment: "true"
+    })
 
     assert has_element?(view_b, "#connecting-panel")
     assert has_element?(view_b, "#match-connection-label")
@@ -126,6 +177,10 @@ defmodule RandosWeb.HomeLiveTest do
     connect_media(view_b)
     assert eventually_has_element?(view_a, "#call-panel")
     assert has_element?(view_a, "#call-countdown")
+    # Each sees the language the other actually speaks.
+    assert has_element?(view_a, "#remote-waveform-language", "Español (ES)")
+    assert eventually_has_element?(view_b, "#remote-waveform-language")
+    assert has_element?(view_b, "#remote-waveform-language", "English (EN)")
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
     assert has_element?(view_a, "#webrtc-audio[data-ice-servers*='stun:']")
     # No TURN server in tests, so the call may be direct.
@@ -173,27 +228,19 @@ defmodule RandosWeb.HomeLiveTest do
   test "ending an active call returns to idle instead of requeueing", %{conn: conn} do
     {:ok, view_a, _html} = live(conn, ~p"/")
 
-    view_a
-    |> form("#conversation-form",
-      conversation: %{
-        speaking_language: "en",
-        listening_language: "es",
-        adult_acknowledgment: "true"
-      }
-    )
-    |> render_submit()
+    submit(view_a, %{
+      speaking_language: "en",
+      hearing_languages: ["es"],
+      adult_acknowledgment: "true"
+    })
 
     {:ok, view_b, _html} = live(conn, ~p"/")
 
-    view_b
-    |> form("#conversation-form",
-      conversation: %{
-        speaking_language: "es",
-        listening_language: "en",
-        adult_acknowledgment: "true"
-      }
-    )
-    |> render_submit()
+    submit(view_b, %{
+      speaking_language: "es",
+      hearing_languages: ["en"],
+      adult_acknowledgment: "true"
+    })
 
     # The call becomes active (and the clock starts) once both browsers'
     # media is connected; their WebRTC hooks report it as a signal.
@@ -211,15 +258,11 @@ defmodule RandosWeb.HomeLiveTest do
   test "can leave the queue before a match", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/")
 
-    view
-    |> form("#conversation-form",
-      conversation: %{
-        speaking_language: "en",
-        listening_language: "es",
-        adult_acknowledgment: "true"
-      }
-    )
-    |> render_submit()
+    submit(view, %{
+      speaking_language: "en",
+      hearing_languages: ["es"],
+      adult_acknowledgment: "true"
+    })
 
     assert has_element?(view, "#looking-panel")
 
@@ -235,6 +278,18 @@ defmodule RandosWeb.HomeLiveTest do
         "type" => "media_state",
         "payload" => %{"state" => "connected"}
       })
+
+  # As a person would: the speaking language first (the page then checks it
+  # among the hearing languages), then everything else, then Find.
+  defp submit(view, conversation) do
+    view
+    |> form("#conversation-form", conversation: Map.take(conversation, [:speaking_language]))
+    |> render_change()
+
+    view
+    |> form("#conversation-form", conversation: conversation)
+    |> render_submit()
+  end
 
   defp eventually_has_element?(view, selector, attempts \\ 120)
 

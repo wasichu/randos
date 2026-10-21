@@ -60,6 +60,9 @@ defmodule RandosWeb.ParticipantShell do
       :ice_transport_policy
     ])
     |> Map.put(:media, media_view(call, participant_id))
+    # The language the rando speaks (with several hearing languages, the
+    # client can't know which): a language code, nothing that identifies them.
+    |> Map.put(:peer_speaks, peer_speaks(call, participant_id))
     # So clients can say "continue for another N minutes" without their own
     # copy of the constant.
     |> Map.put(:extension_duration_seconds, Lifecycle.extension_duration_seconds())
@@ -73,6 +76,15 @@ defmodule RandosWeb.ParticipantShell do
       end
 
     %{self: Map.get(call.media, participant_id), peer: Map.get(call.media, peer_id)}
+  end
+
+  @doc "The language the participant's rando speaks in this call (`nil` if not in it)."
+  @spec peer_speaks(Call.t(), String.t()) :: String.t() | nil
+  def peer_speaks(%Call{match: match}, participant_id) do
+    case Match.peer(match, participant_id) do
+      {:ok, peer} -> peer.speaks_language
+      {:error, _} -> nil
+    end
   end
 
   defp apply_event(participant, event) do

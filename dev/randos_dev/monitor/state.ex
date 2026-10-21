@@ -50,7 +50,9 @@ defmodule RandosDev.Monitor.State do
   def put_snapshot(state, %{queued_count: queued_count, queues: queues}) do
     rows =
       queues
-      |> Enum.map(fn {{speaks, listens, audio?}, ids} -> {speaks, listens, audio?, length(ids)} end)
+      |> Enum.map(fn {{speaks, hears, audio?}, ids} ->
+        {speaks, hears |> List.wrap() |> Enum.join(", "), audio?, length(ids)}
+      end)
       |> Enum.sort()
 
     %{state | queues: rows, queued_count: queued_count}
