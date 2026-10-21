@@ -14,7 +14,9 @@ cd clients/tui && mix tui --url wss://randos.slowinput.org/participant/websocket
 mix tui --check               # is the audio helper there and working?
 ```
 
-Keys are shown at the bottom of the screen; `q` quits.
+Keys are shown at the bottom of the screen; `q` quits. On the idle screen,
+`s` shows the server's status (the same as the website's `/status` page:
+whether the relay works, and today's call counts); `s` or Esc goes back.
 `RANDOS_FAKE_AUDIO=1` swaps the mic for a test tone and the speaker for
 nothing (for screenshots and demos, `just screenshots`; your rando would
 hear a beep). Logs go to

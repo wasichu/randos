@@ -193,6 +193,46 @@ defmodule Tui.ModelTest do
     assert hd(model.log) == "find refused: rate_limited"
   end
 
+  describe "the status screen" do
+    @snapshot %{"relay" => %{"state" => "ok", "transports" => []}, "usage" => %{}}
+
+    test "s on the idle screen opens it and asks the server; s or esc goes back" do
+      {model, [{:push, "status", %{}}]} = Model.key(joined(), "s")
+      assert %{snapshot: nil, unavailable?: false} = model.status_page
+
+      {model, []} = Model.reply(model, "status", {:ok, @snapshot})
+      assert model.status_page.snapshot == @snapshot
+
+      for back <- ["s", "esc"], do: assert({%{status_page: nil}, []} = Model.key(model, back))
+    end
+
+    test "while it's open, the form's keys do nothing and r asks again" do
+      {model, _ask} = Model.key(joined(), "s")
+      assert {^model, []} = keys(model, ["enter", " ", "right", "tab"])
+      assert {_model, [{:push, "status", %{}}]} = Model.key(model, "r")
+    end
+
+    test "it asks again every 30 s while open, never when closed" do
+      {model, _ask} = Model.key(Model.tick(joined(), 1_000), "s")
+      assert {_model, []} = Model.refresh_status(Model.tick(model, 30_999))
+      assert {model, [{:push, "status", %{}}]} = Model.refresh_status(Model.tick(model, 31_000))
+      assert model.status_page.asked_ms == 31_000
+
+      assert {_model, []} = Model.refresh_status(Model.tick(joined(), 99_000))
+    end
+
+    test "a server from before the request: the screen says so; a late reply after closing is ignored" do
+      {model, _ask} = Model.key(joined(), "s")
+      {model, []} = Model.reply(model, "status", {:error, %{"reason" => "invalid_message"}})
+      assert model.status_page.unavailable?
+      # Not logged as a refusal: the screen already says it.
+      refute Enum.any?(model.log, &(&1 =~ "status refused"))
+
+      {closed, []} = Model.key(model, "esc")
+      assert {^closed, []} = Model.reply(closed, "status", {:ok, @snapshot})
+    end
+  end
+
   test "seconds left follows the segment, then the vote deadline" do
     model = Model.tick(joined(), 10_000)
 

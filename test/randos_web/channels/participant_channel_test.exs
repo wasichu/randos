@@ -145,6 +145,28 @@ defmodule RandosWeb.ParticipantChannelTest do
     assert_reply ref, :error, %{reason: :unsupported_signal_type}
   end
 
+  test "status replies with the public status page's data, in any status" do
+    {_state, socket} = join_participant()
+
+    ref = push(socket, "status", %{})
+    assert_reply ref, :ok, %{"relay" => relay, "usage" => usage} = status
+
+    # The same map as /status (RandosWeb.Status.snapshot/0), JSON-safe.
+    assert Map.keys(status) == ["relay", "usage"]
+    assert %{"state" => _, "scope" => "this_node", "transports" => _} = relay
+    assert %{"calls_started" => _, "language_pairs" => _, "nodes" => _} = usage
+    assert {:ok, _json} = Jason.encode(status)
+
+    # Nothing about this participant: no id or topic anywhere in it.
+    refute inspect(status) =~ socket.assigns.participant.id
+
+    # Also while looking.
+    find(socket, "tr", "id")
+    assert_push "state", %{status: :looking}
+    ref = push(socket, "status", %{})
+    assert_reply ref, :ok, %{"relay" => _}
+  end
+
   test "find is rate limited per connection" do
     {_state, socket} = join_participant()
 

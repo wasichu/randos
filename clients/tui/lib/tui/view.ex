@@ -11,6 +11,7 @@ defmodule Tui.View do
   alias ExRatatui.Style
   alias ExRatatui.Widgets.{Block, List, Paragraph}
   alias Tui.Model
+  alias Tui.View.StatusScreen
 
   # The audio meters use the website's colours: cyan-600 for you, violet-600
   # for your rando (`assets/js/randos/audio_visualizer.js`).
@@ -38,6 +39,14 @@ defmodule Tui.View do
         {%Paragraph{text: " " <> help(model) <> mic_help(state), style: %Style{fg: :dark_gray}},
          help_area}
       ]
+  end
+
+  # The server status screen (`s` on the idle screen).
+  defp main(%{connection: :connected, status: :idle, status_page: %{}} = model, area, _extra) do
+    [
+      {%Paragraph{text: StatusScreen.text(model), block: panel(" Server status "), wrap: true},
+       area}
+    ]
   end
 
   # The idle form is a List so the selection marker keeps rows aligned
@@ -268,8 +277,10 @@ defmodule Tui.View do
 
   defp help(%{connection: :connecting}), do: "q quit"
 
+  defp help(%{status: :idle, status_page: %{}}), do: "s/esc back  r refresh  q quit"
+
   defp help(%{status: :idle}),
-    do: "tab/↑↓ move  ←→ change  space check  enter find  q quit"
+    do: "tab/↑↓ move  ←→ change  space check  enter find  s status  q quit"
 
   defp help(%{status: :looking}), do: "c cancel  q quit"
 
@@ -280,6 +291,8 @@ defmodule Tui.View do
   defp help(_model), do: "q quit"
 
   defp mic_help(%{media_state: %{available?: false}}), do: ""
+
+  defp mic_help(%{model: %{status_page: %{}}}), do: ""
 
   defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}),
     do: "  t mic test" <> if(media.devices, do: "  i/o devices", else: "")

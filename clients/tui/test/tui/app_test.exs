@@ -61,6 +61,75 @@ defmodule Tui.AppTest do
       assert text =~ "enter find"
     end
 
+    test "the server status screen, from a status reply" do
+      snapshot = %{
+        "relay" => %{
+          "state" => "degraded",
+          "scope" => "this_node",
+          "checked_at" => "2026-10-21T14:05:00Z",
+          "transports" => [
+            %{"transport" => "udp", "ok" => true, "reason" => nil},
+            %{"transport" => "tls", "ok" => false, "reason" => "no answer"}
+          ]
+        },
+        "usage" => %{
+          "date" => "2026-10-21",
+          "since" => "2026-10-21T09:12:00Z",
+          "calls_started" => 12,
+          "calls_connected" => 9,
+          "calls_continued" => 2,
+          "median_minutes" => 8,
+          "endings" => %{
+            "finished" => 8,
+            "not_connected" => 2,
+            "connection_lost" => 1,
+            "canceled" => 1
+          },
+          "language_pairs" => [
+            %{"languages" => ["en", "es"], "calls" => 5},
+            %{"languages" => ["es", "es"], "calls" => 3}
+          ],
+          "other_pairs_calls" => 4,
+          "nodes" => %{"answered" => 2, "total" => 2}
+        }
+      }
+
+      {model, [{:push, "status", %{}}]} = Tui.Model.key(model("idle"), "s")
+      assert render_text(model) =~ "Asking the server…"
+
+      {model, []} = Tui.Model.reply(model, "status", {:ok, snapshot})
+      text = render_text(model, %{}, {100, 30})
+
+      for line <- [
+            "Server status",
+            "The relay is partly working.",
+            "Over UDP (most calls): working",
+            "Over TLS (networks that block UDP): no answer",
+            "Last checked at 14:05 UTC.",
+            "Today (counting since 09:12 UTC on 2026-10-21):",
+            "Calls started: 12    Connected: 9    Continued past 10 minutes: 2",
+            "Typical length: 8 min",
+            "finished 8, couldn't connect 2, connection lost 1, canceled 1",
+            "English (EN) ↔ Español (ES): 5",
+            "Español (ES) both ways: 3",
+            "Other languages: 4",
+            "Counted across 2 of 2 servers.",
+            "We count calls, not people",
+            "s/esc back  r refresh  q quit"
+          ],
+          do: assert(text =~ line, "missing: #{line}\n\n#{text}")
+
+      # The idle form's hints aren't shown over it.
+      refute text =~ "enter find"
+
+      {model, []} = Tui.Model.reply(model, "status", {:error, %{"reason" => "invalid_message"}})
+      assert render_text(model) =~ "This server has no status page"
+    end
+
+    test "the idle screen offers the status screen" do
+      assert render_text(model("idle"), %{}, {120, 24}) =~ "s status"
+    end
+
     test "the idle screen says where settings are saved, and how to manage them" do
       refute render_text(model("idle")) =~ "Settings are saved"
 

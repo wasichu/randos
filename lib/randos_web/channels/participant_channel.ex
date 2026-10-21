@@ -15,6 +15,8 @@ defmodule RandosWeb.ParticipantChannel do
   alias Randos.Participant
   alias Randos.Signaling
   alias RandosWeb.ParticipantShell
+  alias RandosWeb.RelayHealth
+  alias RandosWeb.Status
 
   # `find` token bucket: a burst of 5, then one more every 6 seconds.
   @find_capacity 5
@@ -87,6 +89,15 @@ defmodule RandosWeb.ParticipantChannel do
       {:ok, _type} -> {:reply, :ok, run(socket, {:client_signal, type, payload})}
       {:error, reason} -> {:reply, {:error, %{reason: reason}}, socket}
     end
+  end
+
+  # The public status page's data (RandosWeb.Status.snapshot/0: the relay's
+  # health and today's aggregate counts, nothing per person), in any status.
+  # A stale relay result starts a fresh check, as the page does; the reply
+  # doesn't wait for it.
+  def handle_in("status", _payload, socket) do
+    RelayHealth.refresh_if_stale()
+    {:reply, {:ok, Status.snapshot()}, socket}
   end
 
   def handle_in(_event, _payload, socket) do

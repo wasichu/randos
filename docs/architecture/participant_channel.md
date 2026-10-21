@@ -41,7 +41,8 @@ is a fresh `idle` state.
 
 Every event gets a reply: `{"status": "ok", "response": {}}` or
 `{"status": "error", "response": {"reason": <string>}}`. Effects of an event
-show up as [`state`](#state) pushes, not in the reply.
+show up as [`state`](#state) pushes, not in the reply. The one exception is
+[`status`](#status-the-public-status-page), whose reply carries its data.
 
 | Event | Payload | Applies when | Effect |
 | --- | --- | --- | --- |
@@ -51,6 +52,7 @@ show up as [`state`](#state) pushes, not in the reply.
 | `next` | `{}` | in a call | Hang up and go straight back to `looking`. |
 | `vote` | `{"vote": "continue" \| "end"}` | `extension_pending` | Vote on extending. Both `continue` → another segment; any `end` → call ends (voter goes `idle`). |
 | `signal` | `{"type": <signal type>, "payload": {…}}` | in a call | Relay a WebRTC signal to the peer (see [signals](#webrtc-signaling)). |
+| `status` | `{}` | always | Reply with the public status page's data (see [below](#status-the-public-status-page)). Changes nothing. |
 
 Events that don't apply in the current status are accepted and ignored.
 Malformed payloads reply `invalid_message`; unknown signal types reply
@@ -80,6 +82,52 @@ carry call audio over WebRTC. Browsers always do. A client that sends
 `false`, so a browser user never ends up in a silent call with a text-only
 client. Send `true` only once you can actually answer or offer an audio
 call; a non-boolean value replies `invalid_message`.
+
+### `status`: the public status page
+
+The reply's `response` is exactly what the website's `/status` page shows
+(`RandosWeb.Status.snapshot/0`): the relay's health, as this server sees
+it, and today's aggregate call counts, already filtered for publishing.
+It carries nothing per person: no addresses, no ids, nothing about the
+participant asking. Asking also starts a fresh relay check if the last one
+is stale (the reply doesn't wait for it; ask again later).
+
+```json
+{
+  "relay": {
+    "state": "ok | degraded | down | checking | not_configured",
+    "scope": "this_node",
+    "checked_at": "2026-10-21T14:05:00Z" | null,
+    "transports": [{"transport": "udp | tls", "ok": true, "reason": null}]
+  },
+  "usage": {
+    "date": "2026-10-21",
+    "since": "2026-10-21T09:12:00Z",
+    "calls_started": 12,
+    "calls_connected": 9,
+    "calls_continued": 2,
+    "median_minutes": 8 | null,
+    "endings": {"finished": 8, "not_connected": 2, "connection_lost": 1, "canceled": 1},
+    "language_pairs": [{"languages": ["en", "es"], "calls": 5}],
+    "other_pairs_calls": 3,
+    "nodes": {"answered": 1, "total": 1}
+  }
+}
+```
+
+- `transports` is empty until the first check (and when no relay is
+  configured); a failed one has a short `reason`.
+- `since`: counting started then (the server starts fresh when it restarts);
+  `date` is the UTC day counted.
+- `median_minutes`: the typical length of a connected call, in whole
+  minutes (`0`: under a minute; `30`: 30 or more); `null` until enough calls
+  connected.
+- `language_pairs`: the two speaking languages of a call, unordered (codes
+  from the join reply's `languages`; the same code twice is a call in one
+  language); pairs with too few calls are summed into `other_pairs_calls`.
+- `nodes`: how many servers' counts are included, of those asked.
+
+Servers from before this event reply `invalid_message`.
 
 ## Server → client pushes
 
