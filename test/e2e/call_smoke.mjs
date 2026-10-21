@@ -9,6 +9,7 @@
 // (see cdp.mjs; CHROME_BIN picks the browser).
 
 import {Browser, BASE_URL, inboundAudio, sleep} from "./cdp.mjs"
+import {startDropProxy} from "./drop_proxy.mjs"
 
 // The server's connect timeout; just smoke shortens it (RANDOS_CONNECT_TIMEOUT_MS).
 const CONNECT_TIMEOUT_MS = Number(process.env.RANDOS_CONNECT_TIMEOUT_MS ?? 15_000)
@@ -144,42 +145,62 @@ try {
   })
 
   await scenario("obligation 9: a dropped connection to the server keeps the call", async () => {
-    const dropper = await browser.newPage("dropper")
-    const stayer = await browser.newPage("stayer")
-    await Promise.all([dropper.open(), stayer.open()])
-    await dropper.findRando("ko", "it")
-    await stayer.findRando("it", "ko")
-    await Promise.all([dropper.webrtcStateIs("connected"), stayer.webrtcStateIs("connected")])
+    // A real drop has no close handshake (the browser sees 1006), and only
+    // that takes Phoenix's reconnect path: closing the socket from page
+    // script is answered by the server, so it's "clean" (1000) and Phoenix
+    // doesn't reconnect. So the dropper's own browser goes through a proxy
+    // that can cut its connection the way a network does; its WebRTC media
+    // (UDP, not proxied) keeps flowing, as it would.
+    const proxy = await startDropProxy()
+    const proxied = await Browser.launch({
+      extraArgs: [`--proxy-server=127.0.0.1:${proxy.port}`, "--proxy-bypass-list=<-loopback>"],
+    })
 
-    const callElement = `document.querySelector("[id^='call-media-']")?.id`
-    const before = await dropper.eval(callElement)
-    const peersBefore = await dropper.eval(`window.__randosPeers.length`)
-    const heardBefore = (await inboundAudio(stayer))?.packetsReceived ?? 0
+    try {
+      const dropper = await proxied.newPage("dropper")
+      const stayer = await browser.newPage("stayer")
+      await Promise.all([dropper.open(), stayer.open()])
+      await dropper.findRando("ko", "it")
+      await stayer.findRando("it", "ko")
+      await Promise.all([dropper.webrtcStateIs("connected"), stayer.webrtcStateIs("connected")])
 
-    // The page's socket to the server drops (the network, a sleeping
-    // laptop); its WebRTC call doesn't need the server, so it keeps going.
-    await dropper.eval(`window.liveSocket.disconnect()`)
-    await stayer.waitFor(`!!document.querySelector("#peer-reconnecting")`, "the rando shown reconnecting")
-    await sleep(1_500)
-    const heardDuring = (await inboundAudio(stayer))?.packetsReceived ?? 0
-    assert(heardDuring > heardBefore, `audio stopped while the socket was down (${heardBefore} → ${heardDuring})`)
+      const callElement = `document.querySelector("[id^='call-media-']")?.id`
+      const before = await dropper.eval(callElement)
+      const peersBefore = await dropper.eval(`window.__randosPeers.length`)
+      const heardBefore = (await inboundAudio(stayer))?.packetsReceived ?? 0
+      // The server's only visible sign that it saw the drop and the
+      // resume: the rando's "reconnecting" notice, shown then cleared.
+      await stayer.eval(`window.__sawReconnecting = false; new MutationObserver(() => {
+        if (document.getElementById("peer-reconnecting")) window.__sawReconnecting = true
+      }).observe(document, {subtree: true, childList: true})`)
 
-    // Back, with its resume ticket: the same call, the same element and
-    // peer connection (nothing restarted), audio still both ways.
-    await dropper.eval(`window.liveSocket.connect()`)
-    await stayer.waitFor(`!document.querySelector("#peer-reconnecting")`, "the rando back")
-    await dropper.waitFor(`!!document.querySelector("#call-panel, #extension-panel")`, "the dropper back in the call")
-    assert((await dropper.eval(callElement)) === before, "the dropper's call element changed (a new call?)")
-    assert((await dropper.eval(`window.__randosPeers.length`)) === peersBefore, "a new peer connection was made")
-    await sleep(1_000)
-    const heardAfter = (await inboundAudio(dropper))?.packetsReceived ?? 0
-    await sleep(500)
-    assert(((await inboundAudio(dropper))?.packetsReceived ?? 0) > heardAfter, "the dropper hears nothing after coming back")
+      // The dropper's network goes away for 2 s; its call doesn't need the
+      // server, so audio keeps going meanwhile.
+      proxy.outage(2_000)
+      await stayer.waitFor(`window.__sawReconnecting`, "the rando shown reconnecting")
+      await sleep(1_000)
+      const heardDuring = (await inboundAudio(stayer))?.packetsReceived ?? 0
+      assert(heardDuring > heardBefore, `audio stopped while the socket was down (${heardBefore} → ${heardDuring})`)
 
-    // It still talks to the server for this call: ending works.
-    await dropper.hangUp()
-    await stayer.waitFor(`window.__randosCallEnds > 0`, "the call to end for the rando")
-    await stayer.stopLooking()
+      // Back (Phoenix reconnects with the resume ticket): the same call, the
+      // same element and peer connection (nothing restarted), audio both ways.
+      await stayer.waitFor(`!document.querySelector("#peer-reconnecting")`, "the rando back", 15_000)
+      await dropper.waitFor(`!!document.querySelector("[data-phx-main].phx-connected")`, "the dropper reconnected")
+      await dropper.waitFor(`!!document.querySelector("#call-panel, #extension-panel")`, "the dropper back in the call")
+      assert((await dropper.eval(callElement)) === before, "the dropper's call element changed (a new call?)")
+      assert((await dropper.eval(`window.__randosPeers.length`)) === peersBefore, "a new peer connection was made")
+      const heardAfter = (await inboundAudio(dropper))?.packetsReceived ?? 0
+      await sleep(500)
+      assert(((await inboundAudio(dropper))?.packetsReceived ?? 0) > heardAfter, "the dropper hears nothing after coming back")
+
+      // It still talks to the server for this call: ending works.
+      await dropper.hangUp()
+      await stayer.waitFor(`window.__randosCallEnds > 0`, "the call to end for the rando")
+      await stayer.stopLooking()
+    } finally {
+      await proxied.close()
+      proxy.close()
+    }
   })
 } finally {
   await browser.close()

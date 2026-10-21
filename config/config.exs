@@ -56,6 +56,11 @@ config :tailwind,
     cd: Path.expand("..", __DIR__)
   ]
 
+# Parameters Phoenix's request, socket and channel logs show as [FILTERED].
+# A resume ticket (Randos.Calls.ResumeTicket) arrives in LiveView connect
+# params and channel join params, and must never be logged (docs/privacy.md).
+config :phoenix, :filter_parameters, ["password", "resume_ticket"]
+
 # Configures Elixir's Logger
 config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",
