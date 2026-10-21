@@ -1,0 +1,92 @@
+# Running your own randos
+
+randos is a single Phoenix application with no database, so an instance is
+one server process plus, ideally, a TURN relay. This is how
+[randos.slowinput.org](https://randos.slowinput.org) runs, and what you need
+to run your own. To work on the code, see [development](development.md).
+
+randos is under the AGPL: if you run a modified copy for other people, you
+must offer them its source. The About page links to this repository; point
+it at yours (`lib/randos_web/live/about_live.ex`).
+
+## One instance, not several
+
+Run exactly one instance of the app. The waiting room (the matchmaking
+queue) and every call live in that instance's memory, so two instances
+would be two separate waiting rooms: two people who arrived at different
+instances could never be matched. Restarting the instance ends the calls in
+progress and empties the waiting room; nothing else is lost, because
+nothing else is kept. (Matching across several instances is a possible
+future change: "Multi-node matchmaking" in the
+[roadmap](architecture/refactor_plan.md).)
+
+One small machine is plenty: the server only relays signaling messages,
+never audio. Ours is a single shared-CPU, 512 MB Fly.io machine.
+
+## Building and running
+
+The repository has a `Dockerfile` for a release image (`just docker-build`
+builds it locally); `fly.toml` is our Fly.io configuration (`just deploy`).
+Without Docker:
+
+```bash
+MIX_ENV=prod mix assets.deploy
+MIX_ENV=prod mix release
+SECRET_KEY_BASE=... PHX_HOST=randos.example.org PORT=4000 \
+  _build/prod/rel/randos/bin/server
+```
+
+(`bin/server` is `bin/randos start` with `PHX_SERVER=true`.)
+
+Put it behind HTTPS (browsers allow the microphone only on secure pages);
+the app itself serves plain HTTP on `PORT`.
+
+## Configuration
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `SECRET_KEY_BASE` | yes | Signs and encrypts cookies. Generate one with `mix phx.gen.secret`. |
+| `PHX_HOST` | yes | The public host name. Browsers' websockets are accepted only from this origin. |
+| `PORT` | | The HTTP port (default `4000`). |
+| `PHX_SERVER` | for releases | `true` starts the web server (`bin/server`, which the Docker image runs, sets it). |
+| `RANDOS_ICE_SERVERS` | | When TURN isn't configured: the ICE servers to hand out, as JSON (default: Google's public STUN). |
+| `RANDOS_CONNECT_TIMEOUT_MS` | | How long a call may take to connect before it ends (default 15 s). |
+| `DNS_CLUSTER_QUERY` | | Erlang clustering via DNS. Clustering alone doesn't share the waiting room (see above). |
+
+### TURN
+
+Two people behind strict NATs or firewalls can't reach each other directly;
+a TURN server relays their (still encrypted) audio. Without one, randos
+hands out public STUN only, and some calls will fail to connect.
+
+randos mints short-lived TURN credentials for each call from a secret it
+shares with coturn (coturn's `use-auth-secret`), so no one gets a
+long-lived password.
+
+| Variable | Purpose |
+| --- | --- |
+| `TURN_HOST` | The TURN server's host. randos derives `stun:HOST:3478`, `turn:HOST:3478`, and `turns:HOST:5349` (TURN over TLS, for networks that block UDP) from it. |
+| `TURN_STUN_URL`, `TURN_SERVER_URL`, `TURNS_SERVER_URL` | Explicit URLs instead of the derived ones. |
+| `TURN_SHARED_SECRET` | coturn's `static-auth-secret`. Required for TURN. |
+| `TURN_REALM` | coturn's realm. Kept with the deployment's config; clients don't need it. |
+| `TURN_CREDENTIAL_TTL_SECONDS` | How long each call's credentials last (default 3600). Values below the longest call plus ten minutes (2400) are raised to that, since coturn re-checks credentials when a relay is refreshed. |
+
+TURN needs `TURN_SHARED_SECRET` and at least one TURN URL; otherwise randos
+falls back to STUN.
+
+Our coturn server is defined as code in `infra/coturn/` (OpenTofu and
+cloud-init on a DigitalOcean droplet, with Let's Encrypt for TLS); its
+[README](../infra/coturn/README.md) covers provisioning, DNS, the firewall,
+certificate renewal, and the encrypted state. The
+[coturn audit](architecture/coturn_audit.md) lists its hardening.
+
+## The terminal client and your instance
+
+The terminal client defaults to randos.slowinput.org. To use yours:
+
+```bash
+randos --url wss://randos.example.org/participant/websocket
+```
+
+(or set `RANDOS_URL`). The client and the server speak the
+[participant channel protocol](architecture/participant_channel.md).

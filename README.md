@@ -2,18 +2,95 @@
   <img src="priv/static/images/logo.svg" alt="randos logo" width="96" height="96">
 </p>
 
-# randos
+<h1 align="center">randos</h1>
 
-randos is an anonymous, audio-only language conversation app for low-pressure
-human practice.
+<p align="center">
+  Short, anonymous, audio-only conversations for language practice.<br>
+  In your browser at <a href="https://randos.slowinput.org">randos.slowinput.org</a>, or in your terminal.
+</p>
 
-It is not a social network, content platform, or metrics-driven dopamine delivery system.
-It is closer to public conversational infrastructure: a calm place where adults
-can briefly meet to converse and then disappear.
+<p align="center">
+  <a href="https://github.com/wasichu/randos/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/wasichu/randos"></a>
+  <a href="https://github.com/wasichu/randos/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/wasichu/randos/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="LICENSE"><img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue.svg"></a>
+</p>
 
-[Try randos][live-site].
+Pick the language you'll speak and the one you want to hear, and randos
+pairs you with a stranger who wants the opposite: a short voice call, then
+you both disappear. No accounts, no profiles, no video, no pressure.
 
-## Philosophy
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/web-call-dark.png">
+  <img alt="A call on the website: your voice and your rando's as two waveforms, 9:57 remaining, with Mute, Next rando and End" src="docs/assets/web-call-light.png">
+</picture>
+
+## How it works
+
+1. Choose the language you'll speak and the language you want to hear. You
+   can practise both ways (I speak Spanish, you speak English) or just listen.
+2. Confirm you're 18 or older. Calls are anonymous and unmoderated.
+3. randos finds someone who speaks what you want to hear and wants to hear
+   what you speak, and connects the two of you.
+4. You talk for ten minutes. When time is up, you both choose whether to
+   keep going, ten more minutes at a time, up to thirty. Either of you can
+   end the call or move on to the next rando at any moment.
+
+That's all there is. Nothing about the call is kept.
+
+## In your browser
+
+Open [randos.slowinput.org](https://randos.slowinput.org) and allow the
+microphone when asked. Tested in Chrome and Safari, on desktop and mobile.
+
+## In your terminal
+
+The same calls, from a terminal (macOS on Apple Silicon, or Linux x86_64
+with glibc 2.39 or newer, e.g. Ubuntu 24.04). Terminal users and browser
+users can be matched with each other.
+
+```bash
+brew install wasichu/randos/randos
+randos
+```
+
+On Linux without Homebrew, download the archive from the
+[latest release](https://github.com/wasichu/randos/releases/latest), unpack
+it anywhere, and run `bin/randos` (it needs ALSA and OpenSSL 3, which most
+desktop distributions have).
+
+<table>
+  <tr>
+    <td><img alt="The terminal client's start screen: choose the language you'll speak and the one you want to hear" src="docs/assets/tui-idle.png"></td>
+    <td><img alt="A call in the terminal: your voice and your rando's as two bar meters, connected directly, 9:54 remaining" src="docs/assets/tui-call.png"></td>
+  </tr>
+</table>
+
+- The keys for each screen are listed along the bottom: arrows to pick
+  languages, Enter to find a rando, `m` to mute, `n` for the next rando,
+  `e` to end the call, `q` to quit.
+- `t` tests your mic (you hear yourself back). `i` and `o` choose the mic
+  and speaker.
+- Echo is cancelled, so speakers work, but headphones sound best.
+- On macOS, the first call asks for microphone access for your terminal app.
+- `randos --check` tells you whether the audio part works.
+- Logs go to `~/Library/Caches/randos/tui.log` (macOS) or
+  `~/.cache/randos/tui.log` (Linux). They never contain audio.
+
+## Privacy
+
+- **No accounts and no history.** There is no database: the waiting room and
+  the calls exist only in the server's memory and vanish when they end.
+- **The server never hears you.** Audio goes directly between the two of
+  you, encrypted (WebRTC). When a direct connection isn't possible, it goes
+  through a relay that passes the encrypted audio along without being able
+  to decrypt it.
+- **No recording, no ads, no tracking.** The site loads nothing from other
+  companies: no analytics, no fonts, no CDNs.
+- **What's still visible:** like any website, the server sees your IP
+  address while you're connected. And as with any direct call, your rando's
+  device can see your IP address, unless the call goes through the relay.
+
+## Why randos is like this
 
 randos is intentionally constrained:
 
@@ -26,198 +103,22 @@ randos is intentionally constrained:
 - no permanent social graph
 - no ads, no tracking, no charging
 
+It is not a social network, a content platform, or a gamified dopamine
+delivery system. It's closer to public conversational infrastructure: a
+calm place where adults can briefly meet, talk, and then disappear. It
+supports crosstalk, language exchange, listening practice, and casual
+conversation without forcing people into rigid modes or progress loops.
+The product should feel like a doorway, not a platform.
+
 randos is free infrastructure for the language-learning community, run as a
 service. Donations may be welcome someday.
 
-Users choose the language they will speak and the language they want to hear.
-randos then pairs compatible strangers for a short WebRTC audio conversation.
+## Working on randos or running your own
 
-This supports crosstalk, language exchange, listening practice, and casual
-conversation without forcing people into rigid modes or gamified progress loops.
-
-Calls start at ten minutes. At the end of each ten minute segment, both people
-must agree to continue. The total cap is thirty minutes.
-
-The product should feel like a doorway, not a platform.
-
-## Current Shape
-
-randos is a Phoenix LiveView application with:
-
-- anonymous matchmaking
-- WebRTC microphone capture and peer audio
-- per-call STUN/TURN credentials for a self-hosted coturn server
-- a public, anonymous channel API for non-browser clients
-  (`docs/architecture/participant_channel.md`)
-- local HTTPS support for microphone testing
-- the coturn server as code (OpenTofu + cloud-init) under `infra/coturn`
-
-All state is process-backed: a matchmaking queue GenServer and one coordinator
-process per call. The roadmap is `docs/architecture/refactor_plan.md`.
-There is no database. Queues, calls, and call session state are transient and
-disappear on application restart.
-
-## Local Development
-
-Toolchain versions (Erlang/OTP, Elixir, just) are pinned in `mise.toml`, and
-common commands live in the `Justfile` (`just --list` shows them all).
-
-Install the toolchain and dependencies, and build assets:
-
-```bash
-mise install
-just setup
-```
-
-Start the app:
-
-```bash
-just dev
-```
-
-Open:
-
-```text
-http://localhost:4000
-```
-
-## HTTPS Development
-
-Microphone capture and WebRTC testing are more reliable from a secure browser
-context. The dev HTTPS endpoint is enabled when these files exist:
-
-```text
-priv/cert/randos_dev.pem
-priv/cert/randos_dev_key.pem
-```
-
-Generate local certs with `mkcert`:
-
-```bash
-mkcert -install
-mkdir -p priv/cert
-mkcert \
-  -key-file priv/cert/randos_dev_key.pem \
-  -cert-file priv/cert/randos_dev.pem \
-  localhost 127.0.0.1 ::1 "$(hostname)" randos.local
-```
-
-Then run:
-
-```bash
-mix phx.server
-```
-
-Open:
-
-```text
-https://localhost:4001
-```
-
-Useful overrides:
-
-```bash
-HTTPS_PORT=4443 mix phx.server
-DEV_SSL_CERTFILE=/path/to/cert.pem DEV_SSL_KEYFILE=/path/to/key.pem mix phx.server
-```
-
-For phone or LAN testing, include the device-visible hostname or LAN IP in the
-certificate name list, then restart the app.
-
-## TURN And STUN
-
-Without TURN env vars, randos falls back to public STUN:
-
-```text
-stun:stun.l.google.com:19302
-```
-
-To test against the coturn server managed by `infra/coturn`:
-
-```bash
-TURN_HOST="turn.slowinput.org" \
-TURN_REALM="turn.slowinput.org" \
-TURN_SHARED_SECRET="$(tofu -chdir=infra/coturn output -raw turn_shared_secret)" \
-TURN_CREDENTIAL_TTL_SECONDS="3600" \
-mix phx.server
-```
-
-That emits browser ICE servers for:
-
-```text
-stun:turn.slowinput.org:3478
-turn:turn.slowinput.org:3478
-turns:turn.slowinput.org:5349
-```
-
-TURN relays encrypted WebRTC packets only when direct peer-to-peer connectivity
-fails. It does not give randos server-side audio access.
-
-## Infrastructure
-
-The coturn OpenTofu and cloud-init setup lives in:
-
-```text
-infra/coturn/
-```
-
-Operational docs:
-
-- `docs/architecture/ops.md`
-- `infra/coturn/README.md`
-
-The OpenTofu state (committed, encrypted) contains the generated TURN shared
-secret; its passphrase lives in the owner's Keychain and password manager.
-See `infra/coturn/README.md`.
-
-## Checks
-
-Run tests:
-
-```bash
-mix test
-```
-
-Run the full project check:
-
-```bash
-mix precommit
-```
-
-Build assets:
-
-```bash
-mix assets.build
-```
-
-Build production assets:
-
-```bash
-mix assets.deploy
-```
-
-## Production Notes
-
-Minimum production configuration:
-
-```bash
-SECRET_KEY_BASE="$(mix phx.gen.secret)"
-PHX_HOST=your.domain.com
-PORT=4000
-```
-
-For TURN-backed production, also set:
-
-```bash
-TURN_HOST="turn.slowinput.org"
-TURN_REALM="turn.slowinput.org"
-TURN_SHARED_SECRET="..."
-TURN_CREDENTIAL_TTL_SECONDS="3600"
-```
-
-Run a single app instance until matchmaking and call coordination are moved to
-shared/distributed infrastructure. The current in-memory state model is not
-safe for horizontally scaled app instances.
+- [Development](docs/development.md): setting up, running it locally, the
+  tests, and how the code is laid out.
+- [Self-hosting](docs/self-hosting.md): running your own instance, its
+  configuration, and the TURN relay.
 
 ## License
 
@@ -225,5 +126,3 @@ randos is free software under the GNU Affero General Public License,
 version 3 or (at your option) any later version: see [`LICENSE`](LICENSE).
 Anyone may use, change, and share it; if you run a modified randos for
 others to use over a network, you must offer them its source too.
-
-[live-site]: https://randos.slowinput.org

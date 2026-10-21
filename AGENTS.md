@@ -22,6 +22,10 @@ are product requirements, not suggestions. Don't add features that violate them.
     each other, and a TUI (helper playing a tone) calls headless Chrome in both
     WebRTC roles with audio checked both ways (run after changing `clients/tui`,
     the helper, the channel, or the browser call; needs the helper built, node, Chrome)
+  - `just screenshots` — regenerates the README's screenshots (`docs/assets/`)
+    from a real call on a throwaway server: headless Chrome peers and VHS
+    driving the TUI with `RANDOS_FAKE_AUDIO=1` (a test tone, no speaker, no
+    device names on screen). Rerun after visible UI changes; needs `vhs`
   - `just top` — dev server plus a terminal dashboard (`RandosDev.Monitor`, in `dev/`):
     queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
   - `just test [path]`, `just test-failed`
