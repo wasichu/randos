@@ -184,6 +184,11 @@ screenshots:
     cd clients/tui && mix compile
     BASE_URL=http://localhost:4010 RANDOS_CALL_SEGMENT_MS=600000 test/e2e/with_test_server.sh tmp/screenshots-server.log node tools/screenshots/screenshots.mjs
 
+# The translation shootout's checks and fill rule (tools/translate; offline,
+# no models). Running models: tools/translate/README.md
+translate-test:
+    cd tools/translate && uv run --group dev pytest -q
+
 # The Homebrew formula for VERSION, from the GitHub release's checksums
 # (packaging/homebrew/README.md); --local uses dist/ instead
 homebrew-formula version *flags:
