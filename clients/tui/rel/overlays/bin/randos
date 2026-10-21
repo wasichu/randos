@@ -1,0 +1,17 @@
+#!/bin/sh
+# The randos terminal client. Runs the release's Tui.CLI (no node, no
+# distribution: a client, not a server) with this command's arguments.
+set -e
+
+# Homebrew (and others) link here from elsewhere: find the real file.
+self="$0"
+while [ -L "$self" ]; do
+  target="$(readlink "$self")"
+  case "$target" in
+    /*) self="$target" ;;
+    *) self="$(dirname "$self")/$target" ;;
+  esac
+done
+root="$(cd "$(dirname "$self")/.." && pwd)"
+
+exec "$root/bin/randos_tui" eval 'System.halt(Tui.CLI.main(System.argv()))' "$@"

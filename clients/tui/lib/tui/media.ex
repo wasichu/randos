@@ -70,14 +70,19 @@ defmodule Tui.Media do
   def request_async(media, command), do: GenServer.cast(media, {:request, command, self()})
 
   @doc """
-  The helper binary: `RANDOS_MEDIA_BIN` if set, otherwise the workspace's debug
-  build (`cargo build -p randos_media` at the repo root). Packaged builds
-  (Phase 4.4) will ship it next to the app.
+  The helper binary: `RANDOS_MEDIA_BIN` if set; else the one a release
+  bundles in the app's `priv/` (`mix release`, see the README); else the
+  workspace's debug build (`cargo build -p randos_media` at the repo root).
   """
   @spec default_helper_path() :: String.t()
   def default_helper_path do
-    System.get_env("RANDOS_MEDIA_BIN") ||
-      Path.expand("../../../../target/debug/randos_media", __DIR__)
+    bundled = Application.app_dir(:tui, "priv/randos_media")
+
+    cond do
+      path = System.get_env("RANDOS_MEDIA_BIN") -> path
+      File.exists?(bundled) -> bundled
+      true -> Path.expand("../../../../target/debug/randos_media", __DIR__)
+    end
   end
 
   @impl true

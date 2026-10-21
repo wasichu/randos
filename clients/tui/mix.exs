@@ -9,8 +9,40 @@ defmodule Tui.MixProject do
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      releases: releases()
     ]
+  end
+
+  # `MIX_ENV=prod mix release randos_tui` (or `just tui-release`): a
+  # self-contained directory (ERTS included) with `bin/randos`, the command
+  # people run, and the media helper bundled in the app's priv/. Named
+  # randos_tui because a release named randos would own bin/randos itself.
+  defp releases do
+    [
+      randos_tui: [
+        include_executables_for: [:unix],
+        steps: [:assemble, &bundle_helper/1]
+      ]
+    ]
+  end
+
+  # The helper's release build (`cargo build --release -p randos_media` at
+  # the repo root), or RANDOS_MEDIA_BIN, copied in next to the app.
+  defp bundle_helper(release) do
+    source =
+      System.get_env("RANDOS_MEDIA_BIN") ||
+        Path.expand("../../target/release/randos_media", __DIR__)
+
+    unless File.exists?(source) do
+      Mix.raise("no media helper at #{source}: cargo build --release -p randos_media first")
+    end
+
+    priv = Path.join([release.path, "lib", "tui-#{release.version}", "priv"])
+    File.mkdir_p!(priv)
+    File.cp!(source, Path.join(priv, "randos_media"))
+    File.chmod!(Path.join(priv, "randos_media"), 0o755)
+    release
   end
 
   # Test helpers shared across the test files (Tui.TestSupport).

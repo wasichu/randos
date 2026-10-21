@@ -148,6 +148,33 @@ media-loopback seconds="20":
 native-check:
     cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny --log-level error check --hide-inclusion-graph
 
+# The TUI as an installable archive (Phase 4.4): ERTS, the app, bin/randos,
+# and the media helper, in dist/randos-VERSION-OS-ARCH.tar.gz (+ .sha256).
+# Unpacks anywhere; checked by running the unpacked copy. CI builds the same
+# on a version tag (.github/workflows/release.yml)
+tui-release:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cargo build --release -p randos_media
+    (cd clients/tui && MIX_ENV=prod mix deps.get --only prod >/dev/null && MIX_ENV=prod mix release randos_tui --overwrite --quiet)
+    version="$(sed -n 's/^ *version: "\(.*\)",$/\1/p' clients/tui/mix.exs | head -1)"
+    os="$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/darwin/macos/')"
+    arch="$(uname -m | sed 's/aarch64/arm64/')"
+    name="randos-${version}-${os}-${arch}"
+    rm -rf "dist/${name}" "dist/${name}.tar.gz"
+    mkdir -p dist
+    cp -R clients/tui/_build/prod/rel/randos_tui "dist/${name}"
+    tar -C dist -czf "dist/${name}.tar.gz" "${name}"
+    (cd dist && shasum -a 256 "${name}.tar.gz" > "${name}.tar.gz.sha256")
+    rm -rf "dist/${name}"
+    # Check the archive itself: unpacked elsewhere, it runs and finds its helper.
+    check="$(mktemp -d)"
+    tar -C "$check" -xzf "dist/${name}.tar.gz"
+    "$check/${name}/bin/randos" --version
+    "$check/${name}/bin/randos" --check
+    rm -rf "$check"
+    echo "dist/${name}.tar.gz"
+
 # The helper against the real coturn: allocations, relayed data, and a whole
 # relay-only call. Derives short-lived TURN REST credentials from the shared
 # secret (via `just tofu`, so the Keychain passphrase) without printing it

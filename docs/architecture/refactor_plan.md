@@ -171,9 +171,20 @@ Decisions for Stage 1 (from the Stage 0 review):
   from decode (network → speaker), and the WebRTC path replaces the device
   sink. It isn't an abstraction to keep.
 
-### 4.4 Distribution
+### 4.4 Distribution (built 2026-10-21; the first tag is the owner's)
 
-Single-binary releases via Burrito (`mix ex_ratatui.gen.burrito`).
+A `mix release` directory, not Burrito: Homebrew installs a directory
+well, and nothing unpacks to a cache on first run. `just tui-release`
+makes `dist/randos-VERSION-OS-ARCH.tar.gz` (~18 MB: ERTS, the app, the
+media helper in `priv/`, and `bin/randos`, `Tui.CLI`'s wrapper, which
+follows symlinks) and checks the unpacked copy (`--version`, `--check`).
+Installed builds default to production and log under the user's cache
+directory. The macOS release links nothing outside the system (this
+Erlang's crypto has OpenSSL built in); Linux is checked in CI.
+`.github/workflows/release.yml` builds macOS arm64 and Linux x86_64 on a
+`v*` tag (the tag must match `mix.exs`'s version) and attaches them to a
+GitHub release; run by hand it only builds artifacts. No tag has been
+pushed: releasing is the owner's call.
 
 ### 4.5 Homebrew (custom tap)
 
