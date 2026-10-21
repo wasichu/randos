@@ -138,6 +138,11 @@ are product requirements, not suggestions. Don't add features that violate them.
   - a client gains its own timer, constant, or policy (ask whether it belongs
     on the server);
   - a test needs a timing fix more than once.
+  - a user-visible feature, a new command, or a new setting lands (or a
+    lane merges): check the README, `docs/development.md` and
+    `docs/self-hosting.md` still describe what users, contributors and
+    operators now see. The docs nearest a change (the roadmap, the
+    protocol and privacy docs) tend to keep up; these drift.
 - **How:** inventory before changing code; for each item propose extract,
   merge, link, or leave, with a one-line reason (some duplication is cheaper
   than a wrong abstraction); get the advisor's view; tell the owner which
