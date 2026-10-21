@@ -14,9 +14,16 @@ defmodule RandosDev.VoiceLabLive do
   """
   use RandosWeb, :live_view
 
+  alias RandosDev.VoiceLabBenchmark
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Voice lab", voice_lab: true)}
+    {:ok,
+     assign(socket,
+       page_title: "Voice lab",
+       voice_lab: true,
+       benchmark: VoiceLabBenchmark.load()
+     )}
   end
 
   @impl true
@@ -97,6 +104,8 @@ defmodule RandosDev.VoiceLabLive do
             </div>
           </section>
         </div>
+        <%!-- Outside #voice-lab (which its script owns), so LiveView renders it. --%>
+        <VoiceLabBenchmark.section report={@benchmark} />
       </div>
     </Layouts.app>
     """

@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-10-21T13:18:19+00:00",
+  "seconds": 200,
+  "dataset": {
+    "name": "LibriSpeech test-clean (CC-BY 4.0)",
+    "speakers": 20,
+    "female": 10,
+    "male": 10,
+    "enrollment_per_speaker": 2,
+    "trials": 60
+  },
+  "models": {
+    "speaker": "speechbrain/spkrec-ecapa-voxceleb",
+    "asr": "openai/whisper-base.en"
+  },
+  "thresholds": {
+    "hidden_eer": 0.3,
+    "wer_margin": 0.1
+  },
+  "baseline": {
+    "eer": 0.0008771929824561404,
+    "identification": 1.0,
+    "wer": 0.05712050078247261
+  },
+  "results": [
+    {
+      "id": "passthrough",
+      "label": "Passthrough",
+      "eer_ignorant": 0.0008771929824561404,
+      "eer_informed": 0.0008771929824561404,
+      "identification_ignorant": 1.0,
+      "identification_informed": 1.0,
+      "wer": 0.056338028169014086,
+      "verdict": {
+        "kind": "keeps_identity",
+        "text": "The speaker is still identified."
+      }
+    },
+    {
+      "id": "pitch_shift_minus_7",
+      "label": "Pitch shift -7 semitones",
+      "eer_ignorant": 0.42280701754385963,
+      "eer_informed": 0.06666666666666665,
+      "identification_ignorant": 0.11666666666666667,
+      "identification_informed": 0.95,
+      "wer": 0.09702660406885759,
+      "eer_undo": 0.0,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "fools_ignorant_only",
+        "text": "Fools an attacker who doesn't know the processor; one who does still identifies the speaker."
+      }
+    },
+    {
+      "id": "pitch_shift_minus_4",
+      "label": "Pitch shift -4 semitones",
+      "eer_ignorant": 0.23596491228070177,
+      "eer_informed": 0.021052631578947368,
+      "identification_ignorant": 0.2833333333333333,
+      "identification_informed": 1.0,
+      "wer": 0.061815336463223784,
+      "eer_undo": 0.0,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "keeps_identity",
+        "text": "The speaker is still identified."
+      }
+    },
+    {
+      "id": "pitch_shift_minus_2",
+      "label": "Pitch shift -2 semitones",
+      "eer_ignorant": 0.050000000000000044,
+      "eer_informed": 0.0,
+      "identification_ignorant": 0.9666666666666667,
+      "identification_informed": 1.0,
+      "wer": 0.06259780907668232,
+      "eer_undo": 0.0,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "keeps_identity",
+        "text": "The speaker is still identified."
+      }
+    },
+    {
+      "id": "pitch_shift_plus_2",
+      "label": "Pitch shift +2 semitones",
+      "eer_ignorant": 0.017543859649122806,
+      "eer_informed": 0.012280701754385965,
+      "identification_ignorant": 0.9666666666666667,
+      "identification_informed": 1.0,
+      "wer": 0.048513302034428794,
+      "eer_undo": 0.009649122807017544,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "keeps_identity",
+        "text": "The speaker is still identified."
+      }
+    },
+    {
+      "id": "pitch_shift_plus_4",
+      "label": "Pitch shift +4 semitones",
+      "eer_ignorant": 0.21666666666666667,
+      "eer_informed": 0.01666666666666672,
+      "identification_ignorant": 0.5666666666666667,
+      "identification_informed": 1.0,
+      "wer": 0.050078247261345854,
+      "eer_undo": 0.002631578947368421,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "keeps_identity",
+        "text": "The speaker is still identified."
+      }
+    },
+    {
+      "id": "pitch_shift_plus_7",
+      "label": "Pitch shift +7 semitones",
+      "eer_ignorant": 0.3833333333333333,
+      "eer_informed": 0.050000000000000044,
+      "identification_ignorant": 0.1,
+      "identification_informed": 1.0,
+      "wer": 0.06416275430359937,
+      "eer_undo": 0.0008771929824561404,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "fools_ignorant_only",
+        "text": "Fools an attacker who doesn't know the processor; one who does still identifies the speaker."
+      }
+    },
+    {
+      "id": "pitch_shift_random",
+      "label": "Pitch shift, random \u00b13 to 7 per clip",
+      "eer_ignorant": 0.33333333333333337,
+      "eer_informed": 0.3833333333333333,
+      "identification_ignorant": 0.25,
+      "identification_informed": 0.4,
+      "wer": 0.05868544600938967,
+      "eer_undo": 0.0,
+      "identification_undo": 1.0,
+      "verdict": {
+        "kind": "undone",
+        "text": "Fools both attackers, but shifting the voice back reveals the speaker."
+      }
+    }
+  ]
+}
