@@ -253,7 +253,7 @@ defmodule RandosWeb.HomeComponents do
         <p id="looking-status" class="mt-3 leading-7 text-stone-600">
           {gettext(
             "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.",
-            hearing_languages: Enum.map_join(@preferences["hearing_languages"], ", ", @language_name),
+            hearing_languages: hearing_summary(@preferences["hearing_languages"], @language_name),
             speaking_language: @language_name.(@preferences["speaking_language"])
           )}
         </p>
@@ -575,4 +575,29 @@ defmodule RandosWeb.HomeComponents do
 
   defp countdown_labels,
     do: JSON.encode!(%{remaining: gettext("%{time} remaining", time: "%{time}")})
+
+  # "English, Español or Français"; past three, a count, so a long choice
+  # doesn't make a long sentence.
+  @listed_languages 3
+
+  defp hearing_summary(codes, language_name) when length(codes) <= @listed_languages do
+    case Enum.map(codes, language_name) do
+      [only] ->
+        only
+
+      names ->
+        gettext("%{first} or %{last}",
+          first: names |> Enum.drop(-1) |> Enum.join(", "),
+          last: List.last(names)
+        )
+    end
+  end
+
+  defp hearing_summary(codes, _language_name) do
+    ngettext(
+      "any of the %{count} language you picked",
+      "any of the %{count} languages you picked",
+      length(codes)
+    )
+  end
 end

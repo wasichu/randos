@@ -293,9 +293,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
     test "never connecting ends the call after the connect timeout" do
       {call_pid, pids} = start_audio_call()
+      ref = Process.monitor(call_pid)
       :ok = report(call_pid, "a", "connected")
 
       assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      # So the Matchmaker can tell a failed call from a finished one.
+      assert_receive {:DOWN, ^ref, :process, ^call_pid, {:shutdown, :connection_failed}}
       Enum.each(pids, &send(&1, :stop))
     end
 

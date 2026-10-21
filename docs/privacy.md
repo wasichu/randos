@@ -42,7 +42,8 @@ something can't be checked from the outside, this says so.
   2026-10-21: no line contained an IP address.
 - **What it briefly remembers:** after a call, the server remembers for 90
   seconds that the two of you just talked (by the anonymous ids of that
-  visit only), so "Next" finds someone new.
+  visit only), so "Next" finds someone new. A call that never connected
+  isn't remembered.
 - **What it can't do:** it relays the connection messages (offers,
   answers, candidates) between the two of you, but it never receives audio.
 

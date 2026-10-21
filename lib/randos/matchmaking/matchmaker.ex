@@ -14,7 +14,9 @@ defmodule Randos.Matchmaking.Matchmaker do
   `Randos.Calls.Lifecycle.rematch_window_seconds/0` after it ends, so "Next"
   finds someone new. The pair is remembered by its two anonymous participant
   ids, in this process only, and forgotten when the window closes; if the
-  two are still waiting then (and still compatible), they're matched.
+  two are still waiting then (and still compatible), they're matched. A call
+  that never connected keeps no one apart (its coordinator exits
+  `{:shutdown, :connection_failed}`): the two may be matched again at once.
   """
 
   use GenServer
@@ -161,14 +163,14 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   @impl true
-  def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
+  def handle_info({:DOWN, ref, :process, pid, reason}, state) do
     cond do
       Map.get(state.monitors, ref) == pid ->
         Logger.info("matchmaking participant went away while queued")
         {:noreply, remove_waiting(state, pid)}
 
       Map.has_key?(state.calls, ref) ->
-        {:noreply, call_ended(state, ref)}
+        {:noreply, call_ended(state, ref, reason)}
 
       true ->
         {:noreply, state}
@@ -280,7 +282,14 @@ defmodule Randos.Matchmaking.Matchmaker do
     }
   end
 
-  defp call_ended(state, ref) do
+  # A call that never connected: no window, and the two (if both are back in
+  # the queue) are matched at once.
+  defp call_ended(state, ref, {:shutdown, :connection_failed}) do
+    {pair, calls} = Map.pop(state.calls, ref)
+    rematch(%{state | calls: calls, recent: Map.delete(state.recent, pair)}, pair)
+  end
+
+  defp call_ended(state, ref, _reason) do
     {pair, calls} = Map.pop(state.calls, ref)
     expires_at = System.monotonic_time(:millisecond) + state.rematch_window_ms
     Process.send_after(self(), {:rematch_window_over, pair}, state.rematch_window_ms)

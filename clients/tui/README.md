@@ -30,8 +30,14 @@ computer (nothing about it goes to the server): the languages, that you
 confirmed the 18+ notice, and the mic and speaker (`i`/`o`). It's
 `tmp/tui-config.json` for `mix tui`, and in an installed copy
 `~/.config/randos/config.json` on Linux or
-`~/Library/Application Support/randos/config.json` on macOS. Delete it to
-start fresh.
+`~/Library/Application Support/randos/config.json` on macOS (the idle
+screen shows where). To manage it:
+
+```bash
+randos --settings         # where it is, and what's in it
+randos --edit-settings    # open it in $VISUAL / $EDITOR (vi if neither is set)
+randos --reset-settings   # forget it; the next start begins fresh
+```
 
 ## Installable builds
 

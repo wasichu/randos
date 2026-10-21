@@ -71,7 +71,8 @@ Two people who just had a call aren't matched with each other again for
 `Randos.Calls.Lifecycle.rematch_window_seconds/0` (90 s) after it ends, so
 `next` finds someone new; if they're still both waiting when it passes,
 they're matched then. The server remembers only the pair's anonymous ids,
-in memory, for that window.
+in memory, for that window. A call that never connected (`connection_failed`)
+keeps no one apart: the two may be matched again at once.
 
 `audio` (boolean, optional, default `false`) says whether this client can
 carry call audio over WebRTC. Browsers always do. A client that sends

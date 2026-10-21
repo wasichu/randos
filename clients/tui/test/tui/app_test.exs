@@ -61,6 +61,20 @@ defmodule Tui.AppTest do
       assert text =~ "enter find"
     end
 
+    test "the idle screen says where settings are saved, and how to manage them" do
+      refute render_text(model("idle")) =~ "Settings are saved"
+
+      text =
+        render_text(
+          model("idle"),
+          %{config: Path.join(System.user_home!(), "cfg/randos.json")},
+          {140, 24}
+        )
+
+      assert text =~ "Settings are saved as you go, in ~/cfg/randos.json"
+      assert text =~ "randos --edit-settings, --reset-settings"
+    end
+
     test "the mic test hint, progress, result, and failure" do
       refute render_text(model("idle")) =~ "t mic test"
 
@@ -87,6 +101,13 @@ defmodule Tui.AppTest do
 
     test "looking, matched, in call with a countdown, and the vote" do
       assert render_text(model("looking")) =~ "Looking for a rando"
+      # Up to three hearing languages are named; past that, a count.
+      assert render_text(%{model("looking") | hears: ["es", "en"]}) =~
+               "who speaks Español (ES) or English (EN) and"
+
+      assert render_text(%{model("looking") | hears: ~w(en es fr de)}) =~
+               "who speaks any of the 4 languages you picked and"
+
       assert render_text(model("connecting")) =~ "Matched!"
 
       in_call =

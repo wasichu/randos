@@ -340,10 +340,13 @@ defmodule Randos.Matchmaking.MatchmakerTest do
       test = self()
 
       call_starter = fn match, _options ->
+        # Ends with the coordinator's exit reasons: :normal, or a call
+        # that never connected.
         call =
           spawn(fn ->
             receive do
               :end_call -> :ok
+              :fail_call -> exit({:shutdown, :connection_failed})
             end
           end)
 
@@ -391,6 +394,26 @@ defmodule Randos.Matchmaking.MatchmakerTest do
       assert {:matched, %Match{participant_a: %{id: "a"}}} = join_as(matchmaker, c, "es", ["en"])
       assert_receive {:call, _match, _call}
       assert %{waiting: ["b"]} = Matchmaker.snapshot(matchmaker)
+    end
+
+    test "a call that never connected keeps no one apart: they're matched again at once" do
+      # A long window, so only the failure can explain the rematch.
+      matchmaker = start_with_calls(60_000)
+      {a, b} = {person("a"), person("b")}
+
+      assert :queued = join_as(matchmaker, a, "en", ["es"])
+      assert {:matched, _} = join_as(matchmaker, b, "es", ["en"])
+      assert_receive {:call, _match, call}
+
+      # Requeued before the matchmaker hears the call failed; then it does.
+      assert :queued = join_as(matchmaker, a, "en", ["es"])
+      assert :queued = join_as(matchmaker, b, "es", ["en"])
+      ref = Process.monitor(call)
+      send(call, :fail_call)
+      assert_receive {:DOWN, ^ref, _, _, {:shutdown, :connection_failed}}
+
+      assert_receive {:call, %Match{participant_a: %{id: "a"}, participant_b: %{id: "b"}}, _call},
+                     1_000
     end
 
     test "when the window closes and both still wait, they're matched" do

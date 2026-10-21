@@ -35,6 +35,11 @@ defmodule Randos.Calls.CallCoordinator do
   alias Randos.Matchmaking.Match
   alias Randos.Signaling
 
+  # A call that never connected stops with this reason (a normal exit to
+  # OTP), so the Matchmaker knows not to keep the two apart: they can be
+  # matched again straight away. Every other ending stops :normal.
+  @failed {:shutdown, :connection_failed}
+
   @overridable [
     :pubsub,
     :ice_transport_policy,
@@ -174,13 +179,13 @@ defmodule Randos.Calls.CallCoordinator do
 
   def handle_event(:state_timeout, :connect_timeout, :connecting, data) do
     Logger.info("call media never connected", media: inspect(data.call.media))
-    {:stop, :normal, end_call(data, :connection_failed)}
+    {:stop, @failed, end_call(data, :connection_failed)}
   end
 
   def handle_event({:timeout, {:grace, participant_id}}, :grace, _state, data) do
     if Map.get(data.call.media, participant_id) == :disconnected do
       Logger.info("call media stayed disconnected")
-      {:stop, :normal, end_call(data, :connection_failed)}
+      {:stop, @failed, end_call(data, :connection_failed)}
     else
       :keep_state_and_data
     end
@@ -268,7 +273,7 @@ defmodule Randos.Calls.CallCoordinator do
     do: {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :peer_disconnected)}
 
   defp handle_signal({:media, :failed}, _message, from, _state, data),
-    do: {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :connection_failed)}
+    do: {:stop_and_reply, @failed, [{:reply, from, :ok}], end_call(data, :connection_failed)}
 
   defp handle_signal({:media, media}, message, from, state, data) do
     id = message.from_participant_id

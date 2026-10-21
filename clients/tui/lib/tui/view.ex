@@ -1,7 +1,8 @@
 defmodule Tui.View do
   @moduledoc """
   The TUI's screens, drawn from `Tui.App`'s state: pure functions of
-  `state.model`, `state.media_state` and `state.uri`, so a test can render
+  `state.model`, `state.media_state`, `state.uri` and `state.config` (the
+  settings file's path, or `nil`), so a test can render
   any screen without the app (`Tui.App.render/2` delegates here).
   """
 
@@ -212,12 +213,21 @@ defmodule Tui.View do
   defp title(%{status: :extension_pending}), do: " Time is up "
   defp title(_model), do: " randos "
 
+  # "English, Español or Français"; past three, a count, as on the website,
+  # so a long choice doesn't make a long sentence.
+  defp hearing_summary(%{hears: hears} = model) when length(hears) <= 3 do
+    case Enum.map(hears, &Model.language_name(model, &1)) do
+      [only] -> only
+      names -> Enum.join(Enum.drop(names, -1), ", ") <> " or " <> Elixir.List.last(names)
+    end
+  end
+
+  defp hearing_summary(%{hears: hears}), do: "any of the #{length(hears)} languages you picked"
+
   defp main_text(%{connection: :connecting}), do: "Connecting to the server…"
 
   defp main_text(%{status: :looking} = model) do
-    hears = Enum.map_join(model.hears, ", ", &Model.language_name(model, &1))
-
-    "Looking for a rando who speaks #{hears} " <>
+    "Looking for a rando who speaks #{hearing_summary(model)} " <>
       "and wants to hear #{Model.language_name(model, model.speaks)}…"
   end
 
@@ -280,7 +290,9 @@ defmodule Tui.View do
 
   defp mic_help(_state), do: ""
 
-  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
+  defp extra_text(%{model: %{status: :idle}} = state),
+    do: mic_test_text(state) <> settings_text(state)
+
   defp extra_text(_state), do: ""
 
   # The current state at a glance, like the website's status label and its
@@ -358,6 +370,21 @@ defmodule Tui.View do
   defp connected_via("relay"), do: "connected via relay"
   defp connected_via("direct"), do: "connected directly"
   defp connected_via(_path), do: "connected"
+
+  # Where the settings live, and how to manage them (Tui.CLI's flags).
+  defp settings_text(%{config: path}) when is_binary(path),
+    do:
+      "\n\nSettings are saved as you go, in #{home_relative(path)} (randos --edit-settings, --reset-settings)."
+
+  defp settings_text(_state), do: ""
+
+  defp home_relative(path) do
+    home = System.user_home() || ""
+
+    if home != "" and String.starts_with?(path, home),
+      do: "~" <> String.replace_prefix(path, home, ""),
+      else: path
+  end
 
   defp mic_test_text(%{media_state: %{available?: false}}), do: ""
 

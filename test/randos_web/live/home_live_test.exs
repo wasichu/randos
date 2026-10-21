@@ -140,6 +140,31 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#matchmaking-error")
   end
 
+  test "names up to three hearing languages while looking; past that, a count", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/")
+
+    submit(view, %{
+      speaking_language: "en",
+      hearing_languages: ["es", "fr"],
+      adult_acknowledgment: "true"
+    })
+
+    assert has_element?(view, "#looking-status", "who speaks Español (ES) or Français (FR) and")
+    render_click(view, "cancel_search")
+
+    submit(view, %{
+      speaking_language: "en",
+      hearing_languages: ~w(es fr de it ja),
+      adult_acknowledgment: "true"
+    })
+
+    assert has_element?(
+             view,
+             "#looking-status",
+             "who speaks any of the 5 languages you picked and"
+           )
+  end
+
   test "matches two compatible browser sessions and assigns roles", %{conn: conn} do
     {:ok, view_a, _html} = live(conn, ~p"/")
 

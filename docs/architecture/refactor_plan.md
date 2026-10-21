@@ -689,10 +689,11 @@ Not scheduled; pick up when relevant.
 - **Same pair rematching on "Next" (done 2026-10-21).** Two people who just
   ended a call aren't matched again for `Lifecycle.rematch_window_seconds/0`
   (90 s), remembered in the Matchmaker's memory only; when the window closes
-  and both are still waiting, a timer matches them. A side effect: a call
-  that never connects no longer rematches the same pair in a loop. Open:
-  the only two people waiting after a failed call now wait 90 s with no
-  message.
+  and both are still waiting, a timer matches them. The owner's decision:
+  a call that never connected skips the window (the coordinator exits
+  `{:shutdown, :connection_failed}`, and the Matchmaker unblocks and
+  rematches the pair at once). Past three hearing languages, the "Looking
+  for…" sentence gives a count instead of the list (both clients).
 - **`RandosWeb.IceServers` reads env vars per call.** Move them to
   `config/runtime.exs` so misconfiguration fails at boot instead of silently
   falling back to Google STUN.
@@ -709,7 +710,10 @@ Not scheduled; pick up when relevant.
   projects).** `turn-client-rustls` 0.1.2 gives rustls one `read_tls` per
   chunk, losing bytes past 4 KiB (worked around in `Relay::recv`); and
   `str0m-rust-crypto` pulls in AWS-LC through `dimpl`'s `rcgen` feature.
-- **TUI config file (done 2026-10-21; `Tui.Config`).** A small file in the
+- **TUI config file (done 2026-10-21; `Tui.Config`).** Managed with
+  `randos --settings`, `--edit-settings` (opens `$VISUAL`/`$EDITOR`, then
+  checks the file is still JSON) and `--reset-settings`; the idle screen
+  says where the file is. A small file in the
   user's config directory (`~/.config/randos/`, or the platform's) keeping
   the chosen mic and speaker, the languages, and that the 18+ notice was
   agreed to. Local only; nothing goes to the server.

@@ -37,10 +37,9 @@ defmodule Tui.Integration.RelayOnlyTest do
     find(b, b_model, "ko", "fr")
 
     # Matched, then the call ends without connecting (the connect timeout,
-    # or the helper giving up on the relay). Requeued, the two wait: they
-    # aren't matched with each other again for the rematch window. (A new
-    # call id also counts, in case a server without that window rematches
-    # them in the same step.)
+    # or the helper giving up on the relay). Requeued, the two can be
+    # rematched at once (a failed call keeps no one apart), so the state may
+    # go straight from one call to the next: a new call id, no `looking`.
     for app <- [a, b] do
       %{call: %{"id" => first}} = await_model(app, &(&1.status == :connecting and &1.call != nil))
       await_model(app, &(&1.status in [:looking, :idle] or another_call?(&1, first)))
