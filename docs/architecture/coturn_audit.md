@@ -38,8 +38,14 @@ replaces the droplet):
   at boot: certbot's standalone listener exists only during a renewal, so
   the timeout when nothing listens isn't what renewal sees. The rebuilt
   droplet's certificate runs to 2027-01-17 (renewal ~2026-12-18), and
-  `cert-check.yml` now checks it daily. Still to confirm on the droplet:
-  `sudo certbot renew --dry-run`.
+  `cert-check.yml` now checks it daily. Confirmed on the droplet
+  2026-10-21: `sudo certbot renew --dry-run` succeeds.
+- **Log privacy (2026-10-21):** the container log held callers' addresses
+  in error lines (see `docs/privacy.md`); it's now scrubbed by rsyslog's
+  `mmanon` before writing, kept 7 days. Applied in place on this droplet
+  (the bootstrap script patched, coturn recreated, the old log deleted)
+  and in the template, so `tofu plan` shows the user_data change until the
+  next intentional rebuild.
 
 ## From the repo (cloud-init `infra/coturn/cloud-init.yaml.tftpl`)
 

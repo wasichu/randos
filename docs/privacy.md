@@ -23,7 +23,7 @@ something can't be checked from the outside, this says so.
 | Part | What it sees | What it logs | Kept for |
 | --- | --- | --- | --- |
 | **The web server** (Phoenix, on Fly.io) | Your IP address while you're connected (any website does); the languages you chose; the connection messages for your call, never the audio | Events such as "call started" and "call ended", tagged with random call and match IDs. No IP addresses, no languages, no identifiers that outlive the call. | Our host, Fly.io, keeps app logs for a limited time; we don't send them anywhere else |
-| **The relay** (coturn, a DigitalOcean droplet) | Both IP addresses of each relayed call, its timing, and its encrypted packets, which it can't decrypt | Errors only: no line per session or per caller | Up to 2 MB of rotated error log on the droplet, overwritten as it fills |
+| **The relay** (coturn, a DigitalOcean droplet) | Both IP addresses of each relayed call, its timing, and its encrypted packets, which it can't decrypt | Errors only, with every IP address zeroed before it's written | 7 days |
 | **Your browser** | Your choice of interface language, if you pick one | A `randos_locale` cookie holding only the language code (e.g. `es`), so the next visit is in your language; it identifies no one and goes nowhere else. Phoenix's session cookie (CSRF protection) also carries the language for the page. | A year, or until you clear it |
 | **Your terminal (the TUI)** | Nothing new | A settings file on your own computer (`~/.config/randos/config.json`, or `~/Library/Application Support/randos/config.json` on macOS): your languages, that you confirmed the 18+ notice, and the mic and speaker names. It never leaves your computer. | Until you delete it |
 | **Your rando's browser or terminal** | The relay's address, never yours; your voice | Nothing (randos has no recording feature) | Not applicable |
@@ -58,10 +58,16 @@ applied by OpenTofu from this repository.
   The username is only an expiry time
   ([`turn_username/0`](../lib/randos_web/ice_servers.ex)), the same for
   everyone who connected in the same second. There's no user database.
-- **It logs errors only:** `log-min-level=error`, so no line per session
-  and no caller addresses in normal operation.
-- **Logs are tiny and rotate:** Docker keeps at most two 1 MB files
-  (`--log-opt max-size=1m`, `--log-opt max-file=2`).
+- **It logs errors only** (`log-min-level=error`): no line per session.
+- **Addresses are scrubbed before anything is written.** coturn's error
+  lines can include a caller's address (for example "Connection reset by
+  peer <address>"), and coturn has no option to leave it out. So Docker
+  sends its output to rsyslog on the droplet (`--log-driver syslog`), whose
+  `mmanon` module zeroes every IPv4 and IPv6 address before writing
+  `/var/log/coturn.log`; nothing goes to the system journal or the general
+  syslog, and Docker keeps no local copy (`cache-disabled=true`). logrotate
+  keeps 7 days. (A side effect: any long number is zeroed too, such as the
+  expiry time in a credential's username.)
 - **It keeps nothing else.** The container's only mount is its read-only
   config (`-v /etc/coturn:/etc/coturn:ro`); it's replaced, not upgraded,
   when the server is rebuilt. Its admin CLI is off (`no-cli`).
@@ -71,9 +77,15 @@ applied by OpenTofu from this repository.
   cloud-metadata addresses are refused (`denied-peer-ip`), so it can't be
   used to reach anything behind it.
 
-Not yet verified: we haven't read the live relay's error log to confirm
-that its error lines never include an address. Until we do, the
-"no caller addresses" claim rests on the configuration above.
+**What we found, and fixed (2026-10-21).** Reading the live relay's log
+showed that coturn's error lines included callers' addresses: in two days,
+42 distinct public addresses besides the relay's own (most of them, by
+their pattern, internet scanners probing the TLS port; some from real
+calls), kept in two rotated 1 MB files that would have held them for
+months. That log was deleted the same day, when the relay switched to the
+scrubbed log above; we checked the switch with a real error from a test,
+written as `0.0.0.0`. The same check found that the relay keeps no other
+files (no database), and that its certificate renewal works.
 
 ### Relay-only, enforced by the server
 

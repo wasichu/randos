@@ -193,6 +193,9 @@ write_files:
       # <ip>:<port>", denied peer IPs), found on the live relay 2026-10-21.
       # cache-disabled: no unscrubbed local copy for `docker logs` (Docker
       # keeps one for other drivers by default). Kept 7 days (logrotate).
+      # rsyslog runs as syslog, which can't create files in /var/log here, so
+      # the file is made for it (as Ubuntu does for its own logs).
+      [ -f /var/log/coturn.log ] || install -o syslog -g adm -m 0640 /dev/null /var/log/coturn.log
       systemctl restart rsyslog
 
       docker rm -f coturn >/dev/null 2>&1 || true
@@ -244,6 +247,7 @@ write_files:
       /var/log/coturn.log {
         daily
         rotate 7
+        create 0640 syslog adm
         missingok
         notifempty
         compress
