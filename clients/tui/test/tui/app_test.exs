@@ -121,7 +121,7 @@ defmodule Tui.AppTest do
       text = render_text(model("idle"))
       assert text =~ "Status:     not looking"
       assert text =~ "Connection: no call"
-      assert text =~ "Last:       connected to the server"
+      refute text =~ "Last:"
 
       assert render_text(model("looking")) =~ "Status:     looking for a rando"
       assert render_text(model("in_call")) =~ "Connection: text only (no audio)"
@@ -181,7 +181,7 @@ defmodule Tui.AppTest do
       assert small =~ "Status:     in a call"
       assert small =~ "Connection: connected"
       refute small =~ "sent /"
-      assert small =~ "Last:       connected to the server"
+      refute small =~ "Last:"
     end
   end
 

@@ -148,7 +148,7 @@ defmodule Tui.App do
     # The main panel gives way first on a short terminal (a tmux split):
     # the status lines must stay visible.
     [header_area, main_area, status_area, help_area] =
-      Layout.split(area, :vertical, [{:length, 3}, {:min, 3}, {:length, 5}, {:length, 1}])
+      Layout.split(area, :vertical, [{:length, 3}, {:min, 3}, {:length, 4}, {:length, 1}])
 
     model = state.model
 
@@ -373,18 +373,17 @@ defmodule Tui.App do
   defp extra_text(_state), do: ""
 
   # The current state at a glance, like the website's status label and its
-  # "Connection:" line, plus the latest notice (full history: tmp/tui.log).
-  # One line each, never wrapped (a wrapped line pushes the next one out of
-  # the box): the connection line drops detail to fit `width`, and anything
-  # still too long is cut with "…".
+  # "Connection:" line (notices, e.g. errors, go to tmp/tui.log; errors also
+  # show in the main panel). One line each, never wrapped (a wrapped line
+  # pushes the next one out of the box): the connection line drops detail to
+  # fit `width`, and anything still too long is cut with "…".
   defp status_text(%{model: model} = state, width) do
     connection = "Connection: "
     room = width - String.length(connection)
 
     [
       "Status:     " <> status_label(model),
-      connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…"),
-      "Last:       " <> (Elixir.List.first(model.log) || "—")
+      connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…")
     ]
     |> Enum.map_join("\n", &fit(&1, width))
   end
