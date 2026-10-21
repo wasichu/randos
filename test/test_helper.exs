@@ -11,4 +11,8 @@ exclude =
       [:distributed]
   end
 
-ExUnit.start(exclude: exclude)
+# assert_receive waits up to 2 s (ExUnit's default is 100 ms): processes
+# here answer within milliseconds, but a busy CI runner can take longer,
+# which flaked tests more than once. Only failing waits get longer;
+# refute_receive keeps its own short default. (The TUI's tests do the same.)
+ExUnit.start(exclude: exclude, assert_receive_timeout: 2_000)
