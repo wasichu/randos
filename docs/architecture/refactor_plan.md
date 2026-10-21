@@ -637,8 +637,7 @@ No behaviour changes.
 
 Not scheduled; pick up when relevant.
 
-- **Hearing several languages (designed 2026-10-21; next after the
-  benchmark and review-page lanes).** Each person speaks one language and
+- **Hearing several languages (done 2026-10-21).** Each person speaks one language and
   picks any number they're comfortable hearing. Two people match when each
   one's speaking language is among the other's hearing languages: the same
   language both ways, or crosstalk. Owner's decisions: the speaking
@@ -648,7 +647,12 @@ Not scheduled; pick up when relevant.
   the waiting list (fine at 15 languages); the browser form gets
   checkboxes; the TUI a multi-select; the channel's `find` accepts a list
   while still taking a single language from v0.2.0 TUIs (a protocol change:
-  the mini-pass applies).
+  the mini-pass applies). Built as designed, plus: when the speaking
+  language changes, the auto-checked one is replaced by the new one (a
+  language the person checked themselves stays), in both clients; the call
+  map gains `peer_speaks` (the rando's language), shown in both clients.
+  Mini-pass done: `participant_channel.md`, both clients, the obligation
+  tests.
 - **Relay regions (designed 2026-10-21; build when users far from New
   York appear).** One relay per region (New York now; Frankfurt, then
   Singapore), each person given the one nearest them.
@@ -682,9 +686,13 @@ Not scheduled; pick up when relevant.
 - **CI (done).** `.github/workflows/ci.yml`: `just precommit` on macOS and
   Linux (with `RANDOS_REQUIRE_NATIVE=1`), plus `just smoke` and
   `just tui-smoke`. Deploys stay manual (`just deploy`).
-- **Same pair rematching on "Next" (decided 2026-10-21: fix).** Two people
-  who just ended a call aren't matched again for a short while (a minute or
-  two), remembered in the Matchmaker's memory only and forgotten after.
+- **Same pair rematching on "Next" (done 2026-10-21).** Two people who just
+  ended a call aren't matched again for `Lifecycle.rematch_window_seconds/0`
+  (90 s), remembered in the Matchmaker's memory only; when the window closes
+  and both are still waiting, a timer matches them. A side effect: a call
+  that never connects no longer rematches the same pair in a loop. Open:
+  the only two people waiting after a failed call now wait 90 s with no
+  message.
 - **`RandosWeb.IceServers` reads env vars per call.** Move them to
   `config/runtime.exs` so misconfiguration fails at boot instead of silently
   falling back to Google STUN.
@@ -701,7 +709,7 @@ Not scheduled; pick up when relevant.
   projects).** `turn-client-rustls` 0.1.2 gives rustls one `read_tls` per
   chunk, losing bytes past 4 KiB (worked around in `Relay::recv`); and
   `str0m-rust-crypto` pulls in AWS-LC through `dimpl`'s `rcgen` feature.
-- **TUI config file (decided 2026-10-21: do it).** A small file in the
+- **TUI config file (done 2026-10-21; `Tui.Config`).** A small file in the
   user's config directory (`~/.config/randos/`, or the platform's) keeping
   the chosen mic and speaker, the languages, and that the 18+ notice was
   agreed to. Local only; nothing goes to the server.
