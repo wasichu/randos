@@ -21,6 +21,18 @@ hear a beep). Logs go to
 `tmp/tui.log` (an installed copy: `~/.cache/randos/tui.log` on Linux,
 `~/Library/Caches/randos/tui.log` on macOS).
 
+On the start screen, ←→ picks the language you'll speak; on the "I'm happy
+to hear" row, ←→ moves through the languages and space checks or unchecks
+one (pick as many as you like; your speaking language starts checked).
+
+Your choices are kept for next time in a small settings file on your own
+computer (nothing about it goes to the server): the languages, that you
+confirmed the 18+ notice, and the mic and speaker (`i`/`o`). It's
+`tmp/tui-config.json` for `mix tui`, and in an installed copy
+`~/.config/randos/config.json` on Linux or
+`~/Library/Application Support/randos/config.json` on macOS. Delete it to
+start fresh.
+
 ## Installable builds
 
 `just tui-release` (repo root) builds `dist/randos-VERSION-OS-ARCH.tar.gz`:

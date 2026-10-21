@@ -13,8 +13,14 @@ Hide
 Type "cd clients/tui && clear && RANDOS_FAKE_AUDIO=1 mix tui --url ws://localhost:4010/participant/websocket"
 Enter
 Sleep 5s
-# Confirm "I'm an adult" (the find form's checkbox).
+# Also happy to hear Spanish (the peer speaks it), then confirm "I'm an
+# adult". The cursor stays on the hearing row, for the screenshot.
+Tab
+Right
 Space
+Tab
+Space
+Up
 Sleep 500ms
 Show
 Sleep 500ms

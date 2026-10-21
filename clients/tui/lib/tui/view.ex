@@ -47,11 +47,11 @@ defmodule Tui.View do
 
     form = %List{
       items: [
-        "I will speak:     ◀ #{Model.language_name(model, :speaks)} ▶",
-        "I want to hear:   ◀ #{Model.language_name(model, :listens)} ▶",
+        "I will speak:     ◀ #{Model.language_name(model, model.speaks)} ▶",
+        "I'm happy to hear: #{hears_row(model)}",
         "#{ack} I'm 18+ and OK with anonymous, unmoderated calls"
       ],
-      selected: Enum.find_index([:speaks, :listens, :ack], &(&1 == model.focus)),
+      selected: Enum.find_index([:speaks, :hears, :ack], &(&1 == model.focus)),
       highlight_symbol: "▶ ",
       highlight_style: %Style{fg: :cyan, modifiers: [:bold]},
       block: panel(title(model))
@@ -68,6 +68,21 @@ defmodule Tui.View do
 
   defp main(model, area, extra) do
     [{%Paragraph{text: main_text(model) <> extra, block: panel(title(model)), wrap: true}, area}]
+  end
+
+  # The language under the cursor with its box, then every checked code:
+  # "◀ [x] Español (ES) ▶  EN ES".
+  defp hears_row(model) do
+    checked = model.hears |> Enum.map_join(" ", &String.upcase/1)
+
+    case Model.hears_cursor(model) do
+      nil ->
+        checked
+
+      {code, checked?} ->
+        box = if checked?, do: "[x]", else: "[ ]"
+        "◀ #{box} #{Model.language_name(model, code)} ▶  #{checked}"
+    end
   end
 
   # During a call with audio, the main panel also shows the two meters (like
@@ -102,14 +117,14 @@ defmodule Tui.View do
         you_y = peer_y - height - 1
 
         main(model, area, "") ++
-          meter("You", Model.language_name(model, :speaks), levels.you, @you_color, rows, %{
+          meter("You", Model.language_name(model, model.speaks), levels.you, @you_color, rows, %{
             inner
             | y: you_y,
               height: height
           }) ++
           meter(
             "Your rando",
-            Model.language_name(model, :listens),
+            Model.language_name(model, Model.peer_speaks(model)),
             levels.peer,
             @peer_color,
             rows,
@@ -200,8 +215,10 @@ defmodule Tui.View do
   defp main_text(%{connection: :connecting}), do: "Connecting to the server…"
 
   defp main_text(%{status: :looking} = model) do
-    "Looking for a rando who speaks #{Model.language_name(model, :listens)} " <>
-      "and wants to hear #{Model.language_name(model, :speaks)}…"
+    hears = Enum.map_join(model.hears, ", ", &Model.language_name(model, &1))
+
+    "Looking for a rando who speaks #{hears} " <>
+      "and wants to hear #{Model.language_name(model, model.speaks)}…"
   end
 
   defp main_text(%{status: :connecting}), do: "Matched! Starting the call…"
@@ -242,7 +259,7 @@ defmodule Tui.View do
   defp help(%{connection: :connecting}), do: "q quit"
 
   defp help(%{status: :idle}),
-    do: "tab/↑↓ move  ←→ change language  space toggle 18+  enter find  q quit"
+    do: "tab/↑↓ move  ←→ change  space check  enter find  q quit"
 
   defp help(%{status: :looking}), do: "c cancel  q quit"
 

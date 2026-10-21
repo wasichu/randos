@@ -23,10 +23,10 @@ sequenceDiagram
     participant S as Server (Participant core, Matchmaker, CallCoordinator)
     participant B as Client B (answerer)
 
-    A->>S: find {speaks, listens, audio}
+    A->>S: find {speaks, hears, audio}
     S-->>A: state: looking
-    B->>S: find {mirrored languages, same audio}
-    Note over S: Matchmaker pairs them and starts a CallCoordinator
+    B->>S: find {speaks one of A's hears, hears A's speaks, same audio}
+    Note over S: Matchmaker pairs them (the longest-waiting compatible person) and starts a CallCoordinator
     S-->>A: state: connecting (role offerer, call: id, ice_servers, ice_transport_policy, media)
     S-->>B: state: connecting (role answerer, call: id, ice_servers, ice_transport_policy, media)
 

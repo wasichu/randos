@@ -27,12 +27,15 @@ defmodule RandosWeb.ParticipantChannelTest do
     {state, socket}
   end
 
-  defp find(socket, speaks, listens, ack \\ true, extra \\ %{}) do
+  defp find(socket, speaks, hears, ack \\ true, extra \\ %{}) do
     ref =
       push(
         socket,
         "find",
-        Map.merge(%{"speaks" => speaks, "listens" => listens, "adult_acknowledged" => ack}, extra)
+        Map.merge(
+          %{"speaks" => speaks, "hears" => List.wrap(hears), "adult_acknowledged" => ack},
+          extra
+        )
       )
 
     assert_reply ref, :ok
@@ -63,12 +66,43 @@ defmodule RandosWeb.ParticipantChannelTest do
     {_state, socket} = join_participant()
     find(socket, "it", "pt")
     assert_push "state", %{status: :looking}
-    assert %{queues: %{{"it", "pt", false} => [_]}} = Matchmaker.snapshot()
+    assert %{queues: %{{"it", ["pt"], false} => [_]}} = Matchmaker.snapshot()
 
     ref = push(socket, "cancel_search", %{})
     assert_reply ref, :ok
     assert_push "state", %{status: :idle}
-    refute Map.has_key?(Matchmaker.snapshot().queues, {"it", "pt", false})
+    refute Map.has_key?(Matchmaker.snapshot().queues, {"it", ["pt"], false})
+  end
+
+  test "find takes several hearing languages, or the single listens of older clients" do
+    {_state, socket} = join_participant()
+    find(socket, "it", ["pt", "it"])
+    assert_push "state", %{status: :looking}
+    assert %{queues: %{{"it", ["pt", "it"], false} => [_]}} = Matchmaker.snapshot()
+    push(socket, "cancel_search", %{}) |> assert_reply(:ok)
+    assert_push "state", %{status: :idle}
+
+    # The v0.2.0 TUI's payload.
+    ref =
+      push(socket, "find", %{"speaks" => "de", "listens" => "fr", "adult_acknowledged" => true})
+
+    assert_reply ref, :ok
+    assert_push "state", %{status: :looking}
+    assert %{queues: %{{"de", ["fr"], false} => [_]}} = Matchmaker.snapshot()
+    push(socket, "cancel_search", %{}) |> assert_reply(:ok)
+    assert_push "state", %{status: :idle}
+
+    # Nothing to hear: the matchmaker's own error.
+    find(socket, "de", [])
+    assert_push "state", %{status: :idle, error: :unsupported_language}
+
+    # Not a list of strings: rejected before anything runs.
+    for hears <- [[1], "fr", %{"a" => 1}] do
+      ref =
+        push(socket, "find", %{"speaks" => "de", "hears" => hears, "adult_acknowledged" => true})
+
+      assert_reply ref, :error, %{reason: "invalid_message"}
+    end
   end
 
   test "closing the channel leaves the queue" do
@@ -80,7 +114,7 @@ defmodule RandosWeb.ParticipantChannelTest do
     ref = leave(socket)
     assert_reply ref, :ok
     Process.sleep(50)
-    refute Map.has_key?(Matchmaker.snapshot().queues, {"tr", "id", false})
+    refute Map.has_key?(Matchmaker.snapshot().queues, {"tr", ["id"], false})
   end
 
   test "end_call takes an optional reason from the documented list" do
@@ -129,7 +163,7 @@ defmodule RandosWeb.ParticipantChannelTest do
     |> form("#conversation-form",
       conversation: %{
         speaking_language: speaks,
-        listening_language: listens,
+        hearing_languages: [listens],
         adult_acknowledgment: "true"
       }
     )
@@ -145,7 +179,8 @@ defmodule RandosWeb.ParticipantChannelTest do
 
     view = browser_find("bn", "hi")
 
-    assert %{queues: %{{"hi", "bn", false} => [_], {"bn", "hi", true} => [_]}} =
+    # (The browser checks its new speaking language among the hearing ones.)
+    assert %{queues: %{{"hi", ["bn"], false} => [_], {"bn", ["hi", "bn"], true} => [_]}} =
              Matchmaker.snapshot()
 
     refute_push "state", %{status: :connecting}

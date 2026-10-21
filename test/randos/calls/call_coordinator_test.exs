@@ -14,14 +14,14 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   # Text-only by default: those calls activate on a short delay, which is
   # what the timer tests need. Media tests pass `audio?: true`.
-  defp participant(id, pid, speaks_language, listens_language, audio?) do
+  defp participant(id, pid, speaks_language, hears_language, audio?) do
     %Entry{
       audio?: audio?,
       id: id,
       pid: pid,
       topic: "test:call:#{id}:#{System.unique_integer([:positive])}",
       speaks_language: speaks_language,
-      listens_language: listens_language
+      hears_languages: [hears_language]
     }
   end
 

@@ -4,6 +4,17 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   This process owns live queue membership only. Queue state is intentionally
   transient and disappears when the process or server stops.
+
+  Everyone waits in one list, oldest first. A joiner is matched with the
+  person who has waited longest among those they're compatible with
+  (`Randos.Matchmaking.Entry.compatible?/2`: each speaks a language the other
+  hears). Fifteen languages and a small queue make a scan cheap.
+
+  Two people who just had a call aren't matched with each other again for
+  `Randos.Calls.Lifecycle.rematch_window_seconds/0` after it ends, so "Next"
+  finds someone new. The pair is remembered by its two anonymous participant
+  ids, in this process only, and forgotten when the window closes; if the
+  two are still waiting then (and still compatible), they're matched.
   """
 
   use GenServer
@@ -11,13 +22,17 @@ defmodule Randos.Matchmaking.Matchmaker do
   require Logger
 
   alias Randos.Calls.CallCoordinator
+  alias Randos.Calls.Lifecycle
   alias Randos.ConversationLanguages
   alias Randos.Matchmaking.Entry
   alias Randos.Matchmaking.Match
 
-  defstruct queues: %{},
+  defstruct waiting: [],
             participants: %{},
             monitors: %{},
+            calls: %{},
+            recent: %{},
+            rematch_window_ms: Lifecycle.rematch_window_seconds() * 1_000,
             call_supervisor: Randos.Calls.CallSupervisor,
             call_options: [],
             call_starter: {CallCoordinator, :start_match}
@@ -25,16 +40,17 @@ defmodule Randos.Matchmaking.Matchmaker do
   @supported_language_codes ConversationLanguages.codes()
 
   @typedoc """
-  What `join/1` needs; `accepted_adult_terms` must be `true`. `audio?`
-  (default `false`) is whether the client carries call audio: only entries
-  that agree are matched, and queues are keyed by `{speaks, listens, audio?}`.
+  What `join/1` needs; `accepted_adult_terms` must be `true`.
+  `hears_languages` are the languages the person is happy to hear (at least
+  one, all supported). `audio?` (default `false`) is whether the client
+  carries call audio: only entries that agree are matched.
   """
   @type join_attrs :: %{
           required(:id) => String.t(),
           required(:pid) => pid(),
           required(:topic) => String.t(),
           required(:speaks_language) => String.t(),
-          required(:listens_language) => String.t(),
+          required(:hears_languages) => [String.t()],
           optional(:accepted_adult_terms) => boolean(),
           optional(:audio?) => boolean()
         }
@@ -45,6 +61,10 @@ defmodule Randos.Matchmaking.Matchmaker do
           | {:error,
              :adult_terms_required | :unsupported_language | :already_queued | :call_start_failed}
 
+  @doc """
+  Options: `:name`, `:call_supervisor`, `:call_options`, `:call_starter`, and
+  `:rematch_window_ms` (tests).
+  """
   def start_link(opts \\ []) do
     {name, opts} = Keyword.pop(opts, :name, __MODULE__)
     GenServer.start_link(__MODULE__, opts, name: name)
@@ -55,7 +75,8 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   On a match the call's coordinator is started and the joiner gets
   `{:matched, match}` (with `call_pid`); both participants then hear about the
-  call only from the coordinator, as `{:call_updated, %Call{}}`.
+  call only from the coordinator, as `{:call_updated, %Call{}}`. (Two people
+  matched when their rematch window closes hear only from the coordinator.)
   """
   @spec join(GenServer.server(), join_attrs()) :: join_result()
   def join(server \\ __MODULE__, attrs)
@@ -77,9 +98,14 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   @doc """
-  Returns a lightweight snapshot for tests and diagnostics.
+  Returns a lightweight snapshot for tests and diagnostics: who is waiting
+  (oldest first) and the same people grouped by what they asked for.
   """
-  @spec snapshot(GenServer.server()) :: %{queued_count: non_neg_integer(), queues: map()}
+  @spec snapshot(GenServer.server()) :: %{
+          queued_count: non_neg_integer(),
+          waiting: [String.t()],
+          queues: map()
+        }
   def snapshot(server \\ __MODULE__) do
     GenServer.call(server, :snapshot)
   end
@@ -90,7 +116,9 @@ defmodule Randos.Matchmaking.Matchmaker do
      %__MODULE__{
        call_supervisor: Keyword.get(opts, :call_supervisor, Randos.Calls.CallSupervisor),
        call_options: Keyword.get(opts, :call_options, []),
-       call_starter: Keyword.get(opts, :call_starter, {CallCoordinator, :start_match})
+       call_starter: Keyword.get(opts, :call_starter, {CallCoordinator, :start_match}),
+       rematch_window_ms:
+         Keyword.get(opts, :rematch_window_ms, Lifecycle.rematch_window_seconds() * 1_000)
      }}
   end
 
@@ -117,20 +145,16 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   def handle_call({:leave, pid}, _from, state) do
-    if Map.has_key?(state.participants, pid) do
-      {:reply, :ok, remove_participant(pid, state)}
-    else
-      {:reply, :ok, state}
-    end
+    {:reply, :ok, remove_waiting(state, pid)}
   end
 
   def handle_call(:snapshot, _from, state) do
     snapshot = %{
-      queued_count: map_size(state.participants),
+      queued_count: length(state.waiting),
+      waiting: Enum.map(state.waiting, & &1.id),
       queues:
-        Map.new(state.queues, fn {key, participants} ->
-          {key, Enum.map(participants, & &1.id)}
-        end)
+        state.waiting
+        |> Enum.group_by(&{&1.speaks_language, &1.hears_languages, &1.audio?}, & &1.id)
     }
 
     {:reply, snapshot, state}
@@ -138,12 +162,28 @@ defmodule Randos.Matchmaking.Matchmaker do
 
   @impl true
   def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
-    case state.monitors do
-      %{^ref => ^pid} ->
+    cond do
+      Map.get(state.monitors, ref) == pid ->
         Logger.info("matchmaking participant went away while queued")
-        {:noreply, remove_participant(pid, state)}
+        {:noreply, remove_waiting(state, pid)}
 
-      _monitors ->
+      Map.has_key?(state.calls, ref) ->
+        {:noreply, call_ended(state, ref)}
+
+      true ->
+        {:noreply, state}
+    end
+  end
+
+  def handle_info({:rematch_window_over, pair}, state) do
+    case Map.get(state.recent, pair) do
+      expires_at when is_integer(expires_at) ->
+        state = %{state | recent: Map.delete(state.recent, pair)}
+        {:noreply, rematch(state, pair)}
+
+      # Matched again meanwhile? Can't be (the pair was blocked), but a stale
+      # timer must never unblock a pair that's in a call.
+      _in_call_or_gone ->
         {:noreply, state}
     end
   end
@@ -156,7 +196,8 @@ defmodule Randos.Matchmaking.Matchmaker do
         {{:error, :adult_terms_required}, state}
 
       not supported_language?(participant.speaks_language) or
-          not supported_language?(participant.listens_language) ->
+        participant.hears_languages == [] or
+          not Enum.all?(participant.hears_languages, &supported_language?/1) ->
         {{:error, :unsupported_language}, state}
 
       Map.has_key?(state.participants, participant.pid) ->
@@ -168,103 +209,113 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   defp join_queue(participant, state) do
-    compatible_key =
-      {participant.listens_language, participant.speaks_language, participant.audio?}
+    case Enum.find(state.waiting, &matchable?(state, &1, participant)) do
+      nil ->
+        {:queued, add_waiting(state, participant)}
 
-    case pop_waiting_participant(state, compatible_key) do
-      {%{} = waiting_participant, state} ->
+      waiting_participant ->
         match = Match.new(waiting_participant, participant)
 
         case start_call(match, state) do
           {:ok, call_pid} ->
             Logger.info("matchmaking matched", match_id: match.id)
+
+            state =
+              state
+              |> remove_waiting(waiting_participant.pid)
+              |> in_call(match, call_pid)
+
             {{:matched, %{match | call_pid: call_pid}}, state}
 
           {:error, reason} ->
+            # Not the waiting participant's fault: they keep their place.
             Logger.warning("matchmaking call start failed",
               match_id: match.id,
               reason: inspect(reason)
             )
 
-            # Not the waiting participant's fault: give them their place back.
-            {{:error, :call_start_failed}, add_participant(waiting_participant, state, :front)}
+            {{:error, :call_start_failed}, state}
         end
-
-      {nil, state} ->
-        {:queued, add_participant(participant, state)}
     end
   end
 
-  defp add_participant(participant, state, position \\ :back) do
-    key = {participant.speaks_language, participant.listens_language, participant.audio?}
-    ref = Process.monitor(participant.pid)
+  # When the window closes and both are still waiting, they're matched (the
+  # one who waited longer offers). Nobody else could have been matched with
+  # either: that would have happened when they joined.
+  defp rematch(state, {id_a, id_b}) do
+    with [first, second] <- Enum.filter(state.waiting, &(&1.id in [id_a, id_b])),
+         true <- matchable?(state, first, second),
+         match = Match.new(first, second),
+         {:ok, call_pid} <- start_call(match, state) do
+      Logger.info("matchmaking matched", match_id: match.id)
 
-    enqueue =
-      case position do
-        :back -> &(&1 ++ [participant])
-        :front -> &[participant | &1]
-      end
+      state
+      |> remove_waiting(first.pid)
+      |> remove_waiting(second.pid)
+      |> in_call(match, call_pid)
+    else
+      {:error, reason} ->
+        Logger.warning("matchmaking call start failed", reason: inspect(reason))
+
+        state
+
+      _not_both_waiting_or_incompatible ->
+        state
+    end
+  end
+
+  defp matchable?(state, a, b),
+    do: a.pid != b.pid and Entry.compatible?(a, b) and not Map.has_key?(state.recent, pair(a, b))
+
+  # The two stay unmatchable while their call runs (they could requeue
+  # before its coordinator's DOWN arrives) and for the window after.
+  defp in_call(state, match, call_pid) do
+    pair = pair(match.participant_a, match.participant_b)
+    ref = Process.monitor(call_pid)
 
     %{
       state
-      | queues: Map.update(state.queues, key, [participant], enqueue),
-        participants: Map.put(state.participants, participant.pid, {key, participant, ref}),
+      | calls: Map.put(state.calls, ref, pair),
+        recent: Map.put(state.recent, pair, :in_call)
+    }
+  end
+
+  defp call_ended(state, ref) do
+    {pair, calls} = Map.pop(state.calls, ref)
+    expires_at = System.monotonic_time(:millisecond) + state.rematch_window_ms
+    Process.send_after(self(), {:rematch_window_over, pair}, state.rematch_window_ms)
+    %{state | calls: calls, recent: Map.put(state.recent, pair, expires_at)}
+  end
+
+  # The same key whichever of the two is first.
+  defp pair(%{id: a}, %{id: b}) when a <= b, do: {a, b}
+  defp pair(%{id: a}, %{id: b}), do: {b, a}
+
+  defp add_waiting(state, participant) do
+    ref = Process.monitor(participant.pid)
+
+    %{
+      state
+      | waiting: state.waiting ++ [participant],
+        participants: Map.put(state.participants, participant.pid, ref),
         monitors: Map.put(state.monitors, ref, participant.pid)
     }
   end
 
-  defp pop_waiting_participant(state, key) do
-    case Map.get(state.queues, key, []) do
-      [] ->
-        {nil, state}
-
-      [participant | rest] ->
-        {_key, _participant, ref} = Map.fetch!(state.participants, participant.pid)
-        Process.demonitor(ref, [:flush])
-
-        queues =
-          if rest == [] do
-            Map.delete(state.queues, key)
-          else
-            Map.put(state.queues, key, rest)
-          end
-
-        {participant,
-         %{
-           state
-           | queues: queues,
-             participants: Map.delete(state.participants, participant.pid),
-             monitors: Map.delete(state.monitors, ref)
-         }}
-    end
-  end
-
-  defp remove_participant(pid, state) do
+  defp remove_waiting(state, pid) do
     case Map.pop(state.participants, pid) do
-      {nil, participants} ->
-        %{state | participants: participants}
+      {nil, _participants} ->
+        state
 
-      {{key, participant, ref}, participants} ->
+      {ref, participants} ->
         Process.demonitor(ref, [:flush])
-
-        queues =
-          state.queues
-          |> Map.update(key, [], &Enum.reject(&1, fn queued -> queued.pid == participant.pid end))
-          |> drop_empty_queue(key)
 
         %{
           state
-          | queues: queues,
+          | waiting: Enum.reject(state.waiting, &(&1.pid == pid)),
             participants: participants,
             monitors: Map.delete(state.monitors, ref)
         }
-    end
-  end
-
-  defp drop_empty_queue(queues, key) do
-    case Map.get(queues, key) do
-      [] -> Map.delete(queues, key)
-      _participants -> queues
     end
   end
 
@@ -274,7 +325,7 @@ defmodule Randos.Matchmaking.Matchmaker do
       pid: Map.fetch!(attrs, :pid),
       topic: Map.fetch!(attrs, :topic),
       speaks_language: Map.fetch!(attrs, :speaks_language),
-      listens_language: Map.fetch!(attrs, :listens_language),
+      hears_languages: attrs |> Map.fetch!(:hears_languages) |> List.wrap() |> Enum.uniq(),
       audio?: Map.get(attrs, :audio?, false) == true
     }
   end

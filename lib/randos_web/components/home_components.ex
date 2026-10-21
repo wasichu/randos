@@ -71,6 +71,7 @@ defmodule RandosWeb.HomeComponents do
   attr :call_deadline_unix_ms, :integer, default: nil
   attr :webrtc_role, :atom, default: nil
   attr :preferences, :map, required: true
+  attr :peer_language, :string, default: nil
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
 
@@ -112,6 +113,7 @@ defmodule RandosWeb.HomeComponents do
         <% :in_call -> %>
           <.call_panel
             preferences={@preferences}
+            peer_language={@peer_language}
             webrtc_role={@webrtc_role}
             language_name={&language_name/1}
           />
@@ -143,7 +145,7 @@ defmodule RandosWeb.HomeComponents do
         phx-submit="find"
         class="space-y-5"
       >
-        <.language_fields form={@form} />
+        <.language_fields form={@form} preferences={@preferences} />
 
         <div class="rounded-md border border-stone-200 bg-stone-50 px-4 py-4">
           <.input
@@ -186,10 +188,11 @@ defmodule RandosWeb.HomeComponents do
   end
 
   attr :form, :any, required: true
+  attr :preferences, :map, required: true
 
   defp language_fields(assigns) do
     ~H"""
-    <div class="grid gap-4 sm:grid-cols-2">
+    <div class="space-y-4">
       <.input
         field={@form[:speaking_language]}
         type="select"
@@ -197,13 +200,39 @@ defmodule RandosWeb.HomeComponents do
         options={language_options()}
         class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
       />
-      <.input
-        field={@form[:listening_language]}
-        type="select"
-        label={gettext("I want them to speak in")}
-        options={language_options()}
-        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
-      />
+      <fieldset id="hearing-languages">
+        <legend class="mb-1 text-sm font-semibold text-stone-800">
+          {gettext("I'm happy to hear")}
+        </legend>
+        <p class="mb-3 text-sm text-stone-500">
+          {gettext("Pick every language you're comfortable listening to.")}
+        </p>
+        <%!-- Submitted even with nothing checked, so unchecking all clears it. --%>
+        <input type="hidden" name="conversation[hearing_languages][]" value="" />
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <label
+            :for={{name, code} <- language_options()}
+            for={"hearing-language-#{code}"}
+            class={[
+              "flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition",
+              if(code in @preferences["hearing_languages"],
+                do: "border-teal-600 bg-teal-50 text-stone-950",
+                else: "border-stone-200 bg-white text-stone-700 hover:border-stone-400"
+              )
+            ]}
+          >
+            <input
+              type="checkbox"
+              id={"hearing-language-#{code}"}
+              name="conversation[hearing_languages][]"
+              value={code}
+              checked={code in @preferences["hearing_languages"]}
+              class="size-4 rounded border-stone-300 accent-teal-700"
+            />
+            <span>{name}</span>
+          </label>
+        </div>
+      </fieldset>
     </div>
     """
   end
@@ -223,9 +252,9 @@ defmodule RandosWeb.HomeComponents do
         </h2>
         <p id="looking-status" class="mt-3 leading-7 text-stone-600">
           {gettext(
-            "Looking for a rando speaking %{speaking_language} who wants to hear %{listening_language}.",
-            speaking_language: @language_name.(@preferences["listening_language"]),
-            listening_language: @language_name.(@preferences["speaking_language"])
+            "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.",
+            hearing_languages: Enum.map_join(@preferences["hearing_languages"], ", ", @language_name),
+            speaking_language: @language_name.(@preferences["speaking_language"])
           )}
         </p>
       </div>
@@ -286,6 +315,7 @@ defmodule RandosWeb.HomeComponents do
   end
 
   attr :preferences, :map, required: true
+  attr :peer_language, :string, default: nil
   attr :webrtc_role, :atom, default: nil
   attr :language_name, :any, required: true
 
@@ -311,7 +341,7 @@ defmodule RandosWeb.HomeComponents do
         <.waveform
           id="remote-waveform"
           label={gettext("Your rando")}
-          language={@language_name.(@preferences["listening_language"])}
+          language={@peer_language && @language_name.(@peer_language)}
         />
       </div>
     </div>
@@ -437,14 +467,14 @@ defmodule RandosWeb.HomeComponents do
 
   attr :id, :string, required: true
   attr :label, :string, required: true
-  attr :language, :string, required: true
+  attr :language, :string, default: nil
 
   defp waveform(assigns) do
     ~H"""
     <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-3 sm:p-4">
       <div class="mb-4">
         <p class="text-sm font-semibold text-stone-800">{@label}</p>
-        <p class="mt-1 text-sm text-stone-500">{@language}</p>
+        <p id={"#{@id}-language"} class="mt-1 text-sm text-stone-500">{@language}</p>
       </div>
       <canvas
         id={"#{@id}-canvas"}

@@ -10,7 +10,7 @@ defmodule Randos.Matchmaking.MatchTest do
       pid: self(),
       topic: "topic:#{id}",
       speaks_language: "en",
-      listens_language: "es"
+      hears_languages: ["es"]
     }
   end
 

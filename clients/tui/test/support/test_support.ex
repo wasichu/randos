@@ -53,19 +53,30 @@ defmodule Tui.TestSupport do
     end
   end
 
-  @doc "On the idle form (`model`): pick the languages, tick 18+, press Enter."
-  def find(app, model, speaks, listens) do
-    index = fn code -> Enum.find_index(model.languages, &(&1.code == code)) end
+  @doc """
+  On a fresh idle form (`model`): speak `speaks`, hear exactly `hears` (a code
+  or a list), tick 18+, press Enter.
+  """
+  def find(app, model, speaks, hears) do
+    hears = List.wrap(hears)
+    codes = Enum.map(model.languages, & &1.code)
+    # A fresh form: only the speaking language is checked, automatically.
+    true =
+      model.hears == [model.speaks] and model.hears_cursor == 0 and not model.adult_acknowledged?
 
-    move = fn from, to ->
-      List.duplicate("right", Integer.mod(to - from, length(model.languages)))
-    end
+    index = fn code -> Enum.find_index(codes, &(&1 == code)) end
 
-    keys(
-      app,
-      move.(model.speaks, index.(speaks)) ++
-        ["tab"] ++ move.(model.listens, index.(listens)) ++ ["tab", " ", "enter"]
-    )
+    to_speaks =
+      List.duplicate("right", Integer.mod(index.(speaks) - index.(model.speaks), length(codes)))
+
+    # Choosing `speaks` leaves just it checked; walk the row, toggling what differs.
+    hears_row =
+      codes
+      |> Enum.map(fn code -> if code == speaks != code in hears, do: [" "], else: [] end)
+      |> Enum.intersperse(["right"])
+      |> List.flatten()
+
+    keys(app, to_speaks ++ ["tab"] ++ hears_row ++ ["tab", " ", "enter"])
   end
 
   @doc "Kills a `Tui.Media` server's helper process (`kill -9`), as a crash would."

@@ -14,11 +14,15 @@ defmodule Tui.App do
       `t` on the idle screen runs a short mic → speaker test through it
     * `:mic_test` — `{input, output}` for that test (default
       `{"device", "device"}`; tests use `{"sine", "null"}`)
+    * `:config` — the settings file (`Tui.Config`): the languages, the 18+
+      acknowledgment, and the devices are read from it at start and saved to
+      it when they change; without one (tests), nothing is saved
     * `:test_pid` — receives `{:tui_model, app_pid, model}` after every change (tests)
   """
   use ExRatatui.App
 
   alias ExRatatui.Event
+  alias Tui.Config
   alias Tui.Connection
   alias Tui.Media
   alias Tui.Media.State, as: MediaState
@@ -46,21 +50,30 @@ defmodule Tui.App do
     # weren't registered yet): ask it for what "ready" would have.
     if media_running?(Keyword.get(opts, :media)), do: send(self(), :media_started)
 
-    {:ok,
-     %{
-       model: Model.set_audio(Model.new(now_ms()), media_running?(Keyword.get(opts, :media))),
-       connection: connection,
-       owned?: owned?,
-       uri: Keyword.get(opts, :uri, "(test)"),
-       media: Keyword.get(opts, :media),
-       mic_test_endpoints: Keyword.get(opts, :mic_test, {"device", "device"}),
-       media_state:
-         MediaState.new(
-           Keyword.get(opts, :media) != nil,
-           Keyword.get(opts, :call_audio, {"device", "device"})
-         ),
-       test_pid: Keyword.get(opts, :test_pid)
-     }}
+    config = Keyword.get(opts, :config)
+    saved = Config.load(config)
+
+    state = %{
+      model:
+        Model.new(now_ms())
+        |> Model.set_audio(media_running?(Keyword.get(opts, :media)))
+        |> Model.restore(saved),
+      connection: connection,
+      owned?: owned?,
+      uri: Keyword.get(opts, :uri, "(test)"),
+      media: Keyword.get(opts, :media),
+      mic_test_endpoints: Keyword.get(opts, :mic_test, {"device", "device"}),
+      media_state:
+        MediaState.new(
+          Keyword.get(opts, :media) != nil,
+          Keyword.get(opts, :call_audio, {"device", "device"})
+        )
+        |> MediaState.restore_choice(saved),
+      config: config,
+      test_pid: Keyword.get(opts, :test_pid)
+    }
+
+    {:ok, Map.put(state, :saved, settings(state))}
   end
 
   @impl true
@@ -124,7 +137,8 @@ defmodule Tui.App do
       )
       when code in ["i", "o"] do
     which = if code == "i", do: :input, else: :output
-    {:noreply, %{state | media_state: MediaState.cycle_device(state.media_state, which)}}
+    state = %{state | media_state: MediaState.cycle_device(state.media_state, which)}
+    {:noreply, persist(state)}
   end
 
   def handle_event(
@@ -137,7 +151,7 @@ defmodule Tui.App do
 
   def handle_event(%Event.Key{code: code, kind: "press"}, state) do
     {model, commands} = Model.key(state.model, code)
-    {:noreply, apply_model(state, model, commands)}
+    {:noreply, state |> apply_model(model, commands) |> persist()}
   end
 
   def handle_event(_event, state), do: {:noreply, state}
@@ -232,6 +246,21 @@ defmodule Tui.App do
     if state.test_pid, do: send(state.test_pid, {:tui_model, self(), model})
     %{state | model: model}
   end
+
+  # Saves the settings file when what it keeps has changed.
+  defp persist(state) do
+    case settings(state) do
+      same when same == state.saved ->
+        state
+
+      settings ->
+        Config.save(state.config, settings)
+        %{state | saved: settings}
+    end
+  end
+
+  defp settings(state),
+    do: Map.merge(Model.saved(state.model), MediaState.saved_choice(state.media_state))
 
   defp now_ms, do: System.system_time(:millisecond)
 end

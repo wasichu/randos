@@ -66,7 +66,7 @@ try {
       looking: await page.eval(`!!document.querySelector("#looking-panel")`),
       error: await page.eval(`document.querySelector("#matchmaking-error")?.textContent.trim() ?? null`),
     })
-    // Requeued pages keep rematching; stop.
+    // A requeued page would wait out the rematch window; stop looking.
     await page.eval(`document.querySelector("#cancel-connection-button, #cancel-search-button")?.click()`)
   } else {
     await page.webrtcStateIs("connected")

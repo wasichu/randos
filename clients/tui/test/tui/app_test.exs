@@ -54,9 +54,9 @@ defmodule Tui.AppTest do
 
     test "idle form shows languages, the 18+ box, and key help" do
       text = render_text(model("idle"))
-      assert text =~ "I will speak:"
-      assert text =~ "English (EN)"
-      assert text =~ "Español (ES)"
+      assert text =~ "I will speak:     ◀ English (EN) ▶"
+      # The language under the cursor, then every checked one.
+      assert text =~ "I'm happy to hear: ◀ [x] English (EN) ▶  EN"
       assert text =~ "[ ] I'm 18+"
       assert text =~ "enter find"
     end
@@ -179,7 +179,9 @@ defmodule Tui.AppTest do
           }
       }
 
-      text = render_text(%{model("in_call") | audio?: true}, %{media_state: media}, {80, 30})
+      # The server says which language the rando speaks.
+      in_call = %{model("in_call") | audio?: true, call: %{"peer_speaks" => "es"}}
+      text = render_text(in_call, %{media_state: media}, {80, 30})
       assert text =~ "You · English (EN)"
       assert text =~ "Your rando · Español (ES)"
       # The loud low bars, at the centre: full blocks, mirrored.
@@ -232,11 +234,12 @@ defmodule Tui.AppTest do
     send(pid, {:randos, {:joined, %{"state" => server_state("idle"), "languages" => @languages}}})
     assert_receive {:tui_model, ^pid, %Model{status: :idle}}
 
-    keys(pid, [" ", "enter"])
+    # Down to the 18+ box, tick it, find.
+    keys(pid, ["tab", "tab", " ", "enter"])
 
     assert_receive {:"$gen_cast",
                     {:push, "find",
-                     %{speaks: "en", listens: "es", adult_acknowledged: true, audio: false}}}
+                     %{speaks: "en", hears: ["en"], adult_acknowledged: true, audio: false}}}
 
     send(pid, {:randos, {:push, "state", server_state("in_call")}})
     assert_receive {:tui_model, ^pid, %Model{status: :in_call}}

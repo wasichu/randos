@@ -54,6 +54,7 @@ defmodule Randos.Calls.Lifecycle do
   @extension_response_timeout_seconds 20
   @connect_timeout_seconds 15
   @disconnected_grace_seconds 5
+  @rematch_window_seconds 90
 
   @typedoc "One participant's media, as they last reported it."
   @type media_state :: :connecting | :connected | :disconnected
@@ -81,6 +82,13 @@ defmodule Randos.Calls.Lifecycle do
   @doc "How long a participant's media may stay disconnected before the call fails."
   @spec disconnected_grace_seconds() :: pos_integer()
   def disconnected_grace_seconds, do: @disconnected_grace_seconds
+
+  @doc """
+  How long two people who just had a call aren't matched with each other
+  again (so "Next" finds someone new), counted from the call's end.
+  """
+  @spec rematch_window_seconds() :: pos_integer()
+  def rematch_window_seconds, do: @rematch_window_seconds
 
   @spec ended_reasons() :: [ended_reason()]
   def ended_reasons, do: @ended_reasons

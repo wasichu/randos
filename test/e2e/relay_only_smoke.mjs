@@ -35,7 +35,8 @@ async function scenario(name, options, [speaks, listens]) {
     const connected = await Promise.all([a, b].map(page => page.eval(`window.__connected === true`)))
     if (connected.some(Boolean)) throw new Error("connected without the relay: a direct address reached the peer")
 
-    await a.hangUp()
+    // Requeued, the two wait out the rematch window; leave.
+    await Promise.all([a, b].map(page => page.stopLooking()))
     await sleep(200)
     await Promise.all([a, b].map(page => page.send("Page.navigate", {url: "about:blank"})))
     results.push(true)
