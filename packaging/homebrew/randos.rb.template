@@ -4,7 +4,6 @@
 class Randos < Formula
   desc "Anonymous, audio-only language practice with strangers, in your terminal"
   homepage "https://randos.slowinput.org"
-  version "@VERSION@"
   license "AGPL-3.0-or-later"
 
   on_macos do
@@ -19,9 +18,7 @@ class Randos < Formula
       url "https://github.com/wasichu/randos/releases/download/v@VERSION@/randos-@VERSION@-linux-x86_64.tar.gz"
       sha256 "@SHA256_LINUX_X86_64@"
     end
-  end
 
-  on_linux do
     # What the release links (checked on the CI build, Ubuntu 24.04, so
     # glibc 2.39 or newer): ALSA for the media helper, OpenSSL 3 for
     # Erlang's crypto, ncurses (libtinfo) and zlib for the VM.
