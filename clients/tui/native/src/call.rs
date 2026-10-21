@@ -841,8 +841,20 @@ mod tests {
     /// Passes each peer's outgoing signals to the other, like the server's
     /// relay, for `duration`.
     fn relay(a: (&Call, &Mutex<Seen>), b: (&Call, &Mutex<Seen>), duration: Duration) {
+        relay_until(a, b, duration, || false);
+    }
+
+    /// Like `relay`, but stops as soon as `done()` holds (`duration` is then
+    /// a deadline): for counts that depend on how soon the call connects,
+    /// which a busy CI machine slows down.
+    fn relay_until(
+        a: (&Call, &Mutex<Seen>),
+        b: (&Call, &Mutex<Seen>),
+        duration: Duration,
+        done: impl Fn() -> bool,
+    ) {
         let until = Instant::now() + duration;
-        while Instant::now() < until {
+        while Instant::now() < until && !done() {
             for (from, to) in [(a.1, b.0), (b.1, a.0)] {
                 for signal in std::mem::take(&mut from.lock().unwrap().signals) {
                     to.signal(signal).unwrap();
@@ -861,10 +873,20 @@ mod tests {
             loss_every: 10,
             ..CallConfig::new(Role::Answerer)
         });
-        relay(
+        // Until ten lost packets have been rebuilt (about 2.5 s once the
+        // call is up), however long connecting takes.
+        relay_until(
             (&offerer, &offerer_seen),
             (&answerer, &answerer_seen),
-            Duration::from_millis(3_500),
+            Duration::from_secs(15),
+            || {
+                answerer_seen
+                    .lock()
+                    .unwrap()
+                    .stats
+                    .last()
+                    .is_some_and(|stats| stats.recovered >= 10)
+            },
         );
 
         let last = answerer_seen.lock().unwrap().stats.last().cloned().unwrap();
