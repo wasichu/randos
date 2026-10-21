@@ -749,6 +749,12 @@ All 2026-10-19 unless noted.
   Measured from Houston: about 50 ms each way to the NYC relay. When users
   far from New York appear, add relay regions: see "Relay regions" in the
   open items.
+- **A 1 GB Fly volume for aggregate stats (2026-10-21).** The owner
+  approved it (about $0.15 a month) to keep the status page's daily totals
+  across sleeps and deploys, keeping costs low: auto-stop stays on. It holds
+  only aggregate counts (no IPs, ids, or anything per person), so "no
+  database" still holds for people; the small file of totals is the one
+  thing kept on disk.
 - **License (2026-10-21): AGPL-3.0-or-later.** The owner would mind someone
   running a closed, modified randos; the AGPL's network clause means anyone
   who runs a modified copy for others must offer them its source. The site's
