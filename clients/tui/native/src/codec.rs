@@ -13,6 +13,10 @@ pub const SAMPLE_RATE: u32 = 48_000;
 pub const FRAME: usize = 960;
 /// Voice at this rate measured −14.9 dB SNR in the design research.
 pub const BITRATE_BPS: i32 = 24_000;
+/// The loss rate the encoder plans for: with in-band FEC on, each packet
+/// also carries a low-bitrate copy of the one before, so a single lost
+/// packet can be rebuilt from the next (`Decoder::recover`).
+const EXPECTED_LOSS_PERCENT: i32 = 10;
 /// libopus's recommended upper bound for one packet.
 const MAX_PACKET: usize = 4_000;
 /// A whole 20 ms frame is buffered before encoding, plus 6.5 ms of Opus
@@ -28,6 +32,8 @@ impl Encoder {
     pub fn new() -> Result<Self, Error> {
         let mut opus = opus::Encoder::new(SAMPLE_RATE, Channels::Mono, Application::Voip)?;
         opus.set_bitrate(Bitrate::Bits(BITRATE_BPS))?;
+        opus.set_inband_fec(true)?;
+        opus.set_packet_loss_perc(EXPECTED_LOSS_PERCENT)?;
         Ok(Self {
             opus,
             packet: [0; MAX_PACKET],
@@ -58,6 +64,12 @@ impl Decoder {
     /// Decodes one packet into a frame.
     pub fn decode(&mut self, packet: &[u8], frame: &mut [f32; FRAME]) -> Result<(), Error> {
         Self::whole_frame(self.opus.decode_float(packet, frame, false)?)
+    }
+
+    /// Rebuilds the frame *before* `next` from the FEC data `next` carries
+    /// (falls back to concealment when `next` has none).
+    pub fn recover(&mut self, next: &[u8], frame: &mut [f32; FRAME]) -> Result<(), Error> {
+        Self::whole_frame(self.opus.decode_float(next, frame, true)?)
     }
 
     /// Fills a frame for a packet that never arrived (Opus packet-loss
@@ -155,6 +167,64 @@ mod tests {
         }
 
         assert!(rms(&output) < 1e-3);
+    }
+
+    /// A rising chirp with a wobble, so concealment (which extrapolates the
+    /// last frames) can't guess the missing one, while FEC carries it.
+    fn chirp_frames(count: usize) -> Vec<[f32; FRAME]> {
+        let mut phase = 0.0f32;
+        (0..count)
+            .map(|f| {
+                let mut frame = [0.0; FRAME];
+                for (i, sample) in frame.iter_mut().enumerate() {
+                    let t = (f * FRAME + i) as f32 / SAMPLE_RATE as f32;
+                    let hz = 200.0 + 900.0 * t + 150.0 * (7.0 * t).sin();
+                    phase += std::f32::consts::TAU * hz / SAMPLE_RATE as f32;
+                    *sample = 0.4 * phase.sin();
+                }
+                frame
+            })
+            .collect()
+    }
+
+    #[test]
+    fn fec_rebuilds_a_lost_packet_closer_than_concealment() {
+        let mut encoder = Encoder::new().unwrap();
+        let packets: Vec<Vec<u8>> = chirp_frames(40)
+            .iter()
+            .map(|frame| encoder.encode(frame).unwrap().to_vec())
+            .collect();
+        let lost = 30;
+
+        // Reference: every packet arrives.
+        let mut reference = Decoder::new().unwrap();
+        let mut expected = [0.0; FRAME];
+        for packet in &packets[..=lost] {
+            reference.decode(packet, &mut expected).unwrap();
+        }
+
+        // Packet `lost` never arrives: rebuild it from the next packet's FEC,
+        // or conceal it.
+        let error = |use_fec: bool| {
+            let mut decoder = Decoder::new().unwrap();
+            let mut frame = [0.0; FRAME];
+            for packet in &packets[..lost] {
+                decoder.decode(packet, &mut frame).unwrap();
+            }
+            if use_fec {
+                decoder.recover(&packets[lost + 1], &mut frame).unwrap();
+            } else {
+                decoder.conceal(&mut frame).unwrap();
+            }
+            let diff: Vec<f32> = frame.iter().zip(&expected).map(|(a, b)| a - b).collect();
+            rms(&diff)
+        };
+
+        let (with_fec, concealed) = (error(true), error(false));
+        assert!(
+            with_fec < concealed * 0.7,
+            "FEC error {with_fec:.4} vs concealment {concealed:.4}"
+        );
     }
 
     #[test]

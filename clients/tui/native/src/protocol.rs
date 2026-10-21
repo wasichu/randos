@@ -111,6 +111,8 @@ pub struct CallStats {
     pub packets_sent: u64,
     pub packets_received: u64,
     pub concealed: u64,
+    /// Lost frames rebuilt from the next packet's in-band FEC.
+    pub recovered: u64,
     pub dropped: u64,
     pub skipped_candidates: u64,
     /// UDP sends that failed (e.g. to an unreachable candidate); not fatal.

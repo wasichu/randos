@@ -172,6 +172,7 @@ fn handle(
                 role: role.parse()?,
                 bind_ip: bind_ip.map(|ip| ip.parse()).transpose()?,
                 relay_only: false,
+                loss_every: 0,
             };
             let (running, started) =
                 Call::start(config, input.parse()?, out.parse()?, Arc::clone(notify))?;

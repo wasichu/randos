@@ -18,7 +18,7 @@ use std::time::{Duration, Instant};
 use cpal::Stream;
 use serde_json::{Value, json};
 use str0m::change::{SdpAnswer, SdpOffer, SdpPendingOffer};
-use str0m::media::{Direction, Frequency, MediaKind, MediaTime, Mid, Pt};
+use str0m::media::{Direction, Frequency, MediaData, MediaKind, MediaTime, Mid, Pt};
 use str0m::net::{Protocol, Receive};
 use str0m::{
     Candidate, Event as RtcEvent, IceConnectionState, Input as RtcInput, Output as RtcOutput, Rtc,
@@ -67,6 +67,9 @@ pub struct CallConfig {
     /// `iceTransportPolicy: "relay"`, so every packet goes through TURN.
     /// Not in the Port protocol: tests use it to prove the relay path.
     pub relay_only: bool,
+    /// Drop every Nth incoming RTP packet once connected (0: none), to test
+    /// loss handling. Not in the Port protocol.
+    pub loss_every: u32,
 }
 
 /// A signal from the peer, as the participant channel delivers it.
@@ -178,11 +181,16 @@ struct Session {
     buf: Vec<u8>,
     ice_servers: Value,
     relay_only: bool,
+    /// `CallConfig::loss_every`, and the RTP packets counted toward it.
+    loss_every: u32,
+    rtp_seen: u32,
     /// Server-reflexive and relayed candidates, and the datagram routing
     /// they need (set up in `run`).
     candidates: Candidates,
     /// Sending silence instead of the mic (`Call::mute`).
     muted: bool,
+    /// The last RTP sequence number decoded, to size gaps.
+    last_seq: Option<u64>,
 }
 
 impl Session {
@@ -233,8 +241,11 @@ impl Session {
             buf: vec![0; 2000],
             ice_servers: config.ice_servers.clone(),
             relay_only: config.relay_only,
+            loss_every: config.loss_every,
+            rtp_seen: 0,
             candidates: Candidates::new(local, Vec::new(), None),
             muted: false,
+            last_seq: None,
         })
     }
 
@@ -414,6 +425,9 @@ impl Session {
                     } => return self.handle_datagram(source, destination, &data),
                     Inbound::Direct => {}
                 }
+                if self.drops_for_test() {
+                    return Ok(());
+                }
                 RtcInput::Receive(
                     Instant::now(),
                     Receive {
@@ -511,11 +525,19 @@ impl Session {
             }
             RtcEvent::MediaData(data) => {
                 let mut frame = [0.0; FRAME];
-                if !data.contiguous {
-                    // A gap before this packet: conceal one frame.
+                let missing = self.missing_before(&data);
+                // Packets lost just before this one: concealment for all but
+                // the last (capped: a long synthetic fill sounds worse than a
+                // gap), then the last rebuilt from this packet's FEC data.
+                for _ in 0..missing.saturating_sub(1).min(MAX_CONCEALED) {
                     self.decoder.conceal(&mut frame)?;
                     self.playback.write(&frame)?;
                     self.report.concealed += 1;
+                }
+                if missing > 0 {
+                    self.decoder.recover(&data.data, &mut frame)?;
+                    self.playback.write(&frame)?;
+                    self.report.recovered += 1;
                 }
                 self.decoder.decode(&data.data, &mut frame)?;
                 self.report.received(&frame);
@@ -526,6 +548,33 @@ impl Session {
             _ => {}
         }
         Ok(())
+    }
+
+    /// `loss_every`: whether to drop the datagram just read (RTP only, once
+    /// connected, so ICE and DTLS are never disturbed).
+    fn drops_for_test(&mut self) -> bool {
+        // RTP version 2, and not RTCP (payload types 72-76 with the marker).
+        let rtp = self.buf.len() > 12
+            && self.buf[0] & 0xC0 == 0x80
+            && !(72..=76).contains(&(self.buf[1] & 0x7F));
+        if self.loss_every == 0 || !self.connected || !rtp {
+            return false;
+        }
+        self.rtp_seen += 1;
+        self.rtp_seen.is_multiple_of(self.loss_every)
+    }
+
+    /// How many packets went missing just before `data`, from the RTP
+    /// sequence numbers (str0m's own `contiguous` flag only says whether).
+    fn missing_before(&mut self, data: &MediaData) -> u64 {
+        let first = **data.seq_range.start();
+        let missing = match self.last_seq {
+            Some(last) if first > last + 1 => first - last - 1,
+            Some(_) => 0,
+            None => u64::from(!data.contiguous),
+        };
+        self.last_seq = Some(**data.seq_range.end());
+        missing
     }
 
     /// Sends due STUN and TURN messages, adds the relay candidate once it's
@@ -623,6 +672,8 @@ struct Report {
     packets_sent: u64,
     packets_received: u64,
     concealed: u64,
+    /// Lost frames rebuilt from the next packet's FEC data.
+    recovered: u64,
     dropped: u64,
     skipped_candidates: u64,
     send_errors: u64,
@@ -636,6 +687,10 @@ struct Report {
     levels_since: Instant,
 }
 
+/// At most this many frames of concealment for one gap (100 ms); longer
+/// gaps play as silence.
+const MAX_CONCEALED: u64 = 5;
+
 /// How often `call_levels` goes out: the website's visualizer frame rate.
 const LEVELS_EVERY: Duration = Duration::from_millis(50);
 
@@ -646,6 +701,7 @@ impl Report {
             packets_sent: 0,
             packets_received: 0,
             concealed: 0,
+            recovered: 0,
             dropped: 0,
             skipped_candidates: 0,
             send_errors: 0,
@@ -693,6 +749,7 @@ impl Report {
             packets_sent: self.packets_sent,
             packets_received: self.packets_received,
             concealed: self.concealed,
+            recovered: self.recovered,
             dropped: self.dropped,
             skipped_candidates: self.skipped_candidates,
             send_errors: self.send_errors,
@@ -747,6 +804,7 @@ mod tests {
             bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
             ice_servers,
             relay_only: false,
+            loss_every: 0,
         })
     }
 
@@ -789,6 +847,37 @@ mod tests {
             }
             thread::sleep(Duration::from_millis(10));
         }
+    }
+
+    #[test]
+    fn single_lost_packets_are_rebuilt_from_fec_and_the_audio_holds() {
+        let (offerer, offerer_seen) = peer(Role::Offerer);
+        // The answerer loses every 10th packet from the offerer.
+        let (answerer, answerer_seen) = peer_from(CallConfig {
+            role: Role::Answerer,
+            bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+            ice_servers: json!([]),
+            relay_only: false,
+            loss_every: 10,
+        });
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_millis(3_500),
+        );
+
+        let last = answerer_seen.lock().unwrap().stats.last().cloned().unwrap();
+        assert!(last.recovered >= 10, "recovered {} frames", last.recovered);
+        // One-packet gaps need no concealment: FEC rebuilds them all.
+        assert_eq!(last.concealed, 0, "concealed {} frames", last.concealed);
+        assert!(
+            last.output_peak_dbfs > -15.0,
+            "heard {} dBFS",
+            last.output_peak_dbfs
+        );
+
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
     }
 
     #[test]
@@ -996,6 +1085,7 @@ mod tests {
                 bind_ip: None,
                 ice_servers: ice.clone(),
                 relay_only: true,
+                loss_every: 0,
             })
         };
         let (offerer, offerer_seen) = relay_only(Role::Offerer);
