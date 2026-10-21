@@ -34,6 +34,7 @@ defmodule Tui.Media.State do
   @type mic_test :: %{phase: phase(), stats: map() | nil, error: String.t() | nil}
   @type call :: %{
           optional(:levels) => %{you: [float()], peer: [float()]},
+          optional(:muted) => boolean(),
           seq: pos_integer(),
           phase: :starting | :active,
           connection: :connecting | :connected | :disconnected | :failed,
@@ -147,6 +148,17 @@ defmodule Tui.Media.State do
     do: give_up(state, "audio_unavailable")
 
   def reply(state, _command, _result), do: {state, []}
+
+  @doc """
+  Mutes or unmutes the running call (the helper then sends silence; the
+  peer still gets a steady stream). Nothing to do without a call.
+  """
+  def toggle_mute(%{call: %{} = call} = state) do
+    muted = not Map.get(call, :muted, false)
+    {put_call(state, muted: muted), [{:request, {:call_mute, muted}}]}
+  end
+
+  def toggle_mute(state), do: {state, []}
 
   @doc "An unsolicited helper event (`{:media, name, payload}` from `Tui.Media`)."
   @spec event(t(), String.t(), map()) :: {t(), [command()]}

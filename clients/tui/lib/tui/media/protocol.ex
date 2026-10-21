@@ -16,6 +16,7 @@ defmodule Tui.Media.Protocol do
           | {:call_start, role :: String.t(), ice_servers :: list() | nil, input :: String.t(),
              output :: String.t()}
           | {:call_signal, type :: String.t(), payload :: map()}
+          | {:call_mute, boolean()}
           | :call_stop
   @type incoming ::
           {:reply, id() | nil, {:ok, term()} | {:error, String.t()}}
@@ -43,6 +44,9 @@ defmodule Tui.Media.Protocol do
 
   def encode(id, {:call_signal, type, payload}),
     do: Jason.encode_to_iodata!(%{id: id, cmd: "call_signal", type: type, payload: payload})
+
+  def encode(id, {:call_mute, muted}) when is_boolean(muted),
+    do: Jason.encode_to_iodata!(%{id: id, cmd: "call_mute", muted: muted})
 
   def encode(id, :call_stop), do: Jason.encode_to_iodata!(%{id: id, cmd: "call_stop"})
 

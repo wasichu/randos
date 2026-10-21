@@ -119,6 +119,14 @@ defmodule Tui.App do
     {:noreply, run_media(state, step)}
   end
 
+  def handle_event(
+        %Event.Key{code: "m", kind: "press"},
+        %{model: %{status: status, audio?: true}} = state
+      )
+      when status in [:connecting, :in_call, :extension_pending] do
+    {:noreply, run_media(state, MediaState.toggle_mute(state.media_state))}
+  end
+
   def handle_event(%Event.Key{code: code, kind: "press"}, state) do
     {model, commands} = Model.key(state.model, code)
     {:noreply, apply_model(state, model, commands)}
@@ -367,6 +375,11 @@ defmodule Tui.App do
 
   defp mic_help(%{media_state: %{available?: false}}), do: ""
   defp mic_help(%{model: %{connection: :connected, status: :idle}}), do: "  t mic test"
+
+  defp mic_help(%{model: %{status: status, audio?: true}, media_state: %{call: call}})
+       when status in [:connecting, :in_call, :extension_pending] and is_map(call),
+       do: if(Map.get(call, :muted, false), do: "  m unmute", else: "  m mute")
+
   defp mic_help(_state), do: ""
 
   defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
@@ -405,8 +418,14 @@ defmodule Tui.App do
   # Each returns its versions from most to least detailed; `status_text`
   # shows the first that fits.
   defp connection_line(%{model: %{status: status, audio?: true}} = state)
-       when status in [:connecting, :in_call, :extension_pending],
-       do: call_line(state.media_state)
+       when status in [:connecting, :in_call, :extension_pending] do
+    lines = call_line(state.media_state)
+
+    case state.media_state.call do
+      %{muted: true} -> Enum.map(lines, &("muted · " <> &1)) ++ ["muted"]
+      _call -> lines
+    end
+  end
 
   defp connection_line(%{model: %{status: status}})
        when status in [:connecting, :in_call, :extension_pending],

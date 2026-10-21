@@ -182,6 +182,16 @@ defmodule Tui.Media.StateTest do
                State.event(in_call(), "call_stats", %{"packets_received" => 9})
     end
 
+    test "mute toggles and asks the helper; nothing to do without a call" do
+      {muted, [{:request, {:call_mute, true}}]} = State.toggle_mute(in_call())
+      assert muted.call.muted
+
+      assert {%{call: %{muted: false}}, [{:request, {:call_mute, false}}]} =
+               State.toggle_mute(muted)
+
+      assert State.toggle_mute(State.new(true)) == {State.new(true), []}
+    end
+
     test "meter levels are kept for display, and nothing is sent" do
       levels = %{"you" => [0.5, 0.04], "peer" => [0.2, 0.04]}
 

@@ -77,6 +77,7 @@ pub struct RemoteSignal {
 
 enum Command {
     Remote(RemoteSignal),
+    Mute(bool),
     Stop,
 }
 
@@ -133,6 +134,13 @@ impl Call {
             .map_err(|_| "the call has ended".into())
     }
 
+    /// Mutes or unmutes the mic (silence is sent while muted).
+    pub fn mute(&self, muted: bool) -> Result<(), Error> {
+        self.commands
+            .send(Command::Mute(muted))
+            .map_err(|_| "the call has ended".into())
+    }
+
     /// False once the session has stopped on its own (it reported `failed`).
     pub fn is_running(&self) -> bool {
         !self.worker.is_finished()
@@ -173,6 +181,8 @@ struct Session {
     /// Server-reflexive and relayed candidates, and the datagram routing
     /// they need (set up in `run`).
     candidates: Candidates,
+    /// Sending silence instead of the mic (`Call::mute`).
+    muted: bool,
 }
 
 impl Session {
@@ -224,6 +234,7 @@ impl Session {
             ice_servers: config.ice_servers.clone(),
             relay_only: config.relay_only,
             candidates: Candidates::new(local, Vec::new(), None),
+            muted: false,
         })
     }
 
@@ -245,6 +256,10 @@ impl Session {
                 Ok(Command::Remote(signal)) => {
                     self.apply_remote(signal)?;
                     self.drain()?;
+                    continue;
+                }
+                Ok(Command::Mute(muted)) => {
+                    self.muted = muted;
                     continue;
                 }
                 Ok(Command::Stop) | Err(TryRecvError::Disconnected) => break,
@@ -343,6 +358,10 @@ impl Session {
             // Not connected yet: drop mic audio rather than queue it.
             return Ok(());
         };
+        // Muted: silence goes out instead (and into the meter), so RTP keeps
+        // flowing and the peer doesn't see a stalled stream.
+        let silence = [0.0; FRAME];
+        let frame = if self.muted { &silence } else { frame };
         self.report.sent(frame);
         let Some(writer) = self.rtc.writer(mid) else {
             return Ok(());
@@ -759,6 +778,41 @@ mod tests {
             }
             thread::sleep(Duration::from_millis(10));
         }
+    }
+
+    #[test]
+    fn a_muted_peer_sends_silence_and_rtp_keeps_flowing() {
+        let (offerer, offerer_seen) = peer(Role::Offerer);
+        let (answerer, answerer_seen) = peer(Role::Answerer);
+        let pair = ((&offerer, &*offerer_seen), (&answerer, &*answerer_seen));
+        relay(pair.0, pair.1, Duration::from_millis(2_500));
+        let received_before = answerer_seen
+            .lock()
+            .unwrap()
+            .stats
+            .last()
+            .unwrap()
+            .packets_received;
+
+        offerer.mute(true).unwrap();
+        relay(pair.0, pair.1, Duration::from_millis(2_500));
+
+        let answerer_last = answerer_seen.lock().unwrap().stats.last().cloned().unwrap();
+        assert!(
+            answerer_last.packets_received > received_before + 50,
+            "RTP kept flowing: {received_before} then {}",
+            answerer_last.packets_received
+        );
+        assert!(
+            answerer_last.output_peak_dbfs < -60.0,
+            "the peer heard {} dBFS",
+            answerer_last.output_peak_dbfs
+        );
+        let (you, _) = offerer_seen.lock().unwrap().levels.clone().unwrap();
+        assert!(you.iter().all(|&bar| bar <= 0.05), "muted meter: {you:?}");
+
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
     }
 
     #[test]

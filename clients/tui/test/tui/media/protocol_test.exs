@@ -33,6 +33,8 @@ defmodule Tui.Media.ProtocolTest do
              %{"id" => 6, "cmd" => "call_signal", "type" => "offer", "payload" => payload}
 
     assert encoded(7, :call_stop) == %{"id" => 7, "cmd" => "call_stop"}
+
+    assert encoded(8, {:call_mute, true}) == %{"id" => 8, "cmd" => "call_mute", "muted" => true}
   end
 
   test "decodes replies, errors, and events" do

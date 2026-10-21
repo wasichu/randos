@@ -183,6 +183,11 @@ fn handle(
             call.signal(RemoteSignal { kind, payload })?;
             Ok(true.into())
         }
+        Command::CallMute { muted } => {
+            let call = media.call.as_ref().ok_or("no call running")?;
+            call.mute(muted)?;
+            Ok(true.into())
+        }
         Command::CallStop => {
             media.call.take().map(Call::stop).transpose()?;
             Ok(true.into())

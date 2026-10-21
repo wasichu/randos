@@ -48,6 +48,7 @@ unsolicited and carry `event` instead.
 | `loopback_stop` | | `true` (also when none was running) |
 | `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the call's, from the channel's `state`; `stun:` URLs give server-reflexive candidates, the first UDP `turn:` URL with credentials a relayed one); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address) | `{"input", "output"}` |
 | `call_signal` | `type` and `payload` of a peer's signal, exactly as the channel's `signal` push has them (`offer`, `answer`, `ice_candidate`; others are ignored) | `true` |
+| `call_mute` | `muted` (boolean): send silence instead of the mic, or the mic again. RTP keeps flowing, so the peer sees a quiet call rather than a stalled one, and the `you` meter reads silence; a new call starts unmuted | `true`; `no call running` without a call |
 | `call_stop` | | `true` (also when none was running) |
 
 One loopback or one call at a time (`loopback already running`, `call

@@ -128,6 +128,18 @@ defmodule Tui.AppTest do
 
       audio = %{model("in_call") | audio?: true}
       assert render_text(audio) =~ "Connection: starting audio…"
+
+      assert render_text(audio, %{
+               media_state: %{
+                 MediaState.new(true)
+                 | call: %{connection: :connecting, muted: false}
+               }
+             }) =~ "m mute"
+
+      muted = %{MediaState.new(true) | call: %{connection: :connecting, muted: true}}
+      text = render_text(audio, %{media_state: muted})
+      assert text =~ "Connection: muted · connecting…"
+      assert text =~ "m unmute"
     end
 
     test "in a call the meters show both sides' bars, mirrored like the website" do
