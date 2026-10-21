@@ -29,6 +29,7 @@ defmodule RandosWeb.Router do
     live_session :default, on_mount: RandosWeb.Locale do
       live "/", HomeLive, :home
       live "/about", AboutLive, :about
+      live "/status", StatusLive, :status
     end
   end
 

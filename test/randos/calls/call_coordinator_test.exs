@@ -291,6 +291,28 @@ defmodule Randos.Calls.CallCoordinatorTest do
       Enum.each(pids, &send(&1, :stop))
     end
 
+    test "a call that connected reports its connected length when it ends" do
+      ref = make_ref()
+      test_pid = self()
+
+      :telemetry.attach(
+        "#{inspect(ref)}",
+        [:randos, :call, :stop],
+        fn _event, measurements, _metadata, _ -> send(test_pid, {ref, measurements}) end,
+        nil
+      )
+
+      on_exit(fn -> :telemetry.detach("#{inspect(ref)}") end)
+
+      {call_pid, pids} = start_audio_call()
+      connect_both(call_pid)
+      :ok = CallCoordinator.hang_up(call_pid, "a")
+
+      assert_receive {^ref, %{connected: connected}}
+      assert is_integer(connected)
+      Enum.each(pids, &send(&1, :stop))
+    end
+
     test "never connecting ends the call after the connect timeout" do
       {call_pid, pids} = start_audio_call()
       ref = Process.monitor(call_pid)
@@ -417,15 +439,22 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
     {match, _pids} = match()
     call_pid = start_call(match)
-    assert_receive {^ref, [:randos, :call, :start], _, %{call_id: call_id}}
+    # The two speaking languages, sorted (for Randos.Stats' aggregate counts).
+    assert_receive {^ref, [:randos, :call, :start], _, %{call_id: call_id, languages: languages}}
+
+    assert languages ==
+             Enum.sort([match.participant_a.speaks_language, match.participant_b.speaks_language])
+
     assert_receive {:call_updated, %{status: :active}}
 
     :ok = CallCoordinator.hang_up(call_pid, "a")
 
-    assert_receive {^ref, [:randos, :call, :stop], %{duration: duration},
+    assert_receive {^ref, [:randos, :call, :stop], %{duration: duration, connected: connected},
                     %{call_id: ^call_id, reason: :hangup}}
 
     assert duration > 0
+    # It was active, so its connected length is known (and shorter).
+    assert is_integer(connected) and connected <= duration
   end
 
   describe "lifecycle under the call supervisor" do
