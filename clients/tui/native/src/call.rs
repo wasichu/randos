@@ -74,6 +74,20 @@ pub struct CallConfig {
     pub loss_every: u32,
 }
 
+impl CallConfig {
+    /// A call in `role` with nothing else set: the default route, no ICE
+    /// servers, and none of the test-only options.
+    pub fn new(role: Role) -> Self {
+        Self {
+            role,
+            bind_ip: None,
+            ice_servers: Value::Array(Vec::new()),
+            relay_only: false,
+            loss_every: 0,
+        }
+    }
+}
+
 /// A signal from the peer, as the participant channel delivers it.
 pub struct RemoteSignal {
     pub kind: String,
@@ -961,11 +975,9 @@ mod tests {
 
     fn peer_with(role: Role, ice_servers: Value) -> (Call, Arc<Mutex<Seen>>) {
         peer_from(CallConfig {
-            role,
             bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
             ice_servers,
-            relay_only: false,
-            loss_every: 0,
+            ..CallConfig::new(role)
         })
     }
 
@@ -1015,11 +1027,9 @@ mod tests {
         let (offerer, offerer_seen) = peer(Role::Offerer);
         // The answerer loses every 10th packet from the offerer.
         let (answerer, answerer_seen) = peer_from(CallConfig {
-            role: Role::Answerer,
             bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
-            ice_servers: json!([]),
-            relay_only: false,
             loss_every: 10,
+            ..CallConfig::new(Role::Answerer)
         });
         relay(
             (&offerer, &offerer_seen),
@@ -1241,11 +1251,9 @@ mod tests {
         }]);
         let relay_only = |role| {
             peer_from(CallConfig {
-                role,
-                bind_ip: None,
                 ice_servers: ice.clone(),
                 relay_only: true,
-                loss_every: 0,
+                ..CallConfig::new(role)
             })
         };
         let (offerer, offerer_seen) = relay_only(Role::Offerer);
@@ -1295,11 +1303,9 @@ mod tests {
         // The default route's address: coturn must be reachable.
         let relay_only = |role| {
             peer_from(CallConfig {
-                role,
-                bind_ip: None,
                 ice_servers: ice.clone(),
                 relay_only: true,
-                loss_every: 0,
+                ..CallConfig::new(role)
             })
         };
         let (offerer, offerer_seen) = relay_only(Role::Offerer);

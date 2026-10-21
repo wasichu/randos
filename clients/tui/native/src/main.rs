@@ -171,10 +171,8 @@ fn handle(
             media.ensure_idle()?;
             let config = CallConfig {
                 ice_servers,
-                role: role.parse()?,
                 bind_ip: bind_ip.map(|ip| ip.parse()).transpose()?,
-                relay_only: false,
-                loss_every: 0,
+                ..CallConfig::new(role.parse()?)
             };
             let (running, started) =
                 Call::start(config, input.parse()?, out.parse()?, Arc::clone(notify))?;

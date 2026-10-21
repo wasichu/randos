@@ -148,6 +148,13 @@ fn tls_config() -> Result<Arc<ClientConfig>, Error> {
     Ok(Arc::clone(CONFIG.get_or_init(|| Arc::new(config))))
 }
 
+fn turn_config(credentials: &TurnServer) -> TurnConfig {
+    TurnConfig::new(TurnCredentials::new(
+        &credentials.username,
+        &credentials.credential,
+    ))
+}
+
 /// The most TLS bytes handed to the client at once (see `Relay::recv`).
 const TLS_FEED: usize = 1024;
 
@@ -170,20 +177,8 @@ pub struct Relay {
 
 impl Relay {
     pub fn allocate(local: SocketAddr, server: SocketAddr, credentials: &TurnServer) -> Self {
-        let config = TurnConfig::new(TurnCredentials::new(
-            &credentials.username,
-            &credentials.credential,
-        ));
-        Self {
-            client: TurnClient::Udp(TurnClientUdp::allocate(local, server, config)),
-            transport: TransportType::Udp,
-            server,
-            local,
-            base: StdInstant::now(),
-            relayed: None,
-            challenge: None,
-            refused: false,
-        }
+        let client = TurnClientUdp::allocate(local, server, turn_config(credentials));
+        Self::with_client(TurnClient::Udp(client), TransportType::Udp, local, server)
     }
 
     /// A relay over TLS (`turns:`): `local` is the TCP stream's own address,
@@ -193,23 +188,34 @@ impl Relay {
         server: SocketAddr,
         credentials: &TurnServer,
     ) -> Result<Self, Error> {
-        let config = TurnConfig::new(TurnCredentials::new(
-            &credentials.username,
-            &credentials.credential,
-        ));
         let name = ServerName::try_from(credentials.name().to_owned())
             .map_err(|err| format!("TURN server name: {err}"))?;
+        let config = turn_config(credentials);
         let client = TurnClientRustls::allocate(local, server, config, name, tls_config()?);
-        Ok(Self {
-            client: TurnClient::Tls(client),
-            transport: TransportType::Tcp,
+        Ok(Self::with_client(
+            TurnClient::Tls(client),
+            TransportType::Tcp,
+            local,
+            server,
+        ))
+    }
+
+    fn with_client(
+        client: TurnClient,
+        transport: TransportType,
+        local: SocketAddr,
+        server: SocketAddr,
+    ) -> Self {
+        Self {
+            client,
+            transport,
             server,
             local,
             base: StdInstant::now(),
             relayed: None,
             challenge: None,
             refused: false,
-        })
+        }
     }
 
     fn now(&self) -> TurnInstant {

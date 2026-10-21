@@ -14,7 +14,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   # Text-only by default: those calls activate on a short delay, which is
   # what the timer tests need. Media tests pass `audio?: true`.
-  defp participant(id, pid, speaks_language, listens_language, audio? \\ false) do
+  defp participant(id, pid, speaks_language, listens_language, audio?) do
     %Entry{
       audio?: audio?,
       id: id,
