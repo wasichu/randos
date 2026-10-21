@@ -749,6 +749,12 @@ All 2026-10-19 unless noted.
   Measured from Houston: about 50 ms each way to the NYC relay. When users
   far from New York appear, add relay regions: see "Relay regions" in the
   open items.
+- **Public /status (done 2026-10-21):** relay health (UDP and TLS
+  allocation every 5 minutes) and today's aggregate counts, cluster-wide
+  (counters summed over nodes, then filtered). Open: persisting daily
+  totals (the `:store` seam, on the approved volume), the TUI status
+  screen (a channel request returning `RandosWeb.Status.snapshot/0`;
+  protocol mini-pass), and a status link outside About.
 - **A 1 GB Fly volume for aggregate stats (2026-10-21).** The owner
   approved it (about $0.15 a month) to keep the status page's daily totals
   across sleeps and deploys, keeping costs low: auto-stop stays on. It holds

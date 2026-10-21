@@ -40,6 +40,17 @@ something can't be checked from the outside, this says so.
   ([`config/prod.exs`](../config/prod.exs)). Phoenix's request logs
   include no client addresses. We checked production's logs on
   2026-10-21: no line contained an IP address.
+- **The status page** (`/status`): counted in the server's memory only,
+  for the current UTC day (reset at midnight and whenever the server
+  restarts): calls started and connected, how they ended (finished,
+  couldn't connect, connection lost, canceled), calls continued past 10
+  minutes, connected lengths in whole minutes (for the typical length),
+  and calls per language pair (the two speaking languages, unordered). No
+  addresses, no ids, nothing per person, no cookies. Published only above
+  small counts: a language pair shows once it has 3 calls (smaller ones are
+  summed under "other"), and the typical length once 3 calls connected.
+  The relay check sets up and releases a test allocation with fresh
+  credentials; it involves no one's call.
 - **What it briefly remembers:** after a call, the server remembers for 90
   seconds that the two of you just talked (by the anonymous ids of that
   visit only), so "Next" finds someone new. A call that never connected
