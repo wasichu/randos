@@ -14,7 +14,10 @@ cd clients/tui && mix tui --url wss://randos.slowinput.org/participant/websocket
 mix tui --check               # is the audio helper there and working?
 ```
 
-Keys are shown at the bottom of the screen; `q` quits. Logs go to
+Keys are shown at the bottom of the screen; `q` quits.
+`RANDOS_FAKE_AUDIO=1` swaps the mic for a test tone and the speaker for
+nothing (for screenshots and demos, `just screenshots`; your rando would
+hear a beep). Logs go to
 `tmp/tui.log` (an installed copy: `~/.cache/randos/tui.log` on Linux,
 `~/Library/Caches/randos/tui.log` on macOS).
 

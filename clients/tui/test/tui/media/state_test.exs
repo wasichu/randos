@@ -69,6 +69,10 @@ defmodule Tui.Media.StateTest do
     idle = State.new(true)
     # A fresh helper: ask what devices there are.
     assert State.event(idle, "ready", %{}) == {idle, [{:request, :devices}]}
+    # With test endpoints (a tone, no output), there are no devices to choose.
+    test_tone = State.new(true, {"sine", "null"})
+    assert State.event(test_tone, "ready", %{}) == {test_tone, []}
+    assert State.helper_started(test_tone) == {test_tone, []}
     assert State.event(idle, "loopback_stats", %{}) == {idle, []}
     assert State.reply(idle, :loopback_stop, {:ok, true}) == {idle, []}
     assert State.mic_test_done(idle) == {idle, []}
@@ -166,8 +170,7 @@ defmodule Tui.Media.StateTest do
       assert {%{call: nil},
               [
                 {:request, :call_stop},
-                {:push, "end_call", %{reason: "audio_failed"}},
-                {:request, :devices}
+                {:push, "end_call", %{reason: "audio_failed"}}
               ]} = State.event(in_call(), "ready", %{})
     end
 

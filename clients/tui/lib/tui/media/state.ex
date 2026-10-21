@@ -238,7 +238,7 @@ defmodule Tui.Media.State do
 
     # Ask what devices there are (they may have changed with the restart).
     {state, commands} = if state.call, do: give_up(state, "audio_failed"), else: {state, []}
-    {state, commands ++ [{:request, :devices}]}
+    {state, commands ++ device_request(state)}
   end
 
   def event(state, _name, _payload), do: {state, []}
@@ -248,8 +248,16 @@ defmodule Tui.Media.State do
   sent before the app could receive it): ask what devices there are.
   """
   @spec helper_started(t()) :: {t(), [command()]}
-  def helper_started(%{available?: true} = state), do: {state, [{:request, :devices}]}
+  def helper_started(%{available?: true} = state), do: {state, device_request(state)}
   def helper_started(state), do: {state, []}
+
+  # Devices matter only when calls use them: with test endpoints (a tone,
+  # no output) there's nothing to choose, and listing them would put the
+  # machine's device names on screen (`RANDOS_FAKE_AUDIO`'s screenshots).
+  defp device_request(%{endpoints: {input, output}}) when "device" in [input, output],
+    do: [{:request, :devices}]
+
+  defp device_request(_state), do: []
 
   ## Internals
 

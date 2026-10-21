@@ -74,7 +74,7 @@ defmodule Tui.CLI do
     # terminal would draw over the TUI until the next redraw.
     log_to_file(log_path())
 
-    {:ok, supervisor} = Tui.Supervisor.start_link(uri: url)
+    {:ok, supervisor} = Tui.Supervisor.start_link(uri: url, app: fake_audio())
     app = Process.whereis(Tui.App)
     ref = Process.monitor(app)
 
@@ -85,6 +85,15 @@ defmodule Tui.CLI do
     end
 
     0
+  end
+
+  # RANDOS_FAKE_AUDIO=1: a synthetic tone for the mic and no sound out, for
+  # screenshots and demos (`just screenshots`): nothing touches a real mic or
+  # speaker. Not for calls with people: they'd hear a beep.
+  defp fake_audio do
+    if System.get_env("RANDOS_FAKE_AUDIO") == "1",
+      do: [call_audio: {"sine", "null"}, mic_test: {"sine", "null"}],
+      else: []
   end
 
   defp default_url, do: Application.fetch_env!(:tui, :default_url)

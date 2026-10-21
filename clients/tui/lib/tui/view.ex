@@ -172,9 +172,21 @@ defmodule Tui.View do
 
     %Paragraph{
       text:
-        "#{if model.audio?, do: "Audio on", else: "Text only (no audio helper)"}.  #{connection} to #{uri}",
+        "#{if model.audio?, do: "Audio on", else: "Text only (no audio helper)"}.  #{connection} to #{server_name(uri)}",
       block: panel(" randos ")
     }
+  end
+
+  # The server's host (and port, if not the scheme's default): the
+  # websocket path is noise to a person.
+  defp server_name(uri) do
+    case URI.parse(uri) do
+      %URI{host: host, port: port, scheme: scheme} when is_binary(host) ->
+        if port == URI.default_port(scheme || ""), do: host, else: "#{host}:#{port}"
+
+      _not_a_url ->
+        uri
+    end
   end
 
   defp title(%{connection: :connecting}), do: " Connecting "

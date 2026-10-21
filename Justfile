@@ -175,6 +175,13 @@ tui-release:
     rm -rf "$check"
     echo "dist/${name}.tar.gz"
 
+# Regenerate the README's screenshots (docs/assets/) from a real call on a
+# throwaway server; needs Chrome and vhs (brew install vhs)
+screenshots:
+    cargo build --quiet -p randos_media
+    cd clients/tui && mix compile
+    BASE_URL=http://localhost:4010 RANDOS_CALL_SEGMENT_MS=600000 test/e2e/with_test_server.sh tmp/screenshots-server.log node tools/screenshots/screenshots.mjs
+
 # The Homebrew formula for VERSION, from the GitHub release's checksums
 # (packaging/homebrew/README.md); --local uses dist/ instead
 homebrew-formula version *flags:
