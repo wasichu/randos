@@ -175,6 +175,11 @@ tui-release:
     rm -rf "$check"
     echo "dist/${name}.tar.gz"
 
+# The Homebrew formula for VERSION, from the GitHub release's checksums
+# (packaging/homebrew/README.md); --local uses dist/ instead
+homebrew-formula version *flags:
+    @packaging/homebrew/render.sh {{version}} {{flags}}
+
 # The helper against the real coturn: allocations, relayed data, and a whole
 # relay-only call. Derives short-lived TURN REST credentials from the shared
 # secret (via `just tofu`, so the Keychain passphrase) without printing it

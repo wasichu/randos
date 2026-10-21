@@ -186,7 +186,15 @@ Erlang's crypto has OpenSSL built in); Linux is checked in CI.
 GitHub release; run by hand it only builds artifacts. No tag has been
 pushed: releasing is the owner's call.
 
-### 4.5 Homebrew (custom tap)
+### 4.5 Homebrew (custom tap) (ready up to the tap repo, 2026-10-21)
+
+**Built:** `packaging/homebrew/` (the formula template, `render.sh`, and the
+owner's remaining steps). The rendered formula installs and passes
+`brew test` through a local tap pointed at a locally built archive. Left
+for the owner: a LICENSE (the repo has none), the `wasichu/homebrew-randos`
+repository, the first `v*` tag, and publishing the rendered formula there
+(`just homebrew-formula VERSION`); automating that last step needs a token
+for the tap repo. The plan below stands.
 
 Goal: `brew install wasichu/randos/randos`, then `randos` just works. Far
 off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
