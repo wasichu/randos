@@ -13,6 +13,6 @@ export const callCountdownValue = ({deadlineUnixMs, now = Date.now()}) => {
   return {
     totalSeconds,
     underMinute: totalSeconds < 60,
-    label: `${minutes}:${seconds.toString().padStart(2, "0")} remaining`,
+    time: `${minutes}:${seconds.toString().padStart(2, "0")}`,
   }
 }

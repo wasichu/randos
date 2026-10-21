@@ -43,18 +43,14 @@ defmodule RandosWeb.AboutLive do
                 )}
               </p>
               <p>
-                {gettext("It is meant for")}
-                <a
+                {elem(meant_for(), 0)}<a
                   href="https://www.dreaming.com/blog-posts/crosstalk"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
                 >
                   {gettext("crosstalk")}
-                </a>
-                {gettext(
-                  ", language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels."
-                )}
+                </a>{elem(meant_for(), 1)}
               </p>
             </section>
 
@@ -93,6 +89,27 @@ defmodule RandosWeb.AboutLive do
               </p>
             </section>
 
+            <section id="about-translations" class="space-y-3">
+              <h2 class="text-xl font-semibold tracking-normal text-stone-950">
+                {gettext("Translations")}
+              </h2>
+              <p>
+                {gettext(
+                  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: each language is one file you can edit on GitHub, or open an issue there."
+                )}
+              </p>
+              <a
+                id="fix-translation-link"
+                href="https://github.com/wasichu/randos/tree/main/priv/gettext"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
+              >
+                <.icon name="hero-language" class="size-4" />
+                {gettext("Help fix a translation")}
+              </a>
+            </section>
+
             <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
               <p class="text-stone-500">
                 {gettext("randos is free software (AGPL-3.0) and built in public.")}
@@ -112,5 +129,27 @@ defmodule RandosWeb.AboutLive do
       </div>
     </Layouts.app>
     """
+  end
+
+  # One sentence for translators, with the link's place marked: the text
+  # around %{crosstalk} goes on either side of the link. (Never rendered as
+  # HTML: translations are plain text.)
+  @link_mark "\u{E000}"
+  defp meant_for do
+    gettext_comment(
+      "%{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it."
+    )
+
+    text =
+      gettext(
+        "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.",
+        crosstalk: @link_mark
+      )
+
+    case String.split(text, @link_mark, parts: 2) do
+      [before, rest] -> {before, rest}
+      # A translation that lost the mark: the sentence, then the link.
+      [whole] -> {whole <> " ", ""}
+    end
   end
 end

@@ -13,7 +13,10 @@ defmodule Randos.MixProject do
       usage_rules: usage_rules(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
       listeners: [Phoenix.CodeReloader],
-      consolidate_protocols: Mix.env() != :dev
+      consolidate_protocols: Mix.env() != :dev,
+      # Translation files name the file a string is in, not the line, so
+      # moving code doesn't churn every .po file (or fail precommit's check).
+      gettext: [write_reference_line_numbers: false]
     ]
   end
 
@@ -119,6 +122,8 @@ defmodule Randos.MixProject do
       ],
       precommit: [
         "compile --warnings-as-errors",
+        # The translation template must match the code (mix gettext.extract --merge).
+        "gettext.extract --check-up-to-date",
         "deps.unlock --unused",
         "format",
         "credo --strict",

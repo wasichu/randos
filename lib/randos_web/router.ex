@@ -8,6 +8,7 @@ defmodule RandosWeb.Router do
     plug :put_root_layout, html: {RandosWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug RandosWeb.Locale
   end
 
   pipeline :api do
@@ -17,8 +18,14 @@ defmodule RandosWeb.Router do
   scope "/", RandosWeb do
     pipe_through :browser
 
-    live "/", HomeLive, :home
-    live "/about", AboutLive, :about
+    live_session :default, on_mount: RandosWeb.Locale do
+      live "/", HomeLive, :home
+      live "/about", AboutLive, :about
+    end
+
+    # The language switcher: a plain link (works without JavaScript); it
+    # only remembers the choice and goes back.
+    get "/locale/:locale", LocaleController, :update
   end
 
   # Other scopes may use custom stacks.
