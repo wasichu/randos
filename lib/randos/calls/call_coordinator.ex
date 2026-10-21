@@ -37,6 +37,7 @@ defmodule Randos.Calls.CallCoordinator do
 
   @overridable [
     :pubsub,
+    :ice_transport_policy,
     :activation_delay_ms,
     :connect_timeout_ms,
     :disconnected_grace_ms,
@@ -51,6 +52,7 @@ defmodule Randos.Calls.CallCoordinator do
     pubsub: Randos.PubSub,
     extension_votes: %{},
     monitors: %{},
+    ice_transport_policy: "all",
     activation_delay_ms: 750,
     connect_timeout_ms: Lifecycle.connect_timeout_seconds() * 1_000,
     disconnected_grace_ms: Lifecycle.disconnected_grace_seconds() * 1_000,
@@ -118,7 +120,7 @@ defmodule Randos.Calls.CallCoordinator do
     data =
       struct!(__MODULE__, Keyword.take(opts, @overridable))
       |> Map.merge(%{
-        call: Call.new(self(), match),
+        call: Call.new(self(), match, data_policy(opts)),
         monitors: monitor_participants(match),
         started_at: System.monotonic_time()
       })
@@ -248,8 +250,17 @@ defmodule Randos.Calls.CallCoordinator do
   ## Helpers
 
   defp handle_signal(:relay, message, from, _state, data) do
-    Logger.debug("call signal relayed", status: message.type)
-    relay_signal_to_peer(data, message)
+    case enforce_policy(data.call, message) do
+      {:ok, message} ->
+        Logger.debug("call signal relayed", status: message.type)
+        relay_signal_to_peer(data, message)
+
+      # A direct candidate in a relay-only call: the peer must never see it.
+      # The sender isn't told (an older client would only retry).
+      :drop ->
+        Logger.debug("call signal dropped (relay-only)", status: message.type)
+    end
+
     {:keep_state_and_data, [{:reply, from, :ok}]}
   end
 
@@ -355,6 +366,15 @@ defmodule Randos.Calls.CallCoordinator do
     Phoenix.PubSub.broadcast(data.pubsub, match.participant_a.topic, {:call_updated, call})
     Phoenix.PubSub.broadcast(data.pubsub, match.participant_b.topic, {:call_updated, call})
   end
+
+  defp enforce_policy(%Call{ice_transport_policy: "relay"}, message) do
+    with {:ok, payload} <- Signaling.relay_only(message.type, message.payload),
+         do: {:ok, %{message | payload: payload}}
+  end
+
+  defp enforce_policy(_call, message), do: {:ok, message}
+
+  defp data_policy(opts), do: Keyword.get(opts, :ice_transport_policy, "all")
 
   defp relay_signal_to_peer(data, message) do
     {:ok, peer} = Match.peer(data.call.match, message.from_participant_id)

@@ -8,14 +8,18 @@ defmodule Randos.Application do
   @impl true
   def start(_type, _args) do
     :ok = RandosWeb.IceServers.check!()
+    # Every call's policy, on the call itself: what clients are told and what
+    # the coordinator enforces are the same value.
+    call_options =
+      Application.get_env(:randos, :call_options, [])
+      |> Keyword.put_new(:ice_transport_policy, RandosWeb.IceServers.transport_policy())
 
     children = [
       RandosWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:randos, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Randos.PubSub},
       {DynamicSupervisor, strategy: :one_for_one, name: Randos.Calls.CallSupervisor},
-      {Randos.Matchmaking.Matchmaker,
-       call_options: Application.get_env(:randos, :call_options, [])},
+      {Randos.Matchmaking.Matchmaker, call_options: call_options},
       # Start to serve requests, typically the last entry
       RandosWeb.Endpoint
     ]

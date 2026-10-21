@@ -64,6 +64,10 @@ through the relay) and the relay's bandwidth (about 40 kbit/s each way per
 call). `RANDOS_ALLOW_DIRECT_CALLS=true` allows direct calls instead, with
 the relay as the fallback for people who can't reach each other directly.
 
+The server enforces this as well as asking the clients: in a relay-only
+call it removes direct addresses from the connection messages it relays,
+so even an outdated client can't reveal its owner's address.
+
 **Production refuses to start without a TURN server** unless direct calls
 are allowed, so a configuration mistake can't quietly expose addresses.
 Development and the tests run without one, with direct calls. If the relay

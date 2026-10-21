@@ -39,15 +39,13 @@ defmodule RandosWeb.IceServers do
   end
 
   @doc """
-  A call's ICE configuration: its servers (fresh TURN credentials) and its
-  `ice_transport_policy`, WebRTC's own values: `"relay"` (only the TURN
-  relay, never a direct connection) or `"all"` (direct when possible).
+  The calls' `ice_transport_policy`, WebRTC's own values: `"relay"` (only
+  the TURN relay, never a direct connection) or `"all"` (direct when
+  possible). Set on every call at boot (`Randos.Application`), so clients
+  read it from the call.
   """
-  @spec call_config() :: %{ice_servers: [map()], ice_transport_policy: String.t()}
-  def call_config do
-    servers = list()
-    %{ice_servers: servers, ice_transport_policy: transport_policy(servers)}
-  end
+  @spec transport_policy() :: String.t()
+  def transport_policy, do: transport_policy(list())
 
   @doc """
   The policy for `servers`: `"relay"` when there's a TURN server among them
@@ -68,7 +66,7 @@ defmodule RandosWeb.IceServers do
   """
   @spec check!() :: :ok
   def check! do
-    if Application.get_env(:randos, :require_relay, false) and transport_policy(list()) != "relay" do
+    if Application.get_env(:randos, :require_relay, false) and transport_policy() != "relay" do
       raise """
       no TURN server is configured, so calls would be direct and show each
       person's IP address to the other. Set TURN_SHARED_SECRET and TURN_HOST

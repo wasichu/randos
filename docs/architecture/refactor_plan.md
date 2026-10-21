@@ -617,9 +617,13 @@ All 2026-10-19 unless noted.
   relay as the fallback. Production refuses to boot without a relay unless
   direct calls are allowed (`RandosWeb.IceServers.check!/0`). If latency
   from far away is the problem, the fix is more relay regions, not direct
-  calls. Open: v0.1.0 TUIs ignore the policy (their own address still
-  reaches the peer) until a new release; and the server could enforce the
-  policy itself by dropping non-relay candidates from relayed signaling.
+  calls. The server enforces it too (`Randos.Signaling.relay_only/2`):
+  it drops direct candidates from relayed signals and blanks the addresses
+  a relay candidate or SDP could carry, so a v0.1.0 TUI (which ignores the
+  policy) can't leak its owner's address; the TUI honours it from v0.2.0.
+  Measured from Houston: about 50 ms each way to the NYC relay. When users
+  far from New York appear, add relay regions (Europe, then Asia) and hand
+  each call the one nearest its two people.
 - **License (2026-10-21): AGPL-3.0-or-later.** The owner would mind someone
   running a closed, modified randos; the AGPL's network clause means anyone
   who runs a modified copy for others must offer them its source. The site's

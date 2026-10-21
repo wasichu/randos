@@ -159,7 +159,7 @@ end-to-end tests check these, by number, for both clients
 | 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
 | 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
-| 8: relay-only means relay only | `relay_only_smoke.mjs` | TUI ↔ TUI: `relay_only_test.exs` |
+| 8: relay-only means relay only | `relay_only_smoke.mjs` (and a page that ignores the policy, which the server's filter must stop) | TUI ↔ TUI: `relay_only_test.exs` |
 
 (Obligation 8's tests run against a server whose only TURN server never
 answers, `RANDOS_TEST_UNREACHABLE_RELAY=1`, so a call can connect only by
@@ -203,6 +203,15 @@ going direct: `just smoke` and `just tui-smoke` run them.)
    server ends it at the connect timeout; never fall back to direct. A
    missing policy (an older server) means `"all"`.
 
+   **The server enforces it too** (`Randos.Signaling.relay_only/2`): in a
+   relay-only call it drops every non-relay candidate it's asked to relay,
+   in `ice_candidate` signals and in SDP, and blanks the addresses a relay
+   candidate or SDP could still carry (`raddr`/`rport`, and the `c=`,
+   `a=rtcp:` and `o=` lines). Nothing else in a message changes: DTLS
+   fingerprints, ICE credentials and codecs stay byte for byte as sent (a
+   test checks). So an older or broken client can't reveal its owner's
+   address; a client following this obligation loses nothing.
+
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media
 reports. If one still receives an `offer`, it must answer with `end_call`
@@ -211,7 +220,9 @@ call with this client stopping, so only the peer is requeued; any other
 ending requeues both participants, and two incompatible clients would
 rematch in a loop.
 
-Signal types: `offer`, `answer`, `ice_candidate` (relayed to the peer as-is;
+Signal types: `offer`, `answer`, `ice_candidate` (relayed to the peer as-is,
+except in relay-only calls, where the server removes direct addresses: see
+obligation 8;
 the server never touches media), `media_state` (validated and acted on;
 `invalid_media_state` if malformed), and `peer_disconnected`.
 `connection_established` / `connection_failed` are older spellings of

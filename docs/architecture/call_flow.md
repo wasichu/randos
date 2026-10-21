@@ -32,9 +32,9 @@ sequenceDiagram
 
     Note over A,B: Obligation 1: start media at the match
     A->>S: signal offer
-    S->>B: offer (relayed as-is)
+    S->>B: offer (relayed; relay-only calls: direct addresses removed)
     B->>S: signal answer
-    S->>A: answer (relayed as-is)
+    S->>A: answer (relayed; relay-only calls: direct addresses removed)
     A-)S: signal ice_candidate (trickle)
     S-)B: ice_candidate
     B-)S: signal ice_candidate

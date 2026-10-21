@@ -106,8 +106,10 @@ export class Browser {
   // participant_channel.md): `getUserMediaError` makes the mic prompt reject
   // with that DOMException name (e.g. "NotAllowedError" = denied);
   // `relayOnly` forces relay-only ICE and drops the ICE servers, so this page
-  // can never connect, with or without TURN.
-  async newPage(name, {getUserMediaDelayMs = 0, getUserMediaError = null, relayOnly = false} = {}) {
+  // can never connect, with or without TURN. `ignoreRelayPolicy` plays an
+  // older or disobedient client: it ignores a relay-only call's policy and
+  // offers its direct addresses (the server must keep them from the peer).
+  async newPage(name, {getUserMediaDelayMs = 0, getUserMediaError = null, relayOnly = false, ignoreRelayPolicy = false} = {}) {
     const {browserContextId} = await this.send("Target.createBrowserContext")
     const {targetId} = await this.send("Target.createTarget", {url: "about:blank", browserContextId})
     const {sessionId} = await this.send("Target.attachToTarget", {targetId, flatten: true})
@@ -137,6 +139,7 @@ export class Browser {
           // can't connect anywhere (with TURN servers, relay-only would still
           // connect, as it does in production).
           if (${relayOnly}) config = {...config, iceServers: [], iceTransportPolicy: "relay"};
+          if (${ignoreRelayPolicy}) config = {...config, iceTransportPolicy: "all"};
           const pc = new OriginalPeer(config, ...rest);
           window.__randosPeers.push(pc);
           return pc;

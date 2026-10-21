@@ -208,6 +208,34 @@ defmodule Randos.Calls.CallCoordinatorTest do
     Enum.each(pids, &send(&1, :stop))
   end
 
+  test "a relay-only call never relays a direct address to the peer" do
+    {match, pids} = match()
+    call_pid = start_call(match, ice_transport_policy: "relay")
+
+    assert_receive {:call_updated, %{status: :active, ice_transport_policy: "relay"}}
+    assert_receive {:call_updated, %{status: :active}}
+
+    candidate = fn line -> %{"candidate" => %{"candidate" => line, "sdpMid" => "0"}} end
+    host = "candidate:1 1 udp 2122260223 192.168.1.5 54321 typ host"
+
+    relay =
+      "candidate:3 1 udp 41885439 203.0.113.9 50000 typ relay raddr 198.51.100.7 rport 61234"
+
+    # Accepted (an older client isn't told), but never relayed.
+    assert :ok = CallCoordinator.relay_signal(call_pid, "a", "ice_candidate", candidate.(host))
+    assert :ok = CallCoordinator.relay_signal(call_pid, "a", "ice_candidate", candidate.(relay))
+
+    assert_receive {:signaling,
+                    %{type: :ice_candidate, payload: %{"candidate" => %{"candidate" => relayed}}}}
+
+    assert relayed ==
+             "candidate:3 1 udp 41885439 203.0.113.9 50000 typ relay raddr 0.0.0.0 rport 0"
+
+    refute_received {:signaling, _}
+
+    Enum.each(pids, &send(&1, :stop))
+  end
+
   test "lifecycle signals are acted on, never relayed: failed ends the call" do
     {match, pids} = match()
     call_pid = start_call(match)

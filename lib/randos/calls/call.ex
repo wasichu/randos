@@ -18,8 +18,16 @@ defmodule Randos.Calls.Call do
           call_deadline_unix_ms: integer() | nil,
           extension_deadline_unix_ms: integer() | nil,
           ended_reason: Randos.Calls.Lifecycle.ended_reason() | nil,
-          media: %{String.t() => Randos.Calls.Lifecycle.media_state()}
+          media: %{String.t() => Randos.Calls.Lifecycle.media_state()},
+          ice_transport_policy: ice_transport_policy()
         }
+
+  @typedoc """
+  `"relay"`: only through the TURN relay, so neither person learns the
+  other's address (the coordinator enforces it on relayed signals);
+  `"all"`: direct when possible.
+  """
+  @type ice_transport_policy :: String.t()
 
   @enforce_keys [:id, :pid, :match]
   defstruct [
@@ -31,15 +39,17 @@ defmodule Randos.Calls.Call do
     :ended_reason,
     status: :connecting,
     extension_count: 0,
-    media: %{}
+    media: %{},
+    ice_transport_policy: "all"
   ]
 
   @doc """
   Builds a new `:connecting` call with a random, unguessable id.
   """
-  @spec new(pid(), Randos.Matchmaking.Match.t()) :: t()
-  def new(pid, match) do
+  @spec new(pid(), Randos.Matchmaking.Match.t(), ice_transport_policy()) :: t()
+  def new(pid, match, ice_transport_policy \\ "all") do
     %__MODULE__{
+      ice_transport_policy: ice_transport_policy,
       id: "call-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false),
       pid: pid,
       match: match,

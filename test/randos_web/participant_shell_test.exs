@@ -60,6 +60,7 @@ defmodule RandosWeb.ParticipantShellTest do
                extension_count: 0,
                extension_duration_seconds: Lifecycle.extension_duration_seconds(),
                ended_reason: nil,
+               ice_transport_policy: "all",
                # Built without Call.new/2, so no media has been reported.
                media: %{self: nil, peer: nil}
              }

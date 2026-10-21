@@ -32,7 +32,6 @@ defmodule RandosWeb.HomeLive do
      |> assign(:preferences, preferences)
      |> assign_form(preferences)
      |> assign(:ice_servers, nil)
-     |> assign(:ice_transport_policy, nil)
      |> assign(:call_id, nil)
      |> assign_participant(participant)}
   end
@@ -88,15 +87,8 @@ defmodule RandosWeb.HomeLive do
 
   defp deliver({:push_signal, message}, socket), do: push_event(socket, "randos:signal", message)
 
-  defp deliver({:ice_config, nil}, socket),
-    do: assign(socket, ice_servers: nil, ice_transport_policy: nil)
-
-  defp deliver({:ice_config, config}, socket) do
-    assign(socket,
-      ice_servers: Jason.encode!(config.ice_servers),
-      ice_transport_policy: config.ice_transport_policy
-    )
-  end
+  defp deliver({:ice_servers, servers}, socket),
+    do: assign(socket, :ice_servers, servers && Jason.encode!(servers))
 
   # Templates read these flat assigns, derived from the participant.
   defp assign_participant(socket, %Participant{} = participant) do
@@ -107,6 +99,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_id, participant.call && participant.call.id)
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
+    |> assign(:ice_transport_policy, participant.call && participant.call.ice_transport_policy)
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
   end
 

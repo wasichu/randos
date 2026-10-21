@@ -114,7 +114,7 @@ defmodule RandosWeb.IceServersTest do
         System.put_env("TURN_HOST", "turn.example.com")
         System.put_env("TURN_SHARED_SECRET", "shared-secret")
 
-        assert %{ice_servers: [_ | _], ice_transport_policy: "relay"} = IceServers.call_config()
+        assert IceServers.transport_policy() == "relay"
       end)
     end
 
@@ -124,13 +124,13 @@ defmodule RandosWeb.IceServersTest do
         System.put_env("TURN_SHARED_SECRET", "shared-secret")
         Application.put_env(:randos, :allow_direct_calls, true)
 
-        assert %{ice_transport_policy: "all"} = IceServers.call_config()
+        assert IceServers.transport_policy() == "all"
       end)
     end
 
     test "direct without a TURN server (development, tests), which production refuses" do
       with_restored_env(fn ->
-        assert %{ice_transport_policy: "all"} = IceServers.call_config()
+        assert IceServers.transport_policy() == "all"
         assert IceServers.check!() == :ok
 
         Application.put_env(:randos, :require_relay, true)

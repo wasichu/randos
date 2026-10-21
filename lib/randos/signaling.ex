@@ -2,8 +2,12 @@ defmodule Randos.Signaling do
   @moduledoc """
   Message boundary for peer-to-peer WebRTC signaling.
 
-  Phoenix relays these messages between matched browser sessions. It does not
-  inspect, transform, store, or process media.
+  Phoenix relays these messages between matched participants. It never sees,
+  stores, or processes media. It relays offers, answers, and ICE candidates
+  as they are, with one exception: in a relay-only call,
+  `relay_only/2` removes every address that could identify a person (see
+  its doc for exactly what it changes), so a client that ignores the
+  policy still can't reveal its owner's address to the peer.
   """
 
   alias Randos.Matchmaking.Match
@@ -107,4 +111,102 @@ defmodule Randos.Signaling do
     do: {:ok, {:media, String.to_existing_atom(state)}}
 
   def classify(:media_state, _payload), do: {:error, :invalid_media_state}
+
+  @doc """
+  A media signal made safe for a relay-only call, or `:drop` when nothing of
+  it may reach the peer. Only these change, and nothing else in the message
+  (a test checks that fingerprints, ICE credentials, codecs and the rest
+  stay byte for byte the same):
+
+    * an ICE candidate that isn't a relay candidate (`typ host`, `srflx`,
+      `prflx`) is dropped; so is one that can't be parsed;
+    * a relay candidate's related address (`raddr`, `rport`: the address
+      behind the relay) becomes `0.0.0.0 0`;
+    * in an offer or answer's SDP, the same for its `a=candidate:` lines,
+      and the addresses in `c=`, `a=rtcp:` and `o=` become `0.0.0.0` (`::`
+      for IPv6). ICE doesn't use those; browsers and str0m already write
+      `0.0.0.0` there in relay-only calls.
+
+  The end-of-candidates signal (an empty candidate) passes unchanged.
+  """
+  @spec relay_only(type(), map()) :: {:ok, map()} | :drop
+  def relay_only(:ice_candidate, %{"candidate" => %{"candidate" => line} = candidate} = payload)
+      when is_binary(line) do
+    case relay_candidate(line) do
+      {:ok, line} -> {:ok, %{payload | "candidate" => %{candidate | "candidate" => line}}}
+      :drop -> :drop
+    end
+  end
+
+  def relay_only(type, %{"sdp" => %{"sdp" => sdp} = description} = payload)
+      when type in [:offer, :answer] and is_binary(sdp),
+      do: {:ok, %{payload | "sdp" => %{description | "sdp" => relay_only_sdp(sdp)}}}
+
+  def relay_only(_type, _payload), do: :drop
+
+  defp relay_only_sdp(sdp) do
+    # Keep the line endings exactly as sent (CRLF, per the spec).
+    sdp
+    |> String.split(~r/(?<=\n)/)
+    |> Enum.flat_map(&relay_only_sdp_line/1)
+    |> Enum.join()
+  end
+
+  defp relay_only_sdp_line("a=candidate:" <> _ = line) do
+    {body, ending} = split_ending(line)
+
+    case relay_candidate(String.replace_prefix(body, "a=", "")) do
+      {:ok, candidate} -> ["a=" <> candidate <> ending]
+      :drop -> []
+    end
+  end
+
+  defp relay_only_sdp_line("c=" <> _ = line), do: [zero_address(line)]
+  defp relay_only_sdp_line("a=rtcp:" <> _ = line), do: [zero_address(line)]
+  defp relay_only_sdp_line("o=" <> _ = line), do: [zero_address(line)]
+  defp relay_only_sdp_line(line), do: [line]
+
+  # "...IN IP4 <address>" (the last field, before the line ending; `c=` has
+  # no space before "IN").
+  defp zero_address(line) do
+    {body, ending} = split_ending(line)
+    Regex.replace(~r/IN IP(4|6) \S+$/, body, fn _, v -> "IN IP#{v} #{zero(v)}" end) <> ending
+  end
+
+  defp zero("4"), do: "0.0.0.0"
+  defp zero("6"), do: "::"
+
+  # The end-of-candidates signal.
+  defp relay_candidate(""), do: {:ok, ""}
+
+  defp relay_candidate("candidate:" <> _ = line) do
+    fields = String.split(line, " ")
+
+    if relay_type?(fields), do: {:ok, zero_related(fields)}, else: :drop
+  end
+
+  defp relay_candidate(_line), do: :drop
+
+  defp relay_type?(fields) do
+    case Enum.drop_while(fields, &(&1 != "typ")) do
+      ["typ", "relay" | _] -> true
+      _other -> false
+    end
+  end
+
+  defp zero_related(fields), do: fields |> zero_related([]) |> Enum.join(" ")
+
+  defp zero_related(["raddr", _address | rest], acc),
+    do: zero_related(rest, ["0.0.0.0", "raddr" | acc])
+
+  defp zero_related(["rport", _port | rest], acc), do: zero_related(rest, ["0", "rport" | acc])
+  defp zero_related([field | rest], acc), do: zero_related(rest, [field | acc])
+  defp zero_related([], acc), do: Enum.reverse(acc)
+
+  defp split_ending(line) do
+    case Regex.run(~r/^(.*?)(\r?\n)?$/s, line, capture: :all_but_first) do
+      [body, ending] -> {body, ending}
+      [body] -> {body, ""}
+    end
+  end
 end
