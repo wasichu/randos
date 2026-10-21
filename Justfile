@@ -265,8 +265,7 @@ check-privacy:
     template=infra/coturn/cloud-init.yaml.tftpl
     status=0
     for setting in 'use-auth-secret' 'log-min-level=error' 'no-cli' \
-                   '--log-opt max-size=1m' '--log-opt max-file=2' \
-                   '-v /etc/coturn:/etc/coturn:ro'; do
+                   '--log-driver none' '-v /etc/coturn:/etc/coturn:ro'; do
       if ! grep -qF -- "$setting" "$template"; then
         echo "ERROR: '$setting' is gone from $template, but docs/privacy.md promises it" >&2
         status=1

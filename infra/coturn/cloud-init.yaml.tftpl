@@ -190,12 +190,16 @@ write_files:
       docker rm -f coturn >/dev/null 2>&1 || true
       # Pinned image (var.coturn_image); upgrade deliberately by changing it.
       docker pull "$COTURN_IMAGE"
+      # No container log at all (--log-driver none): coturn's error lines
+      # include callers' addresses ("Connection reset by peer <ip>:<port>",
+      # denied peer IPs), found on the live relay 2026-10-21, and even
+      # rotated at 2 MB they'd be kept for months. To debug, run a container
+      # by hand with logging, and remove it after.
       docker run -d \
         --name coturn \
         --restart unless-stopped \
         --network host \
-        --log-opt max-size=1m \
-        --log-opt max-file=2 \
+        --log-driver none \
         -v /etc/coturn:/etc/coturn:ro \
         "$COTURN_IMAGE" \
         -c /etc/coturn/turnserver.conf
