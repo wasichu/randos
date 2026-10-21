@@ -243,6 +243,14 @@ defmodule Tui.Media.State do
 
   def event(state, _name, _payload), do: {state, []}
 
+  @doc """
+  The helper was already running when the app started (so its "ready" was
+  sent before the app could receive it): ask what devices there are.
+  """
+  @spec helper_started(t()) :: {t(), [command()]}
+  def helper_started(%{available?: true} = state), do: {state, [{:request, :devices}]}
+  def helper_started(state), do: {state, []}
+
   ## Internals
 
   defp maybe_start_call(%{call: nil, available?: true, role: role, ice_servers: ice} = state)

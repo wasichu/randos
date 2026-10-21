@@ -274,6 +274,13 @@ defmodule Tui.AppTest do
       app
     end
 
+    test "asks a helper that was already running for its devices" do
+      # A stand-in for Tui.Media: registered, so the app sees it running.
+      Process.register(self(), :app_test_running_media)
+      app = idle_app(:app_test_running_media)
+      assert_receive {:"$gen_cast", {:request, :devices, ^app}}
+    end
+
     @tag :native
     @tag :capture_log
     test "runs a loopback through Tui.Media and shows its stats" do

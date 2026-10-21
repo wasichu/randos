@@ -233,6 +233,11 @@ defmodule Tui.Media.StateTest do
                State.start_mic_test(state, {"sine", "null"})
     end
 
+    test "a helper already running when the app started is asked for devices" do
+      assert State.helper_started(State.new(true)) == {State.new(true), [{:request, :devices}]}
+      assert State.helper_started(State.new(false)) == {State.new(false), []}
+    end
+
     test "nothing to cycle before the list arrives" do
       assert State.cycle_device(State.new(true), :input) == State.new(true)
     end

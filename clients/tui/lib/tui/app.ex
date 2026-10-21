@@ -42,6 +42,9 @@ defmodule Tui.App do
       end
 
     Process.send_after(self(), :tick, @tick_ms)
+    # The helper starts before us, so its first "ready" can't reach us (we
+    # weren't registered yet): ask it for what "ready" would have.
+    if media_running?(Keyword.get(opts, :media)), do: send(self(), :media_started)
 
     {:ok,
      %{
@@ -91,6 +94,9 @@ defmodule Tui.App do
 
   def handle_info({:media_reply, command, result}, state),
     do: {:noreply, run_media(state, MediaState.reply(state.media_state, command, result))}
+
+  def handle_info(:media_started, state),
+    do: {:noreply, run_media(state, MediaState.helper_started(state.media_state))}
 
   def handle_info(:mic_test_done, state),
     do: {:noreply, run_media(state, MediaState.mic_test_done(state.media_state))}
