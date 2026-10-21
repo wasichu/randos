@@ -340,10 +340,10 @@ The browser's matching seam is unchanged: `processLocalStream` in
 
 ### Native code this introduces
 
-- **One helper binary per target** (Rust). Its only C is a statically linked
-  libopus, built on our CI.
-- **No new NIFs**, and nothing compiled on users' machines. Correction (2026-10-20): AWS-LC (via str0m's DTLS) is C too, also
-  built statically by Cargo; still nothing compiled on users' machines.
+- **One helper binary per target** (Rust). Its C is a statically linked
+  libopus and (found 2026-10-20) AWS-LC, which str0m's DTLS pulls in; both
+  built on our CI.
+- **No new NIFs**, and nothing compiled on users' machines.
 
 ## Decisions (2026-10-19)
 
