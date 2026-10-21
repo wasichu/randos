@@ -328,8 +328,13 @@ The browser's matching seam is unchanged: `processLocalStream` in
    - `turns:` via turn-client-rustls.
    - Jitter buffer tuning and packet-loss concealment.
    - Device selection, mute.
+   - Scoped and ordered (2026-10-20) in `refactor_plan.md` (4.3).
 3. **AEC:** sonora or aec3 (or macOS VoiceProcessingIO), so headphones become
-   optional.
+   optional. Chosen (2026-10-20): `sonora` 0.2 (BSD-3-Clause, ~820k
+   downloads, a pure-Rust port of WebRTC's audio processing, the canceller
+   Chrome uses); `aec3` describes itself as a work in progress, and
+   `webrtc-audio-processing` wraps C++. To verify on adding it: no C in its
+   tree, 48 kHz mono, 10 ms frames.
 4. **Packaging (with 4.4):** a CI matrix of helper binaries, starting with
    macOS arm64 plus Linux glibc x86_64; Intel Mac, musl and Windows after.
 

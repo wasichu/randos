@@ -92,7 +92,7 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (Stage 1 done; Stage 2 next)
+### 4.3 Audio (Stage 1 done; Stages 2 and 3 in progress)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
@@ -117,6 +117,32 @@ air, slightly offset: expected without echo cancellation (Stage 3), and
 worth a line in the headphones advice. Still to try: the same call across
 real networks (iPad on cellular, against production), which is what
 exercises STUN/TURN. See `tui_audio.md` Stage 1.
+
+**Stages 2 and 3 (started 2026-10-20; the owner asked for both, no open
+design decisions).** Order, one commit each, reviewed with the advisor:
+1. Relay permissions for every known remote candidate when the allocation
+   comes up (the open item below; live-test follow-up).
+2. Mute: the helper sends silence and keeps RTP flowing (a stopped stream
+   looks like a stall to the peer); Port contract only, as browser mute
+   isn't signalled either.
+3. The call's path (direct or relayed) in `call_stats` and the TUI's Status.
+4. Packet loss: Opus in-band FEC on one-frame gaps, concealment sized from
+   the RTP timestamp gap (capped), tested with injected loss.
+5. Device selection: list devices, choose them for a call; in-session only.
+6. Stage 3, echo cancellation with `sonora` (BSD-3-Clause, a pure-Rust port
+   of WebRTC's audio processing; `aec3` if it falls short): render audio fed
+   as it's played, capture processed before encoding, never on the mic-test
+   loopback (it would cancel your own voice). Tested with a synthetic echo
+   (echo reduction and near-end passthrough), then the "headphones
+   required" advice becomes "recommended".
+7. `turns:` (TURN over TLS, coturn serves it on 5349) as a fallback when the
+   UDP allocation isn't up within a few seconds; last, as the heaviest item
+   (TLS over a TCP stream in the session loop, `ring`).
+
+Not planned: ducking (superseded by echo cancellation); Firefox stays a hand
+test (the e2e harness speaks CDP, Firefox needs WebDriver BiDi). Only a person
+can verify echo cancellation on real speakers, Firefox, and `turns:` on a
+UDP-blocked network.
 
 Stage 0 code is done:
 - the helper (`clients/tui/native`, crate `randos_media`) speaks a JSON Port
@@ -502,12 +528,6 @@ Not scheduled; pick up when relevant.
   a new connection is a new participant, by design).
 - **`boundary` library.** Deferred during cleanup; now that core vs web is a
   real split, reconsider enforcing it.
-- **Permissions before the allocation.** A remote candidate that arrives
-  before our TURN allocation is up gets no permission then (`Relay::permit`
-  fails quietly); it's installed on demand when ICE first sends to it.
-  Works (the checkpoint passed), but re-permitting known remote IPs on
-  `Allocated` would make relay connects faster. Watch for slow relay
-  connects in the live call.
 - **`turns:` (TLS) TURN** is unbuilt (`turn-client-rustls`), for networks
   that block UDP; browsers already get `turns:` from the server.
 - **coturn follow-ups** for its next intentional rebuild: see
