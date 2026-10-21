@@ -217,6 +217,17 @@ screenshots:
 translate-test:
     cd tools/translate && uv run --group dev pytest -q
 
+# The voice-anonymization benchmark (tools/voice-eval): can ECAPA-TDNN still
+# identify a speaker after each processor, and can Whisper understand them?
+# Downloads LibriSpeech test-clean (346 MB) and the models (~0.4 GB) once;
+# writes tools/voice-eval/results/benchmark.json, which the voice lab shows
+voice-eval:
+    cd tools/voice-eval && uv run --group models python -m randos_voice_eval.bench
+
+# The benchmark's metrics and verdicts (offline, no models)
+voice-eval-test:
+    cd tools/voice-eval && uv run --group dev pytest -q
+
 # The Homebrew formula for VERSION, from the GitHub release's checksums
 # (packaging/homebrew/README.md); --local uses dist/ instead
 homebrew-formula version *flags:

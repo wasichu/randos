@@ -1,0 +1,30 @@
+[project]
+name = "randos-voice-eval"
+version = "0.1.0"
+description = "The voice-anonymization benchmark for randos: can a speaker-recognition model still identify a voice after a processor, and can speech recognition still understand it?"
+requires-python = "==3.13.*"
+# The metrics and data handling (EER, WER, LibriSpeech's layout): small, no models.
+dependencies = [
+    "numpy==2.3.3",
+    "jiwer==4.0.0",
+    "soundfile==0.13.1",
+]
+
+[dependency-groups]
+dev = ["pytest==8.4.2"]
+# Running the models (`uv sync --group models`): ECAPA-TDNN through
+# SpeechBrain for speaker identity, Whisper through transformers for
+# intelligibility, on the CPU or Apple's GPU (MPS).
+models = [
+    "torch==2.8.0",
+    "torchaudio==2.8.0",
+    "speechbrain==1.0.3",
+    "transformers==4.56.2",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -25,6 +25,17 @@ processor is written once, here, and runs in both clients:
 The pitch shifter moves formants with the pitch, so voices sound smaller or
 larger rather than like someone else: v0's baseline, not the answer.
 
+## Rendering offline (`examples/render.rs`)
+
+Mono little-endian `f32` samples on stdin, processed, the same out on
+stdout, in 128-sample blocks like a worklet. `tools/voice-eval` uses it,
+so the benchmark measures exactly the code calls run:
+
+```bash
+cargo run --release -p randos_voice --example render -- \
+  --variant pitch_shift --rate 48000 --param 0=-4 --param 1=40 < in.f32 > out.f32
+```
+
 ## The WASM interface
 
 No bindings generator: `src/wasm.rs` exports plain functions over numbers
