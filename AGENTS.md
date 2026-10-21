@@ -174,10 +174,16 @@ are product requirements, not suggestions. Don't add features that violate them.
 - Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,
   cargo-deny). `just native-check` runs fmt, clippy with warnings as errors,
   tests, and `cargo deny check`; it is part of `just precommit`.
-  `just turn-check` runs the helper against the real coturn (allocations and a
-  whole relay-only call; reads the TURN secret via `just tofu`, never prints it).
+  `just turn-check` runs the helper against the real coturn (allocations and
+  whole relay-only calls over UDP and TLS TURN; reads the TURN secret via
+  `just tofu`, never prints it). Run it after any change to the relay path:
+  three bugs once passed every hermetic test and showed only there.
   `just media-loopback` runs mic → Opus → speaker by hand and prints latency
-  (headphones; no echo cancellation yet).
+  (headphones: the loopback plays your voice back on purpose, so it has no
+  echo cancellation; calls do).
+  `just tui-release` builds the installable TUI archive (`dist/`, checked by
+  running the unpacked copy); `just homebrew-formula VERSION` renders the
+  Homebrew formula (`packaging/homebrew/README.md`).
 - **No panics in the helper.** `unwrap`/`expect`/`panic!`/`todo!` are denied by
   clippy outside tests; return errors and report them over the Port as
   messages. A panic kills the user's call.
