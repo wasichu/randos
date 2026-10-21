@@ -295,7 +295,6 @@ defmodule Tui.Model do
 
   defp move(%{languages: []} = model, _step), do: model
 
-  # A new speaking language is checked among the hearing ones too.
   # The speaking language is checked among the hearing ones, replacing the
   # one checked for the previous speaking language (unless the person
   # checked or kept that one themselves), so stepping through the list
