@@ -247,7 +247,14 @@ RTL, per-locale `.po` files, the precommit template check, hook text via
 Opus-MT en↔es. Next: the owner logs in to Hugging Face for the gated
 models and sets aside GPU time; then the full field runs, the results
 page, and filling the `.po` files. Checked: gettext uses fuzzy entries at
-runtime, and an empty `msgstr` falls back to English.
+runtime, and an empty `msgstr` falls back to English. The review page is
+done: `cli review` builds `results/review.json` (models side by side,
+disagreement, evaluator conflicts, best per string, winner per locale) and
+`/dev/translations` (`RandosDev.TranslationReviewLive`, dev only) shows it.
+Proven with Opus-MT and M2M100 418M on es (all strings), ar and ja (20
+each): Opus-MT wins es, M2M100 wins ar (Opus-MT's en→ar fails short
+strings). Evaluator conflicts need a second scorer, so they appear once
+MetricX or COMET-Kiwi runs.
 
 **Where it starts.** The web UI already wraps ~80 strings in `gettext`
 (home components, About, layout, `ParticipantErrors`); only `errors.pot` has

@@ -116,7 +116,7 @@ are product requirements, not suggestions. Don't add features that violate them.
   `signaling_test.exs` and `relay_only_smoke.mjs`.
 - `docs/architecture/translation_models.md`: Phase 6 research (translation models,
   evaluators, licenses, memory on the owner's Mac).
-- Interface language: `RandosWeb.Locale` (cookie `randos_locale`, then `Accept-Language`, then English; `dir="rtl"` for Arabic). Wrap every UI string in gettext; use `pgettext("button", …)` for buttons and `%{name}` placeholders, never concatenation; text a hook sets goes through `data-labels` (`assets/js/randos/labels.js`). After changing strings, run `mix gettext.extract --merge` (precommit fails on a stale `default.pot`). Translators' guide: `priv/gettext/README.md`; the shootout lives in `tools/translate/` (`just translate-test`).
+- Interface language: `RandosWeb.Locale` (cookie `randos_locale`, then `Accept-Language`, then English; `dir="rtl"` for Arabic). Wrap every UI string in gettext; use `pgettext("button", …)` for buttons and `%{name}` placeholders, never concatenation; text a hook sets goes through `data-labels` (`assets/js/randos/labels.js`). After changing strings, run `mix gettext.extract --merge` (precommit fails on a stale `default.pot`). Translators' guide: `priv/gettext/README.md`; the shootout lives in `tools/translate/` (`just translate-test`). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, rebuilt by `uv run python -m randos_translate.cli review`).
 - `docs/architecture/refactor_plan.md` is the living roadmap (status, how the
   pieces fit, Phase 4 TUI and 5 voice anonymization, open items, decisions).
   Keep it in sync: symbols not line numbers, and update its "Verified" line.
