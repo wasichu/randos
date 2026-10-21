@@ -5,10 +5,19 @@ defmodule RandosWeb.VoiceProcessorTest do
 
   alias RandosWeb.VoiceProcessor
 
-  setup do
+  # A built-assets directory of our own: the real one exists only after an
+  # asset build. Digested and compressed copies aren't processors.
+  @moduletag :tmp_dir
+  setup %{tmp_dir: dir} do
+    for file <- ~w(passthrough.js pitch_shift.js pitch_shift-1a2b3c.js pitch_shift.js.gz),
+        do: File.write!(Path.join(dir, file), "")
+
+    Application.put_env(:randos, :voice_processor_dir, dir)
+
     on_exit(fn ->
       Application.delete_env(:randos, :voice_processor)
       Application.delete_env(:randos, :require_built_voice_processor)
+      Application.delete_env(:randos, :voice_processor_dir)
     end)
   end
 
@@ -17,11 +26,10 @@ defmodule RandosWeb.VoiceProcessorTest do
   end
 
   test "a built processor's name is fine; the built ones are listed" do
-    [name | _] = VoiceProcessor.available()
-    Application.put_env(:randos, :voice_processor, name)
+    assert VoiceProcessor.available() == ["passthrough", "pitch_shift"]
+    Application.put_env(:randos, :voice_processor, "pitch_shift")
     Application.put_env(:randos, :require_built_voice_processor, true)
     assert VoiceProcessor.check!() == :ok
-    assert "passthrough" in VoiceProcessor.available()
   end
 
   test "an unknown name: production refuses to start, development warns" do

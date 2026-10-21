@@ -46,7 +46,12 @@ defmodule RandosWeb.VoiceProcessor do
 
   defp name?(name), do: name =~ ~r/\A[a-z0-9_]+\z/
 
-  defp dir, do: Application.app_dir(:randos, "priv/static/assets/js/randos/voice")
+  # Tests point this at a directory of their own (`:voice_processor_dir`),
+  # since the worklets are built assets, absent before a build (as in CI).
+  defp dir,
+    do:
+      Application.get_env(:randos, :voice_processor_dir) ||
+        Application.app_dir(:randos, "priv/static/assets/js/randos/voice")
 
   defp unknown(name) do
     message =
