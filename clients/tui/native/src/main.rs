@@ -14,11 +14,13 @@ mod frame;
 mod loopback;
 mod protocol;
 mod relay;
+mod report;
 mod resample;
 mod spectrum;
 mod stun;
 #[cfg(test)]
 mod test_support;
+mod tls_stream;
 
 use std::io::{self, BufReader, BufWriter};
 use std::process::ExitCode;

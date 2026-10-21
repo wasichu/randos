@@ -9,8 +9,8 @@
 //! the 20 ms audio cadence is kept). Every change to the `Rtc` is followed
 //! by `drain`, str0m's one rule (mutate, then poll until `Timeout`).
 
-use std::io::{ErrorKind, Read, Write};
-use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpStream, UdpSocket};
+use std::io::Write;
+use std::net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket};
 use std::sync::Arc;
 use std::sync::mpsc::{self, Receiver, Sender, TryRecvError};
 use std::thread::{self, JoinHandle};
@@ -29,10 +29,11 @@ use str0m::{
 use crate::Error;
 use crate::audio::{Capture, Devices, Input, Notify, Output, Playback, Started};
 use crate::candidates::{Candidates, Found, Inbound, Outbound};
-use crate::codec::{Decoder, Encoder, FRAME, Peak};
+use crate::codec::{Decoder, Encoder, FRAME};
 use crate::echo::EchoCanceller;
-use crate::protocol::{CallStats, Event};
-use crate::spectrum::Analyser;
+use crate::protocol::Event;
+use crate::report::Report;
+use crate::tls_stream::TlsStream;
 
 /// The longest the loop waits on the socket, so mic frames and commands are
 /// serviced well inside one 20 ms frame.
@@ -745,213 +746,14 @@ fn default_route_ip() -> Result<IpAddr, Error> {
     }
 }
 
-/// Once a second: packets each way and the levels, so a test (or the TUI)
-/// can tell audio is flowing in both directions.
-struct Report {
-    since: Instant,
-    packets_sent: u64,
-    packets_received: u64,
-    concealed: u64,
-    /// Lost frames rebuilt from the next packet's FEC data.
-    recovered: u64,
-    dropped: u64,
-    skipped_candidates: u64,
-    send_errors: u64,
-    /// Kinds of our candidates offered so far ("host", "srflx").
-    local_candidates: Vec<String>,
-    input_peak: Peak,
-    output_peak: Peak,
-    /// The meters' bars, each way, sent every `LEVELS_EVERY`.
-    input_bars: Analyser,
-    output_bars: Analyser,
-    levels_since: Instant,
-}
-
-/// The TCP side of a TLS relay: connected on a thread of its own (a
-/// blocking connect mustn't stall the call loop), then read and written
-/// without blocking. The bytes are TLS; `Candidates` makes sense of them.
-#[derive(Default)]
-struct TlsStream {
-    connecting: Option<Receiver<std::io::Result<TcpStream>>>,
-    stream: Option<TcpStream>,
-    /// Waiting to be written (a full socket buffer can't take it all at once).
-    out: Vec<u8>,
-}
-
-/// Give up on reaching a `turns:` server after this long.
-const TLS_CONNECT_TIMEOUT: Duration = Duration::from_secs(5);
-
-impl TlsStream {
-    fn connect(&mut self, server: SocketAddr) {
-        let (done, connecting) = mpsc::channel();
-        let started = thread::Builder::new()
-            .name("turns-connect".into())
-            .spawn(move || {
-                let _ = done.send(TcpStream::connect_timeout(&server, TLS_CONNECT_TIMEOUT));
-            });
-        if started.is_ok() {
-            self.connecting = Some(connecting);
-        }
-    }
-
-    /// The connection's outcome, once: our local address, or a failure.
-    fn connected(&mut self) -> Option<Result<SocketAddr, ()>> {
-        let outcome = match self.connecting.as_ref()?.try_recv() {
-            Err(TryRecvError::Empty) => return None,
-            Ok(Ok(stream)) => stream
-                .set_nonblocking(true)
-                .and_then(|()| stream.set_nodelay(true))
-                .and_then(|()| stream.local_addr())
-                .map(|local| (stream, local)),
-            Ok(Err(err)) => Err(err),
-            Err(TryRecvError::Disconnected) => Err(ErrorKind::Other.into()),
-        };
-        self.connecting = None;
-        Some(match outcome {
-            Ok((stream, local)) => {
-                self.stream = Some(stream);
-                Ok(local)
-            }
-            Err(_) => Err(()),
-        })
-    }
-
-    /// Whatever has arrived (empty if nothing, or the stream closed).
-    fn read(&mut self) -> Vec<u8> {
-        let Some(stream) = self.stream.as_mut() else {
-            return Vec::new();
-        };
-        let mut read = Vec::new();
-        let mut buf = [0u8; 4096];
-        loop {
-            match stream.read(&mut buf) {
-                Ok(0) => {
-                    self.stream = None;
-                    break;
-                }
-                Ok(n) => read.extend_from_slice(&buf[..n]),
-                Err(err) if err.kind() == ErrorKind::WouldBlock => break,
-                Err(_) => {
-                    self.stream = None;
-                    break;
-                }
-            }
-        }
-        read
-    }
-
-    fn flush(&mut self) {
-        let Some(stream) = self.stream.as_mut() else {
-            self.out.clear();
-            return;
-        };
-        while !self.out.is_empty() {
-            match stream.write(&self.out) {
-                Ok(0) => break,
-                Ok(n) => {
-                    self.out.drain(..n);
-                }
-                Err(err) if err.kind() == ErrorKind::WouldBlock => break,
-                Err(_) => {
-                    self.stream = None;
-                    self.out.clear();
-                    break;
-                }
-            }
-        }
-    }
-}
-
 /// At most this many frames of concealment for one gap (100 ms); longer
 /// gaps play as silence.
 const MAX_CONCEALED: u64 = 5;
 
-/// How often `call_levels` goes out: the website's visualizer frame rate.
-const LEVELS_EVERY: Duration = Duration::from_millis(50);
-
-impl Report {
-    fn new() -> Self {
-        Self {
-            since: Instant::now(),
-            packets_sent: 0,
-            packets_received: 0,
-            concealed: 0,
-            recovered: 0,
-            dropped: 0,
-            skipped_candidates: 0,
-            send_errors: 0,
-            local_candidates: vec!["host".into()],
-            input_peak: Peak::default(),
-            output_peak: Peak::default(),
-            input_bars: Analyser::new(),
-            output_bars: Analyser::new(),
-            levels_since: Instant::now(),
-        }
-    }
-
-    fn sent(&mut self, frame: &[f32; FRAME]) {
-        self.input_peak.add(frame);
-        self.input_bars.push(frame);
-    }
-
-    fn received(&mut self, frame: &[f32; FRAME]) {
-        self.packets_received += 1;
-        self.output_peak.add(frame);
-        self.output_bars.push(frame);
-    }
-
-    fn tick(
-        &mut self,
-        capture: &Capture,
-        playback: &Playback,
-        notify: &Notify,
-        candidates: &mut Candidates,
-    ) {
-        if self.levels_since.elapsed() >= LEVELS_EVERY {
-            self.levels_since = Instant::now();
-            // A failed FFT only skips one meter frame; it never ends the call.
-            if let (Ok(you), Ok(peer)) = (self.input_bars.bars(), self.output_bars.bars()) {
-                notify(Event::CallLevels {
-                    you: rounded(&you),
-                    peer: rounded(&peer),
-                });
-            }
-        }
-        if self.since.elapsed() < Duration::from_secs(1) {
-            return;
-        }
-        notify(Event::CallStats(CallStats {
-            packets_sent: self.packets_sent,
-            packets_received: self.packets_received,
-            concealed: self.concealed,
-            recovered: self.recovered,
-            dropped: self.dropped,
-            skipped_candidates: self.skipped_candidates,
-            send_errors: self.send_errors,
-            local_candidates: self.local_candidates.clone(),
-            input_peak_dbfs: self.input_peak.dbfs(),
-            output_peak_dbfs: self.output_peak.dbfs(),
-            capture_ring_ms: capture.queued_ms(),
-            playback_ring_ms: playback.queued_ms(),
-            path: candidates.take_path().map(String::from),
-        }));
-        // Counters are cumulative; peaks are per report.
-        self.since = Instant::now();
-        self.input_peak = Peak::default();
-        self.output_peak = Peak::default();
-    }
-}
-
-/// Two decimals are plenty for a meter, and keep the Port messages short.
-fn rounded(bars: &[f32]) -> Vec<f32> {
-    bars.iter()
-        .map(|bar| (bar * 100.0).round() / 100.0)
-        .collect()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::protocol::CallStats;
     use crate::test_support;
     use std::sync::Mutex;
     use std::sync::atomic::Ordering;
