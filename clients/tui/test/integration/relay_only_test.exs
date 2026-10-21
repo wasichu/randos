@@ -14,7 +14,8 @@ defmodule Tui.Integration.RelayOnlyTest do
   @moduletag :relay_only
   @moduletag timeout: 60_000
 
-  defp matches(model), do: Enum.count(model.log, &(&1 == "matched; connecting"))
+  defp another_call?(%{call: %{"id" => id}}, first), do: id != first
+  defp another_call?(_model, _first), do: false
 
   # Every audio state the app has reported so far.
   defp media_states(app, acc \\ []) do
@@ -36,13 +37,12 @@ defmodule Tui.Integration.RelayOnlyTest do
     find(b, b_model, "ko", "fr")
 
     # Matched, then the call ends without connecting (the connect timeout,
-    # or the helper giving up on the relay). Requeued, the two rematch
-    # within a millisecond, too fast for a model update to show `looking`;
-    # a second match in the model's log (every status change is there)
-    # means the first call ended.
+    # or the helper giving up on the relay). Requeued, the two can be
+    # rematched in the same server step, so the state goes straight from
+    # one call to the next: a new call id, with no `looking` in between.
     for app <- [a, b] do
-      await_model(app, &(&1.status == :connecting))
-      await_model(app, &(&1.status in [:looking, :idle] or matches(&1) >= 2))
+      %{call: %{"id" => first}} = await_model(app, &(&1.status == :connecting and &1.call != nil))
+      await_model(app, &(&1.status in [:looking, :idle] or another_call?(&1, first)))
     end
 
     for app <- [a, b] do
