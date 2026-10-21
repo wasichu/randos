@@ -45,8 +45,8 @@ defmodule Tui.ModelTest do
   test "the idle form picks a speaking language, hearing languages, 18+, and finds" do
     {model, commands} =
       keys(joined(), [
-        # Speak Spanish: it's checked among the hearing languages instead of
-        # English (checked only because it was the speaking language).
+        # Speak Spanish: the hearing languages stay as they were (English,
+        # checked at the start).
         "right",
         # The hearing row: also check French.
         "tab",
@@ -61,21 +61,23 @@ defmodule Tui.ModelTest do
 
     assert commands == [
              {:push, "find",
-              %{speaks: "es", hears: ["es", "fr"], adult_acknowledged: true, audio: false}}
+              %{speaks: "es", hears: ["en", "fr"], adult_acknowledged: true, audio: false}}
            ]
 
     assert model.adult_acknowledged?
   end
 
-  test "stepping through speaking languages checks only the current one" do
-    {model, []} = keys(joined(), ["right", "right"])
-    assert {model.speaks, model.hears} == {"fr", ["fr"]}
+  test "the speaking language starts checked; changing it leaves the hearing languages alone" do
+    assert {joined().speaks, joined().hears} == {"en", ["en"]}
 
-    # A language checked by hand stays when the speaking language moves on.
+    {model, []} = keys(joined(), ["right", "right"])
+    assert {model.speaks, model.hears} == {"fr", ["en"]}
+
+    # Choices made by hand stay too, even unchecking everything.
     {model, []} = keys(joined(), ["tab", "right", " ", "up", "right"])
-    assert {model.speaks, model.hears} == {"es", ["es"]}
-    {model, []} = keys(model, ["right"])
-    assert {model.speaks, model.hears} == {"fr", ["es", "fr"]}
+    assert {model.speaks, model.hears} == {"es", ["en", "es"]}
+    {model, []} = keys(model, ["tab", "left", " ", "right", " ", "up", "right"])
+    assert {model.speaks, model.hears} == {"fr", []}
   end
 
   test "with nothing to hear, Enter says so instead of finding" do

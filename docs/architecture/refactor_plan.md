@@ -647,9 +647,11 @@ Not scheduled; pick up when relevant.
   the waiting list (fine at 15 languages); the browser form gets
   checkboxes; the TUI a multi-select; the channel's `find` accepts a list
   while still taking a single language from v0.2.0 TUIs (a protocol change:
-  the mini-pass applies). Built as designed, plus: when the speaking
-  language changes, the auto-checked one is replaced by the new one (a
-  language the person checked themselves stays), in both clients; the call
+  the mini-pass applies). Built as designed, plus: the speaking language
+  is pre-checked only when the form first appears (or, in the TUI, without
+  saved settings); after that, changing the speaking language leaves the
+  hearing choices alone, in both clients (the owner's call, 2026-10-21:
+  replacing the auto-checked language was annoying); the call
   map gains `peer_speaks` (the rando's language), shown in both clients.
   Mini-pass done: `participant_channel.md`, both clients, the obligation
   tests.

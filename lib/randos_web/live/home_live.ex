@@ -140,10 +140,11 @@ defmodule RandosWeb.HomeLive do
 
     # The speaking language starts checked among the hearing languages (the
     # person can uncheck it): two people who share a language can talk.
+    # Only here: after the form first appears, the hearing choices are the
+    # person's alone, whatever they speak.
     %{
       "speaking_language" => speaking_language,
       "hearing_languages" => [speaking_language],
-      "auto_hearing_language" => speaking_language,
       "adult_acknowledgment" => "false"
     }
   end
@@ -166,7 +167,6 @@ defmodule RandosWeb.HomeLive do
     )
     |> Map.update("adult_acknowledgment", "false", &normalize_checkbox/1)
     |> Map.update("hearing_languages", [], &supported_languages/1)
-    |> follow_speaking_language(current)
   end
 
   # The form sends a "" placeholder so that unchecking everything still
@@ -175,34 +175,6 @@ defmodule RandosWeb.HomeLive do
     do: codes |> Enum.filter(&ConversationLanguages.supported?/1) |> Enum.uniq()
 
   defp supported_languages(_codes), do: []
-
-  # The speaking language is checked among the hearing ones, replacing the
-  # one checked for the previous speaking language ("auto_hearing_language")
-  # unless the person unchecked it meanwhile; languages they checked
-  # themselves stay. The TUI does the same (Tui.Model).
-  defp follow_speaking_language(preferences, current) do
-    hears = preferences["hearing_languages"]
-
-    auto =
-      if preferences["auto_hearing_language"] in hears, do: preferences["auto_hearing_language"]
-
-    new = preferences["speaking_language"]
-
-    cond do
-      new == current["speaking_language"] ->
-        Map.put(preferences, "auto_hearing_language", auto)
-
-      new in hears ->
-        %{preferences | "hearing_languages" => List.delete(hears, auto)}
-        |> Map.put("auto_hearing_language", nil)
-
-      true ->
-        %{preferences | "hearing_languages" => in_order([new | List.delete(hears, auto)])}
-        |> Map.put("auto_hearing_language", new)
-    end
-  end
-
-  defp in_order(codes), do: Enum.filter(ConversationLanguages.codes(), &(&1 in codes))
 
   defp normalize_checkbox(true), do: "true"
   defp normalize_checkbox("true"), do: "true"

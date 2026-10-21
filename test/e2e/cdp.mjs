@@ -233,14 +233,17 @@ export class Page {
   // Speak `speaks`; hear exactly `hears` (a code or a list of codes).
   async findRando(speaks, hears) {
     const heard = [hears].flat()
-    // The speaking language first: the server then checks it among the
-    // hearing languages, so wait for that before setting them exactly.
+    // The speaking language first, and wait until the server has it (its
+    // re-render could otherwise land after the boxes are set), then the
+    // hearing languages exactly.
     await this.eval(`(() => {
       const el = document.getElementById("conversation_speaking_language");
       el.value = ${JSON.stringify(speaks)};
       el.dispatchEvent(new Event("change", {bubbles: true}));
     })()`)
-    await this.waitFor(`!!document.querySelector("#hearing-language-${speaks}:checked")`, "speaking language checked")
+    await this.waitFor(
+      `!!document.querySelector("#conversation_speaking_language option[value='${speaks}'][selected]")`,
+      "speaking language set")
     await this.eval(`(() => {
       const heard = ${JSON.stringify(heard)};
       for (const box of document.querySelectorAll("#hearing-languages input[type=checkbox]"))

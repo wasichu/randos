@@ -68,11 +68,11 @@ defmodule Tui.ConfigTest do
                     }}
 
     # Speak English instead (French → Spanish → English): saved straight
-    # away, and the saved hearing languages stay (they were chosen, not automatic).
+    # away, and the hearing languages are left exactly as they were.
     keys(app, ["left", "left"])
     assert_receive {:tui_model, ^app, %Model{speaks: "en"}}
 
-    assert %{"speaks" => "en", "hears" => ["en", "es", "fr"], "input" => "Some Mic"} =
+    assert %{"speaks" => "en", "hears" => ["es", "fr"], "input" => "Some Mic"} =
              Config.load(path)
   end
 

@@ -29,9 +29,9 @@ defmodule Tui.Model do
 
   @typedoc """
   `speaks` is a language code; `hears` the codes the person is happy to
-  hear. The speaking language starts checked, and choosing another speaking
-  language checks it instead (`auto_hears` is the one checked that way, until
-  the person touches it). `hears_cursor` is the language the hearing row
+  hear. The speaking language starts checked (without saved settings);
+  after that the hearing choices are the person's alone, whatever they
+  speak, as on the website. `hears_cursor` is the language the hearing row
   points at (space toggles it).
   """
   @type t :: %__MODULE__{
@@ -40,7 +40,6 @@ defmodule Tui.Model do
           speaks: String.t(),
           hears: [String.t()],
           hears_cursor: non_neg_integer(),
-          auto_hears: String.t() | nil,
           adult_acknowledged?: boolean(),
           audio?: boolean(),
           focus: :speaks | :hears | :ack,
@@ -60,7 +59,6 @@ defmodule Tui.Model do
             speaks: "en",
             hears: ["en"],
             hears_cursor: 0,
-            auto_hears: "en",
             adult_acknowledged?: false,
             audio?: false,
             focus: :speaks,
@@ -103,7 +101,6 @@ defmodule Tui.Model do
       model
       | speaks: speaks,
         hears: hears,
-        auto_hears: if(hears == model.hears, do: model.auto_hears),
         adult_acknowledged?: saved["adult_acknowledged"] == true
     }
   end
@@ -340,24 +337,11 @@ defmodule Tui.Model do
 
   defp move(%{languages: []} = model, _step), do: model
 
-  # The speaking language is checked among the hearing ones, replacing the
-  # one checked for the previous speaking language (unless the person
-  # checked or kept that one themselves), so stepping through the list
-  # doesn't check every language on the way.
+  # Changing the speaking language leaves the hearing choices alone.
   defp move(%{focus: :speaks} = model, step) do
     codes = Enum.map(model.languages, & &1.code)
     index = Enum.find_index(codes, &(&1 == model.speaks)) || 0
-    speaks = Enum.at(codes, Integer.mod(index + step, length(codes)))
-    hears = List.delete(model.hears, model.auto_hears)
-
-    if speaks in hears,
-      do: %{model | speaks: speaks, hears: hears, auto_hears: nil},
-      else: %{
-        model
-        | speaks: speaks,
-          hears: in_order(model, [speaks | hears]),
-          auto_hears: speaks
-      }
+    %{model | speaks: Enum.at(codes, Integer.mod(index + step, length(codes)))}
   end
 
   defp move(%{focus: :hears} = model, step),
@@ -371,9 +355,7 @@ defmodule Tui.Model do
     hears =
       if checked?, do: List.delete(model.hears, code), else: in_order(model, [code | model.hears])
 
-    # Touched by hand: it's the person's choice now, not the automatic one.
-    auto_hears = if code == model.auto_hears, do: nil, else: model.auto_hears
-    %{model | hears: hears, auto_hears: auto_hears}
+    %{model | hears: hears}
   end
 
   defp toggle(%{focus: :ack} = model),

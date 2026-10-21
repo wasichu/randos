@@ -201,8 +201,9 @@ defmodule RandosWeb.ParticipantChannelTest do
 
     view = browser_find("bn", "hi")
 
-    # (The browser checks its new speaking language among the hearing ones.)
-    assert %{queues: %{{"hi", ["bn"], false} => [_], {"bn", ["hi", "bn"], true} => [_]}} =
+    # (The browser hears only what was checked: changing its speaking
+    # language leaves that alone.)
+    assert %{queues: %{{"hi", ["bn"], false} => [_], {"bn", ["hi"], true} => [_]}} =
              Matchmaker.snapshot()
 
     refute_push "state", %{status: :connecting}

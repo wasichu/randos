@@ -66,44 +66,25 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#hearing-language-en[checked]")
   end
 
-  test "a new speaking language is checked instead of the one checked for the old", %{conn: conn} do
+  test "the speaking language starts checked; after that, hearing choices are left alone", %{
+    conn: conn
+  } do
     {:ok, view, _html} = live(conn, ~p"/")
+    # First load: the speaking language is pre-checked.
     assert has_element?(view, "#hearing-language-en[checked]")
 
-    # English was checked only because it was the speaking language.
+    # Changing the speaking language doesn't touch what's checked.
     view
     |> form("#conversation-form",
       conversation: %{speaking_language: "es", hearing_languages: ["", "en"]}
     )
     |> render_change()
 
-    assert has_element?(view, "#hearing-language-es[checked]")
-    refute has_element?(view, "#hearing-language-en[checked]")
-
-    # Checked by hand, French stays when the speaking language moves on.
-    view
-    |> form("#conversation-form",
-      conversation: %{speaking_language: "es", hearing_languages: ["", "es", "fr"]}
-    )
-    |> render_change()
-
-    view
-    |> form("#conversation-form",
-      conversation: %{speaking_language: "de", hearing_languages: ["", "es", "fr"]}
-    )
-    |> render_change()
-
-    assert has_element?(view, "#hearing-language-fr[checked]")
-    assert has_element?(view, "#hearing-language-de[checked]")
+    assert has_element?(view, "#hearing-language-en[checked]")
     refute has_element?(view, "#hearing-language-es[checked]")
-  end
 
-  test "hearing languages are a free choice; a new speaking language is checked too", %{
-    conn: conn
-  } do
-    {:ok, view, _html} = live(conn, ~p"/")
-
-    # Unchecking everything (the browser still sends the "" placeholder).
+    # A free choice, including nothing at all (the browser still sends the
+    # "" placeholder), kept through another change of speaking language.
     view
     |> form("#conversation-form", conversation: %{hearing_languages: [""]})
     |> render_change()
@@ -111,20 +92,14 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#hearing-languages input[type=checkbox][checked]")
 
     view
-    |> form("#conversation-form", conversation: %{hearing_languages: ["", "fr", "de"]})
-    |> render_change()
-
-    assert has_element?(view, "#hearing-language-fr[checked]")
-    assert has_element?(view, "#hearing-language-de[checked]")
-
-    view
     |> form("#conversation-form",
       conversation: %{speaking_language: "ja", hearing_languages: ["", "fr", "de"]}
     )
     |> render_change()
 
-    assert has_element?(view, "#hearing-language-ja[checked]")
     assert has_element?(view, "#hearing-language-fr[checked]")
+    assert has_element?(view, "#hearing-language-de[checked]")
+    refute has_element?(view, "#hearing-language-ja[checked]")
   end
 
   test "shows validation when searching without the adult acknowledgment", %{conn: conn} do
