@@ -16,16 +16,17 @@ defmodule Tui.Media.ProtocolTest do
 
     ice = [%{"urls" => "stun:stun.example:3478"}]
 
-    assert encoded(4, {:call_start, "offerer", ice, "device", "device"}) == %{
+    assert encoded(4, {:call_start, "offerer", ice, "device", "device", true}) == %{
              "id" => 4,
              "cmd" => "call_start",
              "role" => "offerer",
              "ice_servers" => ice,
              "in" => "device",
-             "out" => "device"
+             "out" => "device",
+             "relay_only" => true
            }
 
-    assert encoded(5, {:call_start, "answerer", nil, "sine", "null"})["ice_servers"] == []
+    assert encoded(5, {:call_start, "answerer", nil, "sine", "null", false})["ice_servers"] == []
 
     payload = %{"sdp" => %{"type" => "offer", "sdp" => "v=0"}}
 

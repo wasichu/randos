@@ -15,7 +15,7 @@ defmodule Tui.Media.Protocol do
           | {:loopback_start, input :: String.t(), output :: String.t()}
           | :loopback_stop
           | {:call_start, role :: String.t(), ice_servers :: list() | nil, input :: String.t(),
-             output :: String.t()}
+             output :: String.t(), relay_only :: boolean()}
           | {:call_signal, type :: String.t(), payload :: map()}
           | {:call_mute, boolean()}
           | :call_stop
@@ -33,14 +33,15 @@ defmodule Tui.Media.Protocol do
 
   def encode(id, :loopback_stop), do: Jason.encode_to_iodata!(%{id: id, cmd: "loopback_stop"})
 
-  def encode(id, {:call_start, role, ice_servers, input, output}) do
+  def encode(id, {:call_start, role, ice_servers, input, output, relay_only}) do
     Jason.encode_to_iodata!(%{
       id: id,
       cmd: "call_start",
       role: role,
       ice_servers: ice_servers || [],
       in: input,
-      out: output
+      out: output,
+      relay_only: relay_only
     })
   end
 

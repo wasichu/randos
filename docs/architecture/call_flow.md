@@ -27,8 +27,8 @@ sequenceDiagram
     S-->>A: state: looking
     B->>S: find {mirrored languages, same audio}
     Note over S: Matchmaker pairs them and starts a CallCoordinator
-    S-->>A: state: connecting (role offerer, call: id, ice_servers, media)
-    S-->>B: state: connecting (role answerer, call: id, ice_servers, media)
+    S-->>A: state: connecting (role offerer, call: id, ice_servers, ice_transport_policy, media)
+    S-->>B: state: connecting (role answerer, call: id, ice_servers, ice_transport_policy, media)
 
     Note over A,B: Obligation 1: start media at the match
     A->>S: signal offer
@@ -205,7 +205,8 @@ sequenceDiagram
 | Server code behind it | `ParticipantShell` + `Participant` (shared) | same |
 | Call policy (activation, timeouts, failure) | server (`CallCoordinator`) | same |
 | Client obligations | `participant_channel.md` | same, same tests |
-| ICE servers arrive in | a DOM attribute on the call element | the `state` push's call map |
+| ICE servers and policy arrive in | DOM attributes on the call element (`data-ice-servers`, `data-ice-transport-policy`) | the `state` push's call map |
+| Relay-only (obligation 8) | `iceTransportPolicy: "relay"` | `call_start`'s `relay_only`: no host or STUN candidates |
 | WebRTC stack | the browser's | str0m in the Rust helper |
 | STUN / TURN candidates | the browser's ICE agent | the helper's own (`stun.rs`, `relay.rs` over `turn-client-proto`): one relay per call over UDP, TLS (`turns:`) as the fallback when UDP is blocked |
 | Echo cancellation | the browser's | the helper's (`echo.rs`, sonora's AEC3, the same canceller), on real devices only |

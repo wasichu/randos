@@ -110,6 +110,7 @@ test *args:
 # Browser smoke test: two headless Chromes place a real WebRTC call (needs Chrome)
 smoke:
     test/e2e/with_test_server.sh tmp/smoke-server.log env BASE_URL=http://localhost:4010 node test/e2e/call_smoke.mjs
+    RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/smoke-relay-server.log env BASE_URL=http://localhost:4010 node test/e2e/relay_only_smoke.mjs
 
 # Terminal client (text-only) against the local dev server; RANDOS_URL or --url to override
 tui *args:
@@ -120,6 +121,7 @@ tui *args:
 # helper built, node, and Chrome)
 tui-smoke:
     test/e2e/with_test_server.sh tmp/tui-smoke-server.log sh -c 'cd clients/tui && RANDOS_URL=ws://localhost:4010/participant/websocket mix test --only integration'
+    RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/tui-smoke-relay-server.log sh -c 'cd clients/tui && RANDOS_URL=ws://localhost:4010/participant/websocket mix test --only relay_only'
 
 # Run the TUI client's tests (pass args through)
 test-tui *args:

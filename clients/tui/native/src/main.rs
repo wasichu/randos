@@ -169,10 +169,12 @@ fn handle(
             input,
             out,
             bind_ip,
+            relay_only,
         } => {
             media.ensure_idle()?;
             let config = CallConfig {
                 ice_servers,
+                relay_only,
                 bind_ip: bind_ip.map(|ip| ip.parse()).transpose()?,
                 ..CallConfig::new(role.parse()?)
             };

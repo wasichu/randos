@@ -51,6 +51,7 @@ defmodule Tui.Media.State do
           status: atom() | nil,
           role: String.t() | nil,
           ice_servers: list() | nil,
+          relay_only?: boolean(),
           call: call() | nil,
           calls: non_neg_integer(),
           last_call_error: String.t() | nil,
@@ -64,6 +65,7 @@ defmodule Tui.Media.State do
             status: nil,
             role: nil,
             ice_servers: nil,
+            relay_only?: false,
             call: nil,
             calls: 0,
             last_call_error: nil,
@@ -135,11 +137,19 @@ defmodule Tui.Media.State do
 
   @doc """
   The server's state push: `status`, `webrtc_role`, and the call map, whose
-  `ice_servers` are this call's STUN/TURN servers.
+  `ice_servers` are this call's STUN/TURN servers and whose
+  `ice_transport_policy` `"relay"` means the call must go through the TURN
+  relay only, so the peer never learns our IP address.
   """
   @spec server_state(t(), atom() | nil, String.t() | nil, map() | nil) :: {t(), [command()]}
   def server_state(state, status, role, call \\ nil) do
-    state = %{state | status: status, role: role, ice_servers: call && call["ice_servers"]}
+    state = %{
+      state
+      | status: status,
+        role: role,
+        ice_servers: call && call["ice_servers"],
+        relay_only?: call != nil and call["ice_transport_policy"] == "relay"
+    }
 
     cond do
       status in @call_statuses -> maybe_start_call(state)
@@ -173,10 +183,10 @@ defmodule Tui.Media.State do
   def reply(%{mic_test: %{phase: :starting}} = state, {:loopback_start, _, _}, {:error, error}),
     do: {fail_mic_test(state, error), []}
 
-  def reply(%{call: %{phase: :starting}} = state, {:call_start, _, _, _, _}, {:ok, _opened}),
+  def reply(%{call: %{phase: :starting}} = state, {:call_start, _, _, _, _, _}, {:ok, _opened}),
     do: {put_call(state, phase: :active), []}
 
-  def reply(%{call: %{}} = state, {:call_start, _, _, _, _}, {:error, _error}),
+  def reply(%{call: %{}} = state, {:call_start, _, _, _, _, _}, {:error, _error}),
     do: give_up(state, "audio_unavailable")
 
   def reply(state, :devices, {:ok, %{"inputs" => inputs, "outputs" => outputs} = list}) do
@@ -272,7 +282,7 @@ defmodule Tui.Media.State do
     {state, stop_test} = stop_mic_test_for_call(state)
 
     {%{state | call: call, calls: seq, last_call_error: nil},
-     stop_test ++ [{:request, {:call_start, role, ice, input, output}}]}
+     stop_test ++ [{:request, {:call_start, role, ice, input, output, state.relay_only?}}]}
   end
 
   defp maybe_start_call(state), do: {state, []}

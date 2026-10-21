@@ -80,7 +80,7 @@ defmodule Tui.Media.StateTest do
 
   describe "call audio" do
     @ice [%{"urls" => "stun:stun.example:3478"}]
-    @start {:call_start, "offerer", @ice, "sine", "null"}
+    @start {:call_start, "offerer", @ice, "sine", "null", false}
     @offer %{"sdp" => %{"type" => "offer", "sdp" => "v=0"}}
     # The call map from the server's state push.
     @call %{"id" => "call-1", "ice_servers" => @ice}
@@ -97,6 +97,21 @@ defmodule Tui.Media.StateTest do
     test "starts from one state push carrying the role and the call's ICE servers" do
       assert {%{call: %{phase: :starting}}, [{:request, @start}]} =
                State.server_state(audio(), :connecting, "offerer", @call)
+    end
+
+    test "a relay-only call (the server's ice_transport_policy) starts relay-only" do
+      call = Map.put(@call, "ice_transport_policy", "relay")
+
+      assert {_, [{:request, {:call_start, "offerer", @ice, "sine", "null", true}}]} =
+               State.server_state(audio(), :connecting, "offerer", call)
+
+      # Anything else (or nothing: an older server) allows direct calls.
+      for policy <- ["all", nil] do
+        call = Map.put(@call, "ice_transport_policy", policy)
+
+        assert {_, [{:request, {:call_start, _, _, _, _, false}}]} =
+                 State.server_state(audio(), :connecting, "offerer", call)
+      end
     end
 
     test "starts at the match (connecting), not before, and only once" do

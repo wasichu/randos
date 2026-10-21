@@ -608,6 +608,18 @@ Not scheduled; pick up when relevant.
 
 All 2026-10-19 unless noted.
 
+- **Relay-only calls (2026-10-21).** Every call goes through the TURN relay
+  (`ice_transport_policy` `"relay"`, obligation 8 in
+  `participant_channel.md`), so neither person learns the other's IP
+  address: for anonymous calls between strangers, that was the biggest leak
+  left (Omegle's was exactly this). The owner keeps an escape hatch for bad
+  latency: `RANDOS_ALLOW_DIRECT_CALLS=true` allows direct calls with the
+  relay as the fallback. Production refuses to boot without a relay unless
+  direct calls are allowed (`RandosWeb.IceServers.check!/0`). If latency
+  from far away is the problem, the fix is more relay regions, not direct
+  calls. Open: v0.1.0 TUIs ignore the policy (their own address still
+  reaches the peer) until a new release; and the server could enforce the
+  policy itself by dropping non-relay candidates from relayed signaling.
 - **License (2026-10-21): AGPL-3.0-or-later.** The owner would mind someone
   running a closed, modified randos; the AGPL's network clause means anyone
   who runs a modified copy for others must offer them its source. The site's

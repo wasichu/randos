@@ -10,6 +10,13 @@ defmodule RandosWeb.IceServers do
   the longest possible call: coturn re-checks them when an allocation is
   refreshed, so expiry mid-call would drop relayed audio. A configured TTL
   below that floor is raised to it.
+
+  **Calls are relay-only whenever there's a TURN server**
+  (`ice_transport_policy` `"relay"`), so neither person ever learns the
+  other's IP address. `RANDOS_ALLOW_DIRECT_CALLS=true` (`:allow_direct_calls`)
+  allows direct calls, with the relay as the fallback (`"all"`). Without a
+  TURN server (development, tests) calls are direct; production refuses to
+  boot that way unless direct calls are allowed (`check!/0`).
   """
 
   require Logger
@@ -32,11 +39,51 @@ defmodule RandosWeb.IceServers do
   end
 
   @doc """
-  Returns JSON-encoded ICE servers for embedding into page metadata.
+  A call's ICE configuration: its servers (fresh TURN credentials) and its
+  `ice_transport_policy`, WebRTC's own values: `"relay"` (only the TURN
+  relay, never a direct connection) or `"all"` (direct when possible).
   """
-  def json do
-    Jason.encode!(list())
+  @spec call_config() :: %{ice_servers: [map()], ice_transport_policy: String.t()}
+  def call_config do
+    servers = list()
+    %{ice_servers: servers, ice_transport_policy: transport_policy(servers)}
   end
+
+  @doc """
+  The policy for `servers`: `"relay"` when there's a TURN server among them
+  and direct calls aren't allowed, else `"all"`.
+  """
+  @spec transport_policy([map()]) :: String.t()
+  def transport_policy(servers) do
+    if Application.get_env(:randos, :allow_direct_calls, false) or
+         not Enum.any?(servers, &turn?/1),
+       do: "all",
+       else: "relay"
+  end
+
+  @doc """
+  At boot, where calls must be relay-only (`:require_relay`, set in
+  production unless direct calls are allowed): raises unless a TURN server is
+  configured, so a misconfiguration can't silently make calls direct.
+  """
+  @spec check!() :: :ok
+  def check! do
+    if Application.get_env(:randos, :require_relay, false) and transport_policy(list()) != "relay" do
+      raise """
+      no TURN server is configured, so calls would be direct and show each
+      person's IP address to the other. Set TURN_SHARED_SECRET and TURN_HOST
+      (or TURN_SERVER_URL / TURNS_SERVER_URL), or set
+      RANDOS_ALLOW_DIRECT_CALLS=true to allow direct calls.
+      """
+    end
+
+    :ok
+  end
+
+  defp turn?(%{"urls" => urls}), do: urls |> List.wrap() |> Enum.any?(&turn_url?/1)
+  defp turn?(_server), do: false
+
+  defp turn_url?(url), do: String.starts_with?(url, ["turn:", "turns:"])
 
   defp configured_servers do
     Application.get_env(:randos, __MODULE__, [])

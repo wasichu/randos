@@ -7,6 +7,8 @@ defmodule Randos.Application do
 
   @impl true
   def start(_type, _args) do
+    :ok = RandosWeb.IceServers.check!()
+
     children = [
       RandosWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:randos, :dns_cluster_query) || :ignore},

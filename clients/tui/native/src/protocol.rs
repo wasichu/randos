@@ -25,9 +25,9 @@ pub enum Command {
         out: String,
     },
     LoopbackStop,
-    /// Starts a call. `ice_servers` is the channel's `ice_servers` push,
-    /// accepted now and used once STUN/TURN gathering lands. `bind_ip` is for
-    /// tests (`127.0.0.1`); by default the default route's address is used.
+    /// Starts a call. `ice_servers` are the call's, from the channel's state
+    /// push (STUN and TURN). `bind_ip` is for tests (`127.0.0.1`); by default
+    /// the default route's address is used.
     CallStart {
         role: String,
         #[serde(default)]
@@ -38,6 +38,10 @@ pub enum Command {
         out: String,
         #[serde(default)]
         bind_ip: Option<String>,
+        /// Only the TURN relay, never a direct connection (the call map's
+        /// `ice_transport_policy` `"relay"`), so the peer never sees our IP.
+        #[serde(default)]
+        relay_only: bool,
     },
     /// A signal from the peer, exactly as the channel's `signal` push has it.
     CallSignal {
@@ -242,6 +246,25 @@ mod tests {
                 id: 3,
                 command: Command::CallMute { muted: true }
             })
+        );
+    }
+
+    #[test]
+    fn call_start_is_direct_unless_relay_only() {
+        let relay_only = |line: &[u8]| match parse(line) {
+            Ok(Request {
+                command: Command::CallStart { relay_only, .. },
+                ..
+            }) => Some(relay_only),
+            _ => None,
+        };
+        assert_eq!(
+            relay_only(br#"{"id":5,"cmd":"call_start","role":"offerer","relay_only":true}"#),
+            Some(true)
+        );
+        assert_eq!(
+            relay_only(br#"{"id":6,"cmd":"call_start","role":"offerer"}"#),
+            Some(false)
         );
     }
 

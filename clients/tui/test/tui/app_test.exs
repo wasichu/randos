@@ -360,7 +360,10 @@ defmodule Tui.AppTest do
       send(app, {:randos, {:push, "state", state}})
 
       assert {:ok, _} =
-               GenServer.call(peer, {:request, {:call_start, "answerer", [], "sine", "null"}})
+               GenServer.call(
+                 peer,
+                 {:request, {:call_start, "answerer", [], "sine", "null", false}}
+               )
 
       relay_until(app, peer, System.monotonic_time(:millisecond) + 8_000, %{
         established?: false,

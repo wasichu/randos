@@ -8,9 +8,10 @@ defmodule RandosWeb.ParticipantShell do
   what the transport has to deliver to its client:
 
     * `{:push_signal, message}` — a WebRTC signal from the peer
-    * `{:ice_servers, servers | nil}` — fresh STUN/TURN servers whenever the
-      participant gets a new call (credentials are minted per call), `nil`
-      once there is no call
+    * `{:ice_config, config | nil}` — `RandosWeb.IceServers.call_config/0`
+      whenever the participant gets a new call (fresh STUN/TURN servers,
+      since credentials are minted per call, and the transport policy),
+      `nil` once there is no call
 
   `client_state/1` is the JSON-safe view of a participant for clients. It
   never includes the match, the peer, or any participant id or pid; the
@@ -26,12 +27,12 @@ defmodule RandosWeb.ParticipantShell do
   alias Randos.Participant
   alias RandosWeb.IceServers
 
-  @type client_effect :: {:push_signal, map()} | {:ice_servers, [map()] | nil}
+  @type client_effect :: {:push_signal, map()} | {:ice_config, map() | nil}
 
   @spec run(Participant.t(), Participant.event()) :: {Participant.t(), [client_effect()]}
   def run(%Participant{} = participant, event) do
     {next, client_effects} = apply_event(participant, event)
-    {next, ice_servers(participant, next) ++ client_effects}
+    {next, ice_config(participant, next) ++ client_effects}
   end
 
   @doc "The participant as its client sees it."
@@ -113,7 +114,7 @@ defmodule RandosWeb.ParticipantShell do
 
   # Fresh credentials for every new call, so they can never be older than the
   # call that uses them.
-  defp ice_servers(%{call_pid: same}, %{call_pid: same}), do: []
-  defp ice_servers(_before, %{call_pid: nil}), do: [{:ice_servers, nil}]
-  defp ice_servers(_before, _after), do: [{:ice_servers, IceServers.list()}]
+  defp ice_config(%{call_pid: same}, %{call_pid: same}), do: []
+  defp ice_config(_before, %{call_pid: nil}), do: [{:ice_config, nil}]
+  defp ice_config(_before, _after), do: [{:ice_config, IceServers.call_config()}]
 end

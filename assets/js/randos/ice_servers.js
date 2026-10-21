@@ -15,3 +15,9 @@ export const iceServersFrom = element => {
   logWarning("webrtc.no_ice_servers")
   return []
 }
+
+// The call's transport policy, rendered beside its ICE servers: "relay" (only
+// the TURN relay, never a direct connection) or "all". The server decides
+// (RandosWeb.IceServers); "all" only if it said nothing.
+export const iceTransportPolicyFrom = element =>
+  element?.dataset.iceTransportPolicy === "relay" ? "relay" : "all"

@@ -27,9 +27,10 @@ export const WebRTCClientState = Object.freeze({
 })
 
 export class WebRTCClient {
-  constructor({role, iceServers, pushSignal, onStateChange, onLocalStream, onRemoteStream}) {
+  constructor({role, iceServers, iceTransportPolicy = "all", pushSignal, onStateChange, onLocalStream, onRemoteStream}) {
     this.role = role
     this.iceServers = iceServers
+    this.iceTransportPolicy = iceTransportPolicy
     this.pushSignal = pushSignal
     this.onStateChange = onStateChange
     this.onLocalStream = onLocalStream
@@ -54,7 +55,11 @@ export class WebRTCClient {
   async startConnection() {
     if (this.peerConnection || this.cleaned) return
 
-    logEvent("webrtc.start", {role: this.role, iceServerCount: this.iceServers.length})
+    logEvent("webrtc.start", {
+      role: this.role,
+      iceServerCount: this.iceServers.length,
+      iceTransportPolicy: this.iceTransportPolicy,
+    })
     const stream = await this.captureLocalAudio()
 
     // The call may have ended while the mic prompt was open; never keep a
@@ -68,7 +73,11 @@ export class WebRTCClient {
     this.onLocalStream?.(stream)
 
     this.setState(WebRTCClientState.CREATING_PEER_CONNECTION)
-    this.peerConnection = new RTCPeerConnection({iceServers: this.iceServers})
+    // "relay": only the TURN relay, so the peer never sees our IP address.
+    this.peerConnection = new RTCPeerConnection({
+      iceServers: this.iceServers,
+      iceTransportPolicy: this.iceTransportPolicy,
+    })
     this.peerConnection.onicecandidate = event => this.handleLocalIceCandidate(event)
     this.peerConnection.oniceconnectionstatechange = () =>
       this.handleConnectionState("ice_connection_state", this.peerConnection?.iceConnectionState)

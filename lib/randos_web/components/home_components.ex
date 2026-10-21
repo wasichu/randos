@@ -75,6 +75,7 @@ defmodule RandosWeb.HomeComponents do
   attr :matchmaking_error, :string, default: nil
 
   attr :ice_servers, :string, default: nil
+  attr :ice_transport_policy, :string, default: nil
 
   def conversation_card(assigns) do
     ~H"""
@@ -87,7 +88,12 @@ defmodule RandosWeb.HomeComponents do
         id={"call-media-#{@call_id}"}
         class="contents"
       >
-        <.call_media_panel call_id={@call_id} webrtc_role={@webrtc_role} ice_servers={@ice_servers} />
+        <.call_media_panel
+          call_id={@call_id}
+          webrtc_role={@webrtc_role}
+          ice_servers={@ice_servers}
+          ice_transport_policy={@ice_transport_policy}
+        />
       </div>
 
       <%= case @ui_state do %>
@@ -356,6 +362,7 @@ defmodule RandosWeb.HomeComponents do
   attr :webrtc_role, :atom, required: true
 
   attr :ice_servers, :string, default: nil
+  attr :ice_transport_policy, :string, default: nil
 
   defp call_media_panel(assigns) do
     ~H"""
@@ -366,6 +373,7 @@ defmodule RandosWeb.HomeComponents do
       data-webrtc-role={@webrtc_role}
       data-call-id={@call_id}
       data-ice-servers={@ice_servers}
+      data-ice-transport-policy={@ice_transport_policy}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
       class="contents"

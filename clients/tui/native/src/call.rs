@@ -67,8 +67,8 @@ pub struct CallConfig {
     /// server-reflexive candidate (our address outside the NAT).
     pub ice_servers: Value,
     /// Offer only the relay candidate (no host or STUN), like a browser's
-    /// `iceTransportPolicy: "relay"`, so every packet goes through TURN.
-    /// Not in the Port protocol: tests use it to prove the relay path.
+    /// `iceTransportPolicy: "relay"`, so every packet goes through TURN and
+    /// the peer never sees our address: `call_start`'s `relay_only`.
     pub relay_only: bool,
     /// Drop every Nth incoming RTP packet once connected (0: none), to test
     /// loss handling. Not in the Port protocol.

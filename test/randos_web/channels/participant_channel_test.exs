@@ -164,7 +164,12 @@ defmodule RandosWeb.ParticipantChannelTest do
     assert_push "state", %{
       status: :connecting,
       webrtc_role: :offerer,
-      call: %{id: call_id, ice_servers: [_ | _], media: %{self: :connecting, peer: :connecting}}
+      call: %{
+        id: call_id,
+        ice_servers: [_ | _],
+        ice_transport_policy: "all",
+        media: %{self: :connecting, peer: :connecting}
+      }
     }
 
     assert "call-" <> _ = call_id

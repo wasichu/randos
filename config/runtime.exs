@@ -40,7 +40,17 @@ if ice_servers = System.get_env("RANDOS_ICE_SERVERS") do
   config :randos, RandosWeb.IceServers, servers: servers
 end
 
+# Calls go through the TURN relay only, so neither person learns the other's
+# IP address (RandosWeb.IceServers). RANDOS_ALLOW_DIRECT_CALLS=true allows
+# direct calls, with the relay as the fallback.
+allow_direct_calls = System.get_env("RANDOS_ALLOW_DIRECT_CALLS") in ~w(true 1)
+config :randos, :allow_direct_calls, allow_direct_calls
+
 if config_env() == :prod do
+  # Relay-only needs a relay: refuse to boot without one (IceServers.check!/0)
+  # rather than silently making calls direct.
+  config :randos, :require_relay, not allow_direct_calls
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want

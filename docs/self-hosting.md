@@ -49,15 +49,26 @@ the app itself serves plain HTTP on `PORT`.
 | `PHX_HOST` | yes | The public host name. Browsers' websockets are accepted only from this origin. |
 | `PORT` | | The HTTP port (default `4000`). |
 | `PHX_SERVER` | for releases | `true` starts the web server (`bin/server`, which the Docker image runs, sets it). |
+| `RANDOS_ALLOW_DIRECT_CALLS` | | `true` allows direct calls between the two people, with the relay as the fallback. Unset, calls go through the TURN relay only (see below). |
 | `RANDOS_ICE_SERVERS` | | When TURN isn't configured: the ICE servers to hand out, as JSON (default: Google's public STUN). |
 | `RANDOS_CONNECT_TIMEOUT_MS` | | How long a call may take to connect before it ends (default 15 s). |
 | `DNS_CLUSTER_QUERY` | | Erlang clustering via DNS. Clustering alone doesn't share the waiting room (see above). |
 
 ### TURN
 
-Two people behind strict NATs or firewalls can't reach each other directly;
-a TURN server relays their (still encrypted) audio. Without one, randos
-hands out public STUN only, and some calls will fail to connect.
+A TURN server relays the two people's (still encrypted) audio. **With one
+configured, every call goes through it** (relay-only), so neither person
+ever learns the other's IP address: a direct call would show each one's
+address to the other. That costs a little latency (the audio detours
+through the relay) and the relay's bandwidth (about 40 kbit/s each way per
+call). `RANDOS_ALLOW_DIRECT_CALLS=true` allows direct calls instead, with
+the relay as the fallback for people who can't reach each other directly.
+
+**Production refuses to start without a TURN server** unless direct calls
+are allowed, so a configuration mistake can't quietly expose addresses.
+Development and the tests run without one, with direct calls. If the relay
+is down, relay-only calls can't connect: they end at the connect timeout
+with the usual "couldn't connect" message.
 
 randos mints short-lived TURN credentials for each call from a secret it
 shares with coturn (coturn's `use-auth-secret`), so no one gets a
@@ -71,8 +82,9 @@ long-lived password.
 | `TURN_REALM` | coturn's realm. Kept with the deployment's config; clients don't need it. |
 | `TURN_CREDENTIAL_TTL_SECONDS` | How long each call's credentials last (default 3600). Values below the longest call plus ten minutes (2400) are raised to that, since coturn re-checks credentials when a relay is refreshed. |
 
-TURN needs `TURN_SHARED_SECRET` and at least one TURN URL; otherwise randos
-falls back to STUN.
+TURN needs `TURN_SHARED_SECRET` and at least one TURN URL; otherwise there
+is no relay (STUN only, so direct calls), which production allows only with
+`RANDOS_ALLOW_DIRECT_CALLS=true`.
 
 Our coturn server is defined as code in `infra/coturn/` (OpenTofu and
 cloud-init on a DigitalOcean droplet, with Let's Encrypt for TLS); its

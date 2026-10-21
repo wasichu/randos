@@ -86,6 +86,7 @@ e.g. `"in_call"`.
     "status": "connecting | active | extension_pending | ended",
     "media": {"self": "connecting | connected | disconnected", "peer": "…"},
     "ice_servers": [{"urls": "stun:…"}, {"urls": "turn:…", "username": "…", "credential": "…"}],
+    "ice_transport_policy": "relay | all",
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
@@ -105,6 +106,11 @@ e.g. `"in_call"`.
 - `ice_servers`: this call's STUN/TURN servers (fresh TURN credentials,
   valid for at least the longest possible call). Use them for this call's
   peer connection.
+- `ice_transport_policy`: WebRTC's `iceTransportPolicy` for this call.
+  `"relay"` (whenever the server has a TURN server, unless its operator
+  allows direct calls): connect only through the TURN relay, so neither
+  person learns the other's IP address. `"all"`: direct when possible, the
+  relay as the fallback. See obligation 8.
 - `call_deadline_unix_ms`: when the current segment ends (10 min, then 10
   more per extension, max 2 extensions / 30 min).
   `extension_deadline_unix_ms`: when the vote closes (20 s).
@@ -153,6 +159,11 @@ end-to-end tests check these, by number, for both clients
 | 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
 | 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
+| 8: relay-only means relay only | `relay_only_smoke.mjs` | TUI ↔ TUI: `relay_only_test.exs` |
+
+(Obligation 8's tests run against a server whose only TURN server never
+answers, `RANDOS_TEST_UNREACHABLE_RELAY=1`, so a call can connect only by
+going direct: `just smoke` and `just tui-smoke` run them.)
 
 1. **Start at the match.** On `connecting`, capture the mic and create the
    peer connection with the call's `ice_servers`, and add the audio track.
@@ -184,6 +195,13 @@ end-to-end tests check these, by number, for both clients
    reply if you're about to close the channel). The call ends
    `peer_disconnected`. A channel that just goes away ends it `disconnected`,
    which means a lost connection (network, crash), not a choice.
+8. **Relay-only means relay only.** When the call's `ice_transport_policy`
+   is `"relay"`, gather and send only relay candidates (a browser's
+   `iceTransportPolicy: "relay"`): no host or server-reflexive candidates,
+   in trickled candidates or in the SDP. Your address must never reach the
+   peer. If the relay can't be reached, the call doesn't connect, and the
+   server ends it at the connect timeout; never fall back to direct. A
+   missing policy (an older server) means `"all"`.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media

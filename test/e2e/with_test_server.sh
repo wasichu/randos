@@ -37,7 +37,13 @@ end)
 mkdir -p "$(dirname "$log")"
 export RANDOS_CONNECT_TIMEOUT_MS=4000 RANDOS_ICE_SERVERS='[]'
 # A developer's TURN settings (`just dev-turn`) must not leak into tests.
-unset TURN_SHARED_SECRET TURN_HOST TURN_SERVER_URL TURNS_SERVER_URL TURN_STUN_URL
+unset TURN_SHARED_SECRET TURN_HOST TURN_SERVER_URL TURNS_SERVER_URL TURN_STUN_URL RANDOS_ALLOW_DIRECT_CALLS
+# RANDOS_TEST_UNREACHABLE_RELAY=1: a TURN server that never answers, so calls
+# are relay-only and can't connect; a client that connected anyway went
+# direct, against the policy (the relay-only obligation tests).
+if [ "${RANDOS_TEST_UNREACHABLE_RELAY:-}" = 1 ]; then
+  export TURN_SERVER_URL=turn:127.0.0.1:9 TURN_SHARED_SECRET=test-only-secret
+fi
 RANDOS_TEST_PARENT_PID=$$ PORT=4010 HTTPS_PORT=4011 RANDOS_CALL_SEGMENT_MS="${RANDOS_CALL_SEGMENT_MS:-8000}" \
   elixir -e "$watchdog" -S mix phx.server > "$log" 2>&1 &
 server=$!

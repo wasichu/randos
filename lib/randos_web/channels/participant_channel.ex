@@ -32,7 +32,7 @@ defmodule RandosWeb.ParticipantChannel do
       assign(socket,
         participant: participant,
         client_state: state,
-        ice_servers: nil,
+        ice_config: nil,
         find_tokens: @find_capacity,
         find_refilled_at: System.monotonic_time(:millisecond)
       )
@@ -126,14 +126,14 @@ defmodule RandosWeb.ParticipantChannel do
   end
 
   # Minted once per call (fresh TURN credentials); every state push for that
-  # call carries them in its `call` map.
-  defp deliver(socket, {:ice_servers, servers}), do: assign(socket, :ice_servers, servers)
+  # call carries them, and the transport policy, in its `call` map.
+  defp deliver(socket, {:ice_config, config}), do: assign(socket, :ice_config, config)
 
   defp push_state_if_changed(socket) do
     state =
       socket.assigns.participant
       |> ParticipantShell.client_state()
-      |> with_ice_servers(socket.assigns.ice_servers)
+      |> with_ice_config(socket.assigns.ice_config)
 
     if state == socket.assigns.client_state do
       socket
@@ -143,10 +143,10 @@ defmodule RandosWeb.ParticipantChannel do
     end
   end
 
-  defp with_ice_servers(%{call: %{} = call} = state, servers),
-    do: %{state | call: Map.put(call, :ice_servers, servers)}
+  defp with_ice_config(%{call: %{} = call} = state, config),
+    do: %{state | call: Map.merge(call, config || %{ice_servers: nil, ice_transport_policy: nil})}
 
-  defp with_ice_servers(state, _servers), do: state
+  defp with_ice_config(state, _config), do: state
 
   defp take_find_token(socket) do
     now = System.monotonic_time(:millisecond)

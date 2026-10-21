@@ -108,8 +108,51 @@ defmodule RandosWeb.IceServersTest do
     end)
   end
 
+  describe "the transport policy" do
+    test "relay-only whenever there's a TURN server" do
+      with_restored_env(fn ->
+        System.put_env("TURN_HOST", "turn.example.com")
+        System.put_env("TURN_SHARED_SECRET", "shared-secret")
+
+        assert %{ice_servers: [_ | _], ice_transport_policy: "relay"} = IceServers.call_config()
+      end)
+    end
+
+    test "direct calls, with the relay as the fallback, when allowed" do
+      with_restored_env(fn ->
+        System.put_env("TURN_HOST", "turn.example.com")
+        System.put_env("TURN_SHARED_SECRET", "shared-secret")
+        Application.put_env(:randos, :allow_direct_calls, true)
+
+        assert %{ice_transport_policy: "all"} = IceServers.call_config()
+      end)
+    end
+
+    test "direct without a TURN server (development, tests), which production refuses" do
+      with_restored_env(fn ->
+        assert %{ice_transport_policy: "all"} = IceServers.call_config()
+        assert IceServers.check!() == :ok
+
+        Application.put_env(:randos, :require_relay, true)
+        assert_raise RuntimeError, ~r/RANDOS_ALLOW_DIRECT_CALLS/, &IceServers.check!/0
+
+        System.put_env("TURN_SERVER_URL", "turns:turn.example.com:5349")
+        System.put_env("TURN_SHARED_SECRET", "shared-secret")
+        assert IceServers.check!() == :ok
+      end)
+    end
+
+    test "a TURN server configured as plain ICE servers counts too" do
+      assert IceServers.transport_policy([%{"urls" => ["stun:a:3478", "turn:a:3478"]}]) == "relay"
+      assert IceServers.transport_policy([%{"urls" => "stun:a:3478"}]) == "all"
+    end
+  end
+
   defp with_restored_env(fun) do
     original_config = Application.get_env(:randos, IceServers)
+
+    original_flags =
+      Map.new([:allow_direct_calls, :require_relay], &{&1, Application.get_env(:randos, &1)})
 
     original_env =
       Map.new(env_names(), fn name ->
@@ -121,6 +164,11 @@ defmodule RandosWeb.IceServersTest do
       fun.()
     after
       Application.put_env(:randos, IceServers, original_config)
+
+      Enum.each(original_flags, fn
+        {key, nil} -> Application.delete_env(:randos, key)
+        {key, value} -> Application.put_env(:randos, key, value)
+      end)
 
       Enum.each(original_env, fn
         {name, nil} -> System.delete_env(name)

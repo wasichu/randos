@@ -10,6 +10,6 @@ run_native? = require_native? or File.regular?(Tui.Media.default_helper_path())
 # Many tests wait on a real helper process; the 100 ms default flakes when
 # precommit or CI is busy compiling. This only lengthens failing waits.
 ExUnit.start(
-  exclude: [:integration] ++ if(run_native?, do: [], else: [:native]),
+  exclude: [:integration, :relay_only] ++ if(run_native?, do: [], else: [:native]),
   assert_receive_timeout: 2_000
 )

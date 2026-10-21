@@ -128,6 +128,8 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#call-countdown")
     assert has_element?(view_a, "#webrtc-audio[data-webrtc-role='offerer']")
     assert has_element?(view_a, "#webrtc-audio[data-ice-servers*='stun:']")
+    # No TURN server in tests, so the call may be direct.
+    assert has_element?(view_a, "#webrtc-audio[data-ice-transport-policy='all']")
     assert has_element?(view_a, "#mute-button[disabled]")
     assert has_element?(view_a, "#local-waveform-canvas[data-audio-visualizer='local']")
     assert has_element?(view_a, "#remote-waveform-canvas[data-audio-visualizer='remote']")
