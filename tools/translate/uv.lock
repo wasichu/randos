@@ -480,6 +480,7 @@ name = "randos-translate"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "huggingface-hub" },
     { name = "polib" },
     { name = "sacrebleu" },
 ]
@@ -497,6 +498,7 @@ models = [
 
 [package.metadata]
 requires-dist = [
+    { name = "huggingface-hub", specifier = "==0.36.2" },
     { name = "polib", specifier = "==1.2.0" },
     { name = "sacrebleu", specifier = "==2.5.1" },
 ]

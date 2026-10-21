@@ -3,8 +3,11 @@ name = "randos-translate"
 version = "0.1.0"
 description = "The Phase 6 translation shootout for randos: machine-translate the UI's gettext strings, check and score them, and fill the .po files."
 requires-python = "==3.13.*"
-# The checks and the .po handling: small, pure Python, no models.
+# The checks and the .po handling: small, pure Python, no models; and
+# huggingface_hub for its `hf` CLI (`uv run hf auth login`, for the gated
+# models) and model downloads.
 dependencies = [
+    "huggingface-hub==0.36.2",
     "polib==1.2.0",
     "sacrebleu==2.5.1",
 ]
