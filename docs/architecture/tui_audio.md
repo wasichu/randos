@@ -98,7 +98,7 @@ isolation and the packaging matrix), B wins clearly.
 | --- | --- | --- |
 | Style | sans-IO, synchronous; we own sockets/timers (fits a single-threaded Port loop) | async (tokio default) |
 | Maintenance | daily commits [source] | active; 0.21 is a layer over the sans-IO `rtc` core, pre-1.0 [source] |
-| Crypto | `rust-crypto` = pure Rust, **no C** [source]; also aws-lc, openssl, apple/windows native | `ring` (C/asm via cc) or aws-lc [source] |
+| Crypto | `rust-crypto` = pure Rust, **no C** [source] (wrong in practice, found 2026-10-20: its DTLS certificate generation pulls in AWS-LC, see the helper README); also aws-lc, openssl, apple/windows native | `ring` (C/asm via cc) or aws-lc [source] |
 | TURN client | **none built in** [source]; relayed candidates accepted, we do the allocation and wrapping | **UDP only**; `turns:` and non-UDP skipped [source] |
 | Trickle ICE / both roles | yes / yes (offer, accept_offer, accept_answer) [source] | yes / yes [source] |
 | Platforms | Windows, Linux gnu, macOS listed as tested; **musl not listed** [source] | undocumented [unverified] |
@@ -342,7 +342,8 @@ The browser's matching seam is unchanged: `processLocalStream` in
 
 - **One helper binary per target** (Rust). Its only C is a statically linked
   libopus, built on our CI.
-- **No new NIFs**, and nothing compiled on users' machines.
+- **No new NIFs**, and nothing compiled on users' machines. Correction (2026-10-20): AWS-LC (via str0m's DTLS) is C too, also
+  built statically by Cargo; still nothing compiled on users' machines.
 
 ## Decisions (2026-10-19)
 
