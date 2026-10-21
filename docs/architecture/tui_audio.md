@@ -122,8 +122,22 @@ to str0m with the *relayed* address as its destination; permissions
 installed per remote candidate; candidates trickled even before the
 answerer knows its mid. One crate quirk: with bad credentials it reports
 failure only after its transaction timeout (~40 s), by design; our wrapper
-fails fast instead (it recognises coturn's refusal). `turns:` (TLS)
-is still unbuilt; `turn-client-rustls` is the path if a network needs it.
+fails fast instead (it recognises coturn's refusal). `turns:` (TLS) was
+added in Stage 2 (`turn-client-rustls`, 2026-10-21): a whole call over TLS
+TURN runs through coturn too.
+
+**One premise of this checkpoint was wrong (found 2026-10-20).** The
+recommendation counted str0m as "the only verified path with no C at all".
+In practice its `rust-crypto` feature pulls in AWS-LC (C, built with CMake)
+through DTLS certificate generation (`str0m-rust-crypto` → `dimpl`'s
+`rcgen` → `aws-lc-rs`), and has since Stage 1; the docs said "no C" until
+the Stage 3 dependency review caught it. The decision holds anyway: the
+str0m integration is proven end to end (direct, STUN, UDP and TLS TURN,
+against our coturn), webrtc-rs's crypto has C of its own (`ring`), and
+AWS-LC is built statically on our CI like libopus, so users still compile
+nothing. Getting back to no C needs an upstream change (rcgen on a
+RustCrypto backend); TLS TURN now reuses AWS-LC as rustls's provider
+rather than adding `ring`.
 
 #### Codec: Opus, statically linked reference libopus
 
@@ -192,7 +206,9 @@ is still unbuilt; `turn-client-rustls` is the path if a network needs it.
 
 Browsers do AEC for free; a native client doesn't.
 
-1. **v1: headphones required.** We can't reliably detect them (cpal only
+1. **v1: headphones required** (superseded 2026-10-20: echo cancellation
+   shipped in Stage 3, so headphones are recommended, not required). We
+   can't reliably detect them (cpal only
    reports device names), so the TUI tells the user before the call. Add
    simple ducking (attenuate the mic while the far end speaks) as a cheap
    safety net.
@@ -324,12 +340,15 @@ The browser's matching seam is unchanged: `processLocalStream` in
      output offers only 44.1 kHz (music mode) or 16 kHz (call mode) [run].
      Bluetooth is common, so the helper now resamples any device rate with
      whole 20 ms frames to and from 48 kHz.
-2. **Hardening:**
+2. **Hardening (done 2026-10-21):**
    - `turns:` via turn-client-rustls.
-   - Jitter buffer tuning and packet-loss concealment.
+   - Jitter buffer tuning and packet-loss concealment (Opus FEC plus sized
+     concealment; str0m's reordering buffer covers jitter).
    - Device selection, mute.
+   - Plus, from the live call: relay permissions on allocation, and the
+     call's path (direct or relay) in the stats.
    - Scoped and ordered (2026-10-20) in `refactor_plan.md` (4.3).
-3. **AEC:** sonora or aec3 (or macOS VoiceProcessingIO), so headphones become
+3. **AEC (done 2026-10-20):** sonora or aec3 (or macOS VoiceProcessingIO), so headphones become
    optional. Chosen (2026-10-20): `sonora` 0.2 (BSD-3-Clause, ~820k
    downloads, a pure-Rust port of WebRTC's audio processing, the canceller
    Chrome uses); `aec3` describes itself as a work in progress, and

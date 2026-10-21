@@ -1,6 +1,7 @@
 # Call flow: how a call happens, for the browser and the TUI
 
-Diagrams of the WebRTC call flow, as built (2026-10-20). The protocol itself
+Diagrams of the WebRTC call flow, as built (2026-10-20; the TUI helper's
+parts updated 2026-10-21 for Stages 2 and 3). The protocol itself
 is specified in [`participant_channel.md`](participant_channel.md) (its
 "Client obligations" are the contract both clients follow); call timing
 values live in `Randos.Calls.Lifecycle`. These diagrams show how the pieces
@@ -142,16 +143,20 @@ flowchart LR
 
     subgraph Helper["randos_media (Rust, clients/tui/native)"]
         Port["Port server<br/>(main.rs, protocol.rs:<br/>JSON in {:packet, 4} frames)"]
-        Call["call session thread (call.rs):<br/>str0m Rtc, UDP socket,<br/>Opus encode/decode"]
-        Cand["candidates.rs: STUN (stun.rs),<br/>TURN relay (relay.rs),<br/>trickle, datagram routing"]
+        Call["call session thread (call.rs):<br/>str0m Rtc, UDP socket,<br/>Opus encode/decode, FEC, mute"]
+        Cand["candidates.rs: STUN (stun.rs),<br/>TURN relay over UDP or TLS (relay.rs,<br/>tls_stream.rs), trickle, routing"]
+        Echo["echo.rs: echo cancellation<br/>(sonora AEC3)"]
+        Rep["report.rs: call_stats,<br/>call_levels (spectrum.rs)"]
         Dev["audio::Devices<br/>(capture, playback, resample)"]
         Cpal["cpal callbacks<br/>(lock-free rings only)"]
         Port --> Call --> Dev --> Cpal
         Call --> Cand
+        Call --> Echo
+        Call --> Rep
     end
 
     Server[("Server<br/>participant channel")] <--> Conn
-    Media <-- "call_start / call_signal / call_stop<br/>events: call_signal, call_state, call_stats" --> Port
+    Media <-- "call_start / call_signal / call_mute / call_stop, devices<br/>events: call_signal, call_state, call_stats, call_levels" --> Port
 ```
 
 How a signal travels inside the TUI (the server sees the same `signal`
@@ -202,7 +207,8 @@ sequenceDiagram
 | Client obligations | `participant_channel.md` | same, same tests |
 | ICE servers arrive in | a DOM attribute on the call element | the `state` push's call map |
 | WebRTC stack | the browser's | str0m in the Rust helper |
-| STUN / TURN candidates | the browser's ICE agent | the helper's own (`stun.rs`, `relay.rs` over `turn-client-proto`), one relay allocation per call |
+| STUN / TURN candidates | the browser's ICE agent | the helper's own (`stun.rs`, `relay.rs` over `turn-client-proto`): one relay per call over UDP, TLS (`turns:`) as the fallback when UDP is blocked |
+| Echo cancellation | the browser's | the helper's (`echo.rs`, sonora's AEC3, the same canceller), on real devices only |
 | Mic, speaker, codec | browser (Opus) | cpal + libopus + resampling in the helper |
 | "I'm leaving" | `pagehide` → `peer_disconnected` | quit → `peer_disconnected` (`Tui.Connection.leave/2`) |
 | Error text | from the server (`ParticipantErrors`) | same, via `error_message` |

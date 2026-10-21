@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `54ee3ea` (2026-10-20). Update this line, and
+Verified against the code at `13902a9` (2026-10-21). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -92,7 +92,7 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (Stage 1 done; Stages 2 and 3 in progress)
+### 4.3 Audio (Stages 1 to 3 done; packaging next)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
@@ -118,8 +118,10 @@ worth a line in the headphones advice. Still to try: the same call across
 real networks (iPad on cellular, against production), which is what
 exercises STUN/TURN. See `tui_audio.md` Stage 1.
 
-**Stages 2 and 3 (started 2026-10-20; the owner asked for both, no open
-design decisions).** Order, one commit each, reviewed with the advisor:
+**Stages 2 and 3 (done 2026-10-21; the owner asked for both, no open
+design decisions).** All seven items below are built, each with tests,
+the relay ones also against coturn (`just turn-check`: four calls/tests).
+Order, one commit each, reviewed with the advisor:
 1. Relay permissions for every known remote candidate when the allocation
    comes up (the open item below; live-test follow-up).
 2. Mute: the helper sends silence and keeps RTP flowing (a stopped stream
@@ -507,6 +509,42 @@ same/different table), and AGENTS' TUI row now cover STUN/TURN.
 - `relay_only` stays test-only (`CallConfig`), not a Port field; it's a
   one-line field if a user's network ever needs diagnosing.
 
+## Quality pass before packaging (done 2026-10-21)
+
+The milestone pass before 4.4/4.5, after Stages 2 and 3; no behaviour
+changes, reviewed with the advisor. Each commit ran `just precommit`,
+`just smoke`, `just tui-smoke`, and `just turn-check` where the relay path
+moved.
+
+**Rust helper**
+- **Extract `report.rs` and `tls_stream.rs`** from `call.rs` (it had grown
+  back to 938 production lines; now 753): the stats and meters, and the
+  TCP connection under a TLS relay.
+- **Extract `CallConfig::new(role)`**: six struct literals no longer repeat
+  every test-only field.
+- **Merge `Relay::allocate`/`allocate_tls`** onto one constructor.
+- **Leave** the new client-side constants (`TLS_FALLBACK_AFTER`,
+  `TLS_CONNECT_TIMEOUT`, `MAX_CONCEALED`, `LEVELS_EVERY`): they describe this
+  network path or this codec, not call policy, so the server couldn't own
+  them.
+
+**TUI**
+- **Extract `Tui.View`**: the screens (pure functions of the app's state)
+  leave `Tui.App` (585 lines, now 231; `App.render/2` delegates).
+
+**Tests**: a warning in every run (`participant/5`'s unused default) gone.
+
+**Docs**: `call_flow.md` (the helper's parts and the same/different table),
+`tui_audio.md` (stages done, and the checkpoint's "no C" premise, which
+turned out wrong; the str0m decision holds, see there), this roadmap.
+
+**What tests didn't catch tonight**: three bugs passed every hermetic test
+and showed only against real coturn or real-device conditions (the late
+trickle, two identical test tones cancelled as echo, the 4 KiB TLS drop).
+That's why `just turn-check` is in the gate for relay changes, and why the
+hand checks matter: echo cancellation on real speakers, Firefox, and TLS
+TURN on a network that blocks UDP.
+
 ## Open items
 
 Not scheduled; pick up when relevant.
@@ -528,8 +566,14 @@ Not scheduled; pick up when relevant.
   a new connection is a new participant, by design).
 - **`boundary` library.** Deferred during cleanup; now that core vs web is a
   real split, reconsider enforcing it.
-- **`turns:` (TLS) TURN** is unbuilt (`turn-client-rustls`), for networks
-  that block UDP; browsers already get `turns:` from the server.
+- **Upstream reports (the owner's call: it means posting on other
+  projects).** `turn-client-rustls` 0.1.2 gives rustls one `read_tls` per
+  chunk, losing bytes past 4 KiB (worked around in `Relay::recv`); and
+  `str0m-rust-crypto` pulls in AWS-LC through `dimpl`'s `rcgen` feature.
+- **Revisit at 4.4:** keep the TUI's device choice between sessions (a config
+  file, once installed users have a config dir); today it's per session.
+- **Decide after a real call:** sonora's noise suppression and gain control
+  (only echo cancellation is on).
 - **coturn follow-ups** for its next intentional rebuild: see
   [`coturn_audit.md`](coturn_audit.md).
 
