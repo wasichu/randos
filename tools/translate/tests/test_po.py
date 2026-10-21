@@ -1,0 +1,67 @@
+"""The fill rule: empty entries are filled; a person's fix always survives,
+even a redo."""
+
+from pathlib import Path
+
+import polib
+
+from randos_translate import po
+
+PO = '''msgid ""
+msgstr ""
+"Language: es\\n"
+
+msgid "Ready"
+msgstr ""
+
+msgctxt "button"
+msgid "End"
+msgstr ""
+
+msgid "Looking"
+msgstr "Buscando (a person wrote this)"
+'''
+
+
+def setup(tmp_path: Path) -> tuple[Path, Path]:
+    root, state = tmp_path / "gettext", tmp_path / "state"
+    path = po.po_path("es", root)
+    path.parent.mkdir(parents=True)
+    path.write_text(PO)
+    return root, state
+
+
+def entries(root: Path) -> dict[str, str]:
+    return {po.Source(e.msgid, e.msgctxt).key: e.msgstr for e in polib.pofile(str(po.po_path("es", root)))}
+
+
+def test_fills_only_empty_entries(tmp_path):
+    root, state = setup(tmp_path)
+    end = po.Source("End", "button").key
+    counts = po.fill("es", {"Ready": "Listo", end: "Fin", "Looking": "Buscando"}, "m1", root=root, state_dir=state)
+
+    assert counts == {"filled": 2, "redone": 0, "kept_human": 0, "kept_existing": 1}
+    assert entries(root) == {"Ready": "Listo", end: "Fin", "Looking": "Buscando (a person wrote this)"}
+
+
+def test_a_redo_replaces_machine_text_but_never_a_persons_fix(tmp_path):
+    root, state = setup(tmp_path)
+    po.fill("es", {"Ready": "Listo", "Looking": "x"}, "m1", root=root, state_dir=state)
+
+    # Someone fixes the machine's "Listo".
+    path = po.po_path("es", root)
+    path.write_text(path.read_text().replace('msgstr "Listo"', 'msgstr "Preparado"'))
+    end = po.Source("End", "button").key
+    po.fill("es", {end: "Fin"}, "m1", root=root, state_dir=state)
+
+    counts = po.fill("es", {"Ready": "Listo 2", end: "Terminar"}, "m2", redo=True, root=root, state_dir=state)
+    assert counts == {"filled": 0, "redone": 1, "kept_human": 1, "kept_existing": 0}
+    assert entries(root)["Ready"] == "Preparado"
+    assert entries(root)[end] == "Terminar"
+
+
+def test_the_source_strings_come_from_the_real_template():
+    keys = [s.key for s in po.sources()]
+    assert "About" in keys
+    assert po.Source("End", "button").key in keys
+    assert all("randos" != s.msgid for s in po.sources())

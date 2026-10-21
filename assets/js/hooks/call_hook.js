@@ -1,4 +1,5 @@
 import {CleanupBag} from "../randos/cleanup"
+import {label, labelsFrom} from "../randos/labels"
 import {attachRemoteAudio, audioStreamSummary} from "../randos/media"
 import {logEvent, logWarning} from "../randos/logging"
 import {AudioLevelVisualizer} from "../randos/audio_visualizer"
@@ -26,6 +27,7 @@ const startFailureReason = error => {
 export const WebRTCAudio = {
   mounted() {
     this.cleanupBag = new CleanupBag("webrtc-audio-hook")
+    this.labels = labelsFrom(this.el)
     this.statusEl = this.el.querySelector("[data-webrtc-status]")
     this.microphoneEl = this.el.querySelector("[data-microphone-status]")
     this.muteButton = this.el.querySelector("[data-webrtc-mute]")
@@ -108,7 +110,9 @@ export const WebRTCAudio = {
     this.el.dataset.microphoneMuted = this.muted ? "true" : "false"
 
     if (this.muteLabel) {
-      this.muteLabel.textContent = this.muted ? "Unmute" : "Mute"
+      this.muteLabel.textContent = this.muted
+        ? label(this.labels, "unmute", "Unmute")
+        : label(this.labels, "mute", "Mute")
     }
 
     if (this.muteButton) {
@@ -139,7 +143,7 @@ export const WebRTCAudio = {
     }
 
     if (stream && this.microphoneEl) {
-      this.microphoneEl.textContent = "microphone ready"
+      this.microphoneEl.textContent = label(this.labels, "microphone_ready", "microphone ready")
       this.localVisualizer = new AudioLevelVisualizer({
         findCanvas: () => document.querySelector("[data-audio-visualizer='local']"),
         stream,
@@ -156,8 +160,10 @@ export const WebRTCAudio = {
 
     if (this.remoteAudioStatusEl) {
       this.remoteAudioStatusEl.textContent = stream
-        ? `remote audio received (${audioStreamSummary(stream)})`
-        : "waiting for remote audio"
+        ? label(this.labels, "remote_audio_received", "remote audio received (%{summary})", {
+            summary: audioStreamSummary(stream),
+          })
+        : label(this.labels, "waiting_for_remote_audio", "waiting for remote audio")
     }
 
     if (this.remoteAudioPlayButton) {
@@ -180,14 +186,18 @@ export const WebRTCAudio = {
     attachRemoteAudio(this.remoteAudio, stream)
       .then(() => {
         if (stream && this.remoteAudioStatusEl) {
-          this.remoteAudioStatusEl.textContent = `remote audio playing (${audioStreamSummary(stream)})`
+          this.remoteAudioStatusEl.textContent = label(this.labels, "remote_audio_playing", "remote audio playing (%{summary})", {
+            summary: audioStreamSummary(stream),
+          })
         }
       })
       .catch(error => {
         logWarning("media.remote_audio_playback_blocked", {reason: error.message})
 
         if (stream && this.remoteAudioStatusEl) {
-          this.remoteAudioStatusEl.textContent = `remote audio needs a tap (${audioStreamSummary(stream)})`
+          this.remoteAudioStatusEl.textContent = label(this.labels, "remote_audio_needs_tap", "remote audio needs a tap (%{summary})", {
+            summary: audioStreamSummary(stream),
+          })
         }
 
         if (this.remoteAudioPlayButton) {
@@ -207,8 +217,9 @@ export const WebRTCAudio = {
     attachRemoteAudio(this.remoteAudio, this.remoteAudio?.srcObject)
       .then(() => {
         if (this.remoteAudioStatusEl) {
-          this.remoteAudioStatusEl.textContent =
-            `remote audio playing (${audioStreamSummary(this.remoteAudio?.srcObject)})`
+          this.remoteAudioStatusEl.textContent = label(this.labels, "remote_audio_playing", "remote audio playing (%{summary})", {
+            summary: audioStreamSummary(this.remoteAudio?.srcObject),
+          })
         }
       })
       .catch(error => {
@@ -220,14 +231,14 @@ export const WebRTCAudio = {
     this.el.dataset.webrtcState = state
 
     if (this.statusEl) {
-      this.statusEl.textContent = state.replaceAll("_", " ")
+      this.statusEl.textContent = label(this.labels, `state_${state}`, state.replaceAll("_", " "))
     }
 
     if (this.microphoneEl) {
       if (state === WebRTCClientState.REQUESTING_MICROPHONE) {
-        this.microphoneEl.textContent = "requesting microphone"
+        this.microphoneEl.textContent = label(this.labels, "requesting_microphone", "requesting microphone")
       } else if (state === WebRTCClientState.MICROPHONE_DENIED) {
-        this.microphoneEl.textContent = "microphone unavailable"
+        this.microphoneEl.textContent = label(this.labels, "microphone_unavailable", "microphone unavailable")
       }
     }
   },

@@ -41,7 +41,7 @@ defmodule RandosWeb.Layouts do
         class="inline-flex items-center gap-3 text-sm font-semibold text-stone-950 dark:text-stone-50"
       >
         <img src={~p"/images/logo.svg"} alt="" class="size-9" />
-        <span>{gettext("randos")}</span>
+        <span>randos</span>
       </a>
       <nav class="flex items-center gap-3 text-sm font-medium text-stone-600 dark:text-stone-300">
         <.link
@@ -51,6 +51,7 @@ defmodule RandosWeb.Layouts do
           <.icon name="hero-information-circle" class="size-4" />
           {gettext("About")}
         </.link>
+        <.locale_switcher />
         <button
           id="theme-toggle"
           type="button"
@@ -71,6 +72,53 @@ defmodule RandosWeb.Layouts do
     </main>
 
     <.flash_group flash={@flash} />
+    """
+  end
+
+  # The interface language: a <details> menu of plain links, so it works
+  # without JavaScript. Each link goes to RandosWeb.LocaleController, which
+  # remembers the choice and comes back here. Ignored by LiveView's patches
+  # (it changes only on a full page load), so an open menu stays open.
+  defp locale_switcher(assigns) do
+    assigns =
+      assign(assigns,
+        current: Gettext.get_locale(RandosWeb.Gettext),
+        locales: RandosWeb.Locale.all()
+      )
+
+    ~H"""
+    <details id="locale-switcher" phx-update="ignore" class="group relative">
+      <summary
+        id="locale-switcher-toggle"
+        title={gettext("Language")}
+        class="inline-flex h-9 cursor-pointer list-none items-center gap-1.5 rounded-md border border-stone-200 bg-white px-2.5 text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white [&::-webkit-details-marker]:hidden"
+      >
+        <.icon name="hero-language" class="size-4" />
+        <span class="uppercase">{@current}</span>
+        <span class="sr-only">{gettext("Language")}</span>
+      </summary>
+      <ul
+        id="locale-options"
+        class="absolute end-0 z-20 mt-2 max-h-80 w-48 overflow-y-auto rounded-md border border-stone-200 bg-white py-1 shadow-lg dark:border-stone-700 dark:bg-stone-900"
+      >
+        <li :for={{code, name} <- @locales}>
+          <a
+            id={"locale-option-#{code}"}
+            href={~p"/locale/#{code}"}
+            hreflang={code}
+            lang={code}
+            rel="nofollow"
+            aria-current={if code == @current, do: "true"}
+            class={[
+              "block px-3 py-1.5 transition hover:bg-stone-100 dark:hover:bg-stone-800",
+              code == @current && "font-semibold text-teal-700 dark:text-teal-300"
+            ]}
+          >
+            {name}
+          </a>
+        </li>
+      </ul>
+    </details>
     """
   end
 
@@ -99,7 +147,7 @@ defmodule RandosWeb.Layouts do
         hidden
       >
         {gettext("Attempting to reconnect")}
-        <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
+        <.icon name="hero-arrow-path" class="ms-1 size-3 motion-safe:animate-spin" />
       </.flash>
 
       <.flash
@@ -111,7 +159,7 @@ defmodule RandosWeb.Layouts do
         hidden
       >
         {gettext("Attempting to reconnect")}
-        <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
+        <.icon name="hero-arrow-path" class="ms-1 size-3 motion-safe:animate-spin" />
       </.flash>
     </div>
     """

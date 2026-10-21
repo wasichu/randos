@@ -28,7 +28,7 @@ defmodule RandosWeb.HomeLive do
 
     {:ok,
      socket
-     |> assign(:page_title, gettext("randos"))
+     |> assign(:page_title, "randos")
      |> assign(:preferences, preferences)
      |> assign_form(preferences)
      |> assign(:ice_servers, nil)

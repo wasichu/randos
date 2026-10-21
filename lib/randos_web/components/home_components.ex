@@ -26,7 +26,7 @@ defmodule RandosWeb.HomeComponents do
         <div class="flex items-center gap-3 sm:gap-4">
           <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
           <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
-            {gettext("randos")}
+            randos
           </h1>
         </div>
         <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
@@ -168,7 +168,7 @@ defmodule RandosWeb.HomeComponents do
           ]}
         >
           <.icon name="hero-magnifying-glass" class="size-5" />
-          {gettext("Find a rando")}
+          {pgettext("button", "Find a rando")}
         </button>
 
         <p
@@ -318,20 +318,20 @@ defmodule RandosWeb.HomeComponents do
 
   defp call_actions_panel(assigns) do
     ~H"""
-    <div class="order-3 col-span-full grid gap-2 border-t border-stone-200 px-4 py-3 sm:col-span-2 sm:grid-cols-2 sm:gap-3 sm:border-l sm:px-7">
+    <div class="order-3 col-span-full grid gap-2 border-t border-stone-200 px-4 py-3 sm:col-span-2 sm:grid-cols-2 sm:gap-3 sm:border-s sm:px-7">
       <button
         id="next-rando-button"
         phx-click="next_rando"
         class="inline-flex h-12 items-center justify-center rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
       >
-        {gettext("Next rando")}
+        {pgettext("button", "Next rando")}
       </button>
       <button
         id="end-call-button"
         phx-click="end_call"
         class="inline-flex h-12 items-center justify-center rounded-md border border-red-200 px-4 py-0 font-semibold leading-none text-red-700 transition hover:border-red-700 hover:bg-red-50"
       >
-        {gettext("End")}
+        {pgettext("button", "End")}
       </button>
     </div>
     """
@@ -349,10 +349,13 @@ defmodule RandosWeb.HomeComponents do
         phx-hook="CallCountdown"
         phx-update="ignore"
         data-deadline-unix-ms={@call_deadline_unix_ms}
+        data-labels={countdown_labels()}
         class="inline-flex items-center gap-2 font-medium text-stone-600"
       >
         <.icon name="hero-clock" class="size-4 text-teal-700" />
-        <span id="call-countdown-value" data-countdown-value>--:-- remaining</span>
+        <span id="call-countdown-value" data-countdown-value>
+          {gettext("%{time} remaining", time: "--:--")}
+        </span>
       </div>
     </div>
     """
@@ -376,13 +379,16 @@ defmodule RandosWeb.HomeComponents do
       data-ice-transport-policy={@ice_transport_policy}
       data-webrtc-state="not_started"
       data-microphone-muted="false"
+      data-labels={call_labels()}
       class="contents"
     >
       <div class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7">
         <div class="min-w-0">
           <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5">
             <span>{gettext("Connection:")}</span>
-            <span id="webrtc-state-label" data-webrtc-status>not started</span>
+            <span id="webrtc-state-label" data-webrtc-status>
+              {pgettext("connection state", "not started")}
+            </span>
             <span id="microphone-status-label" data-microphone-status class="sr-only">
               {gettext("waiting for microphone")}
             </span>
@@ -408,7 +414,7 @@ defmodule RandosWeb.HomeComponents do
           <span data-unmute-icon hidden>
             <.icon name="hero-speaker-wave" class="size-5 shrink-0" />
           </span>
-          <span data-mute-label class="leading-none">{gettext("Mute")}</span>
+          <span data-mute-label class="leading-none">{pgettext("button", "Mute")}</span>
         </button>
       </div>
 
@@ -461,7 +467,7 @@ defmodule RandosWeb.HomeComponents do
           phx-value-vote="continue"
           class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
-          {gettext("Continue")}
+          {pgettext("button", "Continue")}
         </button>
         <button
           id="end-call-button"
@@ -469,7 +475,7 @@ defmodule RandosWeb.HomeComponents do
           phx-value-vote="end"
           class="rounded-md border border-red-200 px-4 py-3 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50"
         >
-          {gettext("End")}
+          {pgettext("button", "End")}
         </button>
       </div>
     </div>
@@ -503,4 +509,36 @@ defmodule RandosWeb.HomeComponents do
       "border-stone-200 bg-white text-stone-500"
     end
   end
+
+  # Text the call hook sets itself (assets/js/randos/labels.js), translated
+  # here; the hook falls back to English for a missing key.
+  defp call_labels do
+    JSON.encode!(%{
+      mute: pgettext("button", "Mute"),
+      unmute: pgettext("button", "Unmute"),
+      microphone_ready: gettext("microphone ready"),
+      requesting_microphone: gettext("requesting microphone"),
+      microphone_unavailable: gettext("microphone unavailable"),
+      waiting_for_remote_audio: gettext("waiting for remote audio"),
+      remote_audio_received: gettext("remote audio received (%{summary})", summary: "%{summary}"),
+      remote_audio_playing: gettext("remote audio playing (%{summary})", summary: "%{summary}"),
+      remote_audio_needs_tap:
+        gettext("remote audio needs a tap (%{summary})", summary: "%{summary}"),
+      # One per WebRTCClientState (assets/js/randos/webrtc_client.js).
+      state_not_started: pgettext("connection state", "not started"),
+      state_requesting_microphone: pgettext("connection state", "requesting microphone"),
+      state_microphone_denied: pgettext("connection state", "microphone denied"),
+      state_creating_peer_connection: pgettext("connection state", "starting"),
+      state_waiting_for_offer: pgettext("connection state", "waiting for your rando"),
+      state_offer_sent: pgettext("connection state", "calling"),
+      state_answer_sent: pgettext("connection state", "answering"),
+      state_ice_checking: pgettext("connection state", "connecting"),
+      state_connected: pgettext("connection state", "connected"),
+      state_failed: pgettext("connection state", "failed"),
+      state_closed: pgettext("connection state", "ended")
+    })
+  end
+
+  defp countdown_labels,
+    do: JSON.encode!(%{remaining: gettext("%{time} remaining", time: "%{time}")})
 end

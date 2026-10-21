@@ -48,7 +48,7 @@ defmodule RandosWeb.CoreComponents do
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
-      class="fixed right-4 top-20 z-50 w-80 sm:right-8 sm:w-96"
+      class="fixed end-4 top-20 z-50 w-80 sm:end-8 sm:w-96"
       {@rest}
     >
       <div class={[
@@ -72,7 +72,7 @@ defmodule RandosWeb.CoreComponents do
         </div>
         <button
           type="button"
-          class="group -mr-1 cursor-pointer rounded p-0.5 transition hover:bg-stone-100"
+          class="group -me-1 cursor-pointer rounded p-0.5 transition hover:bg-stone-100"
           aria-label={gettext("close")}
         >
           <.icon name="hero-x-mark" class="size-5 opacity-50 transition group-hover:opacity-80" />
@@ -268,7 +268,7 @@ defmodule RandosWeb.CoreComponents do
   ## Examples
 
       <.icon name="hero-x-mark" />
-      <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
+      <.icon name="hero-arrow-path" class="ms-1 size-3 motion-safe:animate-spin" />
   """
   attr :name, :string, required: true
   attr :class, :string, default: "size-4"
