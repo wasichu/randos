@@ -187,25 +187,71 @@ write_files:
         systemctl enable --now randos-coturn-cert-retry.timer
       fi
 
+      # coturn's log goes to rsyslog, which zeroes every IP address before
+      # writing /var/log/coturn.log (/etc/rsyslog.d/10-coturn.conf): its
+      # error lines include callers' addresses ("Connection reset by peer
+      # <ip>:<port>", denied peer IPs), found on the live relay 2026-10-21.
+      # cache-disabled: no unscrubbed local copy for `docker logs` (Docker
+      # keeps one for other drivers by default). Kept 7 days (logrotate).
+      systemctl restart rsyslog
+
       docker rm -f coturn >/dev/null 2>&1 || true
       # Pinned image (var.coturn_image); upgrade deliberately by changing it.
       docker pull "$COTURN_IMAGE"
-      # No container log at all (--log-driver none): coturn's error lines
-      # include callers' addresses ("Connection reset by peer <ip>:<port>",
-      # denied peer IPs), found on the live relay 2026-10-21, and even
-      # rotated at 2 MB they'd be kept for months. To debug, run a container
-      # by hand with logging, and remove it after.
       docker run -d \
         --name coturn \
         --restart unless-stopped \
         --network host \
-        --log-driver none \
+        --log-driver syslog \
+        --log-opt syslog-address=udp://127.0.0.1:5514 \
+        --log-opt tag=coturn \
+        --log-opt cache-disabled=true \
         -v /etc/coturn:/etc/coturn:ro \
         "$COTURN_IMAGE" \
         -c /etc/coturn/turnserver.conf
 
       echo "[$(date --iso-8601=seconds)] coturn container started"
       docker ps --filter name=coturn
+
+  # coturn's log, with every IP address zeroed before it's written. Docker
+  # sends coturn's output here (UDP on localhost), not to the journal; this
+  # ruleset handles it alone, so nothing reaches the general system log.
+  - path: /etc/rsyslog.d/10-coturn.conf
+    owner: root:root
+    permissions: "0644"
+    content: |
+      module(load="imudp")
+      module(load="mmanon")
+
+      template(name="coturnLine" type="string" string="%timegenerated:::date-rfc3339% %msg%\n")
+
+      ruleset(name="coturn") {
+        action(type="mmanon"
+               ipv4.enable="on" ipv4.mode="zero" ipv4.bits="32"
+               ipv6.enable="on" ipv6.anonmode="zero" ipv6.bits="128"
+               embeddedipv4.enable="on" embeddedipv4.anonmode="zero" embeddedipv4.bits="128")
+        action(type="omfile" file="/var/log/coturn.log" template="coturnLine" fileCreateMode="0640")
+        stop
+      }
+
+      input(type="imudp" address="127.0.0.1" port="5514" ruleset="coturn")
+
+  # A week of (scrubbed) coturn log, then gone.
+  - path: /etc/logrotate.d/coturn
+    owner: root:root
+    permissions: "0644"
+    content: |
+      /var/log/coturn.log {
+        daily
+        rotate 7
+        missingok
+        notifempty
+        compress
+        delaycompress
+        postrotate
+          /usr/lib/rsyslog/rsyslog-rotate
+        endscript
+      }
 
   # Reruns the bootstrap every 15 minutes until a certificate exists (the
   # rerun issues it and restarts coturn with TLS), then stops itself.
