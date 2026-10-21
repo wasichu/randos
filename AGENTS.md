@@ -105,6 +105,11 @@ are product requirements, not suggestions. Don't add features that violate them.
 - `docs/architecture/call_flow.md`: Mermaid diagrams of the call flow (shared,
   then where the browser and the TUI differ); keep it in step with the code.
 - `docs/architecture/coturn_audit.md`: TURN server findings and proposed hardening.
+- `docs/privacy.md`: what each component sees, logs, and keeps, each claim
+  linked to its config or code. Change it with anything it describes;
+  `just check-privacy` (in precommit) fails if a coturn setting it promises
+  leaves the template, and relay-only enforcement is covered by
+  `signaling_test.exs` and `relay_only_smoke.mjs`.
 - `docs/architecture/translation_models.md`: Phase 6 research (translation models,
   evaluators, licenses, memory on the owner's Mac).
 - `docs/architecture/refactor_plan.md` is the living roadmap (status, how the

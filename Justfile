@@ -136,7 +136,7 @@ format:
     mix format
 
 # Full pre-commit check: server, clients/tui, the Rust helper, and the encrypted-state guard
-precommit: check-state-encrypted
+precommit: check-state-encrypted check-privacy
     mix precommit
     just native-check
     cargo build --quiet -p randos_media
@@ -211,6 +211,22 @@ check-state-encrypted:
       echo "ERROR: $state is not encrypted; do not commit it" >&2
       exit 1
     fi
+
+# Fail if a setting docs/privacy.md relies on leaves the coturn config
+check-privacy:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    template=infra/coturn/cloud-init.yaml.tftpl
+    status=0
+    for setting in 'use-auth-secret' 'log-min-level=error' 'no-cli' \
+                   '--log-opt max-size=1m' '--log-opt max-file=2' \
+                   '-v /etc/coturn:/etc/coturn:ro'; do
+      if ! grep -qF -- "$setting" "$template"; then
+        echo "ERROR: '$setting' is gone from $template, but docs/privacy.md promises it" >&2
+        status=1
+      fi
+    done
+    exit $status
 
 # Build dev assets
 assets:

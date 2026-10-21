@@ -79,6 +79,7 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 | `just precommit` | Everything CI checks per platform: compile with warnings as errors, format, Credo, both test suites, and the Rust helper (fmt, clippy, tests, cargo-deny). **Run it before calling a change done**, and check its exit status. |
 | `just smoke` | Two headless Chromes with fake mics place a real call (`mix test` can't see the browser). Run after changing `assets/js/` or the call flow. |
 | `just tui-smoke` | Real terminal clients call each other and headless Chrome, with audio checked both ways. Run after changing the terminal client, the helper, or the channel. |
+| `just check-privacy` | That the coturn settings [privacy.md](privacy.md) promises are still in its config (part of precommit). |
 | `just turn-check` | The helper against the real coturn, over UDP and TLS (owner only: needs the TURN secret). Run after changing the relay path. |
 
 CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,

@@ -86,11 +86,13 @@ desktop distributions have).
   to decrypt it.
 - **No recording, no ads, no tracking.** The site loads nothing from other
   companies: no analytics, no fonts, no CDNs.
-- **What's still visible:** your IP address. Like any website, the server
-  sees it while you're connected. And because the audio goes directly
-  between you, the person you're talking to can see it too (their browser
-  or terminal needs it to reach you), unless the call goes through the
-  relay, in which case they see only the relay's address.
+- **Your IP address stays between you and our servers.** Like any
+  website, the server sees it while you're connected. The person you're
+  talking to never does: every call goes through our relay, and the server
+  strips direct addresses from everything it passes between you.
+
+What each part sees, logs, and keeps, with the configuration behind every
+claim: [privacy](docs/privacy.md).
 
 ## Why randos is like this
 
