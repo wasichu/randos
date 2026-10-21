@@ -144,7 +144,7 @@ defmodule Tui.AppTest do
       assert text =~ "randos --edit-settings, --reset-settings"
     end
 
-    test "the mic test hint, progress, result, and failure" do
+    test "the mic test: the key in the help line, then its progress, result, and failure" do
       refute render_text(model("idle")) =~ "t mic test"
 
       with_media = fn mic_test ->
@@ -153,7 +153,8 @@ defmodule Tui.AppTest do
         })
       end
 
-      assert with_media.(nil) =~ "Press t to test your mic"
+      # No separate hint line: the key is in the help line.
+      refute with_media.(nil) =~ "Press t to test your mic"
       assert with_media.(nil) =~ "t mic test"
 
       assert with_media.(%{phase: :starting, stats: nil, error: nil}) =~
@@ -207,7 +208,7 @@ defmodule Tui.AppTest do
       assert render_text(older) =~ "Time is up. Continue?"
     end
 
-    test "the idle screen shows the mic and speaker, and how to change them" do
+    test "the status panel shows the mic and speaker on every screen; the idle screen says how to change them" do
       {media, []} =
         MediaState.reply(
           MediaState.new(true),
@@ -222,12 +223,15 @@ defmodule Tui.AppTest do
         )
 
       text = render_text(model("idle"), %{media_state: media})
-      assert text =~ "Mic: Mic A (system default)"
-      assert text =~ "Speaker: Speakers (system default)"
+      assert text =~ "Mic:        Mic A (system default)"
+      assert text =~ "Speaker:    Speakers (system default)"
       assert text =~ "i/o devices"
 
+      # In the Status panel, so a call shows them too.
+      assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:        Mic A"
+
       chosen = media |> MediaState.cycle_device(:input) |> MediaState.cycle_device(:input)
-      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic: Mic B"
+      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic:        Mic B"
     end
 
     test "the status panel shows the current state, the connection, and the latest notice" do

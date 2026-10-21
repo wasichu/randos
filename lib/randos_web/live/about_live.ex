@@ -127,6 +127,18 @@ defmodule RandosWeb.AboutLive do
                 <.icon name="hero-signal" class="size-4" />
                 {gettext("See the status page")}
               </.link>
+              <p>
+                {gettext(
+                  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
+                )}
+                <a
+                  id="privacy-link"
+                  href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
+                  class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
+                >
+                  {gettext("privacy")}
+                </a>
+              </p>
             </section>
 
             <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">

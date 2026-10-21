@@ -35,9 +35,9 @@ defmodule RandosWeb.IceServersTest do
 
   test "uses coturn environment variables with short-lived credentials" do
     with_restored_env(fn ->
-      System.put_env("TURN_HOST", "turn.slowinput.org")
-      System.put_env("TURN_SHARED_SECRET", "shared-secret")
-      System.put_env("TURN_CREDENTIAL_TTL_SECONDS", "900")
+      put_turn("TURN_HOST", "turn.slowinput.org")
+      put_turn("TURN_SHARED_SECRET", "shared-secret")
+      put_turn("TURN_CREDENTIAL_TTL_SECONDS", "900")
 
       assert [
                %{"urls" => "stun:turn.slowinput.org:3478"},
@@ -65,13 +65,13 @@ defmodule RandosWeb.IceServersTest do
     floor = Lifecycle.max_call_duration_seconds() + 600
 
     with_restored_env(fn ->
-      System.put_env("TURN_HOST", "turn.slowinput.org")
-      System.put_env("TURN_SHARED_SECRET", "shared-secret")
+      put_turn("TURN_HOST", "turn.slowinput.org")
+      put_turn("TURN_SHARED_SECRET", "shared-secret")
 
       for {configured, minimum} <- [{"900", floor}, {nil, 3_600}, {"7200", 7_200}] do
         if configured,
-          do: System.put_env("TURN_CREDENTIAL_TTL_SECONDS", configured),
-          else: System.delete_env("TURN_CREDENTIAL_TTL_SECONDS")
+          do: put_turn("TURN_CREDENTIAL_TTL_SECONDS", configured),
+          else: put_turn("TURN_CREDENTIAL_TTL_SECONDS", nil)
 
         [_stun, %{"username" => username} | _] = IceServers.list()
         {expires_at, ""} = Integer.parse(username)
@@ -85,10 +85,10 @@ defmodule RandosWeb.IceServersTest do
 
   test "supports explicit STUN, TURN, and TURNS URLs from environment variables" do
     with_restored_env(fn ->
-      System.put_env("TURN_STUN_URL", "stun:turn.example.com:3478")
-      System.put_env("TURN_SERVER_URL", "turn:turn.example.com:3478")
-      System.put_env("TURNS_SERVER_URL", "turns:turn.example.com:5349")
-      System.put_env("TURN_SHARED_SECRET", "shared-secret")
+      put_turn("TURN_STUN_URL", "stun:turn.example.com:3478")
+      put_turn("TURN_SERVER_URL", "turn:turn.example.com:3478")
+      put_turn("TURNS_SERVER_URL", "turns:turn.example.com:5349")
+      put_turn("TURN_SHARED_SECRET", "shared-secret")
 
       assert [
                %{"urls" => "stun:turn.example.com:3478"},
@@ -100,7 +100,7 @@ defmodule RandosWeb.IceServersTest do
 
   test "falls back to configured STUN when TURN secret is missing" do
     with_restored_env(fn ->
-      System.put_env("TURN_HOST", "turn.slowinput.org")
+      put_turn("TURN_HOST", "turn.slowinput.org")
 
       assert IceServers.list() == [
                %{"urls" => "stun:stun.l.google.com:19302"}
@@ -111,8 +111,8 @@ defmodule RandosWeb.IceServersTest do
   describe "the transport policy" do
     test "relay-only whenever there's a TURN server" do
       with_restored_env(fn ->
-        System.put_env("TURN_HOST", "turn.example.com")
-        System.put_env("TURN_SHARED_SECRET", "shared-secret")
+        put_turn("TURN_HOST", "turn.example.com")
+        put_turn("TURN_SHARED_SECRET", "shared-secret")
 
         assert IceServers.transport_policy() == "relay"
       end)
@@ -120,8 +120,8 @@ defmodule RandosWeb.IceServersTest do
 
     test "direct calls, with the relay as the fallback, when allowed" do
       with_restored_env(fn ->
-        System.put_env("TURN_HOST", "turn.example.com")
-        System.put_env("TURN_SHARED_SECRET", "shared-secret")
+        put_turn("TURN_HOST", "turn.example.com")
+        put_turn("TURN_SHARED_SECRET", "shared-secret")
         Application.put_env(:randos, :allow_direct_calls, true)
 
         assert IceServers.transport_policy() == "all"
@@ -136,8 +136,8 @@ defmodule RandosWeb.IceServersTest do
         Application.put_env(:randos, :require_relay, true)
         assert_raise RuntimeError, ~r/RANDOS_ALLOW_DIRECT_CALLS/, &IceServers.check!/0
 
-        System.put_env("TURN_SERVER_URL", "turns:turn.example.com:5349")
-        System.put_env("TURN_SHARED_SECRET", "shared-secret")
+        put_turn("TURN_SERVER_URL", "turns:turn.example.com:5349")
+        put_turn("TURN_SHARED_SECRET", "shared-secret")
         assert IceServers.check!() == :ok
       end)
     end
@@ -150,42 +150,29 @@ defmodule RandosWeb.IceServersTest do
 
   defp with_restored_env(fun) do
     original_config = Application.get_env(:randos, IceServers)
+    original_turn = Application.get_env(:randos, :turn)
 
     original_flags =
       Map.new([:allow_direct_calls, :require_relay], &{&1, Application.get_env(:randos, &1)})
 
-    original_env =
-      Map.new(env_names(), fn name ->
-        {name, System.get_env(name)}
-      end)
-
     try do
-      Enum.each(env_names(), &System.delete_env/1)
+      Application.put_env(:randos, :turn, %{})
       fun.()
     after
       Application.put_env(:randos, IceServers, original_config)
+      Application.put_env(:randos, :turn, original_turn || %{})
 
       Enum.each(original_flags, fn
         {key, nil} -> Application.delete_env(:randos, key)
         {key, value} -> Application.put_env(:randos, key, value)
       end)
-
-      Enum.each(original_env, fn
-        {name, nil} -> System.delete_env(name)
-        {name, value} -> System.put_env(name, value)
-      end)
     end
   end
 
-  defp env_names do
-    [
-      "TURN_HOST",
-      "TURN_STUN_URL",
-      "TURN_SERVER_URL",
-      "TURNS_SERVER_URL",
-      "TURN_SHARED_SECRET",
-      "TURN_CREDENTIAL_TTL_SECONDS"
-    ]
+  # As config/runtime.exs would have read it from the environment at boot.
+  defp put_turn(name, value) do
+    turn = Application.get_env(:randos, :turn, %{})
+    Application.put_env(:randos, :turn, Map.put(turn, name, value))
   end
 
   defp turn_credential(username, shared_secret) do

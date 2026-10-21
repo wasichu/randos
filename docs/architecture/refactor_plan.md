@@ -696,9 +696,9 @@ Not scheduled; pick up when relevant.
   `{:shutdown, :connection_failed}`, and the Matchmaker unblocks and
   rematches the pair at once). Past three hearing languages, the "Looking
   for…" sentence gives a count instead of the list (both clients).
-- **`RandosWeb.IceServers` reads env vars per call.** Move them to
-  `config/runtime.exs` so misconfiguration fails at boot instead of silently
-  falling back to Google STUN.
+- **`RandosWeb.IceServers` reads env vars per call (done 2026-10-21).**
+  `config/runtime.exs` reads the TURN settings once at boot (`:turn`), so
+  with the boot check a missing relay fails at startup.
 - **Socket blip ends the call (decided 2026-10-21: fix, not yet
   scheduled).** `call_hook.js`'s `disconnected()` tears down on any LiveView
   reconnect, and a new connection is a new participant. The owner: we can't
@@ -706,8 +706,10 @@ Not scheduled; pick up when relevant.
   (about 10 s) and let the same page or TUI rejoin it with a random
   one-time ticket from the call (no identity), in both clients; the
   coordinator's disconnected grace is the natural place.
-- **`boundary` library.** Deferred during cleanup; now that core vs web is a
-  real split, reconsider enforcing it.
+- **`boundary` library (decided 2026-10-21: no dependency).** The one rule
+  (the core never calls the web layer) is enforced by
+  `test/randos/boundary_test.exs`, from the compiled modules' import
+  tables; `Randos.Application` is exempt. Mutation-checked.
 - **Upstream reports (the owner's call: it means posting on other
   projects).** `turn-client-rustls` 0.1.2 gives rustls one `read_tls` per
   chunk, losing bytes past 4 KiB (worked around in `Relay::recv`); and

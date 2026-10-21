@@ -177,8 +177,10 @@ defmodule RandosWeb.IceServers do
 
   defp parse_positive_integer(_value, default), do: default
 
+  # The TURN settings config/runtime.exs read from the environment at boot,
+  # by variable name.
   defp env(name) do
-    case System.get_env(name) do
+    case Application.get_env(:randos, :turn, %{}) |> Map.get(name) do
       value when is_binary(value) ->
         value = String.trim(value)
         if value == "", do: nil, else: value

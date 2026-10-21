@@ -78,7 +78,53 @@ defmodule RandosWeb.Layouts do
       {render_slot(@inner_block)}
     </main>
 
+    <.site_footer />
+
     <.flash_group flash={@flash} />
+    """
+  end
+
+  # Quiet links on every page: whether calls work, what's kept, and the
+  # code, with the commit this server runs (so anyone can read exactly that).
+  defp site_footer(assigns) do
+    assigns = assign(assigns, :commit, Application.get_env(:randos, :commit, ""))
+
+    ~H"""
+    <footer
+      id="site-footer"
+      class="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-5 py-8 text-sm text-stone-500 sm:px-8"
+    >
+      <.link id="footer-status" navigate={~p"/status"} class="transition hover:text-stone-900">
+        {gettext("Status")}
+      </.link>
+      <a
+        id="footer-privacy"
+        href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
+        class="transition hover:text-stone-900"
+      >
+        {gettext("Privacy")}
+      </a>
+      <a
+        id="footer-source"
+        href="https://github.com/wasichu/randos"
+        class="transition hover:text-stone-900"
+      >
+        {gettext("Source (AGPL-3.0)")}
+      </a>
+      <a
+        :if={@commit != ""}
+        id="footer-commit"
+        href={"https://github.com/wasichu/randos/commit/" <> String.replace_suffix(@commit, "-dirty", "")}
+        title={
+          if String.ends_with?(@commit, "-dirty"),
+            do: gettext("Running this commit plus changes not yet committed"),
+            else: gettext("The commit this server runs")
+        }
+        class="font-mono text-xs transition hover:text-stone-900"
+      >
+        {@commit}
+      </a>
+    </footer>
     """
   end
 

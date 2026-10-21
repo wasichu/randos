@@ -16,7 +16,9 @@ returns 403. `tofu plan` shows no drift.
 
 Follow-ups for the next intentional rebuild (each changes `user_data`, which
 replaces the droplet):
-- Drop `no-cli` (deprecated in 4.18; CLI is off by default).
+- Drop `no-cli` (deprecated in 4.18; CLI is off by default). Done in the
+  template 2026-10-21 (`just check-privacy` now refuses anything enabling
+  the CLI); reaches the droplet at its next rebuild.
 - coturn allows relaying to the droplet's own anchor IP (10.17.0.5) despite
   `denied-peer-ip` (it treats its own addresses as valid peers). With TCP
   relay off this only reaches coturn's own UDP ports; acceptable.

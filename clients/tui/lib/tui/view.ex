@@ -25,7 +25,12 @@ defmodule Tui.View do
     # The main panel gives way first on a short terminal (a tmux split):
     # the status lines must stay visible.
     [header_area, main_area, status_area, help_area] =
-      Layout.split(area, :vertical, [{:length, 3}, {:min, 3}, {:length, 4}, {:length, 1}])
+      Layout.split(area, :vertical, [
+        {:length, 3},
+        {:min, 3},
+        {:length, length(status_lines(state)) + 2},
+        {:length, 1}
+      ])
 
     model = state.model
 
@@ -313,16 +318,30 @@ defmodule Tui.View do
   # show in the main panel). One line each, never wrapped (a wrapped line
   # pushes the next one out of the box): the connection line drops detail to
   # fit `width`, and anything still too long is cut with "…".
-  defp status_text(%{model: model} = state, width) do
+  defp status_text(state, width) do
+    state |> status_lines(width) |> Enum.map_join("\n", &fit(&1, width))
+  end
+
+  # Status and connection, then the mic and speaker once the helper has
+  # said what devices there are (on every screen, calls included).
+  defp status_lines(%{model: model} = state, width \\ 80) do
     connection = "Connection: "
     room = width - String.length(connection)
 
     [
       "Status:     " <> status_label(model),
       connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…")
-    ]
-    |> Enum.map_join("\n", &fit(&1, width))
+    ] ++ device_lines(state)
   end
+
+  defp device_lines(%{media_state: %{available?: true, devices: %{} = devices, choice: choice}}) do
+    [
+      "Mic:        " <> device_label(choice.input, devices.default_input),
+      "Speaker:    " <> device_label(choice.output, devices.default_output)
+    ]
+  end
+
+  defp device_lines(_state), do: []
 
   defp fit(line, width) do
     if String.length(line) <= width,
@@ -399,23 +418,17 @@ defmodule Tui.View do
       else: path
   end
 
-  defp mic_test_text(%{media_state: %{available?: false}}), do: ""
+  # Only while a mic test runs or just ran: the key itself is in the help
+  # line, and the devices are in the Status panel.
+  defp mic_test_text(%{media_state: %{available?: true, mic_test: %{} = test}}),
+    do: "\n\n" <> mic_test_line(test)
 
-  defp mic_test_text(%{media_state: %{mic_test: test} = media}),
-    do: "\n\n" <> mic_test_line(test) <> devices_text(media)
-
-  defp devices_text(%{devices: nil}), do: ""
-
-  defp devices_text(%{devices: devices, choice: choice}) do
-    "\n\nMic: #{device_label(choice.input, devices.default_input)}" <>
-      "\nSpeaker: #{device_label(choice.output, devices.default_output)}"
-  end
+  defp mic_test_text(_state), do: ""
 
   defp device_label(nil, nil), do: "system default"
   defp device_label(nil, default), do: "#{default} (system default)"
   defp device_label(name, _default), do: name
 
-  defp mic_test_line(nil), do: "Press t to test your mic (wear headphones)."
   defp mic_test_line(%{phase: :failed, error: error}), do: "Mic test failed: " <> error
 
   defp mic_test_line(%{phase: phase, stats: nil}) when phase in [:starting, :running],

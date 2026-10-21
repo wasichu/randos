@@ -48,6 +48,20 @@ if ice_servers = System.get_env("RANDOS_ICE_SERVERS") do
   config :randos, RandosWeb.IceServers, servers: servers
 end
 
+# The commit the running image was built from (the footer links to it);
+# just deploy sets it at build time. Empty in development.
+config :randos, :commit, System.get_env("RANDOS_COMMIT", "")
+
+# The TURN relay's settings (RandosWeb.IceServers), read once at boot, so a
+# missing relay fails the boot check (IceServers.check!/0) rather than
+# showing up on a call. See docs/self-hosting.md for each one.
+config :randos,
+       :turn,
+       Map.new(
+         ~w(TURN_HOST TURN_STUN_URL TURN_SERVER_URL TURNS_SERVER_URL TURN_SHARED_SECRET TURN_CREDENTIAL_TTL_SECONDS),
+         &{&1, System.get_env(&1)}
+       )
+
 # Where the status page's daily counters are kept across restarts
 # (Randos.Stats.FileStore): aggregate counts only. Production mounts a Fly
 # volume for it (fly.toml); unset, they're in memory only.

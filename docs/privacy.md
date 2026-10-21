@@ -86,7 +86,8 @@ applied by OpenTofu from this repository.
   expiry time in a credential's username.)
 - **It keeps nothing else.** The container's only mount is its read-only
   config (`-v /etc/coturn:/etc/coturn:ro`); it's replaced, not upgraded,
-  when the server is rebuilt. Its admin CLI is off (`no-cli`).
+  when the server is rebuilt. Its admin CLI is off (coturn's default
+  since 4.18; nothing in the config turns it on).
 - **It can't hear calls.** It forwards encrypted packets; the encryption
   keys are negotiated between the two clients.
 - **It relays only to the public internet:** private, loopback, and

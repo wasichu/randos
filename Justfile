@@ -264,7 +264,7 @@ check-privacy:
     set -euo pipefail
     template=infra/coturn/cloud-init.yaml.tftpl
     status=0
-    for setting in 'use-auth-secret' 'log-min-level=error' 'no-cli' \
+    for setting in 'use-auth-secret' 'log-min-level=error' \
                    '--log-driver syslog' '--log-opt cache-disabled=true' \
                    'syslog-address=udp://127.0.0.1:5514' \
                    'type="mmanon"' 'ipv4.bits="32"' 'ipv6.bits="128"' 'embeddedipv4.bits="128"' \
@@ -275,6 +275,11 @@ check-privacy:
         status=1
       fi
     done
+    # coturn's admin CLI is off by default (since 4.18); nothing may turn it on.
+    if grep -qE '^\s+(cli-password|cli-ip|cli-port|cli)(\s|=|$)' "$template"; then
+      echo "ERROR: $template enables coturn's admin CLI, but docs/privacy.md says it's off" >&2
+      status=1
+    fi
     exit $status
 
 # Build dev assets
@@ -312,4 +317,9 @@ docker-build:
 
 # Deploy to Fly.io
 deploy:
-    fly deploy
+    #!/usr/bin/env bash
+    set -euo pipefail
+    # The footer shows this commit; "-dirty" when deploying uncommitted changes.
+    commit=$(git rev-parse --short HEAD)
+    [ -z "$(git status --porcelain)" ] || commit="$commit-dirty"
+    fly deploy --build-arg RANDOS_COMMIT="$commit"
