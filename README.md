@@ -26,16 +26,25 @@ you both disappear. No accounts, no profiles, no video, no pressure.
 
 ## How it works
 
-1. Choose the language you'll speak and the language you want to hear. You
-   can practise both ways (I speak Spanish, you speak English) or just listen.
+1. Choose the language you'll speak, and every language you're happy to
+   hear. You can practise both ways (I speak Spanish, you speak English),
+   both speak the same language, or just listen.
 2. Confirm you're 18 or older. Calls are anonymous and unmoderated.
-3. randos finds someone who speaks what you want to hear and wants to hear
-   what you speak, and connects the two of you.
+3. randos finds someone who speaks a language you're happy to hear and is
+   happy to hear yours, and connects the two of you. Whoever has waited
+   longest is matched first, and you won't be matched with the same person
+   again straight away.
 4. You talk for ten minutes. When time is up, you both choose whether to
    keep going, ten more minutes at a time, up to thirty. Either of you can
    end the call or move on to the next rando at any moment.
 
-That's all there is. Nothing about the call is kept.
+That's all there is. Nothing about the call is kept. The site itself is
+in English for now, with a language switcher in the header; translations
+into the other languages are on their way.
+
+[randos.slowinput.org/status](https://randos.slowinput.org/status) shows
+whether calls can connect right now and how many there have been today:
+calls, not people.
 
 ## In your browser
 
@@ -66,10 +75,16 @@ desktop distributions have).
 </table>
 
 - The keys for each screen are listed along the bottom: arrows to pick
-  languages, Enter to find a rando, `m` to mute, `n` for the next rando,
-  `e` to end the call, `q` to quit.
+  languages (space checks the ones you're happy to hear), Enter to find a
+  rando, `m` to mute, `n` for the next rando, `e` to end the call, `q` to
+  quit.
 - `t` tests your mic (you hear yourself back). `i` and `o` choose the mic
-  and speaker.
+  and speaker. `s` shows the server's status, as on
+  [/status](https://randos.slowinput.org/status).
+- Your languages, the 18+ confirmation, and your mic and speaker are
+  remembered on your computer: `randos --settings` shows where,
+  `--edit-settings` opens them in your editor, `--reset-settings` forgets
+  them.
 - Echo is cancelled, so speakers work, but headphones sound best.
 - On macOS, the first call asks for microphone access for your terminal app.
 - `randos --check` tells you whether the audio part works.

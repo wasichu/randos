@@ -52,6 +52,7 @@ the app itself serves plain HTTP on `PORT`.
 | `RANDOS_ALLOW_DIRECT_CALLS` | | `true` allows direct calls between the two people, with the relay as the fallback. Unset, calls go through the TURN relay only (see below). |
 | `RANDOS_ICE_SERVERS` | | When TURN isn't configured: the ICE servers to hand out, as JSON (default: Google's public STUN). |
 | `RANDOS_STATS_DIR` | | Where the status page keeps each day's aggregate counts across restarts (one small JSON file per day). Unset: memory only. Ours is a 1 GB Fly volume; the container's `bin/start` gives the directory to the app's user. |
+| `RANDOS_VOICE_PROCESSOR` | | Runs every browser call's mic through a voice processor (`passthrough`, `pitch_shift`; the voice lab's experiments). Unset: none, the mic is sent as it is. An unknown name stops the server from starting. |
 | `RANDOS_CONNECT_TIMEOUT_MS` | | How long a call may take to connect before it ends (default 15 s). |
 | `DNS_CLUSTER_QUERY` | | Erlang clustering via DNS. Clustering alone doesn't share the waiting room (see above). |
 
@@ -90,6 +91,14 @@ long-lived password.
 TURN needs `TURN_SHARED_SECRET` and at least one TURN URL; otherwise there
 is no relay (STUN only, so direct calls), which production allows only with
 `RANDOS_ALLOW_DIRECT_CALLS=true`.
+
+The status page (`/status`) tests the relay every few minutes, setting up
+and releasing a real allocation over UDP and TLS, and shows whether it
+works.
+
+coturn's error log can include callers' addresses, so ours goes through
+rsyslog, whose `mmanon` module zeroes every address before it's written;
+see `docs/privacy.md` for what we found and why.
 
 Our coturn server is defined as code in `infra/coturn/` (OpenTofu and
 cloud-init on a DigitalOcean droplet, with Let's Encrypt for TLS); its

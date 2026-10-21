@@ -12,6 +12,9 @@ agents (and people who like rules written down) should also read
 | Server and website | `lib/`, `assets/` | Phoenix LiveView: matchmaking, one process per call, WebRTC signaling. The browser does the audio. |
 | Terminal client | `clients/tui/` | A separate Mix project on [ex_ratatui](https://hex.pm/packages/ex_ratatui), talking to the server over the [participant channel](architecture/participant_channel.md) |
 | Media helper | `clients/tui/native/` | Rust (str0m WebRTC, Opus, cpal), run by the terminal client as a Port: [its README](../clients/tui/native/README.md) |
+| Voice processors | `voice/` | Rust (`randos_voice`), written once: native in the helper, WASM in the browser (`just voice-wasm` rebuilds the committed `.wasm`) |
+| Translation shootout | `tools/translate/` | Python (uv): machine-translates the UI's gettext strings and scores the models |
+| Voice benchmark | `tools/voice-eval/` | Python (uv): can a speaker model still identify a voice after a processor? |
 | TURN server | `infra/coturn/` | coturn as code (OpenTofu + cloud-init): [its README](../infra/coturn/README.md) |
 | Design notes | `docs/architecture/` | The [roadmap](architecture/refactor_plan.md), the [call flow](architecture/call_flow.md), the channel protocol, and more |
 
@@ -90,6 +93,19 @@ internet; the smoke tests start their own throwaway server on :4010.
 
 - `just top`: the dev server plus a terminal dashboard of queues, calls, and
   events.
+- Dev-only pages on `just dev` (never in production):
+  [`/dev/voice-lab`](http://localhost:4000/dev/voice-lab), to hear and
+  compare the voice processors (offline renders, spectrograms, and the
+  anonymization benchmark's results), and
+  [`/dev/translations`](http://localhost:4000/dev/translations), the
+  translation shootout's review page (models side by side, where they and
+  the evaluators disagree).
+- `just voice-eval`: the anonymization benchmark (ECAPA-TDNN speaker
+  identity and Whisper intelligibility on a LibriSpeech subset, downloaded
+  on first run); commit its `results/benchmark.json`.
+  `just translate-test` and `just voice-eval-test` run the two harnesses'
+  offline tests (part of `just precommit`).
+- `/status` (also in production): the relay check and today's counts.
 - `just screenshots`: regenerates the README's screenshots
   (`docs/assets/`) from a real call on a throwaway server, with fake audio
   (needs Chrome and `brew install vhs`).
