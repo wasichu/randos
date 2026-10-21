@@ -24,6 +24,7 @@ something can't be checked from the outside, this says so.
 | --- | --- | --- | --- |
 | **The web server** (Phoenix, on Fly.io) | Your IP address while you're connected (any website does); the languages you chose; the connection messages for your call, never the audio | Events such as "call started" and "call ended", tagged with random call and match IDs. No IP addresses, no languages, no identifiers that outlive the call. | Our host, Fly.io, keeps app logs for a limited time; we don't send them anywhere else |
 | **The relay** (coturn, a DigitalOcean droplet) | Both IP addresses of each relayed call, its timing, and its encrypted packets, which it can't decrypt | Errors only: no line per session or per caller | Up to 2 MB of rotated error log on the droplet, overwritten as it fills |
+| **Your browser** | Your choice of interface language, if you pick one | A `randos_locale` cookie holding only the language code (e.g. `es`), so the next visit is in your language; it identifies no one and goes nowhere else. Phoenix's session cookie (CSRF protection) also carries the language for the page. | A year, or until you clear it |
 | **Your rando's browser or terminal** | The relay's address, never yours; your voice | Nothing (randos has no recording feature) | Not applicable |
 
 ### The web server

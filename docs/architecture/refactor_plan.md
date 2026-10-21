@@ -241,6 +241,14 @@ Numbered after Phase 5 but started first: after 4.4/4.5 ship, before the
 voice lab gets going, and worked on in parallel with it. Scoped 2026-10-20;
 design details when we get there.
 
+**Status (2026-10-21):** plumbing done (`RandosWeb.Locale`, the switcher,
+RTL, per-locale `.po` files, the precommit template check, hook text via
+`data-labels`); the shootout harness (`tools/translate/`) is proven on
+Opus-MT en↔es. Next: the owner logs in to Hugging Face for the gated
+models and sets aside GPU time; then the full field runs, the results
+page, and filling the `.po` files. Checked: gettext uses fuzzy entries at
+runtime, and an empty `msgstr` falls back to English.
+
 **Where it starts.** The web UI already wraps ~80 strings in `gettext`
 (home components, About, layout, `ParticipantErrors`); only `errors.pot` has
 ever been extracted, and there are no translations or locale selection.
