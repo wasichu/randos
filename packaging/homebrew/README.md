@@ -13,6 +13,10 @@ pointed at a locally built archive, links `bin/randos`, and passes
 far as its archive: it builds and runs in CI, and its libraries are listed
 in the formula; `brew install` on Linux is untested.
 
+**Done (2026-10-21):** v0.1.0 is released and in the tap;
+`brew install wasichu/randos/randos` works on macOS arm64. For each new
+version, steps 3 to 5 below.
+
 ## What's left for the owner
 
 These need you: a new repository, a release, and (optionally) a token.

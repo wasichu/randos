@@ -171,7 +171,7 @@ Decisions for Stage 1 (from the Stage 0 review):
   from decode (network → speaker), and the WebRTC path replaces the device
   sink. It isn't an abstraction to keep.
 
-### 4.4 Distribution (built 2026-10-21; the first tag is the owner's)
+### 4.4 Distribution (done 2026-10-21: v0.1.0 released)
 
 A `mix release` directory, not Burrito: Homebrew installs a directory
 well, and nothing unpacks to a cache on first run. `just tui-release`
@@ -186,7 +186,15 @@ Erlang's crypto has OpenSSL built in); Linux is checked in CI.
 GitHub release; run by hand it only builds artifacts. No tag has been
 pushed: releasing is the owner's call.
 
-### 4.5 Homebrew (custom tap) (ready up to the tap repo, 2026-10-21)
+### 4.5 Homebrew (custom tap) (done 2026-10-21: v0.1.0 is installable)
+
+**Live:** `brew install wasichu/randos/randos` installs v0.1.0 from the
+`wasichu/homebrew-randos` tap (checked on macOS arm64: install, `--version`,
+`--check`; the formula passes `brew test` and `brew audit --strict`). Each
+new version: bump `clients/tui/mix.exs`, tag `vX.Y.Z`, then commit
+`just homebrew-formula X.Y.Z` to the tap (automating that needs a token).
+Linux through Homebrew is untested.
+
 
 **Built:** `packaging/homebrew/` (the formula template, `render.sh`, and the
 owner's remaining steps). The rendered formula installs and passes
