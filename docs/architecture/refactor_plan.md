@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `13902a9` (2026-10-21). Update this line, and
+Verified against the code at `bd6daac` (2026-10-21). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -23,8 +23,10 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 2 | UI-agnostic participant core; LiveView becomes a shell | Done |
 | 3 | Public participant channel (browser stays on LiveView) | Done |
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
-| 4 | TUI | 4.1, 4.2 done; 4.3 Stages 0 and 1 done, **next: 4.3 Stage 2** (see 4.3 below); then 4.4 release binaries and 4.5 Homebrew tap |
-| 5 | Voice anonymization | Planned |
+| 4 | TUI | Done: monitor, text client, call audio (STUN/TURN, echo cancellation, FEC), release builds, Homebrew tap (v0.2.0) |
+| — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
+| 6 | UI translations | **Next** |
+| 5 | Voice anonymization | Planned (alongside 6); its voice lab starts with a code-quality pass |
 
 ## How it fits together
 
@@ -92,7 +94,7 @@ matched with a browser user.
   `just tui` runs it against the local dev server. Not production-safe yet:
   see "Text-only clients and browsers" under open items.
 
-### 4.3 Audio (Stages 1 to 3 done; packaging next)
+### 4.3 Audio (done: Stages 0 to 3)
 
 Design: [`tui_audio.md`](tui_audio.md). Proposed: all media in one Rust helper
 run as a Port (str0m, Opus via libopus, cpal), Elixir keeps signaling and UI;
