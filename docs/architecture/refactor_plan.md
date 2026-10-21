@@ -576,6 +576,32 @@ TURN on a network that blocks UDP.
 
 Not scheduled; pick up when relevant.
 
+- **Relay regions (designed 2026-10-21; build when users far from New
+  York appear).** One relay per region (New York now; Frankfurt, then
+  Singapore), each person given the one nearest them.
+  - *Why per person works:* in a relay-only call each client allocates on
+    its own relay and the call runs between the two relay addresses, so
+    Madrid (Frankfurt relay) to Houston (New York relay) goes Madrid →
+    Frankfurt → New York → Houston: close to the direct path, with short
+    detours at each end. Two people in one region share a relay. Relays
+    need no knowledge of each other: one shared secret, so any relay
+    accepts a call's credentials.
+  - *Choosing (decided):* by the Fly edge region that received the
+    person's connection (Fly's `Fly-Region` request header; Fly already
+    routes each visitor to its nearest edge), mapped to the nearest relay
+    by a small table in `RandosWeb.IceServers`. No lookup of anyone's IP
+    address, no GeoIP database. First check that the header reaches the
+    LiveView and participant-channel websocket connections. Rejected:
+    GeoDNS (a paid DNS feature, and it locates the DNS resolver, not the
+    person) and handing out every relay (ICE doesn't choose by latency,
+    and every call would hold allocations on every relay).
+  - *Work:* the coturn OpenTofu config becomes one instance per region
+    (own hostname and certificate, e.g. `turn-fra.slowinput.org`); the
+    region table and per-participant relay choice in `IceServers` (ICE
+    servers are already minted per participant, so no protocol change and
+    no client change); `just turn-check` against each relay;
+    `docs/privacy.md` and the coturn README list every relay. About $6 a
+    month per region.
 - **Multi-node matchmaking.** Production runs one Fly machine because
   `Matchmaker` is node-local (two machines split the queue). Before scaling
   out, pick one: a cluster-wide singleton (`:global`/Horde), or a queue over
@@ -622,8 +648,8 @@ All 2026-10-19 unless noted.
   a relay candidate or SDP could carry, so a v0.1.0 TUI (which ignores the
   policy) can't leak its owner's address; the TUI honours it from v0.2.0.
   Measured from Houston: about 50 ms each way to the NYC relay. When users
-  far from New York appear, add relay regions (Europe, then Asia) and hand
-  each call the one nearest its two people.
+  far from New York appear, add relay regions: see "Relay regions" in the
+  open items.
 - **License (2026-10-21): AGPL-3.0-or-later.** The owner would mind someone
   running a closed, modified randos; the AGPL's network clause means anyone
   who runs a modified copy for others must offer them its source. The site's
