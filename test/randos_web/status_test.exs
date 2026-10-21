@@ -51,7 +51,8 @@ defmodule RandosWeb.StatusTest do
                },
                "language_pairs" => [%{"languages" => ["en", "es"], "calls" => 3}],
                "other_pairs_calls" => 3,
-               "nodes" => %{"answered" => 2, "total" => 3}
+               "nodes" => %{"answered" => 2, "total" => 3},
+               "kept_across_restarts" => false
              }
            }
 
@@ -59,6 +60,11 @@ defmodule RandosWeb.StatusTest do
   end
 
   test "relay states" do
+    # A server that keeps its counts on disk says so.
+    assert Status.build(%{configured: false}, @stats, true)["usage"][
+             "kept_across_restarts"
+           ]
+
     state = fn relay -> Status.build(relay, @stats)["relay"]["state"] end
     ok = %{ok: true, reason: nil}
     down = %{ok: false, reason: "no answer"}

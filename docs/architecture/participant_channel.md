@@ -110,7 +110,8 @@ is stale (the reply doesn't wait for it; ask again later).
     "endings": {"finished": 8, "not_connected": 2, "connection_lost": 1, "canceled": 1},
     "language_pairs": [{"languages": ["en", "es"], "calls": 5}],
     "other_pairs_calls": 3,
-    "nodes": {"answered": 1, "total": 1}
+    "nodes": {"answered": 1, "total": 1},
+    "kept_across_restarts": true
   }
 }
 ```
@@ -126,6 +127,8 @@ is stale (the reply doesn't wait for it; ask again later).
   from the join reply's `languages`; the same code twice is a call in one
   language); pairs with too few calls are summed into `other_pairs_calls`.
 - `nodes`: how many servers' counts are included, of those asked.
+- `kept_across_restarts`: whether this server keeps the day's counts on
+  disk (`true`), or only in memory, so they start over when it restarts.
 
 Servers from before this event reply `invalid_message`.
 

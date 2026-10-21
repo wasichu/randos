@@ -755,9 +755,11 @@ All 2026-10-19 unless noted.
   the 1 GB volume (`Randos.Stats.FileStore`, one JSON file per day, saved
   after each event; `RANDOS_STATS_DIR=/data/stats`); the image's
   `bin/start` runs as root only to hand the root-owned volume directory to
-  `nobody`, then drops privileges with `setpriv`. Open: the TUI status
-  screen (a channel request returning `RandosWeb.Status.snapshot/0`;
-  protocol mini-pass), and a status link outside About.
+  `nobody`, then drops privileges with `setpriv`. The TUI status screen is
+  done: the channel's `status` request, `s` on the TUI's idle screen;
+  mini-pass done (protocol doc, channel test, TUI model, render and
+  integration tests). Open: a status link outside About; rate-limiting the
+  `status` request if the cluster grows (each one is a multicall).
 - **A 1 GB Fly volume for aggregate stats (2026-10-21).** The owner
   approved it (about $0.15 a month) to keep the status page's daily totals
   across sleeps and deploys, keeping costs low: auto-stop stays on. It holds

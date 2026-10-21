@@ -519,11 +519,6 @@ msgstr ""
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
-msgid "Counting since %{time} UTC on %{date}. The server starts fresh whenever it sleeps or is updated, so these are today's calls since then."
-msgstr ""
-
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
 msgid "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection."
 msgstr ""
 
@@ -610,11 +605,6 @@ msgstr ""
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
-msgid "We count calls, not people: no addresses, no ids, nothing about anyone, and only in the server's memory. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
-msgstr ""
-
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
 msgid "Whether calls can connect right now, and how today is going."
 msgstr ""
 
@@ -641,4 +631,19 @@ msgstr ""
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "under 1 min"
+msgstr ""
+
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then."
+msgstr ""
+
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "Counting since %{time} UTC on %{date}: today's calls so far."
+msgstr ""
+
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
 msgstr ""

@@ -30,7 +30,8 @@ defmodule RandosWeb.Status do
           "endings" => %{"finished" => 8, "not_connected" => 2, "connection_lost" => 1, "canceled" => 1},
           "language_pairs" => [%{"languages" => ["en", "es"], "calls" => 5}],
           "other_pairs_calls" => 3,
-          "nodes" => %{"answered" => 1, "total" => 1}   # servers counted, of those asked
+          "nodes" => %{"answered" => 1, "total" => 1},  # servers counted, of those asked
+          "kept_across_restarts" => true   # false: memory only (no RANDOS_STATS_DIR)
         }
       }
   """
@@ -42,11 +43,18 @@ defmodule RandosWeb.Status do
 
   @doc "The status from the running processes."
   @spec snapshot() :: map()
-  def snapshot, do: build(RelayHealth.status(), Stats.snapshot())
+  def snapshot,
+    do:
+      build(
+        RelayHealth.status(),
+        Stats.snapshot(),
+        Application.get_env(:randos, :stats_dir) != nil
+      )
 
   @doc "The status from a relay status and a stats snapshot (pure)."
   @spec build(RelayHealth.status(), map()) :: map()
-  def build(relay, stats), do: %{"relay" => relay(relay), "usage" => usage(stats)}
+  def build(relay, stats, kept? \\ false),
+    do: %{"relay" => relay(relay), "usage" => usage(stats, kept?)}
 
   # The relay as this node sees it ("scope": each node checks for itself).
   defp relay(%{configured: false}),
@@ -82,7 +90,7 @@ defmodule RandosWeb.Status do
     end
   end
 
-  defp usage(stats) do
+  defp usage(stats, kept?) do
     %{
       "date" => Date.to_iso8601(stats.date),
       "since" => stats.since |> minute() |> iso(),
@@ -94,7 +102,8 @@ defmodule RandosWeb.Status do
       "language_pairs" =>
         Enum.map(stats.pairs, fn {{a, b}, calls} -> %{"languages" => [a, b], "calls" => calls} end),
       "other_pairs_calls" => stats.other_pairs,
-      "nodes" => %{"answered" => stats.nodes.answered, "total" => stats.nodes.total}
+      "nodes" => %{"answered" => stats.nodes.answered, "total" => stats.nodes.total},
+      "kept_across_restarts" => kept?
     }
   end
 

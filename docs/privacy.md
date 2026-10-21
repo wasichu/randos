@@ -54,6 +54,8 @@ something can't be checked from the outside, this says so.
   restarts: exactly the aggregates above, and nothing else
   ([`Randos.Stats.FileStore`](../lib/randos/stats/file_store.ex)). Old days'
   files are kept, as a history of totals; they hold nothing about anyone.
+  The terminal client shows the same data, fetched over its channel
+  (`status`); asking sends nothing about the asker.
 - **What it briefly remembers:** after a call, the server remembers for 90
   seconds that the two of you just talked (by the anonymous ids of that
   visit only), so "Next" finds someone new. A call that never connected

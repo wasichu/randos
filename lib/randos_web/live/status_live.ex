@@ -107,11 +107,19 @@ defmodule RandosWeb.StatusLive do
       <div class="space-y-1">
         <h2 class="text-xl font-semibold tracking-normal text-stone-950">{gettext("Today")}</h2>
         <p id="usage-since" class="text-sm leading-6 text-stone-600">
-          {gettext(
-            "Counting since %{time} UTC on %{date}. The server starts fresh whenever it sleeps or is updated, so these are today's calls since then.",
-            time: clock(@usage["since"]),
-            date: @usage["date"]
-          )}
+          {if @usage["kept_across_restarts"],
+            do:
+              gettext(
+                "Counting since %{time} UTC on %{date}: today's calls so far.",
+                time: clock(@usage["since"]),
+                date: @usage["date"]
+              ),
+            else:
+              gettext(
+                "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.",
+                time: clock(@usage["since"]),
+                date: @usage["date"]
+              )}
         </p>
         <p
           :if={@usage["nodes"]["total"] > 1}
@@ -187,7 +195,7 @@ defmodule RandosWeb.StatusLive do
 
       <p id="usage-privacy" class="text-sm leading-6 text-stone-600">
         {gettext(
-          "We count calls, not people: no addresses, no ids, nothing about anyone, and only in the server's memory. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
+          "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
         )}
       </p>
     </section>
