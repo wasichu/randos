@@ -118,6 +118,7 @@ defmodule RandosWeb.Layouts do
         href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
         class="transition hover:text-stone-900"
       >
+        <% gettext_comment("Footer link to the page on what randos sees, logs and keeps (privacy).") %>
         {gettext("Privacy")}
       </a>
       <a
@@ -125,6 +126,7 @@ defmodule RandosWeb.Layouts do
         href="https://github.com/wasichu/randos"
         class="transition hover:text-stone-900"
       >
+        <% gettext_comment("Footer link to the source code; AGPL-3.0 is its license (keep it as is).") %>
         {gettext("Source (AGPL-3.0)")}
       </a>
       <a
@@ -157,6 +159,7 @@ defmodule RandosWeb.Layouts do
 
     ~H"""
     <details id="locale-switcher" phx-update="ignore" class="group relative">
+      <% gettext_comment("Menu that chooses the language of this site's interface.") %>
       <summary
         id="locale-switcher-toggle"
         title={gettext("Language")}

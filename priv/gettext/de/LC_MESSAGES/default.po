@@ -21,12 +21,14 @@ msgstr "Ein Gespräch dauert %{call} Minuten. Wenn die Zeit abgelaufen ist, daue
 msgid "A doorway, not a platform"
 msgstr "Eine Tür, keine Plattform"
 
+#. The page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About"
 msgstr "Über"
 
+#. Title of the page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
@@ -67,6 +69,7 @@ msgstr "Wählen Sie Ihre Sprachen."
 msgid "Connecting"
 msgstr "Verbindung"
 
+#. Label before the call's connection state (for example "connecting").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connection:"
@@ -82,6 +85,7 @@ msgstr "Das Gespräch ist aktiv."
 msgid "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with."
 msgstr "Gespräche sind privat und werden nicht gespeichert. Der Server koordiniert den Anruf, hält aber keine Aufzeichnungen und erstellt keine Geschichte darüber, mit wem Sie gesprochen haben."
 
+#. Heading over the voice call in progress, with your conversation partner.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Current call"
@@ -122,11 +126,13 @@ msgstr "Gewünscht"
 msgid "Intentionally minimal"
 msgstr "Unbeabsichtigt minimal"
 
+#. Menu that chooses the language of this site's interface.
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Language"
 msgstr "Sprache"
 
+#. Your status: searching for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking"
@@ -142,6 +148,7 @@ msgstr "Keine Konten, keine Profile, kein Video, kein Druck."
 msgid "Preparing the call"
 msgstr "Vorbereitung des Anrufs"
 
+#. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
@@ -207,6 +214,7 @@ msgstr "Die Schnittstelle ist leise auf Zweck. Ziel ist Niederdruck menschliche 
 msgid "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
 msgstr "Es gibt keine Konten, Profile, Kontakte, Follower, Feeds, Streifen, Partituren oder permanenten sozialen Graphen. randos ist näher an der gesprächigen Infrastruktur als Social Media."
 
+#. Your status when the call's time has run out and both people choose whether to go on.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Time is up"
@@ -237,6 +245,7 @@ msgstr "Wir können das Internet nicht finden."
 msgid "We couldn't start that call. Please try again."
 msgstr "Wir konnten den Anruf nicht starten, bitte versuchen Sie es noch mal."
 
+#. Label of your own voice's waveform during a call (you, not the other person).
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You"
@@ -262,6 +271,7 @@ msgstr "Ihre rando"
 msgid "close"
 msgstr "schließen"
 
+#. Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "crosstalk"
@@ -340,12 +350,14 @@ msgstr "Fernton empfangen (%{summary})"
 msgid "requesting microphone"
 msgstr "Mikrofon anfordern"
 
+#. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Continue"
 msgstr "Weiter"
 
+#. Button: hang up, ending the call now.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
@@ -358,18 +370,21 @@ msgctxt "button"
 msgid "Find a rando"
 msgstr "Suchen Sie eine rando"
 
+#. Button: turn your own microphone off.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Mute"
 msgstr "Stumm"
 
+#. Button: end this call and find another person to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Next rando"
 msgstr "Nächster rando"
 
+#. Button: turn your own microphone back on.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
@@ -474,16 +489,19 @@ msgstr[1] ""
 msgid "%{language} both ways"
 msgstr "%{language} in beiden Richtungen"
 
+#. A call's typical length in minutes (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{minutes} min"
 msgstr "%{minutes} min"
 
+#. A count on the status page: how many calls started today.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Calls started"
 msgstr "Anrufe gestartet"
 
+#. How a call ended: it was stopped before it connected.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Canceled"
@@ -494,6 +512,7 @@ msgstr "Gestorben"
 msgid "Checking the relay…"
 msgstr "Ich überprüfe das Relais..."
 
+#. A count on the status page: how many calls connected today.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Connected"
@@ -519,6 +538,7 @@ msgstr "Konnte keine Verbindung herstellen"
 msgid "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection."
 msgstr "Jeder Anruf geht durch unser Relais, so dass keine Person die Adresse des anderen sieht. Wir testen es alle paar Minuten, indem wir eine echte Relaisverbindung einrichten."
 
+#. How a call ended: it ran its course normally.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Finished"
@@ -564,6 +584,7 @@ msgstr "Über TLS (Netze, die UDP blockieren)"
 msgid "Over UDP (most calls)"
 msgstr "Über UDP (die meisten Anrufe)"
 
+#. The service status page: whether calls can connect now, and today's call counts.
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -590,6 +611,7 @@ msgstr "Das Relais funktioniert nicht."
 msgid "Today"
 msgstr "Heute"
 
+#. A figure on the status page: the typical length of a call today.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Typical length"
@@ -600,6 +622,7 @@ msgstr "Typische Länge"
 msgid "Whether calls can connect right now, and how today is going."
 msgstr "Ob Anrufe sich jetzt verbinden können und wie es heute geht."
 
+#. A relay server's state on the status page: it is working (up).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "working"
@@ -610,11 +633,13 @@ msgstr "Arbeiten"
 msgid "Counted across %{answered} of %{total} servers."
 msgstr "Gezählt über %{answered} von %{total} Servern."
 
+#. A call's typical length: 30 minutes or more (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "30+ min"
 msgstr "30+ min"
 
+#. A call's typical length: less than one minute (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "under 1 min"
@@ -630,6 +655,7 @@ msgstr "Zählt seit %{time} UTC auf %{date}. Dieser Server beginnt frisch, wenn 
 msgid "Counting since %{time} UTC on %{date}: today's calls so far."
 msgstr "Zählt seit %{time} UTC auf %{date}: Die heutigen Anrufe bisher."
 
+#. Footer link to the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Privacy"
@@ -640,6 +666,7 @@ msgstr "Privatsphäre"
 msgid "Running this commit plus changes not yet committed"
 msgstr "Laufen dieses Commit plus Änderungen, die noch nicht übergeben wurden"
 
+#. Footer link to the source code; AGPL-3.0 is its license (keep it as is).
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Source (AGPL-3.0)"
@@ -655,6 +682,7 @@ msgstr "Der Commit dieser Server läuft"
 msgid "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
 msgstr "Was jeder Teil von randos sieht, protokolliert und behält, mit der Konfiguration hinter jedem Anspruch:"
 
+#. Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "privacy"
@@ -680,6 +708,7 @@ msgstr "Wie Sprachen gezählt werden"
 msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept."
 msgstr "Wir zählen Anrufe, nicht Menschen: keine Adressen, keine Ausweise, nichts über jemanden; nur diese Summen werden gehalten."
 
+#. Label of the search box that finds a piece of this site's text and its translation.
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Find a phrase"
@@ -705,6 +734,7 @@ msgstr "Nichts passt."
 msgid "Pick the language you'd like to check."
 msgstr "Wählen Sie die Sprache aus, die Sie überprüfen möchten."
 
+#. Button: suggest a better translation of this text.
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Suggest a fix"
@@ -720,11 +750,13 @@ msgstr "Die Übersetzungen dieser Website wurden von der Maschine erstellt und w
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "Wenn etwas falsch liest, finden Sie es unten und drücken Sie eine Lösung vorschlagen: es öffnet ein Problem auf GitHub mit allem, was ausgefüllt ist, aber Ihre Lösung (Sie brauchen ein GitHub-Konto). Eine Pull-Anfrage mit Ihrer Lösung öffnet sich auf eigene Faust, und es geht live, wenn es überprüft wird."
 
+#. Opens the list of languages you can hear, to change it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "Veränd."
 
+#. Closes the list of languages you can hear, once you've changed it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"

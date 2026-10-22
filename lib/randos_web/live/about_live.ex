@@ -5,6 +5,10 @@ defmodule RandosWeb.AboutLive do
 
   @impl true
   def mount(_params, _session, socket) do
+    gettext_comment(
+      ~s(The page that explains what randos is \("about us"\), not "approximately".)
+    )
+
     {:ok,
      assign(socket,
        page_title: gettext("About"),
@@ -24,6 +28,9 @@ defmodule RandosWeb.AboutLive do
             <div class="flex items-center gap-3">
               <img src={~p"/images/logo.svg"} alt="" class="size-11" />
               <h1 class="text-4xl font-semibold tracking-normal text-stone-950">
+                <% gettext_comment(
+                  "Title of the page that explains what randos is (\"about us\"), not \"approximately\"."
+                ) %>
                 {gettext("About randos")}
               </h1>
             </div>
@@ -49,8 +56,12 @@ defmodule RandosWeb.AboutLive do
                   rel="noopener noreferrer"
                   class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
                 >
+                  <% gettext_comment("Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).") %>
                   {gettext("crosstalk")}
-                </a>{elem(meant_for(), 1)}
+                </a>{elem(
+                  meant_for(),
+                  1
+                )}
               </p>
             </section>
 
@@ -96,6 +107,9 @@ defmodule RandosWeb.AboutLive do
                   href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
                   class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
                 >
+                  <% gettext_comment(
+                    "Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy)."
+                  ) %>
                   {gettext("privacy")}
                 </a>
               </p>

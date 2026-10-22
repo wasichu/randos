@@ -87,6 +87,9 @@ defmodule RandosWeb.TranslationsLive do
 
           <div :if={@lang} class="mt-8 space-y-4">
             <form id="translation-filter" phx-change="filter" phx-submit="filter">
+              <% gettext_comment(
+                "Label of the search box that finds a piece of this site's text and its translation."
+              ) %>
               <label for="translation-query" class="sr-only">{gettext("Find a phrase")}</label>
               <input
                 id="translation-query"
@@ -137,6 +140,7 @@ defmodule RandosWeb.TranslationsLive do
                     class="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-teal-700 transition hover:text-teal-900"
                   >
                     <.icon name="hero-pencil-square" class="size-4" />
+                    <% gettext_comment("Button: suggest a better translation of this text.") %>
                     {gettext("Suggest a fix")}
                   </a>
                 </div>

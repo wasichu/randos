@@ -234,7 +234,9 @@ defmodule RandosWeb.HomeComponents do
               {hearing_line(@preferences["hearing_languages"])}
             </span>
             <span class="shrink-0 font-medium text-teal-700">
+              <% gettext_comment("Opens the list of languages you can hear, to change it.") %>
               <span class="group-open:hidden">{gettext("Change")}</span>
+              <% gettext_comment("Closes the list of languages you can hear, once you've changed it.") %>
               <span class="hidden group-open:inline">{gettext("Done")}</span>
             </span>
           </summary>
@@ -370,6 +372,9 @@ defmodule RandosWeb.HomeComponents do
     >
       <div>
         <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
+          <% gettext_comment(
+            "Heading over the voice call in progress, with your conversation partner."
+          ) %>
           {gettext("Current call")}
         </h2>
         <p
@@ -396,6 +401,9 @@ defmodule RandosWeb.HomeComponents do
       </div>
 
       <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
+        <% gettext_comment(
+          "Label of your own voice's waveform during a call (you, not the other person)."
+        ) %>
         <.waveform
           id="local-waveform"
           label={gettext("You")}
@@ -419,6 +427,7 @@ defmodule RandosWeb.HomeComponents do
         phx-click="next_rando"
         class="inline-flex h-12 items-center justify-center rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
       >
+        <% gettext_comment("Button: end this call and find another person to talk to.") %>
         {pgettext("button", "Next rando")}
       </button>
       <button
@@ -426,6 +435,7 @@ defmodule RandosWeb.HomeComponents do
         phx-click="end_call"
         class="inline-flex h-12 items-center justify-center rounded-md border border-red-200 px-4 py-0 font-semibold leading-none text-red-700 transition hover:border-red-700 hover:bg-red-50"
       >
+        <% gettext_comment("Button: hang up, ending the call now.") %>
         {pgettext("button", "End")}
       </button>
     </div>
@@ -487,6 +497,9 @@ defmodule RandosWeb.HomeComponents do
       <div class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7">
         <div class="min-w-0">
           <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5">
+            <% gettext_comment(
+              "Label before the call's connection state (for example \"connecting\")."
+            ) %>
             <span>{gettext("Connection:")}</span>
             <span id="webrtc-state-label" data-webrtc-status>
               {pgettext("connection state", "not started")}
@@ -516,6 +529,7 @@ defmodule RandosWeb.HomeComponents do
           <span data-unmute-icon hidden>
             <.icon name="hero-speaker-wave" class="size-5 shrink-0" />
           </span>
+          <% gettext_comment("Button: turn your own microphone off.") %>
           <span data-mute-label class="leading-none">{pgettext("button", "Mute")}</span>
         </button>
       </div>
@@ -569,6 +583,9 @@ defmodule RandosWeb.HomeComponents do
           phx-value-vote="continue"
           class="rounded-md bg-stone-950 px-4 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-teal-800 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300 focus:outline-none focus:ring-4 focus:ring-teal-100"
         >
+          <% gettext_comment(
+            "Button: when the call's time is up, vote to keep talking a few more minutes."
+          ) %>
           {pgettext("button", "Continue")}
         </button>
         <button
@@ -590,11 +607,26 @@ defmodule RandosWeb.HomeComponents do
 
   defp language_name(code), do: ConversationLanguages.name(code)
 
-  defp state_label(:idle), do: gettext("Ready")
-  defp state_label(:looking), do: gettext("Looking")
+  defp state_label(:idle) do
+    gettext_comment("Your status before a call: ready to look for someone to talk to.")
+    gettext("Ready")
+  end
+
+  defp state_label(:looking) do
+    gettext_comment("Your status: searching for someone to talk to.")
+    gettext("Looking")
+  end
+
   defp state_label(:connecting), do: gettext("Connecting")
   defp state_label(:in_call), do: gettext("In call")
-  defp state_label(:extension_pending), do: gettext("Time is up")
+
+  defp state_label(:extension_pending) do
+    gettext_comment(
+      "Your status when the call's time has run out and both people choose whether to go on."
+    )
+
+    gettext("Time is up")
+  end
 
   defp state_description(:idle), do: gettext("Choose your languages.")
   defp state_description(:looking), do: gettext("Finding a compatible rando.")
@@ -615,9 +647,13 @@ defmodule RandosWeb.HomeComponents do
   # Text the call hook sets itself (assets/js/randos/labels.js), translated
   # here; the hook falls back to English for a missing key.
   defp call_labels do
+    # A translator comment applies to the next string, so this one is bound first.
+    gettext_comment("Button: turn your own microphone back on.")
+    unmute = pgettext("button", "Unmute")
+
     JSON.encode!(%{
       mute: pgettext("button", "Mute"),
-      unmute: pgettext("button", "Unmute"),
+      unmute: unmute,
       microphone_ready: gettext("microphone ready"),
       requesting_microphone: gettext("requesting microphone"),
       microphone_unavailable: gettext("microphone unavailable"),

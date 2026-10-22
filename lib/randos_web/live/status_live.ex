@@ -20,6 +20,10 @@ defmodule RandosWeb.StatusLive do
       RelayHealth.refresh_if_stale()
     end
 
+    gettext_comment(
+      "The service status page: whether calls can connect now, and today's call counts."
+    )
+
     {:ok, assign(socket, page_title: gettext("Status"), status: Status.snapshot())}
   end
 
@@ -87,6 +91,7 @@ defmodule RandosWeb.StatusLive do
           <span class={
             if transport["ok"], do: "text-teal-700", else: "text-red-700 dark:text-red-400"
           }>
+            <% gettext_comment("A relay server's state on the status page: it is working (up).") %>
             {if transport["ok"], do: gettext("working"), else: transport["reason"]}
           </span>
         </li>
@@ -134,7 +139,9 @@ defmodule RandosWeb.StatusLive do
       </div>
 
       <dl class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <% gettext_comment("A count on the status page: how many calls started today.") %>
         <.count id="usage-started" label={gettext("Calls started")} value={@usage["calls_started"]} />
+        <% gettext_comment("A count on the status page: how many calls connected today.") %>
         <.count
           id="usage-connected"
           label={gettext("Connected")}
@@ -145,6 +152,7 @@ defmodule RandosWeb.StatusLive do
           label={gettext("Continued past 10 minutes")}
           value={@usage["calls_continued"]}
         />
+        <% gettext_comment("A figure on the status page: the typical length of a call today.") %>
         <.count
           id="usage-median"
           label={gettext("Typical length")}
@@ -251,11 +259,17 @@ defmodule RandosWeb.StatusLive do
   defp transport_name("tls"), do: gettext("Over TLS (networks that block UDP)")
 
   defp endings do
+    # A translator comment applies to the next string, so these are bound first.
+    gettext_comment("How a call ended: it ran its course normally.")
+    finished = gettext("Finished")
+    gettext_comment("How a call ended: it was stopped before it connected.")
+    canceled = gettext("Canceled")
+
     [
-      {"finished", gettext("Finished")},
+      {"finished", finished},
       {"not_connected", gettext("Couldn't connect")},
       {"connection_lost", gettext("Connection lost")},
-      {"canceled", gettext("Canceled")}
+      {"canceled", canceled}
     ]
   end
 
@@ -273,7 +287,18 @@ defmodule RandosWeb.StatusLive do
 
   # The median is a whole-minute bucket: 0 means under a minute, 30 the
   # catch-all for the longest calls.
-  defp median_text(0), do: gettext("under 1 min")
-  defp median_text(30), do: gettext("30+ min")
-  defp median_text(minutes), do: gettext("%{minutes} min", minutes: minutes)
+  defp median_text(0) do
+    gettext_comment("A call's typical length: less than one minute (min = minutes).")
+    gettext("under 1 min")
+  end
+
+  defp median_text(30) do
+    gettext_comment("A call's typical length: 30 minutes or more (min = minutes).")
+    gettext("30+ min")
+  end
+
+  defp median_text(minutes) do
+    gettext_comment("A call's typical length in minutes (min = minutes).")
+    gettext("%{minutes} min", minutes: minutes)
+  end
 end

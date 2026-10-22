@@ -21,12 +21,14 @@ msgstr "একটি কথোপকথনের সময়কাল হয়
 msgid "A doorway, not a platform"
 msgstr "একটি দরজার ফাঁক, প্ল্যাটফর্ম নয়।"
 
+#. The page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About"
 msgstr "সম্পর্কে"
 
+#. Title of the page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
@@ -67,6 +69,7 @@ msgstr "আপনার ভাষা নির্বাচন করুন।"
 msgid "Connecting"
 msgstr "সংযোগ স্থাপন করা হচ্ছে"
 
+#. Label before the call's connection state (for example "connecting").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connection:"
@@ -82,6 +85,7 @@ msgstr "কথোপকথন চলছে।"
 msgid "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with."
 msgstr "কথোপকথনগুলো ব্যক্তিগত থাকে এবং সংরক্ষিত হয় না। সার্ভারটি কলগুলো সমন্বয় করে, কিন্তু এটি কোনো রেকর্ডিং সংরক্ষণ করে না অথবা আপনি কার সাথে কথা বলেছেন সে সম্পর্কে কোনো ইতিহাস তৈরি করে না।"
 
+#. Heading over the voice call in progress, with your conversation partner.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Current call"
@@ -122,11 +126,13 @@ msgstr "কলের সময়"
 msgid "Intentionally minimal"
 msgstr "ইচ্ছাকৃতভাবে ন্যূনতম"
 
+#. Menu that chooses the language of this site's interface.
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Language"
 msgstr "ভাষা"
 
+#. Your status: searching for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking"
@@ -142,6 +148,7 @@ msgstr "কোনো অ্যাকাউন্ট নেই। কোনো �
 msgid "Preparing the call"
 msgstr "কলটি প্রস্তুত করা"
 
+#. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
@@ -207,6 +214,7 @@ msgstr "ইন্টারফেসটিকে ইচ্ছাকৃতভা�
 msgid "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
 msgstr ""
 
+#. Your status when the call's time has run out and both people choose whether to go on.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Time is up"
@@ -237,6 +245,7 @@ msgstr "আমরা ইন্টারনেট খুঁজে পাচ্ছ
 msgid "We couldn't start that call. Please try again."
 msgstr "আমরা সেই কলটি শুরু করতে পারিনি। অনুগ্রহ করে আবার চেষ্টা করুন।"
 
+#. Label of your own voice's waveform during a call (you, not the other person).
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You"
@@ -262,6 +271,7 @@ msgstr ""
 msgid "close"
 msgstr "বন্ধ"
 
+#. Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "crosstalk"
@@ -340,12 +350,14 @@ msgstr "রিমোট অডিও গ্রহণ করা হয়েছ�
 msgid "requesting microphone"
 msgstr "মাইক্রোফোন চাওয়া হচ্ছে"
 
+#. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Continue"
 msgstr "অব্যাহত রাখুন"
 
+#. Button: hang up, ending the call now.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
@@ -358,18 +370,21 @@ msgctxt "button"
 msgid "Find a rando"
 msgstr ""
 
+#. Button: turn your own microphone off.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Mute"
 msgstr "নীরব"
 
+#. Button: end this call and find another person to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Next rando"
 msgstr ""
 
+#. Button: turn your own microphone back on.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
@@ -474,16 +489,19 @@ msgstr[1] ""
 msgid "%{language} both ways"
 msgstr "%{language} উভয় দিকেই"
 
+#. A call's typical length in minutes (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{minutes} min"
 msgstr "%{minutes} মিনিট"
 
+#. A count on the status page: how many calls started today.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Calls started"
 msgstr "কলগুলো শুরু হয়েছে।"
 
+#. How a call ended: it was stopped before it connected.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Canceled"
@@ -494,6 +512,7 @@ msgstr "বাতিল করা হয়েছে"
 msgid "Checking the relay…"
 msgstr "রিলেটি চেক করছি…"
 
+#. A count on the status page: how many calls connected today.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Connected"
@@ -519,6 +538,7 @@ msgstr "সংযোগ স্থাপন করা যায়নি।"
 msgid "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection."
 msgstr "প্রতিটি কলই আমাদের রিলের মাধ্যমে যায়, তাই কেউই অন্যের ঠিকানা দেখতে পায় না। আমরা প্রতি কয়েক মিনিট অন্তর একটি বাস্তব রিলে সংযোগ স্থাপন করে এটি পরীক্ষা করি।"
 
+#. How a call ended: it ran its course normally.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Finished"
@@ -564,6 +584,7 @@ msgstr "TLS-এর মাধ্যমে (UDP ব্লক করে এমন �
 msgid "Over UDP (most calls)"
 msgstr "UDP-এর মাধ্যমে (বেশিরভাগ কল)"
 
+#. The service status page: whether calls can connect now, and today's call counts.
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -590,6 +611,7 @@ msgstr "রিলেটি কাজ করছে না।"
 msgid "Today"
 msgstr "আজ"
 
+#. A figure on the status page: the typical length of a call today.
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Typical length"
@@ -600,6 +622,7 @@ msgstr "সাধারণ দৈর্ঘ্য"
 msgid "Whether calls can connect right now, and how today is going."
 msgstr "এখন কলগুলো কানেক্ট হতে পারছে কিনা, আর আজকের দিনটা কেমন কাটছে।"
 
+#. A relay server's state on the status page: it is working (up).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "working"
@@ -610,11 +633,13 @@ msgstr "কাজ করা"
 msgid "Counted across %{answered} of %{total} servers."
 msgstr "%{total}টি সার্ভারের মধ্যে %{answered}টি বিবেচনা করা হয়েছে।"
 
+#. A call's typical length: 30 minutes or more (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "30+ min"
 msgstr "৩০+ মিনিট"
 
+#. A call's typical length: less than one minute (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "under 1 min"
@@ -630,6 +655,7 @@ msgstr "%{date} তারিখে %{time} UTC থেকে গণনা শু�
 msgid "Counting since %{time} UTC on %{date}: today's calls so far."
 msgstr "%{date} তারিখে %{time} UTC থেকে গণনা করা হচ্ছে: আজ এখন পর্যন্ত কলগুলো।"
 
+#. Footer link to the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Privacy"
@@ -640,6 +666,7 @@ msgstr "গোপনীয়তা"
 msgid "Running this commit plus changes not yet committed"
 msgstr "এই কমিটটি চালানো এবং এখনও কমিট না হওয়া পরিবর্তনগুলো।"
 
+#. Footer link to the source code; AGPL-3.0 is its license (keep it as is).
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Source (AGPL-3.0)"
@@ -655,6 +682,7 @@ msgstr "এই সার্ভারটি যে কমিটগুলো চ�
 msgid "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
 msgstr ""
 
+#. Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "privacy"
@@ -680,6 +708,7 @@ msgstr "ভাষাগুলো কীভাবে গণনা করা হ�
 msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept."
 msgstr "আমরা কলগুলো গণনা করি, মানুষদের নয়: কোনো ঠিকানা নেই, কোনো আইডি নেই, কারও সম্পর্কে কিছুই নেই; শুধুমাত্র এই মোট সংখ্যাগুলোই সংরক্ষণ করা হয়।"
 
+#. Label of the search box that finds a piece of this site's text and its translation.
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Find a phrase"
@@ -705,6 +734,7 @@ msgstr "কিছুই মেলে না।"
 msgid "Pick the language you'd like to check."
 msgstr "আপনি যে ভাষাটি পরীক্ষা করতে চান তা নির্বাচন করুন।"
 
+#. Button: suggest a better translation of this text.
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Suggest a fix"
@@ -720,11 +750,13 @@ msgstr "এই সাইটের অনুবাদগুলো মেশিন
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "এই সাইটের অনুবাদগুলো মেশিন দ্বারা করা হয়েছে। যদি কিছু ভুলভাবে উপস্থাপিত হয়, তবে নিচে সেটি খুঁজে বের করে “Suggest a fix”-এ ক্লিক করুন: এর ফলে GitHub-এ একটি ইস্যু খুলবে, যেখানে সবকিছু ইতিমধ্যেই পূরণ করা থাকবে কিন্তু আপনার"
 
+#. Opens the list of languages you can hear, to change it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "পরিবর্তন করুন"
 
+#. Closes the list of languages you can hear, once you've changed it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
