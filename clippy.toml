@@ -1,0 +1,6 @@
+# Clippy settings for all our Rust (the lints themselves are in the root
+# Cargo.toml's [workspace.lints]). Tests may panic: that's how they fail.
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+allow-panic-in-tests = true
+allow-indexing-slicing-in-tests = true

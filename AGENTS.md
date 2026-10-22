@@ -213,9 +213,17 @@ are product requirements, not suggestions. Don't add features that violate them.
   `just tui-release` builds the installable TUI archive (`dist/`, checked by
   running the unpacked copy); `just homebrew-formula VERSION` renders the
   Homebrew formula (`packaging/homebrew/README.md`).
-- **No panics in the helper.** `unwrap`/`expect`/`panic!`/`todo!` are denied by
-  clippy outside tests; return errors and report them over the Port as
-  messages. A panic kills the user's call.
+- **One set of lints for all our Rust**: the root `Cargo.toml`'s
+  `[workspace.lints]` (each crate has `[lints] workspace = true`;
+  `just rust-lints-check`, in `native-check`, fails a crate that doesn't)
+  and the root `clippy.toml` (tests may unwrap, panic and index). The
+  helper runs the voice crate in its process, so a rule that guards one
+  guards both. Vendored crates (`vendor/`) are third-party code, not linted
+  at our levels; review their diff instead (`vendor/README.md`).
+- **No panics in the helper.** `unwrap`/`expect`/`panic!`/`todo!` and
+  unchecked indexing/slicing are denied by clippy outside tests; return
+  errors and report them over the Port as messages. A panic kills the
+  user's call.
 - **stdout is the Port.** Never print to it (`print_stdout` is denied); write
   frames via `frame::write_frame`. Diagnostics go to stderr.
 - **No `unsafe`** (`forbid(unsafe_code)` in Cargo.toml). If a dependency

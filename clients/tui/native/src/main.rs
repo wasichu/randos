@@ -5,6 +5,10 @@
 //! `loopback_stop`) for checking audio before WebRTC exists. Run with
 //! `--loopback` for the same loopback straight from a terminal.
 
+// Stricter than the workspace's deny: no unsafe in the helper, not even an
+// #[allow] (AGENTS.md).
+#![forbid(unsafe_code)]
+
 mod audio;
 mod call;
 mod candidates;

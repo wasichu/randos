@@ -157,15 +157,30 @@ precommit: check-state-encrypted check-privacy
 media-loopback seconds="20":
     cargo run --quiet -p randos_media -- --loopback --seconds {{seconds}}
 
-# Rust checks: the media helper and the voice processors (format, clippy with
-# warnings as errors, tests, cargo-deny), and that the committed .wasm is
-# the voice processors' current build
 # The test TURN relay that can cut a client's media path (ICE restart
 # tests): target/debug/examples/test_turn (docs/architecture/ice_restart.md)
 test-turn:
     cd clients/tui/native && cargo build --example test_turn
 
-native-check: voice-wasm-check
+# Every crate in the workspace uses the shared lints (root Cargo.toml's
+# [workspace.lints]), so none is checked less strictly than another.
+rust-lints-check:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    status=0
+    manifests=$(cargo metadata --format-version 1 --no-deps | python3 -c 'import json,sys; [print(p["manifest_path"]) for p in json.load(sys.stdin)["packages"]]')
+    for manifest in $manifests; do
+      if ! awk '/^\[lints\]/{f=1;next} /^\[/{f=0} f && /^workspace *= *true/{ok=1} END{exit !ok}' "$manifest"; then
+        echo "error: ${manifest#$PWD/} doesn't use the workspace lints ([lints] workspace = true)" >&2
+        status=1
+      fi
+    done
+    exit $status
+
+# Rust checks: the media helper and the voice processors (format, clippy with
+# warnings as errors, tests, cargo-deny), and that the committed .wasm is
+# the voice processors' current build
+native-check: rust-lints-check voice-wasm-check
     cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny --log-level error check --hide-inclusion-graph
     cd voice && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo clippy --target wasm32-unknown-unknown -- -D warnings && cargo test --quiet
 

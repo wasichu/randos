@@ -68,7 +68,7 @@ impl TlsStream {
                     self.stream = None;
                     break;
                 }
-                Ok(n) => read.extend_from_slice(&buf[..n]),
+                Ok(n) => read.extend_from_slice(buf.get(..n).unwrap_or_default()),
                 Err(err) if err.kind() == ErrorKind::WouldBlock => break,
                 Err(_) => {
                     self.stream = None;

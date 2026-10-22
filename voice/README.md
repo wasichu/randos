@@ -49,7 +49,9 @@ for the `#[unsafe(no_mangle)]` attribute that exporting a symbol requires.
 There is no unsafe block anywhere.
 
 **No panics:** `unwrap`, `expect`, `panic!` and slice indexing are denied by
-clippy outside tests; a panic in the worklet would silence the call.
+clippy outside tests (the workspace's shared lints, root `Cargo.toml`;
+printing to stdout too, since the helper runs this code next to its Port);
+a panic in the worklet would silence the call.
 
 **Reproducible:** `just voice-wasm` remaps std's source paths to rustc's
 own (`/rustc/<commit>`), so the build doesn't embed the machine's paths and

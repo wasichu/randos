@@ -25,17 +25,8 @@ turn-client-proto = "0.7"
 turn-client-rustls = { version = "0.1", default-features = false }
 webpki-roots = "1"
 
-[lints.rust]
-unsafe_code = "forbid"
-
-[lints.clippy]
-# A panic kills the call: errors go back over the Port as messages instead.
-unwrap_used = "deny"
-expect_used = "deny"
-panic = "deny"
-todo = "deny"
-dbg_macro = "deny"
-print_stdout = "deny" # stdout is the Port; write frames, never print
+[lints]
+workspace = true
 
 [dev-dependencies]
 turn-server-proto = "0.7"

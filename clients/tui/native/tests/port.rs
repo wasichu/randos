@@ -1,6 +1,11 @@
 //! Contract test: drives the built helper over stdin/stdout exactly as
 //! `Tui.Media` does (4-byte length + JSON), with no audio hardware.
-#![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::panic,
+    clippy::indexing_slicing
+)]
 
 use std::thread;
 use std::time::{Duration, Instant};

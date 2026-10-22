@@ -101,12 +101,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut incoming = Vec::new();
         while let Ok((n, from)) = listen.recv_from(&mut buf) {
             if !cut.contains(&from) {
-                incoming.push((buf[..n].to_vec(), from, listen_addr));
+                incoming.push((buf.get(..n).unwrap_or_default().to_vec(), from, listen_addr));
             }
         }
         for (addr, socket) in &relayed {
             while let Ok((n, from)) = socket.recv_from(&mut buf) {
-                incoming.push((buf[..n].to_vec(), from, *addr));
+                incoming.push((buf.get(..n).unwrap_or_default().to_vec(), from, *addr));
             }
         }
 

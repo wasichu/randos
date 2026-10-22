@@ -1,7 +1,12 @@
 //! A relay-only helper↔helper call through the test TURN server
 //! (`examples/test_turn.rs`): the relay carries the call, and a cut stops
 //! it, as a network change does. ICE restart recovers it (`call_restart`).
-#![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::panic,
+    clippy::indexing_slicing
+)]
 
 use std::thread;
 use std::time::{Duration, Instant};

@@ -13,17 +13,6 @@ crate-type = ["cdylib", "rlib"]
 # No dependencies: plain Rust in, plain WASM out (no wasm-bindgen). See README.md.
 [dependencies]
 
-[lints.rust]
-# The one exception is the `#[unsafe(no_mangle)]` attribute on the WASM
-# exports (src/wasm.rs), which exporting a symbol requires; there is no
-# unsafe block anywhere. See README.md.
-unsafe_code = "deny"
+[lints]
+workspace = true
 
-[lints.clippy]
-# A panic in the worklet silences the call; in the helper it kills it.
-unwrap_used = "deny"
-expect_used = "deny"
-panic = "deny"
-todo = "deny"
-dbg_macro = "deny"
-indexing_slicing = "deny"

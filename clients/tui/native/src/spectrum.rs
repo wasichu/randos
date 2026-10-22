@@ -66,10 +66,14 @@ impl Analyser {
 
     /// Audio that was just sent or played (any length).
     pub fn push(&mut self, samples: &[f32]) {
-        let newest = &samples[samples.len().saturating_sub(FFT_SIZE)..];
+        let newest = samples
+            .get(samples.len().saturating_sub(FFT_SIZE)..)
+            .unwrap_or_default();
         self.recent.rotate_left(newest.len());
         let start = FFT_SIZE - newest.len();
-        self.recent[start..].copy_from_slice(newest);
+        if let Some(oldest) = self.recent.get_mut(start..) {
+            oldest.copy_from_slice(newest);
+        }
         self.fresh = true;
     }
 

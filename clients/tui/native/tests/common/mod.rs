@@ -1,6 +1,12 @@
 //! Shared by the integration tests: the helper over its Port, and the test
 //! TURN server (`examples/test_turn.rs`).
-#![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic, dead_code)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::panic,
+    clippy::indexing_slicing,
+    dead_code
+)]
 
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::SocketAddr;

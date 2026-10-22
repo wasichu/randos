@@ -5,6 +5,25 @@
 members = ["clients/tui/native", "voice"]
 resolver = "3"
 
+# One set of lints for all our Rust (each crate's `[lints] workspace = true`):
+# the helper runs the voice crate in its own process, so a rule that guards
+# one guards both. A panic kills the user's call (or silences the browser's
+# worklet), so nothing that can panic; stdout is the helper's Port, so no
+# printing (diagnostics go to stderr; tests and examples may allow it).
+[workspace.lints.rust]
+# The helper forbids it outright (#![forbid] in main.rs); the voice crate
+# has one documented exception (`#[unsafe(no_mangle)]` on its WASM exports).
+unsafe_code = "deny"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+dbg_macro = "deny"
+indexing_slicing = "deny"
+print_stdout = "deny"
+
 [profile.release]
 lto = true
 codegen-units = 1

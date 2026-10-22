@@ -719,8 +719,8 @@ impl Session {
     fn drops_for_test(&mut self) -> bool {
         // RTP version 2, and not RTCP (payload types 72-76 with the marker).
         let rtp = self.buf.len() > 12
-            && self.buf[0] & 0xC0 == 0x80
-            && !(72..=76).contains(&(self.buf[1] & 0x7F));
+            && matches!(self.buf.get(..2), Some(&[first, second])
+                if first & 0xC0 == 0x80 && !(72..=76).contains(&(second & 0x7F)));
         if self.loss_every == 0 || !self.connected || !rtp {
             return false;
         }
