@@ -215,7 +215,7 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view_a, "#extension-countdown")
     assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 
-    assert {:ok, call_pid} = eventually_call_pid()
+    assert {:ok, call_pid} = eventually_call_pid(call_id(view_a))
     CallCoordinator.force_time_up(call_pid)
 
     assert eventually_has_element?(view_a, "#extension-panel")
@@ -311,24 +311,44 @@ defmodule RandosWeb.HomeLiveTest do
     end
   end
 
-  defp eventually_call_pid(attempts \\ 200)
+  # This view's call (the page renders its id): not just any call under the
+  # app-wide supervisor, which other tests running meanwhile may have too.
+  defp call_id(view) do
+    [id] =
+      view
+      |> render()
+      |> LazyHTML.from_fragment()
+      |> LazyHTML.query("[id^='call-media-']")
+      |> LazyHTML.attribute("id")
 
-  defp eventually_call_pid(0), do: :error
+    String.replace_prefix(id, "call-media-", "")
+  end
 
-  defp eventually_call_pid(attempts) do
+  defp eventually_call_pid(call_id, attempts \\ 200)
+
+  defp eventually_call_pid(_call_id, 0), do: :error
+
+  defp eventually_call_pid(call_id, attempts) do
     Randos.Calls.CallSupervisor
     |> DynamicSupervisor.which_children()
     |> Enum.find_value(fn
-      {_, pid, _, _} when is_pid(pid) -> pid
+      {_, pid, _, _} when is_pid(pid) -> if coordinator_call_id(pid) == call_id, do: pid
       _child -> nil
     end)
     |> case do
       nil ->
         Process.sleep(10)
-        eventually_call_pid(attempts - 1)
+        eventually_call_pid(call_id, attempts - 1)
 
       pid ->
         {:ok, pid}
     end
+  end
+
+  defp coordinator_call_id(pid) do
+    {_state, data} = :sys.get_state(pid)
+    data.call.id
+  catch
+    :exit, _gone -> nil
   end
 end
