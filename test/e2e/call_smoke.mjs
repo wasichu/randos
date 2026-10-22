@@ -187,7 +187,13 @@ try {
       // The dropper's network goes away for 2 s; its call doesn't need the
       // server, so audio keeps going meanwhile.
       proxy.outage(Number(process.env.SMOKE_OUTAGE_MS ?? 2_000))
-      await stayer.waitFor(`window.__sawReconnecting`, "the rando shown reconnecting")
+      // Locally the server sees the cut at once, marks the dropper away, and
+      // the rando is told. Behind production's edge proxy it may not see it
+      // before the dropper is back, which takes over the seat directly (the
+      // "replaced" path): no notice, the call simply goes on. What matters
+      // either way is checked below: the same call, audio, hang-up.
+      const behindEdge = !/^http:\/\/(localhost|127\.0\.0\.1)/.test(BASE_URL)
+      if (!behindEdge) await stayer.waitFor(`window.__sawReconnecting`, "the rando shown reconnecting")
       await sleep(1_000)
       const heardDuring = (await inboundAudio(stayer))?.packetsReceived ?? 0
       assert(heardDuring > heardBefore, `audio stopped while the socket was down (${heardBefore} → ${heardDuring})`)

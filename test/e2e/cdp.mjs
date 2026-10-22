@@ -124,6 +124,9 @@ export class Browser {
       source: `
         window.__randosStreams = [];
         localStorage.setItem("randos:theme", "light");
+        // The app's own event log (logging.js), so a failing scenario's
+        // console says what happened, against production too.
+        localStorage.setItem("randos:debug", "true");
         const original = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
         navigator.mediaDevices.getUserMedia = async constraints => {
           await new Promise(r => setTimeout(r, ${getUserMediaDelayMs}));
