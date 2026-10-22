@@ -57,6 +57,15 @@ pub enum Command {
     CallMute {
         muted: bool,
     },
+    /// ICE restart for the running call (obligation 10; the TUI sends it as
+    /// offerer when the server's `ice_generation` grows): a new socket on
+    /// the current route, fresh candidates, and a restart offer. Optional
+    /// fresh `ice_servers` (a resume reply's). An answerer re-gathers by
+    /// itself when a restart offer arrives.
+    CallRestart {
+        #[serde(default)]
+        ice_servers: Option<serde_json::Value>,
+    },
     CallStop,
 }
 
@@ -249,6 +258,22 @@ mod tests {
             Ok(Request {
                 id: 3,
                 command: Command::CallMute { muted: true }
+            })
+        );
+        assert_eq!(
+            parse(br#"{"id":5,"cmd":"call_restart"}"#),
+            Ok(Request {
+                id: 5,
+                command: Command::CallRestart { ice_servers: None }
+            })
+        );
+        assert_eq!(
+            parse(br#"{"id":6,"cmd":"call_restart","ice_servers":[{"urls":"stun:x"}]}"#),
+            Ok(Request {
+                id: 6,
+                command: Command::CallRestart {
+                    ice_servers: Some(serde_json::json!([{"urls": "stun:x"}]))
+                }
             })
         );
     }

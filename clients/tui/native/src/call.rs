@@ -8,6 +8,13 @@
 //! one, read the socket until str0m's next deadline (at most a few ms, so
 //! the 20 ms audio cadence is kept). Every change to the `Rtc` is followed
 //! by `drain`, str0m's one rule (mutate, then poll until `Timeout`).
+//!
+//! ICE restart (obligation 10): after a network change the socket's address
+//! (and its TURN allocation's 5-tuple) may be dead, so a restart binds a new
+//! socket on the current route and gathers again from scratch before the
+//! new credentials go out: as offerer on `call_restart`, as answerer when an
+//! offer arrives with new ICE credentials. str0m's restart drops every
+//! candidate pair, so audio waits for the new checks.
 
 use std::io::Write;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket};
@@ -107,6 +114,7 @@ pub struct RemoteSignal {
 enum Command {
     Remote(RemoteSignal),
     Mute(bool),
+    Restart(Option<Value>),
     Stop,
 }
 
@@ -170,6 +178,13 @@ impl Call {
             .map_err(|_| "the call has ended".into())
     }
 
+    /// Restarts ICE (see the module docs), with fresh `ice_servers` if given.
+    pub fn restart(&self, ice_servers: Option<Value>) -> Result<(), Error> {
+        self.commands
+            .send(Command::Restart(ice_servers))
+            .map_err(|_| "the call has ended".into())
+    }
+
     /// False once the session has stopped on its own (it reported `failed`).
     pub fn is_running(&self) -> bool {
         !self.worker.is_finished()
@@ -184,8 +199,15 @@ impl Call {
 
 struct Session {
     rtc: Rtc,
+    role: Role,
     socket: UdpSocket,
     local: SocketAddr,
+    /// `CallConfig::bind_ip`, for the socket a restart binds.
+    bind_ip: Option<IpAddr>,
+    /// Our candidates in the `Rtc`, to invalidate when a restart re-gathers.
+    local_candidates: Vec<Candidate>,
+    /// The peer's ICE ufrag from its last offer: a new one is a restart.
+    remote_ufrag: Option<String>,
     mid: Option<Mid>,
     pt: Option<Pt>,
     pending_offer: Option<SdpPendingOffer>,
@@ -248,8 +270,11 @@ impl Session {
             .clear_codecs()
             .enable_opus(true, false)
             .build(Instant::now());
-        if !config.relay_only {
-            rtc.add_local_candidate(Candidate::host(local, "udp")?);
+        let mut local_candidates = Vec::new();
+        if !config.relay_only
+            && let Some(host) = rtc.add_local_candidate(Candidate::host(local, "udp")?)
+        {
+            local_candidates.push(host.clone());
         }
         let mut report = Report::new();
         if config.relay_only {
@@ -258,8 +283,12 @@ impl Session {
 
         Ok(Self {
             rtc,
+            role: config.role,
             socket,
             local,
+            bind_ip: config.bind_ip,
+            local_candidates,
+            remote_ufrag: None,
             mid: None,
             pt: None,
             pending_offer: None,
@@ -313,6 +342,16 @@ impl Session {
                     self.muted = muted;
                     continue;
                 }
+                Ok(Command::Restart(ice_servers)) => {
+                    if let Some(ice_servers) = ice_servers {
+                        self.ice_servers = ice_servers;
+                    }
+                    if self.role == Role::Offerer {
+                        self.restart()?;
+                    }
+                    self.drain()?;
+                    continue;
+                }
                 Ok(Command::Stop) | Err(TryRecvError::Disconnected) => break,
                 Err(TryRecvError::Empty) => {}
             }
@@ -357,6 +396,60 @@ impl Session {
         drained
     }
 
+    /// As offerer: re-gather, then a restart offer (new ICE credentials)
+    /// with the new candidates. An outstanding offer is replaced.
+    fn restart(&mut self) -> Result<(), Error> {
+        self.regather()?;
+        let mut change = self.rtc.sdp_api();
+        // The old candidates are already invalidated; keep the new host one.
+        change.ice_restart(true);
+        let (offer, pending) = change.apply().ok_or("no restart offer")?;
+        self.pending_offer = Some(pending);
+        self.candidates.sdp_sent();
+        self.signal_out(
+            "offer",
+            json!({"sdp": {"type": "offer", "sdp": offer.to_sdp_string()}}),
+        );
+        Ok(())
+    }
+
+    /// A new socket on the current route and candidates from scratch: the old
+    /// address, and the TURN allocation bound to it, may be gone. The old
+    /// allocation is freed as best we can (from a dead address it just
+    /// expires on the server).
+    fn regather(&mut self) -> Result<(), Error> {
+        let (datagrams, stream) = self.candidates.close();
+        for (to, message) in datagrams {
+            let _ = self.socket.send_to(&message, to);
+        }
+        self.tls.out.extend(stream);
+        self.tls.flush();
+        self.tls = TlsStream::default();
+
+        for candidate in std::mem::take(&mut self.local_candidates) {
+            self.rtc.direct_api().invalidate_candidate(&candidate);
+            self.drain()?;
+        }
+
+        let ip = match self.bind_ip {
+            Some(ip) => ip,
+            None => default_route_ip()?,
+        };
+        self.socket = UdpSocket::bind(SocketAddr::new(ip, 0))?;
+        self.local = self.socket.local_addr()?;
+        self.candidates =
+            Candidates::from_ice_servers(&self.ice_servers, self.local, self.relay_only);
+        self.report.local_candidates.clear();
+        if !self.relay_only {
+            let host = Candidate::host(self.local, "udp")?;
+            if let Some(host) = self.rtc.add_local_candidate(host) {
+                self.local_candidates.push(host.clone());
+            }
+            self.report.local_candidates.push("host".into());
+        }
+        self.drain()
+    }
+
     fn send_offer(&mut self) -> Result<(), Error> {
         let mut change = self.rtc.sdp_api();
         let mid = change.add_media(MediaKind::Audio, Direction::SendRecv, None, None, None);
@@ -376,7 +469,15 @@ impl Session {
     fn apply_remote(&mut self, signal: RemoteSignal) -> Result<(), Error> {
         match signal.kind.as_str() {
             "offer" => {
-                let offer = SdpOffer::from_sdp_string(sdp_text(&signal.payload)?)?;
+                let text = sdp_text(&signal.payload)?;
+                let ufrag = ice_ufrag(text);
+                // New ICE credentials in a later offer: the peer restarted
+                // ICE, so our addresses may be stale too (obligation 10).
+                if self.remote_description_set && ufrag.is_some() && ufrag != self.remote_ufrag {
+                    self.regather()?;
+                }
+                self.remote_ufrag = ufrag;
+                let offer = SdpOffer::from_sdp_string(text)?;
                 let answer = self.rtc.sdp_api().accept_offer(offer)?;
                 self.signal_out(
                     "answer",
@@ -652,7 +753,8 @@ impl Session {
             self.add_local(found)?;
         }
         self.service_tls()?;
-        for payload in self.candidates.trickle(self.mid) {
+        let ufrag = self.rtc.direct_api().local_ice_credentials().ufrag;
+        for payload in self.candidates.trickle(self.mid, &ufrag) {
             self.signal_out("ice_candidate", payload);
         }
         Ok(())
@@ -693,6 +795,7 @@ impl Session {
     /// by `gather`).
     fn add_local(&mut self, found: Found) -> Result<(), Error> {
         if let Some(added) = self.rtc.add_local_candidate(found.candidate) {
+            self.local_candidates.push(added.clone());
             self.candidates.added(added.to_sdp_string());
             self.report.local_candidates.push(found.kind.into());
         }
@@ -720,6 +823,13 @@ impl Session {
             reason,
         });
     }
+}
+
+/// The session-level `a=ice-ufrag` of an SDP (one m-line, so one ufrag).
+fn ice_ufrag(sdp: &str) -> Option<String> {
+    sdp.lines()
+        .find_map(|line| line.trim().strip_prefix("a=ice-ufrag:"))
+        .map(str::to_string)
 }
 
 fn sdp_text(payload: &Value) -> Result<&str, Error> {

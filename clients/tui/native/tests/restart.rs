@@ -81,6 +81,15 @@ impl Call {
         (latest(&self.offerer_seen), latest(&self.answerer_seen))
     }
 
+    /// Asks the offerer for an ICE restart (what the TUI does when the
+    /// server's `ice_generation` grows).
+    fn restart(&mut self) {
+        self.next_id += 1;
+        let request = json!({"id": self.next_id, "cmd": "call_restart"});
+        let reply = self.offerer.request(request, &mut self.offerer_seen);
+        assert_eq!(reply["ok"], true, "call_restart: {reply}");
+    }
+
     fn stop(mut self) {
         let mut ignored = Vec::new();
         for helper in [&mut self.offerer, &mut self.answerer] {
@@ -124,4 +133,67 @@ fn the_test_relay_carries_a_relay_only_call_and_a_cut_stops_it() {
         "audio kept flowing after the cut: {before:?} -> {after:?}"
     );
     call.stop();
+}
+
+#[test]
+fn after_a_cut_an_ice_restart_brings_the_audio_back_both_ways() {
+    let mut turn = TestTurn::spawn();
+    let mut call = Call::start(&turn);
+    call.run(Duration::from_millis(3_000));
+    let connected = call.received();
+    assert!(connected.0 > 50 && connected.1 > 50, "{connected:?}");
+
+    // Both sides' paths die (a network change on each, say).
+    turn.command("cut-all");
+    call.run(Duration::from_millis(1_500));
+    let cut = call.received();
+    call.run(Duration::from_millis(1_000));
+    let still_cut = call.received();
+    assert!(
+        still_cut.0 - cut.0 < 5 && still_cut.1 - cut.1 < 5,
+        "{cut:?} {still_cut:?}"
+    );
+    let before_restart = turn.lines().len();
+
+    // The offerer restarts; the answerer re-gathers on the new credentials.
+    // Both get new sockets, so new allocations the cut doesn't cover.
+    call.restart();
+    call.run(Duration::from_millis(4_000));
+    let back = call.received();
+    assert!(
+        back.0 - still_cut.0 > 50 && back.1 - still_cut.1 > 50,
+        "audio didn't come back: {still_cut:?} -> {back:?}"
+    );
+    let fresh = turn
+        .lines()
+        .iter()
+        .filter(|l| l.starts_with("allocated "))
+        .count();
+    assert!(
+        fresh >= 2,
+        "the restart made no new allocations ({before_restart} lines before)"
+    );
+
+    // Candidates carry our ufrag, so the peer can tell generations apart.
+    let trickled: Vec<_> = call
+        .offerer_seen
+        .iter()
+        .filter(|e| e["event"] == "call_signal" && e["type"] == "ice_candidate")
+        .collect();
+    assert!(!trickled.is_empty());
+    assert!(
+        trickled
+            .iter()
+            .all(|e| e["payload"]["candidate"]["usernameFragment"].is_string()),
+        "{trickled:?}"
+    );
+    call.stop();
+}
+
+#[test]
+fn call_restart_without_a_call_is_an_error() {
+    let mut helper = Helper::spawn();
+    let reply = helper.request(json!({"id": 1, "cmd": "call_restart"}), &mut Vec::new());
+    assert_eq!(reply["error"], "no call running");
+    assert_eq!(helper.close(), 0);
 }

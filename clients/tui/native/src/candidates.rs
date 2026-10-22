@@ -392,7 +392,9 @@ impl Candidates {
     /// an answerer learns it only later (str0m's `MediaAdded`), and a
     /// candidate held back until then never reaches the peer, who then never
     /// permits it on TURN. One m-line, so `sdpMLineIndex` 0 identifies it.
-    pub fn trickle(&mut self, mid: Option<Mid>) -> Vec<Value> {
+    /// `ufrag` is our current ICE ufrag, so after a restart the peer can tell
+    /// the generations apart.
+    pub fn trickle(&mut self, mid: Option<Mid>, ufrag: &str) -> Vec<Value> {
         if !self.sdp_sent {
             return Vec::new();
         }
@@ -404,7 +406,7 @@ impl Candidates {
                     "candidate": candidate,
                     "sdpMid": mid,
                     "sdpMLineIndex": 0,
-                    "usernameFragment": null,
+                    "usernameFragment": ufrag,
                 }})
             })
             .collect()
@@ -441,15 +443,15 @@ mod tests {
     fn candidates_wait_for_our_sdp_but_not_for_the_mid() {
         let mut candidates = Candidates::new(local(), vec![], None);
         candidates.added("candidate:1 1 udp 1 203.0.113.7 4000 typ srflx".into());
-        assert!(candidates.trickle(None).is_empty(), "before our SDP");
+        assert!(candidates.trickle(None, "u").is_empty(), "before our SDP");
 
         // An answerer: SDP sent, mid not known yet.
         candidates.sdp_sent();
-        let sent = candidates.trickle(None);
+        let sent = candidates.trickle(None, "u");
         assert_eq!(sent.len(), 1);
         assert_eq!(sent[0]["candidate"]["sdpMid"], Value::Null);
         assert_eq!(sent[0]["candidate"]["sdpMLineIndex"], 0);
-        assert!(candidates.trickle(None).is_empty(), "sent once");
+        assert!(candidates.trickle(None, "u").is_empty(), "sent once");
     }
 
     #[test]

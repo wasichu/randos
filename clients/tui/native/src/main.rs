@@ -193,6 +193,11 @@ fn handle(
             call.mute(muted)?;
             Ok(true.into())
         }
+        Command::CallRestart { ice_servers } => {
+            let call = media.call.as_ref().ok_or("no call running")?;
+            call.restart(ice_servers)?;
+            Ok(true.into())
+        }
         Command::CallStop => {
             media.call.take().map(Call::stop).transpose()?;
             Ok(true.into())
