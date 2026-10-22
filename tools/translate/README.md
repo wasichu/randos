@@ -49,7 +49,9 @@ page is built from):
 
 - **checks** (`checks.py`): placeholders such as `%{time}` intact; the
   glossary terms "randos" and "rando" kept exactly, lowercase included
-  (it's a name, lowercase even starting a sentence); a sane length
+  (it's a name, lowercase even starting a sentence), as words of their
+  own: "espe*rando*" and the French "*rando*nnée" (a hike) don't count,
+  a Turkish suffix does ("randoyu"); a sane length
   (tighter for buttons, looser for dense CJK); the letters in the locale's
   script (Latin names copied from the English don't count); one
   translation shaped like the source (no list of alternatives, no

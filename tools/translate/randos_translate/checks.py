@@ -33,16 +33,34 @@ def placeholders(source: str, text: str) -> tuple[bool, str]:
     return (want == got, "" if want == got else f"expected {want}, got {got}")
 
 
-def glossary(source: str, text: str) -> tuple[bool, str]:
+_LATIN = r"A-Za-z\u00C0-\u024F"
+
+# Turkish adds its suffixes to the word ("randoyu", "randolar"); elsewhere a
+# Latin letter after the term makes another word ("randonnée", a hike).
+_SUFFIXED = {"tr"}
+
+
+def _has_term(term: str, text: str, locale: str | None = None) -> bool:
+    """The term as a word of its own, not part of another: no Latin letter
+    just before it ("esperando" holds "rando") or after it, but a plural
+    "s" ("randos"); in Turkish, any suffix. Other scripts around it are
+    fine ("あなたのrandoを", "rando-এর")."""
+    after = "" if locale in _SUFFIXED else rf"s?(?![{_LATIN}])"
+    return re.search(rf"(?<![{_LATIN}]){term}{after}", text) is not None
+
+
+def glossary(source: str, text: str, locale: str | None = None) -> tuple[bool, str]:
     """The terms are kept exactly, lowercase included: randos is a name and
     always lowercase, even starting a sentence ("Randos est..." fails)."""
-    missing = [term for term in GLOSSARY if term in source.lower() and term not in text]
+    missing = [term for term in GLOSSARY if term in source.lower() and not _has_term(term, text, locale)]
     # "randos" contains "rando": count each source term once.
-    if "randos" in source.lower() and ("randos" in text or "rando" not in source.lower().replace("randos", "")):
+    if "randos" in source.lower() and (
+        _has_term("randos", text, locale) or "rando" not in source.lower().replace("randos", "")
+    ):
         missing = [t for t in missing if t != "rando"]
     if not missing:
         return (True, "")
-    capitalized = [t for t in missing if t in text.lower()]
+    capitalized = [t for t in missing if _has_term(t, text.lower(), locale)]
     return (False, f"capitalized {capitalized}" if capitalized == missing else f"missing {missing}")
 
 
@@ -126,7 +144,7 @@ def shape(source: str, text: str) -> tuple[bool, str]:
 def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dict[str, dict]:
     results = {
         "placeholders": placeholders(source, text),
-        "glossary": glossary(source, text),
+        "glossary": glossary(source, text, locale),
         "length": length(source, text, button=button, locale=locale),
         "script": script(locale, text, source),
         "shape": shape(source, text),

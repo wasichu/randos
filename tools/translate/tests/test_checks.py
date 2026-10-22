@@ -12,6 +12,13 @@ def test_glossary_terms_stay():
     assert checks.glossary("Find a rando", "Buscar un rando")[0]
     assert not checks.glossary("Find a rando", "Buscar un desconocido")[0]
     assert checks.glossary("About randos", "Acerca de randos")[0]
+    # Inside another word it doesn't count ("esperando" holds "rando").
+    assert not checks.glossary("waiting on your rando", "esperando a tu interlocutor")[0]
+    assert checks.glossary("waiting on your rando", "esperando a tu rando")[0]
+    assert not checks.glossary("waiting on your rando", "en attendant votre randonnée")[0]
+    assert checks.glossary("Find a rando", "Bir randoyu bul", "tr")[0]
+    assert checks.glossary("Find a rando", "rando-এর অপেক্ষায়", "bn")[0]
+    assert checks.glossary("Find a rando", "randoを探す")[0]
 
 
 def test_length_is_sane_and_buttons_tighter():
