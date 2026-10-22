@@ -41,14 +41,20 @@ def glossary(source: str, text: str) -> tuple[bool, str]:
     return (not missing, "" if not missing else f"missing {missing}")
 
 
-def length(source: str, text: str, *, button: bool = False) -> tuple[bool, str]:
+# Chinese, Japanese and Korean write in far fewer characters than English
+# ("connecting" -> "连接", 0.2), so their floor is lower.
+DENSE_LOCALES = {"zh", "ja", "ko"}
+
+
+def length(source: str, text: str, *, button: bool = False, locale: str | None = None) -> tuple[bool, str]:
     """Sane length: not empty, not wildly longer or shorter than the English.
     Buttons get a tighter limit (they must fit)."""
     if not text.strip():
         return (False, "empty")
     ratio = len(text) / max(len(source), 1)
+    low = 0.1 if locale in DENSE_LOCALES else 0.25
     high = 2.0 if button else 3.0
-    ok = 0.25 <= ratio <= high or len(source) < 8
+    ok = low <= ratio <= high or len(source) < 8
     return (ok, "" if ok else f"length ratio {ratio:.2f}")
 
 
@@ -62,18 +68,26 @@ def _script(char: str) -> str | None:
     return "OTHER"
 
 
-def _letters(text: str) -> list[str]:
+_WORD = re.compile(r"[A-Za-z][A-Za-z0-9.+-]*")
+
+
+def _letters(text: str, keep: set[str] = frozenset()) -> list[str]:
+    """The script of each letter, leaving out placeholders, the glossary,
+    and the words in `keep` (names copied from the English, like GitHub)."""
     stripped = PLACEHOLDER.sub("", text)
     for term in GLOSSARY:
         stripped = re.sub(term, "", stripped, flags=re.IGNORECASE)
+    stripped = _WORD.sub(lambda m: "" if m.group(0) in keep else m.group(0), stripped)
     return [s for s in map(_script, stripped) if s]
 
 
 def script(locale: str, text: str, source: str | None = None) -> tuple[bool, str]:
-    """The letters are in the locale's script (ignoring placeholders and the
-    glossary terms, which stay Latin). A translation with no letters at all
-    fails when the source has some (a model that answered "& & &")."""
-    letters = _letters(text)
+    """The letters are in the locale's script (ignoring placeholders, the
+    glossary terms, and Latin words copied as they are from the English,
+    such as GitHub or UDP). A translation with no letters at all fails when
+    the source has some (a model that answered "& & &")."""
+    copied = set(_WORD.findall(source)) if source and locale not in LATIN_LOCALES else set()
+    letters = _letters(text, copied)
     if not letters:
         ok = source is None or not _letters(source)
         return (ok, "" if ok else "no letters")
@@ -89,7 +103,7 @@ def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dic
     results = {
         "placeholders": placeholders(source, text),
         "glossary": glossary(source, text),
-        "length": length(source, text, button=button),
+        "length": length(source, text, button=button, locale=locale),
         "script": script(locale, text, source),
     }
     return {name: {"ok": ok, "detail": detail} for name, (ok, detail) in results.items()}

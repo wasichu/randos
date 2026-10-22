@@ -19,6 +19,9 @@ def test_length_is_sane_and_buttons_tighter():
     assert not checks.length("Short anonymous conversations", "")[0]
     assert not checks.length("End the call now", "x" * 40, button=True)[0]
     assert checks.length("End the call now", "x" * 40)[0]
+    # CJK is dense: "connecting" is two characters.
+    assert checks.length("connecting", "连接", locale="zh")[0]
+    assert not checks.length("connecting", "连接", locale="es")[0]
 
 
 def test_script_matches_the_locale():
@@ -30,6 +33,10 @@ def test_script_matches_the_locale():
     # No letters at all, for a source that has some: a broken translation.
     assert not checks.script("ar", "& & &", "About")[0]
     assert checks.script("ar", "%{time}", "%{time}")[0]
+    # Names copied from the English don't count against the script...
+    assert checks.script("hi", "GitHub पर देखें", "View on GitHub")[0]
+    # ...but English the source doesn't have still does.
+    assert not checks.script("hi", "GitHub view पर", "View on GitHub")[0]
 
 
 def test_protect_and_restore_round_trip():

@@ -60,6 +60,24 @@ def test_a_redo_replaces_machine_text_but_never_a_persons_fix(tmp_path):
     assert entries(root)[end] == "Terminar"
 
 
+def test_a_fill_changes_only_the_msgstrs(tmp_path):
+    # The layout Elixir's Gettext writes: a "##" header, one reference per
+    # line, long strings unwrapped. A fill must leave all of it alone.
+    long = "A conversation lasts %{call} minutes. " * 3
+    head = '## "msgid"s in this file come from POT (.pot) files.\n###\nmsgid ""\nmsgstr ""\n"Language: es\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n\n'
+
+    def entry(msgstr: str) -> str:
+        return f'#: lib/a.ex\n#: lib/b.ex\n#, elixir-autogen, elixir-format\nmsgid "{long}"\nmsgstr "{msgstr}"\n'
+
+    root, state = tmp_path / "gettext", tmp_path / "state"
+    path = po.po_path("es", root)
+    path.parent.mkdir(parents=True)
+    path.write_text(head + entry(""))
+
+    po.fill("es", {long: "Una conversación"}, "m1", root=root, state_dir=state)
+    assert path.read_text() == head + entry("Una conversación")
+
+
 def test_the_source_strings_come_from_the_real_template():
     keys = [s.key for s in po.sources()]
     assert "About" in keys

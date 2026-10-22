@@ -23,6 +23,25 @@ class Translator(Protocol):
     def back_translate(self, texts: list[str], source: str) -> list[str]: ...
 
 
+# Our 14 practice languages, by the English names the instruction models'
+# prompts use (Chinese: the site is in Simplified).
+NAMES = {
+    "es": "Spanish",
+    "zh": "Simplified Chinese",
+    "hi": "Hindi",
+    "ar": "Arabic",
+    "pt": "Portuguese",
+    "bn": "Bengali",
+    "ru": "Russian",
+    "ja": "Japanese",
+    "fr": "French",
+    "de": "German",
+    "ko": "Korean",
+    "it": "Italian",
+    "tr": "Turkish",
+    "id": "Indonesian",
+}
+
 _TOKEN = re.compile(r"\[(\d+)\]")
 
 
@@ -42,6 +61,16 @@ def restore(text: str, kept: list[str]) -> str:
     return _TOKEN.sub(lambda m: kept[int(m.group(1))] if int(m.group(1)) < len(kept) else m.group(0), text)
 
 
+# The MLX instruction models: name -> (repo, prompt style). Sizes chosen to
+# fit the owner's 48 GB Mac one at a time (docs/architecture/translation_models.md).
+MLX = {
+    "hy-mt2": ("mlx-community/Hy-MT2-7B-8bit", "hy-mt2"),
+    "translategemma-4b": ("mlx-community/translategemma-4b-it-8bit", "translategemma"),
+    "translategemma-12b": ("mlx-community/translategemma-12b-it-8bit", "translategemma"),
+    "translategemma-27b": ("mlx-community/translategemma-27b-it-4bit", "translategemma"),
+}
+
+
 def get(name: str) -> Translator:
     if name == "opus-mt":
         from .opus_mt import OpusMT
@@ -51,15 +80,14 @@ def get(name: str) -> Translator:
         from .m2m100 import M2M100
 
         return M2M100()
-    if name in PLANNED:
-        raise SystemExit(f"{name}: planned for the full shootout, not wired yet ({PLANNED[name]})")
-    raise SystemExit(f"unknown model {name!r}; known: opus-mt, m2m100, {', '.join(PLANNED)}")
+    if name == "madlad-400":
+        from .madlad import MADLAD
 
+        return MADLAD()
+    if name in MLX:
+        from .mlx_chat import MLXChat
 
-# The rest of the field (docs/architecture/translation_models.md), to add
-# as adapters when the full shootout runs.
-PLANNED = {
-    "hy-mt2": "MLX, mlx-community/Hy-MT2-*; ungated, Apache-2.0",
-    "translategemma": "MLX, mlx-community/translategemma-*; gated (accept the Gemma terms on Hugging Face)",
-    "madlad-400": "transformers T5 on MPS; ungated, Apache-2.0",
-}
+        repo, style = MLX[name]
+        return MLXChat(name, repo, style)
+    known = ["opus-mt", "m2m100", "madlad-400", *MLX]
+    raise SystemExit(f"unknown model {name!r}; known: {', '.join(known)}")

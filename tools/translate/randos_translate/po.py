@@ -52,6 +52,30 @@ def po_path(locale: str, root: Path = GETTEXT) -> Path:
     return root / locale / "LC_MESSAGES" / "default.po"
 
 
+def _save(po: polib.POFile, path: Path) -> None:
+    """Saves in the layout Elixir's Gettext writes, so a fill's diff is only
+    the new msgstrs: no line wrapping, one reference per "#:" line, and the
+    "##" header comment as it was (polib would rewrite it as "# #")."""
+    header = _leading_comments(path.read_text())
+    po.wrapwidth = 0
+    po.save(str(path))
+    body = path.read_text().splitlines(keepends=True)
+    body = body[len(_leading_comments("".join(body))) :]
+    path.write_text("".join(header + [ref for line in body for ref in _one_reference_per_line(line)]))
+
+
+def _one_reference_per_line(line: str) -> list[str]:
+    if not line.startswith("#: "):
+        return [line]
+    return [f"#: {ref}\n" for ref in line[3:].split()]
+
+
+def _leading_comments(text: str) -> list[str]:
+    lines = text.splitlines(keepends=True)
+    end = next((i for i, line in enumerate(lines) if not line.startswith("#")), len(lines))
+    return lines[:end]
+
+
 def _state_path(locale: str, state_dir: Path) -> Path:
     return state_dir / f"{locale}.json"
 
@@ -99,7 +123,7 @@ def fill(
         entry.msgstr = translations[key]
         state[key] = {"msgstr": translations[key], "model": model}
 
-    po.save(str(path))
+    _save(po, path)
     state_dir.mkdir(parents=True, exist_ok=True)
     _state_path(locale, state_dir).write_text(json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     return counts
