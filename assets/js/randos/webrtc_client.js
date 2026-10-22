@@ -367,6 +367,9 @@ export class WebRTCClient {
   }
 
   // Tells the server about a change in our media state (once per change).
+  // A second `failed` after a restart that failed too isn't sent again:
+  // that's safe only because the server keeps asking for restarts on its
+  // own timer until the call is healthy or out of budget (CallCoordinator).
   reportMediaState(state, details = {}) {
     if (this.reportedMediaState === state) return
 

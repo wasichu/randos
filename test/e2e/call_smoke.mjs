@@ -191,7 +191,9 @@ try {
       // the rando is told. Behind production's edge proxy it may not see it
       // before the dropper is back, which takes over the seat directly (the
       // "replaced" path): no notice, the call simply goes on. What matters
-      // either way is checked below: the same call, audio, hang-up.
+      // either way is checked below: the same call, audio, hang-up. The same
+      // call element is what proves the resume there: a refused ticket would
+      // mount a fresh participant, with a new element, who could still hang up.
       const behindEdge = !/^http:\/\/(localhost|127\.0\.0\.1)/.test(BASE_URL)
       if (!behindEdge) await stayer.waitFor(`window.__sawReconnecting`, "the rando shown reconnecting")
       await sleep(1_000)

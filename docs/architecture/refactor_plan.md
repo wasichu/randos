@@ -672,7 +672,10 @@ Not scheduled; pick up when relevant.
   copy of `is` in `vendor/is` (4 s; `vendor/README.md`) with the helper's
   STUN timing tightened; now ~4 s, guarded by
   `a_dead_path_is_noticed_within_seconds`. An upstream issue (configurable
-  window) is drafted, not filed. `just turn-check` passed 2026-10-22,
+  window) is drafted, not filed. (AGENTS' "a client gains a constant"
+  check: the STUN pacing and the window stay in the helper. They're the
+  ICE agent's own timing, which the server can't see or run; the policy,
+  when to restart and when to give up, is still all on the server.) `just turn-check` passed 2026-10-22,
   including the restart through the real coturn (one helper rebound to a
   new socket mid-call). Design and
   outcome: `ice_restart.md`. Also: `just deploy` now refuses commits that

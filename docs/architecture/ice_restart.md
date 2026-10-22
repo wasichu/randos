@@ -1,8 +1,7 @@
 # ICE restart: design (2026-10-22)
 
-Status: **proposed, not implemented.** For the owner to review; nothing in
-the code or the other docs has changed. Researched 2026-10-22 against
-`89be469`. Claims are marked **[source]** (read in our code or a
+Status: **built** (see "Outcome" below for what changed from this
+proposal). Researched 2026-10-22 against `89be469`. Claims are marked **[source]** (read in our code or a
 dependency's source), **[spec]** (an RFC or W3C/MDN text), or **[verify]**
 (believed, not yet checked; check before building on it).
 

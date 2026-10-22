@@ -335,7 +335,8 @@ deploy:
     # Deploy only what's on origin/main: fly builds from this checkout, so
     # unpushed commits would go live unreviewed by CI. RANDOS_DEPLOY_UNPUSHED=1
     # overrides (say why in the commit you push afterwards).
-    git fetch --quiet origin main
+    git fetch --quiet origin main \
+      || echo "warning: couldn't reach origin; checking against the last fetched origin/main" >&2
     ahead=$(git rev-list --count origin/main..HEAD)
     if [ "$ahead" -gt 0 ] && [ "${RANDOS_DEPLOY_UNPUSHED:-}" != "1" ]; then
       echo "HEAD has $ahead commit(s) not on origin/main; push them (and let CI pass) first," >&2
