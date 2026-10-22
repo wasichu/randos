@@ -319,6 +319,16 @@ docker-build:
 deploy:
     #!/usr/bin/env bash
     set -euo pipefail
+    # Deploy only what's on origin/main: fly builds from this checkout, so
+    # unpushed commits would go live unreviewed by CI. RANDOS_DEPLOY_UNPUSHED=1
+    # overrides (say why in the commit you push afterwards).
+    git fetch --quiet origin main
+    ahead=$(git rev-list --count origin/main..HEAD)
+    if [ "$ahead" -gt 0 ] && [ "${RANDOS_DEPLOY_UNPUSHED:-}" != "1" ]; then
+      echo "HEAD has $ahead commit(s) not on origin/main; push them (and let CI pass) first," >&2
+      echo "or deploy anyway with RANDOS_DEPLOY_UNPUSHED=1 just deploy" >&2
+      exit 1
+    fi
     # The footer shows this commit; "-dirty" when deploying uncommitted changes.
     commit=$(git rev-parse --short HEAD)
     [ -z "$(git status --porcelain)" ] || commit="$commit-dirty"
