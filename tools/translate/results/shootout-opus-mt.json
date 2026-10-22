@@ -26,8 +26,8 @@
         "seconds": 39.1
       },
       "judge": {
-        "at": "20261022T162515Z",
-        "seconds": 2867.9
+        "at": "20261022T214417Z",
+        "seconds": 3848.3
       }
     },
     "appended": [
@@ -267,7 +267,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "reason": "Perfectly natural and matches tone.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -306,7 +307,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Literal translation, unnatural phrasing"
+          "reason": "Literal translation, unnatural phrasing",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -618,7 +620,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -735,7 +738,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -1047,7 +1051,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct, and matches the tone."
+          "reason": "Perfectly natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -1086,7 +1091,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -1203,7 +1209,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -1710,7 +1717,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, clear, and matches the friendly tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -1944,7 +1952,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -2138,8 +2147,9 @@
           "score": 0.6166
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct technical term, natural in Spanish."
+          "score": 7,
+          "reason": "Correct meaning, but awkward phrasing for link text.",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -2333,8 +2343,9 @@
           "score": 0.7608
         },
         "judge": {
-          "score": 8,
-          "reason": "Natural and clear, but 'ordinary casual' is slightly redundant."
+          "score": 10,
+          "reason": "Natural, keeps meaning and tone perfectly.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -2724,7 +2735,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and length."
+          "reason": "Natural, short, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -2763,7 +2775,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, short, and matches the tone."
+          "reason": "Short, natural, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -2841,7 +2854,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, concise, matches tone and meaning."
+          "reason": "Natural, short, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -2880,7 +2894,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Clear, natural, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -2919,7 +2934,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unmute is English, not Spanish. Needs translation."
+          "reason": "Unmute is English, not Spanish. Needs 'Activar micrófono' or similar.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -2958,7 +2974,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -2997,7 +3014,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3036,7 +3054,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3075,7 +3094,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning, but 'conectar' is more formal; 'conectarse' fits better."
+          "reason": "Verb form feels stiff; 'conectando' is more natural",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3114,7 +3134,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3153,7 +3174,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3192,7 +3214,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'denegado' is formal"
+          "reason": "Slightly stiff, 'denegado' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3231,7 +3254,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3270,7 +3294,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'solicitando' is formal"
+          "reason": "slightly stiff, 'solicitando' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3308,8 +3333,9 @@
           "score": 0.7868
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'starting' implies action, 'Inicio' is static.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3348,7 +3374,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "slightly stiff, 'su' unnecessary"
+          "reason": "Slightly stiff, 'por su' sounds formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -3620,8 +3647,9 @@
           "score": 0.5376
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and keeps the original tone."
+          "score": 7,
+          "reason": "Unnatural abbreviation, 'min' is rarely used in Spanish",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -3660,7 +3688,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -3698,8 +3727,9 @@
           "score": 0.8513
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Cancelado' sounds more formal than needed",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -3777,7 +3807,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -3971,8 +4002,9 @@
           "score": 0.8406
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Terminado' sounds more formal than needed.",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -4323,7 +4355,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal for the tone"
+          "reason": "Correct but slightly formal; 'Estado' fits better",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -4518,7 +4551,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -4595,8 +4629,9 @@
           "score": 0.8105
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'funcionando' is more natural",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -4674,7 +4709,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -4713,7 +4749,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -4830,7 +4867,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Correct, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -4908,7 +4946,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "AGPL-3.0 should be AGPL-3.0, minor awkwardness"
+          "reason": "Slightly stiff, comma missing after AGPL",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -5025,7 +5064,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct, and matches the tone."
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -5181,7 +5221,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, just symbols."
+          "reason": "Not Arabic, just symbols",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -5220,7 +5261,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, placeholder error"
+          "reason": "Not Arabic, placeholder repeated",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -5531,8 +5573,9 @@
           "score": 0.4322
         },
         "judge": {
-          "score": 1,
-          "reason": "Missing translation, not Arabic"
+          "score": 7,
+          "reason": "Needs more natural phrasing, slightly stiff",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -5648,8 +5691,9 @@
           "score": 0.3814
         },
         "judge": {
-          "score": 4,
-          "reason": "Missing translation, no context for evaluation"
+          "score": 7,
+          "reason": "Natural but slightly stiff, could be more informal",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -5961,7 +6005,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct, and matches the tone."
+          "reason": "Perfectly natural, matches tone and keeps meaning.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -6000,7 +6045,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Meaning lost, awkward phrasing, wrong tone"
+          "reason": "Meaning lost, awkward phrasing, wrong tone",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -6116,8 +6162,9 @@
           "score": 0.4419
         },
         "judge": {
-          "score": 1,
-          "reason": "Not Arabic, meaning unclear"
+          "score": 4,
+          "reason": "Wrong word, unnatural, meaning unclear",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -6624,7 +6671,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly formal, 'time is up' is more casual"
+          "reason": "Slightly formal, 'time is up' is more casual",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -6858,7 +6906,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Missing translation, not Arabic"
+          "reason": "Missing translation, not Arabic",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -7053,7 +7102,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural word choice, not commonly used in Arabic."
+          "reason": "Unnatural word, wrong register for friendly tone",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -7248,7 +7298,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff phrasing, 'ordinary casual conversation' could be smoother"
+          "reason": "Slightly stiff phrasing, 'ordinary casual conversation' could be more natural.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -7638,7 +7689,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, broken placeholder text"
+          "reason": "Not Arabic, broken characters",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -7676,8 +7728,9 @@
           "score": 0.421
         },
         "judge": {
-          "score": 1,
-          "reason": "Not Arabic, placeholder only"
+          "score": 7,
+          "reason": "Natural but slightly stiff, could be more casual",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -7755,7 +7808,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, broken repetition"
+          "reason": "Not Arabic, broken repetition",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -7794,7 +7848,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'التالي' is correct but could be more casual."
+          "reason": "Natural but slightly stiff; 'التالي' is formal",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -7833,7 +7888,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'Unmute' is 'إلغاء الكتم'"
+          "reason": "Natural but slightly formal; 'Unmute' is idiomatic.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -7872,7 +7928,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, broken characters"
+          "reason": "Not Arabic, broken characters",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -7910,8 +7967,9 @@
           "score": 0.6073
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Natural but slightly formal; 'نداء' is more formal than 'calling'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -7949,8 +8007,9 @@
           "score": 0.3294
         },
         "judge": {
-          "score": 7,
-          "reason": "Natural but slightly stiff, could be more informal"
+          "score": 4,
+          "reason": "ATL is not Arabic, meaning unclear",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -7989,7 +8048,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong meaning, 'الرقم' means 'the number'"
+          "reason": "Wrong meaning, 'الرقم' means 'the number'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8028,7 +8088,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, broken placeholder format"
+          "reason": "Not Arabic, broken, wrong meaning",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8067,7 +8128,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Repetition is unnatural, tone is stiff"
+          "reason": "Repetition is unnatural, tone is stiff",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8106,7 +8168,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural phrasing, missing context for 'denied'"
+          "reason": "Unnatural phrasing, missing context",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8145,7 +8208,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more formal than needed"
+          "reason": "Awkward phrasing, more natural as 'لم يبدأ بعد'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8184,7 +8248,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural phrasing, literal translation"
+          "reason": "Unnatural phrasing, missing context for 'microphone'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8223,7 +8288,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Too literal, unnatural phrasing for Arabic"
+          "reason": "Meaning lost, 'أساس' means 'base' or 'foundation', not 'starting'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8262,7 +8328,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Wrong meaning, not Arabic, or broken"
+          "reason": "Wrong meaning, not Arabic, or broken",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -8535,7 +8602,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, broken placeholder"
+          "reason": "Not Arabic, broken placeholder",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -8574,7 +8642,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Awkward phrasing, meaning unclear"
+          "reason": "Awkward phrasing, unnatural word order",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -8612,8 +8681,9 @@
           "score": 0.4448
         },
         "judge": {
-          "score": 4,
-          "reason": "Repetition is unnatural, tone is stiff"
+          "score": 1,
+          "reason": "Wrong meaning, not Arabic, broken repetition",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -8691,7 +8761,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff, could be more informal"
+          "reason": "Natural but slightly stiff, could be more informal",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -8886,7 +8957,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'تم الانتهاء' is correct but could be more casual."
+          "reason": "Slightly stiff, more formal than needed",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -9236,8 +9308,9 @@
           "score": 0.804
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Natural but slightly formal for the tone.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -9432,7 +9505,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Meaning unclear, too short, unnatural phrasing"
+          "reason": "Meaning unclear, awkward phrasing, wrong register",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -9509,8 +9583,9 @@
           "score": 0.4478
         },
         "judge": {
-          "score": 7,
-          "reason": "Literal, slightly stiff. 'Number of work' is unnatural; 'active' or 'in progress' would fit better."
+          "score": 4,
+          "reason": "Unnatural phrasing, literal translation",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -9588,7 +9663,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the friendly tone."
+          "reason": "Clear, natural, and keeps the informal tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -9627,7 +9703,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Not Arabic, placeholder text only"
+          "reason": "Not Arabic, placeholder issue",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -9744,7 +9821,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'Privacy' is 'الخصوصية'"
+          "reason": "Needs more natural phrasing, slightly stiff",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -9822,7 +9900,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong license name, awkward phrasing"
+          "reason": "Wrong license name, awkward phrasing",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -9938,8 +10017,9 @@
           "score": 0.7086
         },
         "judge": {
-          "score": 1,
-          "reason": "Wrong meaning, not Arabic, broken"
+          "score": 4,
+          "reason": "Wrong meaning, 'ألف- حرية الحياة' means 'thousand - freedom of life'",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -10094,8 +10174,9 @@
           "score": 0.6359
         },
         "judge": {
-          "score": 7,
-          "reason": "Accurate but slightly stiff; '关于' is formal for 'About'."
+          "score": 10,
+          "reason": "Accurate, natural, and matches the tone.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -10134,7 +10215,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '约' is too formal for the friendly tone."
+          "reason": "Slightly stiff, '约' is too formal",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -10446,7 +10528,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Too short, slightly stiff. Needs more context."
+          "reason": "Slightly stiff, missing friendly tone",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -10563,7 +10646,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '电话' is too formal for casual app context"
+          "reason": "Slightly stiff, '电话' is too formal for 'call'",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -10875,7 +10959,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct tone."
+          "reason": "Accurate, natural, and matches the tone.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -10914,7 +10999,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '寻找' is formal; '正在找' is more natural"
+          "reason": "Slightly stiff, '寻找' is formal; '正在寻找' is too literal",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -11031,7 +11117,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '准备' is more formal than needed"
+          "reason": "Slightly stiff, '准备' is more formal than needed",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -11538,7 +11625,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the calm tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -11771,8 +11859,9 @@
           "score": 0.5035
         },
         "judge": {
-          "score": 1,
-          "reason": "Repetition, no meaning, not Chinese"
+          "score": 4,
+          "reason": "Repetition is unnatural, tone is off",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -11967,7 +12056,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, '交叉交谈' is unnatural"
+          "reason": "Slightly stiff, '交叉交谈' is formal",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -12162,7 +12252,8 @@
         },
         "judge": {
           "score": 8,
-          "reason": "Natural but slightly formal; '闲聊' is casual, but '僵硬的模式或标签' could be more relaxed."
+          "reason": "Natural but slightly formal; '闲聊' is casual but '僵硬的模式或标签' could be more relaxed.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -12552,7 +12643,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and length."
+          "reason": "Natural, concise, matches tone and context.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -12590,8 +12682,9 @@
           "score": 0.7463
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Accurate but slightly formal; '挂断' is more natural for calls.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -12669,7 +12762,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -12708,7 +12802,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, keeps tone and placeholder."
+          "reason": "Clear, natural, and keeps the informal tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -12746,8 +12841,9 @@
           "score": 0.4703
         },
         "judge": {
-          "score": 4,
-          "reason": "Unnatural phrasing, literal translation"
+          "score": 7,
+          "reason": "Unnatural phrasing, '解开' is too literal",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -12785,8 +12881,9 @@
           "score": 0.6491
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the tone."
+          "score": 7,
+          "reason": "Accurate but slightly formal; '回答中' would sound more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -12825,7 +12922,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '拨打' is formal; '打电话' is more natural."
+          "reason": "Accurate but slightly formal; '拨打' is correct but '正在拨打' would be more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -12864,7 +12962,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -12902,8 +13001,9 @@
           "score": 0.6214
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; '连接中' would be more idiomatic.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -12942,7 +13042,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '结束' is formal; '结束了' is more natural."
+          "reason": "Slightly stiff, '结束' is formal; '结束了' is more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -12980,8 +13081,9 @@
           "score": 0.7889
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the tone."
+          "score": 7,
+          "reason": "Accurate but slightly stiff; '失败' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -13020,7 +13122,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '被拒绝' is formal"
+          "reason": "Slightly stiff, '被拒绝' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -13059,7 +13162,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -13098,7 +13202,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '请求' is formal for 'requesting'."
+          "reason": "Slightly stiff, '请求' is formal for 'requesting'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -13136,8 +13241,9 @@
           "score": 0.6394
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; '开始' is correct but lacks the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -13176,7 +13282,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; '等待你的' could be more casual."
+          "reason": "Slightly stiff, '等待你的' feels formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -13449,7 +13556,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Accurate, natural, and matches the informal tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -13488,7 +13596,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong meaning, '调用' means 'call (function)'"
+          "reason": "Unnatural phrasing, '调用' is technical",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -13526,8 +13635,9 @@
           "score": 0.8411
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'canceled' is more natural",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -13605,7 +13715,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -13800,7 +13911,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '完成' is more natural"
+          "reason": "Slightly stiff, '结束' is formal; '结束了' is more natural.",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -14151,7 +14263,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Accurate but slightly stiff; '状态' is neutral, not informal."
+          "reason": "Accurate but slightly formal for the tone.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -14346,7 +14459,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '典型长度' sounds formal"
+          "reason": "Slightly stiff, '典型' is formal",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -14424,7 +14538,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "too formal, unnatural for casual app"
+          "reason": "Unnatural phrasing, 'working' should be '正常'",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -14502,7 +14617,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the friendly tone."
+          "reason": "Clear, natural, and matches tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -14540,8 +14656,9 @@
           "score": 0.8385
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the friendly tone."
+          "score": 7,
+          "reason": "Slightly stiff, '1分钟以下' is correct but could be more natural",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -14658,7 +14775,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -14736,7 +14854,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'source' is better as '来源'"
+          "reason": "Slightly stiff, '来源' is more natural",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -14853,7 +14972,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -15009,7 +15129,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong meaning, awkward phrasing"
+          "reason": "Awkward phrasing, unnatural Hindi",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -15047,8 +15168,9 @@
           "score": 0.88
         },
         "judge": {
-          "score": 4,
-          "reason": "Awkward phrasing, unnatural Hindi"
+          "score": 7,
+          "reason": "Slightly stiff phrasing, 'के बारे में' is more natural",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -15360,7 +15482,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning but overly literal, lacks natural Hindi phrasing."
+          "reason": "Unnatural phrasing, 'Connection:' is too direct",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -15477,7 +15600,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly formal, 'मौजूदा' is stiff; 'वर्तमान' or 'चल रही' would be more natural."
+          "reason": "Slightly stiff, 'मौजूदा' is formal",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -15789,7 +15913,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct, and matches the tone."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -15828,7 +15953,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, more natural as 'देख रहा है'."
+          "reason": "Awkward phrasing, more natural as 'खोज रहा है'",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -15945,7 +16071,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -16452,7 +16579,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, more formal than needed"
+          "reason": "Awkward phrasing, more formal than needed",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -16685,8 +16813,9 @@
           "score": 0.8083
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "score": 7,
+          "reason": "Correct but slightly formal; 'आप' is polite, but 'तुम' might fit better for informality.",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -16881,7 +17010,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Wrong meaning, not Hindi, placeholder issue"
+          "reason": "Wrong meaning, not Hindi, placeholder issue",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -17076,7 +17206,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Unnatural phrasing, awkward word choice, and missing tone."
+          "reason": "Awkward phrasing, 'marammat' is incorrect, tone slightly stiff.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -17466,7 +17597,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'जारी रखें' is correct but could be more casual."
+          "reason": "Natural but slightly formal; 'जारी रखें' is correct but could be more casual.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -17504,8 +17636,9 @@
           "score": 0.7601
         },
         "judge": {
-          "score": 7,
-          "reason": "Natural but slightly formal; 'समाप्त' is more casual."
+          "score": 4,
+          "reason": "Unnatural, too formal, loses context",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -17583,7 +17716,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural word choice, too formal"
+          "reason": "Unnatural word choice, too formal",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -17622,7 +17756,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'अगला' is correct but could be more casual."
+          "reason": "Natural but slightly stiff; 'अगला' is correct but could be more casual.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -17661,7 +17796,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Unnatural phrasing, 'unmute' is better as 'अनम्यूट' or 'बोलना'"
+          "reason": "Unnatural phrasing, 'anmut' is not Hindi",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -17699,8 +17835,9 @@
           "score": 0.7488
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct meaning but slightly formal; 'उत्तर' is formal, 'जवाब' is more casual."
+          "score": 4,
+          "reason": "Unnatural phrasing, literal translation",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17739,7 +17876,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly stiff; 'calling' could be more natural as 'बुलाना' or 'कॉलिंग'."
+          "reason": "Accurate but slightly stiff; 'calling' could be more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17778,7 +17916,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural Hindi, literal translation of 'connected'."
+          "reason": "Unnatural, literal translation, not idiomatic Hindi",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17817,7 +17956,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'कर रहा' is unnecessary"
+          "reason": "Awkward phrasing, 'कर रहा है' is too formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17856,7 +17996,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Formal, slightly stiff. 'खत्म हुआ' is more natural."
+          "reason": "Correct meaning but slightly formal for informal tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17894,8 +18035,9 @@
           "score": 0.8192
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "score": 7,
+          "reason": "Correct but slightly stiff; informal tone missing.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17934,7 +18076,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning, but slightly formal. 'अस्वीकृत' is stiff; 'मना कर दिया' is more natural."
+          "reason": "Natural but slightly formal; 'अस्वीकृत' is correct but could be more casual.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -17973,7 +18116,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'नहीं' should be 'हुआ नहीं' for natural flow."
+          "reason": "Awkward phrasing, 'नहीं' should be 'हुआ नहीं'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -18012,7 +18156,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Too formal, lacks context for 'microphone'."
+          "reason": "Too vague, lacks context. Needs 'requesting microphone'.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -18051,7 +18196,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, more formal than needed"
+          "reason": "Awkward phrasing, more formal than needed",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -18090,7 +18236,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'अपने' feels formal"
+          "reason": "Slightly stiff, 'अपने' is unnecessary",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -18363,7 +18510,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but too short; 'min' is unnatural in Hindi."
+          "reason": "Correct but slightly stiff; 'मि.' is too formal",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -18402,7 +18550,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'started' could be more natural"
+          "reason": "Slightly stiff, 'प्रारंभ' is formal; 'शुरू हुए' would be more natural.",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -18440,8 +18589,9 @@
           "score": 0.7936
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Correct meaning but slightly formal for tone",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -18519,7 +18669,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, more natural as 'जुड़ा हुआ' or 'कनेक्टेड'."
+          "reason": "Awkward phrasing, more natural as 'जुड़ा हुआ'",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -18714,7 +18865,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Formal, unnatural for casual app context"
+          "reason": "Correct but slightly formal; 'समाप्त' would be more natural.",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -19064,8 +19216,9 @@
           "score": 0.8095
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly formal; 'स्थिति' is neutral, 'स्थिति' or 'स्थिति' would be more casual."
+          "score": 10,
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -19260,7 +19413,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural phrasing, awkward word order"
+          "reason": "Unnatural phrase, 'लम्बाई' is length, not duration",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -19338,7 +19492,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'कर रहा है' is too formal for 'working'."
+          "reason": "Awkward phrasing, 'काम कर रहा है' is too verbose for a status update.",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -19416,7 +19571,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but placeholder handling is unclear."
+          "reason": "Abridged, slightly stiff. 'मि.' is formal.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -19455,7 +19611,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff, '1 मि. में' is informal but could be smoother."
+          "reason": "Slightly stiff, '1 मि. में' is unnatural for 'under 1 min'",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -19572,7 +19729,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -19649,8 +19807,9 @@
           "score": 0.5555
         },
         "judge": {
-          "score": 4,
-          "reason": "Wrong license format, unnatural phrasing"
+          "score": 7,
+          "reason": "Correct meaning but awkward phrasing, 'अंग्रेजी ३. ०' is unnatural",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -19766,8 +19925,9 @@
           "score": 0.8551
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct term, natural, matches calm tone."
+          "score": 7,
+          "reason": "Correct meaning, but slightly formal for the tone.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -19923,7 +20083,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'О том, что' is too formal"
+          "reason": "Awkward phrasing, 'О том, что' is too formal",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -19962,7 +20123,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Meaning unclear, awkward phrasing, wrong tone"
+          "reason": "Wrong meaning, 'примерно' means 'approximately'",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -20273,8 +20435,9 @@
           "score": 0.8518
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, matches tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Подключение:' is formal",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -20391,7 +20554,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'текущий' is formal"
+          "reason": "Slightly stiff, 'текущий' is formal",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -20703,7 +20867,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -20741,8 +20906,9 @@
           "score": 0.5363
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly formal, 'взгляните' is more imperative than 'looking'"
+          "score": 4,
+          "reason": "Unnatural phrasing, doesn't convey 'searching'",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -20858,8 +21024,9 @@
           "score": 0.8497
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Готов' is formal; 'Готов(а)' is more natural",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -21366,7 +21533,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -21600,7 +21768,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -21795,7 +21964,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'перекрёстный' is too formal"
+          "reason": "Accurate but slightly formal; 'перекрёстный' is precise but less casual.",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -21990,7 +22160,8 @@
         },
         "judge": {
           "score": 8,
-          "reason": "Natural and clear, but 'practice прослушивания' is slightly formal"
+          "reason": "Natural, but 'прослушивания' is slightly formal; 'обычного' could be more casual.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -22379,8 +22550,9 @@
           "score": 0.8083
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and length."
+          "score": 7,
+          "reason": "Slightly formal, 'Продолжить' is neutral",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -22419,7 +22591,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'Конец' is formal; 'Завершить' or 'Готово' would be more natural."
+          "reason": "Too literal, sounds stiff. 'Сбросить' or 'Отключить' would be more natural.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -22497,7 +22670,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'mute' is more direct"
+          "reason": "Slightly stiff, 'Выключить' is formal",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -22535,8 +22709,9 @@
           "score": 0.4875
         },
         "judge": {
-          "score": 7,
-          "reason": "Natural but slightly stiff, 'следующий' is formal"
+          "score": 10,
+          "reason": "Perfectly natural, keeps tone and meaning.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -22574,8 +22749,9 @@
           "score": 0.338
         },
         "judge": {
-          "score": 4,
-          "reason": "Wrong meaning, too vague, not a button label."
+          "score": 1,
+          "reason": "Wrong meaning, not Russian, or broken",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -22613,8 +22789,9 @@
           "score": 0.7782
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "score": 7,
+          "reason": "Correct meaning, but too short and stiff",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22652,8 +22829,9 @@
           "score": 0.7748
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'звонок' is more formal than 'calling'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22691,8 +22869,9 @@
           "score": 0.7977
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, more natural to say 'подключено'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22731,7 +22910,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "unnatural phrasing, too formal for friendly tone"
+          "reason": "unnatural phrasing, too formal for friendly tone",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22769,8 +22949,9 @@
           "score": 0.7889
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly formal, 'ended' is more casual",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22808,8 +22989,9 @@
           "score": 0.8453
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'failed' is more casual than 'ошибка'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22847,8 +23029,9 @@
           "score": 0.7427
         },
         "judge": {
-          "score": 4,
-          "reason": "Awkward phrasing, 'отрицают' is too formal"
+          "score": 7,
+          "reason": "Awkward phrasing, more natural as 'Микрофон отключён'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22887,7 +23070,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more natural to say 'не началось'"
+          "reason": "Slightly stiff, more natural to say 'не началось'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22925,8 +23109,9 @@
           "score": 0.7517
         },
         "judge": {
-          "score": 4,
-          "reason": "awkward phrasing, unnatural for Russian"
+          "score": 7,
+          "reason": "Awkward phrasing, 'запрашиваемый' is too formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -22965,7 +23150,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'начало работы' is formal"
+          "reason": "Slightly stiff, 'начало работы' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -23004,7 +23190,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'твоего' sounds possessive"
+          "reason": "Awkward phrasing, 'waiting for your rando' is better as 'ожидание твоего rando'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -23277,7 +23464,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -23316,7 +23504,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more natural as 'Звонки начались'"
+          "reason": "Awkward phrasing, more natural as 'Звонки начались'",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -23354,8 +23543,9 @@
           "score": 0.8684
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'отменено' sounds more formal than needed",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -23433,7 +23623,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -23627,8 +23818,9 @@
           "score": 0.8343
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'завершено' is more formal than needed",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -23979,7 +24171,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly formal for the tone"
+          "reason": "Correct but slightly formal for the tone",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -24174,7 +24367,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'длина' is formal; 'длительность' or 'продолжительность' would sound more natural."
+          "reason": "Slightly stiff, 'типичная' is formal",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -24251,8 +24445,9 @@
           "score": 0.7079
         },
         "judge": {
-          "score": 4,
-          "reason": "awkward phrasing, not natural for interface"
+          "score": 1,
+          "reason": "wrong meaning, not Russian, or broken",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -24330,7 +24525,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, missing comma after 'мин'"
+          "reason": "Slightly stiff, 'мин' is formal",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -24369,7 +24565,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -24486,7 +24683,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -24564,7 +24762,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Clear, natural, and keeps the tone.",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -24681,7 +24880,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly formal, 'неприкосновенность' is strong"
+          "reason": "Slightly formal, 'частной жизни' is correct but 'неприкосновенность' is too strong",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -24837,7 +25037,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural and matches the tone."
+          "reason": "Perfectly natural and matches the tone.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -24876,7 +25077,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -25187,8 +25389,9 @@
           "score": 0.7531
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff, missing friendly tone",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -25304,8 +25507,9 @@
           "score": 0.7995
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the calm tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'actuel' is formal",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -25617,7 +25821,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "reason": "Perfectly natural, matches tone and keeps meaning.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -25655,8 +25860,9 @@
           "score": 0.5494
         },
         "judge": {
-          "score": 7,
-          "reason": "Too literal, 'regarder' is too general"
+          "score": 4,
+          "reason": "Wrong meaning, 'regarder' means 'to watch', not 'looking for'",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -25773,7 +25979,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -26280,7 +26487,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -26514,7 +26722,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural and informal, matches tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -26708,8 +26917,9 @@
           "score": 0.6166
         },
         "judge": {
-          "score": 4,
-          "reason": "Unnatural, direct English loan without adaptation"
+          "score": 7,
+          "reason": "Correct meaning but awkward phrasing, 'crosstalk' is English",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -26903,8 +27113,9 @@
           "score": 0.7914
         },
         "judge": {
-          "score": 8,
-          "reason": "Natural and clear, but 'modes' could be more casual"
+          "score": 10,
+          "reason": "Natural, keeps meaning and tone perfectly.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -27294,7 +27505,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and length."
+          "reason": "Perfectly natural, short, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -27333,7 +27545,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, short, and matches the tone."
+          "reason": "Perfectly natural, short, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -27411,7 +27624,8 @@
         },
         "judge": {
           "score": 1,
-          "reason": "Wrong meaning, 'mignon' means 'cute'"
+          "reason": "Wrong meaning, not French, or broken",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -27450,7 +27664,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'suivant' is formal"
+          "reason": "Slightly stiff, 'suivant' feels formal",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -27489,7 +27704,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong spelling, unnatural, not French"
+          "reason": "Wrong spelling, unnatural, too short",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -27528,7 +27744,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27567,7 +27784,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural and matches the tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27605,8 +27823,9 @@
           "score": 0.7802
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'connecté' is more tech/corporate"
+          "score": 10,
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27645,7 +27864,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27683,8 +27903,9 @@
           "score": 0.7439
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'terminée' is more formal than needed"
+          "score": 10,
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27723,7 +27944,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27762,7 +27984,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'refusé' is formal; 'microphone bloqué' or 'refus de microphone' would be more natural."
+          "reason": "Slightly stiff, 'refusé' is formal; 'microphone bloqué' or 'accès refusé' would be more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27801,7 +28024,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27839,8 +28063,9 @@
           "score": 0.8358
         },
         "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'demande' is formal; 'en train de demander' would be more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27879,7 +28104,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'début' is formal"
+          "reason": "Natural but slightly stiff; 'en cours' would be more fluid",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -27918,7 +28144,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "slightly stiff, 'votre' feels formal"
+          "reason": "slightly stiff, 'en attendant' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -28035,7 +28262,8 @@
         },
         "judge": {
           "score": null,
-          "error": "unparsed reply: '```json\\n{\"score\": 7, \"reason\": \"Slightly stiff, \\'à l\\'aise d\\\\\\'écouter\\' is unnatural\"}\\n```'"
+          "error": "unparsed reply: '```json\\n{\"score\": 7, \"reason\": \"Slightly stiff, \\'à l\\'aise d\\\\\\'écouter\\' is unnatural\"}\\n```'",
+          "context": ""
         }
       }
     },
@@ -28191,7 +28419,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Correct, natural, and keeps the tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -28230,7 +28459,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'lancés' is more technical than needed"
+          "reason": "Slightly stiff, 'lancés' is more technical than needed",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -28268,8 +28498,9 @@
           "score": 0.8506
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "score": 7,
+          "reason": "Slightly formal, 'canceled' is more casual",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -28347,7 +28578,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -28541,8 +28773,9 @@
           "score": 0.8304
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Terminé' is more formal than needed",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -28892,8 +29125,9 @@
           "score": 0.7994
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly formal; 'état' is neutral, 'statut' would be more natural."
+          "score": 10,
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -29088,7 +29322,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -29165,8 +29400,9 @@
           "score": 0.8112
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly stiff; informal tone missing"
+          "score": 4,
+          "reason": "Wrong meaning, 'Travail' means 'work', not 'working'",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -29244,7 +29480,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -29283,7 +29520,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, keeps meaning, matches tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -29400,7 +29638,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural and matches the tone."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -29478,7 +29717,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -29594,8 +29834,9 @@
           "score": 0.8611
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural and matches the tone."
+          "score": 7,
+          "reason": "Slightly formal, 'vie privée' is correct but 'confidentialité' might fit better.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -29751,7 +29992,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural and concise, matches tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -29790,7 +30032,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Literal translation, unnatural phrasing"
+          "reason": "Unnatural phrasing, meaning unclear",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -30101,8 +30344,9 @@
           "score": 0.8085
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'Verbindung:' feels formal",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -30218,8 +30462,9 @@
           "score": 0.8039
         },
         "judge": {
-          "score": 4,
-          "reason": "Wrong meaning, 'Ausschreibung' is for job postings, not calls"
+          "score": 1,
+          "reason": "Wrong meaning, not German, or broken",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -30531,7 +30776,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct, and matches the tone."
+          "reason": "Perfectly natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -30569,8 +30815,9 @@
           "score": 0.6538
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Too short, slightly stiff. 'Suche' or 'Auf der Suche' would be more natural.",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -30686,8 +30933,9 @@
           "score": 0.8379
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'bereit' would be more natural",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -31194,7 +31442,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, idiomatic, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -31428,7 +31677,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Formal 'Sie' instead of informal 'du'"
+          "reason": "Formal 'Sie' instead of informal 'Du' for a friendly app",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -31622,8 +31872,9 @@
           "score": 0.6166
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct technical term, natural and neutral tone."
+          "score": 7,
+          "reason": "Correct meaning, but 'crosstalk' is unnatural in German.",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -31818,7 +32069,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff phrasing, 'gewöhnliches lässiges Gespräch' is awkward"
+          "reason": "Slightly stiff phrasing, 'gewöhnliches lässiges Gespräch' is awkward",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -32208,7 +32460,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, short, and matches the tone."
+          "reason": "Perfectly natural, short, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -32246,8 +32499,9 @@
           "score": 0.7535
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and length."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'Beenden' would be more natural.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -32324,8 +32578,9 @@
           "score": 0.6755
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'Stumm' is formal, 'Mikrofon aus' is more natural.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -32364,7 +32619,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps tone and meaning."
+          "reason": "Perfectly natural, keeps tone and meaning.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -32403,7 +32659,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong meaning, 'Ausschalten' means 'turn off', not 'unmute'"
+          "reason": "Wrong meaning, 'Ausschalten' means 'turn off', not 'unmute'",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -32441,8 +32698,9 @@
           "score": 0.7625
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "score": 7,
+          "reason": "Correct meaning, but too formal for the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32480,8 +32738,9 @@
           "score": 0.7658
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Anrufen' is more formal than 'calling'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32520,7 +32779,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32559,7 +32819,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32598,7 +32859,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32637,7 +32899,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly stiff, could be more informal"
+          "reason": "Correct but slightly stiff; 'gescheitert' sounds more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32676,7 +32939,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'verweigert' is formal"
+          "reason": "Slightly stiff, 'verweigert' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32715,7 +32979,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'nicht begonnen' is correct but less natural than 'noch nicht gestartet'"
+          "reason": "slightly stiff, 'begonnen' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32754,7 +33019,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'anfordern' is formal; 'Mikrofon freigeben' might flow better."
+          "reason": "Slightly stiff, 'anfordern' is formal; 'Mikrofon anfordern' is correct but could be more casual.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32793,7 +33059,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'Start' would be more casual."
+          "reason": "Natural but slightly stiff; 'Beginn' is formal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -32832,7 +33099,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "formal 'Ihre' and missing article"
+          "reason": "formal 'Ihre' and missing article",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -33105,7 +33373,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Correct, natural, and keeps the informal tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -33144,7 +33413,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'gestartet' is formal"
+          "reason": "Slightly stiff, 'gestartet' is formal",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -33183,7 +33453,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong meaning, too extreme for cancellation"
+          "reason": "Wrong meaning, unnatural, too dramatic",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -33261,7 +33532,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -33455,8 +33727,9 @@
           "score": 0.8114
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Too short, slightly stiff, lacks warmth",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -33807,7 +34080,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly stiff, could be more informal"
+          "reason": "Correct but slightly stiff; 'Status' is fine but could be more informal.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -34002,7 +34276,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -34079,8 +34354,9 @@
           "score": 0.7133
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly stiff; 'Arbeiten' is formal, 'Arbeitsphase' might fit better."
+          "score": 4,
+          "reason": "Unnatural, too literal, wrong register",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -34158,7 +34434,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -34197,7 +34474,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -34314,7 +34592,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Correct term, natural and matches tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -34392,7 +34671,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -34509,7 +34789,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Correct term, natural and informal.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -34665,7 +34946,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "reason": "Accurate, natural, and matches the friendly tone.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -34704,7 +34986,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the friendly tone."
+          "reason": "Clear, natural, and matches the friendly tone.",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -35016,7 +35299,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, concise, matches tone and context.",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -35133,7 +35417,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'corrente' sounds technical"
+          "reason": "Slightly stiff, 'corrente' sounds formal",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -35445,7 +35730,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -35484,7 +35770,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'sto guardando' is too literal. 'Sto cercando' or 'Sto cercando qualcuno' would be more natural."
+          "reason": "Slightly stiff, 'guardando' is too literal. 'Sto cercando' would be more natural.",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -35601,7 +35888,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -36108,7 +36396,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -36341,8 +36630,9 @@
           "score": 0.8319
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff, 'Tu...' feels incomplete",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -36537,7 +36827,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning but sounds technical, not informal"
+          "reason": "Correct meaning but awkward phrasing, 'crosstalk' is English",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -36732,7 +37023,8 @@
         },
         "judge": {
           "score": 8,
-          "reason": "Natural but slightly formal; 'modalità rigide' is unidiomatic"
+          "reason": "Natural but slightly formal; 'ordinaria' could be 'normale'",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -37122,7 +37414,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, short, and matches the tone."
+          "reason": "Perfectly natural, short, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -37161,7 +37454,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and length."
+          "reason": "Perfectly natural, short, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -37239,7 +37533,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Perfectly natural, short, and matches the tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -37278,7 +37573,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'Avanti' is formal"
+          "reason": "Slightly stiff, 'Avanti' is formal for 'Next'",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -37317,7 +37613,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly awkward phrasing, 'muto' is more natural as 'disattiva il muto'"
+          "reason": "Unnatural phrasing, 'muto' is reflexive",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -37356,7 +37653,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning but slightly stiff; 'risposta' is formal"
+          "reason": "Correct meaning but slightly stiff; 'rispondendo' flows better.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37395,7 +37693,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37434,7 +37733,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37472,8 +37772,9 @@
           "score": 0.6088
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'connesso' would be more idiomatic.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37511,8 +37812,9 @@
           "score": 0.7225
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'finito' sounds more natural",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37551,7 +37853,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'non riuscito' is more formal than 'failed'"
+          "reason": "Slightly stiff, 'non riuscito' is more formal than 'failed'",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37590,7 +37893,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the informal tone."
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37629,7 +37933,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37668,7 +37973,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Missing article, slightly stiff. 'richiesta del microfono' would be more natural."
+          "reason": "Awkward phrasing, 'richiesta microfono' is too literal",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37706,8 +38012,9 @@
           "score": 0.7304
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'inizio' is correct but could be more conversational.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -37746,7 +38053,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "awkward possessive 'vostro', informal tone slightly off"
+          "reason": "slightly formal, 'vostro' unnecessary",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -38019,7 +38327,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Correct, natural, and keeps the tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -38057,8 +38366,9 @@
           "score": 0.6747
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'avviate' is formal"
+          "score": 10,
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -38096,8 +38406,9 @@
           "score": 0.8459
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Correct but slightly formal; 'canceled' is more casual.",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -38174,8 +38485,9 @@
           "score": 0.6932
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'collegato' sounds more natural",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -38369,8 +38681,9 @@
           "score": 0.8444
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'terminato' might fit better.",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -38721,7 +39034,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -38916,7 +39230,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'lunghezza tipica' is correct but sounds formal"
+          "reason": "Slightly stiff, 'lunghezza tipica' sounds formal",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -38993,8 +39308,9 @@
           "score": 0.7638
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 4,
+          "reason": "Lavoro means 'job', not 'working'",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -39072,7 +39388,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -39111,7 +39428,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -39228,7 +39546,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the calm tone."
+          "reason": "Correct, natural, and matches the informal tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -39306,7 +39625,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and keeps the informal tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -39423,7 +39743,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -39579,7 +39900,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Accurate, natural, and matches the tone.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -39618,7 +39940,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Simple, natural, and keeps the tone."
+          "reason": "Accurate, natural, and matches the tone.",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -39929,8 +40252,9 @@
           "score": 0.8541
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'Sedang terhubung' would be more natural.",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -40046,8 +40370,9 @@
           "score": 0.7972
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Natural but slightly formal; 'saat ini' is correct but could be more casual.",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -40359,7 +40684,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "reason": "Perfectly natural and concise, matches the tone.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -40397,8 +40723,9 @@
           "score": 0.4466
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'mencari' is correct but could be more conversational.",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -40515,7 +40842,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, concise, and matches the tone.",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -41022,7 +41350,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, clear, and matches the calm tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -41255,8 +41584,9 @@
           "score": 0.7871
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the friendly tone."
+          "score": 7,
+          "reason": "Correct but slightly formal; 'Anda' is polite, but 'kamu' or 'awak' would be more casual.",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -41451,7 +41781,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct English loanword, natural in Indonesian tech contexts."
+          "reason": "Correctly keeps English term, natural for context.",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -41646,7 +41977,8 @@
         },
         "judge": {
           "score": 8,
-          "reason": "Natural and clear, but 'mode or label kaku' slightly stiff"
+          "reason": "Natural and clear, but 'mode or label kaku' slightly stiff",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -42036,7 +42368,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, short, and matches the friendly tone."
+          "reason": "Natural, short, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -42074,8 +42407,9 @@
           "score": 0.7128
         },
         "judge": {
-          "score": 7,
-          "reason": "Natural but slightly formal; 'Selesai' is more casual."
+          "score": 4,
+          "reason": "Unnatural, too formal for informal tone",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -42153,7 +42487,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, short, and matches the friendly tone."
+          "reason": "Natural, short, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -42192,7 +42527,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and keeps the informal tone."
+          "reason": "Clear, natural, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -42231,7 +42567,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Wrong meaning, 'selubung' means 'cover'"
+          "reason": "Wrong meaning, 'selubung' means 'cover'",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -42270,7 +42607,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42308,8 +42646,9 @@
           "score": 0.681
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'memanggil' is correct but could be more casual.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42348,7 +42687,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42387,7 +42727,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning, but 'menyambung' is slightly formal for this context."
+          "reason": "Natural but slightly stiff; 'terhubung' is more common for connections.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42426,7 +42767,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'selesai' is more common for ending"
+          "reason": "Natural but slightly formal; 'selesai' fits better",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42465,7 +42807,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone."
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42504,7 +42847,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the calm tone."
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42543,7 +42887,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the calm tone."
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42582,7 +42927,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly stiff; 'minta mikrofon' is more natural."
+          "reason": "Natural but slightly stiff; 'requesting' could be smoother",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42620,8 +42966,9 @@
           "score": 0.7543
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'mulai' is more casual",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42660,7 +43007,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "natural, keeps meaning, informal tone"
+          "reason": "Natural, correct, and matches the friendly tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -42933,7 +43281,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Correct, natural, and keeps the tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -42971,8 +43320,9 @@
           "score": 0.8413
         },
         "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'dimulai' is formal",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -43010,8 +43360,9 @@
           "score": 0.8615
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the calm tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Dibatalkan' is formal",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -43089,7 +43440,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -43283,8 +43635,9 @@
           "score": 0.824
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'selesai' is correct but could be more casual.",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -43634,8 +43987,9 @@
           "score": 0.6311
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "score": 7,
+          "reason": "Accurate but slightly stiff; informal tone missing",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -43830,7 +44184,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'panjang tipikal' is unnatural"
+          "reason": "Slightly stiff, 'tipikal' is formal",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -43907,8 +44262,9 @@
           "score": 0.8036
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the informal tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'bekerja' is formal for 'working'",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -43986,7 +44342,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the friendly tone."
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -44025,7 +44382,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -44142,7 +44500,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct term, natural, matches calm tone."
+          "reason": "Correct, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -44219,8 +44578,9 @@
           "score": 0.8053
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly stiff, 'Sumber' is formal"
+          "score": 4,
+          "reason": "Wrong license abbreviation, slightly stiff",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -44336,8 +44696,9 @@
           "score": 0.8682
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct term, natural, matches calm tone."
+          "score": 7,
+          "reason": "Correct but slightly formal; 'privasi' is accurate but could sound more casual.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -44493,7 +44854,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning."
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: The page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -44532,7 +44894,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'Hakkında' is formal"
+          "reason": "Slightly stiff, 'Hakkında' is formal",
+          "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n"
         }
       }
     },
@@ -44844,7 +45207,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Label before the call's connection state (for example \"connecting\").\n"
         }
       }
     },
@@ -44961,7 +45325,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'arama' is more search than call"
+          "reason": "Slightly stiff, 'arama' is search, not call",
+          "context": "\nWhere it appears: Heading over the voice call in progress, with your conversation partner.\n"
         }
       }
     },
@@ -45273,7 +45638,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, correct, and matches the tone."
+          "reason": "Perfectly natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Menu that chooses the language of this site's interface.\n"
         }
       }
     },
@@ -45312,7 +45678,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'bakıyorum' is too literal"
+          "reason": "Slightly stiff, more natural would be 'Bakıyor'",
+          "context": "\nWhere it appears: Your status: searching for someone to talk to.\n"
         }
       }
     },
@@ -45429,7 +45796,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Your status before a call: ready to look for someone to talk to.\n"
         }
       }
     },
@@ -45936,7 +46304,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: Your status when the call's time has run out and both people choose whether to go on.\n"
         }
       }
     },
@@ -46170,7 +46539,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly formal, 'sen' would be more informal"
+          "reason": "Slightly formal, 'Sen' would be more natural for informal tone.",
+          "context": "\nWhere it appears: Label of your own voice's waveform during a call (you, not the other person).\n"
         }
       }
     },
@@ -46365,7 +46735,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct English term, no translation needed."
+          "reason": "Correctly keeps English term, natural for context.",
+          "context": "\nWhere it appears: Link text: the name of a way to practise where each person speaks their own language and understands the other's (not electrical crosstalk).\n"
         }
       }
     },
@@ -46560,7 +46931,8 @@
         },
         "judge": {
           "score": 8,
-          "reason": "Natural and correct, but 'sıradan gündelik konuşma' is slightly formal."
+          "reason": "Natural but slightly formal; 'sıradan gündelik konuşma' is redundant.",
+          "context": "\nWhere it appears: %{crosstalk} is replaced by a link reading \"crosstalk\" (translated separately); keep it.\n"
         }
       }
     },
@@ -46950,7 +47322,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, short, and matches the tone."
+          "reason": "Natural, short, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: when the call's time is up, vote to keep talking a few more minutes.\n"
         }
       }
     },
@@ -46989,7 +47362,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal for the tone"
+          "reason": "Correct meaning but too formal; 'Kapat' or 'Sonlandır' would be better.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: hang up, ending the call now.\n"
         }
       }
     },
@@ -47066,8 +47440,9 @@
           "score": 0.8212
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, short, and matches the tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'sessiz' is correct but could be more casual.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone off.\n"
         }
       }
     },
@@ -47106,7 +47481,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the friendly tone."
+          "reason": "Clear, natural, and matches the friendly tone.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: end this call and find another person to talk to.\n"
         }
       }
     },
@@ -47144,8 +47520,9 @@
           "score": 0.7014
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, concise, and matches the friendly tone."
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'sesini aç' is correct but could be more casual.",
+          "context": "\nIt is a button label: it must be short.\nWhere it appears: Button: turn your own microphone back on.\n"
         }
       }
     },
@@ -47183,8 +47560,9 @@
           "score": 0.7206
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly stiff; 'cevap' is formal, 'yanıt' is more natural for informal contexts."
+          "score": 4,
+          "reason": "too short, unnatural for UI label",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47222,8 +47600,9 @@
           "score": 0.5573
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly stiff; 'arama' is formal, 'çağrı' or 'arama yapma' would be more natural."
+          "score": 10,
+          "reason": "Perfectly natural, matches tone and context.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47261,8 +47640,9 @@
           "score": 0.812
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct but slightly stiff; 'bağlandı' would sound more natural."
+          "score": 10,
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47301,7 +47681,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly stiff; 'bağlantı' is formal, 'bağlanma' would be more natural."
+          "reason": "Correct but slightly stiff; 'bağlanıyor' would be more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47339,8 +47720,9 @@
           "score": 0.8195
         },
         "judge": {
-          "score": 7,
-          "reason": "Natural but slightly stiff; 'bitti' is more casual"
+          "score": 10,
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47378,8 +47760,9 @@
           "score": 0.8666
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'baştan başa' would sound more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47418,7 +47801,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the tone."
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47457,7 +47841,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47495,8 +47880,9 @@
           "score": 0.7967
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as 'Mikrofon kullanımını isteyiyor'"
+          "score": 10,
+          "reason": "Clear, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47535,7 +47921,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning, but slightly formal for the tone"
+          "reason": "Correct meaning but slightly stiff; 'başlıyor' would be more natural.",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47574,7 +47961,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly awkward phrasing, 'Beklerken' feels abrupt"
+          "reason": "Slightly awkward phrasing, 'Beklerken' is unnecessary",
+          "context": "\nWhere it appears: A connection state label.\n"
         }
       }
     },
@@ -47846,8 +48234,9 @@
           "score": 0.5376
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the informal tone."
+          "score": 7,
+          "reason": "Unnatural abbreviation, 'min' is rarely used in Turkish",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n"
         }
       }
     },
@@ -47886,7 +48275,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'aramalar' sounds formal"
+          "reason": "Slightly stiff, more natural as 'Bugün başlayan aramalar'",
+          "context": "\nWhere it appears: A count on the status page: how many calls started today.\n"
         }
       }
     },
@@ -47924,8 +48314,9 @@
           "score": 0.8779
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'iptal' is formal",
+          "context": "\nWhere it appears: How a call ended: it was stopped before it connected.\n"
         }
       }
     },
@@ -48003,7 +48394,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'bağlantılı' is correct but 'bağlandı' would be more casual."
+          "reason": "Slightly stiff, 'bağlantılı' is passive; 'bağlandı' would be more natural.",
+          "context": "\nWhere it appears: A count on the status page: how many calls connected today.\n"
         }
       }
     },
@@ -48197,8 +48589,9 @@
           "score": 0.8689
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'tamamlandı' is more formal than needed",
+          "context": "\nWhere it appears: How a call ended: it ran its course normally.\n"
         }
       }
     },
@@ -48549,7 +48942,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: The service status page: whether calls can connect now, and today's call counts.\n"
         }
       }
     },
@@ -48743,8 +49137,9 @@
           "score": 0.8744
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'tipik' is correct but 'uzunluk' sounds formal",
+          "context": "\nWhere it appears: A figure on the status page: the typical length of a call today.\n"
         }
       }
     },
@@ -48821,8 +49216,9 @@
           "score": 0.773
         },
         "judge": {
-          "score": 7,
-          "reason": "Correct meaning but too literal, sounds stiff"
+          "score": 4,
+          "reason": "awkward phrasing, 'çalışma' is a noun, not a verb",
+          "context": "\nWhere it appears: A relay server's state on the status page: it is working (up).\n"
         }
       }
     },
@@ -48900,7 +49296,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length: 30 minutes or more (min = minutes).\n"
         }
       }
     },
@@ -48939,7 +49336,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length: less than one minute (min = minutes).\n"
         }
       }
     },
@@ -49056,7 +49454,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: Footer link to the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -49134,7 +49533,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Accurate, natural, and keeps the informal tone."
+          "reason": "Accurate, natural, and matches the informal tone.",
+          "context": "\nWhere it appears: Footer link to the source code; AGPL-3.0 is its license (keep it as is).\n"
         }
       }
     },
@@ -49251,7 +49651,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the calm tone."
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).\n"
         }
       }
     },
@@ -50503,7 +50904,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -50717,8 +51119,9 @@
           "score": 0.8595
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
+          "score": 7,
+          "reason": "Slightly formal, 'sugerir' is fine but 'solución' is stiff",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -50846,8 +51249,9 @@
           "score": 0.8549
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'Cambiar' would be more natural",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -50890,7 +51294,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches tone and context.",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -51062,7 +51467,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'عبارة' is formal"
+          "reason": "Natural but slightly formal; 'عبارة' is correct but 'إبحث عن عبارة' flows better.",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -51276,8 +51682,9 @@
           "score": 0.6557
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'أولاً' is formal"
+          "score": 4,
+          "reason": "Unnatural phrasing, missing verb",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -51406,7 +51813,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Repetition, unnatural phrasing, no informal tone"
+          "reason": "Repetition of 'تغيير' is unnatural, tone is stiff",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -51449,7 +51857,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Meaning lost, unnatural phrasing, wrong register"
+          "reason": "Unnatural phrasing, awkward word order",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -51621,7 +52030,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'short phrase' would sound more natural"
+          "reason": "Slightly stiff, '短语' is correct but '一个' feels formal",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -51836,7 +52246,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly formal, '修正' is better as '修改'"
+          "reason": "Slightly formal, 'suggest a fix' is more casual",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -51965,7 +52376,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Too formal, '变动' is stiff; '变化' or '改变' fits better."
+          "reason": "Unnatural phrasing, '变动' is too formal",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -52008,7 +52420,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff, '完成' is formal"
+          "reason": "Slightly stiff, placeholder handling awkward",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -52180,7 +52593,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'phrase' could be more casual like 'वाक्यांश'."
+          "reason": "Slightly formal, 'phrase' is better as 'वाक्यांश'",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -52394,8 +52808,9 @@
           "score": 0.664
         },
         "judge": {
-          "score": 7,
-          "reason": "Awkward phrasing, more natural as 'सुझाव दें'"
+          "score": 4,
+          "reason": "Awkward phrasing, unnatural for informal tone",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -52524,7 +52939,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -52567,7 +52983,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural Hindi, wrong tone, meaning unclear"
+          "reason": "Unnatural Hindi, wrong register",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -52738,8 +53155,9 @@
           "score": 0.865
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as 'Найти фразу для практики' or 'Вспомнить фразу'."
+          "score": 10,
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -52953,8 +53371,9 @@
           "score": 0.7373
         },
         "judge": {
-          "score": 7,
-          "reason": "Awkward phrasing, 'фиксации' is too formal"
+          "score": 4,
+          "reason": "Awkward phrasing, unnatural for Russian",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -53082,8 +53501,9 @@
           "score": 0.846
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly formal, 'изменение' is neutral, 'изменения' or 'настройки' might fit better"
+          "score": 4,
+          "reason": "Unnatural phrasing, 'изменение' is too formal",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -53125,8 +53545,9 @@
           "score": 0.8538
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more formal than needed"
+          "score": 10,
+          "reason": "Natural, correct, matches tone and context.",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -53298,7 +53719,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -53513,7 +53935,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -53642,7 +54065,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Change is a verb, Changement is a noun. Wrong part of speech."
+          "reason": "Wrong meaning, 'Changement' is a noun, not a verb",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -53685,7 +54109,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches tone and context.",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -53857,7 +54282,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'phrase' is better as 'Satz'"
+          "reason": "Slightly stiff, 'phrase' is better than 'Satz'",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -54072,7 +54498,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'Fix' is informal but 'vorschlagen' is neutral"
+          "reason": "Slightly stiff, 'Fix' is too technical",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -54201,7 +54628,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Too short, unnatural, wrong register"
+          "reason": "Unnatural abbreviation, wrong register",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -54244,7 +54672,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches tone and context.",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -54416,7 +54845,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, matches tone and meaning.",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -54631,7 +55061,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
+          "reason": "Natural, correct, and matches the tone.",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -54760,7 +55191,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct meaning but slightly formal for the tone"
+          "reason": "Slightly formal, 'Variazione' is more about change in general",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -54803,7 +55235,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches tone and context.",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -54974,8 +55407,9 @@
           "score": 0.8692
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'frasa' is correct but 'sebuah' feels formal",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -55189,8 +55623,9 @@
           "score": 0.8594
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the tone."
+          "score": 7,
+          "reason": "Slightly formal, 'suggest a fix' is more casual",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -55319,7 +55754,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, concise, matches tone and context.",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -55362,7 +55798,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches tone",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
@@ -55534,7 +55971,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'bul' is correct but 'tapa' might flow better."
+          "reason": "Slightly stiff, 'bul' is informal but 'cümle' is neutral",
+          "context": "\nWhere it appears: Label of the search box that finds a piece of this site's text and its translation.\n"
         }
       }
     },
@@ -55748,8 +56186,9 @@
           "score": 0.8628
         },
         "judge": {
-          "score": 10,
-          "reason": "Natural, correct, matches tone and keeps placeholders."
+          "score": 7,
+          "reason": "Slightly stiff, more natural as 'Düzeltme öner'",
+          "context": "\nWhere it appears: Button: suggest a better translation of this text.\n"
         }
       }
     },
@@ -55878,7 +56317,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: Opens the list of languages you can hear, to change it.\n"
         }
       }
     },
@@ -55921,7 +56361,8 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning."
+          "reason": "Natural, correct, matches tone and context.",
+          "context": "\nWhere it appears: Closes the list of languages you can hear, once you've changed it.\n"
         }
       }
     },
