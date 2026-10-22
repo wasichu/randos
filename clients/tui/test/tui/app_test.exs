@@ -424,8 +424,9 @@ defmodule Tui.AppTest do
 
       keys(app, ["t"])
       assert_receive {:tui_media, ^app, %{mic_test: %{phase: :starting}}}
-      # Spawning devices takes a moment under load (precommit, CI).
-      assert_receive {:tui_media, ^app, %{mic_test: %{phase: :running, stats: nil}}}, 2_000
+      # Opening the devices takes a moment under load (precommit, CI: over
+      # 2 s once on Linux CI). Only a failing wait takes this long.
+      assert_receive {:tui_media, ^app, %{mic_test: %{phase: :running, stats: nil}}}, 5_000
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :running, stats: %{"codec_ms" => 26.5}}}},
