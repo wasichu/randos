@@ -38,8 +38,7 @@ class Randos < Formula
   def caveats
     <<~EOS
       randos uses your microphone. On macOS the first call asks for mic
-      access for your terminal app. Headphones sound best, but echo is
-      cancelled, so speakers work too.
+      access for your terminal app.
     EOS
   end
 
