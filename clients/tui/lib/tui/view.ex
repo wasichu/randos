@@ -337,8 +337,7 @@ defmodule Tui.View do
 
   defp mic_help(_state), do: ""
 
-  defp extra_text(%{model: %{status: :idle}} = state),
-    do: mic_test_text(state) <> settings_text(state)
+  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
 
   defp extra_text(_state), do: ""
 
@@ -442,21 +441,6 @@ defmodule Tui.View do
   defp connected_via("relay"), do: "connected via relay"
   defp connected_via("direct"), do: "connected directly"
   defp connected_via(_path), do: "connected"
-
-  # Where the settings live, and how to manage them (Tui.CLI's flags).
-  defp settings_text(%{config: path}) when is_binary(path),
-    do:
-      "\n\nSettings are saved as you go, in #{home_relative(path)} (randos --edit-settings, --reset-settings)."
-
-  defp settings_text(_state), do: ""
-
-  defp home_relative(path) do
-    home = System.user_home() || ""
-
-    if home != "" and String.starts_with?(path, home),
-      do: "~" <> String.replace_prefix(path, home, ""),
-      else: path
-  end
 
   # Only while a mic test runs or just ran: the key itself is in the help
   # line, and the devices are in the Status panel.

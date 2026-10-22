@@ -130,9 +130,7 @@ defmodule Tui.AppTest do
       assert render_text(model("idle"), %{}, {120, 24}) =~ "s status"
     end
 
-    test "the idle screen says where settings are saved, and how to manage them" do
-      refute render_text(model("idle")) =~ "Settings are saved"
-
+    test "the idle screen doesn't spell out where settings are saved (the docs and --settings do)" do
       text =
         render_text(
           model("idle"),
@@ -140,8 +138,8 @@ defmodule Tui.AppTest do
           {140, 24}
         )
 
-      assert text =~ "Settings are saved as you go, in ~/cfg/randos.json"
-      assert text =~ "randos --edit-settings, --reset-settings"
+      refute text =~ "Settings are saved"
+      refute text =~ "cfg/randos.json"
     end
 
     test "the mic test: the key in the help line, then its progress, result, and failure" do
