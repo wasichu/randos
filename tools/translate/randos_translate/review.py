@@ -134,11 +134,11 @@ def pick(entries: dict[str, dict]) -> dict | None:
             return None
         return average_ranks(scores, SCORERS[scorer]["higher_is_better"])
 
-    judge = ranked("judge")
     deciding = {s: r for s in QUALITY if (r := ranked(s)) is not None}
     if set(deciding) == {"metricx"}:
+        judge = ranked("judge")
         deciding = {"metricx": deciding["metricx"], "judge": judge} if judge else {}
-    tiebreak = judge or {m: 0 for m in passing}
+    tiebreak = _judge_ranks(passing)
 
     def key(m: str) -> tuple:
         primary = sum(r[m] for r in deciding.values()) / len(deciding) if deciding else 0
@@ -164,6 +164,48 @@ def _vetoed(passing: dict[str, dict]) -> set[str]:
     if not any(s >= VETO_IF_ANOTHER_AT_LEAST for s in judged.values()):
         return set()
     return {m for m, s in judged.items() if s <= VETO_AT_MOST}
+
+
+def _judge_ranks(passing: dict[str, dict]) -> dict[str, float]:
+    """The judge's ranks among the judged translations; the unjudged ones
+    (the judge sees only finalists, `to_judge`) rank after them. They are
+    never tied with a winner on MetricX and COMET-Kiwi, so it only matters
+    among those the judge saw."""
+    judged = {m: s for m, e in passing.items() if (s := _score(e, "judge")) is not None}
+    ranked = average_ranks(judged, SCORERS["judge"]["higher_is_better"]) if judged else {}
+    return {m: ranked.get(m, len(judged) + 1) for m in passing}
+
+
+def to_judge(entries: dict[str, dict], settled) -> list[str]:
+    """The models whose translation of one string the judge must see next
+    for `pick` to come out as if it had judged them all (`settled(entry)`:
+    judged already, or tried). Only the ones passing every check; none when
+    one passes or none. With MetricX and COMET-Kiwi for every one, the
+    finalists, best mean rank first, a tied group at a time: it stops at
+    the first group holding one rated above the veto (it can't be vetoed),
+    unless one rated at or below it came before and nothing yet rates high
+    enough to veto it. Without them the judge stands in beside MetricX, so
+    all of them."""
+    passing = {m: e for m, e in entries.items() if _passes(e)}
+    if len(passing) < 2:
+        return []
+    if any(_score(e, s) is None for e in passing.values() for s in QUALITY):
+        return sorted(m for m, e in passing.items() if not settled(e))
+    primary: dict[str, float] = {m: 0 for m in passing}
+    for scorer in QUALITY:
+        ranked = average_ranks({m: _score(e, scorer) for m, e in passing.items()}, SCORERS[scorer]["higher_is_better"])
+        primary = {m: primary[m] + ranked[m] for m in passing}
+    low_before = high_seen = False
+    for rank in sorted(set(primary.values())):
+        group = sorted(m for m in passing if primary[m] == rank)
+        if due := [m for m in group if not settled(passing[m])]:
+            return due
+        scores = [_score(passing[m], "judge") for m in group]
+        high_seen = high_seen or any(s is not None and s >= VETO_IF_ANOTHER_AT_LEAST for s in scores)
+        if any(s is None or s > VETO_AT_MOST for s in scores) and (not low_before or high_seen):
+            return []
+        low_before = low_before or any(s is not None and s <= VETO_AT_MOST for s in scores)
+    return []
 
 
 def latest_entries(runs: list[dict], keys: set[str] | None = None) -> dict[tuple[str, str], dict[str, dict]]:

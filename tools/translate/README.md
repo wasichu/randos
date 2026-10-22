@@ -105,9 +105,28 @@ a model scored by fewer scorers gets a skewed mean rank in `review`.
 Never rank on MetricX alone: TranslateGemma was trained with MetricX as its
 reward, so it's the one scorer that knows how to flatter it.
 
-The judge also records the context it judged with: when a string's comment
-changes, `score --scorer judge` judges every model's translation of it
-again, so they're judged alike.
+The judge runs last, after MetricX and COMET-Kiwi, and over every run at
+once (`score --scorer judge results/*.json`: what it must see depends on
+all the models' translations of a string). It sees only what can change a
+pick (`review.to_judge`): translations passing every check, of strings
+still in the template, and of those the finalists, best mean rank over
+MetricX and COMET-Kiwi first, a tied group at a time. It stops at the
+first group with one rated above the veto (4), unless one rated at or
+below it came first and nothing yet rates 7 or more; it goes on in rounds
+until no string needs more. A string missing MetricX or COMET-Kiwi has
+all its passing translations judged, since the judge then stands in. On
+the shootout's runs that is 2,635 judgements instead of 13,270. It can
+pick differently from judging everything on a few strings (9 of 1,974):
+the mean rank depends on which translations are left, and judging
+everything vetoes ones that were never in contention.
+
+Verdicts are cached in `results/judge-cache.json`, keyed by everything the
+judge saw (its model, the rubric, the locale, the context, the English, the
+translation), so two models with the same output are judged once and a
+re-run judges only what changed; a changed comment or rubric is judged
+afresh. `--redo` ignores the cache. The prompts go to mlx-lm's
+`batch_generate` together (greedy, as before). On the review page a
+string's judge column ranks models only when the judge saw them all.
 
 ## Which translation ships
 

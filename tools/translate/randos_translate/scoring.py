@@ -17,8 +17,11 @@ mean rank on the review page. Until then a run holds them as `"pending"`.
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 import re
+from pathlib import Path
 
 from sacrebleu.metrics import CHRF
 
@@ -137,37 +140,90 @@ def parse_judgement(reply: str) -> dict:
 
 class Judge:
     """The tone judge: Mistral Small 3.2 24B (Apache-2.0), 4-bit MLX,
-    greedy. Mistral is a family none of the contestants belongs to."""
+    greedy. Mistral is a family none of the contestants belongs to.
+    Prompts go to mlx-lm's `batch_generate` together (`BATCH` at a time),
+    which keeps the GPU busy between short replies."""
 
     name = "judge"
     REPO = "mlx-community/Mistral-Small-3.2-24B-Instruct-2506-4bit"
+    BATCH = 64
 
     def __init__(self) -> None:
-        from mlx_lm import generate, load
+        from mlx_lm import batch_generate, load
 
-        self._generate = generate
+        self._batch_generate = batch_generate
         self._model, self._tokenizer = load(self.REPO)
         self._contexts = current_contexts()
 
-    def stale(self, entry: dict) -> bool:
-        """Judged with a different context than the template's now (a
-        translator comment added or changed): every model's translation of
-        that string is judged again, so they're judged alike."""
-        return judged_context(entry) != judge_context(entry["msgctxt"], self._contexts.get(entry["key"], ""))
+    def context(self, entry: dict) -> str:
+        """The context the judge sees for an entry now: its string's
+        translator comment in the template today."""
+        return judge_context(entry["msgctxt"], self._contexts.get(entry["key"], ""))
 
     def score(self, locale: str, entries: list[dict]) -> list[dict]:
         from .models import NAMES
 
         language, out = NAMES[locale], []
-        for e in entries:
-            context = judge_context(e["msgctxt"], self._contexts.get(e["key"], ""))
-            ask = JUDGE_RUBRIC.format(language=language, context=context, source=e["msgid"], text=e["text"])
-            prompt = self._tokenizer.apply_chat_template(
-                [{"role": "user", "content": ask}], add_generation_prompt=True, tokenize=False
-            )
-            reply = self._generate(self._model, self._tokenizer, prompt=prompt, max_tokens=80, verbose=False)
-            out.append(parse_judgement(reply) | {"context": context})
+        for i in range(0, len(entries), self.BATCH):
+            chunk = entries[i : i + self.BATCH]
+            contexts = [self.context(e) for e in chunk]
+            prompts = [
+                # The chat template already starts with BOS: no second one.
+                self._tokenizer.encode(
+                    self._tokenizer.apply_chat_template(
+                        [{"role": "user", "content": judge_prompt(language, e, context)}],
+                        add_generation_prompt=True,
+                        tokenize=False,
+                    ),
+                    add_special_tokens=False,
+                )
+                for e, context in zip(chunk, contexts)
+            ]
+            replies = self._batch_generate(self._model, self._tokenizer, prompts, max_tokens=80).texts
+            out += [parse_judgement(r) | {"context": c} for r, c in zip(replies, contexts)]
         return out
+
+
+def judge_prompt(language: str, entry: dict, context: str) -> str:
+    return JUDGE_RUBRIC.format(language=language, context=context, source=entry["msgid"], text=entry["text"])
+
+
+class JudgeCache:
+    """Verdicts already given, keyed by everything the judge saw (its
+    model, the rubric, the locale, the context, the English, the
+    translation): two models with the same output, or a re-run that
+    changes nothing the judge sees, are judged once. A changed rubric or
+    comment is a different key, so it's judged afresh. Only parsed
+    verdicts are kept; a reply that wasn't the JSON asked for is retried."""
+
+    def __init__(self, path: Path) -> None:
+        self.path = path
+        self._verdicts = json.loads(path.read_text())["verdicts"] if path.exists() else {}
+        self._new: set[str] = set()
+
+    @staticmethod
+    def key(locale: str, entry: dict, context: str) -> str:
+        seen = [Judge.REPO, JUDGE_RUBRIC, locale, context, entry["msgid"], entry["text"]]
+        return hashlib.sha256(json.dumps(seen, ensure_ascii=False).encode()).hexdigest()
+
+    def get(self, locale: str, entry: dict, context: str, only_new: bool = False) -> dict | None:
+        """The verdict given before (`only_new`: only one given since this
+        cache was opened, as `--redo` wants)."""
+        key = self.key(locale, entry, context)
+        verdict = self._verdicts.get(key) if not only_new or key in self._new else None
+        return verdict and verdict | {"context": context}
+
+    def put(self, locale: str, entry: dict, verdict: dict) -> None:
+        if verdict.get("score") is not None:
+            kept = {k: verdict[k] for k in ("score", "reason")}
+            key = self.key(locale, entry, verdict["context"])
+            self._verdicts[key] = kept
+            self._new.add(key)
+
+    def save(self) -> None:
+        tmp = self.path.with_name(f".{self.path.name}.tmp")
+        tmp.write_text(json.dumps({"verdicts": self._verdicts}, ensure_ascii=False, indent=0, sort_keys=True) + "\n")
+        os.replace(tmp, self.path)
 
 
 def current_contexts() -> dict[str, str]:

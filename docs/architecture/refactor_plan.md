@@ -255,9 +255,17 @@ translator comments (`gettext_comment`) give the models that take context
 the sense of ambiguous strings ("About" the page, "End" hang up); "randos"
 is lowercased in every output and checked case-sensitively; no added full
 stop. 137–141 of 141 strings per locale; the one plural is left in
-English. Next: the judge speedups (judge only finalists, skip check
-failures, cache verdicts) before the next run (the extension-vote strings,
-new languages: `new_languages.md`).
+English. Judge speedups (2026-10-22): the judge sees only what can
+change a pick, the passing translations and of those the finalists
+(`review.to_judge`, in rounds over every run at once), reuses its verdicts
+(`results/judge-cache.json`, keyed by everything it saw; seeded with the
+shootout's 13,270), and batches its prompts (mlx-lm's `batch_generate`).
+On the shootout's runs: 2,635 judgements instead of 13,270, at 0.75 s each
+instead of ~2.7 s (a batched check gave 128 of 128 verdicts identical);
+9 of 1,974 picks would differ from judging everything (the mean rank
+depends on which translations are left, and judging everything vetoes
+some that were never in contention). Next run: the extension-vote string;
+then new languages (`new_languages.md`).
 
 **Status (2026-10-21):** plumbing done (`RandosWeb.Locale`, the switcher,
 RTL, per-locale `.po` files, the precommit template check, hook text via
