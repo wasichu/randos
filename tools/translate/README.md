@@ -2,7 +2,10 @@
 
 Machine-translates the website's strings (`priv/gettext/default.pot`) into
 the 14 other practice languages, checks and scores every translation, and
-fills the `.po` files with the winners. The plan is in
+fills the `.po` files with each string's best translation. No person chooses
+or reviews them (the owner's rule): the models, the evaluators and the
+checks decide everything; a visitor's "Suggest a fix" (`/translations`) is
+welcome when it comes, and a later run never overwrites it. The plan is in
 `docs/architecture/refactor_plan.md` (Phase 6); the field of models, their
 licenses, and memory needs are in `docs/architecture/translation_models.md`.
 
@@ -14,8 +17,14 @@ just translate-test                  # the checks and the fill rule (offline, no
 cd tools/translate
 uv run --group models python -m randos_translate.cli run --model opus-mt --locales es --limit 12
 uv run --group models python -m randos_translate.cli score --scorer metricx results/shootout-*.json
-uv run python -m randos_translate.cli fill results/<run>.json --locale es
+uv run python -m randos_translate.cli review                     # picks each string's translation
+uv run python -m randos_translate.cli fill --best --locale all --redo
 ```
+
+`uv run --group X` re-syncs the one shared `.venv` to that group, removing
+the others' packages: never run it while a model of another group is
+running (add `--group X` to keep a running group's packages, e.g.
+`uv run --group models --group dev pytest`).
 
 Each kind of model has its own dependency group, and one `uv run` uses one
 group (mlx-lm needs transformers 5, the rest stay on 4.x, so `pyproject.toml`
@@ -39,15 +48,37 @@ records for each one (in `results/<model>-<time>.json`, which the results
 page is built from):
 
 - **checks** (`checks.py`): placeholders such as `%{time}` intact; the
-  glossary terms "randos" and "rando" kept; a sane length (tighter for
-  buttons); the letters in the locale's script;
+  glossary terms "randos" and "rando" kept exactly, lowercase included
+  (it's a name, lowercase even starting a sentence); a sane length
+  (tighter for buttons, looser for dense CJK); the letters in the locale's
+  script (Latin names copied from the English don't count); one
+  translation shaped like the source (no list of alternatives, no
+  leftover protect token);
 - **scores** (`scoring.py`): back-translation chrF against the English.
   The model-based scores come afterwards from `score` (below) and are
   `"pending"` until then;
 - a per-locale summary: how many pass every check, failures by check,
   mean chrF.
 
-`run` never touches the `.po` files.
+Every contestant's output goes through `models.brand_case` first, which
+lowercases "randos"/"rando" wherever a model capitalized it ("Randos est…",
+"Randoslar"); `cli brand-case` applies it to runs made before it existed.
+
+`run` never touches the `.po` files. `run --append <its earlier run>`
+translates only what that run lacks: strings the template gained and, for
+a model that takes context, strings whose context changed.
+
+## Context
+
+Short strings are ambiguous ("About": a page, or "approximately"?), so the
+app gives them a translator comment, `gettext_comment/1` just before the
+call (a `<% gettext_comment("…") %>` in HEEx), which `mix gettext.extract`
+writes as `#.` in the template. A string's context (`po.Source.context`)
+is its comment, else what its msgctxt says ("A button label."). The
+instruction models get it in their prompt (Hy-MT2 through its card's
+background-information prompt, TranslateGemma as a line before the text),
+and so does the judge; the seq2seq models can't take it, and the
+per-string pick then prefers whichever contestant got the sense right.
 
 ## Scoring
 
@@ -74,12 +105,30 @@ a model scored by fewer scorers gets a skewed mean rank in `review`.
 Never rank on MetricX alone: TranslateGemma was trained with MetricX as its
 reward, so it's the one scorer that knows how to flatter it.
 
+The judge also records the context it judged with: when a string's comment
+changes, `score --scorer judge` judges every model's translation of it
+again, so they're judged alike.
+
+## Which translation ships
+
+Each string on its own (`review.pick`): among the translations passing
+every check, the best mean rank over **MetricX and COMET-Kiwi** (ranked
+among the passing ones, ties sharing their rank). The judge breaks ties,
+or stands in beside MetricX when COMET-Kiwi has no score; MetricX alone
+never decides. Further ties go to back-translation chrF, then the shorter
+text, then the text itself, never a model's name. A string that no
+translation passes stays empty, and the site shows the English.
+
 ## Filling the .po files
 
-`fill` writes one run's translations for a locale, and only those that pass
-every check. It **fills only empty entries**. With `--redo` it also replaces
-entries that still hold exactly what the machine wrote last time (recorded
-in `state/<locale>.json`); anything a person changed is never overwritten.
+`fill --best` writes each string's pick (from `results/review.json`, so
+run `review` first) and records in `state/<locale>.json` which model wrote
+each entry. `fill <run>` writes one run's passing translations instead.
+Either **fills only empty entries**; with `--redo` it also replaces
+entries that still hold exactly what the machine wrote last time, and
+empties those that no longer have a passing translation. Anything a person
+wrote is never overwritten. Plural strings are left to people: a model
+translates one string, a plural needs a form per plural rule.
 
 ## The review page
 
@@ -94,9 +143,8 @@ runs. For each locale and string it puts the models' translations side by
 side and works out how much they **disagree** (1 − mean pairwise chrF,
 strings sorted by it), whether the **evaluators disagree** (a model ranked
 first by one scorer and last by another; needs two scorers, so it lights
-up once MetricX or COMET-Kiwi runs), the **best** translation (passes
-every check, best mean rank), and each locale's **winner** (passes every
-check most often, then mean rank). The dev-only page
+up once MetricX or COMET-Kiwi runs), the translation that **ships**
+(above), and per locale the model **picked most**. The dev-only page
 (`RandosDev.TranslationReviewLive`) shows it, with filters for each of
 those.
 
@@ -106,7 +154,7 @@ those.
 | --- | --- | --- | --- | --- |
 | `opus-mt` | Helsinki-NLP Marian, one per pair (`models/opus_mt.py`) | Apache-2.0 / CC-BY-4.0 per pair | `models` | 10 (no pt, ko, bn, ja) |
 | `m2m100` | facebook/m2m100_418M | MIT | `models` | all 14 |
-| `madlad-400` | google/madlad400-7b-mt, bf16 (wired, but didn't fit the 48 GB Mac: see `models/madlad.py`) | Apache-2.0 | `models` | all 14 |
+| `madlad-400` | google/madlad400-7b-mt, bf16, one string at a time (the 10B didn't fit: `models/madlad.py`) | Apache-2.0 | `models` | all 14 |
 | `hy-mt2` | Tencent Hy-MT2 7B, 8-bit MLX | Apache-2.0 | `mlx` | all 14 |
 | `translategemma-4b`, `-12b` | Google TranslateGemma, 8-bit MLX | Gemma terms | `mlx` | all 14 |
 | `translategemma-27b` | Google TranslateGemma 27B, 4-bit MLX | Gemma terms | `mlx` | all 14 |
@@ -116,8 +164,8 @@ terms swapped for `[0]`, `[1]`... tokens and restored after
 (`protect`/`restore`). The instruction models get the original text, with
 the prompt their model card documents (`models/mlx_chat.py`): Hy-MT2's
 terminology prompt carries the glossary; TranslateGemma's chat template
-takes the text alone. All decode greedily or with beam search, so a rerun
-gives the same text.
+takes the text alone. Both get a string's context (above). All decode
+greedily or with beam search, so a rerun gives the same text.
 
 ## Status (2026-10-21)
 

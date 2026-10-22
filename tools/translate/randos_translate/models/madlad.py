@@ -3,12 +3,12 @@ languages, run through transformers on Apple's GPU (MPS) in bfloat16. The
 target language is a `<2xx>` prefix on the input; like the other seq2seq
 models it gets placeholders and glossary terms as `protect` tokens.
 
-Not in the 2026-10 shootout: it didn't fit the owner's 48 GB Mac. The 10B
-swapped the machine to a standstill (45 GB of swap, no locale done in 20
-minutes). The 7B loads as bf16 (15.5 GB) and translated about 2.6 minutes
-per locale with batches of 4, but halfway through, swap jumped 11.7 GB in
-30 seconds and the memory guard stopped it (MPS's generation buffers, not
-the weights). Kept wired for a machine with more memory."""
+The 7B: the 10B swapped the owner's 48 GB Mac to a standstill (45 GB of
+swap, no locale done in 20 minutes). The 7B loads as bf16 (15.5 GB). With
+batches of 4, 4 beams and a flat 256-token budget, generation buffers made
+swap jump 11.7 GB in 30 seconds halfway through; one string at a time, 2
+beams, a budget scaled to the input and MPS's cache emptied after each,
+it ran all 14 locales at 5-6 minutes each, peaking at 20.2 GB."""
 
 from __future__ import annotations
 
@@ -39,20 +39,32 @@ class MADLAD:
         size = sum(p.numel() * p.element_size() for p in self._model.parameters()) / 2**30
         print(f"madlad-400: {repo} loaded as {self._model.dtype}, {size:.1f} GB", file=sys.stderr, flush=True)
 
-    def _run(self, texts: list[str], target: str, batch: int = 4) -> list[str]:
-        out: list[str] = []
-        for i in range(0, len(texts), batch):
-            protected = [protect(t) for t in texts[i : i + batch]]
-            inputs = self._tokenizer(
-                [f"<2{target}> {p}" for p, _ in protected], return_tensors="pt", padding=True
-            ).to(self._device)
-            with self._torch.no_grad():
-                generated = self._model.generate(**inputs, num_beams=4, max_new_tokens=256)
-            decoded = self._tokenizer.batch_decode(generated, skip_special_tokens=True)
-            out += [restore(d, kept) for d, (_, kept) in zip(decoded, protected)]
+    def _run(self, texts: list[str], target: str) -> list[str]:
+        # One string at a time, 2 beams, an output budget scaled to the input,
+        # and MPS's cache emptied after each: generation memory, not the
+        # weights, is what overflowed (4 beams, batches of 4 and a flat
+        # 256-token budget).
+        import gc
+
+        torch, out, peak = self._torch, [], 0
+        for text in texts:
+            protected, kept = protect(text)
+            inputs = self._tokenizer(f"<2{target}> {protected}", return_tensors="pt").to(self._device)
+            budget = min(256, 3 * inputs["input_ids"].shape[1] + 16)
+            with torch.no_grad():
+                generated = self._model.generate(**inputs, num_beams=2, max_new_tokens=budget)
+            out.append(restore(self._tokenizer.decode(generated[0], skip_special_tokens=True), kept))
+            if self._device == "mps":
+                peak = max(peak, torch.mps.driver_allocated_memory())
+                del inputs, generated
+                gc.collect()
+                torch.mps.empty_cache()
+        if peak:
+            print(f"madlad-400: <2{target}>: peak MPS memory {peak / 2**30:.1f} GB", file=sys.stderr, flush=True)
         return out
 
-    def translate(self, texts: list[str], target: str) -> list[str]:
+    def translate(self, texts: list[str], target: str, contexts: list[str] | None = None) -> list[str]:
+        # A seq2seq model takes no context: `contexts` is ignored.
         return self._run(texts, target)
 
     def back_translate(self, texts: list[str], source: str) -> list[str]:

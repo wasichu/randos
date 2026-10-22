@@ -147,20 +147,49 @@ class Judge:
 
         self._generate = generate
         self._model, self._tokenizer = load(self.REPO)
+        self._contexts = current_contexts()
+
+    def stale(self, entry: dict) -> bool:
+        """Judged with a different context than the template's now (a
+        translator comment added or changed): every model's translation of
+        that string is judged again, so they're judged alike."""
+        return judged_context(entry) != judge_context(entry["msgctxt"], self._contexts.get(entry["key"], ""))
 
     def score(self, locale: str, entries: list[dict]) -> list[dict]:
         from .models import NAMES
 
         language, out = NAMES[locale], []
         for e in entries:
-            context = "\nIt is a button label: it must be short.\n" if e["msgctxt"] == "button" else ""
+            context = judge_context(e["msgctxt"], self._contexts.get(e["key"], ""))
             ask = JUDGE_RUBRIC.format(language=language, context=context, source=e["msgid"], text=e["text"])
             prompt = self._tokenizer.apply_chat_template(
                 [{"role": "user", "content": ask}], add_generation_prompt=True, tokenize=False
             )
             reply = self._generate(self._model, self._tokenizer, prompt=prompt, max_tokens=80, verbose=False)
-            out.append(parse_judgement(reply))
+            out.append(parse_judgement(reply) | {"context": context})
         return out
+
+
+def current_contexts() -> dict[str, str]:
+    from . import po
+
+    return {s.key: s.context for s in po.sources()}
+
+
+def judge_context(msgctxt: str | None, context: str) -> str:
+    """The rubric's context lines: a button's length rule, and the string's
+    translator comment ("where it appears")."""
+    lines = ["It is a button label: it must be short."] if msgctxt == "button" else []
+    if context and context != "A button label.":
+        lines.append(f"Where it appears: {context}")
+    return "\n" + "\n".join(lines) + "\n" if lines else ""
+
+
+def judged_context(entry: dict) -> str:
+    """The context an entry's judgement saw (judgements from before comments
+    existed saw only the button rule)."""
+    result = entry["scores"].get("judge") or {}
+    return result["context"] if "context" in result else judge_context(entry["msgctxt"], "")
 
 
 SCORERS = {"metricx": MetricX, "comet_kiwi": CometKiwi, "judge": Judge}

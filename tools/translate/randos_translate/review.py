@@ -12,10 +12,11 @@ and works out:
   best, i.e. some model is ranked first by one scorer and last by another.
   It needs at least two scorers with scores (only back-translation chrF
   runs today, so none conflict yet);
-- **best**: among translations that pass every check, the one with the
-  best mean rank across the scorers that ran;
-- per locale, the **winner**: the model passing every check most often,
-  then the best mean rank.
+- **best**: the translation that ships (`pick`): among those passing every
+  check, the best mean rank over MetricX and COMET-Kiwi, the judge breaking
+  ties; `fill --best` writes these, string by string;
+- per locale, the **winner**: only a summary now, the model picked for the
+  most strings.
 
 The latest run wins when a model translated the same string for the same
 locale more than once. The checks are run again here (they're cheap and
@@ -63,15 +64,15 @@ def disagreement(texts: list[str]) -> float:
     return round(1 - sum(similarity(a, b) for a, b in pairs) / len(pairs), 3)
 
 
-def ranks(entries: dict[str, dict]) -> dict[str, dict[str, int]]:
-    """scorer -> model -> rank (1 is best), for the scorers that scored every model."""
+def ranks(entries: dict[str, dict]) -> dict[str, dict[str, float]]:
+    """scorer -> model -> rank (1 is best, ties averaged), for the scorers
+    that scored every model."""
     out = {}
     for scorer, meta in SCORERS.items():
         scores = {model: _score(e, scorer) for model, e in entries.items()}
         if len(scores) < 2 or any(s is None for s in scores.values()):
             continue
-        ordered = sorted(scores, key=lambda m: scores[m], reverse=meta["higher_is_better"])
-        out[scorer] = {model: ordered.index(model) + 1 for model in scores}
+        out[scorer] = average_ranks(scores, meta["higher_is_better"])
     return out
 
 
@@ -88,13 +89,60 @@ def conflict(scorer_ranks: dict[str, dict[str, int]]) -> dict | None:
     return None
 
 
-def _mean_rank(model: str, scorer_ranks: dict[str, dict[str, int]]) -> float:
-    mine = [r[model] for r in scorer_ranks.values()]
-    return sum(mine) / len(mine) if mine else float("inf")
-
-
 def _passes(entry: dict) -> bool:
     return all(c["ok"] for c in entry["checks"].values())
+
+
+# The two independent quality estimators decide, with equal weight; the
+# judge's 1-10 is too coarse to lead, so it breaks their ties, or stands in
+# beside MetricX when COMET-Kiwi has no score. MetricX alone never decides:
+# TranslateGemma was trained against it (translation_models.md).
+QUALITY = ("metricx", "comet_kiwi")
+
+
+def average_ranks(scores: dict[str, float], higher_is_better: bool) -> dict[str, float]:
+    """model -> rank (1 is best); tied scores share the mean of their places,
+    so no model wins a tie by its name."""
+    ordered = sorted(scores.values(), reverse=higher_is_better)
+    places: dict[float, list[int]] = {}
+    for place, value in enumerate(ordered, start=1):
+        places.setdefault(value, []).append(place)
+    return {model: sum(places[v]) / len(places[v]) for model, v in scores.items()}
+
+
+def pick(entries: dict[str, dict]) -> dict | None:
+    """The translation of one string to ship: among those passing every
+    check, the best mean rank over MetricX and COMET-Kiwi (ranked among the
+    passing ones only); ties go to the judge's rank, then back-translation
+    chrF, then the shorter text, then the text itself (never the model's
+    name). None when nothing passes."""
+    passing = {m: e for m, e in entries.items() if _passes(e)}
+    if not passing:
+        return None
+    if len(passing) == 1:
+        model = next(iter(passing))
+        return {"model": model, "why": "the only translation passing every check"}
+
+    def ranked(scorer: str) -> dict[str, float] | None:
+        scores = {m: _score(e, scorer) for m, e in passing.items()}
+        if any(s is None for s in scores.values()):
+            return None
+        return average_ranks(scores, SCORERS[scorer]["higher_is_better"])
+
+    judge = ranked("judge")
+    deciding = {s: r for s in QUALITY if (r := ranked(s)) is not None}
+    if set(deciding) == {"metricx"}:
+        deciding = {"metricx": deciding["metricx"], "judge": judge} if judge else {}
+    tiebreak = judge or {m: 0 for m in passing}
+
+    def key(m: str) -> tuple:
+        primary = sum(r[m] for r in deciding.values()) / len(deciding) if deciding else 0
+        chrf = _score(passing[m], "chrf") or 0
+        return (primary, tiebreak[m], -chrf, len(passing[m]["text"]), passing[m]["text"])
+
+    model = min(passing, key=key)
+    by = " and ".join(SCORERS[s]["label"] for s in deciding) or "the tie-breaks alone"
+    return {"model": model, "why": f"best of {len(passing)} passing translations by {by}"}
 
 
 def latest_entries(runs: list[dict], keys: set[str] | None = None) -> dict[tuple[str, str], dict[str, dict]]:
@@ -119,15 +167,15 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
     for (locale, _key), entries in table.items():
         scorer_ranks = ranks(entries)
         first = next(iter(entries.values()))
-        passing = [m for m, e in entries.items() if _passes(e)]
-        best = min(passing, key=lambda m: _mean_rank(m, scorer_ranks)) if passing and scorer_ranks else None
+        chosen = pick(entries)
         row = {
             "key": first["key"],
             "msgid": first["msgid"],
             "msgctxt": first["msgctxt"],
             "disagreement": disagreement([e["text"] for e in entries.values()]),
             "conflict": conflict(scorer_ranks),
-            "best": best,
+            "best": chosen and chosen["model"],
+            "best_why": chosen and chosen["why"],
             "translations": {
                 model: {
                     "text": e["text"],
@@ -172,22 +220,13 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
 
 
 def _winner(summary: dict[str, dict]) -> dict | None:
+    """The model picked for the most strings (a summary: each string ships
+    its own pick, `pick`)."""
     if len(summary) < 2:
         return None
-
-    def share(m):
-        return summary[m]["all_checks_pass"] / max(summary[m]["strings"], 1)
-
-    def rank(m):
-        r = summary[m]["mean_rank"]
-        return r if r is not None else float("inf")
-
-    model = sorted(summary, key=lambda m: (-share(m), rank(m)))[0]
-    return {
-        "model": model,
-        "why": f"passes every check on {summary[model]['all_checks_pass']}/{summary[model]['strings']} strings, "
-        f"mean rank {summary[model]['mean_rank']}",
-    }
+    model = max(summary, key=lambda m: (summary[m]["best_count"], summary[m]["all_checks_pass"]))
+    picked = sum(s["best_count"] for s in summary.values())
+    return {"model": model, "why": f"picked for {summary[model]['best_count']} of the {picked} strings filled"}
 
 
 def _runs(results: Path) -> list[dict]:

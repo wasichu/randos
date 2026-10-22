@@ -45,6 +45,12 @@ def test_one_translation_shaped_like_the_source():
     assert not checks.shape("About randos", "について(0)")[0]
     assert not checks.shape("Your rando", "Votre [0]")[0]
     assert checks.shape("Ages (18)", "Edad (18)")[0]
+    # A heading stays a heading; a sentence keeps its end.
+    assert not checks.shape("About randos", "Über randos.")[0]
+    assert not checks.shape("Time is up", "時間切れです。")[0]
+    assert checks.shape("Choose your languages.", "Elige tus idiomas.")[0]
+    assert checks.shape("Something went wrong!", "¡Algo salió mal!")[0]
+    assert checks.shape("Reconnecting audio…", "Reconectando el audio…")[0]
 
 
 def test_protect_and_restore_round_trip():

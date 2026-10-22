@@ -4,8 +4,9 @@ defmodule RandosDev.TranslationReviewLive do
   in development only: for each locale, every model's translation of every
   string side by side, the strings where the models disagree most first,
   each evaluator's score and rank beside each translation, the strings
-  where the evaluators disagree on the best model, the failed checks, and
-  the locale's winner. Data: `RandosDev.TranslationReview`.
+  where the evaluators disagree on the best model, the failed checks, the
+  translation that ships for each string (`review.pick` in tools/translate)
+  and the model picked most. Data: `RandosDev.TranslationReview`.
 
   English on purpose, like the voice lab: it's a developer tool.
   """
@@ -122,7 +123,7 @@ defmodule RandosDev.TranslationReviewLive do
                   <th class="px-4 py-2 font-medium">Pass every check</th>
                   <th class="px-4 py-2 font-medium">Mean chrF</th>
                   <th class="px-4 py-2 font-medium">Mean rank</th>
-                  <th class="px-4 py-2 font-medium">Best on</th>
+                  <th class="px-4 py-2 font-medium">Picked for</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +140,7 @@ defmodule RandosDev.TranslationReviewLive do
                       title={@data["winner"]["why"]}
                       class="ms-2 rounded-full bg-teal-50 px-2 py-0.5 text-xs font-medium text-teal-800"
                     >
-                      winner
+                      most picked
                     </span>
                   </td>
                   <td class="px-4 py-2">{s["strings"]}</td>
@@ -151,7 +152,7 @@ defmodule RandosDev.TranslationReviewLive do
               </tbody>
             </table>
             <p :if={!@data["winner"]} id="review-no-winner" class="px-4 py-2 text-sm text-stone-500">
-              Only one model ran for this locale, so there's no winner yet.
+              Only one model ran for this locale, so there's nothing to compare yet.
             </p>
           </section>
 
@@ -227,9 +228,10 @@ defmodule RandosDev.TranslationReviewLive do
                     <span class="font-medium uppercase tracking-wide">{model}</span>
                     <span
                       :if={row["best"] == model}
+                      title={row["best_why"]}
                       class="review-best rounded-full bg-teal-50 px-2 py-0.5 font-medium text-teal-800"
                     >
-                      best
+                      ships
                     </span>
                   </div>
                   <p :if={t["text"] != ""} dir={@dir} lang={@review_locale} class="text-base">{t["text"]}</p>

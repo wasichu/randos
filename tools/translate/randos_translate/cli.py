@@ -32,15 +32,23 @@ RESULTS = Path(__file__).resolve().parents[1] / "results"
 def run(model_name: str, locales: list[str], limit: int | None, append: Path | None = None) -> Path:
     """Translates the template's strings into `locales`. With `append`, an
     earlier run of the same model: only the strings it lacks (the template
-    changed since), added to that file."""
+    changed since) and, for a model that takes context, those whose context
+    changed, written into that file."""
     model = contestants.get(model_name)
     sources = po.sources()[:limit] if limit else po.sources()
     earlier = json.loads(append.read_text()) if append else None
-    have = set()
+    have: dict[tuple[str, str], str] = {}
     if earlier:
         if earlier["run"]["model"] != model_name:
             sys.exit(f"{append} is a run of {earlier['run']['model']}, not {model_name}")
-        have = {(e["locale"], e["key"]) for e in earlier["entries"]}
+        have = {(e["locale"], e["key"]): e.get("context", "") for e in earlier["entries"]}
+    takes_context = getattr(model, "takes_context", False)
+
+    def stale(locale: str, source: po.Source) -> bool:
+        if (locale, source.key) not in have:
+            return True
+        return takes_context and have[(locale, source.key)] != source.context
+
     unsupported = [loc for loc in locales if loc not in model.locales]
     if unsupported:
         sys.exit(f"{model_name} has no pair wired for {unsupported} (wired: {model.locales})")
@@ -48,8 +56,9 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
     entries, started = [], time.monotonic()
     for locale in locales:
         began = time.monotonic()
-        todo = [s for s in sources if (locale, s.key) not in have]
-        texts = model.translate([s.msgid for s in todo], locale) if todo else []
+        todo = [s for s in sources if stale(locale, s)]
+        texts = model.translate([s.msgid for s in todo], locale, [s.context for s in todo]) if todo else []
+        texts = [contestants.brand_case(t) for t in texts]
         backs = model.back_translate(texts, locale) if todo else []
         print(f"{model_name}: {locale}: {len(texts)} strings in {time.monotonic() - began:.0f} s", file=sys.stderr, flush=True)
         for source, text, back in zip(todo, texts, backs):
@@ -58,6 +67,7 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
                     "key": source.key,
                     "msgid": source.msgid,
                     "msgctxt": source.msgctxt,
+                    "context": source.context if takes_context else "",
                     "locale": locale,
                     "text": text,
                     "back_translation": back,
@@ -68,8 +78,9 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
 
     seconds = round(time.monotonic() - started, 1)
     if earlier:
-        keys = {s.key for s in sources}
-        entries = [e for e in earlier["entries"] if e["key"] in keys] + entries
+        keys, redone = {s.key for s in sources}, {(e["locale"], e["key"]) for e in entries}
+        kept = [e for e in earlier["entries"] if e["key"] in keys and (e["locale"], e["key"]) not in redone]
+        entries = kept + entries
         locales = earlier["run"]["locales"]
 
     summary = {}
@@ -117,7 +128,12 @@ def score(scorer_name: str, paths: list[Path], redo: bool) -> dict[str, int]:
         data = json.loads(path.read_text())
         if "entries" not in data:  # the summary, not a run
             continue
-        todo = [e for e in data["entries"] if redo or (e["scores"].get(scorer_name) or {}).get("score") is None]
+        stale = getattr(scorer, "stale", lambda _entry: False)
+        todo = [
+            e
+            for e in data["entries"]
+            if redo or (e["scores"].get(scorer_name) or {}).get("score") is None or stale(e)
+        ]
         for locale in sorted({e["locale"] for e in todo}):
             mine = [e for e in todo if e["locale"] == locale]
             began = time.monotonic()
@@ -160,6 +176,34 @@ def fill(results: Path, locale: str, redo: bool) -> dict[str, int]:
     return po.fill(locale, translations, data["run"]["model"], redo=redo)
 
 
+def brand_case(paths: list[Path]) -> dict[str, int]:
+    """Applies `models.brand_case` to the outputs of runs made before it
+    existed (`run` applies it to every new one)."""
+    counts = {}
+    for path in paths:
+        data = json.loads(path.read_text())
+        if "entries" not in data:
+            continue
+        changed = 0
+        for entry in data["entries"]:
+            fixed = contestants.brand_case(entry["text"])
+            if fixed != entry["text"]:
+                entry["text"], changed = fixed, changed + 1
+        if changed:
+            _write_atomically(path, data)
+        counts[path.name] = changed
+    return counts
+
+
+def fill_best(locale: str, redo: bool, results: Path = RESULTS) -> dict[str, int]:
+    """Fills the locale string by string with each string's pick (review.json's
+    "best", `review.pick`), recording which model wrote each one."""
+    data = json.loads((results / "review.json").read_text())
+    rows = [r for r in data["locales"][locale]["strings"] if r["best"]]
+    translations = {r["key"]: r["translations"][r["best"]]["text"] for r in rows}
+    return po.fill(locale, translations, {r["key"]: r["best"] for r in rows}, redo=redo)
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="randos_translate")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -169,13 +213,16 @@ def main(argv: list[str] | None = None) -> None:
     r.add_argument("--limit", type=int, help="only the first N strings (for a quick proof)")
     r.add_argument("--append", type=Path, help="an earlier run of this model: translate only the strings it lacks")
     f = sub.add_parser("fill")
-    f.add_argument("results", type=Path)
-    f.add_argument("--locale", required=True)
+    f.add_argument("results", type=Path, nargs="?", help="one run to fill from (without --best)")
+    f.add_argument("--best", action="store_true", help="each string's pick from results/review.json")
+    f.add_argument("--locale", required=True, help="a locale, or all")
     f.add_argument("--redo", action="store_true")
     s = sub.add_parser("score", help="run one model-based scorer over results files")
     s.add_argument("--scorer", required=True, choices=sorted(scoring.SCORERS))
     s.add_argument("results", type=Path, nargs="+")
     s.add_argument("--redo", action="store_true", help="also rescore entries that already have a score")
+    b = sub.add_parser("brand-case", help="lowercase randos/rando in runs made before run did it")
+    b.add_argument("results", type=Path, nargs="+")
     sub.add_parser(
         "review", help="combine results/*.json into results/review.json (the review page's data) and shootout-summary.json"
     )
@@ -185,11 +232,18 @@ def main(argv: list[str] | None = None) -> None:
         print(run(args.model, args.locales.split(","), args.limit, args.append))
     elif args.command == "score":
         print(score(args.scorer, [p for p in args.results if p.name != "review.json"], args.redo))
+    elif args.command == "brand-case":
+        print(brand_case(args.results))
     elif args.command == "review":
         print(review.write(RESULTS))
         print(review.write_summary(RESULTS))
     else:
-        print(fill(args.results, args.locale, args.redo))
+        locales = po.LOCALES if args.locale == "all" else [args.locale]
+        if not args.best and not args.results:
+            parser.error("fill needs a results file, or --best")
+        for locale in locales:
+            counts = fill_best(locale, args.redo) if args.best else fill(args.results, locale, args.redo)
+            print(locale, counts)
 
 
 if __name__ == "__main__":

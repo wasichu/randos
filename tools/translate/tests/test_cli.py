@@ -12,9 +12,11 @@ class Upper:
 
     def __init__(self):
         self.asked = []
+        self.contexts = []
 
-    def translate(self, texts, target):
+    def translate(self, texts, target, contexts=None):
         self.asked += texts
+        self.contexts += contexts or []
         return [t.upper() for t in texts]
 
     def back_translate(self, texts, source):
@@ -38,6 +40,47 @@ def test_append_translates_only_what_the_run_lacks(tmp_path, monkeypatch):
     assert sorted(e["key"] for e in data["entries"]) == ["New", "Ready"]
     assert data["summary"]["es"]["strings"] == 2
     assert len(data["run"]["appended"]) == 1
+
+
+def test_a_changed_comment_retranslates_only_for_a_model_that_takes_context(tmp_path, monkeypatch):
+    monkeypatch.setattr(cli, "RESULTS", tmp_path)
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("About"), po.Source("Cancel")])
+    reader = type("Reads", (Upper,), {"takes_context": True})()
+    monkeypatch.setattr(cli.contestants, "get", lambda name: reader)
+    first = cli.run("upper", ["es"], None)
+
+    about = po.Source("About", comment="The page that explains randos")
+    monkeypatch.setattr(cli.po, "sources", lambda: [about, po.Source("Cancel")])
+    reader.asked, reader.contexts = [], []
+    cli.run("upper", ["es"], None, append=first)
+    assert reader.asked == ["About"]
+    assert reader.contexts == ["The page that explains randos"]
+    entries = json.loads(first.read_text())["entries"]
+    assert sorted((e["key"], e["context"]) for e in entries) == [
+        ("About", "The page that explains randos"),
+        ("Cancel", ""),
+    ]
+
+    # A seq2seq model can't use the comment: nothing to redo.
+    plain = Upper()
+    monkeypatch.setattr(cli.contestants, "get", lambda name: plain)
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("About"), po.Source("Cancel")])
+    second = cli.run("upper", ["es"], None)
+    monkeypatch.setattr(cli.po, "sources", lambda: [about, po.Source("Cancel")])
+    cli.run("upper", ["es"], None, append=second)
+    assert plain.asked == ["About", "Cancel"]
+
+
+def test_every_output_goes_through_brand_case(tmp_path, monkeypatch):
+    class Capitalizes(Upper):
+        def translate(self, texts, target, contexts=None):
+            return ["Randos est un lieu" for _ in texts]
+
+    monkeypatch.setattr(cli, "RESULTS", tmp_path)
+    monkeypatch.setattr(cli.contestants, "get", lambda name: Capitalizes())
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("randos is a place")])
+    out = cli.run("upper", ["es"], None)
+    assert json.loads(out.read_text())["entries"][0]["text"] == "randos est un lieu"
 
 
 class Stops:

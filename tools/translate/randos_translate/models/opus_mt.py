@@ -62,7 +62,8 @@ class OpusMT:
             out += [restore(d, kept) for d, (_, kept) in zip(decoded, protected)]
         return out
 
-    def translate(self, texts: list[str], target: str) -> list[str]:
+    def translate(self, texts: list[str], target: str, contexts: list[str] | None = None) -> list[str]:
+        # A seq2seq model takes no context: `contexts` is ignored.
         return self._run(PAIRS[target][0], texts, TARGET_TOKEN.get(target, ""))
 
     def back_translate(self, texts: list[str], source: str) -> list[str]:

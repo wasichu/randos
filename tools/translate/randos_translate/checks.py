@@ -34,11 +34,16 @@ def placeholders(source: str, text: str) -> tuple[bool, str]:
 
 
 def glossary(source: str, text: str) -> tuple[bool, str]:
-    missing = [term for term in GLOSSARY if term in source.lower() and term not in text.lower()]
+    """The terms are kept exactly, lowercase included: randos is a name and
+    always lowercase, even starting a sentence ("Randos est..." fails)."""
+    missing = [term for term in GLOSSARY if term in source.lower() and term not in text]
     # "randos" contains "rando": count each source term once.
-    if "randos" in source.lower() and "randos" in text.lower():
+    if "randos" in source.lower() and ("randos" in text or "rando" not in source.lower().replace("randos", "")):
         missing = [t for t in missing if t != "rando"]
-    return (not missing, "" if not missing else f"missing {missing}")
+    if not missing:
+        return (True, "")
+    capitalized = [t for t in missing if t in text.lower()]
+    return (False, f"capitalized {capitalized}" if capitalized == missing else f"missing {missing}")
 
 
 # Chinese, Japanese and Korean write in far fewer characters than English
@@ -100,6 +105,9 @@ def script(locale: str, text: str, source: str | None = None) -> tuple[bool, str
 
 
 _LEFTOVER_TOKEN = re.compile(r"[\[(]\d+[\])]")
+# Full stops and exclamation marks, Latin and CJK/Devanagari/Arabic ones.
+_SENTENCE_END = (".", "!", "。", "！", "।", "۔")
+_ANY_END = (".", "!", "?", ":", "…", ")", "”", '"')
 
 
 def shape(source: str, text: str) -> tuple[bool, str]:
@@ -108,6 +116,9 @@ def shape(source: str, text: str) -> tuple[bool, str]:
     token left behind ("[0]", or a model's rewrite of it, "(0)")."""
     if text.count("\n") > source.count("\n"):
         return (False, "line breaks the source doesn't have (alternatives?)")
+    # A heading or label stays one ("About randos" -> "Über randos", not "Über randos.").
+    if text.rstrip().endswith(_SENTENCE_END) and not source.rstrip().endswith(_ANY_END):
+        return (False, "ends a sentence the source doesn't")
     leftover = [t for t in _LEFTOVER_TOKEN.findall(text) if t not in source]
     return (not leftover, "" if not leftover else f"leftover tokens {leftover}")
 

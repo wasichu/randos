@@ -1,0 +1,62 @@
+"""Per-string selection (`review.pick`): of the translations passing every
+check, MetricX and COMET-Kiwi decide together, the judge breaks ties, and a
+model's name never does."""
+
+from randos_translate import review
+
+OK = {"placeholders": {"ok": True, "detail": ""}}
+FAIL = {"placeholders": {"ok": False, "detail": "expected ['%{time}']"}}
+
+
+def entry(text, *, metricx=None, comet=None, judge=None, chrf=50.0, checks=OK):
+    return {
+        "text": text,
+        "checks": checks,
+        "scores": {
+            "chrf": chrf,
+            "metricx": {"score": metricx},
+            "comet_kiwi": {"score": comet},
+            "judge": {"score": judge},
+        },
+    }
+
+
+def test_the_two_quality_estimators_decide_together():
+    # a is best by MetricX, b by COMET-Kiwi and second by MetricX: b's mean rank wins.
+    entries = {
+        "a": entry("A", metricx=1.0, comet=0.60),
+        "b": entry("B", metricx=1.5, comet=0.90),
+        "c": entry("C", metricx=3.0, comet=0.80),
+    }
+    assert review.pick(entries)["model"] == "b"
+
+
+def test_a_translation_failing_a_check_never_ships():
+    entries = {"a": entry("A", metricx=0.1, comet=0.99, checks=FAIL), "b": entry("B", metricx=5.0, comet=0.5)}
+    assert review.pick(entries) == {"model": "b", "why": "the only translation passing every check"}
+    assert review.pick({"a": entry("A", checks=FAIL)}) is None
+
+
+def test_metricx_alone_never_decides():
+    # No COMET-Kiwi scores: MetricX prefers a, the judge prefers b, so they tie
+    # on mean rank and the judge's rank breaks it.
+    entries = {"a": entry("A", metricx=1.0, judge=4), "b": entry("B", metricx=2.0, judge=10)}
+    assert review.pick(entries)["model"] == "b"
+
+
+def test_ties_never_go_by_the_models_name():
+    # Equal on everything but chrF: the higher chrF wins, though "z" sorts last.
+    same = {"metricx": 1.0, "comet": 0.8, "judge": 7}
+    entries = {"a": entry("A", chrf=40.0, **same), "z": entry("Z", chrf=60.0, **same)}
+    assert review.pick(entries)["model"] == "z"
+    # Equal there too: the shorter text.
+    entries = {"a": entry("Longer", **same), "z": entry("Short", **same)}
+    assert review.pick(entries)["model"] == "z"
+
+
+def test_tied_scores_share_their_rank():
+    assert review.average_ranks({"a": 1.0, "b": 1.0, "c": 2.0}, higher_is_better=False) == {
+        "a": 1.5,
+        "b": 1.5,
+        "c": 3.0,
+    }

@@ -34,6 +34,16 @@ class Source:
     def key(self) -> str:
         return f"{self.msgctxt}\x04{self.msgid}" if self.msgctxt else self.msgid
 
+    @property
+    def context(self) -> str:
+        """What a translator (or a model that takes context) should know: the
+        template's comment ("#."), else what the msgctxt says."""
+        if self.comment:
+            return self.comment
+        if self.msgctxt == "button":
+            return "A button label."
+        return f"A {self.msgctxt} label." if self.msgctxt else ""
+
 
 def sources(pot: Path = GETTEXT / "default.pot") -> list[Source]:
     return [
@@ -90,7 +100,7 @@ def load_state(locale: str, state_dir: Path = STATE) -> dict:
 def fill(
     locale: str,
     translations: dict[str, str],
-    model: str,
+    model: str | dict[str, str],
     *,
     redo: bool = False,
     root: Path = GETTEXT,
@@ -99,19 +109,28 @@ def fill(
     """Write `translations` (Source.key -> text) into the locale's .po.
 
     Fills empty entries. With `redo`, also replaces entries whose current
-    text is still what the machine wrote (a person's edit is never touched).
-    Returns counts of what happened.
+    text is still what the machine wrote (a person's edit is never touched),
+    and empties those of them that now have no translation to write (none
+    passes the checks any more), so the English shows instead.
+    `model` names who wrote them: one model, or one per key (per-string
+    selection). Returns counts of what happened.
     """
     path = po_path(locale, root)
     po = polib.pofile(str(path))
     state = load_state(locale, state_dir)
-    counts = {"filled": 0, "redone": 0, "kept_human": 0, "kept_existing": 0}
+    counts = {"filled": 0, "redone": 0, "cleared": 0, "kept_human": 0, "kept_existing": 0}
 
     for entry in po:
         key = Source(entry.msgid, entry.msgctxt).key
-        if key not in translations or not entry.msgid or entry.msgid_plural:
+        if not entry.msgid or entry.msgid_plural:
             continue
         machine_wrote = state.get(key, {}).get("msgstr")
+        if key not in translations:
+            if redo and entry.msgstr and entry.msgstr == machine_wrote:
+                entry.msgstr = ""
+                del state[key]
+                counts["cleared"] += 1
+            continue
         if not entry.msgstr:
             counts["filled"] += 1
         elif redo and entry.msgstr == machine_wrote:
@@ -128,7 +147,7 @@ def fill(
         # fuzzy entries, so it would never show.
         if "fuzzy" in entry.flags:
             entry.flags.remove("fuzzy")
-        state[key] = {"msgstr": translations[key], "model": model}
+        state[key] = {"msgstr": translations[key], "model": model if isinstance(model, str) else model[key]}
 
     _save(po, path)
     state_dir.mkdir(parents=True, exist_ok=True)

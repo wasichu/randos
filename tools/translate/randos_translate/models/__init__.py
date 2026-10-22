@@ -1,9 +1,15 @@
-"""The contestants, behind one interface: `translate(texts, target) -> list`.
+"""The contestants, behind one interface:
+`translate(texts, target, contexts) -> list`.
 
 Seq2seq models can't follow instructions, so `protect`/`restore` swap
 placeholders and glossary terms for tokens they pass through untouched;
 the checks then show which models still damage them. Instruction models
-(Hy-MT2, TranslateGemma, an LLM) get the same rules in their prompt.
+(Hy-MT2, TranslateGemma) get the same rules in their prompt, and each
+string's context (its translator comment, `po.Source.context`), which the
+seq2seq models can't take: per-string selection then prefers whichever
+contestant got the sense right.
+
+Every contestant's output then goes through `brand_case`.
 """
 
 from __future__ import annotations
@@ -18,7 +24,7 @@ class Translator(Protocol):
     name: str
     locales: list[str]
 
-    def translate(self, texts: list[str], target: str) -> list[str]: ...
+    def translate(self, texts: list[str], target: str, contexts: list[str] | None = None) -> list[str]: ...
 
     def back_translate(self, texts: list[str], source: str) -> list[str]: ...
 
@@ -59,6 +65,18 @@ def protect(text: str) -> tuple[str, list[str]]:
 
 def restore(text: str, kept: list[str]) -> str:
     return _TOKEN.sub(lambda m: kept[int(m.group(1))] if int(m.group(1)) < len(kept) else m.group(0), text)
+
+
+# "rando"/"randos" at the start of a word, in any case, but not "random".
+_BRAND = re.compile(r"\brando(?!m)s?", re.IGNORECASE)
+
+
+def brand_case(text: str) -> str:
+    """randos is a name and always lowercase, even starting a sentence
+    ("Randos est..." -> "randos est..."), with a suffix ("Randoslar") or a
+    particle ("Randosは") attached: what `restore` guarantees the seq2seq
+    models, for every contestant."""
+    return _BRAND.sub(lambda m: m.group(0).lower(), text)
 
 
 # The MLX instruction models: name -> (repo, prompt style). Sizes chosen to
