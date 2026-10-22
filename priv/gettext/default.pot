@@ -567,13 +567,7 @@ msgstr ""
 msgid "Over UDP (most calls)"
 msgstr ""
 
-#: lib/randos_web/live/about_live.ex
-#, elixir-autogen, elixir-format
-msgid "See the status page"
-msgstr ""
-
 #: lib/randos_web/components/layouts.ex
-#: lib/randos_web/live/about_live.ex
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Status"
@@ -609,11 +603,6 @@ msgstr ""
 msgid "Whether calls can connect right now, and how today is going."
 msgstr ""
 
-#: lib/randos_web/live/about_live.ex
-#, elixir-autogen, elixir-format
-msgid "Whether calls can connect right now, and today's call counts: we count calls, not people."
-msgstr ""
-
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "working"
@@ -642,11 +631,6 @@ msgstr ""
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Counting since %{time} UTC on %{date}: today's calls so far."
-msgstr ""
-
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
-msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
 msgstr ""
 
 #: lib/randos_web/components/layouts.ex
@@ -682,4 +666,19 @@ msgstr ""
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando's connection dropped; waiting a few seconds for them to come back."
+msgstr ""
+
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”."
+msgstr ""
+
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "How languages are counted"
+msgstr ""
+
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept."
 msgstr ""

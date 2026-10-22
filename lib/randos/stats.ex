@@ -62,6 +62,9 @@ defmodule Randos.Stats do
     GenServer.start_link(__MODULE__, opts, name: Keyword.get(opts, :name, __MODULE__))
   end
 
+  @doc "The fewest calls a language pair needs to be shown (fewer count as \"other\")."
+  def min_published, do: @min_published
+
   @doc "The PubSub topic the stats announce changes on (`{:stats_updated, published}`)."
   def topic, do: @topic
 

@@ -14,6 +14,9 @@ defmodule RandosWeb.StatusLiveTest do
     assert has_element?(view, "#usage-median")
     assert has_element?(view, "#usage-ending-not_connected")
     assert has_element?(view, "#usage-privacy")
+    # The small-pairs rule sits behind the Languages spoken info icon.
+    assert has_element?(view, "#usage-pairs #usage-pairs-info summary")
+    assert has_element?(view, "#usage-pairs-info #usage-pairs-note")
   end
 
   test "updates when the relay health announces a change", %{conn: conn} do
@@ -23,8 +26,16 @@ defmodule RandosWeb.StatusLiveTest do
     assert has_element?(view, "#relay-status")
   end
 
-  test "the About page links here", %{conn: conn} do
-    {:ok, view, _html} = live(conn, ~p"/about")
-    assert has_element?(view, "#status-link[href='/status']")
+  test "every page's header links here (an icon); the About page has no section for it", %{
+    conn: conn
+  } do
+    for path <- [~p"/", ~p"/about"] do
+      {:ok, view, _html} = live(conn, path)
+      assert has_element?(view, "#header-status-link[href='/status'] .hero-signal")
+    end
+
+    {:ok, about, _html} = live(conn, ~p"/about")
+    refute has_element?(about, "#about-status")
+    assert has_element?(about, "#about-privacy #privacy-link")
   end
 end

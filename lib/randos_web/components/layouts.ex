@@ -59,6 +59,15 @@ defmodule RandosWeb.Layouts do
         <div id="locale-switcher-slot" class={@in_call && "hidden"}>
           <.locale_switcher />
         </div>
+        <.link
+          id="header-status-link"
+          navigate={~p"/status"}
+          title={gettext("Status")}
+          class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
+        >
+          <.icon name="hero-signal" class="size-4" />
+          <span class="sr-only">{gettext("Status")}</span>
+        </.link>
         <button
           id="theme-toggle"
           type="button"

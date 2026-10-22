@@ -87,6 +87,18 @@ defmodule RandosWeb.AboutLive do
                   max: @max_call_minutes
                 )}
               </p>
+              <p id="about-privacy">
+                {gettext(
+                  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
+                )}
+                <a
+                  id="privacy-link"
+                  href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
+                  class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
+                >
+                  {gettext("privacy")}
+                </a>
+              </p>
             </section>
 
             <section id="about-translations" class="space-y-3">
@@ -108,37 +120,6 @@ defmodule RandosWeb.AboutLive do
                 <.icon name="hero-language" class="size-4" />
                 {gettext("Help fix a translation")}
               </a>
-            </section>
-
-            <section id="about-status" class="space-y-3">
-              <h2 class="text-xl font-semibold tracking-normal text-stone-950">
-                {gettext("Status")}
-              </h2>
-              <p>
-                {gettext(
-                  "Whether calls can connect right now, and today's call counts: we count calls, not people."
-                )}
-              </p>
-              <.link
-                id="status-link"
-                navigate={~p"/status"}
-                class="inline-flex items-center gap-2 font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
-              >
-                <.icon name="hero-signal" class="size-4" />
-                {gettext("See the status page")}
-              </.link>
-              <p>
-                {gettext(
-                  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
-                )}
-                <a
-                  id="privacy-link"
-                  href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
-                  class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
-                >
-                  {gettext("privacy")}
-                </a>
-              </p>
             </section>
 
             <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">

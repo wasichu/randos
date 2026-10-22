@@ -167,7 +167,28 @@ defmodule RandosWeb.StatusLive do
       </div>
 
       <div id="usage-pairs" class="rounded-lg border border-stone-200 bg-white p-5">
-        <h3 class="text-sm font-semibold text-stone-950">{gettext("Languages spoken")}</h3>
+        <div class="flex items-center gap-1.5">
+          <h3 class="text-sm font-semibold text-stone-950">{gettext("Languages spoken")}</h3>
+          <%!-- A native disclosure: no script, works by keyboard. --%>
+          <details id="usage-pairs-info" class="group relative">
+            <summary
+              title={gettext("How languages are counted")}
+              class="flex size-5 cursor-pointer list-none items-center justify-center rounded-full text-stone-400 transition hover:text-stone-700 group-open:text-teal-700 [&::-webkit-details-marker]:hidden"
+            >
+              <.icon name="hero-information-circle" class="size-4" />
+              <span class="sr-only">{gettext("How languages are counted")}</span>
+            </summary>
+            <p
+              id="usage-pairs-note"
+              class="absolute start-0 top-6 z-10 w-64 rounded-md border border-stone-200 bg-white p-3 text-xs leading-5 text-stone-600 shadow-lg"
+            >
+              {gettext(
+                "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.",
+                min: Randos.Stats.min_published()
+              )}
+            </p>
+          </details>
+        </div>
         <ul :if={@usage["language_pairs"] != []} class="mt-3 space-y-1.5 text-sm">
           <li
             :for={pair <- @usage["language_pairs"]}
@@ -195,7 +216,7 @@ defmodule RandosWeb.StatusLive do
 
       <p id="usage-privacy" class="text-sm leading-6 text-stone-600">
         {gettext(
-          "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept. A language pair shows once it has at least 3 calls; smaller ones are counted under “other”."
+          "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept."
         )}
       </p>
     </section>
