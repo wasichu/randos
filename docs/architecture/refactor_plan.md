@@ -241,6 +241,24 @@ Numbered after Phase 5 but started first: after 4.4/4.5 ship, before the
 voice lab gets going, and worked on in parallel with it. Scoped 2026-10-20;
 design details when we get there.
 
+**Status (2026-10-22): filled, every language, by the models alone.** No
+person chooses or reviews translations (the owner's rule); a visitor's
+"Suggest a fix" (`/translations`, the translation-fix workflow) is
+welcome on top. The shootout ran seven contestants (Hy-MT2, TranslateGemma
+4B/12B/27B, MADLAD-400 7B in bf16 with one string at a time and 2 beams
+so its generation memory fits, Opus-MT, M2M100) and four scorers
+(back-translation chrF, MetricX-24, COMET-Kiwi, the tone judge). Each
+string ships its best translation among those passing every check, by
+combined quality rank, with a judge veto (rated ≤ 4 while another passing
+one is ≥ 7: the judge is the only scorer that sees the context);
+translator comments (`gettext_comment`) give the models that take context
+the sense of ambiguous strings ("About" the page, "End" hang up); "randos"
+is lowercased in every output and checked case-sensitively; no added full
+stop. 137–141 of 141 strings per locale; the one plural is left in
+English. Next: the judge speedups (judge only finalists, skip check
+failures, cache verdicts) before the next run (the extension-vote strings,
+new languages: `new_languages.md`).
+
 **Status (2026-10-21):** plumbing done (`RandosWeb.Locale`, the switcher,
 RTL, per-locale `.po` files, the precommit template check, hook text via
 `data-labels`); the shootout harness (`tools/translate/`) is proven on

@@ -309,6 +309,9 @@ defmodule RandosWeb.HomeComponents do
           phx-click="cancel_search"
           class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
         >
+          <% gettext_comment(
+            "A button: stop searching for someone to talk to (not \"stop watching\")."
+          ) %>
           {gettext("Stop looking")}
         </button>
       </div>
