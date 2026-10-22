@@ -78,8 +78,39 @@ def test_a_fill_changes_only_the_msgstrs(tmp_path):
     assert path.read_text() == head + entry("Una conversación")
 
 
+def test_a_filled_entry_is_no_longer_fuzzy(tmp_path):
+    root, state = tmp_path / "gettext", tmp_path / "state"
+    path = po.po_path("es", root)
+    path.parent.mkdir(parents=True)
+    path.write_text(PO.replace('msgid "Ready"', '#, elixir-format, fuzzy\nmsgid "Ready"'))
+
+    po.fill("es", {"Ready": "Listo"}, "m1", root=root, state_dir=state)
+    entry = next(e for e in polib.pofile(str(path)) if e.msgid == "Ready")
+    assert entry.msgstr == "Listo"
+    assert entry.flags == ["elixir-format"]
+
+
 def test_the_source_strings_come_from_the_real_template():
     keys = [s.key for s in po.sources()]
     assert "About" in keys
     assert po.Source("End", "button").key in keys
     assert all("randos" != s.msgid for s in po.sources())
+
+
+def test_plural_strings_are_left_to_people(tmp_path):
+    pot = tmp_path / "default.pot"
+    pot.write_text(
+        'msgid ""\nmsgstr ""\n\nmsgid "Ready"\nmsgstr ""\n\n'
+        'msgid "one language"\nmsgid_plural "%{count} languages"\nmsgstr[0] ""\nmsgstr[1] ""\n'
+    )
+    assert [s.msgid for s in po.sources(pot)] == ["Ready"]
+
+    # ...and fill leaves one alone even when a run (an old one) has it.
+    root, state = tmp_path / "gettext", tmp_path / "state"
+    path = po.po_path("es", root)
+    path.parent.mkdir(parents=True)
+    path.write_text(pot.read_text())
+    counts = po.fill("es", {"Ready": "Listo", "one language": "un idioma"}, "m1", root=root, state_dir=state)
+    assert counts["filled"] == 1
+    plural = next(e for e in polib.pofile(str(path)) if e.msgid_plural)
+    assert plural.msgstr == "" and not any(plural.msgstr_plural.values())

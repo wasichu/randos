@@ -39,6 +39,14 @@ def test_script_matches_the_locale():
     assert not checks.script("hi", "GitHub view पर", "View on GitHub")[0]
 
 
+def test_one_translation_shaped_like_the_source():
+    assert checks.shape("Time is up", "Die Zeit ist um")[0]
+    assert not checks.shape("Time is up", "Die Zeit ist um.\noder\nEs ist vorbei.")[0]
+    assert not checks.shape("About randos", "について(0)")[0]
+    assert not checks.shape("Your rando", "Votre [0]")[0]
+    assert checks.shape("Ages (18)", "Edad (18)")[0]
+
+
 def test_protect_and_restore_round_trip():
     text, kept = protect("Looking for a rando speaking %{speaking_language}.")
     assert "%{" not in text and "rando" not in text

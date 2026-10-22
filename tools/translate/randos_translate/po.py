@@ -44,7 +44,9 @@ def sources(pot: Path = GETTEXT / "default.pot") -> list[Source]:
             references=tuple(path for path, _line in e.occurrences),
         )
         for e in polib.pofile(str(pot))
-        if e.msgid and not e.obsolete
+        # Plurals are left to people: a model translates one string, but a
+        # plural needs a form per plural rule of the language (msgstr[n]).
+        if e.msgid and not e.obsolete and not e.msgid_plural
     ]
 
 
@@ -107,7 +109,7 @@ def fill(
 
     for entry in po:
         key = Source(entry.msgid, entry.msgctxt).key
-        if key not in translations or not entry.msgid:
+        if key not in translations or not entry.msgid or entry.msgid_plural:
             continue
         machine_wrote = state.get(key, {}).get("msgstr")
         if not entry.msgstr:
@@ -121,6 +123,11 @@ def fill(
             counts["kept_existing"] += 1
             continue
         entry.msgstr = translations[key]
+        # A fresh translation of this very msgid: a "fuzzy" left by a merge
+        # (the English was reworded) no longer applies, and Gettext skips
+        # fuzzy entries, so it would never show.
+        if "fuzzy" in entry.flags:
+            entry.flags.remove("fuzzy")
         state[key] = {"msgstr": translations[key], "model": model}
 
     _save(po, path)

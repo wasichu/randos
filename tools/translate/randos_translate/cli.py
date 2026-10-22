@@ -115,6 +115,8 @@ def score(scorer_name: str, paths: list[Path], redo: bool) -> dict[str, int]:
     counts = {}
     for path in paths:
         data = json.loads(path.read_text())
+        if "entries" not in data:  # the summary, not a run
+            continue
         todo = [e for e in data["entries"] if redo or (e["scores"].get(scorer_name) or {}).get("score") is None]
         for locale in sorted({e["locale"] for e in todo}):
             mine = [e for e in todo if e["locale"] == locale]
@@ -146,10 +148,14 @@ def _write_atomically(path: Path, data: dict) -> None:
 
 def fill(results: Path, locale: str, redo: bool) -> dict[str, int]:
     data = json.loads(results.read_text())
+    # The checks run again, as in review, so an improved check applies to an old run.
     translations = {
         e["key"]: e["text"]
         for e in data["entries"]
-        if e["locale"] == locale and all(c["ok"] for c in e["checks"].values())
+        if e["locale"] == locale
+        and all(
+            c["ok"] for c in checks.run_all(locale, e["msgid"], e["text"], button=e["msgctxt"] == "button").values()
+        )
     }
     return po.fill(locale, translations, data["run"]["model"], redo=redo)
 
@@ -170,7 +176,9 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--scorer", required=True, choices=sorted(scoring.SCORERS))
     s.add_argument("results", type=Path, nargs="+")
     s.add_argument("--redo", action="store_true", help="also rescore entries that already have a score")
-    sub.add_parser("review", help="combine results/*.json into results/review.json (the review page's data)")
+    sub.add_parser(
+        "review", help="combine results/*.json into results/review.json (the review page's data) and shootout-summary.json"
+    )
     args = parser.parse_args(argv)
 
     if args.command == "run":
@@ -179,6 +187,7 @@ def main(argv: list[str] | None = None) -> None:
         print(score(args.scorer, [p for p in args.results if p.name != "review.json"], args.redo))
     elif args.command == "review":
         print(review.write(RESULTS))
+        print(review.write_summary(RESULTS))
     else:
         print(fill(args.results, args.locale, args.redo))
 

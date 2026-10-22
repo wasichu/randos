@@ -190,14 +190,44 @@ def _winner(summary: dict[str, dict]) -> dict | None:
     }
 
 
+def _runs(results: Path) -> list[dict]:
+    """Every run in results/ (review.json and the summary aren't runs)."""
+    files = (json.loads(p.read_text()) for p in sorted(results.glob("*.json")))
+    return [data for data in files if "entries" in data]
+
+
 def write(results: Path) -> Path:
-    runs = [
-        json.loads(p.read_text())
-        for p in sorted(results.glob("*.json"))
-        if p.name != "review.json"
-    ]
     out = results / "review.json"
     # Strings dropped from the template since a run don't count.
     keys = {s.key for s in po.sources()}
-    out.write_text(json.dumps(build(runs, keys), ensure_ascii=False, indent=2) + "\n")
+    out.write_text(json.dumps(build(_runs(results), keys), ensure_ascii=False, indent=2) + "\n")
+    return out
+
+
+def _mean(values: list) -> float | None:
+    values = [v for v in values if v is not None]
+    return round(sum(values) / len(values), 3) if values else None
+
+
+def write_summary(results: Path) -> Path:
+    """results/review.json -> results/shootout-summary.json: each locale's
+    winner, and per model the pass count, mean rank and mean of every
+    score; plus each shootout run's timings."""
+    review = json.loads((results / "review.json").read_text())
+    # Each model's latest run (the one review uses).
+    runs = {
+        r["run"]["model"]: {k: r["run"].get(k) for k in ("at", "seconds", "locales", "appended", "scored")}
+        for r in sorted(_runs(results), key=lambda r: r["run"]["at"])
+    }
+    locales = {}
+    for locale, data in review["locales"].items():
+        models = {}
+        for model in data["models"]:
+            mine = [row["translations"][model] for row in data["strings"] if model in row["translations"]]
+            means = {f"mean_{s}": _mean([t["scores"].get(s) for t in mine]) for s in SCORERS if s != "chrf"}
+            models[model] = data["summary"][model] | means
+        locales[locale] = {"winner": data["winner"], "models": models}
+    out = results / "shootout-summary.json"
+    summary = {"generated_at": review["generated_at"], "runs": runs, "locales": locales}
+    out.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
     return out

@@ -99,11 +99,25 @@ def script(locale: str, text: str, source: str | None = None) -> tuple[bool, str
     return (ok, "" if ok else f"only {share:.0%} of letters in the {locale} script")
 
 
+_LEFTOVER_TOKEN = re.compile(r"[\[(]\d+[\])]")
+
+
+def shape(source: str, text: str) -> tuple[bool, str]:
+    """One translation, shaped like the source: no line breaks the English
+    hasn't (a model listing alternatives, "…\\noder\\n…"), and no `protect`
+    token left behind ("[0]", or a model's rewrite of it, "(0)")."""
+    if text.count("\n") > source.count("\n"):
+        return (False, "line breaks the source doesn't have (alternatives?)")
+    leftover = [t for t in _LEFTOVER_TOKEN.findall(text) if t not in source]
+    return (not leftover, "" if not leftover else f"leftover tokens {leftover}")
+
+
 def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dict[str, dict]:
     results = {
         "placeholders": placeholders(source, text),
         "glossary": glossary(source, text),
         "length": length(source, text, button=button, locale=locale),
         "script": script(locale, text, source),
+        "shape": shape(source, text),
     }
     return {name: {"ok": ok, "detail": detail} for name, (ok, detail) in results.items()}
