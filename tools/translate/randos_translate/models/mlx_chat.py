@@ -30,6 +30,10 @@ class MLXChat:
         self.name, self.repo, self._style = name, repo, style
         self._generate = generate
         self._model, self._tokenizer = load(repo)
+        # TranslateGemma's tokenizer lists only <eos> as an end, but its turns
+        # end with <end_of_turn>: without it every answer runs to max_tokens.
+        if style == "translategemma":
+            self._tokenizer.add_eos_token("<end_of_turn>")
 
     def _prompt(self, text: str, source: str, target: str) -> str:
         if self._style == "translategemma":
@@ -48,7 +52,8 @@ class MLXChat:
     def _one(self, text: str, source: str, target: str) -> str:
         prompt = self._prompt(text, source, target)
         out = self._generate(self._model, self._tokenizer, prompt=prompt, max_tokens=256, verbose=False)
-        return out.strip()
+        # A turn marker that slipped through is not part of the translation.
+        return out.split("<end_of_turn>")[0].strip()
 
     def translate(self, texts: list[str], target: str) -> list[str]:
         return [self._one(t, "en", target) for t in texts]

@@ -106,7 +106,7 @@ those.
 | --- | --- | --- | --- | --- |
 | `opus-mt` | Helsinki-NLP Marian, one per pair (`models/opus_mt.py`) | Apache-2.0 / CC-BY-4.0 per pair | `models` | 10 (no pt, ko, bn, ja) |
 | `m2m100` | facebook/m2m100_418M | MIT | `models` | all 14 |
-| `madlad-400` | google/madlad400-10b-mt, bf16 | Apache-2.0 | `models` | all 14 |
+| `madlad-400` | google/madlad400-7b-mt, bf16 (wired, but didn't fit the 48 GB Mac: see `models/madlad.py`) | Apache-2.0 | `models` | all 14 |
 | `hy-mt2` | Tencent Hy-MT2 7B, 8-bit MLX | Apache-2.0 | `mlx` | all 14 |
 | `translategemma-4b`, `-12b` | Google TranslateGemma, 8-bit MLX | Gemma terms | `mlx` | all 14 |
 | `translategemma-27b` | Google TranslateGemma 27B, 4-bit MLX | Gemma terms | `mlx` | all 14 |

@@ -31,7 +31,7 @@ from pathlib import Path
 
 from sacrebleu.metrics import CHRF
 
-from . import checks
+from . import checks, po
 
 # Which way each score points (MetricX is an error score: lower is better).
 SCORERS = {
@@ -97,11 +97,14 @@ def _passes(entry: dict) -> bool:
     return all(c["ok"] for c in entry["checks"].values())
 
 
-def latest_entries(runs: list[dict]) -> dict[tuple[str, str], dict[str, dict]]:
-    """(locale, key) -> model -> entry, the latest run winning."""
+def latest_entries(runs: list[dict], keys: set[str] | None = None) -> dict[tuple[str, str], dict[str, dict]]:
+    """(locale, key) -> model -> entry, the latest run winning; with `keys`,
+    only those strings (the template's current ones)."""
     table: dict[tuple[str, str], dict[str, dict]] = {}
     for run in sorted(runs, key=lambda r: r["run"]["at"]):
         for entry in run["entries"]:
+            if keys is not None and entry["key"] not in keys:
+                continue
             current = checks.run_all(
                 entry["locale"], entry["msgid"], entry["text"], button=entry["msgctxt"] == "button"
             )
@@ -109,8 +112,8 @@ def latest_entries(runs: list[dict]) -> dict[tuple[str, str], dict[str, dict]]:
     return table
 
 
-def build(runs: list[dict]) -> dict:
-    table = latest_entries(runs)
+def build(runs: list[dict], keys: set[str] | None = None) -> dict:
+    table = latest_entries(runs, keys)
     locales: dict[str, dict] = {}
 
     for (locale, _key), entries in table.items():
@@ -194,5 +197,7 @@ def write(results: Path) -> Path:
         if p.name != "review.json"
     ]
     out = results / "review.json"
-    out.write_text(json.dumps(build(runs), ensure_ascii=False, indent=2) + "\n")
+    # Strings dropped from the template since a run don't count.
+    keys = {s.key for s in po.sources()}
+    out.write_text(json.dumps(build(runs, keys), ensure_ascii=False, indent=2) + "\n")
     return out
