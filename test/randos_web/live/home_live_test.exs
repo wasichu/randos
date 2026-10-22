@@ -46,6 +46,43 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#find-rando-button[disabled]")
   end
 
+  test "hearing languages: a summary line over chips, open on a fresh page", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/")
+
+    # Open on load, and it keeps whatever the person does with it after.
+    assert has_element?(view, "#hearing-languages #hearing-details[open][phx-mounted]")
+
+    assert has_element?(
+             view,
+             "#hearing-details #hearing-summary #hearing-summary-text[data-hearing='en']"
+           )
+
+    # Every language is a chip with a real checkbox inside, in one labelled group.
+    assert has_element?(view, "#hearing-languages legend")
+
+    for {_name, code} <- Randos.ConversationLanguages.all() do
+      assert has_element?(
+               view,
+               "#hearing-chips #hearing-chip-#{code} input#hearing-language-#{code}[type=checkbox]"
+             )
+    end
+
+    # The summary follows the choice.
+    view
+    |> form("#conversation-form",
+      conversation: %{hearing_languages: ["", "en", "es", "fr", "de"]}
+    )
+    |> render_change()
+
+    assert has_element?(view, "#hearing-summary-text[data-hearing='en es fr de']")
+
+    view
+    |> form("#conversation-form", conversation: %{hearing_languages: [""]})
+    |> render_change()
+
+    assert has_element?(view, "#hearing-summary-text[data-hearing='']")
+  end
+
   test "defaults the speaking language from the browser locale, checked among the hearing ones",
        %{conn: conn} do
     conn = put_connect_params(conn, %{"browser_locale" => "pt-BR"})

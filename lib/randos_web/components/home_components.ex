@@ -203,37 +203,69 @@ defmodule RandosWeb.HomeComponents do
         class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
       />
       <fieldset id="hearing-languages">
-        <legend class="mb-1 text-sm font-semibold text-stone-800">
+        <legend class="mb-1.5 text-sm font-semibold text-stone-800">
           {gettext("I'm happy to hear")}
         </legend>
-        <p class="mb-3 text-sm text-stone-500">
-          {gettext("Pick every language you're comfortable listening to.")}
-        </p>
-        <%!-- Submitted even with nothing checked, so unchecking all clears it. --%>
-        <input type="hidden" name="conversation[hearing_languages][]" value="" />
-        <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
-          <label
-            :for={{name, code} <- language_options()}
-            for={"hearing-language-#{code}"}
-            class={[
-              "flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition",
-              if(code in @preferences["hearing_languages"],
-                do: "border-teal-600 bg-teal-50 text-stone-950",
-                else: "border-stone-200 bg-white text-stone-700 hover:border-stone-400"
-              )
-            ]}
+        <%!-- The choice in one line; "Change" opens the chips. Native
+             <details>, no script. Open on every page load (nothing is
+             stored between visits), so people see the choices; after
+             that, ignore_attributes keeps it as the person left it. --%>
+        <details
+          id="hearing-details"
+          class="group"
+          open
+          phx-mounted={JS.ignore_attributes(["open"])}
+        >
+          <summary
+            id="hearing-summary"
+            class="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md border border-stone-200 bg-white px-3 py-2.5 text-sm transition hover:border-stone-400 dark:hover:border-stone-500 [&::-webkit-details-marker]:hidden"
           >
-            <input
-              type="checkbox"
-              id={"hearing-language-#{code}"}
-              name="conversation[hearing_languages][]"
-              value={code}
-              checked={code in @preferences["hearing_languages"]}
-              class="size-4 rounded border-stone-300 accent-teal-700"
-            />
-            <span>{name}</span>
-          </label>
-        </div>
+            <span
+              id="hearing-summary-text"
+              data-hearing={Enum.join(@preferences["hearing_languages"], " ")}
+              class="min-w-0 text-stone-800"
+            >
+              {hearing_line(@preferences["hearing_languages"])}
+            </span>
+            <span class="shrink-0 font-medium text-teal-700">
+              <span class="group-open:hidden">{gettext("Change")}</span>
+              <span class="hidden group-open:inline">{gettext("Done")}</span>
+            </span>
+          </summary>
+          <p class="mb-3 mt-3 text-sm text-stone-500">
+            {gettext("Pick every language you're comfortable listening to.")}
+          </p>
+          <%!-- Submitted even with nothing checked, so unchecking all clears it. --%>
+          <input type="hidden" name="conversation[hearing_languages][]" value="" />
+          <div id="hearing-chips" class="flex flex-wrap gap-2">
+            <label
+              :for={{name, code} <- language_options()}
+              id={"hearing-chip-#{code}"}
+              for={"hearing-language-#{code}"}
+              class="cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id={"hearing-language-#{code}"}
+                name="conversation[hearing_languages][]"
+                value={code}
+                checked={code in @preferences["hearing_languages"]}
+                class="peer sr-only"
+              />
+              <span class={[
+                "inline-flex select-none items-center rounded-full border px-3 py-1.5 text-sm transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-teal-600",
+                if(code in @preferences["hearing_languages"],
+                  do:
+                    "border-teal-600 bg-teal-600 text-white dark:border-teal-400 dark:bg-teal-400 dark:text-stone-950",
+                  else:
+                    "border-stone-300 bg-white text-stone-700 hover:border-stone-400 dark:hover:border-stone-500"
+                )
+              ]}>
+                {name}
+              </span>
+            </label>
+          </div>
+        </details>
       </fieldset>
     </div>
     """
@@ -588,6 +620,13 @@ defmodule RandosWeb.HomeComponents do
 
   defp countdown_labels,
     do: JSON.encode!(%{remaining: gettext("%{time} remaining", time: "%{time}")})
+
+  # The hearing choice's one-line summary (the TUI's rule: up to three
+  # names, then a count).
+  defp hearing_line([]), do: gettext("Pick at least one language to hear")
+
+  defp hearing_line(codes),
+    do: gettext("You'll hear %{languages}", languages: hearing_summary(codes, &language_name/1))
 
   # "English, Español or Français"; past three, a count, so a long choice
   # doesn't make a long sentence.
