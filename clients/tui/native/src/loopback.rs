@@ -14,6 +14,8 @@ use crate::Error;
 use crate::audio::{Capture, DeviceStats, Devices, Input, Notify, Output, Playback, Started};
 use crate::codec::{CODEC_DELAY_MS, Decoder, Encoder, FRAME, Peak};
 use crate::protocol::{Event, LoopbackStats};
+use crate::report::{LEVELS_EVERY, rounded};
+use crate::spectrum::Analyser;
 
 /// A running loopback. Dropping the streams stops the devices; `stop`
 /// also joins the worker and surfaces its error, if any.
@@ -101,12 +103,15 @@ fn run_worker(
     playback.finish()
 }
 
-/// Reports once a second where the mouth-to-ear latency goes.
+/// Reports once a second where the mouth-to-ear latency goes, and every
+/// `LEVELS_EVERY` the mic's meter bars.
 struct Report {
     since: Instant,
     bytes: usize,
     peak: Peak,
     dropped: u64,
+    bars: Analyser,
+    levels_since: Instant,
 }
 
 impl Report {
@@ -116,6 +121,8 @@ impl Report {
             bytes: 0,
             peak: Peak::default(),
             dropped: 0,
+            bars: Analyser::new(),
+            levels_since: Instant::now(),
         }
     }
 
@@ -130,6 +137,15 @@ impl Report {
     ) {
         self.bytes += bytes;
         self.peak.add(input);
+        self.bars.push(input);
+
+        if self.levels_since.elapsed() >= LEVELS_EVERY {
+            self.levels_since = Instant::now();
+            // A failed FFT only skips one meter frame.
+            if let Ok(you) = self.bars.bars() {
+                notify(Event::LoopbackLevels { you: rounded(&you) });
+            }
+        }
 
         let elapsed = self.since.elapsed();
         if elapsed < Duration::from_secs(1) {
@@ -162,9 +178,8 @@ impl Report {
             dropped: self.dropped,
         }));
 
-        *self = Self {
-            dropped: self.dropped,
-            ..Self::new()
-        };
+        self.since = Instant::now();
+        self.bytes = 0;
+        self.peak = Peak::default();
     }
 }

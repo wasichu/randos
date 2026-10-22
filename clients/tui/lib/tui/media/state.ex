@@ -25,13 +25,17 @@ defmodule Tui.Media.State do
 
   alias Tui.Media.Protocol
 
-  @mic_test_ms 5_000
   # Media starts at the match (`connecting`), not `in_call`: the server only
   # reports `in_call` once both sides' audio is up.
   @call_statuses [:connecting, :in_call, :extension_pending]
 
-  @type phase :: :starting | :running | :done | :failed
-  @type mic_test :: %{phase: phase(), stats: map() | nil, error: String.t() | nil}
+  @type phase :: :starting | :running | :failed
+  @type mic_test :: %{
+          phase: phase(),
+          stats: map() | nil,
+          levels: [float()] | nil,
+          error: String.t() | nil
+        }
   @type call :: %{
           optional(:levels) => %{you: [float()], peer: [float()]},
           optional(:muted) => boolean(),
@@ -82,21 +86,31 @@ defmodule Tui.Media.State do
 
   ## Mic test
 
-  @doc "The user asked for a mic test, through `{input, output}` (see `Tui.Media.loopback_start/3`)."
-  @spec start_mic_test(t(), {String.t(), String.t()}) :: {t(), [command()]}
-  def start_mic_test(%{mic_test: %{phase: phase}} = state, _endpoints)
+  @doc """
+  The mic test key: a silent level meter, on until pressed again. Shown
+  (running, or failed), it goes away; hidden, it opens the mic from
+  `{input, _output}` (see `Tui.Media.loopback_start/3`). Nothing is played
+  back: the output is always `null`, so it never howls without headphones.
+  """
+  @spec toggle_mic_test(t(), {String.t(), String.t()}) :: {t(), [command()]}
+  def toggle_mic_test(%{mic_test: %{phase: phase}} = state, _endpoints)
       when phase in [:starting, :running],
-      do: {state, []}
+      # The helper handles requests in order, so a stop sent while the start
+      # is pending still stops it.
+      do: {%{state | mic_test: nil}, [{:request, :loopback_stop}]}
 
-  def start_mic_test(%{call: %{}} = state, _endpoints), do: {state, []}
+  def toggle_mic_test(%{mic_test: %{phase: :failed}} = state, _endpoints),
+    do: {%{state | mic_test: nil}, []}
 
-  def start_mic_test(%{available?: false} = state, _endpoints),
+  def toggle_mic_test(%{call: %{}} = state, _endpoints), do: {state, []}
+
+  def toggle_mic_test(%{available?: false} = state, _endpoints),
     do: {fail_mic_test(state, "no audio helper (cargo build -p randos_media)"), []}
 
-  def start_mic_test(state, endpoints) do
-    {input, output} = with_choice(state, endpoints)
+  def toggle_mic_test(state, {input, _output}) do
+    {input, output} = with_choice(state, {input, "null"})
 
-    {%{state | mic_test: %{phase: :starting, stats: nil, error: nil}},
+    {%{state | mic_test: %{phase: :starting, stats: nil, levels: nil, error: nil}},
      [{:request, {:loopback_start, input, output}}]}
   end
 
@@ -141,13 +155,6 @@ defmodule Tui.Media.State do
   defp choose("device", name) when is_binary(name), do: "device:" <> name
   defp choose(endpoint, _name), do: endpoint
 
-  @doc "The mic test's time is up."
-  @spec mic_test_done(t()) :: {t(), [command()]}
-  def mic_test_done(%{mic_test: %{phase: :running}} = state),
-    do: {put_mic_test(state, phase: :done), [{:request, :loopback_stop}]}
-
-  def mic_test_done(state), do: {state, []}
-
   ## Call: inputs from the server
 
   @doc """
@@ -191,9 +198,8 @@ defmodule Tui.Media.State do
   @doc "The helper's reply to a request this module issued."
   @spec reply(t(), Protocol.command(), {:ok, term()} | {:error, String.t()}) ::
           {t(), [command()]}
-  def reply(%{mic_test: %{phase: :starting}} = state, {:loopback_start, _, _}, {:ok, _opened}) do
-    {put_mic_test(state, phase: :running), [{:after, @mic_test_ms, :mic_test_done}]}
-  end
+  def reply(%{mic_test: %{phase: :starting}} = state, {:loopback_start, _, _}, {:ok, _opened}),
+    do: {put_mic_test(state, phase: :running), []}
 
   def reply(%{mic_test: %{phase: :starting}} = state, {:loopback_start, _, _}, {:error, error}),
     do: {fail_mic_test(state, error), []}
@@ -232,6 +238,10 @@ defmodule Tui.Media.State do
   @spec event(t(), String.t(), map()) :: {t(), [command()]}
   def event(%{mic_test: %{phase: :running}} = state, "loopback_stats", stats),
     do: {put_mic_test(state, stats: stats), []}
+
+  # The meter's bars (20 a second): only drawn.
+  def event(%{mic_test: %{phase: :running}} = state, "loopback_levels", %{"you" => you}),
+    do: {put_mic_test(state, levels: you), []}
 
   def event(%{mic_test: %{phase: phase}} = state, "loopback_failed", %{"error" => error})
       when phase in [:starting, :running],
@@ -304,7 +314,7 @@ defmodule Tui.Media.State do
 
   defp stop_mic_test_for_call(%{mic_test: %{phase: phase}} = state)
        when phase in [:starting, :running],
-       do: {put_mic_test(state, phase: :done), [{:request, :loopback_stop}]}
+       do: {%{state | mic_test: nil}, [{:request, :loopback_stop}]}
 
   defp stop_mic_test_for_call(state), do: {state, []}
 
@@ -329,7 +339,7 @@ defmodule Tui.Media.State do
   end
 
   defp fail_mic_test(state, error) do
-    mic_test = state.mic_test || %{stats: nil}
+    mic_test = state.mic_test || %{stats: nil, levels: nil}
     %{state | mic_test: Map.merge(mic_test, %{phase: :failed, error: error})}
   end
 

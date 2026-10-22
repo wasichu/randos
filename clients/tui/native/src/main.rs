@@ -230,7 +230,12 @@ fn run_cli_loopback(args: &[String]) -> Result<(), Error> {
         }
     }
 
-    let notify: Notify = Arc::new(|event: Event| eprintln!("randos_media: {event}"));
+    // The meter bars come 20 times a second: too many to print.
+    let notify: Notify = Arc::new(|event: Event| {
+        if !matches!(event, Event::LoopbackLevels { .. }) {
+            eprintln!("randos_media: {event}");
+        }
+    });
     let (running, started) = Loopback::start(input.parse()?, output.parse()?, notify)?;
     eprintln!("randos_media: input: {}", started.input);
     eprintln!("randos_media: output: {}", started.output);

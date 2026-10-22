@@ -4,45 +4,51 @@ defmodule Tui.Media.StateTest do
   alias Tui.Media.State
 
   @endpoints {"device", "device"}
-  @start {:loopback_start, "device", "device"}
+  # Silent: whatever the endpoints say, nothing is played back.
+  @start {:loopback_start, "device", "null"}
 
   defp running do
-    {state, _} = State.start_mic_test(State.new(true), @endpoints)
+    {state, _} = State.toggle_mic_test(State.new(true), @endpoints)
     {state, _} = State.reply(state, @start, {:ok, %{}})
     state
   end
 
-  test "a mic test asks the helper to start, then runs for five seconds" do
-    {state, commands} = State.start_mic_test(State.new(true), @endpoints)
-    assert %{phase: :starting} = state.mic_test
+  test "t opens the mic, silently, and keeps it open until pressed again" do
+    {state, commands} = State.toggle_mic_test(State.new(true), @endpoints)
+    assert %{phase: :starting, levels: nil} = state.mic_test
     assert commands == [{:request, @start}]
 
+    # No timer: it stays on.
     {state, commands} = State.reply(state, @start, {:ok, %{"input" => "mic"}})
     assert %{phase: :running, stats: nil} = state.mic_test
-    assert commands == [{:after, 5_000, :mic_test_done}]
+    assert commands == []
+
+    assert State.toggle_mic_test(state, @endpoints) ==
+             {%{state | mic_test: nil}, [{:request, :loopback_stop}]}
   end
 
-  test "stats show while running; time up stops the helper and keeps the result" do
-    {state, []} = State.event(running(), "loopback_stats", %{"latency_ms" => 81.0})
+  test "the meter's bars and the stats are kept while it runs; late ones after a stop are ignored" do
+    {state, []} = State.event(running(), "loopback_levels", %{"you" => [0.5, 0.1]})
+    {state, []} = State.event(state, "loopback_stats", %{"input_peak_dbfs" => -12.0})
+    assert %{levels: [0.5, 0.1], stats: %{"input_peak_dbfs" => -12.0}} = state.mic_test
 
-    {state, commands} = State.mic_test_done(state)
-    assert %{phase: :done, stats: %{"latency_ms" => 81.0}} = state.mic_test
-    assert commands == [{:request, :loopback_stop}]
-
-    # Late stats from a stopped test are ignored.
-    assert State.event(state, "loopback_stats", %{"latency_ms" => 99.0}) == {state, []}
+    {stopped, _} = State.toggle_mic_test(state, @endpoints)
+    assert State.event(stopped, "loopback_levels", %{"you" => [0.9]}) == {stopped, []}
+    assert State.event(stopped, "loopback_stats", %{}) == {stopped, []}
   end
 
-  test "pressing t again during a test does nothing" do
-    state = running()
-    assert State.start_mic_test(state, @endpoints) == {state, []}
+  test "pressing t while it's still starting stops it (the helper takes requests in order)" do
+    {starting, _} = State.toggle_mic_test(State.new(true), @endpoints)
+
+    assert {%{mic_test: nil}, [{:request, :loopback_stop}]} =
+             State.toggle_mic_test(starting, @endpoints)
   end
 
   test "failures: no helper, a refused start, a failed loopback, a restarted helper" do
-    {state, []} = State.start_mic_test(State.new(false), @endpoints)
+    {state, []} = State.toggle_mic_test(State.new(false), @endpoints)
     assert %{phase: :failed, error: "no audio helper" <> _} = state.mic_test
 
-    {starting, _} = State.start_mic_test(State.new(true), @endpoints)
+    {starting, _} = State.toggle_mic_test(State.new(true), @endpoints)
     {state, []} = State.reply(starting, @start, {:error, "no 48 kHz config"})
     assert %{phase: :failed, error: "no 48 kHz config"} = state.mic_test
 
@@ -53,16 +59,15 @@ defmodule Tui.Media.StateTest do
     assert %{phase: :failed, error: "the audio helper restarted"} = state.mic_test
   end
 
-  test "a failed test can be retried" do
-    {failed, []} =
-      State.reply(
-        elem(State.start_mic_test(State.new(true), @endpoints), 0),
-        @start,
-        {:error, "x"}
-      )
+  test "t on a failure hides it; t again retries" do
+    {starting, _} = State.toggle_mic_test(State.new(true), @endpoints)
+    {failed, []} = State.reply(starting, @start, {:error, "x"})
+
+    {hidden, []} = State.toggle_mic_test(failed, @endpoints)
+    assert hidden.mic_test == nil
 
     assert {%{mic_test: %{phase: :starting}}, [{:request, @start}]} =
-             State.start_mic_test(failed, @endpoints)
+             State.toggle_mic_test(hidden, @endpoints)
   end
 
   test "events and replies with no test in progress change nothing" do
@@ -74,8 +79,8 @@ defmodule Tui.Media.StateTest do
     assert State.event(test_tone, "ready", %{}) == {test_tone, []}
     assert State.helper_started(test_tone) == {test_tone, []}
     assert State.event(idle, "loopback_stats", %{}) == {idle, []}
+    assert State.event(idle, "loopback_levels", %{"you" => [0.1]}) == {idle, []}
     assert State.reply(idle, :loopback_stop, {:ok, true}) == {idle, []}
-    assert State.mic_test_done(idle) == {idle, []}
   end
 
   describe "call audio" do
@@ -190,13 +195,13 @@ defmodule Tui.Media.StateTest do
     end
 
     test "a call stops a running mic test; the mic test waits during a call" do
-      {state, _} = State.start_mic_test(audio(), {"sine", "null"})
+      {state, _} = State.toggle_mic_test(audio(), {"sine", "null"})
       {state, _} = State.reply(state, {:loopback_start, "sine", "null"}, {:ok, %{}})
 
-      assert {%{mic_test: %{phase: :done}}, [{:request, :loopback_stop}, {:request, @start}]} =
+      assert {%{mic_test: nil}, [{:request, :loopback_stop}, {:request, @start}]} =
                State.server_state(state, :connecting, "offerer", @call)
 
-      assert State.start_mic_test(in_call(), {"sine", "null"}) == {in_call(), []}
+      assert State.toggle_mic_test(in_call(), {"sine", "null"}) == {in_call(), []}
     end
 
     test "stats are kept for display" do
@@ -244,11 +249,11 @@ defmodule Tui.Media.StateTest do
       {state, []} = State.reply(State.new(true), :devices, {:ok, @list})
       state = state |> State.cycle_device(:input) |> State.cycle_device(:input)
 
-      assert {_, [{:request, {:loopback_start, "device:Shokz", "device"}}]} =
-               State.start_mic_test(state, {"device", "device"})
+      assert {_, [{:request, {:loopback_start, "device:Shokz", "null"}}]} =
+               State.toggle_mic_test(state, {"device", "device"})
 
       assert {_, [{:request, {:loopback_start, "sine", "null"}}]} =
-               State.start_mic_test(state, {"sine", "null"})
+               State.toggle_mic_test(state, {"sine", "null"})
     end
 
     test "a helper already running when the app started is asked for devices" do

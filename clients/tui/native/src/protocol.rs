@@ -86,6 +86,9 @@ pub enum Event {
     LoopbackStats(LoopbackStats),
     /// The loopback stopped on its own; it is no longer running.
     LoopbackFailed { error: String },
+    /// Every 50 ms while the loopback runs: the mic's meter bars (`you`, as
+    /// in `CallLevels`), so the TUI's mic test can be a silent meter.
+    LoopbackLevels { you: Vec<f32> },
     /// A device stream reported an error (it may recover).
     StreamError { error: String },
     /// A WebRTC signal for the peer, in the participant channel's shape
@@ -189,6 +192,7 @@ impl fmt::Display for Event {
                 s.dropped
             ),
             Event::LoopbackFailed { error } => write!(f, "loopback failed: {error}"),
+            Event::LoopbackLevels { .. } => write!(f, "loopback levels"),
             Event::StreamError { error } => write!(f, "stream error: {error}"),
             Event::CallSignal { kind, .. } => write!(f, "signal out: {kind}"),
             Event::CallState { state, reason } => match reason {
@@ -302,6 +306,12 @@ mod tests {
                 error: "gone".into()
             })),
             json!({"event": "loopback_failed", "error": "gone"})
+        );
+        assert_eq!(
+            as_json(Outgoing::Event(Event::LoopbackLevels {
+                you: vec![0.5, 0.0]
+            })),
+            json!({"event": "loopback_levels", "you": [0.5, 0.0]})
         );
     }
 }

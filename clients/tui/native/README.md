@@ -15,8 +15,9 @@ just media-loopback            # default mic → Opus → default speaker, 20 s
 randos_media --loopback [--in device|sine] [--out device|null|wav:PATH] [--seconds N]
 ```
 
-`--seconds` defaults to 20. The TUI runs the same loopback over the Port
-(`t` on the idle screen, 5 s). Once a second it reports where the latency goes: device
+`--seconds` defaults to 20. The TUI's mic test runs the same loopback over
+the Port with output `null` (`t` on the idle screen, until `t` again), and
+draws `loopback_levels` as a silent meter. Once a second it reports where the latency goes: device
 buffers (from cpal's callback timestamps), the two rings, and the codec's
 fixed 26.5 ms (one 20 ms frame plus 6.5 ms of Opus lookahead). That's the
 pipeline's own latency, not an acoustic mouth-to-ear measurement. Use
@@ -62,6 +63,7 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 | Event | Fields |
 | --- | --- |
 | `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `resample_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
+| `loopback_levels` | every 50 ms: `you`, the mic's 12 meter bars (0..1, lowest frequencies first, as in `call_levels`); not printed by `--loopback` |
 | `loopback_failed` | `error`; the loopback stopped on its own |
 | `stream_error` | `error`; a device stream reported a problem |
 | `call_signal` | `type`, `payload`: a signal for the peer in the channel's shape; push it as the channel's `signal` event unchanged |
@@ -114,8 +116,8 @@ mic frame is cleaned before it's muted or encoded, with the audio queued in
 the rings as a delay hint (AEC3 also estimates the delay itself). Only when
 both ends are real devices: a synthetic input or a `null`/`wav` output has no
 sound path to cancel (and two test peers sending the same steady tone would
-look like echo). Never on the mic test's loopback, which plays your own
-voice back on purpose. Measured on synthetic audio (tests): 43 dB of echo
+look like echo). Never on the loopback, which (from the terminal, with a
+speaker) plays your own voice back on purpose. Measured on synthetic audio (tests): 43 dB of echo
 removed after convergence, your voice through within 1 dB, and about
 −3.5 dB of it kept while both people talk at once.
 

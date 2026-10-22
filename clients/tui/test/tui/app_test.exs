@@ -142,7 +142,7 @@ defmodule Tui.AppTest do
       refute text =~ "cfg/randos.json"
     end
 
-    test "the mic test: the key in the help line, then its progress, result, and failure" do
+    test "the mic test: the key in the help line, then its meter, and failure" do
       refute render_text(model("idle")) =~ "t mic test"
 
       with_media = fn mic_test ->
@@ -155,13 +155,17 @@ defmodule Tui.AppTest do
       refute with_media.(nil) =~ "Press t to test your mic"
       assert with_media.(nil) =~ "t mic test"
 
-      assert with_media.(%{phase: :starting, stats: nil, error: nil}) =~
-               "you should hear yourself"
+      assert with_media.(%{phase: :starting, stats: nil, levels: nil, error: nil}) =~
+               "Mic: opening…"
 
-      stats = %{"latency_ms" => 81.2, "input_peak_dbfs" => -40.4}
+      # A silent meter: bars and the last second's peak, nothing about hearing yourself.
+      running = %{phase: :running, stats: nil, levels: [0.0, 0.5, 1.0], error: nil}
+      assert with_media.(running) =~ "Mic: ▁▅█   (t to stop)"
 
-      assert with_media.(%{phase: :done, stats: stats, error: nil}) =~
-               "Mic test done: ≈81 ms delay, input peak -40 dBFS"
+      assert with_media.(%{running | stats: %{"input_peak_dbfs" => -40.4}}) =~
+               "Mic: ▁▅█  peak -40 dBFS   (t to stop)"
+
+      refute with_media.(running) =~ "hear yourself"
 
       assert with_media.(%{phase: :failed, stats: nil, error: "no mic"}) =~
                "Mic test failed: no mic"

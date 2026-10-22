@@ -32,7 +32,7 @@ pub(crate) struct Report {
 }
 
 /// How often `call_levels` goes out: the website's visualizer frame rate.
-const LEVELS_EVERY: Duration = Duration::from_millis(50);
+pub(crate) const LEVELS_EVERY: Duration = Duration::from_millis(50);
 
 impl Report {
     pub(crate) fn new() -> Self {
@@ -108,7 +108,7 @@ impl Report {
 }
 
 /// Two decimals are plenty for a meter, and keep the Port messages short.
-fn rounded(bars: &[f32]) -> Vec<f32> {
+pub(crate) fn rounded(bars: &[f32]) -> Vec<f32> {
     bars.iter()
         .map(|bar| (bar * 100.0).round() / 100.0)
         .collect()

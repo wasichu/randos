@@ -113,9 +113,6 @@ defmodule Tui.App do
   def handle_info(:media_started, state),
     do: {:noreply, run_media(state, MediaState.helper_started(state.media_state))}
 
-  def handle_info(:mic_test_done, state),
-    do: {:noreply, run_media(state, MediaState.mic_test_done(state.media_state))}
-
   def handle_info(_message, state), do: {:noreply, state}
 
   @impl true
@@ -128,7 +125,7 @@ defmodule Tui.App do
         %Event.Key{code: "t", kind: "press"},
         %{model: %{connection: :connected, status: :idle, status_page: nil}} = state
       ) do
-    step = MediaState.start_mic_test(state.media_state, state.mic_test_endpoints)
+    step = MediaState.toggle_mic_test(state.media_state, state.mic_test_endpoints)
     {:noreply, run_media(state, step)}
   end
 

@@ -442,8 +442,8 @@ defmodule Tui.View do
   defp connected_via("direct"), do: "connected directly"
   defp connected_via(_path), do: "connected"
 
-  # Only while a mic test runs or just ran: the key itself is in the help
-  # line, and the devices are in the Status panel.
+  # Only while the mic test is on (t shows it, t again hides it): the key
+  # itself is in the help line, and the devices are in the Status panel.
   defp mic_test_text(%{media_state: %{available?: true, mic_test: %{} = test}}),
     do: "\n\n" <> mic_test_line(test)
 
@@ -455,17 +455,18 @@ defmodule Tui.View do
 
   defp mic_test_line(%{phase: :failed, error: error}), do: "Mic test failed: " <> error
 
-  defp mic_test_line(%{phase: phase, stats: nil}) when phase in [:starting, :running],
-    do: "Mic test: say something; you should hear yourself…"
+  defp mic_test_line(%{levels: nil}), do: "Mic: opening…"
 
-  defp mic_test_line(%{phase: :done, stats: nil}), do: "Mic test done."
-
-  defp mic_test_line(%{phase: phase, stats: stats}) do
-    prefix = if phase == :done, do: "Mic test done:", else: "Mic test:"
-
-    "#{prefix} ≈#{round(stats["latency_ms"])} ms delay, " <>
-      "input peak #{round(stats["input_peak_dbfs"])} dBFS"
+  # One line: the bars (as the call's "You" meter has them) and the last
+  # second's peak. Nothing is played back.
+  defp mic_test_line(%{levels: levels, stats: stats}) do
+    peak = if stats, do: "  peak #{round(stats["input_peak_dbfs"])} dBFS", else: ""
+    "Mic: " <> Enum.map_join(levels, &level_char/1) <> peak <> "   (t to stop)"
   end
+
+  @level_chars ~w(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
+  defp level_char(level),
+    do: Enum.at(@level_chars, round(min(max(level, 0.0), 1.0) * 7))
 
   defp panel(title) do
     %Block{title: title, borders: [:all], border_type: :rounded, border_style: %Style{fg: :cyan}}

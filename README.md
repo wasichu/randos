@@ -80,7 +80,8 @@ desktop distributions have).
   languages (space checks the ones you're happy to hear), Enter to find a
   rando, `m` to mute, `n` for the next rando, `e` to end the call, `q` to
   quit.
-- `t` tests your mic (you hear yourself back). `i` and `o` choose the mic
+- `t` shows a mic level meter (silent: nothing is played back); `t` again
+  hides it and closes the mic. `i` and `o` choose the mic
   and speaker. `s` shows the server's status, as on
   [/status](https://randos.slowinput.org/status).
 - Your languages, the 18+ confirmation, and your mic and speaker are

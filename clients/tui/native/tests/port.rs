@@ -145,6 +145,23 @@ fn loopback_runs_and_reports_stats_without_hardware() {
         "the sine reached the codec"
     );
 
+    // The meter: bars many times a second, and the 440 Hz tone lights one.
+    let levels: Vec<_> = events
+        .iter()
+        .filter(|event| event["event"] == "loopback_levels")
+        .collect();
+    assert!(
+        levels.len() >= 10,
+        "{} loopback_levels events",
+        levels.len()
+    );
+    let bars = levels.last().unwrap()["you"].as_array().unwrap();
+    assert_eq!(bars.len(), 12);
+    assert!(
+        bars.iter().any(|bar| bar.as_f64().unwrap() > 0.3),
+        "{bars:?}"
+    );
+
     let reply = helper.request(
         json!({"id": 4, "cmd": "loopback_start", "in": "nope", "out": "null"}),
         &mut events,
