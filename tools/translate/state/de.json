@@ -4,52 +4,52 @@
     "msgstr": "%{first} oder %{last}"
   },
   "%{language} both ways": {
-    "model": "opus-mt",
-    "msgstr": "%{language} in beiden Richtungen"
+    "model": "m2m100",
+    "msgstr": "%{language} Beide Wege"
   },
   "%{minutes} min": {
-    "model": "opus-mt",
-    "msgstr": "%{minutes} min"
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} Minuten"
   },
   "%{time} remaining": {
-    "model": "opus-mt",
-    "msgstr": "%{time} verbleibend"
+    "model": "madlad-400",
+    "msgstr": "%{time} noch verfügbar"
   },
   "30+ min": {
-    "model": "opus-mt",
-    "msgstr": "30+ min"
+    "model": "translategemma-4b",
+    "msgstr": "30 Minuten oder länger"
   },
   "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
-    "model": "opus-mt",
-    "msgstr": "Ein Gespräch dauert %{call} Minuten. Wenn die Zeit abgelaufen ist, dauert es noch weitere %{extension} Minuten, nur wenn sich beide Menschen entscheiden, bis zu %{max} Minuten in allen. Sie können jederzeit gehen."
+    "model": "translategemma-27b",
+    "msgstr": "Ein Gespräch dauert %{call} Minuten. Nach Ablauf dieser Zeit wird es nur dann um weitere %{extension} Minuten verlängert, wenn beide Gesprächspartner dies wünschen – die Gesamtdauer beträgt jedoch maximal %{max} Minuten. Sie können das Gespräch jederzeit beenden."
   },
   "A doorway, not a platform": {
     "model": "opus-mt",
     "msgstr": "Eine Tür, keine Plattform"
   },
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
-    "model": "opus-mt",
-    "msgstr": "Ein Sprachpaar zeigt, wenn es mindestens %{min} Anrufe hat; kleinere werden unter .other. gezählt."
+    "model": "madlad-400",
+    "msgstr": "Ein Sprachpaar wird angezeigt, sobald es mindestens %{min} Aufrufe hat; kleinere werden unter „Andere“ gezählt."
   },
   "About": {
     "model": "opus-mt",
     "msgstr": "Über"
   },
   "About randos": {
-    "model": "opus-mt",
-    "msgstr": "Ungefähr randos"
+    "model": "translategemma-4b",
+    "msgstr": "Über randos"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "opus-mt",
-    "msgstr": "Akzeptieren Sie die 18+ Anerkennung vor der Suche nach einem rando."
+    "model": "hy-mt2",
+    "msgstr": "Akzeptieren Sie die Bestätigung für 18+ vor dem Suchen nach einem rando."
   },
   "Attempting to reconnect": {
     "model": "opus-mt",
     "msgstr": "Versuch, die Verbindung wieder herzustellen"
   },
   "Both people choose whether to continue.": {
-    "model": "opus-mt",
-    "msgstr": "Beide wählen, ob sie weitermachen sollen."
+    "model": "translategemma-4b",
+    "msgstr": "Beide Personen entscheiden, ob sie weitermachen möchten."
   },
   "Calls started": {
     "model": "opus-mt",
@@ -60,35 +60,35 @@
     "msgstr": "Abbrechen"
   },
   "Canceled": {
-    "model": "opus-mt",
-    "msgstr": "Gestorben"
+    "model": "m2m100",
+    "msgstr": "abgesagt"
   },
   "Change": {
-    "model": "opus-mt",
-    "msgstr": "Veränd."
+    "model": "m2m100",
+    "msgstr": "Veränderung"
   },
   "Checking the relay…": {
-    "model": "opus-mt",
-    "msgstr": "Ich überprüfe das Relais..."
+    "model": "translategemma-4b",
+    "msgstr": "Überprüfung des Relais…"
   },
   "Choose supported conversation languages.": {
-    "model": "opus-mt",
-    "msgstr": "Wählen Sie unterstützte Konversationssprachen aus."
+    "model": "hy-mt2",
+    "msgstr": "Wählen Sie die unterstützten Konversationssprachen aus."
   },
   "Choose your languages.": {
-    "model": "opus-mt",
-    "msgstr": "Wählen Sie Ihre Sprachen."
+    "model": "translategemma-27b",
+    "msgstr": "Wählen Sie Ihre Sprache(n) aus."
   },
   "Connected": {
     "model": "opus-mt",
     "msgstr": "Verbunden"
   },
   "Connecting": {
-    "model": "opus-mt",
-    "msgstr": "Verbindung"
+    "model": "hy-mt2",
+    "msgstr": "Verbinden"
   },
   "Connection lost": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Verbindung verloren"
   },
   "Connection:": {
@@ -100,32 +100,32 @@
     "msgstr": "Fortsetzung nach 10 Minuten"
   },
   "Conversation is active.": {
-    "model": "opus-mt",
-    "msgstr": "Das Gespräch ist aktiv."
+    "model": "translategemma-27b",
+    "msgstr": "Der Austausch ist lebhaft."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
-    "model": "opus-mt",
-    "msgstr": "Gespräche sind privat und werden nicht gespeichert. Der Server koordiniert den Anruf, hält aber keine Aufzeichnungen und erstellt keine Geschichte darüber, mit wem Sie gesprochen haben."
+    "model": "translategemma-12b",
+    "msgstr": "Gespräche sind privat und werden nicht gespeichert. Der Server koordiniert den Anruf, speichert aber keine Aufzeichnungen und erstellt keine Protokolle darüber, mit wem Sie gesprochen haben."
   },
   "Couldn't connect": {
     "model": "opus-mt",
     "msgstr": "Konnte keine Verbindung herstellen"
   },
   "Counted across %{answered} of %{total} servers.": {
-    "model": "opus-mt",
-    "msgstr": "Gezählt über %{answered} von %{total} Servern."
+    "model": "hy-mt2",
+    "msgstr": "Berechnet für %{answered} von %{total} Servern."
   },
   "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
-    "model": "opus-mt",
-    "msgstr": "Zählt seit %{time} UTC auf %{date}. Dieser Server beginnt frisch, wenn er schläft oder aktualisiert wird, also sind dies die heutigen Anrufe seitdem."
+    "model": "translategemma-4b",
+    "msgstr": "Die Zählung beginnt seit dem Zeitpunkt %{time} UTC am %{date}. Dieser Server wird jedes Mal neu gestartet, wenn er in den Leerlauf geht oder aktualisiert wird, daher handelt es sich um die heutigen Anrufe seitdem."
   },
   "Counting since %{time} UTC on %{date}: today's calls so far.": {
-    "model": "opus-mt",
-    "msgstr": "Zählt seit %{time} UTC auf %{date}: Die heutigen Anrufe bisher."
+    "model": "translategemma-12b",
+    "msgstr": "Anzahl der Anrufe seit %{time} UTC am %{date}: Die bisherige Anzahl der Anrufe für heute."
   },
   "Current call": {
-    "model": "opus-mt",
-    "msgstr": "Laufende Ausschreibung"
+    "model": "hy-mt2",
+    "msgstr": "Aktueller Anruf"
   },
   "Done": {
     "model": "opus-mt",
@@ -136,36 +136,36 @@
     "msgstr": "Vergänglich per Voreinstellung"
   },
   "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
-    "model": "opus-mt",
-    "msgstr": "Jeder Anruf geht durch unser Relais, so dass keine Person die Adresse des anderen sieht. Wir testen es alle paar Minuten, indem wir eine echte Relaisverbindung einrichten."
+    "model": "hy-mt2",
+    "msgstr": "Jeder Anruf geht über unser Relais, sodass keiner der Teilnehmer die Adresse des anderen sieht. Wir prüfen das alle paar Minuten, indem wir eine echte Relaisverbindung herstellen."
   },
   "Find a phrase": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Einen Satz finden"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "opus-mt",
-    "msgstr": "Suchen Sie einen Satz, in Englisch oder %{language}"
+    "model": "hy-mt2",
+    "msgstr": "Finde einen Satz, auf Englisch oder %{language}"
   },
   "Finding a compatible rando.": {
-    "model": "opus-mt",
-    "msgstr": "Suche nach einem kompatiblen rando."
+    "model": "m2m100",
+    "msgstr": "Die Suche nach einem kompatiblen rando"
   },
   "Finding a rando": {
     "model": "opus-mt",
     "msgstr": "Suche nach einem rando"
   },
   "Finished": {
-    "model": "opus-mt",
-    "msgstr": "Fertig"
+    "model": "hy-mt2",
+    "msgstr": "Beendet"
   },
   "Help fix a translation": {
-    "model": "opus-mt",
-    "msgstr": "Hilfe bei der Korrektur einer Übersetzung"
+    "model": "hy-mt2",
+    "msgstr": "Hilf dabei, eine Übersetzung zu korrigieren"
   },
   "How calls ended": {
-    "model": "opus-mt",
-    "msgstr": "Wie Anrufe beendet wurden"
+    "model": "hy-mt2",
+    "msgstr": "Wie die Anrufe beendet wurden"
   },
   "How languages are counted": {
     "model": "opus-mt",
@@ -176,24 +176,24 @@
     "msgstr": "Ich bin 18 oder älter und verstehe, dass Gespräche anonym und unmoderiert sind."
   },
   "I will speak in": {
-    "model": "opus-mt",
-    "msgstr": "Ich werde sprechen."
+    "model": "madlad-400",
+    "msgstr": "Ich werde sprechen in"
   },
   "I'm happy to hear": {
-    "model": "opus-mt",
-    "msgstr": "Ich bin froh zu hören"
+    "model": "madlad-400",
+    "msgstr": "Ich freue mich zu hören"
   },
   "In call": {
-    "model": "opus-mt",
-    "msgstr": "Gewünscht"
+    "model": "translategemma-4b",
+    "msgstr": "Beim Telefonat"
   },
   "Intentionally minimal": {
-    "model": "opus-mt",
-    "msgstr": "Unbeabsichtigt minimal"
+    "model": "translategemma-4b",
+    "msgstr": "Absichtlich minimalistisch"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
-    "model": "opus-mt",
-    "msgstr": "Es ist für %{crosstalk}, Sprachaustausch, Hörübungen und gewöhnliches lässiges Gespräch gedacht, ohne Menschen zu starren Modi oder Etiketten zu zwingen."
+    "model": "translategemma-27b",
+    "msgstr": "Es ist für %{crosstalk}, Sprachpraxis, das Üben des Hörverständnisses und alltägliche, ungezwungene Gespräche gedacht – und zwar ohne, dass Menschen in starre Strukturen oder Kategorien gezwängt werden."
   },
   "Language": {
     "model": "opus-mt",
@@ -204,140 +204,140 @@
     "msgstr": "Gesprochene Sprachen"
   },
   "Last checked at %{time} UTC.": {
-    "model": "opus-mt",
-    "msgstr": "Zuletzt um %{time} UTC überprüft."
+    "model": "translategemma-4b",
+    "msgstr": "Letzte Überprüfung: %{time} UTC."
   },
   "Looking": {
     "model": "opus-mt",
     "msgstr": "Suchen"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
-    "model": "opus-mt",
-    "msgstr": "Auf der Suche nach einem rando, der %{hearing_languages} spricht und hören will %{speaking_language}."
+    "model": "hy-mt2",
+    "msgstr": "Auf der Suche nach einem rando, der %{hearing_languages} spricht und %{speaking_language} hören möchte."
   },
   "No accounts. No profiles. No video. No pressure.": {
-    "model": "opus-mt",
-    "msgstr": "Keine Konten, keine Profile, kein Video, kein Druck."
+    "model": "hy-mt2",
+    "msgstr": "Keine Konten. Keine Profile. Keine Videos. Kein Druck."
   },
   "No calls yet.": {
-    "model": "opus-mt",
-    "msgstr": "Noch keine Anrufe."
+    "model": "translategemma-27b",
+    "msgstr": "Bisher keine Anrufe."
   },
   "No relay is configured": {
-    "model": "opus-mt",
-    "msgstr": "Kein Relais konfiguriert"
+    "model": "madlad-400",
+    "msgstr": "Es ist kein Relais konfiguriert"
   },
   "Not translated yet": {
     "model": "opus-mt",
     "msgstr": "Noch nicht übersetzt"
   },
   "Nothing matches.": {
-    "model": "opus-mt",
-    "msgstr": "Nichts passt."
+    "model": "madlad-400",
+    "msgstr": "Nichts stimmt überein."
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
-    "msgstr": "Weitere Sprachen: %{calls}"
+    "model": "m2m100",
+    "msgstr": "Andere Sprachen: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
-    "model": "opus-mt",
-    "msgstr": "Über TLS (Netze, die UDP blockieren)"
+    "model": "translategemma-27b",
+    "msgstr": "Über TLS (in Netzwerken, die UDP blockieren)."
   },
   "Over UDP (most calls)": {
-    "model": "opus-mt",
-    "msgstr": "Über UDP (die meisten Anrufe)"
+    "model": "translategemma-27b",
+    "msgstr": "Über UDP (die meisten Anrufe)."
   },
   "Pick at least one language to hear": {
-    "model": "opus-mt",
-    "msgstr": "Wählen Sie mindestens eine Sprache, um zu hören"
+    "model": "madlad-400",
+    "msgstr": "Wählen Sie mindestens eine Sprache aus, die Sie hören möchten"
   },
   "Pick every language you're comfortable listening to.": {
-    "model": "opus-mt",
-    "msgstr": "Such dir jede Sprache aus, die dir angenehm zuhört."
+    "model": "translategemma-12b",
+    "msgstr": "Wählen Sie alle Sprachen aus, die Sie gerne hören."
   },
   "Pick the language you'd like to check.": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "Wählen Sie die Sprache aus, die Sie überprüfen möchten."
   },
   "Preparing the call": {
-    "model": "opus-mt",
-    "msgstr": "Vorbereitung des Anrufs"
+    "model": "translategemma-4b",
+    "msgstr": "Vorbereitung des Gesprächs"
   },
   "Privacy": {
-    "model": "opus-mt",
-    "msgstr": "Privatsphäre"
+    "model": "translategemma-4b",
+    "msgstr": "Datenschutz"
   },
   "Ready": {
-    "model": "opus-mt",
-    "msgstr": "Fertig"
+    "model": "madlad-400",
+    "msgstr": "Bereit"
   },
   "Reconnecting audio…": {
-    "model": "opus-mt",
-    "msgstr": "Audio wieder verbinden..."
+    "model": "translategemma-12b",
+    "msgstr": "Audioverbindung wird wiederhergestellt..."
   },
   "Running this commit plus changes not yet committed": {
-    "model": "opus-mt",
-    "msgstr": "Laufen dieses Commit plus Änderungen, die noch nicht übergeben wurden"
+    "model": "madlad-400",
+    "msgstr": "Ausführen dieses Commits plus noch nicht übertragene Änderungen"
   },
   "Secure audio connection is starting.": {
-    "model": "opus-mt",
-    "msgstr": "Sichere Audioverbindung beginnt."
+    "model": "madlad-400",
+    "msgstr": "Sichere Audioverbindung wird gestartet."
   },
   "Short anonymous conversations for language practice.": {
-    "model": "opus-mt",
-    "msgstr": "Kurze anonyme Gespräche für die Sprachpraxis."
+    "model": "madlad-400",
+    "msgstr": "Kurze anonyme Gespräche zur Sprachübung."
   },
   "Something went wrong!": {
     "model": "opus-mt",
     "msgstr": "Irgendetwas ist schiefgelaufen!"
   },
   "Source (AGPL-3.0)": {
-    "model": "opus-mt",
-    "msgstr": "Quelle (AGPL-3.0)"
+    "model": "translategemma-27b",
+    "msgstr": "Quellcode (AGPL-3.0)"
   },
   "Starting call with rando.": {
-    "model": "opus-mt",
-    "msgstr": "Beginn des Anrufs mit rando."
+    "model": "translategemma-4b",
+    "msgstr": "Erster Anruf mit rando."
   },
   "Status": {
-    "model": "opus-mt",
-    "msgstr": "Status"
+    "model": "hy-mt2",
+    "msgstr": "Statusseite"
   },
   "Stop looking": {
-    "model": "opus-mt",
-    "msgstr": "Hör auf zu suchen."
+    "model": "madlad-400",
+    "msgstr": "Hör auf zu suchen"
   },
   "Suggest a fix": {
-    "model": "opus-mt",
-    "msgstr": "Einen Fix vorschlagen"
+    "model": "madlad-400",
+    "msgstr": "Eine Korrektur vorschlagen"
   },
   "Switch theme": {
-    "model": "opus-mt",
-    "msgstr": "Thema wechseln"
+    "model": "hy-mt2",
+    "msgstr": "Theme wechseln"
   },
   "The call ended because audio isn't available here.": {
-    "model": "opus-mt",
-    "msgstr": "Der Anruf endete, weil Audio hier nicht verfügbar ist."
+    "model": "translategemma-12b",
+    "msgstr": "Das Gespräch wurde beendet, da hier keine Audioübertragung möglich ist."
   },
   "The call ended because audio stopped working on this device.": {
-    "model": "opus-mt",
-    "msgstr": "Der Anruf endete, weil Audio aufgehört hat, auf diesem Gerät zu arbeiten."
+    "model": "translategemma-27b",
+    "msgstr": "Das Gespräch wurde beendet, da auf diesem Gerät die Tonübertragung nicht mehr funktionierte."
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
-    "model": "opus-mt",
-    "msgstr": "Der Anruf endete, weil der Mikrofonzugriff blockiert war. Erlauben Sie es, dann suchen Sie noch einmal."
+    "model": "translategemma-12b",
+    "msgstr": "Der Anruf wurde beendet, weil der Zugriff auf das Mikrofon blockiert war. Bitte erlauben Sie den Zugriff und versuchen Sie es dann erneut."
   },
   "The call ended because no microphone was found.": {
-    "model": "opus-mt",
-    "msgstr": "Der Anruf endete, weil kein Mikrofon gefunden wurde."
+    "model": "translategemma-27b",
+    "msgstr": "Das Gespräch wurde beendet, da kein Mikrofon gefunden wurde."
   },
   "The commit this server runs": {
-    "model": "opus-mt",
-    "msgstr": "Der Commit dieser Server läuft"
+    "model": "madlad-400",
+    "msgstr": "Der Commit, den dieser Server ausführt"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
-    "model": "opus-mt",
-    "msgstr": "Die Schnittstelle ist leise auf Zweck. Ziel ist Niederdruck menschliche Präsenz, nicht Leistung oder Engagement-Schleifen."
+    "model": "translategemma-12b",
+    "msgstr": "Die Benutzeroberfläche ist bewusst schlicht gehalten. Ziel ist eine unaufdringliche Nutzererfahrung, nicht Leistung oder Mechanismen zur Steigerung der Interaktion."
   },
   "The relay is partly working": {
     "model": "opus-mt",
@@ -348,31 +348,31 @@
     "msgstr": "Das Relais funktioniert"
   },
   "The relay isn't working": {
-    "model": "opus-mt",
-    "msgstr": "Das Relais funktioniert nicht."
+    "model": "madlad-400",
+    "msgstr": "Das Relais funktioniert nicht"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
-    "model": "opus-mt",
-    "msgstr": "Die Übersetzungen dieser Website wurden von der Maschine erstellt und wurden noch nicht von den Leuten überprüft. Wenn etwas in Ihrer Sprache falsch liest, helfen Sie bitte, es zu beheben: finden Sie den Text, schreiben Sie, wie er gelesen werden soll, und wir tun den Rest."
+    "model": "hy-mt2",
+    "msgstr": "Die Übersetzungen dieser Website wurden von Maschinen erstellt und noch nicht von Menschen überprüft. Falls etwas in Ihrer Sprache falsch aussieht, helfen Sie bitte dabei, es zu korrigieren: Finden Sie den Text, schreiben Sie darauf, wie er lauten sollte, und wir erledigen den Rest."
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "opus-mt",
-    "msgstr": "Es gibt keine Konten, Profile, Kontakte, Follower, Feeds, Streifen, Partituren oder permanenten sozialen Graphen. randos ist näher an der gesprächigen Infrastruktur als Social Media."
+    "model": "translategemma-12b",
+    "msgstr": "Es gibt keine Benutzerkonten, Profile, Kontakte, Follower, Feeds, Serien von Interaktionen, Punktzahlen oder ein dauerhaftes soziales Netzwerk. \"randos\" ist eher eine Plattform für die Kommunikation als ein soziales Netzwerk."
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
-    "model": "opus-mt",
-    "msgstr": "Wenn etwas falsch liest, finden Sie es unten und drücken Sie eine Lösung vorschlagen: es öffnet ein Problem auf GitHub mit allem, was ausgefüllt ist, aber Ihre Lösung (Sie brauchen ein GitHub-Konto). Eine Pull-Anfrage mit Ihrer Lösung öffnet sich auf eigene Faust, und es geht live, wenn es überprüft wird."
+    "model": "hy-mt2",
+    "msgstr": "Die Übersetzungen auf dieser Seite wurden von einer Maschine erstellt. Falls etwas falsch ist, finden Sie es unten und klicken Sie auf „Eine Korrektur vorschlagen“: Dadurch wird eine Anfrage auf GitHub eröffnet, in der bereits alle Informationen eingetragen sind – außer Ihrer Korrektur (Sie benötigen ein GitHub-Konto). Eine Pull-Request mit Ihrer Korrektur wird automatisch erstellt und geht online, sobald sie überprüft wurde."
   },
   "Time is up": {
-    "model": "opus-mt",
-    "msgstr": "Die Zeit ist um"
+    "model": "madlad-400",
+    "msgstr": "Die Zeit ist abgelaufen"
   },
   "Time is up. Continue for another %{minutes} minutes?": {
-    "model": "opus-mt",
-    "msgstr": "Die Zeit ist um. Weiter für weitere %{minutes} Minuten?"
+    "model": "madlad-400",
+    "msgstr": "Die Zeit ist abgelaufen. Weitermachen für weitere %{minutes} Minuten?"
   },
   "Today": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Heute"
   },
   "Toggle dark mode": {
@@ -384,83 +384,83 @@
     "msgstr": "Übersetzungen"
   },
   "Typical length": {
-    "model": "opus-mt",
-    "msgstr": "Typische Länge"
+    "model": "translategemma-4b",
+    "msgstr": "Typische Dauer"
   },
   "View on GitHub": {
-    "model": "opus-mt",
-    "msgstr": "Blick auf GitHub"
+    "model": "madlad-400",
+    "msgstr": "Auf GitHub ansehen"
   },
   "We can't find the internet": {
-    "model": "opus-mt",
-    "msgstr": "Wir können das Internet nicht finden."
+    "model": "madlad-400",
+    "msgstr": "Wir können das Internet nicht finden"
   },
   "We couldn't start that call. Please try again.": {
-    "model": "opus-mt",
-    "msgstr": "Wir konnten den Anruf nicht starten, bitte versuchen Sie es noch mal."
+    "model": "hy-mt2",
+    "msgstr": "Wir konnten diesen Anruf nicht starten. Bitte versuchen Sie es erneut."
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
-    "model": "opus-mt",
-    "msgstr": "Wir zählen Anrufe, nicht Menschen: keine Adressen, keine Ausweise, nichts über jemanden; nur diese Summen werden gehalten."
+    "model": "translategemma-4b",
+    "msgstr": "Wir zählen Anrufe, nicht Personen: keine Adressen, keine Identifikationsnummern, keine Informationen über Einzelpersonen – nur diese Gesamtzahlen werden geführt."
   },
   "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
-    "model": "opus-mt",
-    "msgstr": "Was jeder Teil von randos sieht, protokolliert und behält, mit der Konfiguration hinter jedem Anspruch:"
+    "model": "hy-mt2",
+    "msgstr": "Was jeder Teil der randos wahrnimmt, protokolliert und speichert – zusammen mit der Konfiguration hinter jeder Angabe:"
   },
   "Whether calls can connect right now, and how today is going.": {
-    "model": "opus-mt",
-    "msgstr": "Ob Anrufe sich jetzt verbinden können und wie es heute geht."
+    "model": "madlad-400",
+    "msgstr": "Ob Anrufe jetzt verbunden werden können und wie der Tag verläuft."
   },
   "You": {
     "model": "opus-mt",
     "msgstr": "Sie"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "opus-mt",
-    "msgstr": "Sie wählen die Sprache, die Sie sprechen möchten und die Sprache, die Sie hören möchten. randos paart Sie mit jemandem, der für ein kurzes Gespräch kompatibel ist, und kommt dann aus dem Weg."
+    "model": "hy-mt2",
+    "msgstr": "Sie wählen die Sprache aus, in der Sie sprechen möchten, sowie die Sprache, in der Sie zugehört bekommen möchten. randos verbindet Sie mit einer passenden Person für ein kurzes Gespräch und zieht sich anschließend zurück."
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "opus-mt",
-    "msgstr": "Sie haben abgestimmt. Audio startet, wenn der Anruf öffnet."
+    "model": "hy-mt2",
+    "msgstr": "Ihr seid verbunden. Die Audioübertragung beginnt, sobald der Anruf hergestellt wird."
   },
   "You'll hear %{languages}": {
     "model": "opus-mt",
     "msgstr": "Du wirst es hören %{languages}"
   },
   "Your rando": {
-    "model": "opus-mt",
-    "msgstr": "Ihre rando"
+    "model": "hy-mt2",
+    "msgstr": "Dein rando"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
-    "model": "opus-mt",
-    "msgstr": "Die Verbindung deiner rando ist gefallen; sie warten ein paar Sekunden, bis sie zurückkommen."
+    "model": "hy-mt2",
+    "msgstr": "Die Verbindung Ihres rando ist unterbrochen worden; warten Sie ein paar Sekunden, bis er wieder online geht."
   },
   "button\u0004Continue": {
-    "model": "opus-mt",
-    "msgstr": "Weiter"
+    "model": "hy-mt2",
+    "msgstr": "Weitermachen"
   },
   "button\u0004End": {
-    "model": "opus-mt",
-    "msgstr": "Ende"
+    "model": "hy-mt2",
+    "msgstr": "Beenden"
   },
   "button\u0004Find a rando": {
-    "model": "opus-mt",
-    "msgstr": "Suchen Sie eine rando"
+    "model": "madlad-400",
+    "msgstr": "Suche nach einem rando"
   },
   "button\u0004Mute": {
-    "model": "opus-mt",
-    "msgstr": "Stumm"
+    "model": "hy-mt2",
+    "msgstr": "Stummschalten"
   },
   "button\u0004Next rando": {
-    "model": "opus-mt",
-    "msgstr": "Nächster rando"
+    "model": "madlad-400",
+    "msgstr": "Nächste rando"
   },
   "button\u0004Unmute": {
-    "model": "opus-mt",
-    "msgstr": "Ausschalten"
+    "model": "madlad-400",
+    "msgstr": "Stummschaltung aufheben"
   },
   "close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "schließen"
   },
   "connection state\u0004answering": {
@@ -468,48 +468,48 @@
     "msgstr": "Antwort"
   },
   "connection state\u0004calling": {
-    "model": "opus-mt",
-    "msgstr": "Anrufen"
+    "model": "translategemma-4b",
+    "msgstr": "Anruf"
   },
   "connection state\u0004connected": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "verbunden"
   },
   "connection state\u0004connecting": {
-    "model": "opus-mt",
-    "msgstr": "Verbindung"
+    "model": "hy-mt2",
+    "msgstr": "Verbinden"
   },
   "connection state\u0004ended": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "beendet"
   },
   "connection state\u0004failed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "fehlgeschlagen"
   },
   "connection state\u0004microphone denied": {
-    "model": "opus-mt",
-    "msgstr": "Mikrofon verweigert"
+    "model": "translategemma-4b",
+    "msgstr": "Mikrofon nicht erkannt/zugelassen"
   },
   "connection state\u0004not started": {
-    "model": "opus-mt",
-    "msgstr": "nicht begonnen"
+    "model": "madlad-400",
+    "msgstr": "nicht gestartet"
   },
   "connection state\u0004requesting microphone": {
-    "model": "opus-mt",
-    "msgstr": "Mikrofon anfordern"
+    "model": "madlad-400",
+    "msgstr": "Anforderung eines Mikrofons"
   },
   "connection state\u0004starting": {
-    "model": "opus-mt",
-    "msgstr": "Beginn"
+    "model": "madlad-400",
+    "msgstr": "Starten"
   },
   "connection state\u0004waiting for your rando": {
-    "model": "opus-mt",
-    "msgstr": "warten auf Ihre rando"
+    "model": "madlad-400",
+    "msgstr": "Ich warte auf Ihre rando"
   },
   "crosstalk": {
-    "model": "opus-mt",
-    "msgstr": "crosstalk"
+    "model": "madlad-400",
+    "msgstr": "Übersprechen"
   },
   "microphone ready": {
     "model": "opus-mt",
@@ -520,47 +520,47 @@
     "msgstr": "Mikrofon nicht verfügbar"
   },
   "privacy": {
-    "model": "opus-mt",
-    "msgstr": "Privatsphäre"
+    "model": "translategemma-4b",
+    "msgstr": "Datenschutz"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "opus-mt",
-    "msgstr": "randos ist ein Ort für anonyme, audio-only Sprachgespräche."
+    "model": "translategemma-27b",
+    "msgstr": "randos ist eine Plattform für anonyme, rein audiobasierte Sprachgespräche."
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "opus-mt",
-    "msgstr": "randos ist freie Software (AGPL-3.0) und in der Öffentlichkeit gebaut."
+    "model": "translategemma-12b",
+    "msgstr": "randos ist eine freie Software (AGPL-3.0) und wird öffentlich entwickelt."
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "opus-mt",
-    "msgstr": "Remote-Audio benötigt einen Tipp (%{summary})"
+    "model": "translategemma-27b",
+    "msgstr": "Für die Fernsteuerung des Audios ist ein Tippen erforderlich (%{summary})."
   },
   "remote audio playing (%{summary})": {
-    "model": "opus-mt",
-    "msgstr": "Fernabspiel (%{summary})"
+    "model": "translategemma-27b",
+    "msgstr": "Audio-Wiedergabe aus der Ferne (%{summary})"
   },
   "remote audio received (%{summary})": {
-    "model": "opus-mt",
-    "msgstr": "Fernton empfangen (%{summary})"
+    "model": "madlad-400",
+    "msgstr": "Remote-Audio empfangen (%{summary})"
   },
   "requesting microphone": {
-    "model": "opus-mt",
-    "msgstr": "Mikrofon anfordern"
+    "model": "madlad-400",
+    "msgstr": "Anforderung eines Mikrofons"
   },
   "under 1 min": {
-    "model": "opus-mt",
-    "msgstr": "unter 1 min"
+    "model": "hy-mt2",
+    "msgstr": "unter 1 Minute"
   },
   "waiting for microphone": {
     "model": "opus-mt",
     "msgstr": "Warten auf Mikrofon"
   },
   "waiting for remote audio": {
-    "model": "opus-mt",
-    "msgstr": "Warten auf entfernte Audio"
+    "model": "madlad-400",
+    "msgstr": "Warten auf Remote-Audio"
   },
   "working": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Arbeiten"
   }
 }

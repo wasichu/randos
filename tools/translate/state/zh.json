@@ -1,31 +1,31 @@
 {
   "%{first} or %{last}": {
-    "model": "hy-mt2",
-    "msgstr": "%{first} 或 %{last}"
+    "model": "opus-mt",
+    "msgstr": "%{first}或%{last}"
   },
   "%{language} both ways": {
-    "model": "hy-mt2",
-    "msgstr": "%{language} 两种方向均可"
+    "model": "opus-mt",
+    "msgstr": "%{language} 两种方式"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
-    "msgstr": "%{minutes} 分钟"
+    "model": "opus-mt",
+    "msgstr": "%{minutes}分钟"
   },
   "%{time} remaining": {
-    "model": "hy-mt2",
-    "msgstr": "还剩 %{time} 时间"
+    "model": "translategemma-12b",
+    "msgstr": "剩余时间：%{time}"
   },
   "30+ min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "30分钟以上"
   },
   "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
-    "model": "hy-mt2",
-    "msgstr": "一次通话的时长为 %{call} 分钟。时间结束后，只有当双方都愿意的话，通话才能继续 %{extension} 分钟，总时长最多不超过 %{max} 分钟。你可以随时结束通话。"
+    "model": "madlad-400",
+    "msgstr": "对话持续时间为 %{call} 分钟。 时间到期后,如果双方同意,对话将再持续 %{extension} 分钟,最多持续 %{max} 分钟。 您可以随时退出对话。"
   },
   "A doorway, not a platform": {
-    "model": "hy-mt2",
-    "msgstr": "是一个门口，而非平台。"
+    "model": "opus-mt",
+    "msgstr": "门道,不是站台"
   },
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "hy-mt2",
@@ -33,91 +33,91 @@
   },
   "About": {
     "model": "hy-mt2",
-    "msgstr": "关于"
+    "msgstr": "关于我们"
   },
   "About randos": {
     "model": "hy-mt2",
-    "msgstr": "关于randos"
+    "msgstr": "关于 randos 的介绍"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "hy-mt2",
-    "msgstr": "在寻找rando之前，先同意18+的条款说明。"
+    "model": "opus-mt",
+    "msgstr": "在寻找 rando 之前先接受18+确认。"
   },
   "Attempting to reconnect": {
-    "model": "hy-mt2",
-    "msgstr": "尝试重新连接"
+    "model": "translategemma-4b",
+    "msgstr": "尝试重新建立联系"
   },
   "Both people choose whether to continue.": {
-    "model": "hy-mt2",
-    "msgstr": "两人都可以选择是否继续。"
+    "model": "translategemma-12b",
+    "msgstr": "双方都可以选择是否继续。"
   },
   "Calls started": {
-    "model": "hy-mt2",
-    "msgstr": "通话已开始"
+    "model": "m2m100",
+    "msgstr": "打电话开始"
   },
   "Cancel": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "取消"
   },
   "Canceled": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "已取消"
   },
   "Change": {
-    "model": "hy-mt2",
-    "msgstr": "更改"
+    "model": "m2m100",
+    "msgstr": "改變"
   },
   "Checking the relay…": {
-    "model": "hy-mt2",
-    "msgstr": "正在检查中继器……"
+    "model": "opus-mt",
+    "msgstr": "正在检查中继器..."
   },
   "Choose supported conversation languages.": {
-    "model": "hy-mt2",
-    "msgstr": "选择支持的对话语言。"
+    "model": "translategemma-12b",
+    "msgstr": "请选择支持的对话语言。"
   },
   "Choose your languages.": {
     "model": "hy-mt2",
     "msgstr": "选择您的语言。"
   },
   "Connected": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "已连接"
   },
   "Connecting": {
-    "model": "hy-mt2",
-    "msgstr": "连接中"
+    "model": "opus-mt",
+    "msgstr": "正在连接"
   },
   "Connection lost": {
     "model": "hy-mt2",
     "msgstr": "连接丢失"
   },
   "Connection:": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "连接："
   },
   "Continued past 10 minutes": {
-    "model": "hy-mt2",
-    "msgstr": "持续了10分钟以上"
+    "model": "translategemma-4b",
+    "msgstr": "持续超过10分钟"
   },
   "Conversation is active.": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "对话正在进行中。"
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
-    "model": "hy-mt2",
-    "msgstr": "对话为私密内容，不会被保存。服务器负责协调通话，但不会保存录音，也不会记录您与谁进行过通话。"
+    "model": "translategemma-27b",
+    "msgstr": "对话内容是私密的，不会被存储。服务器仅负责协调通话，但不会保存任何通话录音，也不会记录您与谁进行过通话。"
   },
   "Couldn't connect": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "无法连接"
   },
   "Counted across %{answered} of %{total} servers.": {
-    "model": "hy-mt2",
-    "msgstr": "已统计 %{total} 台服务器中的 %{answered} 台。"
+    "model": "translategemma-27b",
+    "msgstr": "根据%{total}台服务器中%{answered}台服务器的统计结果。"
   },
   "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
-    "model": "hy-mt2",
-    "msgstr": "计数起始时间为UTC时间 %{time}，日期为 %{date}。每当该服务器暂停运行或更新后，计数都会重新开始，因此这些是自那时以来的今日来电记录。"
+    "model": "translategemma-12b",
+    "msgstr": "自%{date} %{time} UTC时间开始统计。由于服务器在休眠或更新时会重新启动，因此这些数据代表了自该时间点以来今天的访问记录。"
   },
   "Counting since %{time} UTC on %{date}: today's calls so far.": {
     "model": "hy-mt2",
@@ -128,60 +128,60 @@
     "msgstr": "当前通话"
   },
   "Done": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "已完成"
   },
   "Ephemeral by default": {
-    "model": "hy-mt2",
-    "msgstr": "默认为短暂存在"
+    "model": "translategemma-4b",
+    "msgstr": "默认情况下，是短暂的"
   },
   "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
-    "model": "hy-mt2",
-    "msgstr": "每次通话都会通过我们的中继服务器进行，因此双方都无法看到对方的地址。我们会每隔几分钟建立一次真实的中继连接来测试系统。"
+    "model": "translategemma-27b",
+    "msgstr": "每次通话都通过我们的中继服务器进行，因此通话双方都无法看到对方的地址。我们还会定期（每隔几分钟）建立一次真实的通话连接来测试系统。"
   },
   "Find a phrase": {
-    "model": "hy-mt2",
-    "msgstr": "找出一个短语"
+    "model": "m2m100",
+    "msgstr": "找个句子"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "hy-mt2",
-    "msgstr": "找一句英文或 %{language} 语言的短语。"
+    "model": "madlad-400",
+    "msgstr": "找到一个短语,英文或 %{language}"
   },
   "Finding a compatible rando.": {
-    "model": "hy-mt2",
-    "msgstr": "寻找一个合得来的rando。"
+    "model": "opus-mt",
+    "msgstr": "查找兼容的 rando。"
   },
   "Finding a rando": {
-    "model": "hy-mt2",
-    "msgstr": "寻找一个rando"
+    "model": "opus-mt",
+    "msgstr": "查找 rando"
   },
   "Finished": {
-    "model": "hy-mt2",
-    "msgstr": "已完成"
+    "model": "m2m100",
+    "msgstr": "结束"
   },
   "Help fix a translation": {
-    "model": "hy-mt2",
-    "msgstr": "帮忙修改一下翻译"
+    "model": "opus-mt",
+    "msgstr": "帮助修正翻译"
   },
   "How calls ended": {
     "model": "hy-mt2",
     "msgstr": "通话是如何结束的"
   },
   "How languages are counted": {
-    "model": "hy-mt2",
-    "msgstr": "语言是如何被统计的"
+    "model": "madlad-400",
+    "msgstr": "如何计算语言数量"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "hy-mt2",
     "msgstr": "我已年满18岁，并且明白这些对话是匿名进行的，且没有审核机制。"
   },
   "I will speak in": {
-    "model": "hy-mt2",
-    "msgstr": "我会发言的。"
+    "model": "opus-mt",
+    "msgstr": "我将发言"
   },
   "I'm happy to hear": {
-    "model": "hy-mt2",
-    "msgstr": "听到这个消息我很高兴。"
+    "model": "opus-mt",
+    "msgstr": "我很高兴听到"
   },
   "In call": {
     "model": "hy-mt2",
@@ -192,39 +192,43 @@
     "msgstr": "刻意保持极简"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
-    "model": "hy-mt2",
-    "msgstr": "它适用于 %{crosstalk}、语言交流、听力练习以及日常随意的对话，不会强迫人们遵循固定的模式或分类。"
+    "model": "translategemma-12b",
+    "msgstr": "它的设计目的是为了促进跨文化交流（%{crosstalk}），进行语言互换，提供听力练习，以及进行轻松、自然的日常对话，而不会强迫人们采用僵化的模式或标签。"
   },
   "Language": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "语言"
   },
   "Languages spoken": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "使用的语言"
   },
+  "Last checked at %{time} UTC.": {
+    "model": "madlad-400",
+    "msgstr": "上次检查时间为世界协调时%{time}。"
+  },
   "Looking": {
-    "model": "hy-mt2",
-    "msgstr": "寻找中"
+    "model": "opus-mt",
+    "msgstr": "正在寻找"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "hy-mt2",
     "msgstr": "正在寻找会说 %{hearing_languages} 语言且愿意听 %{speaking_language} 语言的rando。"
   },
   "No accounts. No profiles. No video. No pressure.": {
-    "model": "hy-mt2",
-    "msgstr": "没有账号，没有个人资料，没有视频，没有压力。"
+    "model": "translategemma-12b",
+    "msgstr": "无需注册账号，无需创建个人资料，无需上传视频，无需任何压力。"
   },
   "No calls yet.": {
-    "model": "hy-mt2",
-    "msgstr": "还没有任何来电。"
+    "model": "translategemma-4b",
+    "msgstr": "目前还没有接到任何电话。"
   },
   "No relay is configured": {
-    "model": "hy-mt2",
-    "msgstr": "未配置中继。"
+    "model": "opus-mt",
+    "msgstr": "没有配置中继"
   },
   "Not translated yet": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "尚未翻译"
   },
   "Nothing matches.": {
@@ -236,67 +240,67 @@
     "msgstr": "其他语言：%{calls}"
   },
   "Over TLS (networks that block UDP)": {
-    "model": "hy-mt2",
-    "msgstr": "通过 TLS（会阻止 UDP 的网络）"
+    "model": "translategemma-27b",
+    "msgstr": "通过 TLS（传输层安全协议）网络（这些网络会阻止 UDP 协议）。"
   },
   "Over UDP (most calls)": {
-    "model": "hy-mt2",
-    "msgstr": "通过 UDP（大多数通话）"
+    "model": "translategemma-12b",
+    "msgstr": "通过 UDP 协议 (大部分通话)。"
   },
   "Pick at least one language to hear": {
     "model": "hy-mt2",
     "msgstr": "至少选择一种语言来收听"
   },
   "Pick every language you're comfortable listening to.": {
-    "model": "hy-mt2",
-    "msgstr": "挑选所有你愿意听的语言。"
+    "model": "translategemma-12b",
+    "msgstr": "请选择您能够听懂的每一种语言。"
   },
   "Pick the language you'd like to check.": {
-    "model": "hy-mt2",
-    "msgstr": "选择您想要检查的语言。"
+    "model": "translategemma-12b",
+    "msgstr": "请选择您想要检查的语言。"
   },
   "Preparing the call": {
-    "model": "hy-mt2",
-    "msgstr": "正在准备通话。"
+    "model": "translategemma-4b",
+    "msgstr": "准备通话"
   },
   "Privacy": {
-    "model": "hy-mt2",
-    "msgstr": "隐私保护"
+    "model": "m2m100",
+    "msgstr": "隐私"
   },
   "Ready": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "准备好了"
   },
   "Reconnecting audio…": {
-    "model": "hy-mt2",
-    "msgstr": "正在重新连接音频……"
+    "model": "m2m100",
+    "msgstr": "重新连接音频..."
   },
   "Running this commit plus changes not yet committed": {
-    "model": "hy-mt2",
-    "msgstr": "执行此提交以及尚未提交的更改"
+    "model": "opus-mt",
+    "msgstr": "运行此承诺加尚未执行的更改"
   },
   "Secure audio connection is starting.": {
-    "model": "hy-mt2",
-    "msgstr": "安全的音频连接正在建立中。"
+    "model": "m2m100",
+    "msgstr": "安全音频连接开始了。"
   },
   "Short anonymous conversations for language practice.": {
-    "model": "hy-mt2",
-    "msgstr": "用于语言练习的简短匿名对话。"
+    "model": "translategemma-27b",
+    "msgstr": "用于语言练习的简短、匿名的对话。"
   },
   "Something went wrong!": {
-    "model": "hy-mt2",
-    "msgstr": "出错了！"
+    "model": "translategemma-4b",
+    "msgstr": "出了问题！"
   },
   "Source (AGPL-3.0)": {
-    "model": "hy-mt2",
-    "msgstr": "来源（AGPL-3.0）"
+    "model": "madlad-400",
+    "msgstr": "源代码 (AGPL-3.0)"
   },
   "Starting call with rando.": {
     "model": "hy-mt2",
     "msgstr": "开始与rando通话。"
   },
   "Status": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "状态"
   },
   "Stop looking": {
@@ -304,8 +308,8 @@
     "msgstr": "别再看了"
   },
   "Suggest a fix": {
-    "model": "hy-mt2",
-    "msgstr": "建议一个解决方案。"
+    "model": "translategemma-4b",
+    "msgstr": "提出改进方案"
   },
   "Switch theme": {
     "model": "hy-mt2",
@@ -320,8 +324,8 @@
     "msgstr": "由于该设备的音频功能出现故障，通话已结束。"
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
-    "model": "hy-mt2",
-    "msgstr": "通话因麦克风访问被阻止而结束。请允许访问，然后再尝试。"
+    "model": "translategemma-4b",
+    "msgstr": "通话中断是因为麦克风无法使用。请先允许麦克风使用，然后再重新尝试。"
   },
   "The call ended because no microphone was found.": {
     "model": "hy-mt2",
@@ -336,43 +340,43 @@
     "msgstr": "该界面刻意保持简洁。其目的是营造轻松无压的用户体验，而非追求性能或互动效果。"
   },
   "The relay is partly working": {
-    "model": "hy-mt2",
-    "msgstr": "中继器部分可以正常工作。"
+    "model": "opus-mt",
+    "msgstr": "中继器部分正常"
   },
   "The relay is working": {
-    "model": "hy-mt2",
-    "msgstr": "中继器正在正常工作。"
+    "model": "opus-mt",
+    "msgstr": "中继器起作用了"
   },
   "The relay isn't working": {
-    "model": "hy-mt2",
-    "msgstr": "中继器无法正常工作。"
+    "model": "madlad-400",
+    "msgstr": "继电器不工作"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
     "model": "hy-mt2",
     "msgstr": "该网站的翻译是由机器完成的，尚未经过人工审核。如果您发现某些内容在您的语言中表达有误，请帮忙修正：找到相关文本，写出正确的表达方式，其余工作我们会处理。"
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "hy-mt2",
-    "msgstr": "没有账户、个人资料、联系人、关注者、动态、连击记录、分数，也没有永久性的社交关系图。Randos更像是用于对话的基础设施，而非社交媒体。"
+    "model": "translategemma-12b",
+    "msgstr": "randos 平台不提供账户、个人资料、联系方式、关注者、动态、连续使用记录、评分等功能，也不存在永久性的社交关系图谱。randos 更接近于一种对话基础设施，而非传统的社交媒体。"
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
-    "model": "hy-mt2",
-    "msgstr": "该网站的翻译是由机器完成的。如果发现有错误，可在下方找到对应内容并点击“建议修正”：这样就会在 GitHub 上创建一个已填好所有信息的 issue，只需补充您的修正方案即可（需要拥有 GitHub 账户）。包含您修正方案的 pull request 会自动创建，经过审核后就会正式上线。"
+    "model": "translategemma-12b",
+    "msgstr": "本网站的翻译是由机器自动生成的。如果发现翻译有误，请在下方找到相关内容，点击“建议修改”。这将会在GitHub上创建一个问题，其中所有信息都已填写完毕，只需您提供修改建议即可（您需要一个GitHub账号）。您的修改建议会自动生成一个“拉取请求”，一旦审核通过，修改内容将立即生效。"
   },
   "Time is up": {
-    "model": "hy-mt2",
-    "msgstr": "时间到。"
+    "model": "opus-mt",
+    "msgstr": "时间到了"
   },
   "Time is up. Continue for another %{minutes} minutes?": {
     "model": "hy-mt2",
     "msgstr": "时间到。还要继续 %{minutes} 分钟吗？"
   },
   "Today": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "今天"
   },
   "Toggle dark mode": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "切换深色模式"
   },
   "Translations": {
@@ -380,104 +384,108 @@
     "msgstr": "翻译结果"
   },
   "Typical length": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "典型长度"
   },
   "View on GitHub": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "在 GitHub 上查看"
   },
   "We can't find the internet": {
-    "model": "hy-mt2",
-    "msgstr": "我们找不到网络。"
+    "model": "m2m100",
+    "msgstr": "我们找不到互联网"
   },
   "We couldn't start that call. Please try again.": {
-    "model": "hy-mt2",
-    "msgstr": "我们无法发起那次通话。请再试一次。"
+    "model": "translategemma-27b",
+    "msgstr": "我们无法开始该通话。请稍后重试。"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
-    "model": "hy-mt2",
-    "msgstr": "我们统计的是通话次数，而非人数：没有地址，没有身份信息，也不会记录任何人的相关资料；仅保留这些总计数据。"
+    "model": "translategemma-12b",
+    "msgstr": "我们只统计通话次数，不记录任何个人信息：没有地址、没有身份信息，没有任何关于个人的数据；我们只保留这些总数。"
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "translategemma-27b",
+    "msgstr": "关于 randos 的各个部分如何进行观察、记录和存储数据，以及每项声明背后的配置信息："
   },
   "Whether calls can connect right now, and how today is going.": {
     "model": "hy-mt2",
     "msgstr": "现在电话能否接通，以及今天的一切进展如何。"
   },
   "You": {
-    "model": "hy-mt2",
-    "msgstr": "你"
+    "model": "translategemma-4b",
+    "msgstr": "我"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "hy-mt2",
-    "msgstr": "你可以选择自己想要说的语言以及想要听的语言。Randos会为你匹配一个性格相投的人进行简短的对话，之后就会退出。"
+    "model": "translategemma-4b",
+    "msgstr": "您可以选择您想说和想听的语言。randos会为您匹配一位合适的对话对象，然后让双方自行交流。"
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "hy-mt2",
-    "msgstr": "你们已匹配成功。通话接通后音频就会开始播放。"
+    "model": "translategemma-12b",
+    "msgstr": "您已成功匹配。通话开始时，音频会自动开始播放。"
   },
   "You'll hear %{languages}": {
-    "model": "hy-mt2",
-    "msgstr": "你会听到 %{languages} 的声音。"
+    "model": "translategemma-12b",
+    "msgstr": "您将听到以下语言：%{languages}"
   },
   "Your rando": {
-    "model": "hy-mt2",
-    "msgstr": "你的rando"
+    "model": "madlad-400",
+    "msgstr": "您的 rando"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
-    "model": "hy-mt2",
-    "msgstr": "您的rando连接已断开，正在等待几秒让其重新连接。"
+    "model": "madlad-400",
+    "msgstr": "您的 rando 的连接中断;等待几秒钟他们回来。"
   },
   "button\u0004Continue": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "继续"
   },
   "button\u0004End": {
-    "model": "hy-mt2",
-    "msgstr": "结束"
+    "model": "m2m100",
+    "msgstr": "结局"
   },
   "button\u0004Find a rando": {
-    "model": "hy-mt2",
-    "msgstr": "找个rando吧"
+    "model": "opus-mt",
+    "msgstr": "查找 rando"
   },
   "button\u0004Mute": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "静音"
   },
   "button\u0004Next rando": {
-    "model": "hy-mt2",
-    "msgstr": "下一个rando"
+    "model": "madlad-400",
+    "msgstr": "下一页 rando"
   },
   "button\u0004Unmute": {
     "model": "hy-mt2",
     "msgstr": "取消静音"
   },
   "close": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "关闭"
   },
   "connection state\u0004answering": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "回答"
   },
   "connection state\u0004calling": {
-    "model": "hy-mt2",
-    "msgstr": "打电话"
+    "model": "m2m100",
+    "msgstr": "呼叫"
   },
   "connection state\u0004connected": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "已连接"
   },
   "connection state\u0004connecting": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "连接"
   },
   "connection state\u0004ended": {
     "model": "hy-mt2",
-    "msgstr": "结束了"
+    "msgstr": "已结束"
   },
   "connection state\u0004failed": {
-    "model": "hy-mt2",
-    "msgstr": "失败了"
+    "model": "opus-mt",
+    "msgstr": "失败"
   },
   "connection state\u0004microphone denied": {
     "model": "hy-mt2",
@@ -488,44 +496,44 @@
     "msgstr": "尚未开始"
   },
   "connection state\u0004requesting microphone": {
-    "model": "hy-mt2",
-    "msgstr": "请求使用麦克风"
+    "model": "translategemma-4b",
+    "msgstr": "请求麦克风"
   },
   "connection state\u0004starting": {
     "model": "hy-mt2",
     "msgstr": "开始"
   },
   "connection state\u0004waiting for your rando": {
-    "model": "hy-mt2",
-    "msgstr": "正在等待你的rando"
+    "model": "madlad-400",
+    "msgstr": "等待你的回复 rando"
   },
   "crosstalk": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "串扰"
   },
   "microphone ready": {
-    "model": "hy-mt2",
-    "msgstr": "麦克风已准备就绪"
+    "model": "opus-mt",
+    "msgstr": "麦克风准备好了"
   },
   "microphone unavailable": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "麦克风不可用"
   },
   "privacy": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "隐私"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "hy-mt2",
-    "msgstr": "Randos是一个用于匿名进行纯语音语言交流的场所。"
+    "model": "translategemma-27b",
+    "msgstr": "randos 是一个仅提供语音交流的匿名语言学习平台。"
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "hy-mt2",
-    "msgstr": "Randos是自由软件（AGPL-3.0许可证），并且是在公开环境下开发的。"
+    "model": "translategemma-4b",
+    "msgstr": "randos 是一款免费的软件（采用 AGPL-3.0 协议），并且是开源的。"
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "远程音频需要点击操作（%{summary}）"
+    "model": "translategemma-27b",
+    "msgstr": "远程音频需要轻按一下（%{summary}）。"
   },
   "remote audio playing (%{summary})": {
     "model": "hy-mt2",
@@ -536,23 +544,23 @@
     "msgstr": "已接收到远程音频（%{summary}）"
   },
   "requesting microphone": {
-    "model": "hy-mt2",
-    "msgstr": "请求使用麦克风"
+    "model": "opus-mt",
+    "msgstr": "请求麦克风"
   },
   "under 1 min": {
-    "model": "hy-mt2",
-    "msgstr": "1分钟以内"
+    "model": "opus-mt",
+    "msgstr": "1分钟以下"
   },
   "waiting for microphone": {
-    "model": "hy-mt2",
-    "msgstr": "等待麦克风。"
+    "model": "madlad-400",
+    "msgstr": "等待麦克风"
   },
   "waiting for remote audio": {
-    "model": "hy-mt2",
-    "msgstr": "正在等待远程音频。"
+    "model": "opus-mt",
+    "msgstr": "等待远程音频"
   },
   "working": {
-    "model": "hy-mt2",
-    "msgstr": "工作"
+    "model": "opus-mt",
+    "msgstr": "工作情况"
   }
 }

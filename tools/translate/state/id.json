@@ -1,27 +1,27 @@
 {
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "%{first} atau %{last}"
   },
   "%{language} both ways": {
-    "model": "hy-mt2",
-    "msgstr": "%{language} ke kedua arah"
+    "model": "m2m100",
+    "msgstr": "%{language} Kedua cara"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} menit"
   },
   "%{time} remaining": {
-    "model": "hy-mt2",
-    "msgstr": "%{time} tersisa"
+    "model": "translategemma-27b",
+    "msgstr": "Waktu tersisa: %{time}"
   },
   "30+ min": {
     "model": "hy-mt2",
-    "msgstr": "30+ menit"
+    "msgstr": "30 menit atau lebih"
   },
   "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
-    "model": "hy-mt2",
-    "msgstr": "Sebuah percakapan berlangsung selama %{call} menit. Ketika waktu habis, percakapan dapat berlanjut selama %{extension} menit lagi, asalkan kedua pihak setuju, dengan total durasi maksimal hingga %{max} menit. Anda dapat berhenti kapan saja."
+    "model": "translategemma-27b",
+    "msgstr": "Percakapan berlangsung selama %{call} menit. Setelah waktu habis, percakapan dapat dilanjutkan selama %{extension} menit lagi, tetapi hanya jika kedua belah pihak memilih untuk melakukannya. Durasi total percakapan adalah maksimal %{max} menit. Anda dapat mengakhiri percakapan kapan saja."
   },
   "A doorway, not a platform": {
     "model": "hy-mt2",
@@ -33,10 +33,10 @@
   },
   "About": {
     "model": "hy-mt2",
-    "msgstr": "Tentang"
+    "msgstr": "Tentang Kami"
   },
   "About randos": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Tentang randos"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
@@ -44,144 +44,144 @@
     "msgstr": "Terima pernyataan usia 18+ terlebih dahulu sebelum mencari rando."
   },
   "Attempting to reconnect": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Mencoba terhubung kembali"
   },
   "Both people choose whether to continue.": {
-    "model": "hy-mt2",
-    "msgstr": "Kedua orang memilih apakah akan melanjutkan atau tidak."
+    "model": "translategemma-4b",
+    "msgstr": "Kedua orang memutuskan apakah akan melanjutkan atau tidak."
   },
   "Calls started": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Panggilan dimulai"
   },
   "Cancel": {
-    "model": "hy-mt2",
-    "msgstr": "Batal"
+    "model": "translategemma-4b",
+    "msgstr": "Batalkan"
   },
   "Canceled": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Dibatalkan"
   },
   "Change": {
-    "model": "hy-mt2",
-    "msgstr": "Ganti"
+    "model": "opus-mt",
+    "msgstr": "Ubah"
   },
   "Checking the relay…": {
-    "model": "hy-mt2",
-    "msgstr": "Memeriksa relay…"
+    "model": "translategemma-27b",
+    "msgstr": "Memeriksa relai…"
   },
   "Choose supported conversation languages.": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Pilih bahasa percakapan yang didukung."
   },
   "Choose your languages.": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Pilih bahasa Anda."
   },
   "Connected": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Terhubung"
   },
   "Connecting": {
-    "model": "hy-mt2",
-    "msgstr": "Terhubung"
+    "model": "m2m100",
+    "msgstr": "Menghubungkan"
   },
   "Connection lost": {
-    "model": "hy-mt2",
-    "msgstr": "Koneksi terputus"
+    "model": "madlad-400",
+    "msgstr": "Koneksi hilang"
   },
   "Connection:": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Koneksi:"
   },
   "Continued past 10 minutes": {
-    "model": "hy-mt2",
-    "msgstr": "Berlanjut lebih dari 10 menit"
+    "model": "translategemma-4b",
+    "msgstr": "Melanjutkan setelah 10 menit"
   },
   "Conversation is active.": {
-    "model": "hy-mt2",
-    "msgstr": "Percakapan sedang berlangsung."
+    "model": "translategemma-12b",
+    "msgstr": "Percakapan sedang berlangsung secara aktif."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "hy-mt2",
     "msgstr": "Percakapan bersifat pribadi dan tidak disimpan. Server mengkoordinasikan panggilan, tetapi tidak menyimpan rekaman atau membuat catatan mengenai siapa yang Anda ajak bicara."
   },
   "Couldn't connect": {
-    "model": "hy-mt2",
-    "msgstr": "Tidak bisa terhubung"
+    "model": "translategemma-4b",
+    "msgstr": "Tidak dapat terhubung"
   },
   "Counted across %{answered} of %{total} servers.": {
-    "model": "hy-mt2",
-    "msgstr": "Dihitung di %{answered} dari %{total} server."
+    "model": "translategemma-27b",
+    "msgstr": "Dihitung berdasarkan %{answered} dari %{total} server."
   },
   "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
-    "model": "hy-mt2",
-    "msgstr": "Dihitung sejak %{time} UTC pada %{date}. Server ini dimulai kembali setiap kali berhenti bekerja atau diperbarui, jadi ini adalah panggilan-panggilan hari ini sejak saat itu."
+    "model": "translategemma-12b",
+    "msgstr": "Perhitungan dimulai sejak pukul %{time} UTC pada tanggal %{date}. Server ini selalu memulai ulang setiap kali dimatikan atau diperbarui, jadi ini adalah jumlah panggilan yang tercatat hari ini sejak saat itu."
   },
   "Counting since %{time} UTC on %{date}: today's calls so far.": {
-    "model": "hy-mt2",
-    "msgstr": "Menghitung sejak %{time} UTC pada %{date}: panggilan hari ini hingga saat ini."
+    "model": "translategemma-12b",
+    "msgstr": "Perhitungan sejak pukul %{time} UTC pada tanggal %{date}: jumlah panggilan yang telah masuk hingga saat ini."
   },
   "Current call": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Panggilan saat ini"
   },
   "Done": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Selesai"
   },
   "Ephemeral by default": {
-    "model": "hy-mt2",
-    "msgstr": "Sementara secara default"
+    "model": "translategemma-4b",
+    "msgstr": "Secara default, bersifat sementara"
   },
   "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
-    "model": "hy-mt2",
-    "msgstr": "Setiap panggilan melewati relay kami, sehingga kedua pihak tidak dapat melihat alamat satu sama lain. Kami mengujinya setiap beberapa menit dengan membuat koneksi relay yang sesungguhnya."
+    "model": "translategemma-27b",
+    "msgstr": "Setiap panggilan telepon melewati server perantara kami, sehingga alamat masing-masing pengguna tidak terlihat oleh pihak lain. Kami menguji sistem ini setiap beberapa menit dengan membuat koneksi perantara yang sebenarnya."
   },
   "Find a phrase": {
-    "model": "hy-mt2",
-    "msgstr": "Temukan sebuah frasa"
+    "model": "opus-mt",
+    "msgstr": "Cari sebuah frasa"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "hy-mt2",
-    "msgstr": "Temukan sebuah frasa, dalam bahasa Inggris atau %{language}"
+    "model": "madlad-400",
+    "msgstr": "Cari frasa, dalam bahasa Inggris atau %{language}"
   },
   "Finding a compatible rando.": {
     "model": "hy-mt2",
     "msgstr": "Mencari rando yang cocok."
   },
   "Finding a rando": {
-    "model": "hy-mt2",
-    "msgstr": "Mencari seorang rando"
+    "model": "opus-mt",
+    "msgstr": "Menemukan rando"
   },
   "Finished": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "Selesai"
   },
   "Help fix a translation": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Bantu perbaiki terjemahan"
   },
   "How calls ended": {
-    "model": "hy-mt2",
-    "msgstr": "Bagaimana panggilan berakhir"
+    "model": "translategemma-4b",
+    "msgstr": "Bagaimana panggilan tersebut berakhir"
   },
   "How languages are counted": {
     "model": "hy-mt2",
     "msgstr": "Bagaimana bahasa-bahasa dihitung"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
-    "model": "hy-mt2",
-    "msgstr": "Saya berusia 18 tahun atau lebih dan memahami bahwa percakapan ini bersifat anonim dan tidak dimoderasi."
+    "model": "translategemma-12b",
+    "msgstr": "Saya berusia 18 tahun atau lebih, dan saya memahami bahwa percakapan bersifat anonim dan tidak dimoderasi."
   },
   "I will speak in": {
-    "model": "hy-mt2",
-    "msgstr": "Saya akan berbicara dalam"
+    "model": "opus-mt",
+    "msgstr": "Aku akan berbicara di"
   },
   "I'm happy to hear": {
-    "model": "hy-mt2",
-    "msgstr": "Saya senang mendengarnya."
+    "model": "translategemma-4b",
+    "msgstr": "Saya senang mendengar"
   },
   "In call": {
     "model": "hy-mt2",
@@ -192,88 +192,88 @@
     "msgstr": "Sengaja minimalis"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
-    "model": "hy-mt2",
-    "msgstr": "Ini ditujukan untuk %{crosstalk}, pertukaran bahasa, latihan mendengar, dan percakapan sehari-hari yang santai, tanpa memaksa orang-orang untuk mengikuti pola atau label yang kaku."
+    "model": "translategemma-27b",
+    "msgstr": "Tujuannya adalah untuk %{crosstalk}, pertukaran bahasa, latihan mendengarkan, dan percakapan santai sehari-hari tanpa memaksakan aturan atau label yang kaku pada para pesertanya."
   },
   "Language": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Bahasa"
   },
   "Languages spoken": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Bahasa yang digunakan"
   },
   "Last checked at %{time} UTC.": {
-    "model": "hy-mt2",
-    "msgstr": "Terakhir diperiksa pada %{time} UTC."
+    "model": "translategemma-12b",
+    "msgstr": "Terakhir diperiksa pada pukul %{time} UTC."
   },
   "Looking": {
-    "model": "hy-mt2",
-    "msgstr": "Mencari"
+    "model": "m2m100",
+    "msgstr": "Melihat"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "hy-mt2",
     "msgstr": "Mencari rando yang bisa berbicara dalam %{hearing_languages} dan ingin mendengar %{speaking_language}."
   },
   "No accounts. No profiles. No video. No pressure.": {
-    "model": "hy-mt2",
-    "msgstr": "Tidak ada akun. Tidak ada profil. Tidak ada video. Tidak ada tekanan."
+    "model": "translategemma-12b",
+    "msgstr": "Tidak ada akun. Tidak ada profil. Tidak ada video. Tanpa tekanan."
   },
   "No calls yet.": {
     "model": "hy-mt2",
     "msgstr": "Belum ada panggilan."
   },
   "No relay is configured": {
-    "model": "hy-mt2",
-    "msgstr": "Tidak ada relay yang dikonfigurasi"
+    "model": "madlad-400",
+    "msgstr": "Tidak ada relay yang dikonfigurasikan"
   },
   "Not translated yet": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Belum diterjemahkan"
   },
   "Nothing matches.": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Tidak ada yang cocok."
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Bahasa lain: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
-    "model": "hy-mt2",
-    "msgstr": "Melalui TLS (jaringan yang memblokir UDP)"
+    "model": "translategemma-12b",
+    "msgstr": "Melalui TLS (jaringan yang memblokir UDP)."
   },
   "Over UDP (most calls)": {
     "model": "hy-mt2",
     "msgstr": "Melalui UDP (sebagian besar panggilan)"
   },
   "Pick at least one language to hear": {
-    "model": "hy-mt2",
-    "msgstr": "Pilih setidaknya satu bahasa untuk didengar"
+    "model": "opus-mt",
+    "msgstr": "Pilih setidaknya satu bahasa untuk mendengar"
   },
   "Pick every language you're comfortable listening to.": {
-    "model": "hy-mt2",
-    "msgstr": "Pilih setiap bahasa yang nyaman untuk Anda dengarkan."
+    "model": "translategemma-27b",
+    "msgstr": "Pilihlah setiap bahasa yang Anda merasa nyaman mendengarkannya."
   },
   "Pick the language you'd like to check.": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "Pilih bahasa yang ingin Anda periksa."
   },
   "Preparing the call": {
-    "model": "hy-mt2",
-    "msgstr": "Mempersiapkan panggilan"
+    "model": "m2m100",
+    "msgstr": "Persiapan panggilan"
   },
   "Privacy": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Privasi"
   },
   "Ready": {
-    "model": "hy-mt2",
-    "msgstr": "Siap"
+    "model": "m2m100",
+    "msgstr": "Bersedia"
   },
   "Reconnecting audio…": {
-    "model": "hy-mt2",
-    "msgstr": "Menghubungkan kembali audio…"
+    "model": "madlad-400",
+    "msgstr": "Menyambungkan audio kembali…"
   },
   "Running this commit plus changes not yet committed": {
     "model": "hy-mt2",
@@ -284,279 +284,283 @@
     "msgstr": "Koneksi audio yang aman sedang diaktifkan."
   },
   "Short anonymous conversations for language practice.": {
-    "model": "hy-mt2",
-    "msgstr": "Percakapan anonim singkat untuk berlatih bahasa."
+    "model": "madlad-400",
+    "msgstr": "Percakapan anonim singkat untuk latihan bahasa."
   },
   "Something went wrong!": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Ada yang salah!"
   },
   "Source (AGPL-3.0)": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Sumber (AGPL-3.0)"
   },
   "Starting call with rando.": {
-    "model": "hy-mt2",
-    "msgstr": "Memulai panggilan dengan rando."
+    "model": "opus-mt",
+    "msgstr": "Mulai panggilan dengan rando."
   },
   "Status": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Status"
   },
   "Stop looking": {
-    "model": "hy-mt2",
-    "msgstr": "Berhenti mencari."
+    "model": "m2m100",
+    "msgstr": "Berhentilah melihat"
   },
   "Suggest a fix": {
-    "model": "hy-mt2",
-    "msgstr": "Usulkan perbaikan"
+    "model": "madlad-400",
+    "msgstr": "Sarankan perbaikan"
   },
   "Switch theme": {
-    "model": "hy-mt2",
-    "msgstr": "Ganti tema"
+    "model": "translategemma-4b",
+    "msgstr": "Ubah tema"
   },
   "The call ended because audio isn't available here.": {
-    "model": "hy-mt2",
-    "msgstr": "Panggilan berakhir karena audio tidak tersedia di sini."
+    "model": "translategemma-27b",
+    "msgstr": "Panggilan terputus karena fitur audio tidak tersedia di sini."
   },
   "The call ended because audio stopped working on this device.": {
-    "model": "hy-mt2",
-    "msgstr": "Panggilan berakhir karena audio di perangkat ini berhenti berfungsi."
+    "model": "translategemma-12b",
+    "msgstr": "Panggilan tersebut berakhir karena fungsi audio pada perangkat ini berhenti bekerja."
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
     "model": "hy-mt2",
     "msgstr": "Panggilan berakhir karena akses mikrofon diblokir. Izinkan terlebih dahulu, lalu coba lagi."
   },
   "The call ended because no microphone was found.": {
-    "model": "hy-mt2",
-    "msgstr": "Panggilan berakhir karena tidak ditemukan mikrofon."
+    "model": "translategemma-27b",
+    "msgstr": "Panggilan terputus karena mikrofon tidak ditemukan."
   },
   "The commit this server runs": {
-    "model": "hy-mt2",
-    "msgstr": "Komit yang dijalankan oleh server ini"
+    "model": "madlad-400",
+    "msgstr": "Kommit yang dijalankan oleh server ini"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
-    "model": "hy-mt2",
-    "msgstr": "Antarmukanya sengaja dibuat sederhana. Tujuannya adalah menciptakan suasana yang tidak menekan, bukan untuk meningkatkan kinerja atau memicu interaksi berulang."
+    "model": "translategemma-12b",
+    "msgstr": "Antarmuka ini dirancang agar sederhana dan tidak mencolok. Tujuannya adalah untuk menciptakan lingkungan yang nyaman dan tidak membebani, bukan untuk memaksa pengguna untuk terus berinteraksi atau meningkatkan kinerja."
   },
   "The relay is partly working": {
-    "model": "hy-mt2",
-    "msgstr": "Relay-nya berfungsi sebagian saja."
+    "model": "opus-mt",
+    "msgstr": "Relay sebagian bekerja"
   },
   "The relay is working": {
-    "model": "hy-mt2",
-    "msgstr": "Relay-nya berfungsi dengan baik."
+    "model": "m2m100",
+    "msgstr": "Relay sedang bekerja"
   },
   "The relay isn't working": {
-    "model": "hy-mt2",
-    "msgstr": "Relay-nya tidak berfungsi."
+    "model": "madlad-400",
+    "msgstr": "Relai tidak bekerja"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
     "model": "hy-mt2",
     "msgstr": "Terjemahan situs ini dibuat oleh mesin dan belum ditinjau oleh manusia. Jika ada bagian yang salah dalam bahasa Anda, tolong bantu perbaikinya: temukan teksnya, tuliskan bagaimana seharusnya tertulis, dan kami akan menangani sisanya."
   },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "translategemma-27b",
+    "msgstr": "Tidak ada akun, profil, daftar kontak, pengikut, linimasa, rekor pencapaian, atau jaringan sosial permanen. randos lebih mirip dengan infrastruktur percakapan daripada media sosial."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
-    "model": "hy-mt2",
-    "msgstr": "Terjemahan di situs ini dibuat oleh mesin. Jika ada bagian yang salah, cari di bawahnya lalu tekan “Suggest a fix”: hal tersebut akan membuka masalah di GitHub dengan semua informasi sudah terisi, kecuali solusi yang Anda berikan (Anda memerlukan akun GitHub). Pull request dengan solusi Anda akan dibuat secara otomatis, dan akan diaktifkan setelah ditinjau."
+    "model": "translategemma-12b",
+    "msgstr": "Terjemahan pada situs ini dibuat oleh mesin. Jika ada bagian yang terjemahannya kurang tepat, silakan temukan bagian tersebut di bawah ini dan klik \"Sarankan perbaikan\": ini akan membuka sebuah laporan di GitHub dengan semua informasi yang sudah diisi, kecuali perbaikan yang Anda sarankan (Anda memerlukan akun GitHub). Permintaan perubahan (pull request) dengan perbaikan Anda akan dibuat secara otomatis, dan akan diterapkan setelah ditinjau."
   },
   "Time is up": {
-    "model": "hy-mt2",
-    "msgstr": "Waktunya sudah habis."
+    "model": "translategemma-4b",
+    "msgstr": "Waktu habis"
   },
   "Time is up. Continue for another %{minutes} minutes?": {
     "model": "hy-mt2",
     "msgstr": "Waktunya sudah habis. Mau melanjutkan selama %{minutes} menit lagi?"
   },
   "Today": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Hari ini"
   },
   "Toggle dark mode": {
-    "model": "hy-mt2",
-    "msgstr": "Beralih ke mode gelap"
+    "model": "translategemma-4b",
+    "msgstr": "Aktifkan mode gelap"
   },
   "Translations": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Terjemahan"
   },
   "Typical length": {
-    "model": "hy-mt2",
-    "msgstr": "Panjang rata-rata"
+    "model": "translategemma-4b",
+    "msgstr": "Durasi yang umum"
   },
   "View on GitHub": {
-    "model": "hy-mt2",
-    "msgstr": "Tampilan di GitHub"
+    "model": "madlad-400",
+    "msgstr": "Lihat di GitHub"
   },
   "We can't find the internet": {
-    "model": "hy-mt2",
-    "msgstr": "Kami tidak bisa menemukan internet."
+    "model": "opus-mt",
+    "msgstr": "Kami tidak dapat menemukan internet"
   },
   "We couldn't start that call. Please try again.": {
-    "model": "hy-mt2",
-    "msgstr": "Kami tidak dapat memulai panggilan tersebut. Silakan coba lagi."
+    "model": "translategemma-4b",
+    "msgstr": "Kami tidak dapat memulai panggilan tersebut. Mohon coba lagi."
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
-    "model": "hy-mt2",
-    "msgstr": "Kami menghitung jumlah panggilan, bukan orangnya: tanpa alamat, tanpa ID, tanpa informasi apa pun tentang siapa pun; hanya total angka-angka inilah yang disimpan."
+    "model": "translategemma-12b",
+    "msgstr": "Kami hanya menghitung jumlah panggilan, bukan orangnya: tidak ada alamat, tidak ada identitas, tidak ada informasi tentang siapa pun; hanya total jumlah panggilan yang kami catat."
   },
   "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
-    "model": "hy-mt2",
-    "msgstr": "Apa yang dilihat, dicatat, dan disimpan oleh setiap bagian dari randos, beserta konfigurasi di balik setiap klaim:"
+    "model": "translategemma-27b",
+    "msgstr": "Apa yang dilihat, dicatat, dan disimpan oleh setiap komponen dari *randos*, beserta konfigurasi yang menjadi dasar setiap klaim:"
   },
   "Whether calls can connect right now, and how today is going.": {
-    "model": "hy-mt2",
-    "msgstr": "Apakah panggilan bisa terhubung sekarang, dan bagaimana keadaan hari ini."
+    "model": "translategemma-27b",
+    "msgstr": "Apakah panggilan telepon dapat tersambung saat ini, dan bagaimana keadaan hari ini."
   },
   "You": {
-    "model": "hy-mt2",
-    "msgstr": "Anda"
+    "model": "translategemma-4b",
+    "msgstr": "Saya"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "hy-mt2",
-    "msgstr": "Anda memilih bahasa yang ingin Anda gunakan untuk berbicara dan bahasa yang ingin Anda dengar. Randos akan menghubungkan Anda dengan seseorang yang cocok untuk percakapan singkat, lalu mundur dari percakapan tersebut."
+    "model": "translategemma-12b",
+    "msgstr": "Anda dapat memilih bahasa yang ingin Anda gunakan untuk berbicara dan bahasa yang ingin Anda dengar. Aplikasi randos akan menghubungkan Anda dengan seseorang yang cocok untuk percakapan singkat, kemudian aplikasi tersebut akan berhenti ikut campur."
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "hy-mt2",
-    "msgstr": "Kalian sudah terhubung. Audio akan mulai saat panggilan dibuka."
+    "model": "translategemma-27b",
+    "msgstr": "Anda telah terhubung. Audio akan dimulai saat panggilan dibuka."
   },
   "You'll hear %{languages}": {
-    "model": "hy-mt2",
-    "msgstr": "Anda akan mendengar %{languages}"
+    "model": "translategemma-12b",
+    "msgstr": "Anda akan mendengar bahasa-bahasa berikut: %{languages}"
   },
   "Your rando": {
-    "model": "hy-mt2",
-    "msgstr": "Rando-mu"
+    "model": "madlad-400",
+    "msgstr": "Anda rando"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "Koneksi rando Anda terputus; tunggu beberapa detik hingga mereka kembali terhubung."
   },
   "button\u0004Continue": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Lanjutkan"
   },
   "button\u0004End": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "Selesai"
   },
   "button\u0004Find a rando": {
     "model": "hy-mt2",
-    "msgstr": "Cari seorang rando"
+    "msgstr": "Temukan seorang rando"
   },
   "button\u0004Mute": {
-    "model": "hy-mt2",
-    "msgstr": "Menyembunyikan suara"
+    "model": "opus-mt",
+    "msgstr": "Bisu"
   },
   "button\u0004Next rando": {
-    "model": "hy-mt2",
-    "msgstr": "Rando berikutnya"
+    "model": "madlad-400",
+    "msgstr": "Berikutnya rando"
   },
   "button\u0004Unmute": {
-    "model": "hy-mt2",
-    "msgstr": "Buka suara"
+    "model": "translategemma-4b",
+    "msgstr": "Aktifkan mikrofon"
   },
   "close": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "tutup"
   },
   "connection state\u0004answering": {
-    "model": "hy-mt2",
-    "msgstr": "menjawab"
+    "model": "m2m100",
+    "msgstr": "Jawaban"
   },
   "connection state\u0004calling": {
-    "model": "hy-mt2",
-    "msgstr": "menelepon"
+    "model": "opus-mt",
+    "msgstr": "memanggil"
   },
   "connection state\u0004connected": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "terhubung"
   },
   "connection state\u0004connecting": {
-    "model": "hy-mt2",
-    "msgstr": "terhubung"
+    "model": "m2m100",
+    "msgstr": "Menghubungkan"
   },
   "connection state\u0004ended": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "selesai"
   },
   "connection state\u0004failed": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "gagal"
   },
   "connection state\u0004microphone denied": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "mikrofon ditolak"
   },
   "connection state\u0004not started": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "belum dimulai"
   },
   "connection state\u0004requesting microphone": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "meminta mikrofon"
   },
   "connection state\u0004starting": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "memulai"
   },
   "connection state\u0004waiting for your rando": {
-    "model": "hy-mt2",
-    "msgstr": "menunggu rando-mu"
+    "model": "opus-mt",
+    "msgstr": "menunggu rando Anda"
   },
   "crosstalk": {
-    "model": "hy-mt2",
-    "msgstr": "percakapan campur"
+    "model": "m2m100",
+    "msgstr": "Crosstalk"
   },
   "microphone ready": {
-    "model": "hy-mt2",
-    "msgstr": "Mikrofon siap."
+    "model": "m2m100",
+    "msgstr": "Mikrofon siap"
   },
   "microphone unavailable": {
-    "model": "hy-mt2",
-    "msgstr": "mikrofon tidak tersedia"
+    "model": "m2m100",
+    "msgstr": "Mikrofon tidak tersedia"
   },
   "privacy": {
-    "model": "hy-mt2",
-    "msgstr": "privasi"
+    "model": "m2m100",
+    "msgstr": "Privasi"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "hy-mt2",
-    "msgstr": "Randos adalah tempat untuk percakapan bahasa secara anonim hanya melalui audio."
+    "model": "translategemma-27b",
+    "msgstr": "randos adalah platform untuk percakapan bahasa secara anonim melalui audio saja."
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "hy-mt2",
-    "msgstr": "Randos merupakan perangkat lunak gratis (AGPL-3.0) yang dikembangkan secara terbuka."
+    "model": "translategemma-12b",
+    "msgstr": "randos adalah perangkat lunak gratis (berlisensi AGPL-3.0) dan dikembangkan secara terbuka."
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "Audio jarak jauh memerlukan tap (%{summary})"
+    "model": "translategemma-12b",
+    "msgstr": "Audio dari perangkat jarak jauh memerlukan sentuhan untuk berfungsi (%{summary})."
   },
   "remote audio playing (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "Pemutaran audio jarak jauh (%{summary})"
+    "model": "madlad-400",
+    "msgstr": "pemutaran audio jarak jauh (%{summary})"
   },
   "remote audio received (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "Audio jarak jauh diterima (%{summary})"
+    "model": "translategemma-12b",
+    "msgstr": "Audio yang diterima dari jarak jauh (%{summary})."
   },
   "requesting microphone": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "meminta mikrofon"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "kurang dari 1 menit"
   },
   "waiting for microphone": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "menunggu mikrofon"
   },
   "waiting for remote audio": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "menunggu audio jarak jauh"
   },
   "working": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "bekerja"
   }
 }

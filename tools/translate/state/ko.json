@@ -1,10 +1,10 @@
 {
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} 또는 %{last}"
   },
   "%{language} both ways": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{language} 양방향"
   },
   "%{minutes} min": {
@@ -12,104 +12,108 @@
     "msgstr": "%{minutes}분"
   },
   "%{time} remaining": {
-    "model": "hy-mt2",
-    "msgstr": "%{time}가 남았습니다."
+    "model": "translategemma-12b",
+    "msgstr": "남은 시간: %{time}"
   },
   "30+ min": {
     "model": "hy-mt2",
     "msgstr": "30분 이상"
   },
   "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
-    "model": "hy-mt2",
-    "msgstr": "대화는 %{call}분 동안 진행됩니다. 시간이 지나면, 양쪽 모두가 원할 경우에만 추가로 %{extension}분 더 이어지며, 총 소요 시간은 %{max}분을 넘지 않습니다. 언제든지 대화를 종료할 수 있습니다."
+    "model": "translategemma-12b",
+    "msgstr": "통화는 %{call}분 동안 지속됩니다. 시간이 다 되면, 양쪽 모두 동의하는 경우에만 추가로 %{extension}분 동안 계속될 수 있으며, 총 %{max}분을 초과하지 않습니다. 언제든지 통화를 종료할 수 있습니다."
   },
   "A doorway, not a platform": {
-    "model": "hy-mt2",
-    "msgstr": "플랫폼이 아닌 출입구입니다."
+    "model": "madlad-400",
+    "msgstr": "플랫폼이 아닌 출입구"
   },
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
-    "model": "hy-mt2",
-    "msgstr": "어떤 언어 쌍이라도 최소 %{min}회의 조회가 있으면 표시되며, 그보다 적은 경우는 “기타”로 분류됩니다."
+    "model": "translategemma-27b",
+    "msgstr": "%{min}회 이상의 통화가 이루어지면 해당 언어 조합이 표시되고, 그보다 적은 경우에는 “기타” 항목에 포함됩니다."
   },
   "About": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "소개"
   },
   "About randos": {
     "model": "hy-mt2",
     "msgstr": "randos에 대하여"
   },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "madlad-400",
+    "msgstr": "rando을 찾기 전에 18+ 인정을 수락하십시오."
+  },
   "Attempting to reconnect": {
-    "model": "hy-mt2",
-    "msgstr": "다시 연결을 시도 중입니다."
+    "model": "madlad-400",
+    "msgstr": "다시 연결하려고 시도 중"
   },
   "Both people choose whether to continue.": {
     "model": "hy-mt2",
     "msgstr": "두 사람 모두 계속할지 말지를 선택합니다."
   },
   "Calls started": {
-    "model": "hy-mt2",
-    "msgstr": "전화가 시작되었습니다."
+    "model": "madlad-400",
+    "msgstr": "통화 시작됨"
   },
   "Cancel": {
-    "model": "hy-mt2",
-    "msgstr": "취소하기"
+    "model": "madlad-400",
+    "msgstr": "취소"
   },
   "Canceled": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "취소됨"
   },
   "Change": {
-    "model": "hy-mt2",
-    "msgstr": "변경하기"
+    "model": "madlad-400",
+    "msgstr": "변경"
   },
   "Checking the relay…": {
-    "model": "hy-mt2",
-    "msgstr": "리레이를 확인 중입니다…"
+    "model": "translategemma-4b",
+    "msgstr": "릴레이 상태 확인 중…"
   },
   "Choose supported conversation languages.": {
     "model": "hy-mt2",
     "msgstr": "지원되는 대화 언어를 선택하세요."
   },
   "Choose your languages.": {
-    "model": "hy-mt2",
-    "msgstr": "원하는 언어를 선택하세요."
+    "model": "translategemma-27b",
+    "msgstr": "언어를 선택하세요."
   },
   "Connected": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "연결됨"
   },
   "Connecting": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "연결 중"
   },
   "Connection lost": {
-    "model": "hy-mt2",
-    "msgstr": "연결이 끊겼습니다."
+    "model": "m2m100",
+    "msgstr": "잃어버린 연결"
   },
   "Connection:": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "연결:"
   },
   "Continued past 10 minutes": {
-    "model": "hy-mt2",
-    "msgstr": "10분이 넘도록 계속되었다"
+    "model": "translategemma-4b",
+    "msgstr": "10분 이상 지속"
   },
   "Conversation is active.": {
-    "model": "hy-mt2",
-    "msgstr": "대화가 활발하게 이루어지고 있습니다."
+    "model": "madlad-400",
+    "msgstr": "대화가 활성화되어 있습니다."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "hy-mt2",
     "msgstr": "대화는 비공개이며 저장되지 않습니다. 서버는 통화를 조율하지만, 녹음본을 보관하거나 누구와 통화했는지에 대한 기록을 만들지 않습니다."
   },
   "Couldn't connect": {
-    "model": "hy-mt2",
-    "msgstr": "연결되지 않았습니다."
+    "model": "madlad-400",
+    "msgstr": "연결할 수 없음"
   },
   "Counted across %{answered} of %{total} servers.": {
-    "model": "hy-mt2",
-    "msgstr": "%{total}대의 서버 중 %{answered}대를 대상으로 집계했습니다."
+    "model": "madlad-400",
+    "msgstr": "%{total} 서버 중 %{answered} 서버에 걸쳐 계산됨."
   },
   "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
     "model": "hy-mt2",
@@ -120,36 +124,44 @@
     "msgstr": "%{date}의 %{time} UTC부터 집계된 수치: 오늘까지의 총 통화 횟수입니다."
   },
   "Current call": {
-    "model": "hy-mt2",
-    "msgstr": "현재 통화 중"
+    "model": "translategemma-4b",
+    "msgstr": "현재 진행 중인 통화"
   },
   "Done": {
-    "model": "hy-mt2",
-    "msgstr": "완료됨"
+    "model": "translategemma-4b",
+    "msgstr": "완료"
   },
   "Ephemeral by default": {
-    "model": "hy-mt2",
-    "msgstr": "기본적으로 일시적."
+    "model": "translategemma-4b",
+    "msgstr": "기본 설정: 일시적인"
   },
   "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
     "model": "hy-mt2",
     "msgstr": "모든 통화는 저희의 릴레이를 통해 이루어지므로, 양쪽 당사자는 상대방의 주소를 볼 수 없습니다. 저희는 실제 릴레이 연결을 설정하여 몇 분마다 이 기능을 테스트합니다."
   },
   "Find a phrase": {
-    "model": "hy-mt2",
-    "msgstr": "문구를 찾아보세요."
+    "model": "translategemma-4b",
+    "msgstr": "특정 구절 찾기"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "hy-mt2",
-    "msgstr": "영어나 %{language}로 된 문장을 찾아보세요."
+    "model": "m2m100",
+    "msgstr": "영어로 발음한 문장을 찾거나 %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "m2m100",
+    "msgstr": "적합한 것을 찾으십시오 rando"
+  },
+  "Finding a rando": {
+    "model": "madlad-400",
+    "msgstr": "검색결과 rando"
   },
   "Finished": {
-    "model": "hy-mt2",
-    "msgstr": "끝났습니다."
+    "model": "m2m100",
+    "msgstr": "마무리"
   },
   "Help fix a translation": {
-    "model": "hy-mt2",
-    "msgstr": "번역을 고쳐주는 데 도움을 주세요."
+    "model": "madlad-400",
+    "msgstr": "번역을 고치는 데 도움을 주세요"
   },
   "How calls ended": {
     "model": "hy-mt2",
@@ -160,67 +172,71 @@
     "msgstr": "언어는 어떻게 집계되는가"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
-    "model": "hy-mt2",
-    "msgstr": "저는 18세 이상이며, 대화가 익명으로 이루어지고 검열되지 않는다는 사실을 이해합니다."
+    "model": "translategemma-4b",
+    "msgstr": "저는 18세 이상이며, 대화가 익명으로 진행되고 관리되지 않는다는 것을 이해합니다."
   },
   "I will speak in": {
-    "model": "hy-mt2",
-    "msgstr": "제가 말씀드리겠습니다."
+    "model": "m2m100",
+    "msgstr": "나는 말을 할 것이다"
   },
   "I'm happy to hear": {
-    "model": "hy-mt2",
-    "msgstr": "듣고 기쁩니다."
+    "model": "madlad-400",
+    "msgstr": "듣게 되어 기쁘네요"
   },
   "In call": {
     "model": "hy-mt2",
     "msgstr": "통화 중"
   },
   "Intentionally minimal": {
-    "model": "hy-mt2",
-    "msgstr": "의도적으로 최소화됨"
+    "model": "madlad-400",
+    "msgstr": "의도적으로 최소화"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "hy-mt2",
-    "msgstr": "이는 사람들을 엄격한 형식이나 카테고리에 얽매이지 않게 하여, %{crosstalk}, 언어 교환, 듣기 연습, 그리고 평범한 일상 대화를 위한 것입니다."
+    "msgstr": "이는 %{crosstalk}이나 언어 교환, 듣기 연습, 그리고 사람들을 엄격한 형식이나 카테고리에 얽매이지 않게 하는 일상적인 대화를 위한 것입니다."
   },
   "Language": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "언어"
   },
   "Languages spoken": {
-    "model": "hy-mt2",
-    "msgstr": "사용하는 언어"
+    "model": "madlad-400",
+    "msgstr": "구사하는 언어"
   },
   "Last checked at %{time} UTC.": {
-    "model": "hy-mt2",
-    "msgstr": "마지막으로 확인된 시간은 UTC 기준 %{time}입니다."
+    "model": "madlad-400",
+    "msgstr": "마지막으로 확인한 시간은 %{time} UTC입니다."
   },
   "Looking": {
-    "model": "hy-mt2",
-    "msgstr": "찾아보기"
+    "model": "madlad-400",
+    "msgstr": "찾는 중"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "madlad-400",
+    "msgstr": "%{hearing_languages}를 말하고 %{speaking_language}를 듣고 싶어하는 rando을 찾고 있습니다."
   },
   "No accounts. No profiles. No video. No pressure.": {
-    "model": "hy-mt2",
-    "msgstr": "계정도 없고, 프로필도 없으며, 영상도 없습니다. 압박도 전혀 없죠."
+    "model": "translategemma-12b",
+    "msgstr": "계정이 필요 없고, 프로필을 만들 필요도 없으며, 영상도 필요 없습니다. 아무런 부담도 느껴지지 않을 거예요."
   },
   "No calls yet.": {
-    "model": "hy-mt2",
-    "msgstr": "아직 전화가 없어요."
+    "model": "translategemma-4b",
+    "msgstr": "아직 전화는 오지 않았습니다."
   },
   "No relay is configured": {
-    "model": "hy-mt2",
-    "msgstr": "리레이가 설정되어 있지 않습니다."
+    "model": "madlad-400",
+    "msgstr": "릴레이가 설정되지 않았습니다"
   },
   "Not translated yet": {
-    "model": "hy-mt2",
-    "msgstr": "아직 번역되지 않았습니다."
+    "model": "madlad-400",
+    "msgstr": "아직 번역되지 않음"
   },
   "Nothing matches.": {
-    "model": "hy-mt2",
-    "msgstr": "일치하는 항목이 없습니다."
+    "model": "translategemma-27b",
+    "msgstr": "어울리는 게 하나도 없네."
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "다른 언어: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -228,56 +244,56 @@
     "msgstr": "TLS를 통해 (UDP가 차단되는 네트워크에서)"
   },
   "Over UDP (most calls)": {
-    "model": "hy-mt2",
-    "msgstr": "UDP를 통해 (대부분의 호출)"
+    "model": "translategemma-4b",
+    "msgstr": "UDP를 통해 (대부분의 통화)"
   },
   "Pick at least one language to hear": {
-    "model": "hy-mt2",
-    "msgstr": "들을 언어를 하나 이상 선택하세요."
+    "model": "madlad-400",
+    "msgstr": "듣고 싶은 언어를 적어도 하나 선택하세요"
   },
   "Pick every language you're comfortable listening to.": {
-    "model": "hy-mt2",
-    "msgstr": "듣기에 편안한 모든 언어를 골라주세요."
+    "model": "translategemma-27b",
+    "msgstr": "자신이 편하게 들을 수 있는 모든 언어를 선택하세요."
   },
   "Pick the language you'd like to check.": {
-    "model": "hy-mt2",
-    "msgstr": "검사하고 싶은 언어를 선택하세요."
+    "model": "translategemma-27b",
+    "msgstr": "확인하려는 언어를 선택하세요."
   },
   "Preparing the call": {
-    "model": "hy-mt2",
-    "msgstr": "전화를 준비하고 있습니다."
+    "model": "translategemma-4b",
+    "msgstr": "전화 준비"
   },
   "Privacy": {
-    "model": "hy-mt2",
-    "msgstr": "개인정보 보호"
+    "model": "translategemma-12b",
+    "msgstr": "개인 정보 보호 정책"
   },
   "Ready": {
-    "model": "hy-mt2",
-    "msgstr": "준비됨"
+    "model": "translategemma-4b",
+    "msgstr": "준비 완료"
   },
   "Reconnecting audio…": {
     "model": "hy-mt2",
     "msgstr": "오디오 재연결 중…"
   },
   "Running this commit plus changes not yet committed": {
-    "model": "hy-mt2",
-    "msgstr": "이 커밋을 실행하고 아직 커밋되지 않은 변경사항들도 처리합니다."
+    "model": "madlad-400",
+    "msgstr": "이 커밋과 아직 커밋되지 않은 변경 사항을 실행"
   },
   "Secure audio connection is starting.": {
-    "model": "hy-mt2",
-    "msgstr": "안전한 오디오 연결이 시작되고 있습니다."
+    "model": "translategemma-4b",
+    "msgstr": "안정적인 오디오 연결이 시작되었습니다."
   },
   "Short anonymous conversations for language practice.": {
-    "model": "hy-mt2",
-    "msgstr": "언어 연습을 위한 짧은 익명 대화들."
+    "model": "madlad-400",
+    "msgstr": "언어 연습을 위한 짧은 익명 대화."
   },
   "Something went wrong!": {
     "model": "hy-mt2",
     "msgstr": "무언가 잘못되었습니다!"
   },
   "Source (AGPL-3.0)": {
-    "model": "hy-mt2",
-    "msgstr": "출처 (AGPL-3.0)"
+    "model": "madlad-400",
+    "msgstr": "소스 (AGPL-3.0)"
   },
   "Starting call with rando.": {
     "model": "hy-mt2",
@@ -288,68 +304,68 @@
     "msgstr": "상태"
   },
   "Stop looking": {
-    "model": "hy-mt2",
-    "msgstr": "더 이상 찾지 마세요."
+    "model": "m2m100",
+    "msgstr": "쳐다보는 것을 멈추라"
   },
   "Suggest a fix": {
-    "model": "hy-mt2",
-    "msgstr": "수정 방안을 제안해 주세요."
+    "model": "madlad-400",
+    "msgstr": "수정 사항 제안하기"
   },
   "Switch theme": {
     "model": "hy-mt2",
     "msgstr": "테마 변경"
   },
   "The call ended because audio isn't available here.": {
-    "model": "hy-mt2",
-    "msgstr": "여기서는 오디오가 지원되지 않아 통화가 종료되었습니다."
+    "model": "translategemma-4b",
+    "msgstr": "이 곳에서는 음성 통화가 불가능하기 때문에 통화가 종료되었습니다."
   },
   "The call ended because audio stopped working on this device.": {
     "model": "hy-mt2",
     "msgstr": "이 기기에서 오디오가 작동하지 않아 통화가 종료되었습니다."
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
-    "model": "hy-mt2",
-    "msgstr": "마이크 접근이 차단되어 통화가 종료되었습니다. 접근을 허용한 다음 다시 시도해 주세요."
+    "model": "translategemma-4b",
+    "msgstr": "전화 연결이 끊어진 이유는 마이크 접근 권한이 차단되었기 때문입니다. 마이크 접근 권한을 허용한 후 다시 시도해 보세요."
   },
   "The call ended because no microphone was found.": {
-    "model": "hy-mt2",
-    "msgstr": "마이크가 발견되지 않아 통화가 종료되었습니다."
+    "model": "madlad-400",
+    "msgstr": "마이크를 찾을 수 없어 통화가 종료되었습니다."
   },
   "The commit this server runs": {
     "model": "hy-mt2",
     "msgstr": "이 서버가 실행하는 커밋"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
-    "model": "hy-mt2",
-    "msgstr": "이 인터페이스는 의도적으로 조용하게 설계되었습니다. 목표는 성능이나 참여도를 높이는 것이 아니라, 부담 없는 인간적인 느낌을 제공하는 것입니다."
+    "model": "translategemma-12b",
+    "msgstr": "이 인터페이스는 의도적으로 단순하고 조용하게 디자인되었습니다. 목표는 사용자의 부담을 줄이고 편안한 경험을 제공하는 것이며, 성능 향상이나 사용자의 과도한 참여를 유도하는 데 있지 않습니다."
   },
   "The relay is partly working": {
-    "model": "hy-mt2",
-    "msgstr": "리레이가 부분적으로 작동하고 있습니다."
+    "model": "madlad-400",
+    "msgstr": "릴레이가 부분적으로 작동합니다"
   },
   "The relay is working": {
-    "model": "hy-mt2",
-    "msgstr": "리레이가 정상적으로 작동하고 있습니다."
+    "model": "madlad-400",
+    "msgstr": "릴레이가 작동합니다"
   },
   "The relay isn't working": {
-    "model": "hy-mt2",
-    "msgstr": "리레이가 작동하지 않습니다."
+    "model": "madlad-400",
+    "msgstr": "릴레이가 작동하지 않습니다"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
     "model": "hy-mt2",
     "msgstr": "이 사이트의 번역은 컴퓨터가 자동으로 작성한 것이며, 아직 사람의 검토를 거치지 않았습니다. 여러분의 언어로 번역된 내용에 오류가 있을 경우, 수정을 도와주시기 바랍니다. 문제가 있는 텍스트를 찾아 올바른 표현을 적어주시면 저희가 나머지를 처리하겠습니다."
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "hy-mt2",
-    "msgstr": "계정, 프로필, 연락처, 팔로워, 피드, 스트릭, 점수, 혹은 영구적인 소셜 그래프는 존재하지 않습니다. randos는 소셜 미디어라기보다는 대화형 인프라에 더 가깝습니다."
+    "model": "madlad-400",
+    "msgstr": "계정, 프로필, 연락처, 팔로워, 피드, 스트레이크, 점수, 영구적인 소셜 그래프가 없습니다. randos은 소셜 미디어보다 대화형 인프라에 더 가깝습니다."
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
-    "model": "hy-mt2",
-    "msgstr": "이 사이트의 번역은 컴퓨터가 자동으로 처리한 것입니다. 오류가 있을 경우 아래에서 해당 부분을 찾아 “수정 제안”을 누르세요. 그러면 모든 정보가 입력된 상태의 이슈가 GitHub에 열리며, GitHub 계정이 필요합니다. 귀하가 제안한 수정 사항이 포함된 풀 리퀘스트가 자동으로 생성되고, 검토가 완료되면 즉시 적용됩니다."
+    "model": "translategemma-12b",
+    "msgstr": "이 웹사이트의 번역은 기계 번역을 통해 이루어졌습니다. 만약 번역에 오류가 있다면, 아래에서 해당 부분을 찾으시고 \"수정 제안\" 버튼을 누르세요. 그러면 GitHub에 해당 문제에 대한 보고서가 생성되며, 대부분의 정보는 자동으로 채워집니다. 단, 수정 사항은 직접 입력해야 합니다 (GitHub 계정이 필요합니다). 수정 사항을 제안하면 자동으로 \"풀 리퀘스트\"가 생성되며, 검토가 완료되면 해당 수정 사항이 적용됩니다."
   },
   "Time is up": {
-    "model": "hy-mt2",
-    "msgstr": "시간이 다 되었습니다."
+    "model": "madlad-400",
+    "msgstr": "시간이 다 됐어"
   },
   "Time is up. Continue for another %{minutes} minutes?": {
     "model": "hy-mt2",
@@ -364,167 +380,187 @@
     "msgstr": "다크 모드 전환"
   },
   "Translations": {
-    "model": "hy-mt2",
-    "msgstr": "번역들"
+    "model": "m2m100",
+    "msgstr": "번역"
   },
   "Typical length": {
-    "model": "hy-mt2",
-    "msgstr": "일반적인 길이"
+    "model": "translategemma-4b",
+    "msgstr": "일반적인 소요 시간"
   },
   "View on GitHub": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "GitHub에서 보기"
   },
   "We can't find the internet": {
-    "model": "hy-mt2",
-    "msgstr": "인터넷을 찾을 수 없어요."
+    "model": "m2m100",
+    "msgstr": "우리는 인터넷을 찾을 수 없습니다"
   },
   "We couldn't start that call. Please try again.": {
-    "model": "hy-mt2",
-    "msgstr": "그 전화를 시작할 수 없었습니다. 다시 시도해 주세요."
+    "model": "translategemma-12b",
+    "msgstr": "해당 통화를 시작할 수 없습니다. 다시 시도해 주십시오."
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
-    "model": "hy-mt2",
-    "msgstr": "우리는 사람이 아닌 전화 횟수를 집계합니다. 주소도, ID도, 개인에 대한 정보도 전혀 없으며, 오직 이러한 총계만 기록됩니다."
+    "model": "translategemma-12b",
+    "msgstr": "저희는 사람 수를 세는 것이 아니라 통화 건수를 세는 것입니다. 주소, 신분증, 개인 정보 등 어떤 정보도 수집하지 않습니다. 오직 통화 건수만 기록됩니다."
   },
   "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
-    "model": "hy-mt2",
-    "msgstr": "각 randos가 무엇을 보고, 기록하며, 저장하는지, 그리고 모든 주장 뒤에 있는 설정들:"
+    "model": "translategemma-12b",
+    "msgstr": "randos가 각 부분에서 보고, 기록하고, 저장하는 내용과, 각 기능이 작동하는 방식에 대한 설정 정보:"
   },
   "Whether calls can connect right now, and how today is going.": {
-    "model": "hy-mt2",
-    "msgstr": "지금 전화가 연결될 수 있는지, 그리고 오늘은 어떻게 지내고 있는지."
+    "model": "m2m100",
+    "msgstr": "전화가 지금 연결될 수 있는지, 그리고 오늘은 어떻게 진행되고 있는지."
   },
   "You": {
-    "model": "hy-mt2",
-    "msgstr": "당신"
+    "model": "translategemma-4b",
+    "msgstr": "나"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "hy-mt2",
-    "msgstr": "원하는 대화 언어와 듣고 싶은 언어를 직접 선택할 수 있습니다. Randos는 적합한 상대와 짧은 대화를 나누게 해준 뒤 자리를 비켜줍니다."
+    "model": "translategemma-27b",
+    "msgstr": "원하는 대화 언어와 듣고 싶은 언어를 직접 선택할 수 있습니다. randos는 사용자와 잘 맞는 상대를 찾아 짧은 대화를 나눌 수 있도록 연결해 준 후, 더 이상 개입하지 않습니다."
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "hy-mt2",
-    "msgstr": "매칭이 되었습니다. 통화가 연결되면 오디오가 재생됩니다."
+    "model": "translategemma-27b",
+    "msgstr": "매칭이 완료되었습니다. 통화 연결 시 오디오가 시작됩니다."
   },
   "You'll hear %{languages}": {
-    "model": "hy-mt2",
-    "msgstr": "%{languages}를 들으실 수 있습니다."
+    "model": "madlad-400",
+    "msgstr": "귀하의 귀에 들릴 것입니다 %{languages}"
+  },
+  "Your rando": {
+    "model": "madlad-400",
+    "msgstr": "귀하의 rando"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "madlad-400",
+    "msgstr": "rando 의 연결이 끊어졌습니다. 다시 연결될 때까지 몇 초 동안 기다립니다."
   },
   "button\u0004Continue": {
-    "model": "hy-mt2",
-    "msgstr": "계속하기"
+    "model": "madlad-400",
+    "msgstr": "계속"
   },
   "button\u0004End": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "끝"
   },
+  "button\u0004Find a rando": {
+    "model": "madlad-400",
+    "msgstr": "검색 rando"
+  },
   "button\u0004Mute": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "음소거"
+  },
+  "button\u0004Next rando": {
+    "model": "madlad-400",
+    "msgstr": "rando 다음 페이지"
   },
   "button\u0004Unmute": {
     "model": "hy-mt2",
     "msgstr": "음소거 해제"
   },
   "close": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "닫기"
   },
   "connection state\u0004answering": {
-    "model": "hy-mt2",
-    "msgstr": "답변하기"
+    "model": "madlad-400",
+    "msgstr": "응답 중"
   },
   "connection state\u0004calling": {
-    "model": "hy-mt2",
-    "msgstr": "전화하기"
+    "model": "translategemma-4b",
+    "msgstr": "통화 중"
   },
   "connection state\u0004connected": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "연결됨"
   },
   "connection state\u0004connecting": {
-    "model": "hy-mt2",
-    "msgstr": "연결하기"
+    "model": "madlad-400",
+    "msgstr": "연결 중"
   },
   "connection state\u0004ended": {
-    "model": "hy-mt2",
-    "msgstr": "끝났다"
+    "model": "translategemma-4b",
+    "msgstr": "종료"
   },
   "connection state\u0004failed": {
-    "model": "hy-mt2",
-    "msgstr": "실패했습니다."
+    "model": "madlad-400",
+    "msgstr": "실패함"
   },
   "connection state\u0004microphone denied": {
-    "model": "hy-mt2",
-    "msgstr": "마이크 사용이 거부되었습니다."
+    "model": "madlad-400",
+    "msgstr": "마이크 사용 거부됨"
   },
   "connection state\u0004not started": {
     "model": "hy-mt2",
-    "msgstr": "아직 시작하지 않았습니다."
+    "msgstr": "아직 시작되지 않음"
   },
   "connection state\u0004requesting microphone": {
-    "model": "hy-mt2",
-    "msgstr": "마이크 사용 요청"
+    "model": "madlad-400",
+    "msgstr": "마이크 요청 중"
   },
   "connection state\u0004starting": {
-    "model": "hy-mt2",
-    "msgstr": "시작하기"
+    "model": "translategemma-12b",
+    "msgstr": "시작 중"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "m2m100",
+    "msgstr": "당신을 기다리고 있습니다 rando"
   },
   "crosstalk": {
     "model": "hy-mt2",
     "msgstr": "크로스토크"
   },
   "microphone ready": {
-    "model": "hy-mt2",
-    "msgstr": "마이크 준비 완료."
+    "model": "translategemma-4b",
+    "msgstr": "마이크 준비 완료"
   },
   "microphone unavailable": {
-    "model": "hy-mt2",
-    "msgstr": "마이크가 사용 불가능합니다."
+    "model": "madlad-400",
+    "msgstr": "마이크 사용할 수 없음"
   },
   "privacy": {
-    "model": "hy-mt2",
-    "msgstr": "개인정보 보호"
+    "model": "translategemma-12b",
+    "msgstr": "개인 정보 보호"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "hy-mt2",
-    "msgstr": "randos는 익명으로 오디오만으로 언어 대화를 나눌 수 있는 곳입니다."
+    "model": "translategemma-27b",
+    "msgstr": "randos는 익명으로 음성만으로 언어 교환을 할 수 있는 공간입니다."
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "hy-mt2",
-    "msgstr": "randos는 자유 소프트웨어(AGPL-3.0)이며 공개적으로 제작되었습니다."
+    "model": "translategemma-4b",
+    "msgstr": "randos는 무료 소프트웨어(AGPL-3.0)이며, 공개적으로 개발되었습니다."
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "원격 오디오의 경우 탭이 필요합니다 (%{summary})"
+    "model": "m2m100",
+    "msgstr": "원격 오디오는 탭이 필요합니다 (%{summary})"
   },
   "remote audio playing (%{summary})": {
     "model": "hy-mt2",
     "msgstr": "원격 오디오 재생 (%{summary})"
   },
   "remote audio received (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "원격 오디오 수신됨 (%{summary})"
+    "model": "m2m100",
+    "msgstr": "원격 오디오 수신 (%{summary})"
   },
   "requesting microphone": {
-    "model": "hy-mt2",
-    "msgstr": "마이크 사용 요청"
+    "model": "madlad-400",
+    "msgstr": "마이크 요청 중"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "1분 미만"
   },
   "waiting for microphone": {
-    "model": "hy-mt2",
-    "msgstr": "마이크를 기다리고 있습니다."
+    "model": "madlad-400",
+    "msgstr": "마이크를 기다리는 중"
   },
   "waiting for remote audio": {
-    "model": "hy-mt2",
-    "msgstr": "원격 오디오를 기다리고 있습니다."
+    "model": "madlad-400",
+    "msgstr": "원격 오디오를 기다립니다"
   },
   "working": {
-    "model": "hy-mt2",
-    "msgstr": "일하기"
+    "model": "madlad-400",
+    "msgstr": "작업 중"
   }
 }

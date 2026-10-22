@@ -14,7 +14,7 @@ msgstr ""
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time."
-msgstr "Una conversación dura %{call} minutos. Cuando el tiempo ha terminado, continúa por otros %{extension} minutos sólo si ambas personas lo desean, hasta %{max} minutos en total. Usted puede salir en cualquier momento."
+msgstr "Una conversación tiene una duración de %{call} minutos. Una vez que se agota el tiempo, se puede extender por %{extension} minutos adicionales, siempre y cuando ambas personas lo deseen, con un límite máximo total de %{max} minutos. Puedes finalizar la conversación en cualquier momento."
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
@@ -26,18 +26,18 @@ msgstr "Una puerta, no una plataforma"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About"
-msgstr "Acerca de"
+msgstr "Acerca de nosotros"
 
 #. Title of the page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
-msgstr "Alrededor de randos"
+msgstr "Acerca de randos"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Accept the 18+ acknowledgment before looking for a rando."
-msgstr "Aceptar el 18+ reconocimiento antes de buscar un rando."
+msgstr "Acepte el reconocimiento de 18+ antes de buscar un rando."
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -47,7 +47,7 @@ msgstr "Intentando reconectar"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Both people choose whether to continue."
-msgstr "Ambas personas eligen si continuar."
+msgstr "Ambas personas deciden si desean continuar."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -57,7 +57,7 @@ msgstr "Cancelar"
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
-msgstr "Elija lenguajes de conversación compatibles."
+msgstr "Seleccione los idiomas de conversación admitidos."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -67,7 +67,7 @@ msgstr "Elige tus idiomas."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
-msgstr "Conectando"
+msgstr "Conexión"
 
 #. Label before the call's connection state (for example "connecting").
 #: lib/randos_web/components/home_components.ex
@@ -78,18 +78,18 @@ msgstr "Conexión:"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Conversation is active."
-msgstr "La conversación es activa."
+msgstr "La conversación está en curso."
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with."
-msgstr "Las conversaciones son privadas y no se almacenan. El servidor coordina la llamada, pero no guarda grabaciones ni construye una historia alrededor de con quién habló."
+msgstr "Las conversaciones son privadas y no se almacenan. El servidor coordina la llamada, pero no guarda grabaciones ni crea un historial de con quién has hablado."
 
 #. Heading over the voice call in progress, with your conversation partner.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Current call"
-msgstr "Llamada actual"
+msgstr "Llamada en curso"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
@@ -99,17 +99,17 @@ msgstr "Efímero por defecto"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Finding a compatible rando."
-msgstr "Encontrar una compatible rando."
+msgstr "Encontrar un rando compatible."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Finding a rando"
-msgstr "Encontrando un rando"
+msgstr "Encontrar un rando"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "I am 18 or older and understand that conversations are anonymous and unmoderated."
-msgstr "Tengo 18 años o más y entiendo que las conversaciones son anónimas y no moderadas."
+msgstr "Tengo 18 años o más y entiendo que las conversaciones son anónimas y no están moderadas."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -119,18 +119,18 @@ msgstr "Voy a hablar en"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "In call"
-msgstr "En servicio"
+msgstr "En una llamada telefónica"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "Intentionally minimal"
-msgstr "Mínimo intencionadamente"
+msgstr "Intencionalmente mínimo"
 
 #. Menu that chooses the language of this site's interface.
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Language"
-msgstr "Idioma"
+msgstr "Lenguaje"
 
 #. Your status: searching for someone to talk to.
 #: lib/randos_web/components/home_components.ex
@@ -141,28 +141,28 @@ msgstr "Buscando"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "No accounts. No profiles. No video. No pressure."
-msgstr "Sin cuentas, sin perfiles, sin vídeo, sin presión."
+msgstr "Sin cuentas. Sin perfiles. Sin videos. Sin presiones."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Preparing the call"
-msgstr "Preparación de la llamada"
+msgstr "Preparar la llamada"
 
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
-msgstr "Listo"
+msgstr "Listo/a"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Secure audio connection is starting."
-msgstr "La conexión de audio segura está empezando."
+msgstr "Se está estableciendo una conexión de audio segura."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Short anonymous conversations for language practice."
-msgstr "Conversaciones anónimas cortas para la práctica del lenguaje."
+msgstr "Conversaciones breves y anónimas para practicar el idioma."
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -177,73 +177,73 @@ msgstr "Inicio de la llamada con rando."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Stop looking"
-msgstr "Deja de buscar."
+msgstr "Deja de mirar"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Switch theme"
-msgstr "Cambiar el tema"
+msgstr "Cambiar tema"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "The call ended because audio isn't available here."
-msgstr "La llamada terminó porque el audio no está disponible aquí."
+msgstr "La llamada se interrumpió porque no hay audio disponible en este momento."
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "The call ended because audio stopped working on this device."
-msgstr "La llamada terminó porque el audio dejó de funcionar en este dispositivo."
+msgstr "La llamada se interrumpió porque el audio dejó de funcionar en este dispositivo."
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "The call ended because microphone access was blocked. Allow it, then look again."
-msgstr "La llamada terminó porque el acceso al micrófono estaba bloqueado."
+msgstr "La llamada finalizó debido a que el acceso al micrófono estaba bloqueado. Permita el acceso y vuelva a intentarlo."
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "The call ended because no microphone was found."
-msgstr "La llamada terminó porque no se encontró ningún micrófono."
+msgstr "La llamada se interrumpió porque no se encontró ningún micrófono."
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops."
-msgstr "La interfaz es silenciosa a propósito. El objetivo es la presencia humana de baja presión, no los bucles de rendimiento o compromiso."
+msgstr "La interfaz está diseñada para ser discreta. El objetivo es fomentar una presencia humana natural y relajada, no buscar un alto rendimiento ni generar interacciones constantes."
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
-msgstr "No hay cuentas, perfiles, contactos, seguidores, feeds, rachas, puntuaciones o gráficos sociales permanentes. randos está más cerca de la infraestructura de conversación que las redes sociales."
+msgstr "No existen cuentas, perfiles, contactos, seguidores, flujos de actividad, rachas, puntuaciones o un grafo social permanente. randos se asemeja más a una infraestructura para la comunicación que a una red social."
 
 #. Your status when the call's time has run out and both people choose whether to go on.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Time is up"
-msgstr "Se acabó el tiempo."
+msgstr "El tiempo se ha acabado"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Time is up. Continue for another %{minutes} minutes?"
-msgstr "Se acabó el tiempo. ¿Continuar por otros %{minutes} minutos?"
+msgstr "El tiempo ha terminado. ¿Desea continuar durante otros %{minutes} minutos?"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Toggle dark mode"
-msgstr "Conmutar modo oscuro"
+msgstr "Activar/desactivar el modo oscuro"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "View on GitHub"
-msgstr "Vista sobre GitHub"
+msgstr "Ver en GitHub"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
-msgstr "No podemos encontrar Internet."
+msgstr "No podemos encontrar el internet"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "We couldn't start that call. Please try again."
-msgstr "No pudimos empezar esa llamada, por favor, inténtalo de nuevo."
+msgstr "No pudimos iniciar esa llamada. Por favor, inténtelo de nuevo."
 
 #. Label of your own voice's waveform during a call (you, not the other person).
 #: lib/randos_web/components/home_components.ex
@@ -254,12 +254,12 @@ msgstr "Tú"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
-msgstr "Eliges el idioma que quieres hablar y el idioma que quieres oír. randos Te emparejas con alguien compatible para una conversación corta, y luego te quitas del camino."
+msgstr "Usted elige el idioma que desea hablar y el idioma que desea escuchar. randos le conecta con alguien compatible para una breve conversación, y luego se retira."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You have matched. Audio starts when the call opens."
-msgstr "El audio comienza cuando se abre la llamada."
+msgstr "Se ha establecido la conexión. El audio comenzará cuando se inicie la llamada."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -280,12 +280,12 @@ msgstr "crosstalk"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is a place for anonymous, audio-only language conversation."
-msgstr "randos es un lugar para la conversación anónima, de lenguaje audio-solamente."
+msgstr "randos es un espacio para practicar idiomas a través de conversaciones anónimas, exclusivamente en formato de audio."
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is free software (AGPL-3.0) and built in public."
-msgstr "randos es software libre (AGPL-3.0) y construido en público."
+msgstr "randos es software libre (AGPL-3.0) y fue desarrollado de forma pública."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -301,18 +301,18 @@ msgstr "esperando audio remoto"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels."
-msgstr "Está destinado a %{crosstalk}, el intercambio de idiomas, la práctica de escuchar, y la conversación casual ordinaria sin forzar a la gente en modos rígidos o etiquetas."
+msgstr "Está diseñado para %{crosstalk}, el intercambio de idiomas, la práctica de la comprensión auditiva y las conversaciones informales y cotidianas, sin obligar a las personas a ajustarse a formatos o categorías rígidas."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "%{time} remaining"
-msgstr "%{time} restantes"
+msgstr "Tiempo restante: %{time}"
 
 #: lib/randos_web/live/about_live.ex
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Help fix a translation"
-msgstr "Ayudar a arreglar una traducción"
+msgstr "Ayuda a corregir una traducción"
 
 #: lib/randos_web/live/about_live.ex
 #: lib/randos_web/live/translations_live.ex
@@ -328,12 +328,12 @@ msgstr "micrófono listo"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "microphone unavailable"
-msgstr "micrófono no disponible"
+msgstr "Micrófono no disponible"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "remote audio needs a tap (%{summary})"
-msgstr "audio remoto necesita un toque (%{summary})"
+msgstr "se necesita tocar para activar el audio remoto (%{summary})"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -343,7 +343,7 @@ msgstr "Reproducción remota de audio (%{summary})"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "remote audio received (%{summary})"
-msgstr "audio remoto recibido (%{summary})"
+msgstr "Audio recibido de forma remota (%{summary})."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -362,7 +362,7 @@ msgstr "Continuar"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "End"
-msgstr "Fin"
+msgstr "Finalizar"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -382,20 +382,20 @@ msgstr "Silenciar"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Next rando"
-msgstr "Siguiente rando"
+msgstr "Próximo rando"
 
 #. Button: turn your own microphone back on.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Unmute"
-msgstr "Unmute"
+msgstr "Desactivar el silencio"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "answering"
-msgstr "contestando"
+msgstr "respondiendo"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -413,19 +413,19 @@ msgstr "conectado"
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "connecting"
-msgstr "conectar"
+msgstr "conectando"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "ended"
-msgstr "terminado"
+msgstr "Terminado"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "failed"
-msgstr "Falló"
+msgstr "fracasado"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -455,12 +455,12 @@ msgstr "Inicio"
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "waiting for your rando"
-msgstr "esperando por su rando"
+msgstr "A la espera de tu rando"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "I'm happy to hear"
-msgstr "Me alegra oír eso."
+msgstr "Me alegro de escuchar"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -470,7 +470,7 @@ msgstr "Buscando un rando que hable %{hearing_languages} y quiera escuchar %{spe
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Pick every language you're comfortable listening to."
-msgstr "Elige cada idioma que estés cómodo escuchando."
+msgstr "Elige cada idioma que te sientas cómodo escuchando."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -487,7 +487,7 @@ msgstr[1] ""
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{language} both ways"
-msgstr "%{language} Ambos caminos"
+msgstr "%{language} Ambas maneras"
 
 #. A call's typical length in minutes (min = minutes).
 #: lib/randos_web/live/status_live.ex
@@ -499,7 +499,7 @@ msgstr "%{minutes} min"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Calls started"
-msgstr "Llamadas iniciadas"
+msgstr "Las llamadas comenzaron"
 
 #. How a call ended: it was stopped before it connected.
 #: lib/randos_web/live/status_live.ex
@@ -510,7 +510,7 @@ msgstr "Cancelado"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Checking the relay…"
-msgstr "Comprobando el relé..."
+msgstr "Verificando el relé…"
 
 #. A count on the status page: how many calls connected today.
 #: lib/randos_web/live/status_live.ex
@@ -521,7 +521,7 @@ msgstr "Conectado"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Connection lost"
-msgstr "Conexión perdida"
+msgstr "Se perdió la conexión"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -531,12 +531,12 @@ msgstr "Continuación de los últimos 10 minutos"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Couldn't connect"
-msgstr "No se pudo conectar"
+msgstr "No podía conectarse"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection."
-msgstr "Cada llamada pasa a través de nuestro relé, así que ninguna persona ve la dirección del otro. Lo probamos cada pocos minutos estableciendo una conexión de relé real."
+msgstr "Todas las llamadas pasan por nuestro relé, por lo que ninguna persona ve la dirección de la otra, lo probamos cada pocos minutos estableciendo una conexión de relé real."
 
 #. How a call ended: it ran its course normally.
 #: lib/randos_web/live/status_live.ex
@@ -557,12 +557,12 @@ msgstr "Idiomas hablados"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
-msgstr "Última comprobación en %{time} UTC."
+msgstr "Última verificación realizada a las %{time} UTC."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "No calls yet."
-msgstr "Todavía no hay llamadas."
+msgstr "Aún no he recibido llamadas."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -577,34 +577,34 @@ msgstr "Otros idiomas: %{calls}"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Over TLS (networks that block UDP)"
-msgstr "Sobre TLS (redes que bloquean UDP)"
+msgstr "A través de TLS (redes que bloquean el protocolo UDP)"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Over UDP (most calls)"
-msgstr "Sobre UDP (la mayoría de las llamadas)"
+msgstr "A través de UDP (la mayoría de las llamadas)."
 
 #. The service status page: whether calls can connect now, and today's call counts.
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Status"
-msgstr "Situación"
+msgstr "Estado"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "The relay is partly working"
-msgstr "El relé está funcionando en parte"
+msgstr "El relé está funcionando parcialmente"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "The relay is working"
-msgstr "El relé está funcionando."
+msgstr "El relé está funcionando"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "The relay isn't working"
-msgstr "El relé no funciona."
+msgstr "El relé no funciona"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -620,18 +620,18 @@ msgstr "Longitud típica"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Whether calls can connect right now, and how today is going."
-msgstr "Si las llamadas pueden conectarse ahora mismo, y cómo va hoy."
+msgstr "Si es posible realizar llamadas en este momento, y cómo está yendo el día."
 
 #. A relay server's state on the status page: it is working (up).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "working"
-msgstr "Trabajo"
+msgstr "funcionando"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Counted across %{answered} of %{total} servers."
-msgstr "Contado a través de %{answered} de %{total} servidores."
+msgstr "Contabilizado en el %{answered}% de los %{total} servidores."
 
 #. A call's typical length: 30 minutes or more (min = minutes).
 #: lib/randos_web/live/status_live.ex
@@ -643,17 +643,17 @@ msgstr "30+ min"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "under 1 min"
-msgstr "menos de 1 min"
+msgstr "menos de 1 minuto"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then."
-msgstr "Contando desde %{time} UTC on %{date}. Este servidor comienza de nuevo cada vez que duerme o se actualiza, por lo que estas son las llamadas de hoy desde entonces."
+msgstr "Contando desde las %{time} UTC del %{date}. Este servidor se reinicia cada vez que se apaga o se actualiza, por lo que estas son las llamadas realizadas desde entonces."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Counting since %{time} UTC on %{date}: today's calls so far."
-msgstr "Contando desde %{time} UTC en %{date}: las llamadas de hoy hasta ahora."
+msgstr "Contando desde las %{time} UTC del %{date}: llamadas recibidas hasta el momento de hoy."
 
 #. Footer link to the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/components/layouts.ex
@@ -664,75 +664,75 @@ msgstr "Privacidad"
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Running this commit plus changes not yet committed"
-msgstr "Ejecutar este commit plus cambios aún no comprometidos"
+msgstr "Ejecutar este commit más los cambios que aún no se han cometido"
 
 #. Footer link to the source code; AGPL-3.0 is its license (keep it as is).
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Source (AGPL-3.0)"
-msgstr "Fuente (AGPL-3,0)"
+msgstr "Fuente (AGPL-3.0)"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "The commit this server runs"
-msgstr "La confirmación de este servidor se ejecuta"
+msgstr "El commit que ejecuta este servidor"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
-msgstr "Lo que cada parte de randos ve, registra y guarda, con la configuración detrás de cada reclamación:"
+msgstr "Lo que cada parte de randos ve, registra y guarda, junto con la configuración que subyace a cada reclamación:"
 
 #. Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "privacy"
-msgstr "privacidad"
+msgstr "Privacidad"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando's connection dropped; waiting a few seconds for them to come back."
-msgstr "Su rando conexión cayó; esperando unos segundos para que volvieran."
+msgstr "La conexión de tu rando se interrumpió; espera unos segundos a que vuelvan."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”."
-msgstr "Un par de idiomas se muestra una vez que tiene al menos %{min} llamadas; las más pequeñas se cuentan bajo “otros”."
+msgstr "Un par de idiomas se muestra una vez que se han registrado al menos %{min} llamadas; los pares con un número menor de llamadas se incluyen en la categoría “otros”."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "How languages are counted"
-msgstr "Cómo se cuentan los idiomas"
+msgstr "¿Cómo se contabilizan los idiomas?"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept."
-msgstr "Contamos las llamadas, no las personas: no hay direcciones, no hay identificación, no hay nada de nadie; sólo estos totales se mantienen."
+msgstr "Contamos llamadas, no personas: no se registran direcciones, ni identificaciones, ni información sobre nadie; solo se guardan estos totales."
 
 #. Label of the search box that finds a piece of this site's text and its translation.
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Find a phrase"
-msgstr "Encontrar una frase"
+msgstr "Encuentra una frase"
 
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Find a phrase, in English or %{language}"
-msgstr "Buscar una frase, en inglés o %{language}"
+msgstr "Encuentra una frase, en inglés o %{language}"
 
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Not translated yet"
-msgstr "No traducido aún"
+msgstr "Todavía no traducido"
 
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Nothing matches."
-msgstr "Nada coincide."
+msgstr "Nada se parece."
 
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Pick the language you'd like to check."
-msgstr "Elige el idioma que quieras revisar."
+msgstr "Elige el idioma que deseas verificar."
 
 #. Button: suggest a better translation of this text.
 #: lib/randos_web/live/translations_live.ex
@@ -743,24 +743,24 @@ msgstr "Sugerir una solución"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest."
-msgstr "Las traducciones de este sitio fueron hechas por máquina y no han sido revisadas por la gente todavía. Si algo lee mal en su idioma, por favor ayude a arreglarlo: encontrar el texto, escribir cómo debe leer, y haremos el resto."
+msgstr "Las traducciones de este sitio fueron realizadas por máquina y aún no han sido revisadas por personas. Si algo se lee mal en su idioma, por favor ayúdenos a corregirlo: encuentre el texto, escriba cómo debería leerse y nosotros nos encargaremos del resto."
 
 #: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
-msgstr "Las traducciones de este sitio fueron hechas por máquina. Si algo se lee mal, encuéntralo a continuación y pulsa “Sugerir una solución”: abre un problema en GitHub con todo lo rellenado excepto su solución (necesita una cuenta de GitHub). Una solicitud de extracción con su solución se abre por su cuenta, y se va en vivo una vez que se revisa."
+msgstr "Las traducciones de este sitio fueron realizadas por un sistema automatizado. Si encuentra algún error, puede encontrarlo a continuación y hacer clic en \"Sugerir una corrección\". Esto abrirá un problema en GitHub con toda la información ya completada, excepto la corrección que usted propone (necesitará una cuenta de GitHub). Una solicitud de modificación con su corrección se abrirá automáticamente y se publicará una vez que sea revisada."
 
 #. Opens the list of languages you can hear, to change it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
-msgstr "Cambio"
+msgstr "Cambiar"
 
 #. Closes the list of languages you can hear, once you've changed it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
-msgstr "Hecho"
+msgstr "Done"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -770,9 +770,9 @@ msgstr "Elige al menos un idioma para escuchar"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You'll hear %{languages}"
-msgstr "Oirás %{languages}"
+msgstr "Escucharás %{languages}"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Reconnecting audio…"
-msgstr "Reconectando audio..."
+msgstr "Reconectando el audio…"
