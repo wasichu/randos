@@ -178,6 +178,13 @@ are product requirements, not suggestions. Don't add features that violate them.
   - The only long-lived process we start on purpose is the dev server
     (`just serve`, from the session hook); stop it with `just serve-stop`.
 
+- **Waits in tests allow at least 5 s.** A wait for something to happen
+  (`assert_receive`, the `eventually` helpers, e2e `waitFor`) gets 5 s or
+  more: only a failing wait ever runs that long, and CI runners are slower
+  than a laptop (2 s waits flaked three tests in one day). The suites'
+  defaults say so (`assert_receive_timeout: 5_000` in both test helpers).
+  Assertions about timing itself (a short test timer firing on time) keep
+  their tight bounds; so does `refute_receive`.
 - Tests mirror `lib/` under `test/`. LiveView tests use `Phoenix.LiveViewTest`
   + `LazyHTML`; assert on element IDs (`has_element?(view, "#id")`), not raw HTML
   or copy text. Always give key template elements stable DOM IDs.

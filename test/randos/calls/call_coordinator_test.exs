@@ -318,7 +318,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
       ref = Process.monitor(call_pid)
       :ok = report(call_pid, "a", "connected")
 
-      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 5_000
       # So the Matchmaker can tell a failed call from a finished one.
       assert_receive {:DOWN, ^ref, :process, ^call_pid, {:shutdown, :connection_failed}}
       Enum.each(pids, &send(&1, :stop))
@@ -331,7 +331,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
       :ok = report(call_pid, "b", "disconnected")
       assert_receive {:call_updated, %{status: :active, media: %{"b" => :disconnected}}}
 
-      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 5_000
       Enum.each(pids, &send(&1, :stop))
     end
 
@@ -470,7 +470,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
       new_pid = waiting_pid()
       {:ok, _} = CallCoordinator.resume(call_pid, "b", ticket, new_pid)
 
-      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 5_000
       Enum.each([pid_a, new_pid], &send(&1, :stop))
     end
 
@@ -747,7 +747,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
     test "a call without audio isn't unhealthy for media it never has" do
       {match, pids} = match(false)
       start_call(match, call_duration_ms: 60_000, recovery_budget_ms: 100)
-      assert_receive {:call_updated, %{status: :active, recovering: false}}, 1_000
+      assert_receive {:call_updated, %{status: :active, recovering: false}}, 5_000
       refute_receive {:call_updated, %{status: :ended}}, 300
       stop_all(pids)
     end

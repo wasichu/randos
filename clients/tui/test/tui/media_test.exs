@@ -26,7 +26,7 @@ defmodule Tui.MediaTest do
     assert {:error, "loopback already running"} = Media.loopback_start(media, "sine", "null")
 
     assert_receive {:media, "loopback_stats", %{"codec_ms" => 26.5, "input_peak_dbfs" => peak}},
-                   2_000
+                   5_000
 
     assert peak > -10
     assert Media.loopback_stop(media) == :ok
@@ -65,7 +65,7 @@ defmodule Tui.MediaTest do
     ref = Process.monitor(first)
     kill_helper(first)
 
-    assert_receive {:DOWN, ^ref, :process, ^first, {:helper_exited, _status}}, 2_000
+    assert_receive {:DOWN, ^ref, :process, ^first, {:helper_exited, _status}}, 5_000
     assert Process.alive?(supervisor)
 
     second = wait_for_restart(:media_restart_test, first)

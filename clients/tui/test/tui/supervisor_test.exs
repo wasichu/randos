@@ -18,7 +18,7 @@ defmodule Tui.SupervisorTest do
 
     ref = Process.monitor(media)
     kill_helper(media)
-    assert_receive {:DOWN, ^ref, :process, ^media, {:helper_exited, _}}, 2_000
+    assert_receive {:DOWN, ^ref, :process, ^media, {:helper_exited, _}}, 5_000
 
     assert eventually(fn -> Tui.Media.ping(Tui.Media) == :pong end)
     assert Process.whereis(Tui.App) == app, "the UI (and its call channel) survived"

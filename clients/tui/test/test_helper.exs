@@ -7,9 +7,10 @@
 require_native? = System.get_env("RANDOS_REQUIRE_NATIVE") == "1"
 run_native? = require_native? or File.regular?(Tui.Media.default_helper_path())
 
-# Many tests wait on a real helper process; the 100 ms default flakes when
-# precommit or CI is busy compiling. This only lengthens failing waits.
+# A wait for something to happen allows at least 5 s (AGENTS.md, Testing):
+# many tests wait on a real helper process, and CI is slower than a laptop.
+# Only failing waits run that long.
 ExUnit.start(
   exclude: [:integration, :relay_only, :recovery] ++ if(run_native?, do: [], else: [:native]),
-  assert_receive_timeout: 2_000
+  assert_receive_timeout: 5_000
 )

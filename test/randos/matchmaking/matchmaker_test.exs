@@ -431,7 +431,7 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
       # The one who waited longer offers.
       assert_receive {:call, %Match{participant_a: %{id: "a"}, participant_b: %{id: "b"}}, _call},
-                     1_000
+                     5_000
 
       assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)
     end

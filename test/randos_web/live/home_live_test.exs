@@ -335,7 +335,7 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#extension-countdown")
   end
 
-  defp eventually_gone?(view, selector, attempts \\ 200)
+  defp eventually_gone?(view, selector, attempts \\ 500)
   defp eventually_gone?(_view, _selector, 0), do: false
 
   defp eventually_gone?(view, selector, attempts) do
@@ -366,9 +366,9 @@ defmodule RandosWeb.HomeLiveTest do
     |> render_submit()
   end
 
-  # Up to 2 s (200 × 10 ms), like assert_receive's default here: a busy CI
+  # Up to 5 s (500 × 10 ms), like assert_receive's default here: a busy CI
   # runner can be slow; only a failing wait takes that long.
-  defp eventually_has_element?(view, selector, attempts \\ 200)
+  defp eventually_has_element?(view, selector, attempts \\ 500)
 
   defp eventually_has_element?(_view, _selector, 0), do: false
 
@@ -394,7 +394,7 @@ defmodule RandosWeb.HomeLiveTest do
     String.replace_prefix(id, "call-media-", "")
   end
 
-  defp eventually_call_pid(call_id, attempts \\ 200)
+  defp eventually_call_pid(call_id, attempts \\ 500)
 
   defp eventually_call_pid(_call_id, 0), do: :error
 

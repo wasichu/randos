@@ -430,7 +430,7 @@ defmodule Tui.AppTest do
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :running, stats: %{"codec_ms" => 26.5}}}},
-                     2_000
+                     5_000
 
       # The helper dying mid-test is reported, not left showing "running".
       media = Process.whereis(:app_test_media)
@@ -438,7 +438,7 @@ defmodule Tui.AppTest do
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :failed, error: "the audio helper restarted"}}},
-                     2_000
+                     5_000
     end
 
     test "without a media helper it explains instead of crashing" do

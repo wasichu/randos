@@ -128,7 +128,8 @@ defmodule Tui.TestSupport do
   end
 
   @doc "Retries `fun` while it exits (e.g. a process that's still restarting)."
-  def eventually(fun, attempts \\ 50) do
+  # Up to 5 s (250 × 20 ms), the tests' rule for waits (AGENTS.md).
+  def eventually(fun, attempts \\ 250) do
     fun.()
   catch
     :exit, _ when attempts > 0 ->
@@ -137,7 +138,7 @@ defmodule Tui.TestSupport do
   end
 
   @doc "Waits until `name` is registered to a process other than `old`."
-  def wait_for_restart(name, old, attempts \\ 50) do
+  def wait_for_restart(name, old, attempts \\ 250) do
     case Process.whereis(name) do
       pid when is_pid(pid) and pid != old ->
         pid
