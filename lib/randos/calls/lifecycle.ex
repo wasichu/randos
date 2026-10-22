@@ -56,6 +56,9 @@ defmodule Randos.Calls.Lifecycle do
   @disconnected_grace_seconds 5
   @rematch_window_seconds 90
   @reconnect_grace_seconds 10
+  @ice_restart_delay_seconds 2
+  @ice_restart_timeout_seconds 10
+  @max_ice_restarts 2
 
   @typedoc "One participant's media, as they last reported it."
   @type media_state :: :connecting | :connected | :disconnected
@@ -98,6 +101,26 @@ defmodule Randos.Calls.Lifecycle do
   """
   @spec reconnect_grace_seconds() :: pos_integer()
   def reconnect_grace_seconds, do: @reconnect_grace_seconds
+
+  @doc """
+  ICE restart (calls whose two clients support it, `Call.ice_restart?`):
+  how long a side may stay `disconnected` before the server asks for a
+  restart (a short loss often recovers by itself).
+  """
+  @spec ice_restart_delay_seconds() :: pos_integer()
+  def ice_restart_delay_seconds, do: @ice_restart_delay_seconds
+
+  @doc "How long one ICE restart attempt has to get both sides connected again."
+  @spec ice_restart_timeout_seconds() :: pos_integer()
+  def ice_restart_timeout_seconds, do: @ice_restart_timeout_seconds
+
+  @doc """
+  Restart attempts per outage (counting from the last time both sides were
+  connected) before the call ends `:connection_failed`. An attempt started
+  by a resume doesn't count: the last one's messages may have been lost.
+  """
+  @spec max_ice_restarts() :: pos_integer()
+  def max_ice_restarts, do: @max_ice_restarts
 
   @spec ended_reasons() :: [ended_reason()]
   def ended_reasons, do: @ended_reasons

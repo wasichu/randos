@@ -54,7 +54,8 @@ defmodule Randos.Matchmaking.Matchmaker do
           required(:speaks_language) => String.t(),
           required(:hears_languages) => [String.t()],
           optional(:accepted_adult_terms) => boolean(),
-          optional(:audio?) => boolean()
+          optional(:audio?) => boolean(),
+          optional(:ice_restart?) => boolean()
         }
 
   @type join_result ::
@@ -335,7 +336,8 @@ defmodule Randos.Matchmaking.Matchmaker do
       topic: Map.fetch!(attrs, :topic),
       speaks_language: Map.fetch!(attrs, :speaks_language),
       hears_languages: attrs |> Map.fetch!(:hears_languages) |> List.wrap() |> Enum.uniq(),
-      audio?: Map.get(attrs, :audio?, false) == true
+      audio?: Map.get(attrs, :audio?, false) == true,
+      ice_restart?: Map.get(attrs, :ice_restart?, false) == true
     }
   end
 

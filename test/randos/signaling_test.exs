@@ -119,6 +119,32 @@ defmodule Randos.SignalingTest do
                })
     end
 
+    test "an ICE restart offer keeps its new credentials and ice-options, loses its host candidates" do
+      restart =
+        Enum.map_join(
+          [
+            "v=0",
+            "o=- 4611731400430051336 3 IN IP4 0.0.0.0",
+            "m=audio 9 UDP/TLS/RTP/SAVPF 111",
+            "a=ice-ufrag:Zq3W",
+            "a=ice-pwd:N0w4n3wpassw0rdF0rTh1sRestart",
+            "a=ice-options:trickle",
+            "a=" <> @host,
+            "a=" <> @relay
+          ],
+          &(&1 <> "\r\n")
+        )
+
+      assert {:ok, %{"sdp" => %{"sdp" => safe}}} =
+               Signaling.relay_only(:offer, %{"sdp" => %{"type" => "offer", "sdp" => restart}})
+
+      assert safe =~ "a=ice-ufrag:Zq3W\r\n"
+      assert safe =~ "a=ice-pwd:N0w4n3wpassw0rdF0rTh1sRestart\r\n"
+      assert safe =~ "a=ice-options:trickle\r\n"
+      assert safe =~ @relay_zeroed
+      refute safe =~ "192.168.1.5"
+    end
+
     test "anything else is dropped rather than relayed unchecked" do
       assert Signaling.relay_only(:offer, %{"sdp" => "not a description"}) == :drop
       assert Signaling.relay_only(:answer, %{}) == :drop

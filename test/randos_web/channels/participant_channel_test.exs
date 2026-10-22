@@ -134,6 +134,13 @@ defmodule RandosWeb.ParticipantChannelTest do
           {"find", %{"speaks" => 1}},
           {"find",
            %{"speaks" => "en", "listens" => "es", "adult_acknowledged" => true, "audio" => "yes"}},
+          {"find",
+           %{
+             "speaks" => "en",
+             "listens" => "es",
+             "adult_acknowledged" => true,
+             "ice_restart" => "yes"
+           }},
           {"vote", %{"vote" => "maybe"}},
           {"signal", %{"type" => "offer"}},
           {"bogus", %{}}
@@ -227,6 +234,8 @@ defmodule RandosWeb.ParticipantChannelTest do
         id: call_id,
         ice_servers: [_ | _],
         ice_transport_policy: "all",
+        # The offerer restarts ICE when this grows (obligation 10).
+        ice_generation: 0,
         media: %{self: :connecting, peer: :connecting}
       }
     }

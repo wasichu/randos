@@ -667,6 +667,119 @@ defmodule Randos.Calls.CallCoordinatorTest do
     assert is_integer(connected) and connected <= duration
   end
 
+  describe "ICE restart (both clients can restart, obligation 10)" do
+    # A long, connected call whose clients can restart ICE; short timings.
+    defp restart_call(opts \\ [], capable \\ {true, true}) do
+      {match, [pid_a, pid_b]} = match(true)
+      {cap_a, cap_b} = capable
+
+      match = %{
+        match
+        | participant_a: %{match.participant_a | ice_restart?: cap_a},
+          participant_b: %{match.participant_b | ice_restart?: cap_b}
+      }
+
+      call_pid =
+        start_call(
+          match,
+          Keyword.merge(
+            [
+              call_duration_ms: 60_000,
+              connect_timeout_ms: 300,
+              disconnected_grace_ms: 100,
+              reconnect_grace_ms: 600,
+              ice_restart_delay_ms: 50,
+              ice_restart_timeout_ms: 150,
+              max_ice_restarts: 2
+            ],
+            opts
+          )
+        )
+
+      assert_receive {:call_updated, %{status: :connecting}}
+      assert_receive {:call_updated, %{status: :connecting}}
+      tickets = tickets(call_pid)
+      connect_both(call_pid)
+      {call_pid, [pid_a, pid_b], tickets}
+    end
+
+    test "a short loss that recovers by itself asks for nothing" do
+      {call_pid, pids, _tickets} = restart_call()
+      :ok = report(call_pid, "b", "disconnected")
+      :ok = report(call_pid, "b", "connected")
+      refute_receive {:call_updated, %{ice_generation: 1}}, 150
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "a lasting disconnect asks the offerer to restart; back to connected, the call goes on" do
+      {call_pid, pids, _tickets} = restart_call()
+      :ok = report(call_pid, "b", "disconnected")
+      assert_receive {:call_updated, %{status: :active, ice_generation: 1}}, 300
+
+      :ok = report(call_pid, "b", "connected")
+      refute_receive {:call_updated, %{status: :ended}}, 400
+
+      # A new outage starts counting again (the last one was won).
+      :ok = report(call_pid, "a", "disconnected")
+      assert_receive {:call_updated, %{ice_generation: 2}}, 300
+      assert_receive {:call_updated, %{ice_generation: 3}}, 400
+      :ok = report(call_pid, "a", "connected")
+      refute_receive {:call_updated, %{status: :ended}}, 400
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "out of attempts, the call ends connection_failed" do
+      {call_pid, pids, _tickets} = restart_call()
+      :ok = report(call_pid, "b", "disconnected")
+      assert_receive {:call_updated, %{ice_generation: 1}}, 300
+      assert_receive {:call_updated, %{ice_generation: 2}}, 400
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 400
+      refute_received {:call_updated, %{ice_generation: 3}}
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "failed counts as disconnected while attempts remain" do
+      {call_pid, pids, _tickets} = restart_call()
+      :ok = report(call_pid, "a", "failed")
+      refute_received {:call_updated, %{status: :ended}}
+      assert_receive {:call_updated, %{status: :active, ice_generation: 1}}, 300
+      :ok = report(call_pid, "a", "connected")
+      refute_receive {:call_updated, %{status: :ended}}, 400
+      Enum.each(pids, &send(&1, :stop))
+    end
+
+    test "no restart while someone is away; one at once when they're back" do
+      {call_pid, [pid_a, pid_b], %{"a" => ticket}} = restart_call()
+      Process.exit(pid_a, :kill)
+      assert_receive {:call_updated, %{away: ["a"]}}
+      :ok = report(call_pid, "b", "disconnected")
+      refute_receive {:call_updated, %{ice_generation: 1}}, 300
+
+      new_pid = waiting_pid()
+      {:ok, _} = CallCoordinator.resume(call_pid, "a", ticket, new_pid)
+      assert_receive {:call_updated, %{ice_generation: 1}}, 100
+
+      # The resume's attempt didn't count: two more before the call fails.
+      assert_receive {:call_updated, %{ice_generation: 2}}, 400
+      assert_receive {:call_updated, %{ice_generation: 3}}, 400
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 400
+      Enum.each([pid_b, new_pid], &send(&1, :stop))
+    end
+
+    test "if either client can't restart, the call keeps today's rules" do
+      {call_pid, pids, _tickets} = restart_call([], {true, false})
+      :ok = report(call_pid, "b", "disconnected")
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 400
+      refute_received {:call_updated, %{ice_generation: 1}}
+      Enum.each(pids, &send(&1, :stop))
+
+      {call_pid, pids, _tickets} = restart_call([], {false, true})
+      :ok = report(call_pid, "a", "failed")
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 100
+      Enum.each(pids, &send(&1, :stop))
+    end
+  end
+
   describe "lifecycle under the call supervisor" do
     test "is not restarted after the call ends" do
       {match, _pids} = match()

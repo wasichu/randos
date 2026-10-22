@@ -61,6 +61,7 @@ defmodule RandosWeb.ParticipantShellTest do
                extension_duration_seconds: Lifecycle.extension_duration_seconds(),
                ended_reason: nil,
                ice_transport_policy: "all",
+               ice_generation: 0,
                # Built without Call.new/2, so no media has been reported.
                media: %{self: nil, peer: nil},
                # The rando's language, a code: never who they are.

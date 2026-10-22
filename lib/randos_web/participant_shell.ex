@@ -81,7 +81,9 @@ defmodule RandosWeb.ParticipantShell do
       :extension_deadline_unix_ms,
       :extension_count,
       :ended_reason,
-      :ice_transport_policy
+      :ice_transport_policy,
+      # The offerer restarts ICE whenever this grows (obligation 10).
+      :ice_generation
     ])
     |> Map.put(:media, media_view(call, participant_id))
     # The language the rando speaks (with several hearing languages, the

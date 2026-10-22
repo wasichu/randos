@@ -25,6 +25,12 @@ defmodule RandosWeb.HomeLive do
       |> assign(:ice_servers, nil)
       |> assign(:voice_processor, RandosWeb.VoiceProcessor.configured())
       |> assign(:call_id, nil)
+      # Whether this page's JavaScript can restart ICE (obligation 10): a
+      # connect param, so it's the code the page actually loaded.
+      |> assign(
+        :ice_restart?,
+        connected?(socket) and get_connect_params(socket)["ice_restart"] == true
+      )
 
     case connected?(socket) && resume(socket) do
       {:ok, socket} -> {:ok, socket}
@@ -58,7 +64,8 @@ defmodule RandosWeb.HomeLive do
   end
 
   defp start_fresh(socket, preferences) do
-    participant = Participant.new(participant_preferences(preferences))
+    participant =
+      Participant.new(participant_preferences(preferences, socket.assigns.ice_restart?))
 
     if connected?(socket) do
       Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
@@ -149,6 +156,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_status, participant.call && participant.call.status)
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
     |> assign(:ice_transport_policy, participant.call && participant.call.ice_transport_policy)
+    |> assign(:ice_generation, participant.call && participant.call.ice_generation)
     |> assign(
       :peer_language,
       participant.call && ParticipantShell.peer_speaks(participant.call, participant.id)
@@ -176,6 +184,7 @@ defmodule RandosWeb.HomeLive do
             webrtc_role={@webrtc_role}
             ice_servers={@ice_servers}
             ice_transport_policy={@ice_transport_policy}
+            ice_generation={@ice_generation}
             voice_processor={@voice_processor}
             preferences={@preferences}
             peer_language={@peer_language}
@@ -247,15 +256,16 @@ defmodule RandosWeb.HomeLive do
   end
 
   defp participant_preferences(%Phoenix.LiveView.Socket{} = socket),
-    do: participant_preferences(socket.assigns.preferences)
+    do: participant_preferences(socket.assigns.preferences, socket.assigns.ice_restart?)
 
-  defp participant_preferences(preferences) do
+  defp participant_preferences(preferences, ice_restart?) do
     %{
       speaks: preferences["speaking_language"],
       hears: preferences["hearing_languages"],
       adult_acknowledged?: acknowledged?(preferences),
       # The browser always brings WebRTC audio.
-      audio?: true
+      audio?: true,
+      ice_restart?: ice_restart?
     }
   end
 end

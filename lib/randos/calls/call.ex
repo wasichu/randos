@@ -20,7 +20,9 @@ defmodule Randos.Calls.Call do
           ended_reason: Randos.Calls.Lifecycle.ended_reason() | nil,
           media: %{String.t() => Randos.Calls.Lifecycle.media_state()},
           ice_transport_policy: ice_transport_policy(),
-          away: [String.t()]
+          away: [String.t()],
+          ice_restart?: boolean(),
+          ice_generation: non_neg_integer()
         }
 
   @typedoc """
@@ -44,7 +46,12 @@ defmodule Randos.Calls.Call do
     ice_transport_policy: "all",
     # Participants whose connection to the server dropped, waiting for them
     # to come back (Lifecycle.reconnect_grace_seconds/0).
-    away: []
+    away: [],
+    # Both clients can restart ICE (obligation 10); otherwise the call
+    # keeps the plain disconnected grace.
+    ice_restart?: false,
+    # Bumped by the coordinator to ask the offerer for an ICE restart.
+    ice_generation: 0
   ]
 
   @doc """
@@ -57,7 +64,8 @@ defmodule Randos.Calls.Call do
       id: "call-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false),
       pid: pid,
       match: match,
-      media: %{match.participant_a.id => :connecting, match.participant_b.id => :connecting}
+      media: %{match.participant_a.id => :connecting, match.participant_b.id => :connecting},
+      ice_restart?: match.participant_a.ice_restart? and match.participant_b.ice_restart?
     }
   end
 end

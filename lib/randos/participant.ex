@@ -42,12 +42,15 @@ defmodule Randos.Participant do
   they're happy to hear (`hears`, at least one). `audio?` is whether their
   client can carry call audio (WebRTC); only clients that agree on it are
   matched, so nobody sits through a silent call with a text-only client.
+  `ice_restart?` is whether it can restart ICE when the server asks
+  (obligation 10); optional, `false` for clients from before.
   """
   @type preferences :: %{
-          speaks: String.t(),
-          hears: [String.t()],
-          adult_acknowledged?: boolean(),
-          audio?: boolean()
+          required(:speaks) => String.t(),
+          required(:hears) => [String.t()],
+          required(:adult_acknowledged?) => boolean(),
+          required(:audio?) => boolean(),
+          optional(:ice_restart?) => boolean()
         }
 
   @typedoc """
@@ -142,7 +145,8 @@ defmodule Randos.Participant do
       speaks: entry.speaks_language,
       hears: entry.hears_languages,
       adult_acknowledged?: true,
-      audio?: entry.audio?
+      audio?: entry.audio?,
+      ice_restart?: entry.ice_restart?
     }
 
     p = %__MODULE__{
@@ -288,7 +292,8 @@ defmodule Randos.Participant do
       speaks_language: p.preferences.speaks,
       hears_languages: p.preferences.hears,
       accepted_adult_terms: p.preferences.adult_acknowledged?,
-      audio?: p.preferences.audio?
+      audio?: p.preferences.audio?,
+      ice_restart?: Map.get(p.preferences, :ice_restart?, false)
     }
   end
 

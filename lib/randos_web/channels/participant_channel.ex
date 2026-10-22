@@ -64,7 +64,9 @@ defmodule RandosWeb.ParticipantChannel do
         socket
       )
       when is_binary(speaks) and is_boolean(ack) and
-             (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) do
+             (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) and
+             (not is_map_key(payload, "ice_restart") or
+                is_boolean(:erlang.map_get("ice_restart", payload))) do
     with {:ok, hears} <- hears(payload),
          {:ok, socket} <- take_find_token(socket) do
       # Clients that don't say they carry audio are matched only with each other.
@@ -72,7 +74,9 @@ defmodule RandosWeb.ParticipantChannel do
         speaks: speaks,
         hears: hears,
         adult_acknowledged?: ack,
-        audio?: Map.get(payload, "audio", false)
+        audio?: Map.get(payload, "audio", false),
+        # Can restart ICE when asked (obligation 10); older clients can't.
+        ice_restart?: Map.get(payload, "ice_restart", false)
       }
 
       {:reply, :ok, run(socket, {:find, preferences})}

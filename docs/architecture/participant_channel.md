@@ -85,6 +85,7 @@ join reply, which carries the whole current `state`. Message by message
 | `resume_ticket` (server → you) | Only if the new socket drops again before it arrives: then the second drop can't be resumed and the call ends after the grace. | Accepted (two drops within moments). |
 | `signal` `media_state` (you → server) | The server never hears your change; a lost `connected` left a call `connecting` until it failed. | Obligation 9: repeat your last report after the resume (both clients do). |
 | `signal` offer / answer / ICE candidate, either way | While `connecting`: the call can't connect. Once `active`: a late candidate, harmless. | By design, the connect timeout ends the call as `connection_failed`, both are requeued, and the rematch window doesn't apply. |
+| a restart `offer` (either way) | The restart can't happen; the media stays down. | The server holds restarts while either person is away and asks again as soon as they're back (a new `ice_generation` in the resume reply and the `state` push); nobody resends an old offer. |
 | `vote` (you → server) | The vote isn't counted, and nothing shows it: the call can end at the vote timeout though you chose to continue. | **Known gap.** Planned: `call` says whether you've voted; clients show it, so after a resume an uncounted vote shows the buttons again. |
 | `find`, `cancel_search`, `end_call`, `next` | Nothing happens. | You see nothing happen and do it again (without a call there's no resume: a rejoin is a new, `idle` participant). |
 | `status` | No reply. | Ask again (the TUI's status screen refreshes on its own). |
@@ -134,6 +135,13 @@ carry call audio over WebRTC. Browsers always do. A client that sends
 `false`, so a browser user never ends up in a silent call with a text-only
 client. Send `true` only once you can actually answer or offer an audio
 call; a non-boolean value replies `invalid_message`.
+
+`ice_restart` (boolean, optional, default `false`) says this client follows
+obligation 10: it restarts ICE when the server asks. Only a call whose two
+clients both sent `true` gets restarts (the browser sends it as a connect
+param, so it's always the code the page actually loaded); other calls keep
+the plain disconnected grace. It isn't a matching rule. A non-boolean
+value replies `invalid_message`.
 
 ### `status`: the public status page
 
@@ -205,6 +213,7 @@ e.g. `"in_call"`.
     "media": {"self": "connecting | connected | disconnected", "peer": "…"},
     "ice_servers": [{"urls": "stun:…"}, {"urls": "turn:…", "username": "…", "credential": "…"}],
     "ice_transport_policy": "relay | all",
+    "ice_generation": 0,
     "peer_speaks": "es",
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
@@ -228,6 +237,9 @@ e.g. `"in_call"`.
 - `peer_speaks`: the language your rando speaks in this call (a code from
   `languages`). With several hearing languages, it's the only way to know.
   It's a language, never anything that identifies them.
+- `ice_generation`: starts at 0. The server raises it to ask for an ICE
+  restart (obligation 10), only in calls whose clients both sent
+  `ice_restart: true`.
 - `ice_transport_policy`: WebRTC's `iceTransportPolicy` for this call.
   `"relay"` (whenever the server has a TURN server, unless its operator
   allows direct calls): connect only through the TURN relay, so neither
@@ -311,7 +323,13 @@ going direct: `just smoke` and `just tui-smoke` run them.)
    person's connection to the server is down (obligation 9), the grace
    waits: a network change drops both at once. Once they're back, a side
    still `disconnected` gets a fresh grace. Don't run your own timers for
-   these.
+   these. In a call with ICE restart (both clients sent `ice_restart: true`),
+   a side `disconnected` for `Lifecycle.ice_restart_delay_seconds/0` (2 s)
+   gets a restart instead of the grace (obligation 10): each attempt has
+   `Lifecycle.ice_restart_timeout_seconds/0` (10 s), and after
+   `Lifecycle.max_ice_restarts/0` (2) failed attempts the call ends
+   `connection_failed`. There, `failed` is a report like `disconnected`, not
+   the end: keep your peer connection and wait for the status.
 5. **Tear down when the status leaves the call** (`call` becomes `null`).
    The server doesn't relay lifecycle signals to the peer.
 6. **Can't start? `end_call` with a reason.** No mic, mic denied, or no
@@ -347,8 +365,20 @@ going direct: `just smoke` and `just tui-smoke` run them.)
    the server takes you back, report your current `media_state` again,
    even if it hasn't changed (a report sent as the socket dropped may
    never have arrived; the server ignores a repeat), and carry on; if it
-   refuses, the call is over: end it locally. A page unload or quitting is leaving on purpose
+   refuses, the call is over: end it locally. Act on the reply's
+   `ice_generation` too (obligation 10): a restart asked for while you were
+   gone is in it. A page unload or quitting is leaving on purpose
    (obligation 7), not a drop.
+10. **Restart when asked** (if you sent `ice_restart: true`). When
+    `call.ice_generation` grows past the last one you acted on (in a
+    `state` push or a resume reply), the **offerer** restarts ICE: new ICE
+    credentials and fresh candidates (re-gather from the current network:
+    the old addresses may be gone), and a new `offer`, then trickle as
+    usual. The **answerer** answers any offer, a restart included, and
+    re-gathers too. Only the server asks and only the offerer offers, so
+    restart offers never cross. Keep the call's media, DTLS and tracks;
+    report `media_state` as usual (no new value): the server knows a
+    restart is in flight because it asked for one.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media

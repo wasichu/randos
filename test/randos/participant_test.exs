@@ -73,7 +73,9 @@ defmodule Randos.ParticipantTest do
                speaks_language: "fr",
                hears_languages: ["de"],
                accepted_adult_terms: true,
-               audio?: true
+               audio?: true,
+               # Not given: a client from before ICE restart.
+               ice_restart?: false
              }
     end
 
