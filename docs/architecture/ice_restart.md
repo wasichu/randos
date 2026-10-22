@@ -6,6 +6,25 @@ the code or the other docs has changed. Researched 2026-10-22 against
 dependency's source), **[spec]** (an RFC or W3C/MDN text), or **[verify]**
 (believed, not yet checked; check before building on it).
 
+## Outcome (2026-10-22): built, with one change
+
+The owner approved D1–D6 as recommended, then asked for consistent
+behaviour across every failure. So the timers below (the disconnected
+grace, the reconnect grace, the attempt timeout and count) became **one
+recovery budget** (`Lifecycle.recovery_budget_seconds/0`, 15 s): from the
+moment an active call turns unhealthy (media down, or someone away) it
+has that long, shown as `call.recovering` ("Reconnecting audio…"), and
+ends with what's still wrong. Restarts happen inside it: 2 s after
+`disconnected`, at once on `failed` or on a resume with media down, then
+every 5 s (`Lifecycle.ice_restart_retry_seconds/0`). Without ICE restart,
+`failed` ends the call at once. ICE restart itself is as designed; the
+helper's half is `call_restart`. Tested: `call_coordinator_test.exs`
+(one test per scenario), `test/e2e/recovery_smoke.mjs` (two Chromes
+through `test_turn`, both paths cut, and a cut with the websocket drop),
+and the helper's `tests/restart.rs`. The current rules are in
+`participant_channel.md` (obligations 4, 9, 10); what follows is the
+design as proposed.
+
 ## Recommendation in short
 
 1. **Fix the sequence that ends calls today first**, before any WebRTC

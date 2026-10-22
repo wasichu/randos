@@ -649,10 +649,29 @@ Not scheduled; pick up when relevant.
   (the "timing fix more than once" trigger, raised with the owner); smoke
   failures now keep each scenario's server log and page consoles
   (`test/e2e/failures.mjs`, a CI artifact).
-- **ICE restart (owner: worth designing, 2026-10-22).** A real network
-  change (Wi-Fi to cellular, NAT rebinding) kills the media path, and
-  nothing re-establishes it; the call ends after the disconnected grace.
-  Design note in progress: `ice_restart.md`.
+- **Recovery and ICE restart (built 2026-10-22).** A real network change
+  (Wi-Fi to cellular, NAT rebinding) kills the media path and drops the
+  connection to the server together. Owner's decisions: build ICE restart
+  now rather than wait for data; consistent behaviour across every
+  failure, so one recovery budget (`Lifecycle.recovery_budget_seconds/0`,
+  15 s) replaces the separate grace timers, with restarts inside it
+  (2 s after `disconnected`, at once on `failed` or a resume, every 5 s);
+  a "Reconnecting audio…" notice (`call.recovering`). Behaviour changes
+  approved: a dead call with an older client ends at 15 s (was 5), and a
+  dropped connection gets 15 s to come back (was 10). Built: the server
+  (`reassess/2` in `CallCoordinator`), the browser (`restartIce`), the
+  helper (`call_restart`, re-gathering from a new socket), the test TURN
+  relay that can cut a client (`examples/test_turn.rs`, `just test-turn`),
+  `recovery_smoke.mjs`. In progress: the TUI's side (sending
+  `call_restart` when the generation grows, the notice, TUI↔TUI and
+  TUI↔browser tests, a `turn-check` scenario). Design and
+  outcome: `ice_restart.md`. Also: `just deploy` now refuses commits that
+  aren't on `origin/main` (an unpushed commit once reached production).
+- **The extension vote shows what you chose (planned, after the
+  translation merge).** A vote lost in a drop isn't counted and nothing
+  shows it. `call` will say whether you've voted, and both clients name
+  the choice (owner's wording: "You agreed to continue, waiting on your
+  rando…", never "you voted").
 
 - **Hearing several languages (done 2026-10-21).** Each person speaks one language and
   picks any number they're comfortable hearing. Two people match when each

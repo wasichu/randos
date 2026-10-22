@@ -21,8 +21,9 @@ Tests: `test/randos_web/channels/participant_channel_test.exs`.
   dropped can rejoin with the call's resume ticket and take its place in
   the call again ([Resuming](#resuming-after-a-dropped-connection)). If the
   socket drops while queued, the participant leaves the queue; during a
-  call, the call waits `Lifecycle.reconnect_grace_seconds/0` (10 s) for it
-  to come back before ending (`disconnected`) for both people.
+  call, the call waits for it within its recovery budget
+  (`Lifecycle.recovery_budget_seconds/0`, 15 s; obligation 4) before
+  ending (`disconnected`) for both people.
 
 ## Joining
 
@@ -66,7 +67,7 @@ id); the reply's `call` carries fresh `ice_servers`, and a new
 `resume_ticket` follows (each works once). Keep your WebRTC connection,
 mic and audio running across the drop: the call never needed the server
 to carry audio. If the ticket is refused (used, or the call ended
-meanwhile: the grace is `Lifecycle.reconnect_grace_seconds/0`, 10 s), the
+meanwhile: the budget is `Lifecycle.recovery_budget_seconds/0`, 15 s), the
 reply is `"resumed": false` with a fresh `idle` state: end your local
 call. A ticket is 128 random bits that name only this seat of this call;
 the server keeps only its hash, for as long as the call lasts.
@@ -82,7 +83,7 @@ join reply, which carries the whole current `state`. Message by message
 | Message | Lost in a drop | Put right by |
 | --- | --- | --- |
 | `state` (server → you) | You miss a change. | The join reply's `state` (resumed or not); the browser remounts from it. |
-| `resume_ticket` (server → you) | Only if the new socket drops again before it arrives: then the second drop can't be resumed and the call ends after the grace. | Accepted (two drops within moments). |
+| `resume_ticket` (server → you) | Only if the new socket drops again before it arrives: then the second drop can't be resumed and the call ends at the recovery budget. | Accepted (two drops within moments). |
 | `signal` `media_state` (you → server) | The server never hears your change; a lost `connected` left a call `connecting` until it failed. | Obligation 9: repeat your last report after the resume (both clients do). |
 | `signal` offer / answer / ICE candidate, either way | While `connecting`: the call can't connect. Once `active`: a late candidate, harmless. | By design, the connect timeout ends the call as `connection_failed`, both are requeued, and the rematch window doesn't apply. |
 | a restart `offer` (either way) | The restart can't happen; the media stays down. | The server holds restarts while either person is away and asks again as soon as they're back (a new `ice_generation` in the resume reply and the `state` push); nobody resends an old offer. |
@@ -140,7 +141,7 @@ call; a non-boolean value replies `invalid_message`.
 obligation 10: it restarts ICE when the server asks. Only a call whose two
 clients both sent `true` gets restarts (the browser sends it as a connect
 param, so it's always the code the page actually loaded); other calls keep
-the plain disconnected grace. It isn't a matching rule. A non-boolean
+only the recovery budget (obligation 4). It isn't a matching rule. A non-boolean
 value replies `invalid_message`.
 
 ### `status`: the public status page
@@ -214,6 +215,7 @@ e.g. `"in_call"`.
     "ice_servers": [{"urls": "stun:…"}, {"urls": "turn:…", "username": "…", "credential": "…"}],
     "ice_transport_policy": "relay | all",
     "ice_generation": 0,
+    "recovering": false,
     "peer_speaks": "es",
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
@@ -237,6 +239,9 @@ e.g. `"in_call"`.
 - `peer_speaks`: the language your rando speaks in this call (a code from
   `languages`). With several hearing languages, it's the only way to know.
   It's a language, never anything that identifies them.
+- `recovering`: `true` while the call is unhealthy and within its
+  recovery budget (obligation 4): show "Reconnecting audio…". If
+  `peer_reconnecting` is also `true`, say that instead (it says more).
 - `ice_generation`: starts at 0. The server raises it to ask for an ICE
   restart (obligation 10), only in calls whose clients both sent
   `ice_restart: true`.
@@ -292,7 +297,7 @@ end-to-end tests check these, by number, for both clients
 | --- | --- | --- |
 | 1–4: start at the match, negotiate, report, `in_call` once both connect | "two people match and connect audio" | both roles, audio checked both ways |
 | 4: never connects → ends at the connect timeout | relay-only page | relay-only browser |
-| 4: disconnected past the grace | (unit tests: `call_coordinator_test.exs`; hard to cause from a real client) | (same) |
+| 4: unhealthy past the recovery budget | (unit tests: `call_coordinator_test.exs`; hard to cause from a real client) | (same) |
 | 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
 | 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
@@ -318,17 +323,21 @@ going direct: `just smoke` and `just tui-smoke` run them.)
    Send each change once.
 4. **Let the server decide.** It makes the call `in_call` (and starts its
    clock) once both sides are `connected`, and ends it `connection_failed` if
-   that doesn't happen within the connect timeout (15 s), if a side stays
-   `disconnected` past the grace (5 s), or on `failed`. While either
-   person's connection to the server is down (obligation 9), the grace
-   waits: a network change drops both at once. Once they're back, a side
-   still `disconnected` gets a fresh grace. Don't run your own timers for
-   these. In a call with ICE restart (both clients sent `ice_restart: true`),
-   a side `disconnected` for `Lifecycle.ice_restart_delay_seconds/0` (2 s)
-   gets a restart instead of the grace (obligation 10): each attempt has
-   `Lifecycle.ice_restart_timeout_seconds/0` (10 s), and after
-   `Lifecycle.max_ice_restarts/0` (2) failed attempts the call ends
-   `connection_failed`. There, `failed` is a report like `disconnected`, not
+   that doesn't happen within the connect timeout (15 s). Once the call is
+   up, **one recovery budget** covers whatever goes wrong: from the moment
+   it turns unhealthy (a side's media `disconnected` or `failed`, or
+   someone's connection to the server down, obligation 9) it has
+   `Lifecycle.recovery_budget_seconds/0` (15 s), and `call.recovering` is
+   `true` (say "Reconnecting audio…"). Healthy again ends it; at the
+   deadline the call ends `disconnected` if someone is still away, else
+   `connection_failed`. Inside it the server does what can help: it waits
+   for someone away, and in a call with ICE restart (both clients sent
+   `ice_restart: true`) it asks for a restart (obligation 10) after
+   `Lifecycle.ice_restart_delay_seconds/0` (2 s) of `disconnected`, at once
+   on `failed` or on a resume with media down, then every
+   `Lifecycle.ice_restart_retry_seconds/0` (5 s). Without ICE restart,
+   `failed` ends the call at once (nothing can fix it). Don't run your own
+   timers for these. In a call with ICE restart, `failed` is a report, not
    the end: keep your peer connection and wait for the status.
 5. **Tear down when the status leaves the call** (`call` becomes `null`).
    The server doesn't relay lifecycle signals to the peer.
@@ -400,7 +409,5 @@ the server never touches media), `media_state` (validated and acted on;
 
 - Resuming covers a dropped connection during a call only: a client
   dropped while idle or queued starts fresh (and is out of the queue).
-- No ICE restart: if a drop also broke the media path, the usual
-  `media_state` reports and the disconnected grace apply.
 - No IP-level rate limiting; that belongs at the edge (Fly).
 - No identity of any kind, by design.

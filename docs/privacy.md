@@ -98,6 +98,12 @@ applied by OpenTofu from this repository.
   config (`-v /etc/coturn:/etc/coturn:ro`); it's replaced, not upgraded,
   when the server is rebuilt. Its admin CLI is off (coturn's default
   since 4.18; nothing in the config turns it on).
+- **A recovered call leaves an old allocation behind for a while.** When
+  a network change breaks a call and ICE restarts (obligation 10 in
+  [`participant_channel.md`](architecture/participant_channel.md)), the
+  client allocates again from its new address; the old allocation can't
+  be released from the dead one, so it simply expires on the relay (up to
+  10 minutes), in memory like every allocation. Nothing new is kept.
 - **It can't hear calls.** It forwards encrypted packets; the encryption
   keys are negotiated between the two clients.
 - **It relays only to the public internet:** private, loopback, and

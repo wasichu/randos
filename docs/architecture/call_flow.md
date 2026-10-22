@@ -67,16 +67,18 @@ stateDiagram-v2
     active --> extension_pending: segment time up
     extension_pending --> active: both vote continue
     extension_pending --> ended: a vote to end, vote timeout,<br/>or the 30-minute cap
-    active --> ended: hang up, next, peer left,<br/>media_state failed, or<br/>disconnected past the grace
+    active --> ended: hang up, next, peer left,<br/>failed (no ICE restart), or<br/>unhealthy past the recovery budget
     ended --> [*]
 
     note right of active
-        A participant's disconnected starts a grace
-        timer (per participant; it survives
-        active / extension_pending); reconnecting
-        cancels it. While someone is away, it
-        waits; when they're back, a side still
-        disconnected gets a fresh one.
+        Unhealthy (media down, or someone away)
+        starts one recovery budget (15 s; it
+        survives active / extension_pending);
+        healthy again cancels it. Inside it the
+        server waits for the away and, with ICE
+        restart, asks the offerer to restart
+        (2 s after disconnected, at once on
+        failed or a resume, then every 5 s).
     end note
 ```
 
@@ -87,14 +89,14 @@ How a call ends decides who is requeued:
 | `end_call` (incl. "can't start audio", with a reason) | `hangup` | only the peer; the sender goes `idle` (with `error`) |
 | `next` | `hangup` | both |
 | leaving on purpose (`peer_disconnected`) | `peer_disconnected` | the peer |
-| a client's connection drops and it doesn't come back within the reconnect grace (10 s) | `disconnected` | the peer |
-| never connects, `failed`, disconnected past the grace | `connection_failed` | both |
+| a client's connection drops and it doesn't come back within the recovery budget (15 s) | `disconnected` | the peer |
+| never connects; `failed` without ICE restart; media still down at the recovery budget | `connection_failed` | both |
 
 ## Shared: a dropped connection, and coming back
 
 A client's connection to the server can drop mid-call (the network, a
 sleeping laptop) while its WebRTC call carries on. The call waits for it
-(`Lifecycle.reconnect_grace_seconds/0`), and the client rejoins with the
+(within `Lifecycle.recovery_budget_seconds/0`), and the client rejoins with the
 one-time resume ticket it was given (client obligation 9). The browser's
 LiveSocket sends the ticket as a connect param; the TUI as a join param.
 
@@ -111,7 +113,7 @@ sequenceDiagram
 
     Note over A,B: In the call, audio flowing (not through the server)
     A--xS: A's socket drops (its process on the server goes away)
-    Note over S: A is away: the call waits up to the reconnect grace
+    Note over S: A is away: the call waits, within the recovery budget
     S-->>B: state: call.peer_reconnecting = true
     Note over A,B: A's WebRTC call keeps running
 
