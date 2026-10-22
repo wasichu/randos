@@ -128,8 +128,8 @@
     "msgstr": "বর্তমান কল"
   },
   "Done": {
-    "model": "madlad-400",
-    "msgstr": "সম্পন্ন"
+    "model": "m2m100",
+    "msgstr": "ডোন"
   },
   "Ephemeral by default": {
     "model": "madlad-400",
@@ -156,8 +156,8 @@
     "msgstr": "একটি rando খুঁজছি"
   },
   "Finished": {
-    "model": "madlad-400",
-    "msgstr": "সম্পন্ন"
+    "model": "m2m100",
+    "msgstr": "শেষ"
   },
   "Help fix a translation": {
     "model": "madlad-400",
@@ -168,8 +168,8 @@
     "msgstr": "কলগুলো কীভাবে শেষ হলো"
   },
   "How languages are counted": {
-    "model": "translategemma-12b",
-    "msgstr": "ভাষাগুলো কীভাবে গণনা করা হয়?"
+    "model": "madlad-400",
+    "msgstr": "কিভাবে ভাষা গণনা করা হয়"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "hy-mt2",
@@ -184,8 +184,8 @@
     "msgstr": "আমি শুনতে খুশি"
   },
   "In call": {
-    "model": "hy-mt2",
-    "msgstr": "কলের সময়"
+    "model": "madlad-400",
+    "msgstr": "কলের মধ্যে"
   },
   "Intentionally minimal": {
     "model": "madlad-400",
@@ -220,8 +220,8 @@
     "msgstr": "কোনো অ্যাকাউন্ট নয়, কোনো প্রোফাইল নয়, কোনো ভিডিও নয়। কোনো চাপ নেই।"
   },
   "No calls yet.": {
-    "model": "translategemma-27b",
-    "msgstr": "এখনো পর্যন্ত কোনো ফোন আসেনি।"
+    "model": "translategemma-12b",
+    "msgstr": "এখনো কোনো ফোন আসেনি।"
   },
   "No relay is configured": {
     "model": "madlad-400",
@@ -344,16 +344,16 @@
     "msgstr": "রিলে আংশিকভাবে কাজ করছে"
   },
   "The relay is working": {
-    "model": "m2m100",
-    "msgstr": "রেলি কাজ করছে"
+    "model": "madlad-400",
+    "msgstr": "রিলে কাজ করছে"
   },
   "The relay isn't working": {
     "model": "madlad-400",
     "msgstr": "রিলে কাজ করছে না"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
-    "model": "translategemma-27b",
-    "msgstr": "এই সাইটের অনুবাদগুলো স্বয়ংক্রিয়ভাবে করা হয়েছে এবং এখনো পর্যন্ত কোনো মানুষ তা যাচাই করেনি। যদি কোনো অনুবাদ আপনার ভাষায় ভুল মনে হয়, তাহলে অনুগ্রহ করে সেটি সংশোধন করুন: ভুল অংশটি খুঁজে বের করুন, এরপর আপনার মতে সেটি কীভাবে লেখা উচিত তা জানান, বাকি কাজ আমরা করে দেব।"
+    "model": "madlad-400",
+    "msgstr": "এই সাইটের অনুবাদ মেশিনের মাধ্যমে করা হয়েছে এবং এখনো তা মানুষের দ্বারা পর্যালোচনা করা হয়নি। যদি আপনার ভাষায় কোন কিছু ভুলভাবে পড়া হয়, তাহলে দয়া করে তা ঠিক করতে সাহায্য করুন: লেখাটি খুঁজে বের করুন, লিখুন কিভাবে এটি পড়া উচিত, এবং আমরা বাকি কাজটি করব।"
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
     "model": "translategemma-27b",
@@ -392,8 +392,8 @@
     "msgstr": "গিটহাব-এ দেখুন"
   },
   "We can't find the internet": {
-    "model": "madlad-400",
-    "msgstr": "আমরা ইন্টারনেট খুঁজে পাচ্ছি না"
+    "model": "m2m100",
+    "msgstr": "ইন্টারনেট খুঁজে পাওয়া যায় না"
   },
   "We couldn't start that call. Please try again.": {
     "model": "hy-mt2",
@@ -468,8 +468,8 @@
     "msgstr": "উত্তর দেওয়া"
   },
   "connection state\u0004calling": {
-    "model": "m2m100",
-    "msgstr": "কল"
+    "model": "madlad-400",
+    "msgstr": "কল করা হচ্ছে"
   },
   "connection state\u0004connected": {
     "model": "m2m100",
@@ -532,8 +532,8 @@
     "msgstr": "randos হলো ফ্রি সফটওয়্যার (AGPL-3.0) এবং এটি পাবলিকভাবে তৈরি করা হয়েছে।"
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "translategemma-27b",
-    "msgstr": "দূরবর্তী অডিওর জন্য একটি ট্যাপ প্রয়োজন (%{summary})।"
+    "model": "hy-mt2",
+    "msgstr": "রিমোট অডিওর জন্য একটি ট্যাপ দরকার (%{summary})"
   },
   "remote audio playing (%{summary})": {
     "model": "madlad-400",

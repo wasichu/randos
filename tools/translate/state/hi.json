@@ -80,8 +80,8 @@
     "msgstr": "अपनी भाषाएँ चुनें।"
   },
   "Connected": {
-    "model": "madlad-400",
-    "msgstr": "कनेक्टेड"
+    "model": "opus-mt",
+    "msgstr": "जुड़ा हुआ"
   },
   "Connecting": {
     "model": "hy-mt2",
@@ -332,8 +332,8 @@
     "msgstr": "यह कॉल इसलिए समाप्त हुई क्योंकि कोई माइक्रोफोन नहीं मिला।"
   },
   "The commit this server runs": {
-    "model": "madlad-400",
-    "msgstr": "इस सर्वर द्वारा चलाया गया कमिट"
+    "model": "hy-mt2",
+    "msgstr": "यह सर्वर जो कमिट चलाता है"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "hy-mt2",
@@ -384,8 +384,8 @@
     "msgstr": "अनुवाद"
   },
   "Typical length": {
-    "model": "opus-mt",
-    "msgstr": "सामान्य लम्बाई"
+    "model": "translategemma-4b",
+    "msgstr": "सामान्य अवधि"
   },
   "View on GitHub": {
     "model": "madlad-400",
@@ -420,8 +420,8 @@
     "msgstr": "आप वह भाषा चुनते हैं जो आप बोलना चाहते हैं और वह भाषा जो आप सुनना चाहते हैं. randos आपको एक छोटी बातचीत के लिए किसी उपयुक्त व्यक्ति के साथ जोड़ता है, फिर रास्ते से बाहर हो जाता है."
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "opus-mt",
-    "msgstr": "आप मेल खाते हैं. जब कॉल प्रारंभ होता है तो ऑडियो प्रारंभ होता है."
+    "model": "madlad-400",
+    "msgstr": "आप मेल खाते हैं. कॉल खुलने पर ऑडियो शुरू होता है."
   },
   "You'll hear %{languages}": {
     "model": "madlad-400",
@@ -464,16 +464,16 @@
     "msgstr": "बंद करें"
   },
   "connection state\u0004answering": {
-    "model": "translategemma-4b",
-    "msgstr": "उत्तर देना"
+    "model": "madlad-400",
+    "msgstr": "जवाब दे रहा है"
   },
   "connection state\u0004calling": {
     "model": "hy-mt2",
     "msgstr": "कॉल करना"
   },
   "connection state\u0004connected": {
-    "model": "m2m100",
-    "msgstr": "कनेक्ट"
+    "model": "translategemma-4b",
+    "msgstr": "जुड़े हुए"
   },
   "connection state\u0004connecting": {
     "model": "opus-mt",

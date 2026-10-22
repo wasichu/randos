@@ -36,8 +36,8 @@
     "msgstr": "О нас"
   },
   "About randos": {
-    "model": "translategemma-4b",
-    "msgstr": "О компании \"randos\""
+    "model": "hy-mt2",
+    "msgstr": "О randos"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
     "model": "madlad-400",
@@ -64,8 +64,8 @@
     "msgstr": "Отменено"
   },
   "Change": {
-    "model": "m2m100",
-    "msgstr": "Изменения"
+    "model": "hy-mt2",
+    "msgstr": "Изменить"
   },
   "Checking the relay…": {
     "model": "hy-mt2",
@@ -208,8 +208,8 @@
     "msgstr": "Последняя проверка произведена в %{time} UTC."
   },
   "Looking": {
-    "model": "madlad-400",
-    "msgstr": "Глядя"
+    "model": "translategemma-4b",
+    "msgstr": "Ищу"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "madlad-400",
@@ -276,8 +276,8 @@
     "msgstr": "Переподключение звука..."
   },
   "Running this commit plus changes not yet committed": {
-    "model": "opus-mt",
-    "msgstr": "Выполнение этого обязательства плюс изменения, которые еще не были приняты"
+    "model": "hy-mt2",
+    "msgstr": "Запуск этого коммита вместе с изменениями, которые ещё не коммитированы"
   },
   "Secure audio connection is starting.": {
     "model": "madlad-400",
@@ -436,8 +436,8 @@
     "msgstr": "Соединение с вашим rando прервано; жду несколько секунд, пока оно восстановится."
   },
   "button\u0004Continue": {
-    "model": "madlad-400",
-    "msgstr": "Продолжение"
+    "model": "opus-mt",
+    "msgstr": "Продолжить"
   },
   "button\u0004End": {
     "model": "opus-mt",
@@ -456,8 +456,8 @@
     "msgstr": "Следующая rando"
   },
   "button\u0004Unmute": {
-    "model": "madlad-400",
-    "msgstr": "Отключить звук"
+    "model": "translategemma-4b",
+    "msgstr": "Включить звук"
   },
   "close": {
     "model": "m2m100",
@@ -496,8 +496,8 @@
     "msgstr": "не начато"
   },
   "connection state\u0004requesting microphone": {
-    "model": "m2m100",
-    "msgstr": "Заказать микрофон"
+    "model": "hy-mt2",
+    "msgstr": "запрос микрофона"
   },
   "connection state\u0004starting": {
     "model": "hy-mt2",
@@ -552,8 +552,8 @@
     "msgstr": "менее 1 минуты"
   },
   "waiting for microphone": {
-    "model": "hy-mt2",
-    "msgstr": "ожидаю микрофон"
+    "model": "m2m100",
+    "msgstr": "В ожидании микрофона"
   },
   "waiting for remote audio": {
     "model": "translategemma-4b",

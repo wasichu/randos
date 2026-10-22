@@ -64,8 +64,8 @@
     "msgstr": "abgesagt"
   },
   "Change": {
-    "model": "m2m100",
-    "msgstr": "Veränderung"
+    "model": "hy-mt2",
+    "msgstr": "Ändern"
   },
   "Checking the relay…": {
     "model": "translategemma-4b",
@@ -176,8 +176,8 @@
     "msgstr": "Ich bin 18 oder älter und verstehe, dass Gespräche anonym und unmoderiert sind."
   },
   "I will speak in": {
-    "model": "madlad-400",
-    "msgstr": "Ich werde sprechen in"
+    "model": "m2m100",
+    "msgstr": "Ich werde in"
   },
   "I'm happy to hear": {
     "model": "madlad-400",
@@ -424,8 +424,8 @@
     "msgstr": "Ihr seid verbunden. Die Audioübertragung beginnt, sobald der Anruf hergestellt wird."
   },
   "You'll hear %{languages}": {
-    "model": "opus-mt",
-    "msgstr": "Du wirst es hören %{languages}"
+    "model": "m2m100",
+    "msgstr": "Sie werden hören %{languages}"
   },
   "Your rando": {
     "model": "hy-mt2",
@@ -504,8 +504,8 @@
     "msgstr": "Starten"
   },
   "connection state\u0004waiting for your rando": {
-    "model": "madlad-400",
-    "msgstr": "Ich warte auf Ihre rando"
+    "model": "m2m100",
+    "msgstr": "Sie warten auf Ihre rando"
   },
   "crosstalk": {
     "model": "madlad-400",
@@ -560,7 +560,7 @@
     "msgstr": "Warten auf Remote-Audio"
   },
   "working": {
-    "model": "m2m100",
-    "msgstr": "Arbeiten"
+    "model": "translategemma-4b",
+    "msgstr": "funktioniert"
   }
 }

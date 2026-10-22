@@ -16,8 +16,8 @@
     "msgstr": "Waktu tersisa: %{time}"
   },
   "30+ min": {
-    "model": "hy-mt2",
-    "msgstr": "30 menit atau lebih"
+    "model": "opus-mt",
+    "msgstr": "30+ min"
   },
   "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
     "model": "translategemma-27b",
@@ -152,8 +152,8 @@
     "msgstr": "Mencari rando yang cocok."
   },
   "Finding a rando": {
-    "model": "opus-mt",
-    "msgstr": "Menemukan rando"
+    "model": "madlad-400",
+    "msgstr": "Mencari rando"
   },
   "Finished": {
     "model": "translategemma-4b",
@@ -176,8 +176,8 @@
     "msgstr": "Saya berusia 18 tahun atau lebih, dan saya memahami bahwa percakapan bersifat anonim dan tidak dimoderasi."
   },
   "I will speak in": {
-    "model": "opus-mt",
-    "msgstr": "Aku akan berbicara di"
+    "model": "hy-mt2",
+    "msgstr": "Saya akan berbicara dalam"
   },
   "I'm happy to hear": {
     "model": "translategemma-4b",
@@ -208,8 +208,8 @@
     "msgstr": "Terakhir diperiksa pada pukul %{time} UTC."
   },
   "Looking": {
-    "model": "m2m100",
-    "msgstr": "Melihat"
+    "model": "hy-mt2",
+    "msgstr": "Mencari teman bicara"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "hy-mt2",
@@ -464,8 +464,8 @@
     "msgstr": "tutup"
   },
   "connection state\u0004answering": {
-    "model": "m2m100",
-    "msgstr": "Jawaban"
+    "model": "translategemma-4b",
+    "msgstr": "menjawab"
   },
   "connection state\u0004calling": {
     "model": "opus-mt",

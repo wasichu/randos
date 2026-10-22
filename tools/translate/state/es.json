@@ -140,8 +140,8 @@
     "msgstr": "Todas las llamadas pasan por nuestro relé, por lo que ninguna persona ve la dirección de la otra, lo probamos cada pocos minutos estableciendo una conexión de relé real."
   },
   "Find a phrase": {
-    "model": "m2m100",
-    "msgstr": "Encuentra una frase"
+    "model": "translategemma-4b",
+    "msgstr": "Encontrar una frase"
   },
   "Find a phrase, in English or %{language}": {
     "model": "m2m100",
@@ -196,8 +196,8 @@
     "msgstr": "Está diseñado para %{crosstalk}, el intercambio de idiomas, la práctica de la comprensión auditiva y las conversaciones informales y cotidianas, sin obligar a las personas a ajustarse a formatos o categorías rígidas."
   },
   "Language": {
-    "model": "m2m100",
-    "msgstr": "Lenguaje"
+    "model": "opus-mt",
+    "msgstr": "Idioma"
   },
   "Languages spoken": {
     "model": "opus-mt",
@@ -456,8 +456,8 @@
     "msgstr": "Próximo rando"
   },
   "button\u0004Unmute": {
-    "model": "madlad-400",
-    "msgstr": "Desactivar el silencio"
+    "model": "translategemma-4b",
+    "msgstr": "Activar el micrófono"
   },
   "close": {
     "model": "opus-mt",
