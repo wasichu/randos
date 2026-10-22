@@ -178,6 +178,25 @@ defmodule Tui.AppTest do
                "your rando's connection dropped; waiting for them to come back"
     end
 
+    test "while the server brings the audio back, the call panel says so (the rando's drop wins)" do
+      recovering = %{"status" => "active", "recovering" => true}
+
+      text =
+        render_text(%{model("in_call", %{"call" => recovering}) | audio?: true}, %{}, {140, 24})
+
+      assert text =~ "Reconnecting audio…"
+
+      both = Map.put(recovering, "peer_reconnecting", true)
+      text = render_text(%{model("in_call", %{"call" => both}) | audio?: true}, %{}, {140, 24})
+      refute text =~ "Reconnecting audio…"
+      assert text =~ "rando"
+
+      healthy = %{"status" => "active", "recovering" => false}
+
+      refute render_text(model("in_call", %{"call" => healthy}), %{}, {140, 24}) =~
+               "Reconnecting audio"
+    end
+
     test "looking, matched, in call with a countdown, and the vote" do
       assert render_text(model("looking")) =~ "Looking for a rando"
       # Up to three hearing languages are named; past that, a count.

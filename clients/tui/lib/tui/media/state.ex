@@ -173,22 +173,29 @@ defmodule Tui.Media.State do
   """
   @spec server_state(t(), atom() | nil, String.t() | nil, map() | nil) :: {t(), [command()]}
   def server_state(state, status, role, call \\ nil) do
-    state = %{
-      state
-      | status: status,
-        role: role,
-        ice_servers: call && call["ice_servers"],
-        relay_only?: call != nil and call["ice_transport_policy"] == "relay",
-        ice_generation: (call && call["ice_generation"]) || 0
-    }
-
-    cond do
-      status in @call_statuses and state.call == nil -> maybe_start_call(state)
-      status in @call_statuses -> maybe_restart(state)
-      state.call != nil -> stop_call(state)
-      true -> {state, []}
-    end
+    %{state | status: status, role: role}
+    |> struct!(call_fields(call))
+    |> follow_status()
   end
+
+  defp call_fields(nil), do: %{ice_servers: nil, relay_only?: false, ice_generation: 0}
+
+  defp call_fields(call) do
+    %{
+      ice_servers: call["ice_servers"],
+      relay_only?: call["ice_transport_policy"] == "relay",
+      ice_generation: call["ice_generation"] || 0
+    }
+  end
+
+  defp follow_status(%{status: status, call: nil} = state) when status in @call_statuses,
+    do: maybe_start_call(state)
+
+  defp follow_status(%{status: status} = state) when status in @call_statuses,
+    do: maybe_restart(state)
+
+  defp follow_status(%{call: %{}} = state), do: stop_call(state)
+  defp follow_status(state), do: {state, []}
 
   @doc """
   A `signal` push from the peer. One never arrives before our call starts:

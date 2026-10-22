@@ -277,7 +277,7 @@ defmodule Tui.View do
   defp main_text(%{status: :connecting}), do: "Matched! Starting the call…"
 
   defp main_text(%{status: :in_call, audio?: true} = model),
-    do: "You're in a call.#{time_left(model, " remaining")}"
+    do: "You're in a call.#{time_left(model, " remaining")}#{recovering(model)}"
 
   defp main_text(%{status: :in_call} = model) do
     "You're in a call.#{time_left(model, " remaining")}\n\n" <>
@@ -288,10 +288,18 @@ defmodule Tui.View do
 
   defp main_text(%{status: :extension_pending} = model) do
     "Time is up. #{continue_question(model.call)}#{time_left(model, " to decide")}\n\n" <>
-      "y: continue    n: end"
+      "y: continue    n: end#{recovering(model)}"
   end
 
   defp main_text(_model), do: ""
+
+  # The server is bringing the call's audio back (`call.recovering`: an ICE
+  # restart or a wait, within its recovery budget), as the browser says. If
+  # the rando's connection to the server dropped, the Status line already
+  # says so, and that's the news.
+  defp recovering(%{call: %{"peer_reconnecting" => true}}), do: ""
+  defp recovering(%{call: %{"recovering" => true}}), do: "\n\nReconnecting audio…"
+  defp recovering(_model), do: ""
 
   # The length comes from the server (`extension_duration_seconds`), never a
   # constant of our own; an older server that doesn't send it gets no number.

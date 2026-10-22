@@ -20,30 +20,10 @@ defmodule Tui.Integration.BrowserCallTest do
 
   alias Tui.Model
 
-  @repo_root Path.expand("../../../..", __DIR__)
   @hold_ms 4_000
 
-  defp base_url do
-    %URI{host: host, port: port} = URI.parse(server_url())
-    "http://#{host}:#{port}"
-  end
-
-  # `env`: the script's failure modes (EXPECT, MIC_ERROR, RELAY_ONLY).
-  defp start_browser(speaks, listens, env \\ []) do
-    node = System.find_executable("node") || flunk("node not found")
-
-    Port.open({:spawn_executable, node}, [
-      :binary,
-      :exit_status,
-      {:line, 64_000},
-      {:cd, @repo_root},
-      {:env,
-       Enum.map([{"BASE_URL", base_url()} | env], fn {k, v} ->
-         {String.to_charlist(k), String.to_charlist(v)}
-       end)},
-      args: ["test/e2e/tui_browser_call.mjs", speaks, listens, Integer.to_string(@hold_ms)]
-    ])
-  end
+  defp browser(speaks, listens, env \\ []),
+    do: Tui.TestSupport.start_browser(speaks, listens, @hold_ms, env)
 
   defp await_browser(port, event) do
     receive do
@@ -100,13 +80,13 @@ defmodule Tui.Integration.BrowserCallTest do
     find(app, model, "hi", "bn")
     await_model(app, &(&1.status == :looking))
 
-    port = start_browser("bn", "hi")
+    port = browser("bn", "hi")
     assert %Model{webrtc_role: "offerer"} = await_model(app, &(&1.status == :in_call))
     assert_audio_both_ways(await_call(app, port))
   end
 
   test "the browser waits first and offers; the TUI answers" do
-    port = start_browser("ar", "ru")
+    port = browser("ar", "ru")
     await_browser(port, "looking")
 
     app = start_audio_tui(:answering_tui)
@@ -131,7 +111,7 @@ defmodule Tui.Integration.BrowserCallTest do
     find(app, model, "pt", "zh")
     await_model(app, &(&1.status == :looking))
 
-    port = start_browser("zh", "pt", [{"EXPECT", "call_ends"}])
+    port = browser("zh", "pt", [{"EXPECT", "call_ends"}])
 
     assert %Model{error: error} = await_model(app, &(&1.status == :idle and &1.error != nil))
     assert error =~ "audio isn't available"
@@ -144,7 +124,7 @@ defmodule Tui.Integration.BrowserCallTest do
     find(app, model, "ko", "it")
     await_model(app, &(&1.status == :looking))
 
-    port = start_browser("it", "ko", [{"EXPECT", "call_ends"}, {"MIC_ERROR", "NotAllowedError"}])
+    port = browser("it", "ko", [{"EXPECT", "call_ends"}, {"MIC_ERROR", "NotAllowedError"}])
 
     requeued(app)
     assert %{"idle" => true, "error" => error} = await_browser(port, "call_ended")
@@ -158,7 +138,7 @@ defmodule Tui.Integration.BrowserCallTest do
     find(app, model, "de", "ja")
     await_model(app, &(&1.status == :looking))
 
-    port = start_browser("ja", "de", [{"EXPECT", "call_ends"}, {"RELAY_ONLY", "1"}])
+    port = browser("ja", "de", [{"EXPECT", "call_ends"}, {"RELAY_ONLY", "1"}])
 
     requeued(app)
     assert %{"event" => "call_ended"} = await_browser(port, "call_ended")

@@ -198,7 +198,8 @@ defmodule Tui.ModelTest do
 
     idle = Model.set_audio(joined("idle"), true)
     {idle, []} = Model.key(idle, " ")
-    assert {_, [{:push, "find", %{audio: true}}]} = Model.key(idle, "enter")
+    # With audio, the helper can restart ICE when asked (obligation 10).
+    assert {_, [{:push, "find", %{audio: true, ice_restart: true}}]} = Model.key(idle, "enter")
   end
 
   test "a peer's offer ends the call with end_call, so only the peer is requeued" do

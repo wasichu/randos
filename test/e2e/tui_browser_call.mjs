@@ -8,6 +8,8 @@
 //   EXPECT=connected (default) | call_ends — what this run waits for
 //   MIC_ERROR=NotAllowedError — the mic prompt rejects (denied)
 //   RELAY_ONLY=1 — this browser can never connect
+//   REPORT_EVERY_MS=N — also report Chrome's inbound stats every N ms while
+//     holding ({"event": "inbound", "inbound": {...}})
 //
 // Reports progress as JSON lines on stdout, one object each:
 //   {"event": "looking"}                          waiting in the queue
@@ -73,7 +75,15 @@ try {
     await page.webrtcStateIs("connected")
     report({event: "connected"})
 
-    await sleep(Number(holdMs))
+    // REPORT_EVERY_MS: Chrome's inbound stats while holding too, so a test
+    // can watch the audio stop at a cut and come back (ICE restart).
+    const every = Number(process.env.REPORT_EVERY_MS ?? 0)
+    const until = Date.now() + Number(holdMs)
+    while (every > 0 && Date.now() + every < until) {
+      await sleep(every)
+      report({event: "inbound", inbound: await inboundAudio(page)})
+    }
+    await sleep(Math.max(until - Date.now(), 0))
     report({event: "result", inbound: await inboundAudio(page)})
   }
 } catch (error) {

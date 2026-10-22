@@ -1347,4 +1347,60 @@ mod tests {
         offerer.stop().unwrap();
         answerer.stop().unwrap();
     }
+
+    /// ICE restart through the real coturn (obligation 10): a relay-only call,
+    /// then the offerer restarts, so both sides bind new sockets (new
+    /// 5-tuples, new allocations; the old ones are abandoned as after a
+    /// network change) and the call must carry audio both ways again.
+    #[test]
+    #[ignore = "needs coturn credentials in the environment"]
+    fn production_turn_call_comes_back_after_an_ice_restart() {
+        let ice = json!([{
+            "urls": "turn:turn.slowinput.org:3478",
+            "username": std::env::var("TURN_TEST_USERNAME").unwrap(),
+            "credential": std::env::var("TURN_TEST_CREDENTIAL").unwrap(),
+        }]);
+        let relay_only = |role| {
+            peer_from(CallConfig {
+                ice_servers: ice.clone(),
+                relay_only: true,
+                ..CallConfig::new(role)
+            })
+        };
+        let (offerer, offerer_seen) = relay_only(Role::Offerer);
+        let (answerer, answerer_seen) = relay_only(Role::Answerer);
+        let received = |seen: &Mutex<Seen>| {
+            seen.lock()
+                .unwrap()
+                .stats
+                .last()
+                .map_or(0, |s| s.packets_received)
+        };
+
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_secs(8),
+        );
+        let before = (received(&offerer_seen), received(&answerer_seen));
+        assert!(before.0 > 100 && before.1 > 100, "before: {before:?}");
+
+        offerer.restart(None).unwrap();
+        relay(
+            (&offerer, &offerer_seen),
+            (&answerer, &answerer_seen),
+            Duration::from_secs(10),
+        );
+        let after = (received(&offerer_seen), received(&answerer_seen));
+        assert!(
+            after.0 > before.0 + 150 && after.1 > before.1 + 150,
+            "after the restart: {before:?} -> {after:?}"
+        );
+        for seen in [&offerer_seen, &answerer_seen] {
+            let seen = seen.lock().unwrap();
+            assert_eq!(seen.stats.last().unwrap().path.as_deref(), Some("relay"));
+        }
+        offerer.stop().unwrap();
+        answerer.stop().unwrap();
+    }
 }

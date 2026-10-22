@@ -126,9 +126,11 @@ tui *args:
 # Through a throwaway server with 8s segments: two real TUI clients call each other,
 # and a TUI (helper with a test tone) calls headless Chrome in both roles (needs the
 # helper built, node, and Chrome)
-tui-smoke:
+tui-smoke: test-turn
     test/e2e/with_test_server.sh tmp/tui-smoke-server.log sh -c 'cd clients/tui && RANDOS_URL=ws://localhost:4010/participant/websocket mix test --only integration'
     RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/tui-smoke-relay-server.log sh -c 'cd clients/tui && RANDOS_URL=ws://localhost:4010/participant/websocket mix test --only relay_only'
+    # Recovery (ICE restart): the tests start the test relay and their own server.
+    cd clients/tui && RANDOS_URL=ws://localhost:4010/participant/websocket mix test --only recovery
 
 # Run the TUI client's tests (pass args through)
 test-tui *args:

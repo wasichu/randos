@@ -36,6 +36,48 @@ defmodule Tui.TestSupport do
     app
   end
 
+  @repo_root Path.expand("../../../..", __DIR__)
+
+  @doc "The repository's root (scripts and the test relay are run from there)."
+  def repo_root, do: @repo_root
+
+  @doc """
+  Starts the browser half of a TUI ↔ browser call
+  (`test/e2e/tui_browser_call.mjs`, headless Chrome with a fake mic) over a
+  Port, against the server at `server_url/0`; it exits when the Port
+  closes. `env`: the script's options (EXPECT, MIC_ERROR, RELAY_ONLY,
+  REPORT_EVERY_MS).
+  """
+  def start_browser(speaks, listens, hold_ms, env \\ []) do
+    node = System.find_executable("node") || flunk("node not found")
+    %URI{host: host, port: port} = URI.parse(server_url())
+
+    Port.open({:spawn_executable, node}, [
+      :binary,
+      :exit_status,
+      {:line, 64_000},
+      {:cd, @repo_root},
+      {:env,
+       Enum.map([{"BASE_URL", "http://#{host}:#{port}"} | env], fn {k, v} ->
+         {String.to_charlist(k), String.to_charlist(v)}
+       end)},
+      args: ["test/e2e/tui_browser_call.mjs", speaks, listens, Integer.to_string(hold_ms)]
+    ])
+  end
+
+  @doc """
+  Waits for the app's media state (`{:tui_media, app, state}`) to satisfy
+  `fun`, and returns it.
+  """
+  def await_media(app, fun, timeout \\ 20_000) do
+    receive do
+      {:tui_media, ^app, media} ->
+        if fun.(media), do: media, else: await_media(app, fun, timeout)
+    after
+      timeout -> flunk("timed out waiting for #{inspect(app)}'s media state")
+    end
+  end
+
   @doc "Presses keys on a running app."
   def keys(app, codes),
     do: Enum.each(codes, &Runtime.inject_event(app, %Event.Key{code: &1, kind: "press"}))

@@ -215,6 +215,48 @@ defmodule Tui.Media.StateTest do
       assert State.toggle_mic_test(in_call(), {"sine", "null"}) == {in_call(), []}
     end
 
+    test "obligation 10: the offerer restarts when the server's ice_generation grows, once each" do
+      gen = fn n -> Map.put(@call, "ice_generation", n) end
+      restart = [{:request, {:call_restart, @ice}}]
+
+      # The generation the call started with is acted on already.
+      {state, []} = State.server_state(in_call(), :in_call, "offerer", gen.(0))
+
+      {state, commands} = State.server_state(state, :in_call, "offerer", gen.(1))
+      assert commands == restart
+      assert state.call.generation == 1
+
+      # The same generation again (any later state push): nothing.
+      assert {_, []} = State.server_state(state, :in_call, "offerer", gen.(1))
+      # A resume reply with a generation asked for while we were away.
+      assert {_, ^restart} = State.server_state(state, :extension_pending, "offerer", gen.(3))
+    end
+
+    test "the answerer only notes the generation: its helper re-gathers on the restart offer" do
+      {state, _} = State.server_state(audio(), :in_call, "answerer", @call)
+
+      {state, []} =
+        State.reply(state, {:call_start, "answerer", @ice, "sine", "null", false}, {:ok, %{}})
+
+      assert {%{call: %{generation: 2}}, []} =
+               State.server_state(
+                 state,
+                 :in_call,
+                 "answerer",
+                 Map.put(@call, "ice_generation", 2)
+               )
+    end
+
+    test "a call that starts at a later generation doesn't restart for it" do
+      call = Map.put(@call, "ice_generation", 4)
+
+      {state, [{:request, {:call_start, _, _, _, _, _}}]} =
+        State.server_state(audio(), :connecting, "offerer", call)
+
+      assert state.call.generation == 4
+      assert {_, []} = State.server_state(state, :in_call, "offerer", call)
+    end
+
     test "stats are kept for display" do
       assert {%{call: %{stats: %{"packets_received" => 9}}}, []} =
                State.event(in_call(), "call_stats", %{"packets_received" => 9})
