@@ -323,6 +323,18 @@ defmodule Tui.Media.State do
 
   # Each change of the helper's connection goes to the server, which decides
   # what it means for the call. A failed session has stopped on its own.
+  @doc """
+  Back in the same call after a dropped connection: the last media state
+  again, unchanged (obligation 9: a report sent as the socket dropped may
+  never have arrived; the server ignores a repeat). Nothing if no call, or
+  nothing reported yet.
+  """
+  @spec resumed(t()) :: {t(), [command()]}
+  def resumed(%{call: %{connection: connection}} = state) when connection != :connecting,
+    do: {state, [{:push, "signal", %{type: "media_state", payload: %{state: connection}}}]}
+
+  def resumed(state), do: {state, []}
+
   defp report_media(%{call: %{connection: same}} = state, same, _reason), do: {state, []}
 
   defp report_media(state, connection, reason) do

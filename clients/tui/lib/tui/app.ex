@@ -204,6 +204,11 @@ defmodule Tui.App do
   end
 
   # Server messages that matter to call audio, after the model has them.
+  defp follow_call(state, {:joined, %{"resumed" => true}}) do
+    state = run_media(state, server_state(state))
+    run_media(state, MediaState.resumed(state.media_state))
+  end
+
   defp follow_call(state, {:joined, _reply}), do: run_media(state, server_state(state))
   defp follow_call(state, {:push, "state", _}), do: run_media(state, server_state(state))
   defp follow_call(state, :disconnected), do: run_media(state, server_state(state))

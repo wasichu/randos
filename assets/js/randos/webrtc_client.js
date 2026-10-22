@@ -323,6 +323,12 @@ export class WebRTCClient {
     this.pushSignal("media_state", {state, ...details})
   }
 
+  // The last report again, unchanged, after the socket rejoined (the server
+  // ignores a repeat). Nothing if nothing was reported yet.
+  repeatMediaState() {
+    if (this.reportedMediaState) this.pushSignal("media_state", {state: this.reportedMediaState})
+  }
+
   setState(state) {
     if (this.state === state) return
 

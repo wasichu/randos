@@ -161,6 +161,17 @@ defmodule Tui.Media.StateTest do
       assert commands == push.(:connected)
     end
 
+    test "back in the call after a dropped connection, the last report again (obligation 9)" do
+      # Nothing reported yet (still connecting), or no call: nothing to repeat.
+      assert State.resumed(in_call()) == {in_call(), []}
+      assert State.resumed(audio()) == {audio(), []}
+
+      {state, _} = State.event(in_call(), "call_state", %{"state" => "connected"})
+
+      assert State.resumed(state) ==
+               {state, [{:push, "signal", %{type: "media_state", payload: %{state: :connected}}}]}
+    end
+
     test "a failed session is reported with its reason; the server ends the call" do
       assert {%{call: %{connection: :failed}},
               [

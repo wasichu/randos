@@ -323,8 +323,10 @@ going direct: `just smoke` and `just tui-smoke` run them.)
 9. **Survive a dropped connection.** If your socket to the server drops
    during a call, keep the call's media running and rejoin with the latest
    `resume_ticket` ([Resuming](#resuming-after-a-dropped-connection)). If
-   the server takes you back, carry on; if it refuses, the call is over:
-   end it locally. A page unload or quitting is leaving on purpose
+   the server takes you back, report your current `media_state` again,
+   even if it hasn't changed (a report sent as the socket dropped may
+   never have arrived; the server ignores a repeat), and carry on; if it
+   refuses, the call is over: end it locally. A page unload or quitting is leaving on purpose
    (obligation 7), not a drop.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only

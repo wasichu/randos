@@ -163,6 +163,14 @@ try {
       await dropper.findRando("ko", "it")
       await stayer.findRando("it", "ko")
       await Promise.all([dropper.webrtcStateIs("connected"), stayer.webrtcStateIs("connected")])
+      // And the server has the call active (both media reports in), so the
+      // drop tests a resume, not a connect cut short. (A report lost in the
+      // cut is repeated after the resume, obligation 9, but its timing is
+      // luck here.)
+      await Promise.all([
+        dropper.waitFor(`!!document.querySelector("#call-panel")`, "the call active for the dropper"),
+        stayer.waitFor(`!!document.querySelector("#call-panel")`, "the call active for the rando"),
+      ])
 
       const callElement = `document.querySelector("[id^='call-media-']")?.id`
       const before = await dropper.eval(callElement)

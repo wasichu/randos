@@ -95,9 +95,12 @@ export const WebRTCAudio = {
     this.offlineTimer = setTimeout(() => this.cleanup(), graceMs + 2_000)
   },
 
+  // Back in the same call: say our media state again (obligation 9), since
+  // a report sent as the socket dropped may never have reached the server.
   reconnected() {
     clearTimeout(this.offlineTimer)
     logEvent("call.socket_reconnected", {})
+    this.peer?.repeatMediaState()
   },
 
   cleanup({notify = false} = {}) {
