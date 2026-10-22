@@ -100,15 +100,8 @@ applied by OpenTofu from this repository.
   cloud-metadata addresses are refused (`denied-peer-ip`), so it can't be
   used to reach anything behind it.
 
-**What we found, and fixed (2026-10-21).** Reading the live relay's log
-showed that coturn's error lines included callers' addresses: in two days,
-42 distinct public addresses besides the relay's own (most of them, by
-their pattern, internet scanners probing the TLS port; some from real
-calls), kept in two rotated 1 MB files that would have held them for
-months. That log was deleted the same day, when the relay switched to the
-scrubbed log above; we checked the switch with a real error from a test,
-written as `0.0.0.0`. The same check found that the relay keeps no other
-files (no database), and that its certificate renewal works.
+Until 2026-10-21 the relay's error log kept callers' addresses; that log
+was deleted when the scrubbed one replaced it.
 
 ### Relay-only, enforced by the server
 

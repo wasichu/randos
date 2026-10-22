@@ -32,10 +32,11 @@ defmodule RandosWeb.StatusLiveTest do
     for path <- [~p"/", ~p"/about"] do
       {:ok, view, _html} = live(conn, path)
       assert has_element?(view, "#header-status-link[href='/status'] .hero-signal")
-      # About is an icon too, so the toolbar is all icons (and the locale code).
+      # About is a book (the info icon means a hint, as on this page), so the
+      # toolbar is all icons and the locale code.
       assert has_element?(
                view,
-               "#header-about-link[href='/about'][title='About'] .hero-information-circle"
+               "#header-about-link[href='/about'][title='About'] .hero-book-open"
              )
     end
 

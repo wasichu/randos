@@ -54,7 +54,7 @@ defmodule RandosWeb.Layouts do
           title={gettext("About")}
           class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
         >
-          <.icon name="hero-information-circle" class="size-4" />
+          <.icon name="hero-book-open" class="size-4" />
           <span class="sr-only">{gettext("About")}</span>
         </.link>
         <%!-- Hidden during a call: switching reloads the page, which would end it. --%>
