@@ -22,7 +22,8 @@ defmodule Randos.Calls.Call do
           ice_transport_policy: ice_transport_policy(),
           away: [String.t()],
           ice_restart?: boolean(),
-          ice_generation: non_neg_integer()
+          ice_generation: non_neg_integer(),
+          recovering: boolean()
         }
 
   @typedoc """
@@ -45,13 +46,16 @@ defmodule Randos.Calls.Call do
     media: %{},
     ice_transport_policy: "all",
     # Participants whose connection to the server dropped, waiting for them
-    # to come back (Lifecycle.reconnect_grace_seconds/0).
+    # to come back (within Lifecycle.recovery_budget_seconds/0).
     away: [],
     # Both clients can restart ICE (obligation 10); otherwise the call
     # keeps the plain disconnected grace.
     ice_restart?: false,
     # Bumped by the coordinator to ask the offerer for an ICE restart.
-    ice_generation: 0
+    ice_generation: 0,
+    # Unhealthy (someone's media down, or someone away) and within the
+    # recovery budget; clients say "Reconnecting audio…".
+    recovering: false
   ]
 
   @doc """

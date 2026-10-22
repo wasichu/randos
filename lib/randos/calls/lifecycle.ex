@@ -53,12 +53,10 @@ defmodule Randos.Calls.Lifecycle do
   @max_extension_count 2
   @extension_response_timeout_seconds 20
   @connect_timeout_seconds 15
-  @disconnected_grace_seconds 5
   @rematch_window_seconds 90
-  @reconnect_grace_seconds 10
+  @recovery_budget_seconds 15
   @ice_restart_delay_seconds 2
-  @ice_restart_timeout_seconds 10
-  @max_ice_restarts 2
+  @ice_restart_retry_seconds 5
 
   @typedoc "One participant's media, as they last reported it."
   @type media_state :: :connecting | :connected | :disconnected
@@ -83,10 +81,6 @@ defmodule Randos.Calls.Lifecycle do
   @spec connect_timeout_seconds() :: pos_integer()
   def connect_timeout_seconds, do: @connect_timeout_seconds
 
-  @doc "How long a participant's media may stay disconnected before the call fails."
-  @spec disconnected_grace_seconds() :: pos_integer()
-  def disconnected_grace_seconds, do: @disconnected_grace_seconds
-
   @doc """
   How long two people who just had a call aren't matched with each other
   again (so "Next" finds someone new), counted from the call's end.
@@ -95,32 +89,25 @@ defmodule Randos.Calls.Lifecycle do
   def rematch_window_seconds, do: @rematch_window_seconds
 
   @doc """
-  How long a call waits for a participant whose connection to the server
-  dropped (a network blip, a sleeping laptop) to come back with its resume
-  ticket before ending the call `:disconnected`.
+  How long an active call may stay unhealthy (someone's media down, or
+  someone's connection to the server dropped: a network change, a sleeping
+  laptop) before it ends, whatever the cause and whatever the clients can
+  do about it. Restarts and resumes happen inside it.
   """
-  @spec reconnect_grace_seconds() :: pos_integer()
-  def reconnect_grace_seconds, do: @reconnect_grace_seconds
+  @spec recovery_budget_seconds() :: pos_integer()
+  def recovery_budget_seconds, do: @recovery_budget_seconds
 
   @doc """
   ICE restart (calls whose two clients support it, `Call.ice_restart?`):
   how long a side may stay `disconnected` before the server asks for a
-  restart (a short loss often recovers by itself).
+  restart (a short loss often recovers by itself). `failed` doesn't wait.
   """
   @spec ice_restart_delay_seconds() :: pos_integer()
   def ice_restart_delay_seconds, do: @ice_restart_delay_seconds
 
-  @doc "How long one ICE restart attempt has to get both sides connected again."
-  @spec ice_restart_timeout_seconds() :: pos_integer()
-  def ice_restart_timeout_seconds, do: @ice_restart_timeout_seconds
-
-  @doc """
-  Restart attempts per outage (counting from the last time both sides were
-  connected) before the call ends `:connection_failed`. An attempt started
-  by a resume doesn't count: the last one's messages may have been lost.
-  """
-  @spec max_ice_restarts() :: pos_integer()
-  def max_ice_restarts, do: @max_ice_restarts
+  @doc "How often the server asks again while a restarted call is still down."
+  @spec ice_restart_retry_seconds() :: pos_integer()
+  def ice_restart_retry_seconds, do: @ice_restart_retry_seconds
 
   @spec ended_reasons() :: [ended_reason()]
   def ended_reasons, do: @ended_reasons

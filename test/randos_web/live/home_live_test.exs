@@ -259,6 +259,20 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view_a, "#extension-countdown")
     assert has_element?(view_a, "#call-panel[data-webrtc-role='offerer']")
 
+    # Audio down: both are told it's reconnecting (the recovery budget);
+    # back up, the notice goes.
+    refute has_element?(view_a, "#call-recovering")
+
+    render_hook(view_b, "signal", %{
+      "type" => "media_state",
+      "payload" => %{"state" => "disconnected"}
+    })
+
+    assert eventually_has_element?(view_a, "#call-recovering")
+    assert eventually_has_element?(view_b, "#call-recovering")
+    connect_media(view_b)
+    assert eventually_gone?(view_a, "#call-recovering")
+
     assert {:ok, call_pid} = eventually_call_pid(call_id(view_a))
     CallCoordinator.force_time_up(call_pid)
 
@@ -319,6 +333,18 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view, "#idle-panel")
     refute has_element?(view, "#call-countdown")
     refute has_element?(view, "#extension-countdown")
+  end
+
+  defp eventually_gone?(view, selector, attempts \\ 200)
+  defp eventually_gone?(_view, _selector, 0), do: false
+
+  defp eventually_gone?(view, selector, attempts) do
+    if has_element?(view, selector) do
+      Process.sleep(10)
+      eventually_gone?(view, selector, attempts - 1)
+    else
+      true
+    end
   end
 
   defp connect_media(view),

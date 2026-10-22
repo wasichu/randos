@@ -73,6 +73,7 @@ defmodule RandosWeb.HomeComponents do
   attr :preferences, :map, required: true
   attr :peer_language, :string, default: nil
   attr :peer_reconnecting, :boolean, default: false
+  attr :recovering, :boolean, default: false
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
 
@@ -120,6 +121,7 @@ defmodule RandosWeb.HomeComponents do
             preferences={@preferences}
             peer_language={@peer_language}
             peer_reconnecting={@peer_reconnecting}
+            recovering={@recovering}
             webrtc_role={@webrtc_role}
             language_name={&language_name/1}
           />
@@ -355,6 +357,7 @@ defmodule RandosWeb.HomeComponents do
   attr :preferences, :map, required: true
   attr :peer_language, :string, default: nil
   attr :peer_reconnecting, :boolean, default: false
+  attr :recovering, :boolean, default: false
   attr :webrtc_role, :atom, default: nil
   attr :language_name, :any, required: true
 
@@ -377,6 +380,18 @@ defmodule RandosWeb.HomeComponents do
         >
           <.icon name="hero-arrow-path" class="size-4 text-teal-700 motion-safe:animate-spin" />
           {gettext("Your rando's connection dropped; waiting a few seconds for them to come back.")}
+        </p>
+        <%!-- The call is recovering (the server's budget, obligation 10): the
+             audio may be cut for a few seconds. The rando's own drop says
+             more, so it wins. --%>
+        <p
+          :if={@recovering and not @peer_reconnecting}
+          id="call-recovering"
+          role="status"
+          class="mt-3 inline-flex items-center gap-2 rounded-md bg-stone-100 px-3 py-2 text-sm text-stone-700"
+        >
+          <.icon name="hero-arrow-path" class="size-4 text-teal-700 motion-safe:animate-spin" />
+          {gettext("Reconnecting audio…")}
         </p>
       </div>
 
@@ -462,7 +477,7 @@ defmodule RandosWeb.HomeComponents do
       data-ice-transport-policy={@ice_transport_policy}
       data-ice-generation={@ice_generation}
       data-ice-restart={to_string(@ice_restart)}
-      data-reconnect-grace-ms={Randos.Calls.Lifecycle.reconnect_grace_seconds() * 1000}
+      data-recovery-budget-ms={Randos.Calls.Lifecycle.recovery_budget_seconds() * 1000}
       data-voice-processor={@voice_processor}
       data-webrtc-state="not_started"
       data-microphone-muted="false"

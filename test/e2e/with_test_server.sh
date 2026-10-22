@@ -38,7 +38,9 @@ end)
 '
 
 mkdir -p "$(dirname "$log")"
-export RANDOS_CONNECT_TIMEOUT_MS=4000 RANDOS_ICE_SERVERS='[]'
+# RANDOS_TEST_ICE_SERVERS: a local test relay instead (recovery_smoke.mjs
+# points it at test_turn; calls are then relay-only through it).
+export RANDOS_CONNECT_TIMEOUT_MS=4000 RANDOS_ICE_SERVERS="${RANDOS_TEST_ICE_SERVERS:-[]}"
 # A developer's TURN settings (`just dev-turn`) must not leak into tests.
 unset TURN_SHARED_SECRET TURN_HOST TURN_SERVER_URL TURNS_SERVER_URL TURN_STUN_URL RANDOS_ALLOW_DIRECT_CALLS
 # RANDOS_TEST_UNREACHABLE_RELAY=1: a TURN server that never answers, so calls

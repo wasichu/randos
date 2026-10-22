@@ -83,14 +83,16 @@ defmodule RandosWeb.ParticipantShell do
       :ended_reason,
       :ice_transport_policy,
       # The offerer restarts ICE whenever this grows (obligation 10).
-      :ice_generation
+      :ice_generation,
+      # Unhealthy and within the recovery budget: say "Reconnecting audio…".
+      :recovering
     ])
     |> Map.put(:media, media_view(call, participant_id))
     # The language the rando speaks (with several hearing languages, the
     # client can't know which): a language code, nothing that identifies them.
     |> Map.put(:peer_speaks, peer_speaks(call, participant_id))
     # The rando's connection to the server dropped and the call is waiting
-    # for them to come back (Lifecycle.reconnect_grace_seconds/0).
+    # for them to come back (within Lifecycle.recovery_budget_seconds/0).
     |> Map.put(:peer_reconnecting, peer_reconnecting?(call, participant_id))
     # So clients can say "continue for another N minutes" without their own
     # copy of the constant.

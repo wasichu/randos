@@ -15,32 +15,30 @@ defmodule Randos.Calls.CallCoordinator do
     * `:extension_pending` — waits for both votes, or times out and ends
 
   It owns call health: participants report their raw `media_state`
-  (`Randos.Signaling.classify/2`); a participant `disconnected` longer than
-  `disconnected_grace_ms` (a per-participant timer that survives status
-  changes), or reporting `failed`, ends the call `:connection_failed`.
-  Except while someone is away (below): a real network change drops a
-  person's connection to the server and the call's media together, so
-  the other side's `disconnected` grace would end the call before they
-  could resume. It waits instead (the away timer bounds it), and once
-  everyone is back, a seat still `disconnected` gets a fresh grace.
+  (`Randos.Signaling.classify/2`). Once active, a call is unhealthy while
+  anyone's media is down (in a call with audio) or anyone is away (their
+  connection to the server dropped; `call.away`). From the moment it turns
+  unhealthy it has one deadline, `recovery_budget_ms`
+  (`Lifecycle.recovery_budget_seconds/0`), shown as `call.recovering`; it
+  ends then with a reason from what's still wrong (`:disconnected` if
+  someone is still away, else `:connection_failed`), and healthy again
+  cancels it. Inside the budget the coordinator does the most useful thing
+  it can:
 
-  In a call whose two clients can restart ICE (`Call.ice_restart?`,
-  obligation 10), a `disconnected` past `ice_restart_delay_ms` instead
-  bumps `call.ice_generation`, which asks the offerer for an ICE restart,
-  and gives the attempt `ice_restart_timeout_ms` to get both sides
-  `connected`; after `max_ice_restarts` failed attempts the call ends
-  `:connection_failed`. `failed` counts as `disconnected` there, while
-  attempts remain. A resume while media is down starts an attempt at once
-  (not counted: the last one's messages may have been lost). The server
-  decides and only the offerer offers, so restart offers never cross.
+    * someone away: wait for them. If they come back with their resume
+      ticket (`resume/4`, `Randos.Calls.ResumeTicket`), the new process
+      takes their place. Leaving on purpose (`peer_disconnected`, hanging
+      up) still ends the call at once.
+    * in a call whose two clients can restart ICE (`Call.ice_restart?`,
+      obligation 10): media `disconnected` past `ice_restart_delay_ms`, or
+      `failed`, or a resume with media down, bumps `call.ice_generation`,
+      asking the offerer for an ICE restart, then again every
+      `ice_restart_retry_ms` until healthy or out of budget. The server
+      decides and only the offerer offers, so restart offers never cross.
+    * otherwise: wait (ICE may recover by itself); `failed` without
+      restart ends the call `:connection_failed` at once.
 
-  A participant whose process goes away mid-call (their connection to the
-  server dropped) is marked away (`call.away`) rather than ending the call:
-  their media may well still be flowing. If they come back within
-  `reconnect_grace_ms` with their resume ticket (`resume/4`,
-  `Randos.Calls.ResumeTicket`), the new process takes their place;
-  otherwise the call ends `:disconnected`. Leaving on purpose
-  (`peer_disconnected`, hanging up) still ends it at once.
+  While connecting, the connect timeout covers media; away still counts.
 
   The coordinator also monitors both participants, relays WebRTC media
   signaling between them, and broadcasts `{:call_updated, %Call{}}` to both
@@ -68,14 +66,12 @@ defmodule Randos.Calls.CallCoordinator do
   @overridable [
     :pubsub,
     :tickets,
-    :reconnect_grace_ms,
+    :recovery_budget_ms,
     :ice_transport_policy,
     :activation_delay_ms,
     :connect_timeout_ms,
-    :disconnected_grace_ms,
     :ice_restart_delay_ms,
-    :ice_restart_timeout_ms,
-    :max_ice_restarts,
+    :ice_restart_retry_ms,
     :call_duration_ms,
     :extension_duration_ms,
     :extension_response_timeout_ms
@@ -92,18 +88,12 @@ defmodule Randos.Calls.CallCoordinator do
     # Participant id => the registry key of their current resume ticket.
     resume_keys: %{},
     tickets: ResumeTicket.registry(),
-    reconnect_grace_ms: Lifecycle.reconnect_grace_seconds() * 1_000,
+    recovery_budget_ms: Lifecycle.recovery_budget_seconds() * 1_000,
     ice_transport_policy: "all",
     activation_delay_ms: 750,
     connect_timeout_ms: Lifecycle.connect_timeout_seconds() * 1_000,
-    disconnected_grace_ms: Lifecycle.disconnected_grace_seconds() * 1_000,
     ice_restart_delay_ms: Lifecycle.ice_restart_delay_seconds() * 1_000,
-    ice_restart_timeout_ms: Lifecycle.ice_restart_timeout_seconds() * 1_000,
-    max_ice_restarts: Lifecycle.max_ice_restarts(),
-    # Restart attempts since both sides were last connected, and whether one
-    # is in flight.
-    restart_attempts: 0,
-    restart_pending?: false,
+    ice_restart_retry_ms: Lifecycle.ice_restart_retry_seconds() * 1_000,
     call_duration_ms: Lifecycle.call_duration_seconds() * 1_000,
     extension_duration_ms: Lifecycle.extension_duration_seconds() * 1_000,
     extension_response_timeout_ms: Lifecycle.extension_response_timeout_seconds() * 1_000
@@ -247,40 +237,25 @@ defmodule Randos.Calls.CallCoordinator do
     {:stop, @failed, end_call(data, :connection_failed)}
   end
 
-  # ICE restart (Call.ice_restart?). While anyone is away the restart waits
-  # for them: a restart offer can't reach someone who isn't there, and the
-  # resume starts one.
-  def handle_event({:timeout, _restart}, event, _state, %{call: %{away: [_ | _]}})
-      when event in [:restart_delay, :restart_attempt, :restart_now],
-      do: :keep_state_and_data
+  # Recovery (see the moduledoc): out of budget, the call ends with what's
+  # still wrong.
+  def handle_event({:timeout, :recovery}, :recovery, state, data) do
+    cond do
+      not unhealthy?(state, data) ->
+        :keep_state_and_data
 
-  def handle_event({:timeout, {:restart_delay, id}}, :restart_delay, state, data) do
-    if Map.get(data.call.media, id) == :disconnected and not restarting?(data),
-      do: restart(state, data, :counted),
-      else: :keep_state_and_data
-  end
+      data.call.away != [] ->
+        Logger.info("call participant didn't come back")
+        {:stop, :normal, end_call(data, :disconnected)}
 
-  def handle_event({:timeout, :restart_attempt}, :restart_now, state, data),
-    do: restart(state, data, :uncounted)
-
-  def handle_event({:timeout, :restart_attempt}, :restart_attempt, state, data) do
-    if Lifecycle.media_connected?(data.call),
-      do: :keep_state_and_data,
-      else: restart(state, data, :counted)
-  end
-
-  def handle_event({:timeout, {:grace, _id}}, :grace, _state, %{call: %{away: [_ | _]}}) do
-    Logger.info("call media disconnected while a participant is away; waiting for them")
-    :keep_state_and_data
-  end
-
-  def handle_event({:timeout, {:grace, participant_id}}, :grace, _state, data) do
-    if Map.get(data.call.media, participant_id) == :disconnected do
-      Logger.info("call media stayed disconnected")
-      {:stop, @failed, end_call(data, :connection_failed)}
-    else
-      :keep_state_and_data
+      true ->
+        Logger.info("call media didn't come back", media: inspect(data.call.media))
+        {:stop, @failed, end_call(data, :connection_failed)}
     end
+  end
+
+  def handle_event({:timeout, :restart}, :restart, state, data) do
+    if restart_now?(state, data), do: restart(data), else: :keep_state_and_data
   end
 
   def handle_event(event_type, :time_up, :active, data)
@@ -336,7 +311,7 @@ defmodule Randos.Calls.CallCoordinator do
 
   # A participant's process went away (its connection dropped): wait for
   # them to come back with their ticket rather than ending the call.
-  def handle_event(:info, {:DOWN, ref, :process, _pid, reason}, _state, data)
+  def handle_event(:info, {:DOWN, ref, :process, _pid, reason}, state, data)
       when is_map_key(data.monitors, ref) do
     {role, monitors} = Map.pop(data.monitors, ref)
     id = Map.fetch!(data.call.match, role).id
@@ -348,17 +323,9 @@ defmodule Randos.Calls.CallCoordinator do
         call: %{data.call | away: Enum.uniq([id | data.call.away])}
     }
 
+    {data, actions} = reassess(state, data)
     broadcast(data)
-    {:keep_state, data, [{{:timeout, {:away, id}}, data.reconnect_grace_ms, :away}]}
-  end
-
-  def handle_event({:timeout, {:away, participant_id}}, :away, _state, data) do
-    if participant_id in data.call.away do
-      Logger.info("call participant didn't come back")
-      {:stop, :normal, end_call(data, :disconnected)}
-    else
-      :keep_state_and_data
-    end
+    {:keep_state, data, actions}
   end
 
   def handle_event({:call, from}, {:resume, participant_id, key, pid}, state, data) do
@@ -367,14 +334,16 @@ defmodule Randos.Calls.CallCoordinator do
       data = take_seat(data, role, participant_id, pid)
       {data, ticket} = issue_ticket(data, participant_id, :reply)
       Logger.info("call participant came back")
+      {data, actions} = reassess(state, data)
+      # Whatever was asked while someone was away may never have arrived.
+      data = if restart_now?(state, data), do: bump_generation(data), else: data
       broadcast(data)
       entry = Map.fetch!(data.call.match, role)
 
       {:keep_state, data,
        [
-         {:reply, from, {:ok, %{call: data.call, entry: entry, ticket: ticket}}},
-         {{:timeout, {:away, participant_id}}, :cancel}
-         | after_resume(state, data)
+         {:reply, from, {:ok, %{call: data.call, entry: entry, ticket: ticket}}}
+         | actions ++ retry_if_restarting(state, data)
        ]}
     else
       _invalid -> {:keep_state_and_data, [{:reply, from, {:error, :invalid_ticket}}]}
@@ -404,20 +373,29 @@ defmodule Randos.Calls.CallCoordinator do
   defp handle_signal(:leave, _message, from, _state, data),
     do: {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :peer_disconnected)}
 
+  # `failed` is final for this connection: with ICE restart, restart now
+  # (recorded as disconnected; the budget bounds it); without, the end.
   defp handle_signal({:media, :failed}, message, from, state, data) do
-    if restarts?(state, data),
-      do: handle_signal({:media, :disconnected}, message, from, state, data),
-      else: {:stop_and_reply, @failed, [{:reply, from, :ok}], end_call(data, :connection_failed)}
+    if restarts?(state, data) do
+      id = message.from_participant_id
+      data = %{data | call: Lifecycle.put_media(data.call, id, :disconnected)}
+      {data, actions} = reassess(state, data)
+      data = if restart_now?(state, data), do: bump_generation(data), else: data
+      broadcast(data)
+      {:keep_state, data, [{:reply, from, :ok} | actions ++ retry_if_restarting(state, data)]}
+    else
+      {:stop_and_reply, @failed, [{:reply, from, :ok}], end_call(data, :connection_failed)}
+    end
   end
 
   defp handle_signal({:media, media}, message, from, state, data) do
     id = message.from_participant_id
     unchanged? = Map.get(data.call.media, id) == media
     data = %{data | call: Lifecycle.put_media(data.call, id, media)}
-    # Only a change arms or cancels a timer (a repeated `disconnected` must
-    # not extend it).
-    {data, timers} = if unchanged?, do: {data, []}, else: media_timers(id, media, state, data)
-    actions = [{:reply, from, :ok} | timers]
+    # Only a change starts anything (a repeated `disconnected` must not
+    # push a restart back).
+    {data, timers} = if unchanged?, do: {data, []}, else: reassess(state, data)
+    actions = [{:reply, from, :ok} | timers ++ restart_delay(unchanged?, media, state, data)]
 
     cond do
       state == :connecting and Lifecycle.audio?(data.call) and
@@ -437,57 +415,69 @@ defmodule Randos.Calls.CallCoordinator do
     end
   end
 
-  # What a media change starts or stops: the restart path in calls that can
-  # restart ICE, else the disconnected grace.
-  defp media_timers(id, media, state, data) do
-    cond do
-      not restarts?(state, data) ->
-        {data, grace_timer(id, media, state, data)}
+  # Healthy or not, after anything that can change it: unhealthy starts the
+  # one recovery deadline (and shows `call.recovering`); healthy again ends
+  # it and every restart timer.
+  defp reassess(state, data) do
+    case {unhealthy?(state, data), data.call.recovering} do
+      {true, false} ->
+        {put_in(data.call.recovering, true),
+         [{{:timeout, :recovery}, data.recovery_budget_ms, :recovery}]}
 
-      media == :disconnected ->
-        {data, [{{:timeout, {:restart_delay, id}}, data.ice_restart_delay_ms, :restart_delay}]}
+      {false, true} ->
+        {put_in(data.call.recovering, false),
+         [{{:timeout, :recovery}, :cancel}, {{:timeout, :restart}, :cancel}]}
 
-      Lifecycle.media_connected?(data.call) ->
-        # Both connected: the outage is over, whatever started it.
-        {%{data | restart_attempts: 0, restart_pending?: false},
-         [{{:timeout, {:restart_delay, id}}, :cancel}, {{:timeout, :restart_attempt}, :cancel}]}
-
-      true ->
-        {data, [{{:timeout, {:restart_delay, id}}, :cancel}]}
+      _same ->
+        {data, []}
     end
   end
+
+  defp unhealthy?(state, data),
+    do: data.call.away != [] or media_down?(state, data)
+
+  # Media counts once the call is up, and only in a call with audio.
+  defp media_down?(state, data),
+    do:
+      state in [:active, :extension_pending] and Lifecycle.audio?(data.call) and
+        not Lifecycle.media_connected?(data.call)
+
+  # A new `disconnected` in a restart call: ask for a restart if it lasts
+  # (a short loss often recovers by itself).
+  defp restart_delay(false, :disconnected, state, data) do
+    if restarts?(state, data),
+      do: [{{:timeout, :restart}, data.ice_restart_delay_ms, :restart}],
+      else: []
+  end
+
+  defp restart_delay(_unchanged?, _media, _state, _data), do: []
 
   defp restarts?(state, data),
     do: data.call.ice_restart? and state in [:active, :extension_pending]
 
-  defp restarting?(data), do: data.restart_pending?
+  # A restart can help: media down, everyone here to hear the offer.
+  defp restart_now?(state, data),
+    do: restarts?(state, data) and data.call.away == [] and media_down?(state, data)
 
-  # Ask the offerer for an ICE restart (obligation 10): a new generation,
-  # and a timeout for the attempt. Out of attempts, the call has failed.
-  defp restart(_state, %{restart_attempts: n, max_ice_restarts: max} = data, :counted)
-       when n >= max do
-    Logger.info("call media didn't come back after ICE restarts")
-    {:stop, @failed, end_call(data, :connection_failed)}
-  end
-
-  defp restart(_state, data, counted) do
-    attempts = if counted == :counted, do: data.restart_attempts + 1, else: data.restart_attempts
-    call = %{data.call | ice_generation: data.call.ice_generation + 1}
-    data = %{data | call: call, restart_attempts: attempts, restart_pending?: true}
-    Logger.info("call ICE restart requested", status: "generation #{call.ice_generation}")
+  # Ask the offerer for an ICE restart (obligation 10), and again after
+  # `ice_restart_retry_ms` while it's still down (the budget bounds it).
+  defp restart(data) do
+    data = bump_generation(data)
     broadcast(data)
-
-    {:keep_state, data,
-     [{{:timeout, :restart_attempt}, data.ice_restart_timeout_ms, :restart_attempt}]}
+    {:keep_state, data, [{{:timeout, :restart}, data.ice_restart_retry_ms, :restart}]}
   end
 
-  # While connecting, the connect timeout covers a disconnect.
-  defp grace_timer(_id, _media, :connecting, _data), do: []
+  defp bump_generation(data) do
+    data = update_in(data.call.ice_generation, &(&1 + 1))
+    Logger.info("call ICE restart requested", status: "generation #{data.call.ice_generation}")
+    data
+  end
 
-  defp grace_timer(id, :disconnected, _state, data),
-    do: [{{:timeout, {:grace, id}}, data.disconnected_grace_ms, :grace}]
-
-  defp grace_timer(id, :connected, _state, _data), do: [{{:timeout, {:grace, id}}, :cancel}]
+  defp retry_if_restarting(state, data) do
+    if restart_now?(state, data),
+      do: [{{:timeout, :restart}, data.ice_restart_retry_ms, :restart}],
+      else: []
+  end
 
   defp participant_ids(%{call: %Call{match: match}}),
     do: [match.participant_a.id, match.participant_b.id]
@@ -498,27 +488,6 @@ defmodule Randos.Calls.CallCoordinator do
       match.participant_b.id == id -> :participant_b
       true -> nil
     end
-  end
-
-  # Everyone is back and media is down: in a restart call, a restart now
-  # (whatever was asked while someone was away may never have arrived);
-  # otherwise a fresh grace.
-  defp after_resume(state, %{call: %{away: []}} = data) do
-    cond do
-      not restarts?(state, data) -> regrace(state, data)
-      Lifecycle.media_connected?(data.call) -> []
-      true -> [{{:timeout, :restart_attempt}, 0, :restart_now}]
-    end
-  end
-
-  defp after_resume(_state, _data), do: []
-
-  # A seat still `disconnected` (its grace may have run out while someone
-  # was away) gets a fresh one.
-  defp regrace(state, data) do
-    for {id, :disconnected} <- data.call.media,
-        timer <- grace_timer(id, :disconnected, state, data),
-        do: timer
   end
 
   # The new process takes the participant's seat: monitored from now on, and

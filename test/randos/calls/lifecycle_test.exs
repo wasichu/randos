@@ -107,9 +107,12 @@ defmodule Randos.Calls.LifecycleTest do
       refute Lifecycle.audio?(call([], false))
     end
 
-    test "connect timeout and disconnected grace are the decided values" do
+    test "the connect timeout and the recovery timings are the decided values" do
       assert Lifecycle.connect_timeout_seconds() == 15
-      assert Lifecycle.disconnected_grace_seconds() == 5
+      # One budget for every kind of trouble; restarts happen inside it.
+      assert Lifecycle.recovery_budget_seconds() == 15
+      assert Lifecycle.ice_restart_delay_seconds() == 2
+      assert Lifecycle.ice_restart_retry_seconds() == 5
     end
   end
 end

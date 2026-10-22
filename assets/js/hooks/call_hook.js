@@ -115,7 +115,7 @@ export const WebRTCAudio = {
   // call by then: stop the mic rather than keep it on for nobody.
   disconnected() {
     if (this.cleaned) return
-    const graceMs = Number(this.el.dataset.reconnectGraceMs) || 0
+    const graceMs = Number(this.el.dataset.recoveryBudgetMs) || 0
     logEvent("call.socket_disconnected", {graceMs})
     clearTimeout(this.offlineTimer)
     this.offlineTimer = setTimeout(() => this.cleanup(), graceMs + 2_000)

@@ -112,6 +112,12 @@ smoke:
     test/e2e/with_test_server.sh tmp/smoke-server.log env BASE_URL=http://localhost:4010 SMOKE_SERVER_LOG=tmp/smoke-server.log node test/e2e/call_smoke.mjs
     RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/smoke-relay-server.log env BASE_URL=http://localhost:4010 node test/e2e/relay_only_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-voice-lab-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_lab_smoke.mjs
+    just recovery-smoke
+
+# A call whose media path dies comes back (ICE restart, obligation 10):
+# two Chromes, relay-only through the test TURN relay, which cuts them.
+recovery-smoke: test-turn
+    node test/e2e/recovery_smoke.mjs
 
 # Terminal client (text-only) against the local dev server; RANDOS_URL or --url to override
 tui *args:

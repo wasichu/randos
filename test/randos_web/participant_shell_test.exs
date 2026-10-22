@@ -62,6 +62,7 @@ defmodule RandosWeb.ParticipantShellTest do
                ended_reason: nil,
                ice_transport_policy: "all",
                ice_generation: 0,
+               recovering: false,
                # Built without Call.new/2, so no media has been reported.
                media: %{self: nil, peer: nil},
                # The rando's language, a code: never who they are.

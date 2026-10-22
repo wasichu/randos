@@ -152,22 +152,36 @@ defmodule RandosWeb.HomeLive do
     |> assign(:participant, participant)
     |> assign(:ui_state, participant.status)
     |> assign(:webrtc_role, participant.webrtc_role)
-    |> assign(:call_id, participant.call && participant.call.id)
-    |> assign(:call_status, participant.call && participant.call.status)
-    |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
-    |> assign(:ice_transport_policy, participant.call && participant.call.ice_transport_policy)
-    |> assign(:ice_generation, participant.call && participant.call.ice_generation)
-    |> assign(:ice_restart, participant.call != nil and participant.call.ice_restart?)
-    |> assign(
-      :peer_language,
-      participant.call && ParticipantShell.peer_speaks(participant.call, participant.id)
-    )
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
-    |> assign(
-      :peer_reconnecting,
-      participant.call != nil and
-        ParticipantShell.peer_reconnecting?(participant.call, participant.id)
-    )
+    |> assign(call_assigns(participant.call, participant.id))
+  end
+
+  defp call_assigns(nil, _participant_id) do
+    [
+      call_id: nil,
+      call_status: nil,
+      call_deadline_unix_ms: nil,
+      ice_transport_policy: nil,
+      ice_generation: nil,
+      ice_restart: false,
+      recovering: false,
+      peer_language: nil,
+      peer_reconnecting: false
+    ]
+  end
+
+  defp call_assigns(call, participant_id) do
+    [
+      call_id: call.id,
+      call_status: call.status,
+      call_deadline_unix_ms: call.call_deadline_unix_ms,
+      ice_transport_policy: call.ice_transport_policy,
+      ice_generation: call.ice_generation,
+      ice_restart: call.ice_restart?,
+      recovering: call.recovering,
+      peer_language: ParticipantShell.peer_speaks(call, participant_id),
+      peer_reconnecting: ParticipantShell.peer_reconnecting?(call, participant_id)
+    ]
   end
 
   @impl true
@@ -191,6 +205,7 @@ defmodule RandosWeb.HomeLive do
             preferences={@preferences}
             peer_language={@peer_language}
             peer_reconnecting={@peer_reconnecting}
+            recovering={@recovering}
             form={@form}
             matchmaking_error={@matchmaking_error}
           />

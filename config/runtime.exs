@@ -41,9 +41,13 @@ if ice_servers = System.get_env("RANDOS_ICE_SERVERS") do
   servers =
     ice_servers
     |> JSON.decode!()
-    |> Enum.map(fn server ->
-      Map.new(server, fn {k, v} -> {String.to_existing_atom(k), v} end)
-    end)
+    # Only WebRTC's RTCIceServer keys (atoms named here, so this never
+    # depends on what's been loaded, nor makes atoms from the environment).
+    |> Enum.map(
+      &Map.new(Map.take(&1, ["urls", "username", "credential"]), fn {k, v} ->
+        {%{"urls" => :urls, "username" => :username, "credential" => :credential}[k], v}
+      end)
+    )
 
   config :randos, RandosWeb.IceServers, servers: servers
 end
