@@ -1,0 +1,1167 @@
+{
+  "generated_at": "20261022T165407Z",
+  "runs": {
+    "opus-mt": {
+      "at": "20261022T153658Z",
+      "seconds": 603.6,
+      "locales": [
+        "es",
+        "ar",
+        "zh",
+        "hi",
+        "ru",
+        "fr",
+        "de",
+        "it",
+        "id",
+        "tr"
+      ],
+      "appended": [
+        {
+          "at": "20261022T013840Z",
+          "seconds": 39.2
+        },
+        {
+          "at": "20261022T153658Z",
+          "seconds": 68.7
+        }
+      ],
+      "scored": {
+        "metricx": {
+          "at": "20261022T160426Z",
+          "seconds": 34.7
+        },
+        "comet_kiwi": {
+          "at": "20261022T160612Z",
+          "seconds": 39.1
+        },
+        "judge": {
+          "at": "20261022T162515Z",
+          "seconds": 2867.9
+        }
+      }
+    },
+    "m2m100": {
+      "at": "20261022T153547Z",
+      "seconds": 724.0,
+      "locales": [
+        "es",
+        "zh",
+        "hi",
+        "ar",
+        "pt",
+        "bn",
+        "ru",
+        "ja",
+        "fr",
+        "de",
+        "ko",
+        "it",
+        "tr",
+        "id"
+      ],
+      "appended": [
+        {
+          "at": "20261022T013758Z",
+          "seconds": 78.0
+        },
+        {
+          "at": "20261022T153547Z",
+          "seconds": 84.3
+        }
+      ],
+      "scored": {
+        "metricx": {
+          "at": "20261022T160420Z",
+          "seconds": 47.1
+        },
+        "comet_kiwi": {
+          "at": "20261022T160601Z",
+          "seconds": 49.4
+        },
+        "judge": {
+          "at": "20261022T162037Z",
+          "seconds": 4039.9
+        }
+      }
+    },
+    "hy-mt2": {
+      "at": "20261022T154215Z",
+      "seconds": 2125.3,
+      "locales": [
+        "es",
+        "zh",
+        "hi",
+        "ar",
+        "pt",
+        "bn",
+        "ru",
+        "ja",
+        "fr",
+        "de",
+        "ko",
+        "it",
+        "tr",
+        "id"
+      ],
+      "appended": [
+        {
+          "at": "20261022T044059Z",
+          "seconds": 91.4
+        },
+        {
+          "at": "20261022T154215Z",
+          "seconds": 292.2
+        }
+      ],
+      "scored": {
+        "metricx": {
+          "at": "20261022T160412Z",
+          "seconds": 56.4
+        },
+        "comet_kiwi": {
+          "at": "20261022T160548Z",
+          "seconds": 55.8
+        },
+        "judge": {
+          "at": "20261022T161346Z",
+          "seconds": 4112.9
+        }
+      }
+    },
+    "translategemma-4b": {
+      "at": "20261022T154442Z",
+      "seconds": 1036.8,
+      "locales": [
+        "es",
+        "zh",
+        "hi",
+        "ar",
+        "pt",
+        "bn",
+        "ru",
+        "ja",
+        "fr",
+        "de",
+        "ko",
+        "it",
+        "tr",
+        "id"
+      ],
+      "appended": [
+        {
+          "at": "20261022T154442Z",
+          "seconds": 139.0
+        }
+      ],
+      "scored": {
+        "metricx": {
+          "at": "20261022T160455Z",
+          "seconds": 53.1
+        },
+        "comet_kiwi": {
+          "at": "20261022T160703Z",
+          "seconds": 55.9
+        },
+        "judge": {
+          "at": "20261022T164505Z",
+          "seconds": 4160.9
+        }
+      }
+    },
+    "translategemma-12b": {
+      "at": "20261022T155231Z",
+      "seconds": 3394.3,
+      "locales": [
+        "es",
+        "zh",
+        "hi",
+        "ar",
+        "pt",
+        "bn",
+        "ru",
+        "ja",
+        "fr",
+        "de",
+        "ko",
+        "it",
+        "tr",
+        "id"
+      ],
+      "appended": [
+        {
+          "at": "20261022T155231Z",
+          "seconds": 456.1
+        }
+      ],
+      "scored": {
+        "metricx": {
+          "at": "20261022T160436Z",
+          "seconds": 59.3
+        },
+        "comet_kiwi": {
+          "at": "20261022T160629Z",
+          "seconds": 76.1
+        },
+        "judge": {
+          "at": "20261022T163150Z",
+          "seconds": 4066.3
+        }
+      }
+    },
+    "translategemma-27b": {
+      "at": "20261022T160331Z",
+      "seconds": 6336.3,
+      "locales": [
+        "es",
+        "zh",
+        "hi",
+        "ar",
+        "pt",
+        "bn",
+        "ru",
+        "ja",
+        "fr",
+        "de",
+        "ko",
+        "it",
+        "tr",
+        "id"
+      ],
+      "appended": [
+        {
+          "at": "20261022T160331Z",
+          "seconds": 635.1
+        }
+      ],
+      "scored": {
+        "metricx": {
+          "at": "20261022T160446Z",
+          "seconds": 69.5
+        },
+        "comet_kiwi": {
+          "at": "20261022T160647Z",
+          "seconds": 114.8
+        },
+        "judge": {
+          "at": "20261022T163829Z",
+          "seconds": 4196.7
+        }
+      }
+    }
+  },
+  "locales": {
+    "ar": {
+      "winner": {
+        "model": "m2m100",
+        "why": "passes every check on 128/141 strings, mean rank 3.38"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 126,
+          "mean_chrf": 61.8,
+          "mean_rank": 2.46,
+          "best_count": 55,
+          "mean_metricx": 1.722,
+          "mean_comet_kiwi": 0.775,
+          "mean_judge": 8.255
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 128,
+          "mean_chrf": 49.5,
+          "mean_rank": 3.38,
+          "best_count": 41,
+          "mean_metricx": 3.233,
+          "mean_comet_kiwi": 0.69,
+          "mean_judge": 7.39
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 91,
+          "mean_chrf": 35.6,
+          "mean_rank": 4.69,
+          "best_count": 11,
+          "mean_metricx": 5.129,
+          "mean_comet_kiwi": 0.562,
+          "mean_judge": 5.376
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 118,
+          "mean_chrf": 55.7,
+          "mean_rank": 3.32,
+          "best_count": 11,
+          "mean_metricx": 1.767,
+          "mean_comet_kiwi": 0.753,
+          "mean_judge": 8.085
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 97,
+          "mean_chrf": 48.2,
+          "mean_rank": 4.04,
+          "best_count": 3,
+          "mean_metricx": 2.364,
+          "mean_comet_kiwi": 0.703,
+          "mean_judge": 7.773
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 116,
+          "mean_chrf": 50.8,
+          "mean_rank": 3.1,
+          "best_count": 14,
+          "mean_metricx": 1.65,
+          "mean_comet_kiwi": 0.759,
+          "mean_judge": 8.035
+        }
+      }
+    },
+    "bn": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 126/141 strings, mean rank 2.17"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 126,
+          "mean_chrf": 64.3,
+          "mean_rank": 2.17,
+          "best_count": 74,
+          "mean_metricx": 1.955,
+          "mean_comet_kiwi": 0.83,
+          "mean_judge": 6.809
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 124,
+          "mean_chrf": 43.6,
+          "mean_rank": 3.38,
+          "best_count": 28,
+          "mean_metricx": 3.837,
+          "mean_comet_kiwi": 0.725,
+          "mean_judge": 6.191
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 119,
+          "mean_chrf": 52.4,
+          "mean_rank": 3.01,
+          "best_count": 11,
+          "mean_metricx": 1.9,
+          "mean_comet_kiwi": 0.819,
+          "mean_judge": 6.851
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 93,
+          "mean_chrf": 45.2,
+          "mean_rank": 3.53,
+          "best_count": 3,
+          "mean_metricx": 2.17,
+          "mean_comet_kiwi": 0.789,
+          "mean_judge": 7.014
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 110,
+          "mean_chrf": 48.1,
+          "mean_rank": 2.9,
+          "best_count": 18,
+          "mean_metricx": 2.001,
+          "mean_comet_kiwi": 0.82,
+          "mean_judge": 6.972
+        }
+      }
+    },
+    "de": {
+      "winner": {
+        "model": "opus-mt",
+        "why": "passes every check on 141/141 strings, mean rank 2.97"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 140,
+          "mean_chrf": 68.2,
+          "mean_rank": 2.8,
+          "best_count": 44,
+          "mean_metricx": 1.026,
+          "mean_comet_kiwi": 0.795,
+          "mean_judge": 8.277
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 133,
+          "mean_chrf": 64.2,
+          "mean_rank": 3.57,
+          "best_count": 30,
+          "mean_metricx": 2.08,
+          "mean_comet_kiwi": 0.73,
+          "mean_judge": 6.858
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 141,
+          "mean_chrf": 67.5,
+          "mean_rank": 2.97,
+          "best_count": 44,
+          "mean_metricx": 1.564,
+          "mean_comet_kiwi": 0.768,
+          "mean_judge": 7.879
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 105,
+          "mean_chrf": 53.0,
+          "mean_rank": 3.96,
+          "best_count": 2,
+          "mean_metricx": 1.174,
+          "mean_comet_kiwi": 0.733,
+          "mean_judge": 7.837
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 108,
+          "mean_chrf": 55.5,
+          "mean_rank": 4.19,
+          "best_count": 5,
+          "mean_metricx": 1.489,
+          "mean_comet_kiwi": 0.72,
+          "mean_judge": 8.128
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 122,
+          "mean_chrf": 59.2,
+          "mean_rank": 3.52,
+          "best_count": 16,
+          "mean_metricx": 1.074,
+          "mean_comet_kiwi": 0.779,
+          "mean_judge": 8.028
+        }
+      }
+    },
+    "es": {
+      "winner": {
+        "model": "opus-mt",
+        "why": "passes every check on 141/141 strings, mean rank 2.66"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 141,
+          "mean_chrf": 73.7,
+          "mean_rank": 3.0,
+          "best_count": 32,
+          "mean_metricx": 2.32,
+          "mean_comet_kiwi": 0.8,
+          "mean_judge": 8.929
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 135,
+          "mean_chrf": 62.5,
+          "mean_rank": 3.8,
+          "best_count": 22,
+          "mean_metricx": 3.5,
+          "mean_comet_kiwi": 0.733,
+          "mean_judge": 7.716
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 141,
+          "mean_chrf": 78.1,
+          "mean_rank": 2.66,
+          "best_count": 65,
+          "mean_metricx": 2.887,
+          "mean_comet_kiwi": 0.782,
+          "mean_judge": 8.801
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 123,
+          "mean_chrf": 61.9,
+          "mean_rank": 3.77,
+          "best_count": 11,
+          "mean_metricx": 2.047,
+          "mean_comet_kiwi": 0.781,
+          "mean_judge": 8.482
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 113,
+          "mean_chrf": 62.3,
+          "mean_rank": 4.26,
+          "best_count": 3,
+          "mean_metricx": 2.309,
+          "mean_comet_kiwi": 0.756,
+          "mean_judge": 8.56
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 122,
+          "mean_chrf": 61.0,
+          "mean_rank": 3.5,
+          "best_count": 8,
+          "mean_metricx": 1.93,
+          "mean_comet_kiwi": 0.796,
+          "mean_judge": 8.539
+        }
+      }
+    },
+    "fr": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 140/141 strings, mean rank 2.85"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 140,
+          "mean_chrf": 66.4,
+          "mean_rank": 2.85,
+          "best_count": 44,
+          "mean_metricx": 2.318,
+          "mean_comet_kiwi": 0.796,
+          "mean_judge": 8.809
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 130,
+          "mean_chrf": 60.3,
+          "mean_rank": 3.59,
+          "best_count": 35,
+          "mean_metricx": 3.496,
+          "mean_comet_kiwi": 0.743,
+          "mean_judge": 7.709
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 140,
+          "mean_chrf": 72.3,
+          "mean_rank": 2.95,
+          "best_count": 46,
+          "mean_metricx": 2.9,
+          "mean_comet_kiwi": 0.772,
+          "mean_judge": 8.586
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 130,
+          "mean_chrf": 59.4,
+          "mean_rank": 3.77,
+          "best_count": 4,
+          "mean_metricx": 2.358,
+          "mean_comet_kiwi": 0.79,
+          "mean_judge": 8.454
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 117,
+          "mean_chrf": 54.5,
+          "mean_rank": 4.32,
+          "best_count": 4,
+          "mean_metricx": 2.759,
+          "mean_comet_kiwi": 0.759,
+          "mean_judge": 8.22
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 127,
+          "mean_chrf": 57.0,
+          "mean_rank": 3.53,
+          "best_count": 8,
+          "mean_metricx": 2.145,
+          "mean_comet_kiwi": 0.799,
+          "mean_judge": 8.194
+        }
+      }
+    },
+    "hi": {
+      "winner": {
+        "model": "opus-mt",
+        "why": "passes every check on 130/141 strings, mean rank 3.81"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 126,
+          "mean_chrf": 68.7,
+          "mean_rank": 2.56,
+          "best_count": 57,
+          "mean_metricx": 1.981,
+          "mean_comet_kiwi": 0.818,
+          "mean_judge": 7.213
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 125,
+          "mean_chrf": 50.6,
+          "mean_rank": 3.48,
+          "best_count": 39,
+          "mean_metricx": 3.333,
+          "mean_comet_kiwi": 0.731,
+          "mean_judge": 6.411
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 130,
+          "mean_chrf": 58.4,
+          "mean_rank": 3.81,
+          "best_count": 27,
+          "mean_metricx": 4.136,
+          "mean_comet_kiwi": 0.715,
+          "mean_judge": 6.511
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 116,
+          "mean_chrf": 55.9,
+          "mean_rank": 3.54,
+          "best_count": 8,
+          "mean_metricx": 1.863,
+          "mean_comet_kiwi": 0.805,
+          "mean_judge": 7.128
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 88,
+          "mean_chrf": 48.0,
+          "mean_rank": 4.26,
+          "best_count": 1,
+          "mean_metricx": 2.313,
+          "mean_comet_kiwi": 0.73,
+          "mean_judge": 7.191
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 114,
+          "mean_chrf": 57.1,
+          "mean_rank": 3.36,
+          "best_count": 8,
+          "mean_metricx": 2.014,
+          "mean_comet_kiwi": 0.802,
+          "mean_judge": 7.241
+        }
+      }
+    },
+    "id": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 140/141 strings, mean rank 2.92"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 140,
+          "mean_chrf": 66.0,
+          "mean_rank": 2.92,
+          "best_count": 43,
+          "mean_metricx": 1.504,
+          "mean_comet_kiwi": 0.787,
+          "mean_judge": 8.936
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 135,
+          "mean_chrf": 56.9,
+          "mean_rank": 3.54,
+          "best_count": 29,
+          "mean_metricx": 2.637,
+          "mean_comet_kiwi": 0.72,
+          "mean_judge": 7.823
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 133,
+          "mean_chrf": 70.9,
+          "mean_rank": 3.26,
+          "best_count": 43,
+          "mean_metricx": 2.467,
+          "mean_comet_kiwi": 0.749,
+          "mean_judge": 8.447
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 130,
+          "mean_chrf": 59.3,
+          "mean_rank": 3.54,
+          "best_count": 15,
+          "mean_metricx": 1.261,
+          "mean_comet_kiwi": 0.794,
+          "mean_judge": 8.617
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 119,
+          "mean_chrf": 58.4,
+          "mean_rank": 4.12,
+          "best_count": 2,
+          "mean_metricx": 1.549,
+          "mean_comet_kiwi": 0.771,
+          "mean_judge": 8.567
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 120,
+          "mean_chrf": 62.5,
+          "mean_rank": 3.61,
+          "best_count": 9,
+          "mean_metricx": 1.426,
+          "mean_comet_kiwi": 0.774,
+          "mean_judge": 8.631
+        }
+      }
+    },
+    "it": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 141/141 strings, mean rank 2.91"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 141,
+          "mean_chrf": 69.5,
+          "mean_rank": 2.91,
+          "best_count": 45,
+          "mean_metricx": 1.763,
+          "mean_comet_kiwi": 0.791,
+          "mean_judge": 8.794
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 134,
+          "mean_chrf": 60.5,
+          "mean_rank": 3.62,
+          "best_count": 36,
+          "mean_metricx": 3.209,
+          "mean_comet_kiwi": 0.723,
+          "mean_judge": 7.489
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 141,
+          "mean_chrf": 73.9,
+          "mean_rank": 2.95,
+          "best_count": 44,
+          "mean_metricx": 2.428,
+          "mean_comet_kiwi": 0.762,
+          "mean_judge": 8.574
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 120,
+          "mean_chrf": 57.7,
+          "mean_rank": 3.7,
+          "best_count": 6,
+          "mean_metricx": 1.705,
+          "mean_comet_kiwi": 0.779,
+          "mean_judge": 8.326
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 117,
+          "mean_chrf": 57.9,
+          "mean_rank": 4.25,
+          "best_count": 5,
+          "mean_metricx": 2.126,
+          "mean_comet_kiwi": 0.739,
+          "mean_judge": 8.553
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 123,
+          "mean_chrf": 56.4,
+          "mean_rank": 3.57,
+          "best_count": 5,
+          "mean_metricx": 1.67,
+          "mean_comet_kiwi": 0.79,
+          "mean_judge": 8.27
+        }
+      }
+    },
+    "ja": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 135/141 strings, mean rank 2.22"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 135,
+          "mean_chrf": 62.4,
+          "mean_rank": 2.22,
+          "best_count": 75,
+          "mean_metricx": 2.23,
+          "mean_comet_kiwi": 0.821,
+          "mean_judge": 7.901
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 117,
+          "mean_chrf": 46.2,
+          "mean_rank": 3.34,
+          "best_count": 28,
+          "mean_metricx": 3.454,
+          "mean_comet_kiwi": 0.725,
+          "mean_judge": 6.551
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 95,
+          "mean_chrf": 49.4,
+          "mean_rank": 3.21,
+          "best_count": 8,
+          "mean_metricx": 2.345,
+          "mean_comet_kiwi": 0.789,
+          "mean_judge": 7.525
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 108,
+          "mean_chrf": 46.0,
+          "mean_rank": 3.39,
+          "best_count": 7,
+          "mean_metricx": 2.257,
+          "mean_comet_kiwi": 0.779,
+          "mean_judge": 7.674
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 114,
+          "mean_chrf": 49.8,
+          "mean_rank": 2.85,
+          "best_count": 20,
+          "mean_metricx": 2.132,
+          "mean_comet_kiwi": 0.809,
+          "mean_judge": 7.596
+        }
+      }
+    },
+    "ko": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 132/141 strings, mean rank 2.16"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 132,
+          "mean_chrf": 59.6,
+          "mean_rank": 2.16,
+          "best_count": 72,
+          "mean_metricx": 1.887,
+          "mean_comet_kiwi": 0.838,
+          "mean_judge": 8.298
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 128,
+          "mean_chrf": 49.1,
+          "mean_rank": 3.25,
+          "best_count": 36,
+          "mean_metricx": 3.564,
+          "mean_comet_kiwi": 0.749,
+          "mean_judge": 6.894
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 117,
+          "mean_chrf": 51.9,
+          "mean_rank": 3.08,
+          "best_count": 9,
+          "mean_metricx": 2.159,
+          "mean_comet_kiwi": 0.818,
+          "mean_judge": 7.943
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 106,
+          "mean_chrf": 48.2,
+          "mean_rank": 3.64,
+          "best_count": 6,
+          "mean_metricx": 2.52,
+          "mean_comet_kiwi": 0.783,
+          "mean_judge": 7.957
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 113,
+          "mean_chrf": 48.9,
+          "mean_rank": 2.86,
+          "best_count": 14,
+          "mean_metricx": 1.887,
+          "mean_comet_kiwi": 0.826,
+          "mean_judge": 7.915
+        }
+      }
+    },
+    "pt": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 141/141 strings, mean rank 2.21"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 141,
+          "mean_chrf": 76.8,
+          "mean_rank": 2.21,
+          "best_count": 79,
+          "mean_metricx": 2.525,
+          "mean_comet_kiwi": 0.779,
+          "mean_judge": 9.248
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 135,
+          "mean_chrf": 63.6,
+          "mean_rank": 3.06,
+          "best_count": 37,
+          "mean_metricx": 3.788,
+          "mean_comet_kiwi": 0.718,
+          "mean_judge": 7.872
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 128,
+          "mean_chrf": 62.2,
+          "mean_rank": 3.15,
+          "best_count": 10,
+          "mean_metricx": 2.124,
+          "mean_comet_kiwi": 0.769,
+          "mean_judge": 8.695
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 115,
+          "mean_chrf": 62.4,
+          "mean_rank": 3.62,
+          "best_count": 3,
+          "mean_metricx": 2.41,
+          "mean_comet_kiwi": 0.745,
+          "mean_judge": 8.752
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 120,
+          "mean_chrf": 59.5,
+          "mean_rank": 2.95,
+          "best_count": 12,
+          "mean_metricx": 2.256,
+          "mean_comet_kiwi": 0.776,
+          "mean_judge": 8.738
+        }
+      }
+    },
+    "ru": {
+      "winner": {
+        "model": "opus-mt",
+        "why": "passes every check on 136/141 strings, mean rank 3.35"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 131,
+          "mean_chrf": 65.5,
+          "mean_rank": 2.72,
+          "best_count": 46,
+          "mean_metricx": 1.692,
+          "mean_comet_kiwi": 0.8,
+          "mean_judge": 8.291
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 133,
+          "mean_chrf": 54.1,
+          "mean_rank": 3.59,
+          "best_count": 39,
+          "mean_metricx": 3.313,
+          "mean_comet_kiwi": 0.725,
+          "mean_judge": 7.135
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 136,
+          "mean_chrf": 59.3,
+          "mean_rank": 3.35,
+          "best_count": 34,
+          "mean_metricx": 2.755,
+          "mean_comet_kiwi": 0.748,
+          "mean_judge": 7.482
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 118,
+          "mean_chrf": 57.1,
+          "mean_rank": 3.58,
+          "best_count": 7,
+          "mean_metricx": 1.581,
+          "mean_comet_kiwi": 0.781,
+          "mean_judge": 7.865
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 113,
+          "mean_chrf": 54.0,
+          "mean_rank": 4.19,
+          "best_count": 5,
+          "mean_metricx": 2.024,
+          "mean_comet_kiwi": 0.751,
+          "mean_judge": 8.057
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 118,
+          "mean_chrf": 51.6,
+          "mean_rank": 3.57,
+          "best_count": 10,
+          "mean_metricx": 1.793,
+          "mean_comet_kiwi": 0.781,
+          "mean_judge": 8.007
+        }
+      }
+    },
+    "tr": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 140/141 strings, mean rank 2.8"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 140,
+          "mean_chrf": 63.2,
+          "mean_rank": 2.8,
+          "best_count": 46,
+          "mean_metricx": 3.45,
+          "mean_comet_kiwi": 0.805,
+          "mean_judge": 8.475
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 128,
+          "mean_chrf": 51.4,
+          "mean_rank": 3.57,
+          "best_count": 37,
+          "mean_metricx": 4.919,
+          "mean_comet_kiwi": 0.734,
+          "mean_judge": 7.257
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 137,
+          "mean_chrf": 62.2,
+          "mean_rank": 2.92,
+          "best_count": 41,
+          "mean_metricx": 3.907,
+          "mean_comet_kiwi": 0.789,
+          "mean_judge": 8.135
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 121,
+          "mean_chrf": 53.9,
+          "mean_rank": 3.77,
+          "best_count": 4,
+          "mean_metricx": 3.57,
+          "mean_comet_kiwi": 0.781,
+          "mean_judge": 8.007
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 103,
+          "mean_chrf": 50.0,
+          "mean_rank": 4.31,
+          "best_count": 5,
+          "mean_metricx": 3.91,
+          "mean_comet_kiwi": 0.76,
+          "mean_judge": 8.057
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 117,
+          "mean_chrf": 48.6,
+          "mean_rank": 3.64,
+          "best_count": 8,
+          "mean_metricx": 3.576,
+          "mean_comet_kiwi": 0.792,
+          "mean_judge": 7.787
+        }
+      }
+    },
+    "zh": {
+      "winner": {
+        "model": "hy-mt2",
+        "why": "passes every check on 139/141 strings, mean rank 2.66"
+      },
+      "models": {
+        "hy-mt2": {
+          "strings": 141,
+          "all_checks_pass": 139,
+          "mean_chrf": 64.0,
+          "mean_rank": 2.66,
+          "best_count": 60,
+          "mean_metricx": 1.212,
+          "mean_comet_kiwi": 0.779,
+          "mean_judge": 7.979
+        },
+        "m2m100": {
+          "strings": 141,
+          "all_checks_pass": 115,
+          "mean_chrf": 50.0,
+          "mean_rank": 3.73,
+          "best_count": 27,
+          "mean_metricx": 2.394,
+          "mean_comet_kiwi": 0.685,
+          "mean_judge": 6.787
+        },
+        "opus-mt": {
+          "strings": 141,
+          "all_checks_pass": 137,
+          "mean_chrf": 56.2,
+          "mean_rank": 3.36,
+          "best_count": 31,
+          "mean_metricx": 1.885,
+          "mean_comet_kiwi": 0.734,
+          "mean_judge": 7.199
+        },
+        "translategemma-12b": {
+          "strings": 141,
+          "all_checks_pass": 123,
+          "mean_chrf": 53.3,
+          "mean_rank": 3.43,
+          "best_count": 11,
+          "mean_metricx": 1.101,
+          "mean_comet_kiwi": 0.762,
+          "mean_judge": 7.638
+        },
+        "translategemma-27b": {
+          "strings": 141,
+          "all_checks_pass": 92,
+          "mean_chrf": 45.1,
+          "mean_rank": 4.3,
+          "best_count": 1,
+          "mean_metricx": 1.433,
+          "mean_comet_kiwi": 0.702,
+          "mean_judge": 7.702
+        },
+        "translategemma-4b": {
+          "strings": 141,
+          "all_checks_pass": 121,
+          "mean_chrf": 52.3,
+          "mean_rank": 3.52,
+          "best_count": 11,
+          "mean_metricx": 1.208,
+          "mean_comet_kiwi": 0.766,
+          "mean_judge": 7.582
+        }
+      }
+    }
+  }
+}

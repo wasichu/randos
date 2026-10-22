@@ -1,0 +1,566 @@
+{
+  "%{first} or %{last}": {
+    "model": "hy-mt2",
+    "msgstr": "%{first} o %{last}"
+  },
+  "%{language} both ways": {
+    "model": "hy-mt2",
+    "msgstr": "%{language} in entrambe le direzioni"
+  },
+  "%{minutes} min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} minuti"
+  },
+  "%{time} remaining": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} rimanenti"
+  },
+  "30+ min": {
+    "model": "hy-mt2",
+    "msgstr": "30+ minuti"
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "hy-mt2",
+    "msgstr": "Una conversazione dura %{call} minuti. Quando il tempo è scaduto, può continuare per altri %{extension} minuti solo se entrambe le persone lo desiderano, per un massimo complessivo di %{max} minuti. Puoi andartene in qualsiasi momento."
+  },
+  "A doorway, not a platform": {
+    "model": "hy-mt2",
+    "msgstr": "Una porta, non una piattaforma"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "hy-mt2",
+    "msgstr": "Una coppia di lingue viene visualizzata non appena presenta almeno %{min} richieste; quelle con un numero inferiore vengono conteggiate tra “altre”."
+  },
+  "About": {
+    "model": "hy-mt2",
+    "msgstr": "Informazioni"
+  },
+  "About randos": {
+    "model": "hy-mt2",
+    "msgstr": "Informazioni sui randos"
+  },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Accetta l’avviso relativo all’età minima di 18 anni prima di cercare un rando."
+  },
+  "Attempting to reconnect": {
+    "model": "hy-mt2",
+    "msgstr": "Cerco di riconnettermi"
+  },
+  "Both people choose whether to continue.": {
+    "model": "hy-mt2",
+    "msgstr": "Entrambe le persone decidono se continuare."
+  },
+  "Calls started": {
+    "model": "hy-mt2",
+    "msgstr": "Sono iniziate le chiamate"
+  },
+  "Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "Annulla"
+  },
+  "Canceled": {
+    "model": "hy-mt2",
+    "msgstr": "Annullato"
+  },
+  "Change": {
+    "model": "hy-mt2",
+    "msgstr": "Cambiare"
+  },
+  "Checking the relay…": {
+    "model": "hy-mt2",
+    "msgstr": "Controllo il relè…"
+  },
+  "Choose supported conversation languages.": {
+    "model": "hy-mt2",
+    "msgstr": "Scegli le lingue di conversazione supportate."
+  },
+  "Choose your languages.": {
+    "model": "hy-mt2",
+    "msgstr": "Scegli le tue lingue."
+  },
+  "Connected": {
+    "model": "hy-mt2",
+    "msgstr": "Connesso"
+  },
+  "Connecting": {
+    "model": "hy-mt2",
+    "msgstr": "Connettersi"
+  },
+  "Connection lost": {
+    "model": "hy-mt2",
+    "msgstr": "Connessione persa"
+  },
+  "Connection:": {
+    "model": "hy-mt2",
+    "msgstr": "Connessione:"
+  },
+  "Continued past 10 minutes": {
+    "model": "hy-mt2",
+    "msgstr": "Continuato per oltre 10 minuti"
+  },
+  "Conversation is active.": {
+    "model": "hy-mt2",
+    "msgstr": "La conversazione è attiva."
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "hy-mt2",
+    "msgstr": "Le conversazioni sono private e non vengono archiviate. Il server coordina la chiamata, ma non conserva registrazioni né crea un elenco di chi hai parlato."
+  },
+  "Couldn't connect": {
+    "model": "hy-mt2",
+    "msgstr": "Non è stato possibile connettersi"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "hy-mt2",
+    "msgstr": "Contato su %{answered} dei %{total} server."
+  },
+  "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
+    "model": "hy-mt2",
+    "msgstr": "Si conta a partire da %{time} UTC del %{date}. Questo server ricomincia da zero ogni volta che entra in modalità di pausa o viene aggiornato, quindi queste sono le chiamate di oggi a partire da quel momento."
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "hy-mt2",
+    "msgstr": "Conteggio a partire da %{time} UTC del %{date}: chiamate di oggi finora."
+  },
+  "Current call": {
+    "model": "hy-mt2",
+    "msgstr": "Chiamata attuale"
+  },
+  "Done": {
+    "model": "hy-mt2",
+    "msgstr": "Fatto"
+  },
+  "Ephemeral by default": {
+    "model": "hy-mt2",
+    "msgstr": "Ephemeral per impostazione predefinita"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "hy-mt2",
+    "msgstr": "Ogni chiamata passa attraverso il nostro relè, quindi nessuna delle due parti vede l’indirizzo dell’altra. Lo verifichiamo ogni pochi minuti creando una connessione relè reale."
+  },
+  "Find a phrase": {
+    "model": "hy-mt2",
+    "msgstr": "Trova una frase"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "hy-mt2",
+    "msgstr": "Trova una frase, in inglese o %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Trovare un rando compatibile."
+  },
+  "Finding a rando": {
+    "model": "hy-mt2",
+    "msgstr": "Trovare un rando"
+  },
+  "Finished": {
+    "model": "hy-mt2",
+    "msgstr": "Finito"
+  },
+  "Help fix a translation": {
+    "model": "hy-mt2",
+    "msgstr": "Aiutami a correggere una traduzione"
+  },
+  "How calls ended": {
+    "model": "hy-mt2",
+    "msgstr": "Come terminavano le chiamate"
+  },
+  "How languages are counted": {
+    "model": "hy-mt2",
+    "msgstr": "Come vengono contate le lingue"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "hy-mt2",
+    "msgstr": "Ho 18 anni o più e capisco che le conversazioni sono anonime e non vengono moderate."
+  },
+  "I will speak in": {
+    "model": "hy-mt2",
+    "msgstr": "Parlerò in"
+  },
+  "I'm happy to hear": {
+    "model": "hy-mt2",
+    "msgstr": "Sono felice di sentirlo."
+  },
+  "In call": {
+    "model": "hy-mt2",
+    "msgstr": "In chiamata"
+  },
+  "Intentionally minimal": {
+    "model": "hy-mt2",
+    "msgstr": "Intenzionalmente minimo"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "hy-mt2",
+    "msgstr": "È pensato per il %{crosstalk}, lo scambio linguistico, la pratica dell’ascolto e conversazioni casuali ordinarie, senza costringere le persone in schemi o categorie rigide."
+  },
+  "Language": {
+    "model": "hy-mt2",
+    "msgstr": "Lingua"
+  },
+  "Languages spoken": {
+    "model": "hy-mt2",
+    "msgstr": "Lingue parlate"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "hy-mt2",
+    "msgstr": "Ultima verifica effettuata alle %{time} UTC."
+  },
+  "Looking": {
+    "model": "hy-mt2",
+    "msgstr": "Cercando"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "hy-mt2",
+    "msgstr": "Sto cercando un rando che parli %{hearing_languages} e voglia ascoltare %{speaking_language}."
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "hy-mt2",
+    "msgstr": "Nessun account. Nessun profilo. Nessun video. Nessuna pressione."
+  },
+  "No calls yet.": {
+    "model": "hy-mt2",
+    "msgstr": "Ancora nessuna chiamata."
+  },
+  "No relay is configured": {
+    "model": "hy-mt2",
+    "msgstr": "Non è configurato alcun relay."
+  },
+  "Not translated yet": {
+    "model": "hy-mt2",
+    "msgstr": "Non ancora tradotto"
+  },
+  "Nothing matches.": {
+    "model": "hy-mt2",
+    "msgstr": "Niente corrisponde."
+  },
+  "Other languages: %{calls}": {
+    "model": "hy-mt2",
+    "msgstr": "Altre lingue: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "hy-mt2",
+    "msgstr": "Attraverso TLS (reti che bloccano UDP)"
+  },
+  "Over UDP (most calls)": {
+    "model": "hy-mt2",
+    "msgstr": "Su UDP (la maggior parte delle chiamate)"
+  },
+  "Pick at least one language to hear": {
+    "model": "hy-mt2",
+    "msgstr": "Scegli almeno un linguaggio da ascoltare"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "hy-mt2",
+    "msgstr": "Scegli ogni lingua che ti permette di ascoltare con facilità."
+  },
+  "Pick the language you'd like to check.": {
+    "model": "hy-mt2",
+    "msgstr": "Scegli il linguaggio che desideri verificare."
+  },
+  "Preparing the call": {
+    "model": "hy-mt2",
+    "msgstr": "Preparare la chiamata"
+  },
+  "Privacy": {
+    "model": "hy-mt2",
+    "msgstr": "Privacy"
+  },
+  "Ready": {
+    "model": "hy-mt2",
+    "msgstr": "Pronto"
+  },
+  "Reconnecting audio…": {
+    "model": "hy-mt2",
+    "msgstr": "Riconnessione audio…"
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "hy-mt2",
+    "msgstr": "Eseguire questo commit insieme ai cambiamenti ancora non commessi"
+  },
+  "Secure audio connection is starting.": {
+    "model": "hy-mt2",
+    "msgstr": "Si sta avviando una connessione audio sicura."
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "hy-mt2",
+    "msgstr": "Brevi conversazioni anonime per la pratica linguistica."
+  },
+  "Something went wrong!": {
+    "model": "hy-mt2",
+    "msgstr": "C’è stato un problema!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "hy-mt2",
+    "msgstr": "Fonte (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Inizio chiamata con rando."
+  },
+  "Status": {
+    "model": "hy-mt2",
+    "msgstr": "Stato"
+  },
+  "Stop looking": {
+    "model": "hy-mt2",
+    "msgstr": "Smetti di cercare."
+  },
+  "Suggest a fix": {
+    "model": "hy-mt2",
+    "msgstr": "Proponi una soluzione."
+  },
+  "Switch theme": {
+    "model": "hy-mt2",
+    "msgstr": "Cambiare tema"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "hy-mt2",
+    "msgstr": "La chiamata è terminata perché l’audio non è disponibile qui."
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "hy-mt2",
+    "msgstr": "La chiamata si è interrotta perché l’audio non funzionava più su questo dispositivo."
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "hy-mt2",
+    "msgstr": "La chiamata è terminata perché l’accesso al microfono è stato bloccato. Abilitalo, poi prova di nuovo."
+  },
+  "The call ended because no microphone was found.": {
+    "model": "hy-mt2",
+    "msgstr": "La chiamata è terminata perché non è stato trovato alcun microfono."
+  },
+  "The commit this server runs": {
+    "model": "hy-mt2",
+    "msgstr": "Il commit eseguito da questo server"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "hy-mt2",
+    "msgstr": "L’interfaccia è progettata per essere silenziosa di proposito. L’obiettivo è una presenza umana non invasiva, non cicli di prestazioni o coinvolgimento."
+  },
+  "The relay is partly working": {
+    "model": "hy-mt2",
+    "msgstr": "Il relè funziona in parte."
+  },
+  "The relay is working": {
+    "model": "hy-mt2",
+    "msgstr": "Il relè funziona."
+  },
+  "The relay isn't working": {
+    "model": "hy-mt2",
+    "msgstr": "Il relè non funziona."
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "hy-mt2",
+    "msgstr": "Le traduzioni di questo sito sono state realizzate da un sistema automatizzato e non sono ancora state controllate da persone. Se qualcosa non è corretto nella vostra lingua, vi preghiamo di aiutarci a correggerlo: trovate il testo, indicate come dovrebbe essere scritto e noi ci occuperemo del resto."
+  },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "hy-mt2",
+    "msgstr": "Non esistono account, profili, contatti, follower, feed, serie di azioni consecutive, punteggi né un grafo sociale permanente. Randos è più simile a un’infrastruttura per conversazioni che a una piattaforma di social media."
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "hy-mt2",
+    "msgstr": "Le traduzioni di questo sito sono state realizzate da un sistema automatizzato. Se qualcosa non è corretto, trovalo di seguito e premi “Suggerisci una correzione”: si aprirà un ticket su GitHub con tutti i dati già compilati, tranne la tua correzione (è necessario avere un account GitHub). Una richiesta di merge con la tua correzione verrà aperta automaticamente e diventerà efficace una volta revisionata."
+  },
+  "Time is up": {
+    "model": "hy-mt2",
+    "msgstr": "Il tempo è scaduto."
+  },
+  "Time is up. Continue for another %{minutes} minutes?": {
+    "model": "hy-mt2",
+    "msgstr": "Il tempo è scaduto. Continuare per altri %{minutes} minuti?"
+  },
+  "Today": {
+    "model": "hy-mt2",
+    "msgstr": "Oggi"
+  },
+  "Toggle dark mode": {
+    "model": "hy-mt2",
+    "msgstr": "Attiva/desattiva il modalità scura"
+  },
+  "Translations": {
+    "model": "hy-mt2",
+    "msgstr": "Traduzioni"
+  },
+  "Typical length": {
+    "model": "hy-mt2",
+    "msgstr": "Lunghezza tipica"
+  },
+  "View on GitHub": {
+    "model": "hy-mt2",
+    "msgstr": "Visualizza su GitHub"
+  },
+  "We can't find the internet": {
+    "model": "hy-mt2",
+    "msgstr": "Non riusciamo a trovare Internet."
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "hy-mt2",
+    "msgstr": "Non siamo riusciti a avviare quella chiamata. Provare di nuovo, per favore."
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "hy-mt2",
+    "msgstr": "Contiamo le chiamate, non le persone: nessun indirizzo, nessun ID, niente su nessuno; vengono conservati soltanto questi totali."
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "hy-mt2",
+    "msgstr": "Cosa vede, registra e conserva ciascuna parte dei randos, insieme alla configurazione alla base di ogni richiesta:"
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "hy-mt2",
+    "msgstr": "Se le chiamate possono essere effettuate in questo momento, e come sta andando la giornata."
+  },
+  "You": {
+    "model": "hy-mt2",
+    "msgstr": "Tu"
+  },
+  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
+    "model": "hy-mt2",
+    "msgstr": "Scegli il linguaggio che vuoi parlare e quello che vuoi ascoltare. Randos ti mette in contatto con qualcuno compatibile per una breve conversazione, poi si tira da parte."
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "hy-mt2",
+    "msgstr": "Avete trovato un partner. L’audio inizia non appena si avvia la chiamata."
+  },
+  "You'll hear %{languages}": {
+    "model": "hy-mt2",
+    "msgstr": "Ascolterai %{languages}"
+  },
+  "Your rando": {
+    "model": "hy-mt2",
+    "msgstr": "Il tuo rando"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "hy-mt2",
+    "msgstr": "La connessione del tuo rando è stata interrotta; aspetta qualche secondo che torni online."
+  },
+  "button\u0004Continue": {
+    "model": "hy-mt2",
+    "msgstr": "Continua"
+  },
+  "button\u0004End": {
+    "model": "hy-mt2",
+    "msgstr": "Fine"
+  },
+  "button\u0004Find a rando": {
+    "model": "hy-mt2",
+    "msgstr": "Trova un rando"
+  },
+  "button\u0004Mute": {
+    "model": "hy-mt2",
+    "msgstr": "Muto"
+  },
+  "button\u0004Next rando": {
+    "model": "hy-mt2",
+    "msgstr": "Prossimo rando"
+  },
+  "button\u0004Unmute": {
+    "model": "hy-mt2",
+    "msgstr": "Disattiva il silenzio"
+  },
+  "close": {
+    "model": "hy-mt2",
+    "msgstr": "chiudi"
+  },
+  "connection state\u0004answering": {
+    "model": "hy-mt2",
+    "msgstr": "rispondere"
+  },
+  "connection state\u0004calling": {
+    "model": "hy-mt2",
+    "msgstr": "chiamare"
+  },
+  "connection state\u0004connected": {
+    "model": "hy-mt2",
+    "msgstr": "connesso"
+  },
+  "connection state\u0004connecting": {
+    "model": "hy-mt2",
+    "msgstr": "connettersi"
+  },
+  "connection state\u0004ended": {
+    "model": "hy-mt2",
+    "msgstr": "finito"
+  },
+  "connection state\u0004failed": {
+    "model": "hy-mt2",
+    "msgstr": "fallito"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "hy-mt2",
+    "msgstr": "Microfono negato"
+  },
+  "connection state\u0004not started": {
+    "model": "hy-mt2",
+    "msgstr": "non iniziato"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "hy-mt2",
+    "msgstr": "chiedere il microfono"
+  },
+  "connection state\u0004starting": {
+    "model": "hy-mt2",
+    "msgstr": "iniziare"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "hy-mt2",
+    "msgstr": "In attesa del tuo rando"
+  },
+  "crosstalk": {
+    "model": "hy-mt2",
+    "msgstr": "parlare tra sé"
+  },
+  "microphone ready": {
+    "model": "hy-mt2",
+    "msgstr": "Microfono pronto"
+  },
+  "microphone unavailable": {
+    "model": "hy-mt2",
+    "msgstr": "Il microfono non è disponibile."
+  },
+  "privacy": {
+    "model": "hy-mt2",
+    "msgstr": "privacy"
+  },
+  "randos is a place for anonymous, audio-only language conversation.": {
+    "model": "hy-mt2",
+    "msgstr": "Randos è un luogo per conversazioni linguistiche anonime in audio soltanto."
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "hy-mt2",
+    "msgstr": "Randos è un software libero (AGPL-3.0) e sviluppato in modo pubblico."
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "L’audio remoto richiede un tocco (%{summary})"
+  },
+  "remote audio playing (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "Riproduzione audio remota (%{summary})"
+  },
+  "remote audio received (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "Audio remoto ricevuto (%{summary})"
+  },
+  "requesting microphone": {
+    "model": "hy-mt2",
+    "msgstr": "chiedere il microfono"
+  },
+  "under 1 min": {
+    "model": "hy-mt2",
+    "msgstr": "meno di 1 minuto"
+  },
+  "waiting for microphone": {
+    "model": "hy-mt2",
+    "msgstr": "in attesa del microfono"
+  },
+  "waiting for remote audio": {
+    "model": "hy-mt2",
+    "msgstr": "in attesa dell’audio remoto"
+  },
+  "working": {
+    "model": "hy-mt2",
+    "msgstr": "lavorare"
+  }
+}

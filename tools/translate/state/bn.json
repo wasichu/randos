@@ -1,0 +1,506 @@
+{
+  "%{first} or %{last}": {
+    "model": "hy-mt2",
+    "msgstr": "%{first} অথবা %{last}"
+  },
+  "%{language} both ways": {
+    "model": "hy-mt2",
+    "msgstr": "%{language} উভয় দিকেই"
+  },
+  "%{minutes} min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} মিনিট"
+  },
+  "%{time} remaining": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} সময় অবশিষ্ট"
+  },
+  "30+ min": {
+    "model": "hy-mt2",
+    "msgstr": "৩০+ মিনিট"
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "hy-mt2",
+    "msgstr": "একটি কথোপকথনের সময়কাল হয় %{call} মিনিট। সময় শেষ হয়ে গেলে, উভয় পক্ষ চাইলেই এটি আরও %{extension} মিনিট ধরে চলতে পারে; মোট সময়কাল %{max} মিনিট পর্যন্ত হতে পারে। আপনি যেকোনো সময় চলে যেতে পারেন।"
+  },
+  "A doorway, not a platform": {
+    "model": "hy-mt2",
+    "msgstr": "একটি দরজার ফাঁক, প্ল্যাটফর্ম নয়।"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "hy-mt2",
+    "msgstr": "কোনো ভাষা-দম্পতি যখন কমপক্ষে %{min}টি কল পায়, তখনই তা দেখানো হয়; কম সংখ্যক কলযুক্ত দম্পতিগুলো “অন্যান্য” বিভাগে গণ্য হয়।"
+  },
+  "About": {
+    "model": "hy-mt2",
+    "msgstr": "সম্পর্কে"
+  },
+  "Attempting to reconnect": {
+    "model": "hy-mt2",
+    "msgstr": "পুনরায় সংযোগ স্থাপনের চেষ্টা করছি"
+  },
+  "Both people choose whether to continue.": {
+    "model": "hy-mt2",
+    "msgstr": "উভয়েই এগিয়ে যাওয়া উচিত কিনা তা নির্ধারণ করে।"
+  },
+  "Calls started": {
+    "model": "hy-mt2",
+    "msgstr": "কলগুলো শুরু হয়েছে।"
+  },
+  "Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "বাতিল করুন"
+  },
+  "Canceled": {
+    "model": "hy-mt2",
+    "msgstr": "বাতিল করা হয়েছে"
+  },
+  "Change": {
+    "model": "hy-mt2",
+    "msgstr": "পরিবর্তন করুন"
+  },
+  "Checking the relay…": {
+    "model": "hy-mt2",
+    "msgstr": "রিলেটি চেক করছি…"
+  },
+  "Choose supported conversation languages.": {
+    "model": "hy-mt2",
+    "msgstr": "সমর্থিত কথোপকথনের ভাষাগুলি নির্বাচন করুন।"
+  },
+  "Choose your languages.": {
+    "model": "hy-mt2",
+    "msgstr": "আপনার ভাষা নির্বাচন করুন।"
+  },
+  "Connected": {
+    "model": "hy-mt2",
+    "msgstr": "সংযুক্ত"
+  },
+  "Connecting": {
+    "model": "hy-mt2",
+    "msgstr": "সংযোগ স্থাপন করা হচ্ছে"
+  },
+  "Connection lost": {
+    "model": "hy-mt2",
+    "msgstr": "কানেকশন হারিয়ে গেছে।"
+  },
+  "Connection:": {
+    "model": "hy-mt2",
+    "msgstr": "সংযোগ:"
+  },
+  "Continued past 10 minutes": {
+    "model": "hy-mt2",
+    "msgstr": "১০ মিনিট অতিবাহিত হওয়ার পরও অব্যাহত রইল।"
+  },
+  "Conversation is active.": {
+    "model": "hy-mt2",
+    "msgstr": "কথোপকথন চলছে।"
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "hy-mt2",
+    "msgstr": "কথোপকথনগুলো ব্যক্তিগত থাকে এবং সংরক্ষিত হয় না। সার্ভারটি কলগুলো সমন্বয় করে, কিন্তু এটি কোনো রেকর্ডিং সংরক্ষণ করে না অথবা আপনি কার সাথে কথা বলেছেন সে সম্পর্কে কোনো ইতিহাস তৈরি করে না।"
+  },
+  "Couldn't connect": {
+    "model": "hy-mt2",
+    "msgstr": "সংযোগ স্থাপন করা যায়নি।"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "hy-mt2",
+    "msgstr": "%{total}টি সার্ভারের মধ্যে %{answered}টি বিবেচনা করা হয়েছে।"
+  },
+  "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
+    "model": "hy-mt2",
+    "msgstr": "%{date} তারিখে %{time} UTC থেকে গণনা শুরু হয়েছে। এই সার্ভারটি যখনই বন্ধ থাকে বা আপডেট হয়, তখনই এটি নতুনভাবে শুরু হয়; সুতরাং এগুলো হলো সেই সময় থেকে আজকের কলগুলো।"
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "hy-mt2",
+    "msgstr": "%{date} তারিখে %{time} UTC থেকে গণনা করা হচ্ছে: আজ এখন পর্যন্ত কলগুলো।"
+  },
+  "Current call": {
+    "model": "hy-mt2",
+    "msgstr": "বর্তমান কল"
+  },
+  "Done": {
+    "model": "hy-mt2",
+    "msgstr": "সম্পন্ন।"
+  },
+  "Ephemeral by default": {
+    "model": "hy-mt2",
+    "msgstr": "ডিফল্টভাবে অস্থায়ী"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "hy-mt2",
+    "msgstr": "প্রতিটি কলই আমাদের রিলের মাধ্যমে যায়, তাই কেউই অন্যের ঠিকানা দেখতে পায় না। আমরা প্রতি কয়েক মিনিট অন্তর একটি বাস্তব রিলে সংযোগ স্থাপন করে এটি পরীক্ষা করি।"
+  },
+  "Find a phrase": {
+    "model": "hy-mt2",
+    "msgstr": "একটি বাক্যাংশ খুঁজুন"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "hy-mt2",
+    "msgstr": "ইংরেজিতে বা %{language}-এ একটি বাক্যাংশ খুঁজুন।"
+  },
+  "Finished": {
+    "model": "hy-mt2",
+    "msgstr": "শেষ হয়েছে।"
+  },
+  "Help fix a translation": {
+    "model": "hy-mt2",
+    "msgstr": "অনুবাদটি ঠিক করতে সাহায্য করুন।"
+  },
+  "How calls ended": {
+    "model": "hy-mt2",
+    "msgstr": "কলগুলো কীভাবে শেষ হয়েছিল"
+  },
+  "How languages are counted": {
+    "model": "hy-mt2",
+    "msgstr": "ভাষাগুলো কীভাবে গণনা করা হয়"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "hy-mt2",
+    "msgstr": "আমার বয়স ১৮ বছর বা তার বেশি, এবং আমি বুঝি যে এখানকার কথোপকথনগুলো গোপনীয় এবং নিয়ন্ত্রণহীন।"
+  },
+  "I will speak in": {
+    "model": "hy-mt2",
+    "msgstr": "আমি কথা বলব।"
+  },
+  "I'm happy to hear": {
+    "model": "hy-mt2",
+    "msgstr": "এটা শুনে আমি খুশি।"
+  },
+  "In call": {
+    "model": "hy-mt2",
+    "msgstr": "কলের সময়"
+  },
+  "Intentionally minimal": {
+    "model": "hy-mt2",
+    "msgstr": "ইচ্ছাকৃতভাবে ন্যূনতম"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "hy-mt2",
+    "msgstr": "এটি %{crosstalk}, ভাষা বিনিময়, শ্রবণ অনুশীলন, এবং কঠোর নিয়ম বা শ্রেণীবিভাগের চাপ ছাড়া সাধারণ অনানুষ্ঠানিক কথোপকথনের জন্য তৈরি করা হয়েছে।"
+  },
+  "Language": {
+    "model": "hy-mt2",
+    "msgstr": "ভাষা"
+  },
+  "Languages spoken": {
+    "model": "hy-mt2",
+    "msgstr": "কথ্য ভাষাসমূহ"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "hy-mt2",
+    "msgstr": "সর্বশেষ পরীক্ষা করা হয়েছে %{time} UTC-এ।"
+  },
+  "Looking": {
+    "model": "hy-mt2",
+    "msgstr": "দেখছি"
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "hy-mt2",
+    "msgstr": "কোনো অ্যাকাউন্ট নেই। কোনো প্রোফাইল নেই। কোনো ভিডিও নেই। কোনো চাপ নেই।"
+  },
+  "No calls yet.": {
+    "model": "hy-mt2",
+    "msgstr": "এখনও কোনো কল আসেনি।"
+  },
+  "No relay is configured": {
+    "model": "hy-mt2",
+    "msgstr": "কোনো রিলে কনফিগার করা হয়নি।"
+  },
+  "Not translated yet": {
+    "model": "hy-mt2",
+    "msgstr": "এখনও অনুবাদ করা হয়নি।"
+  },
+  "Nothing matches.": {
+    "model": "hy-mt2",
+    "msgstr": "কিছুই মেলে না।"
+  },
+  "Other languages: %{calls}": {
+    "model": "hy-mt2",
+    "msgstr": "অন্যান্য ভাষা: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "hy-mt2",
+    "msgstr": "TLS-এর মাধ্যমে (UDP ব্লক করে এমন নেটওয়ার্কগুলিতে)"
+  },
+  "Over UDP (most calls)": {
+    "model": "hy-mt2",
+    "msgstr": "UDP-এর মাধ্যমে (বেশিরভাগ কল)"
+  },
+  "Pick at least one language to hear": {
+    "model": "hy-mt2",
+    "msgstr": "শোনার জন্য অন্তত একটি ভাষা নির্বাচন করুন।"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "hy-mt2",
+    "msgstr": "আপনি যেসব ভাষার শব্দ শুনতে স্বাচ্ছন্দ্য বোধ করেন, সেগুলো সবই নির্বাচন করুন।"
+  },
+  "Pick the language you'd like to check.": {
+    "model": "hy-mt2",
+    "msgstr": "আপনি যে ভাষাটি পরীক্ষা করতে চান তা নির্বাচন করুন।"
+  },
+  "Preparing the call": {
+    "model": "hy-mt2",
+    "msgstr": "কলটি প্রস্তুত করা"
+  },
+  "Privacy": {
+    "model": "hy-mt2",
+    "msgstr": "গোপনীয়তা"
+  },
+  "Ready": {
+    "model": "hy-mt2",
+    "msgstr": "প্রস্তুত"
+  },
+  "Reconnecting audio…": {
+    "model": "hy-mt2",
+    "msgstr": "অডিও পুনরায় সংযুক্ত হচ্ছে…"
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "hy-mt2",
+    "msgstr": "এই কমিটটি চালানো এবং এখনও কমিট না হওয়া পরিবর্তনগুলো।"
+  },
+  "Secure audio connection is starting.": {
+    "model": "hy-mt2",
+    "msgstr": "নিরাপদ অডিও সংযোগ শুরু হচ্ছে।"
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "hy-mt2",
+    "msgstr": "ভাষা অনুশীলনের জন্য সংক্ষিপ্ত, গোপনীয় কথোপকথন।"
+  },
+  "Something went wrong!": {
+    "model": "hy-mt2",
+    "msgstr": "কিছু একটা ভুল হয়েছে!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "hy-mt2",
+    "msgstr": "সোর্স (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "hy-mt2",
+    "msgstr": "rando-এর সাথে কল শুরু করা হচ্ছে।"
+  },
+  "Status": {
+    "model": "hy-mt2",
+    "msgstr": "অবস্থা"
+  },
+  "Stop looking": {
+    "model": "hy-mt2",
+    "msgstr": "আর খোঁজা বন্ধ করুন।"
+  },
+  "Suggest a fix": {
+    "model": "hy-mt2",
+    "msgstr": "একটি সমাধান প্রস্তাব করুন।"
+  },
+  "Switch theme": {
+    "model": "hy-mt2",
+    "msgstr": "থিম পরিবর্তন করুন"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "hy-mt2",
+    "msgstr": "এখানে অডিও না থাকার কারণে কলটি শেষ হয়ে গেছে।"
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "hy-mt2",
+    "msgstr": "এই ডিভাইসে অডিও কাজ করা বন্ধ হয়ে যাওয়ায় কলটি শেষ হয়ে গেল।"
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোন ব্যবহার বন্ধ থাকার কারণে কলটি শেষ হয়ে গেছে। এটি অনুমতি দিন, তারপর আবার চেষ্টা করুন।"
+  },
+  "The call ended because no microphone was found.": {
+    "model": "hy-mt2",
+    "msgstr": "কোনো মাইক্রোফোন না পাওয়ায় কলটি শেষ হয়ে গেল।"
+  },
+  "The commit this server runs": {
+    "model": "hy-mt2",
+    "msgstr": "এই সার্ভারটি যে কমিটগুলো চালায়"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "hy-mt2",
+    "msgstr": "ইন্টারফেসটিকে ইচ্ছাকৃতভাবে নীরব রাখা হয়েছে। লক্ষ্য হলো কম চাপযুক্ত মানবিক উপস্থিতি, পারফরম্যান্স বা অংশগ্রহণের চক্র নয়।"
+  },
+  "The relay is partly working": {
+    "model": "hy-mt2",
+    "msgstr": "রিলেটি আংশিকভাবে কাজ করছে।"
+  },
+  "The relay is working": {
+    "model": "hy-mt2",
+    "msgstr": "রিলেটি কাজ করছে।"
+  },
+  "The relay isn't working": {
+    "model": "hy-mt2",
+    "msgstr": "রিলেটি কাজ করছে না।"
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "hy-mt2",
+    "msgstr": "এই সাইটের অনুবাদগুলো মেশিন দ্বারা করা হয়েছে এবং এখনও মানুষের দ্বারা পরীক্ষা করা হয়নি। যদি আপনার ভাষায় কিছু ভুলভাবে উপস্থাপিত হয়, দয়া করে তা সংশোধনে সাহায্য করুন: ঐ টেক্সটটি খুঁজে বের করুন, এটা কীভাবে"
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "hy-mt2",
+    "msgstr": "এই সাইটের অনুবাদগুলো মেশিন দ্বারা করা হয়েছে। যদি কিছু ভুলভাবে উপস্থাপিত হয়, তবে নিচে সেটি খুঁজে বের করে “Suggest a fix”-এ ক্লিক করুন: এর ফলে GitHub-এ একটি ইস্যু খুলবে, যেখানে সবকিছু ইতিমধ্যেই পূরণ করা থাকবে কিন্তু আপনার"
+  },
+  "Time is up": {
+    "model": "hy-mt2",
+    "msgstr": "সময় শেষ হয়েছে।"
+  },
+  "Time is up. Continue for another %{minutes} minutes?": {
+    "model": "hy-mt2",
+    "msgstr": "সময় শেষ হয়ে গেছে। আরও %{minutes} মিনিট চালিয়ে যাবেন?"
+  },
+  "Today": {
+    "model": "hy-mt2",
+    "msgstr": "আজ"
+  },
+  "Toggle dark mode": {
+    "model": "hy-mt2",
+    "msgstr": "ডার্ক মোড চালু/বন্ধ করুন"
+  },
+  "Translations": {
+    "model": "hy-mt2",
+    "msgstr": "অনুবাদসমূহ"
+  },
+  "Typical length": {
+    "model": "hy-mt2",
+    "msgstr": "সাধারণ দৈর্ঘ্য"
+  },
+  "We can't find the internet": {
+    "model": "hy-mt2",
+    "msgstr": "আমরা ইন্টারনেট খুঁজে পাচ্ছি না।"
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "hy-mt2",
+    "msgstr": "আমরা সেই কলটি শুরু করতে পারিনি। অনুগ্রহ করে আবার চেষ্টা করুন।"
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "hy-mt2",
+    "msgstr": "আমরা কলগুলো গণনা করি, মানুষদের নয়: কোনো ঠিকানা নেই, কোনো আইডি নেই, কারও সম্পর্কে কিছুই নেই; শুধুমাত্র এই মোট সংখ্যাগুলোই সংরক্ষণ করা হয়।"
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "hy-mt2",
+    "msgstr": "এখন কলগুলো কানেক্ট হতে পারছে কিনা, আর আজকের দিনটা কেমন কাটছে।"
+  },
+  "You": {
+    "model": "hy-mt2",
+    "msgstr": "আপনি"
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "hy-mt2",
+    "msgstr": "আপনারা মেলে গেছেন। কল শুরু হলেই অডিও চালু হবে।"
+  },
+  "You'll hear %{languages}": {
+    "model": "hy-mt2",
+    "msgstr": "আপনি %{languages} শুনতে পাবেন।"
+  },
+  "button\u0004Continue": {
+    "model": "hy-mt2",
+    "msgstr": "অব্যাহত রাখুন"
+  },
+  "button\u0004End": {
+    "model": "hy-mt2",
+    "msgstr": "শেষ"
+  },
+  "button\u0004Mute": {
+    "model": "hy-mt2",
+    "msgstr": "নীরব"
+  },
+  "button\u0004Unmute": {
+    "model": "hy-mt2",
+    "msgstr": "মিউট তুলুন"
+  },
+  "close": {
+    "model": "hy-mt2",
+    "msgstr": "বন্ধ"
+  },
+  "connection state\u0004answering": {
+    "model": "hy-mt2",
+    "msgstr": "উত্তর দেওয়া"
+  },
+  "connection state\u0004calling": {
+    "model": "hy-mt2",
+    "msgstr": "কল করা"
+  },
+  "connection state\u0004connected": {
+    "model": "hy-mt2",
+    "msgstr": "সংযুক্ত"
+  },
+  "connection state\u0004connecting": {
+    "model": "hy-mt2",
+    "msgstr": "সংযোগ স্থাপন করা"
+  },
+  "connection state\u0004ended": {
+    "model": "hy-mt2",
+    "msgstr": "শেষ হয়েছে"
+  },
+  "connection state\u0004failed": {
+    "model": "hy-mt2",
+    "msgstr": "ব্যর্থ হয়েছে"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোন অস্বীকৃত হয়েছে।"
+  },
+  "connection state\u0004not started": {
+    "model": "hy-mt2",
+    "msgstr": "এখনও শুরু হয়নি।"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোন চাওয়া হচ্ছে"
+  },
+  "connection state\u0004starting": {
+    "model": "hy-mt2",
+    "msgstr": "শুরু করা"
+  },
+  "crosstalk": {
+    "model": "hy-mt2",
+    "msgstr": "ক্রসটক"
+  },
+  "microphone ready": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোন প্রস্তুত।"
+  },
+  "microphone unavailable": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোন উপলব্ধ নয়।"
+  },
+  "privacy": {
+    "model": "hy-mt2",
+    "msgstr": "গোপনীয়তা"
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "hy-mt2",
+    "msgstr": "Randos হলো ফ্রি সফটওয়্যার (AGPL-3.0) এবং এটি পাবলিকভাবে তৈরি করা হয়েছে।"
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "রিমোট অডিওর জন্য একটি ট্যাপ দরকার (%{summary})"
+  },
+  "remote audio playing (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "রিমোট অডিও প্লে হচ্ছে (%{summary})"
+  },
+  "remote audio received (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "রিমোট অডিও গ্রহণ করা হয়েছে (%{summary})"
+  },
+  "requesting microphone": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোন চাওয়া হচ্ছে"
+  },
+  "under 1 min": {
+    "model": "hy-mt2",
+    "msgstr": "১ মিনিটের কম"
+  },
+  "waiting for microphone": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক্রোফোনের জন্য অপেক্ষা করছি।"
+  },
+  "waiting for remote audio": {
+    "model": "hy-mt2",
+    "msgstr": "রিমোট অডিওর জন্য অপেক্ষা করছি"
+  },
+  "working": {
+    "model": "hy-mt2",
+    "msgstr": "কাজ করা"
+  }
+}

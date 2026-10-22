@@ -1,0 +1,546 @@
+{
+  "%{first} or %{last}": {
+    "model": "opus-mt",
+    "msgstr": "%{first} или %{last}"
+  },
+  "%{language} both ways": {
+    "model": "opus-mt",
+    "msgstr": "%{language} в обоих направлениях"
+  },
+  "%{minutes} min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes} мин."
+  },
+  "%{time} remaining": {
+    "model": "opus-mt",
+    "msgstr": "%{time} Оставшиеся"
+  },
+  "30+ min": {
+    "model": "opus-mt",
+    "msgstr": "30 + мин."
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "opus-mt",
+    "msgstr": "Разговор длится %{call} минут. Когда время поднимается, он продолжается еще на %{extension} минуту, только если оба человека хотят, до %{max} минут. Вы можете уйти в любое время."
+  },
+  "A doorway, not a platform": {
+    "model": "opus-mt",
+    "msgstr": "Дверной проем, а не платформа"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "opus-mt",
+    "msgstr": "Языковая пара показывает, когда у нее есть по крайней мере %{min} звонков; меньшее число засчитывается в ОВОРЕ."
+  },
+  "About": {
+    "model": "opus-mt",
+    "msgstr": "О том, что"
+  },
+  "About randos": {
+    "model": "opus-mt",
+    "msgstr": "Примерно randos"
+  },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "opus-mt",
+    "msgstr": "Примите признание 18+, прежде чем искать rando."
+  },
+  "Attempting to reconnect": {
+    "model": "opus-mt",
+    "msgstr": "Попытка восстановить связь"
+  },
+  "Both people choose whether to continue.": {
+    "model": "opus-mt",
+    "msgstr": "Оба выбирают, продолжать ли."
+  },
+  "Calls started": {
+    "model": "opus-mt",
+    "msgstr": "Начали звонки"
+  },
+  "Cancel": {
+    "model": "opus-mt",
+    "msgstr": "Отмена"
+  },
+  "Canceled": {
+    "model": "opus-mt",
+    "msgstr": "Отменено"
+  },
+  "Change": {
+    "model": "opus-mt",
+    "msgstr": "Изменение"
+  },
+  "Checking the relay…": {
+    "model": "opus-mt",
+    "msgstr": "Проверяю реле..."
+  },
+  "Choose supported conversation languages.": {
+    "model": "opus-mt",
+    "msgstr": "Выбрать поддерживаемые языки разговора."
+  },
+  "Choose your languages.": {
+    "model": "opus-mt",
+    "msgstr": "Выбирайте языки."
+  },
+  "Connected": {
+    "model": "opus-mt",
+    "msgstr": "Подключено"
+  },
+  "Connecting": {
+    "model": "opus-mt",
+    "msgstr": "Подключение"
+  },
+  "Connection lost": {
+    "model": "opus-mt",
+    "msgstr": "Потеря связи"
+  },
+  "Connection:": {
+    "model": "opus-mt",
+    "msgstr": "Подключение:"
+  },
+  "Continued past 10 minutes": {
+    "model": "opus-mt",
+    "msgstr": "Осталось 10 минут."
+  },
+  "Conversation is active.": {
+    "model": "opus-mt",
+    "msgstr": "Разговоры активны."
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "opus-mt",
+    "msgstr": "Слушания закрыты и не хранятся. Сервер координирует звонок, но он не хранит записи и не создает историю вокруг того, с кем вы разговаривали."
+  },
+  "Couldn't connect": {
+    "model": "opus-mt",
+    "msgstr": "Не удалось связать"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "opus-mt",
+    "msgstr": "Пересчитано по %{answered} %{total} серверам."
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "opus-mt",
+    "msgstr": "Считаю с %{time} UTC на %{date}: сегодняшние звонки до сих пор."
+  },
+  "Current call": {
+    "model": "opus-mt",
+    "msgstr": "Текущий звонок"
+  },
+  "Done": {
+    "model": "opus-mt",
+    "msgstr": "Выполнено"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "opus-mt",
+    "msgstr": "Каждый звонок проходит через наш реле, так что никто не видит адрес другого, мы проверяем его каждые несколько минут, установим реальное соединение."
+  },
+  "Find a phrase": {
+    "model": "opus-mt",
+    "msgstr": "Найти фразу"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "opus-mt",
+    "msgstr": "Найти фразу на английском языке или %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "opus-mt",
+    "msgstr": "Найти совместимую rando."
+  },
+  "Finding a rando": {
+    "model": "opus-mt",
+    "msgstr": "Поиск rando"
+  },
+  "Finished": {
+    "model": "opus-mt",
+    "msgstr": "Завершено"
+  },
+  "Help fix a translation": {
+    "model": "opus-mt",
+    "msgstr": "Помогите сделать перевод"
+  },
+  "How calls ended": {
+    "model": "opus-mt",
+    "msgstr": "Как закончились звонки"
+  },
+  "How languages are counted": {
+    "model": "opus-mt",
+    "msgstr": "Как учитываются языки"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "opus-mt",
+    "msgstr": "Мне 18 лет и я понимаю, что разговоры анонимные и неумеренные."
+  },
+  "I will speak in": {
+    "model": "opus-mt",
+    "msgstr": "Я поговорю с вами."
+  },
+  "I'm happy to hear": {
+    "model": "opus-mt",
+    "msgstr": "Рад слышать."
+  },
+  "In call": {
+    "model": "opus-mt",
+    "msgstr": "По вызову"
+  },
+  "Intentionally minimal": {
+    "model": "opus-mt",
+    "msgstr": "Преднамеренные минимальные"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "opus-mt",
+    "msgstr": "Оно предназначено для %{crosstalk}, языкового обмена, практики прослушивания и обычного разговора без принуждения людей к жестким режимам или ярлыкам."
+  },
+  "Language": {
+    "model": "opus-mt",
+    "msgstr": "Язык"
+  },
+  "Languages spoken": {
+    "model": "opus-mt",
+    "msgstr": "Знание языков"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "opus-mt",
+    "msgstr": "Последний раз проверялся при %{time} UTC."
+  },
+  "Looking": {
+    "model": "opus-mt",
+    "msgstr": "Взгляните."
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "opus-mt",
+    "msgstr": "Ищу rando, который говорит %{hearing_languages} и хочет услышать %{speaking_language}."
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "opus-mt",
+    "msgstr": "Нет счетов, нет профилей, нет видео, нет давления."
+  },
+  "No calls yet.": {
+    "model": "opus-mt",
+    "msgstr": "Пока никаких звонков."
+  },
+  "No relay is configured": {
+    "model": "opus-mt",
+    "msgstr": "Нет конфигурации реле"
+  },
+  "Not translated yet": {
+    "model": "opus-mt",
+    "msgstr": "Ещё не переведено."
+  },
+  "Nothing matches.": {
+    "model": "opus-mt",
+    "msgstr": "Ничего не сходится."
+  },
+  "Other languages: %{calls}": {
+    "model": "opus-mt",
+    "msgstr": "Другие языки: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "opus-mt",
+    "msgstr": "Через TLS (сети, блокирующие UDP)"
+  },
+  "Over UDP (most calls)": {
+    "model": "opus-mt",
+    "msgstr": "На протяжении всего UDP (большинство звонков)"
+  },
+  "Pick at least one language to hear": {
+    "model": "opus-mt",
+    "msgstr": "Выбери хотя бы один язык, чтобы услышать"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "opus-mt",
+    "msgstr": "Выбери каждый язык, который тебе удобно слушать."
+  },
+  "Pick the language you'd like to check.": {
+    "model": "opus-mt",
+    "msgstr": "Выбери язык, который хочешь проверить."
+  },
+  "Preparing the call": {
+    "model": "opus-mt",
+    "msgstr": "Подготовка вызова"
+  },
+  "Privacy": {
+    "model": "opus-mt",
+    "msgstr": "Конфиденциальность"
+  },
+  "Ready": {
+    "model": "opus-mt",
+    "msgstr": "Готов"
+  },
+  "Reconnecting audio…": {
+    "model": "opus-mt",
+    "msgstr": "Переподключение звука..."
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "opus-mt",
+    "msgstr": "Выполнение этого обязательства плюс изменения, которые еще не были приняты"
+  },
+  "Secure audio connection is starting.": {
+    "model": "opus-mt",
+    "msgstr": "Начинается защищенная аудиоподключение."
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "opus-mt",
+    "msgstr": "Короткие анонимные разговоры для языковой практики."
+  },
+  "Something went wrong!": {
+    "model": "opus-mt",
+    "msgstr": "Что-то пошло не так!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "opus-mt",
+    "msgstr": "Источник (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "opus-mt",
+    "msgstr": "Начинаем звонок с rando."
+  },
+  "Status": {
+    "model": "opus-mt",
+    "msgstr": "Статус"
+  },
+  "Stop looking": {
+    "model": "opus-mt",
+    "msgstr": "Хватит искать."
+  },
+  "Suggest a fix": {
+    "model": "opus-mt",
+    "msgstr": "Предложение по фиксации"
+  },
+  "Switch theme": {
+    "model": "opus-mt",
+    "msgstr": "Смена темы"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "opus-mt",
+    "msgstr": "Звонок закончился, потому что здесь нет аудио."
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "opus-mt",
+    "msgstr": "Звонок закончился, потому что аудио перестало работать над этим устройством."
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "opus-mt",
+    "msgstr": "Звонок закончился, потому что доступ к микрофону был заблокирован."
+  },
+  "The call ended because no microphone was found.": {
+    "model": "opus-mt",
+    "msgstr": "Звонок закончился, потому что микрофона не нашли."
+  },
+  "The commit this server runs": {
+    "model": "opus-mt",
+    "msgstr": "Запуск сервера"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "opus-mt",
+    "msgstr": "Интерфейс нарочно тихий. Цель состоит в присутствии человека с низким давлением, а не в петле взаимодействия или взаимодействия."
+  },
+  "The relay is partly working": {
+    "model": "opus-mt",
+    "msgstr": "Реле частично работает"
+  },
+  "The relay is working": {
+    "model": "opus-mt",
+    "msgstr": "Реле работает."
+  },
+  "The relay isn't working": {
+    "model": "opus-mt",
+    "msgstr": "Реле не работает."
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "opus-mt",
+    "msgstr": "Переводы этого сайта были сделаны машиной и еще не просмотрены людьми. Если на вашем языке что-то не так, пожалуйста, помогите исправить его: найдите текст, напишите, как он должен читать, и мы сделаем остальное."
+  },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "opus-mt",
+    "msgstr": "Нет ни счетов, ни профилей, ни контактов, ни подписчиков, ни лент, ни строк, ни счетов, ни постоянных социальных графиков. randos ближе к разговорной инфраструктуре, чем социальные сети."
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "opus-mt",
+    "msgstr": "Переводы на этот сайт были сделаны машиной. Если что-то читает неправильно, нажмите на кнопку «Suggest» и нажмите: это открывает вопрос на GitHub со всем заполненным, кроме вашего (вам нужен аккаунт GitHub). Заказ на вытягивание с открытием вашей позиции сам по себе, и он начнет работать, как только он будет пересмотрен."
+  },
+  "Time is up": {
+    "model": "opus-mt",
+    "msgstr": "Время вышло."
+  },
+  "Today": {
+    "model": "opus-mt",
+    "msgstr": "Сегодня"
+  },
+  "Translations": {
+    "model": "opus-mt",
+    "msgstr": "Переводы"
+  },
+  "Typical length": {
+    "model": "opus-mt",
+    "msgstr": "Типичная длина"
+  },
+  "View on GitHub": {
+    "model": "opus-mt",
+    "msgstr": "Вид на GitHub"
+  },
+  "We can't find the internet": {
+    "model": "opus-mt",
+    "msgstr": "Мы не можем найти интернет"
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "opus-mt",
+    "msgstr": "Мы не могли начать звонок, пожалуйста, попробуйте еще раз."
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "opus-mt",
+    "msgstr": "Мы считаем звонки, а не людей: нет адресов, нет документов, ничего о ком-либо; только эти итоговые данные сохраняются."
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "opus-mt",
+    "msgstr": "Что каждая часть randos видит, регистрирует и хранит с конфигурацией за каждой претензией:"
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "opus-mt",
+    "msgstr": "Могут ли звонки соединиться прямо сейчас и как проходит сегодня."
+  },
+  "You": {
+    "model": "opus-mt",
+    "msgstr": "Ты"
+  },
+  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
+    "model": "opus-mt",
+    "msgstr": "Вы выбираете язык, на котором вы хотите говорить, и язык, который вы хотите услышать. randos соединяет вас с кем-то, совместимым для короткого разговора, а затем уходите с пути."
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "opus-mt",
+    "msgstr": "Вы совпадали. Звук начинается, когда открывается звонок."
+  },
+  "You'll hear %{languages}": {
+    "model": "opus-mt",
+    "msgstr": "Ты услышишь %{languages}"
+  },
+  "Your rando": {
+    "model": "opus-mt",
+    "msgstr": "Твой rando"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "opus-mt",
+    "msgstr": "Твоя rando связь упала, ожидая, что они вернутся."
+  },
+  "button\u0004Continue": {
+    "model": "opus-mt",
+    "msgstr": "Продолжить"
+  },
+  "button\u0004End": {
+    "model": "opus-mt",
+    "msgstr": "Конец"
+  },
+  "button\u0004Find a rando": {
+    "model": "opus-mt",
+    "msgstr": "Найти rando"
+  },
+  "button\u0004Mute": {
+    "model": "opus-mt",
+    "msgstr": "Выключить"
+  },
+  "button\u0004Next rando": {
+    "model": "opus-mt",
+    "msgstr": "Следующий rando"
+  },
+  "button\u0004Unmute": {
+    "model": "opus-mt",
+    "msgstr": "Немного."
+  },
+  "close": {
+    "model": "opus-mt",
+    "msgstr": "Закрыть"
+  },
+  "connection state\u0004answering": {
+    "model": "opus-mt",
+    "msgstr": "Ответ"
+  },
+  "connection state\u0004calling": {
+    "model": "opus-mt",
+    "msgstr": "Звонок"
+  },
+  "connection state\u0004connected": {
+    "model": "opus-mt",
+    "msgstr": "соединено"
+  },
+  "connection state\u0004connecting": {
+    "model": "opus-mt",
+    "msgstr": "подсоединение"
+  },
+  "connection state\u0004ended": {
+    "model": "opus-mt",
+    "msgstr": "Закончено"
+  },
+  "connection state\u0004failed": {
+    "model": "opus-mt",
+    "msgstr": "Ошибка"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "opus-mt",
+    "msgstr": "Микрофон отрицают"
+  },
+  "connection state\u0004not started": {
+    "model": "opus-mt",
+    "msgstr": "не запущено"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "opus-mt",
+    "msgstr": "запрашиваемый микрофон"
+  },
+  "connection state\u0004starting": {
+    "model": "opus-mt",
+    "msgstr": "начало работы"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "opus-mt",
+    "msgstr": "Ждать твоего rando"
+  },
+  "crosstalk": {
+    "model": "opus-mt",
+    "msgstr": "Перекрёстный разговор"
+  },
+  "microphone ready": {
+    "model": "opus-mt",
+    "msgstr": "Микрофон готов"
+  },
+  "microphone unavailable": {
+    "model": "opus-mt",
+    "msgstr": "Микрофон отсутствует"
+  },
+  "privacy": {
+    "model": "opus-mt",
+    "msgstr": "неприкосновенность частной жизни"
+  },
+  "randos is a place for anonymous, audio-only language conversation.": {
+    "model": "opus-mt",
+    "msgstr": "randos - это место для анонимного, звукового разговора на языке."
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "opus-mt",
+    "msgstr": "randos является бесплатным программным обеспечением (AGPL-3.0) и построено в открытом доступе."
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "opus-mt",
+    "msgstr": "Дистанционный звук нуждается в кране (%{summary})"
+  },
+  "remote audio playing (%{summary})": {
+    "model": "opus-mt",
+    "msgstr": "Дистанционное звукозапись (%{summary})"
+  },
+  "requesting microphone": {
+    "model": "opus-mt",
+    "msgstr": "запрашиваемый микрофон"
+  },
+  "under 1 min": {
+    "model": "opus-mt",
+    "msgstr": "менее 1 мин."
+  },
+  "waiting for microphone": {
+    "model": "opus-mt",
+    "msgstr": "Ожидание микрофона"
+  },
+  "waiting for remote audio": {
+    "model": "opus-mt",
+    "msgstr": "Ожидание удалённого звука"
+  },
+  "working": {
+    "model": "opus-mt",
+    "msgstr": "трудоустроены"
+  }
+}
