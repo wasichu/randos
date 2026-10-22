@@ -47,41 +47,46 @@ defmodule RandosWeb.Layouts do
         <img src={~p"/images/logo.svg"} alt="" class="size-9" />
         <span>randos</span>
       </a>
-      <nav class="flex items-center gap-3 text-sm font-medium text-stone-600 dark:text-stone-300">
-        <.link
-          id="header-about-link"
-          navigate={~p"/about"}
-          title={gettext("About")}
-          class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
-        >
-          <.icon name="hero-book-open" class="size-4" />
-          <span class="sr-only">{gettext("About")}</span>
-        </.link>
-        <%!-- Hidden during a call: switching reloads the page, which would end it. --%>
-        <div id="locale-switcher-slot" class={@in_call && "hidden"}>
-          <.locale_switcher />
+      <nav class="flex items-center gap-4 text-sm font-medium text-stone-600 dark:text-stone-300">
+        <%!-- Two pairs: the pages (About, Status), then the settings (language, theme). --%>
+        <div id="header-pages" class="flex items-center gap-2">
+          <.link
+            id="header-about-link"
+            navigate={~p"/about"}
+            title={gettext("About")}
+            class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
+          >
+            <.icon name="hero-book-open" class="size-4" />
+            <span class="sr-only">{gettext("About")}</span>
+          </.link>
+          <.link
+            id="header-status-link"
+            navigate={~p"/status"}
+            title={gettext("Status")}
+            class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
+          >
+            <.icon name="hero-signal" class="size-4" />
+            <span class="sr-only">{gettext("Status")}</span>
+          </.link>
         </div>
-        <.link
-          id="header-status-link"
-          navigate={~p"/status"}
-          title={gettext("Status")}
-          class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
-        >
-          <.icon name="hero-signal" class="size-4" />
-          <span class="sr-only">{gettext("Status")}</span>
-        </.link>
-        <button
-          id="theme-toggle"
-          type="button"
-          data-theme-toggle
-          aria-pressed="false"
-          title={gettext("Switch theme")}
-          class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
-        >
-          <.icon name="hero-moon" class="size-4 dark:hidden" />
-          <.icon name="hero-sun" class="hidden size-4 dark:block" />
-          <span class="sr-only">{gettext("Toggle dark mode")}</span>
-        </button>
+        <div id="header-settings" class="flex items-center gap-2">
+          <%!-- Hidden during a call: switching reloads the page, which would end it. --%>
+          <div id="locale-switcher-slot" class={@in_call && "hidden"}>
+            <.locale_switcher />
+          </div>
+          <button
+            id="theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-pressed="false"
+            title={gettext("Switch theme")}
+            class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
+          >
+            <.icon name="hero-moon" class="size-4 dark:hidden" />
+            <.icon name="hero-sun" class="hidden size-4 dark:block" />
+            <span class="sr-only">{gettext("Toggle dark mode")}</span>
+          </button>
+        </div>
       </nav>
     </header>
 

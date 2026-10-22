@@ -40,6 +40,17 @@ defmodule RandosWeb.StatusLiveTest do
              )
     end
 
+    # Two pairs: the pages, then the settings.
+    {:ok, home, _html} = live(conn, ~p"/")
+
+    for {group, items} <- [
+          {"#header-pages", ["#header-about-link", "#header-status-link"]},
+          {"#header-settings", ["#locale-switcher-slot", "#theme-toggle"]}
+        ],
+        item <- items do
+      assert has_element?(home, "#{group} #{item}")
+    end
+
     {:ok, about, _html} = live(conn, ~p"/about")
     refute has_element?(about, "#about-status")
     assert has_element?(about, "#about-privacy #privacy-link")
