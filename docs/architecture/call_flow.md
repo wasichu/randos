@@ -74,7 +74,9 @@ stateDiagram-v2
         A participant's disconnected starts a grace
         timer (per participant; it survives
         active / extension_pending); reconnecting
-        cancels it.
+        cancels it. While someone is away, it
+        waits; when they're back, a side still
+        disconnected gets a fresh one.
     end note
 ```
 

@@ -18,6 +18,11 @@ defmodule Randos.Calls.CallCoordinator do
   (`Randos.Signaling.classify/2`); a participant `disconnected` longer than
   `disconnected_grace_ms` (a per-participant timer that survives status
   changes), or reporting `failed`, ends the call `:connection_failed`.
+  Except while someone is away (below): a real network change drops a
+  person's connection to the server and the call's media together, so
+  the other side's `disconnected` grace would end the call before they
+  could resume. It waits instead (the away timer bounds it), and once
+  everyone is back, a seat still `disconnected` gets a fresh grace.
 
   A participant whose process goes away mid-call (their connection to the
   server dropped) is marked away (`call.away`) rather than ending the call:
@@ -222,6 +227,11 @@ defmodule Randos.Calls.CallCoordinator do
     {:stop, @failed, end_call(data, :connection_failed)}
   end
 
+  def handle_event({:timeout, {:grace, _id}}, :grace, _state, %{call: %{away: [_ | _]}}) do
+    Logger.info("call media disconnected while a participant is away; waiting for them")
+    :keep_state_and_data
+  end
+
   def handle_event({:timeout, {:grace, participant_id}}, :grace, _state, data) do
     if Map.get(data.call.media, participant_id) == :disconnected do
       Logger.info("call media stayed disconnected")
@@ -309,7 +319,7 @@ defmodule Randos.Calls.CallCoordinator do
     end
   end
 
-  def handle_event({:call, from}, {:resume, participant_id, key, pid}, _state, data) do
+  def handle_event({:call, from}, {:resume, participant_id, key, pid}, state, data) do
     with ^key <- Map.get(data.resume_keys, participant_id),
          role when role != nil <- role_of(data.call.match, participant_id) do
       data = take_seat(data, role, participant_id, pid)
@@ -322,6 +332,7 @@ defmodule Randos.Calls.CallCoordinator do
        [
          {:reply, from, {:ok, %{call: data.call, entry: entry, ticket: ticket}}},
          {{:timeout, {:away, participant_id}}, :cancel}
+         | regrace(state, data)
        ]}
     else
       _invalid -> {:keep_state_and_data, [{:reply, from, {:error, :invalid_ticket}}]}
@@ -399,6 +410,16 @@ defmodule Randos.Calls.CallCoordinator do
       true -> nil
     end
   end
+
+  # Everyone is back: a seat still `disconnected` (its grace may have run out
+  # while someone was away) gets a fresh one.
+  defp regrace(state, %{call: %{away: []}} = data) do
+    for {id, :disconnected} <- data.call.media,
+        timer <- grace_timer(id, :disconnected, state, data),
+        do: timer
+  end
+
+  defp regrace(_state, _data), do: []
 
   # The new process takes the participant's seat: monitored from now on, and
   # the old one (if it's still around, not yet noticed gone) is let go and

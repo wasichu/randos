@@ -474,6 +474,55 @@ defmodule Randos.Calls.CallCoordinatorTest do
       Enum.each([pid_a, new_pid], &send(&1, :stop))
     end
 
+    # A network change: "a"'s connection to the server and the call's media
+    # drop together, so "b" reports disconnected while "a" is away.
+    defp network_change(opts) do
+      {call_pid, [pid_a, pid_b]} =
+        start_audio_call(
+          [disconnected_grace_ms: 100, reconnect_grace_ms: 400, call_duration_ms: 60_000] ++ opts
+        )
+
+      %{"a" => ticket} = tickets(call_pid)
+      connect_both(call_pid)
+      Process.exit(pid_a, :kill)
+      assert_receive {:call_updated, %{away: ["a"]}}
+      :ok = report(call_pid, "b", "disconnected")
+      {call_pid, ticket, pid_b}
+    end
+
+    test "while someone is away, the other side's disconnected grace waits for them" do
+      {call_pid, ticket, pid_b} = network_change([])
+
+      # Past the disconnected grace: still on, waiting for "a".
+      refute_receive {:call_updated, %{status: :ended}}, 250
+
+      new_pid = waiting_pid()
+      {:ok, _} = CallCoordinator.resume(call_pid, "a", ticket, new_pid)
+
+      # Back, and the media recovers: the call goes on.
+      :ok = report(call_pid, "b", "connected")
+      refute_receive {:call_updated, %{status: :ended}}, 250
+      Enum.each([pid_b, new_pid], &send(&1, :stop))
+    end
+
+    test "once they're back, media still disconnected gets a fresh grace, then fails" do
+      {call_pid, ticket, pid_b} = network_change([])
+      refute_receive {:call_updated, %{status: :ended}}, 250
+
+      new_pid = waiting_pid()
+      {:ok, _} = CallCoordinator.resume(call_pid, "a", ticket, new_pid)
+
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 500
+      Enum.each([pid_b, new_pid], &send(&1, :stop))
+    end
+
+    test "if they never come back, the call ends at the reconnect grace, as disconnected" do
+      {_call_pid, _ticket, pid_b} = network_change([])
+      refute_receive {:call_updated, %{status: :ended}}, 250
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}, 500
+      send(pid_b, :stop)
+    end
+
     test "a ticket only opens its own seat, and junk is refused" do
       {match, pids} = match()
       {call_pid, %{"a" => ticket_a}} = active(match, [])

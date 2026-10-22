@@ -307,8 +307,11 @@ going direct: `just smoke` and `just tui-smoke` run them.)
 4. **Let the server decide.** It makes the call `in_call` (and starts its
    clock) once both sides are `connected`, and ends it `connection_failed` if
    that doesn't happen within the connect timeout (15 s), if a side stays
-   `disconnected` past the grace (5 s), or on `failed`. Don't run your own
-   timers for these.
+   `disconnected` past the grace (5 s), or on `failed`. While either
+   person's connection to the server is down (obligation 9), the grace
+   waits: a network change drops both at once. Once they're back, a side
+   still `disconnected` gets a fresh grace. Don't run your own timers for
+   these.
 5. **Tear down when the status leaves the call** (`call` becomes `null`).
    The server doesn't relay lifecycle signals to the peer.
 6. **Can't start? `end_call` with a reason.** No mic, mic denied, or no
