@@ -52,7 +52,13 @@ defmodule Tui.Model do
           status_page: status_page() | nil
         }
 
-  @type status_page :: %{snapshot: map() | nil, unavailable?: boolean(), asked_ms: integer()}
+  # `info?`: the "About these numbers" pop-up is open (i).
+  @type status_page :: %{
+          snapshot: map() | nil,
+          unavailable?: boolean(),
+          asked_ms: integer(),
+          info?: boolean()
+        }
 
   defstruct connection: :connecting,
             languages: [],
@@ -209,7 +215,7 @@ defmodule Tui.Model do
   def refresh_status(model), do: {model, []}
 
   defp ask_status(model) do
-    page = model.status_page || %{snapshot: nil, unavailable?: false}
+    page = model.status_page || %{snapshot: nil, unavailable?: false, info?: false}
     {%{model | status_page: Map.put(page, :asked_ms, model.now_ms)}, [{:push, "status", %{}}]}
   end
 
@@ -219,7 +225,14 @@ defmodule Tui.Model do
   @spec key(t(), String.t()) :: {t(), [command()]}
   def key(%{connection: :connecting} = model, _key), do: {model, []}
 
-  # The status screen: s or esc goes back, r asks again now.
+  # The status screen: i opens or closes "About these numbers" (esc closes it
+  # first); s or esc goes back, r asks again now.
+  def key(%{status: :idle, status_page: %{info?: true} = page} = model, k) when k in ["i", "esc"],
+    do: {%{model | status_page: %{page | info?: false}}, []}
+
+  def key(%{status: :idle, status_page: %{} = page} = model, "i"),
+    do: {%{model | status_page: Map.put(page, :info?, true)}, []}
+
   def key(%{status: :idle, status_page: %{}} = model, k) when k in ["s", "esc"],
     do: {%{model | status_page: nil}, []}
 

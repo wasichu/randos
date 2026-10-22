@@ -87,7 +87,8 @@ desktop distributions have).
 - `t` shows a mic level meter (silent: nothing is played back); `t` again
   hides it and closes the mic. `i` and `o` choose the mic
   and speaker. `s` shows the server's status, as on
-  [/status](https://randos.slowinput.org/status).
+  [/status](https://randos.slowinput.org/status); `i` there says what's
+  counted and what isn't.
 - Your languages, the 18+ confirmation, and your mic and speaker are
   remembered on your computer: `randos --settings` shows where,
   `--edit-settings` opens them in your editor, `--reset-settings` forgets

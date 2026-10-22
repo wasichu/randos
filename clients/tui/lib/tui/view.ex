@@ -9,7 +9,7 @@ defmodule Tui.View do
   alias ExRatatui.Layout
   alias ExRatatui.Layout.Rect
   alias ExRatatui.Style
-  alias ExRatatui.Widgets.{Block, List, Paragraph}
+  alias ExRatatui.Widgets.{Block, List, Paragraph, Popup}
   alias Tui.Model
   alias Tui.View.StatusScreen
 
@@ -63,7 +63,7 @@ defmodule Tui.View do
          block: panel(" You ")
        }, status_area},
       {%Paragraph{
-         text: state |> device_lines("") |> Enum.map_join("\n", &fit(&1, devices_area.width - 2)),
+         text: state |> device_lines() |> Enum.map_join("\n", &fit(&1, devices_area.width - 2)),
          block: panel(" Devices ")
        }, devices_area}
     ]
@@ -76,11 +76,31 @@ defmodule Tui.View do
   end
 
   # The server status screen (`s` on the idle screen).
-  defp main(%{connection: :connected, status: :idle, status_page: %{}} = model, area, _extra) do
-    [
+  defp main(
+         %{connection: :connected, status: :idle, status_page: %{} = page} = model,
+         area,
+         _extra
+       ) do
+    screen =
       {%Paragraph{text: StatusScreen.text(model), block: panel(" Server status "), wrap: true},
        area}
-    ]
+
+    # i: "About these numbers", over the screen.
+    about =
+      if page[:info?] do
+        [
+          {%Popup{
+             content: %Paragraph{text: StatusScreen.about(), wrap: true},
+             block: panel(" About these numbers "),
+             percent_width: 70,
+             fixed_height: 7
+           }, area}
+        ]
+      else
+        []
+      end
+
+    [screen | about]
   end
 
   # The idle form is a List so the selection marker keeps rows aligned
@@ -319,7 +339,10 @@ defmodule Tui.View do
 
   defp help(%{connection: :connecting}), do: "q quit"
 
-  defp help(%{status: :idle, status_page: %{}}), do: "s/esc back  r refresh  q quit"
+  defp help(%{status: :idle, status_page: %{info?: true}}), do: "i/esc close  q quit"
+
+  defp help(%{status: :idle, status_page: %{}}),
+    do: "s/esc back  r refresh  i about these numbers  q quit"
 
   defp help(%{status: :idle}),
     do: "tab/↑↓ move  ←→ change  space check  enter find  s status  q quit"
@@ -369,23 +392,19 @@ defmodule Tui.View do
     [
       "Now:        " <> status_label(model),
       connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…")
-    ] ++ if(devices?, do: device_lines(state, "   "), else: [])
+    ] ++ if(devices?, do: device_lines(state), else: [])
   end
 
-  # `pad` lines the values up with the You panel's when they share it.
-  defp device_lines(state, pad \\ "")
-
-  defp device_lines(
-         %{media_state: %{available?: true, devices: %{} = devices, choice: choice}},
-         pad
-       ) do
+  # The values start in the You panel's column (after "Connection: "),
+  # side by side or sharing its panel, so the two read as one table.
+  defp device_lines(%{media_state: %{available?: true, devices: %{} = devices, choice: choice}}) do
     [
-      "Mic:     " <> pad <> device_label(choice.input, devices.default_input),
-      "Speaker: " <> pad <> device_label(choice.output, devices.default_output)
+      "Mic:        " <> device_label(choice.input, devices.default_input),
+      "Speaker:    " <> device_label(choice.output, devices.default_output)
     ]
   end
 
-  defp device_lines(_state, _pad), do: []
+  defp device_lines(_state), do: []
 
   defp fit(line, width) do
     if String.length(line) <= width,

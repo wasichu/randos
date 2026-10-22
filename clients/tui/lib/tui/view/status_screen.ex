@@ -16,7 +16,14 @@ defmodule Tui.View.StatusScreen do
   def text(%{status_page: %{snapshot: nil}}), do: "Asking the server…"
 
   def text(%{status_page: %{snapshot: %{"relay" => relay, "usage" => usage}}} = model) do
-    Enum.join([relay_text(relay), usage_text(model, usage), privacy()], "\n\n")
+    Enum.join([relay_text(relay), usage_text(model, usage)], "\n\n")
+  end
+
+  @doc "What the counts are, and aren't (the pop-up behind i)."
+  @spec about() :: String.t()
+  def about do
+    "We count calls, not people: no addresses, no ids, nothing about anyone.\n\n" <>
+      "A language pair shows once it has at least 3 calls; smaller ones count as \"other\"."
   end
 
   ## The relay
@@ -98,11 +105,6 @@ defmodule Tui.View.StatusScreen do
     do: ["Counted across #{answered} of #{total} servers."]
 
   defp nodes(_one), do: []
-
-  defp privacy do
-    "We count calls, not people: no addresses, no ids, nothing about anyone.\n" <>
-      "A language pair shows once it has at least 3 calls; smaller ones count as \"other\"."
-  end
 
   defp clock(iso) when is_binary(iso) do
     case DateTime.from_iso8601(iso) do

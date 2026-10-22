@@ -114,10 +114,24 @@ defmodule Tui.AppTest do
             "Español (ES) both ways: 3",
             "Other languages: 4",
             "Counted across 2 of 2 servers.",
-            "We count calls, not people",
-            "s/esc back  r refresh  q quit"
+            "s/esc back  r refresh  i about these numbers  q quit"
           ],
           do: assert(text =~ line, "missing: #{line}\n\n#{text}")
+
+      # What the counts are and aren't: behind i, in a pop-up; i or esc
+      # closes it (esc doesn't leave the screen while it's open).
+      refute text =~ "We count calls, not people"
+      {about, []} = Tui.Model.key(model, "i")
+      about_text = render_text(about, %{}, {100, 30})
+      assert about_text =~ "About these numbers"
+      assert about_text =~ "We count calls, not people"
+      assert about_text =~ "A language pair shows once it has at least 3 calls"
+      assert about_text =~ "i/esc close  q quit"
+
+      for k <- ["i", "esc"] do
+        {closed, []} = Tui.Model.key(about, k)
+        assert %{status_page: %{info?: false}} = closed
+      end
 
       # The idle form's hints aren't shown over it.
       refute text =~ "enter find"
@@ -253,15 +267,15 @@ defmodule Tui.AppTest do
       # Wide enough: a Devices panel beside You.
       text = render_text(model("idle"), %{media_state: media})
       assert text =~ "Devices"
-      assert text =~ "Mic:     Mic A (default)"
-      assert text =~ "Speaker: Speakers (default)"
+      assert text =~ "Mic:        Mic A (default)"
+      assert text =~ "Speaker:    Speakers (default)"
       assert text =~ "i mic  o speaker"
 
       # On every screen, so a call shows them too.
-      assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:     Mic A"
+      assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:        Mic A"
 
       chosen = media |> MediaState.cycle_device(:input) |> MediaState.cycle_device(:input)
-      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic:     Mic B"
+      assert render_text(model("idle"), %{media_state: chosen}) =~ "Mic:        Mic B"
 
       # Narrow (a tmux split): no Devices panel; the lines join Status, lined up.
       narrow = render_text(model("idle"), %{media_state: media}, {80, 24})
