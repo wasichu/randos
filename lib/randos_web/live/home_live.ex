@@ -157,6 +157,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:call_deadline_unix_ms, participant.call && participant.call.call_deadline_unix_ms)
     |> assign(:ice_transport_policy, participant.call && participant.call.ice_transport_policy)
     |> assign(:ice_generation, participant.call && participant.call.ice_generation)
+    |> assign(:ice_restart, participant.call != nil and participant.call.ice_restart?)
     |> assign(
       :peer_language,
       participant.call && ParticipantShell.peer_speaks(participant.call, participant.id)
@@ -185,6 +186,7 @@ defmodule RandosWeb.HomeLive do
             ice_servers={@ice_servers}
             ice_transport_policy={@ice_transport_policy}
             ice_generation={@ice_generation}
+            ice_restart={@ice_restart}
             voice_processor={@voice_processor}
             preferences={@preferences}
             peer_language={@peer_language}

@@ -56,6 +56,7 @@ export const WebRTCAudio = {
       role: this.el.dataset.webrtcRole,
       iceServers: iceServersFrom(this.el),
       iceTransportPolicy: iceTransportPolicyFrom(this.el),
+      restartable: this.el.dataset.iceRestart === "true",
       // The server's choice (RANDOS_VOICE_PROCESSOR); empty means none.
       voiceProcessor: this.el.dataset.voiceProcessor || null,
       pushSignal: (type, payload) => this.pushEvent("signal", {type, payload}),
@@ -63,6 +64,10 @@ export const WebRTCAudio = {
       onLocalStream: stream => this.setLocalStream(stream),
       onRemoteStream: stream => this.setRemoteStream(stream),
     })
+
+    // The ICE generation this page has acted on: only a later one is a
+    // request to restart (obligation 10).
+    this.iceGeneration = Number(this.el.dataset.iceGeneration) || 0
 
     logEvent("call.webrtc_hook_mounted", {role: this.el.dataset.webrtcRole})
 
@@ -78,6 +83,27 @@ export const WebRTCAudio = {
 
   destroyed() {
     this.cleanup()
+  },
+
+  // LiveView still updates data-* on this phx-update="ignore" element and
+  // calls updated(): that's how a new ice_generation arrives.
+  updated() {
+    this.maybeRestartIce()
+  },
+
+  // The server raised the call's ICE generation: the offerer restarts, once
+  // per generation (obligation 10). The answerer answers the new offer.
+  maybeRestartIce() {
+    const generation = Number(this.el.dataset.iceGeneration) || 0
+    if (generation <= this.iceGeneration) return
+
+    this.iceGeneration = generation
+    if (this.el.dataset.webrtcRole !== "offerer") return
+
+    logEvent("call.ice_restart_requested", {generation})
+    this.peer
+      ?.restartIce(iceServersFrom(this.el))
+      .catch(error => logWarning("webrtc.ice_restart_failed", {reason: error.message}))
   },
 
   // The page's connection to the server dropped. The call itself (WebRTC,
@@ -101,6 +127,8 @@ export const WebRTCAudio = {
     clearTimeout(this.offlineTimer)
     logEvent("call.socket_reconnected", {})
     this.peer?.repeatMediaState()
+    // A restart asked for while we were gone (the resume's state has it).
+    this.maybeRestartIce()
   },
 
   cleanup({notify = false} = {}) {

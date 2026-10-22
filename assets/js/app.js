@@ -41,7 +41,13 @@ window.addEventListener("phx:randos:resume_ticket", event => setResumeTicket(eve
 
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: () => ({_csrf_token: csrfToken, browser_locale: browserLocale, resume_ticket: resumeTicket()}),
+  // ice_restart: this page's code restarts ICE when asked (obligation 10).
+  params: () => ({
+    _csrf_token: csrfToken,
+    browser_locale: browserLocale,
+    resume_ticket: resumeTicket(),
+    ice_restart: true,
+  }),
   hooks: {...colocatedHooks, ...Hooks},
 })
 

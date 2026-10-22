@@ -227,6 +227,13 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#webrtc-audio[data-ice-servers*='stun:']")
     # No TURN server in tests, so the call may be direct.
     assert has_element?(view_a, "#webrtc-audio[data-ice-transport-policy='all']")
+    # ICE restart (obligation 10): the generation to act on, and whether
+    # this call restarts (these test sessions didn't declare it).
+    assert has_element?(
+             view_a,
+             "#webrtc-audio[data-ice-generation='0'][data-ice-restart='false']"
+           )
+
     # The hook's own text (Mute/Unmute, connection states) comes translated.
     [labels] =
       view_a

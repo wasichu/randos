@@ -32,6 +32,10 @@ export class WebRTCClient {
     role,
     iceServers,
     iceTransportPolicy = "all",
+    // The call restarts ICE (both clients can, obligation 10): `failed` is a
+    // report, not the end, and the previous generation's leftovers (a late
+    // answer, old candidates) are expected, not errors.
+    restartable = false,
     voiceProcessor = null,
     pushSignal,
     onStateChange,
@@ -41,6 +45,7 @@ export class WebRTCClient {
     this.role = role
     this.iceServers = iceServers
     this.iceTransportPolicy = iceTransportPolicy
+    this.restartable = restartable
     // A key of VOICE_PROCESSORS (voice/seam.js), or null: send the mic as is.
     this.voiceProcessor = voiceProcessor
     this.pushSignal = pushSignal
@@ -190,6 +195,11 @@ export class WebRTCClient {
   }
 
   async receiveAnswer(answer) {
+    // An answer to an offer a restart has already replaced.
+    if (this.restartable && this.peerConnection.signalingState !== "have-local-offer") {
+      logDebug("webrtc.stale_answer_ignored")
+      return
+    }
     await this.peerConnection.setRemoteDescription(new RTCSessionDescription(answer))
     await this.flushPendingIceCandidates()
     logEvent("webrtc.answer_received")
@@ -203,8 +213,40 @@ export class WebRTCClient {
       return
     }
 
-    await this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate))
-    logDebug("webrtc.ice_candidate_added")
+    try {
+      await this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate))
+      logDebug("webrtc.ice_candidate_added")
+    } catch (error) {
+      // After a restart, a candidate of the old generation is refused.
+      if (!this.restartable) throw error
+      logDebug("webrtc.ice_candidate_refused", {reason: error.message})
+    }
+  }
+
+  // Obligation 10: the server asked for an ICE restart (it only asks the
+  // offerer to act): new credentials, fresh candidates from the network we
+  // have now, and a new offer. In order with incoming signals.
+  restartIce(iceServers) {
+    if (this.cleaned || this.role !== "offerer") return Promise.resolve()
+
+    const restarted = this.signalChain.then(async () => {
+      await this.ready.catch(() => {})
+      const pc = this.peerConnection
+      if (this.cleaned || !pc) return
+
+      // The resume reply's servers, in case the old credentials have aged.
+      if (iceServers?.length) pc.setConfiguration({...pc.getConfiguration(), iceServers})
+      pc.restartIce()
+      const offer = await pc.createOffer({iceRestart: true})
+      if (this.cleaned) return
+      await pc.setLocalDescription(offer)
+      if (this.cleaned) return
+      this.pushSignal("offer", {sdp: serializeSessionDescription(pc.localDescription)})
+      logEvent("webrtc.ice_restart_offer_sent")
+    })
+
+    this.signalChain = restarted.catch(() => {})
+    return restarted
   }
 
   close() {
@@ -219,6 +261,15 @@ export class WebRTCClient {
   // call with a reason, see the hook). The server ends the call.
   failConnection(payload) {
     if (this.cleaned) return
+
+    // A restartable call isn't over at `failed`: the server may restart ICE,
+    // and it ends the call (the status) if it gives up.
+    if (this.restartable) {
+      this.reportMediaState("failed", payload)
+      this.setState(WebRTCClientState.ICE_CHECKING)
+      logWarning("webrtc.failed_awaiting_restart", payload)
+      return
+    }
 
     this.reportMediaState("failed", payload)
     this.teardown()
