@@ -301,6 +301,26 @@ Everything stays offline and dies with its starter (AGENTS.md, Testing).
     stdin closes, the existing pattern.
 
   (b) reuses a maintained server; (a) needs no Rust build for `just smoke`.
+
+  **Built: (b), `clients/tui/native/examples/test_turn.rs`** (the owner
+  chose it, D5). `just test-turn` builds it to
+  `target/debug/examples/test_turn` (cargo's tests build it too). Run it
+  with no arguments (or `--user U --pass P --realm R`; defaults `randos`,
+  `randos`, `randos`). It's a real UDP TURN relay on 127.0.0.1 (Allocate,
+  Refresh, CreatePermission, ChannelBind, Send/Data) with fixed long-term
+  credentials, so a test hands out
+  `[{"urls": "turn:127.0.0.1:PORT?transport=udp", "username": "randos",
+  "credential": "randos"}]`. Its stdout is a report for the test that
+  started it (it isn't the helper, so it may print), one line per event:
+  `listening 127.0.0.1:PORT` first, then `allocated CLIENT RELAYED` per
+  allocation and `cut CLIENT` per cut. Commands on stdin, one per line:
+  `cut ADDR` (drop everything from and to that client address: its
+  5-tuple is dead, as after a move; new allocations from other addresses
+  still work, so a restart that re-gathers from a new socket recovers),
+  `cut-all` (every client address seen so far), `heal`, `quit`. It exits
+  when stdin closes. The helper's `tests/restart.rs` checks it: a
+  relay-only helper↔helper call flows through it, and stops after
+  `cut-all`.
 - **Scenarios:**
   - browser ↔ browser in `call_smoke.mjs`, both roles cut;
   - TUI ↔ TUI (`clients/tui/test/integration`);

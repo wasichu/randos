@@ -2,92 +2,13 @@
 //! `Tui.Media` does (4-byte length + JSON), with no audio hardware.
 #![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
 
-use std::io::{Read, Write};
-use std::process::{Child, ChildStdin, Command, Stdio};
-use std::sync::mpsc::{self, Receiver};
 use std::thread;
 use std::time::{Duration, Instant};
 
 use serde_json::{Value, json};
 
-/// One helper process. A reader thread decodes its stdout frames into a
-/// channel, so a test can watch several helpers at once.
-struct Helper {
-    child: Child,
-    stdin: Option<ChildStdin>,
-    messages: Receiver<Value>,
-}
-
-impl Helper {
-    fn spawn() -> Self {
-        let mut child = Command::new(env!("CARGO_BIN_EXE_randos_media"))
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .spawn()
-            .unwrap();
-        let stdin = child.stdin.take();
-        let mut stdout = child.stdout.take().unwrap();
-        let (tx, messages) = mpsc::channel();
-
-        thread::spawn(move || {
-            loop {
-                let mut header = [0u8; 4];
-                if stdout.read_exact(&mut header).is_err() {
-                    return;
-                }
-                let mut body = vec![0u8; u32::from_be_bytes(header) as usize];
-                stdout.read_exact(&mut body).unwrap();
-                if tx.send(serde_json::from_slice(&body).unwrap()).is_err() {
-                    return;
-                }
-            }
-        });
-
-        Self {
-            child,
-            stdin,
-            messages,
-        }
-    }
-
-    fn send(&mut self, body: &[u8]) {
-        let stdin = self.stdin.as_mut().unwrap();
-        stdin
-            .write_all(&u32::try_from(body.len()).unwrap().to_be_bytes())
-            .unwrap();
-        stdin.write_all(body).unwrap();
-        stdin.flush().unwrap();
-    }
-
-    fn receive(&mut self) -> Value {
-        self.messages
-            .recv_timeout(Duration::from_secs(10))
-            .expect("a message from the helper")
-    }
-
-    /// Sends a request and returns its reply, collecting events seen first.
-    fn request(&mut self, request: Value, events: &mut Vec<Value>) -> Value {
-        self.send(&serde_json::to_vec(&request).unwrap());
-        loop {
-            let message = self.receive();
-            if message.get("event").is_some() {
-                events.push(message);
-            } else {
-                return message;
-            }
-        }
-    }
-
-    /// Events that have arrived so far, without waiting.
-    fn events(&mut self) -> Vec<Value> {
-        self.messages.try_iter().collect()
-    }
-
-    fn close(mut self) -> i32 {
-        drop(self.stdin.take());
-        self.child.wait().unwrap().code().unwrap()
-    }
-}
+mod common;
+use common::Helper;
 
 #[test]
 fn ping_and_malformed_requests() {
