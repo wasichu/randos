@@ -106,6 +106,14 @@ internet; the smoke tests start their own throwaway server on :4010.
   `just translate-test` and `just voice-eval-test` run the two harnesses'
   offline tests (part of `just precommit`).
 - `/status` (also in production): the relay check and today's counts.
+- `/translations` (also in production): every string per language, each
+  with a link to a prefilled GitHub issue. Such an issue becomes a pull
+  request through `.github/workflows/translation-fix.yml`:
+  `tools/translate`'s `randos_translate.issue_fix` reads and checks it
+  (issue text never reaches a shell), and `mix randos.translation_fix`
+  writes the one entry with Expo, so the diff is one line. Pull requests
+  the workflow opens don't trigger CI; it checks the fix itself, and CI
+  runs on main after merging.
 - `just screenshots`: regenerates the README's screenshots
   (`docs/assets/`) from a real call on a throwaway server, with fake audio
   (needs Chrome and `brew install vhs`).

@@ -1,0 +1,46 @@
+# A translation fix. randos.slowinput.org/translations links here with
+# everything but the fix filled in (each field's `id` is a URL parameter).
+# .github/workflows/translation-fix.yml reads the answers by these labels
+# and turns the issue into a pull request: change a label there too.
+name: Fix a translation
+description: Suggest a better translation for one piece of the site's text.
+title: "Translation fix"
+labels: ["translation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping. If you came from the site's translations page, only the last box is left: write your fix there and submit. A pull request with your fix opens on its own, and it goes live once it's reviewed.
+
+        Keep `%{...}` placeholders exactly as they are, and keep "rando" and "randos" untranslated.
+  - type: input
+    id: locale
+    attributes:
+      label: Language
+      description: The language's code, like es or ja.
+    validations:
+      required: true
+  - type: textarea
+    id: english
+    attributes:
+      label: English
+      description: The English text, exactly as it is (leave as is).
+    validations:
+      required: true
+  - type: input
+    id: context
+    attributes:
+      label: Context
+      description: Leave as is (for example "button", or empty).
+  - type: textarea
+    id: current
+    attributes:
+      label: Current translation
+      description: What the site says now (leave as is).
+  - type: textarea
+    id: fix
+    attributes:
+      label: Your fix
+      description: The whole text as it should read in your language.
+    validations:
+      required: true

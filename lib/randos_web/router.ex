@@ -30,6 +30,7 @@ defmodule RandosWeb.Router do
       live "/", HomeLive, :home
       live "/about", AboutLive, :about
       live "/status", StatusLive, :status
+      live "/translations", TranslationsLive, :index
     end
   end
 

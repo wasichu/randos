@@ -4,11 +4,21 @@ Each language is one file: `<code>/LC_MESSAGES/default.po` (`es` Spanish,
 `zh` Chinese, `hi` Hindi, `ar` Arabic, `pt` Portuguese, `bn` Bengali, `ru`
 Russian, `ja` Japanese, `fr` French, `de` German, `ko` Korean, `it`
 Italian, `tr` Turkish, `id` Indonesian). The translations were made by
-machine and nobody has reviewed them yet, so fixes are very welcome: edit
-the file on GitHub and open a pull request, or open an issue saying what
-reads wrong.
+machine and nobody has reviewed them yet, so fixes are very welcome.
 
-An entry looks like this; change only the `msgstr`:
+**The easy way:** [randos.slowinput.org/translations](https://randos.slowinput.org/translations)
+lists every string in your language next to the English. Press "Suggest
+a fix": a GitHub issue opens with everything filled in but your fix
+(`.github/ISSUE_TEMPLATE/translation.yml`). Submit it, and the
+translation-fix workflow (`.github/workflows/translation-fix.yml`) checks
+it (the rules below) and opens a pull request changing that one entry, or
+comments on the issue saying why it can't. A maintainer reviews and
+merges; the next deploy ships it. The workflow records nothing in
+`tools/translate/state`, so the shootout treats your text as a person's
+and never overwrites it.
+
+**Or edit the file** on GitHub and open a pull request. An entry looks
+like this; change only the `msgstr`:
 
 ```po
 msgctxt "button"

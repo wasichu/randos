@@ -42,7 +42,10 @@ you both disappear. No accounts, no profiles, no video, no pressure.
 
 That's all there is. Nothing about the call is kept. The site itself is
 in English for now, with a language switcher in the header; translations
-into the other languages are on their way.
+into the other languages are on their way. They're machine-made, so
+[/translations](https://randos.slowinput.org/translations) lists every
+string next to the English: "Suggest a fix" opens a GitHub issue with
+everything filled in but your fix, and a pull request follows on its own.
 
 [randos.slowinput.org/status](https://randos.slowinput.org/status) shows
 whether calls can connect right now and how many there have been today:

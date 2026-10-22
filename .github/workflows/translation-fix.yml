@@ -1,0 +1,87 @@
+# A translation-fix issue (.github/ISSUE_TEMPLATE/translation.yml, linked
+# from the site's /translations page) becomes a pull request with that one
+# .po entry changed, or a comment on the issue saying why it can't.
+#
+# The issue's text is untrusted: it never reaches a shell. Python reads the
+# event file and writes everything the later steps use (tools/translate,
+# randos_translate.issue_fix); the steps here see only the issue number.
+# Pull requests opened with GITHUB_TOKEN don't trigger CI, so the fix is
+# checked here (the translation checks, and the app compiling its .po).
+name: Translation fix
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+concurrency:
+  group: translation-fix-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  fix:
+    if: github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'translation')
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    env:
+      ISSUE: ${{ github.event.issue.number }}
+      BRANCH: translation/issue-${{ github.event.issue.number }}
+      OUT: ${{ runner.temp }}/fix
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: jdx/mise-action@v5
+        with:
+          install_args: erlang elixir uv
+
+      - name: Read and check the fix
+        id: check
+        working-directory: tools/translate
+        run: |
+          set +e
+          uv run --frozen python -m randos_translate.issue_fix "$GITHUB_EVENT_PATH" "$OUT"
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Say why it can't be applied
+        if: steps.check.outputs.code == '2'
+        run: gh issue comment "$ISSUE" --body-file "$OUT/comment.md"
+
+      - name: Fail on anything else
+        if: steps.check.outputs.code != '0' && steps.check.outputs.code != '2'
+        run: exit 1
+
+      - name: Cache Mix deps and builds
+        if: steps.check.outputs.code == '0'
+        uses: actions/cache@v6
+        with:
+          path: |
+            deps
+            _build
+          key: mix-translation-${{ runner.os }}-${{ hashFiles('mise.toml', 'mix.lock') }}
+          restore-keys: mix-translation-${{ runner.os }}-
+
+      - name: Apply it, and check the app still compiles its translations
+        if: steps.check.outputs.code == '0'
+        run: |
+          mix local.hex --force --if-missing
+          mix deps.get
+          mix randos.translation_fix "$OUT/fix.json"
+          mix compile --warnings-as-errors
+
+      - name: Open or update the pull request
+        if: steps.check.outputs.code == '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git commit -am "$(cat "$OUT/title.txt")" -m "From issue #$ISSUE."
+          git push --force origin "$BRANCH"
+          if gh pr view "$BRANCH" --json state -q .state 2>/dev/null | grep -q OPEN; then
+            gh pr edit "$BRANCH" --title "$(cat "$OUT/title.txt")" --body-file "$OUT/pr.md"
+          else
+            gh pr create --head "$BRANCH" --base main --title "$(cat "$OUT/title.txt")" --body-file "$OUT/pr.md"
+            gh issue comment "$ISSUE" --body "Thanks! Your fix is in a pull request now; it goes live once it's reviewed and merged."
+          fi

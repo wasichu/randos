@@ -299,16 +299,13 @@ msgid "%{time} remaining"
 msgstr ""
 
 #: lib/randos_web/live/about_live.ex
+#: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Help fix a translation"
 msgstr ""
 
 #: lib/randos_web/live/about_live.ex
-#, elixir-autogen, elixir-format
-msgid "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: each language is one file you can edit on GitHub, or open an issue there."
-msgstr ""
-
-#: lib/randos_web/live/about_live.ex
+#: lib/randos_web/live/translations_live.ex
 #, elixir-autogen, elixir-format
 msgid "Translations"
 msgstr ""
@@ -685,4 +682,44 @@ msgstr ""
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format, fuzzy
 msgid "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept."
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Find a phrase"
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format
+msgid "Find a phrase, in English or %{language}"
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format
+msgid "Not translated yet"
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing matches."
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format
+msgid "Pick the language you'd like to check."
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format
+msgid "Suggest a fix"
+msgstr ""
+
+#: lib/randos_web/live/about_live.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest."
+msgstr ""
+
+#: lib/randos_web/live/translations_live.ex
+#, elixir-autogen, elixir-format
+msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr ""

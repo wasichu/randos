@@ -107,19 +107,17 @@ defmodule RandosWeb.AboutLive do
               </h2>
               <p>
                 {gettext(
-                  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: each language is one file you can edit on GitHub, or open an issue there."
+                  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest."
                 )}
               </p>
-              <a
+              <.link
                 id="fix-translation-link"
-                href="https://github.com/wasichu/randos/tree/main/priv/gettext"
-                target="_blank"
-                rel="noopener noreferrer"
+                navigate={~p"/translations"}
                 class="inline-flex items-center gap-2 font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
               >
                 <.icon name="hero-language" class="size-4" />
                 {gettext("Help fix a translation")}
-              </a>
+              </.link>
             </section>
 
             <section class="flex flex-col gap-3 border-t border-stone-200 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
