@@ -119,6 +119,11 @@ def pick(entries: dict[str, dict]) -> dict | None:
     passing = {m: e for m, e in entries.items() if _passes(e)}
     if not passing:
         return None
+    vetoed = _vetoed(passing)
+    passing = {m: e for m, e in passing.items() if m not in vetoed}
+    if len(passing) == 1 and vetoed:
+        model = next(iter(passing))
+        return {"model": model, "why": f"the only one left after the judge's veto of {', '.join(sorted(vetoed))}"}
     if len(passing) == 1:
         model = next(iter(passing))
         return {"model": model, "why": "the only translation passing every check"}
@@ -142,7 +147,23 @@ def pick(entries: dict[str, dict]) -> dict | None:
 
     model = min(passing, key=key)
     by = " and ".join(SCORERS[s]["label"] for s in deciding) or "the tie-breaks alone"
-    return {"model": model, "why": f"best of {len(passing)} passing translations by {by}"}
+    veto = f", after the judge's veto of {', '.join(sorted(vetoed))}" if vetoed else ""
+    return {"model": model, "why": f"best of {len(passing)} passing translations by {by}{veto}"}
+
+
+# The judge sees each string's context, which MetricX and COMET-Kiwi don't:
+# a translation it rates this low ("Lenguaje" for the interface "Language")
+# is dropped when it rates another this high ("Idioma").
+VETO_AT_MOST, VETO_IF_ANOTHER_AT_LEAST = 4, 7
+
+
+def _vetoed(passing: dict[str, dict]) -> set[str]:
+    """The passing translations the judge vetoes. Only judged ones count on
+    either side: a missing judgement never vetoes, nor is vetoed."""
+    judged = {m: s for m, e in passing.items() if (s := _score(e, "judge")) is not None}
+    if not any(s >= VETO_IF_ANOTHER_AT_LEAST for s in judged.values()):
+        return set()
+    return {m for m, s in judged.items() if s <= VETO_AT_MOST}
 
 
 def latest_entries(runs: list[dict], keys: set[str] | None = None) -> dict[tuple[str, str], dict[str, dict]]:

@@ -65,6 +65,14 @@ def test_a_good_fix_names_its_entry(pot):
     assert fix.warnings == []
 
 
+def test_a_capitalized_rando_goes_through_lowercased(pot):
+    english = "Looking for a rando who speaks %{language}."
+    fix = issue_fix.check(
+        issue_fix.parse_body(body(english=english, context="", fix="Buscamos a un Rando que hable %{language}.")), pot
+    )
+    assert fix.msgstr == "Buscamos a un rando que hable %{language}."
+
+
 def test_a_broken_placeholder_or_a_translated_rando_is_refused(pot):
     english = "Looking for a rando who speaks %{language}."
     with pytest.raises(Rejected, match="placeholders"):

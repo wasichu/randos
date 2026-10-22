@@ -54,6 +54,30 @@ def test_ties_never_go_by_the_models_name():
     assert review.pick(entries)["model"] == "z"
 
 
+def test_the_judge_vetoes_a_wrong_sense_the_estimators_miss():
+    # "Language" (the interface language): MetricX and COMET-Kiwi slightly
+    # prefer "Lenguaje", which the judge, seeing the context, rates 4.
+    entries = {
+        "m2m100": entry("Lenguaje", metricx=0.30, comet=0.87, judge=4),
+        "hy-mt2": entry("Idioma", metricx=1.69, comet=0.86, judge=10),
+    }
+    chosen = review.pick(entries)
+    assert chosen["model"] == "hy-mt2"
+    assert "veto of m2m100" in chosen["why"]
+
+
+def test_no_veto_without_a_judged_alternative_rated_well():
+    # The alternative has no judgement: a missing one never vetoes.
+    entries = {
+        "a": entry("Lenguaje", metricx=0.30, comet=0.87, judge=4),
+        "b": entry("Idioma", metricx=1.69, comet=0.86, judge=None),
+    }
+    assert review.pick(entries)["model"] == "a"
+    # Nor does a middling one (5 or 6).
+    entries["b"] = entry("Idioma", metricx=1.69, comet=0.86, judge=6)
+    assert review.pick(entries)["model"] == "a"
+
+
 def test_tied_scores_share_their_rank():
     assert review.average_ranks({"a": 1.0, "b": 1.0, "c": 2.0}, higher_is_better=False) == {
         "a": 1.5,

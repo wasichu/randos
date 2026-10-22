@@ -25,6 +25,7 @@ from pathlib import Path
 import polib
 
 from randos_translate import checks, po
+from randos_translate.models import brand_case
 
 # The form's labels, as they head each answer in the issue body.
 LABELS = {
@@ -97,6 +98,9 @@ def check(answers: dict[str, str], pot: Path = po.GETTEXT / "default.pot") -> Fi
     if entry.msgid_plural:
         raise Rejected("This text has plural forms, which this form can't edit yet; a maintainer will apply it by hand.")
 
+    # randos is a name, always lowercase: a fix that capitalizes it is
+    # lowercased, like every machine translation, rather than refused.
+    text = brand_case(text)
     current = next((e.msgstr for e in polib.pofile(str(po.po_path(locale, pot.parent))) if e.msgid == english and e.msgctxt == context), "")
     if text == current:
         raise Rejected("The fix is the same as the current translation.")
