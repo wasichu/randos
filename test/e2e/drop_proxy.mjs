@@ -42,6 +42,10 @@ export async function startDropProxy() {
       const end = head.indexOf("\r\n\r\n")
       if (end < 0) return
       client.off("data", onData)
+      // Removing the listener doesn't stop the stream: without a pause, what
+      // arrives before the upstream connects (a POST's body, often a packet
+      // of its own) is lost. pipe() resumes it.
+      client.pause()
 
       const text = head.subarray(0, end).toString("latin1")
       entry.firstLine = text.split("\r\n")[0]

@@ -176,7 +176,7 @@ try {
 
       // The dropper's network goes away for 2 s; its call doesn't need the
       // server, so audio keeps going meanwhile.
-      proxy.outage(2_000)
+      proxy.outage(Number(process.env.SMOKE_OUTAGE_MS ?? 2_000))
       await stayer.waitFor(`window.__sawReconnecting`, "the rando shown reconnecting")
       await sleep(1_000)
       const heardDuring = (await inboundAudio(stayer))?.packetsReceived ?? 0
@@ -184,7 +184,9 @@ try {
 
       // Back (Phoenix reconnects with the resume ticket): the same call, the
       // same element and peer connection (nothing restarted), audio both ways.
+      // Gone because the rando came back, not because the call ended.
       await stayer.waitFor(`!document.querySelector("#peer-reconnecting")`, "the rando back", 15_000)
+      assert(await stayer.eval(`!!document.querySelector("#call-panel, #extension-panel")`), "the call ended for the rando")
       await dropper.waitFor(`!!document.querySelector("[data-phx-main].phx-connected")`, "the dropper reconnected")
       await dropper.waitFor(`!!document.querySelector("#call-panel, #extension-panel")`, "the dropper back in the call")
       assert((await dropper.eval(callElement)) === before, "the dropper's call element changed (a new call?)")
