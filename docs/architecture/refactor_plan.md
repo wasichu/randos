@@ -668,8 +668,9 @@ Not scheduled; pick up when relevant.
   Open: the helper notices a dead path in ~14.6 s against Chrome's ~5.5 s
   (str0m's ICE agent; tuning its STUN retransmits didn't change it), so a
   TUI↔TUI call is silent ~17 s before it comes back (inside the budget,
-  which counts from detection); and `just turn-check`'s restart scenario
-  hasn't run against the real coturn yet (it needs the owner's secret). Design and
+  which counts from detection). `just turn-check` passed 2026-10-22,
+  including the restart through the real coturn (one helper rebound to a
+  new socket mid-call). Design and
   outcome: `ice_restart.md`. Also: `just deploy` now refuses commits that
   aren't on `origin/main` (an unpushed commit once reached production).
 - **The extension vote shows what you chose (planned, after the
