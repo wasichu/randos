@@ -296,7 +296,9 @@ defmodule RandosWeb.HomeLiveTest do
     |> render_submit()
   end
 
-  defp eventually_has_element?(view, selector, attempts \\ 120)
+  # Up to 2 s (200 × 10 ms), like assert_receive's default here: a busy CI
+  # runner can be slow; only a failing wait takes that long.
+  defp eventually_has_element?(view, selector, attempts \\ 200)
 
   defp eventually_has_element?(_view, _selector, 0), do: false
 
@@ -309,7 +311,7 @@ defmodule RandosWeb.HomeLiveTest do
     end
   end
 
-  defp eventually_call_pid(attempts \\ 120)
+  defp eventually_call_pid(attempts \\ 200)
 
   defp eventually_call_pid(0), do: :error
 
