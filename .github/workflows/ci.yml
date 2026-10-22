@@ -107,3 +107,13 @@ jobs:
       - name: Server log on failure
         if: failure()
         run: tail -n 200 tmp/smoke-server.log tmp/tui-smoke-server.log 2>/dev/null || true
+
+      # Each failing browser scenario's server log and page consoles
+      # (test/e2e/failures.mjs).
+      - name: Keep the failing scenarios' logs
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-failures
+          path: tmp/smoke-failures/
+          if-no-files-found: ignore

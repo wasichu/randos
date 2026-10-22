@@ -431,6 +431,49 @@ defmodule Randos.Calls.CallCoordinatorTest do
       send(pid_b, :stop)
     end
 
+    test "a drop while connecting: after the resume, the repeated report makes the call active" do
+      {call_pid, [pid_a, pid_b]} =
+        start_audio_call(
+          connect_timeout_ms: 400,
+          reconnect_grace_ms: 300,
+          call_duration_ms: 60_000
+        )
+
+      %{"b" => ticket} = tickets(call_pid)
+      :ok = report(call_pid, "a", "connected")
+      assert_receive {:call_updated, %{status: :connecting, media: %{"a" => :connected}}}
+
+      # "b" connected too, but its report was lost in the drop (obligation 9).
+      Process.exit(pid_b, :kill)
+      assert_receive {:call_updated, %{status: :connecting, away: ["b"]}}
+
+      new_pid = waiting_pid()
+
+      assert {:ok, %{call: %{status: :connecting}}} =
+               CallCoordinator.resume(call_pid, "b", ticket, new_pid)
+
+      # A repeat changes nothing; "b"'s report, repeated, makes it active.
+      :ok = report(call_pid, "a", "connected")
+      :ok = report(call_pid, "b", "connected")
+      assert_receive {:call_updated, %{status: :active, away: []}}
+      refute_receive {:call_updated, %{status: :ended}}, 500
+      Enum.each([pid_a, new_pid], &send(&1, :stop))
+    end
+
+    test "a drop while connecting, without the repeated report, ends at the connect timeout" do
+      {call_pid, [pid_a, pid_b]} =
+        start_audio_call(connect_timeout_ms: 150, reconnect_grace_ms: 300)
+
+      %{"b" => ticket} = tickets(call_pid)
+      :ok = report(call_pid, "a", "connected")
+      Process.exit(pid_b, :kill)
+      new_pid = waiting_pid()
+      {:ok, _} = CallCoordinator.resume(call_pid, "b", ticket, new_pid)
+
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 1_000
+      Enum.each([pid_a, new_pid], &send(&1, :stop))
+    end
+
     test "a ticket only opens its own seat, and junk is refused" do
       {match, pids} = match()
       {call_pid, %{"a" => ticket_a}} = active(match, [])

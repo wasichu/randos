@@ -71,6 +71,24 @@ reply is `"resumed": false` with a fresh `idle` state: end your local
 call. A ticket is 128 random bits that name only this seat of this call;
 the server keeps only its hash, for as long as the call lasts.
 
+### What a drop can lose, and what puts it right
+
+A message in flight when the socket drops may never arrive. The rule:
+**after a resume, the side that reconnected re-announces its state, and
+the server treats a repeat as harmless.** The server's side of that is the
+join reply, which carries the whole current `state`. Message by message
+(audited 2026-10-22):
+
+| Message | Lost in a drop | Put right by |
+| --- | --- | --- |
+| `state` (server → you) | You miss a change. | The join reply's `state` (resumed or not); the browser remounts from it. |
+| `resume_ticket` (server → you) | Only if the new socket drops again before it arrives: then the second drop can't be resumed and the call ends after the grace. | Accepted (two drops within moments). |
+| `signal` `media_state` (you → server) | The server never hears your change; a lost `connected` left a call `connecting` until it failed. | Obligation 9: repeat your last report after the resume (both clients do). |
+| `signal` offer / answer / ICE candidate, either way | While `connecting`: the call can't connect. Once `active`: a late candidate, harmless. | By design, the connect timeout ends the call as `connection_failed`, both are requeued, and the rematch window doesn't apply. |
+| `vote` (you → server) | The vote isn't counted, and nothing shows it: the call can end at the vote timeout though you chose to continue. | **Known gap.** Planned: `call` says whether you've voted; clients show it, so after a resume an uncounted vote shows the buttons again. |
+| `find`, `cancel_search`, `end_call`, `next` | Nothing happens. | You see nothing happen and do it again (without a call there's no resume: a rejoin is a new, `idle` participant). |
+| `status` | No reply. | Ask again (the TUI's status screen refreshes on its own). |
+
 ## Client → server events
 
 Every event gets a reply: `{"status": "ok", "response": {}}` or

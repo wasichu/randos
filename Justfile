@@ -109,7 +109,7 @@ test *args:
 
 # Browser smoke test: two headless Chromes place a real WebRTC call (needs Chrome)
 smoke:
-    test/e2e/with_test_server.sh tmp/smoke-server.log env BASE_URL=http://localhost:4010 node test/e2e/call_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-server.log env BASE_URL=http://localhost:4010 SMOKE_SERVER_LOG=tmp/smoke-server.log node test/e2e/call_smoke.mjs
     RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/smoke-relay-server.log env BASE_URL=http://localhost:4010 node test/e2e/relay_only_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-voice-lab-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_lab_smoke.mjs
 

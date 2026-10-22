@@ -74,7 +74,7 @@ export class Browser {
   }
 
   constructor(proc, profile) {
-    Object.assign(this, {proc, profile, nextId: 0, pending: new Map(), buffer: ""})
+    Object.assign(this, {proc, profile, nextId: 0, pending: new Map(), buffer: "", pages: new Map()})
     // Messages from Chrome arrive on fd 4, each terminated by a NUL byte.
     proc.stdio[4].setEncoding("utf8")
     proc.stdio[4].on("data", chunk => {
@@ -83,6 +83,7 @@ export class Browser {
       while ((end = this.buffer.indexOf("\0")) >= 0) {
         const msg = JSON.parse(this.buffer.slice(0, end))
         this.buffer = this.buffer.slice(end + 1)
+        if (!msg.id && msg.sessionId) this.pages.get(msg.sessionId)?.record(msg)
         const waiter = msg.id && this.pending.get(msg.id)
         if (!waiter) continue
         this.pending.delete(msg.id)
@@ -114,6 +115,7 @@ export class Browser {
     const {targetId} = await this.send("Target.createTarget", {url: "about:blank", browserContextId})
     const {sessionId} = await this.send("Target.attachToTarget", {targetId, flatten: true})
     const page = new Page(this, name, sessionId)
+    this.pages.set(sessionId, page)
     await page.send("Page.enable")
     await page.send("Runtime.enable")
     // Record every mic stream so tests can check nothing is left live, and
@@ -166,9 +168,28 @@ export class Browser {
   }
 }
 
+// Every page of every browser, so a failing test can dump their consoles
+// (test/e2e/failures.mjs).
+export const allPages = new Set()
+const MAX_LOG_LINES = 2_000
+
 export class Page {
   constructor(browser, name, sessionId) {
-    Object.assign(this, {browser, name, sessionId})
+    Object.assign(this, {browser, name, sessionId, logs: []})
+    allPages.add(this)
+  }
+
+  // The page's console and uncaught errors, timestamped (the app's own
+  // logEvent/logDebug lines included), the latest MAX_LOG_LINES.
+  record({method, params}) {
+    let line
+    if (method === "Runtime.consoleAPICalled")
+      line = `${params.type} ${params.args.map(describe).join(" ")}`
+    else if (method === "Runtime.exceptionThrown")
+      line = `exception ${params.exceptionDetails.exception?.description ?? params.exceptionDetails.text}`
+    else return
+    this.logs.push(`${new Date().toISOString()} ${line}`)
+    if (this.logs.length > MAX_LOG_LINES) this.logs.splice(0, this.logs.length - MAX_LOG_LINES)
   }
 
   send(method, params) {
@@ -306,4 +327,11 @@ export async function inboundAudio(page) {
     }
     return null;
   })()`)
+}
+
+// A console argument as text: its value, else its preview's fields.
+function describe(arg) {
+  if (arg.value !== undefined) return typeof arg.value === "string" ? arg.value : JSON.stringify(arg.value)
+  const fields = arg.preview?.properties?.map(p => `${p.name}=${p.value}`)
+  return fields ? `{${fields.join(", ")}}` : (arg.description ?? arg.type)
 }

@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `d940b95` (2026-10-21). Update this line, and
+Verified against the code at `17bcc0c` (2026-10-22). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -636,6 +636,23 @@ No behaviour changes.
 ## Open items
 
 Not scheduled; pick up when relevant.
+
+- **Lost messages in a drop (audited 2026-10-22).** Obligation 9's flake
+  was real: a `media_state` lost as the socket dropped left a call
+  `connecting` until it failed. Fixed: after a resume both clients repeat
+  their last report. The whole protocol was then audited message by
+  message ("What a drop can lose" in `participant_channel.md`). One gap
+  remains, the extension vote: a vote lost in a drop isn't counted and
+  nothing shows it. Planned (it adds UI strings, so after the translation
+  merge): `call` says whether you've voted, and both clients show it.
+  Also from this: the obligation 9 test needed timing fixes four times
+  (the "timing fix more than once" trigger, raised with the owner); smoke
+  failures now keep each scenario's server log and page consoles
+  (`test/e2e/failures.mjs`, a CI artifact).
+- **ICE restart (owner: worth designing, 2026-10-22).** A real network
+  change (Wi-Fi to cellular, NAT rebinding) kills the media path, and
+  nothing re-establishes it; the call ends after the disconnected grace.
+  Design note in progress: `ice_restart.md`.
 
 - **Hearing several languages (done 2026-10-21).** Each person speaks one language and
   picks any number they're comfortable hearing. Two people match when each

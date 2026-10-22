@@ -8,6 +8,7 @@
 // No npm dependencies: drives headless Chrome over the DevTools protocol
 // (see cdp.mjs; CHROME_BIN picks the browser).
 
+import {watch} from "./failures.mjs"
 import {Browser, BASE_URL, inboundAudio, sleep} from "./cdp.mjs"
 import {startDropProxy} from "./drop_proxy.mjs"
 
@@ -20,13 +21,14 @@ const results = []
 
 async function scenario(name, fn) {
   const started = Date.now()
+  const save = watch(name)
   try {
     await fn()
     results.push({name, ok: true})
     console.log(`  ✓ ${name} (${Date.now() - started}ms)`)
   } catch (error) {
     results.push({name, ok: false})
-    console.log(`  ✗ ${name}\n      ${error.message}`)
+    console.log(`  ✗ ${name}\n      ${error.message}\n      logs: ${save(error)}`)
   }
 }
 
