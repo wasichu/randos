@@ -236,7 +236,7 @@ defmodule Tui.AppTest do
       assert render_text(older) =~ "Time is up. Continue?"
     end
 
-    test "a Devices panel beside Status shows the mic and speaker on every screen (inside Status when narrow)" do
+    test "a Devices panel beside You shows the mic and speaker on every screen (inside You when narrow)" do
       {media, []} =
         MediaState.reply(
           MediaState.new(true),
@@ -250,7 +250,7 @@ defmodule Tui.AppTest do
            }}
         )
 
-      # Wide enough: a Devices panel beside Status.
+      # Wide enough: a Devices panel beside You.
       text = render_text(model("idle"), %{media_state: media})
       assert text =~ "Devices"
       assert text =~ "Mic:     Mic A (default)"
@@ -266,17 +266,17 @@ defmodule Tui.AppTest do
       # Narrow (a tmux split): no Devices panel; the lines join Status, lined up.
       narrow = render_text(model("idle"), %{media_state: media}, {80, 24})
       refute narrow =~ "Devices"
-      assert narrow =~ "Status:     not looking"
+      assert narrow =~ "Now:        not looking"
       assert narrow =~ "Mic:        Mic A (default)"
     end
 
     test "the status panel shows the current state, the connection, and the latest notice" do
       text = render_text(model("idle"))
-      assert text =~ "Status:     not looking"
+      assert text =~ "Now:        not looking"
       assert text =~ "Connection: no call"
       refute text =~ "Last:"
 
-      assert render_text(model("looking")) =~ "Status:     looking for a rando"
+      assert render_text(model("looking")) =~ "Now:        looking for a rando"
       assert render_text(model("in_call")) =~ "Connection: text only (no audio)"
 
       audio = %{model("in_call") | audio?: true}
@@ -348,7 +348,7 @@ defmodule Tui.AppTest do
       assert render_text(in_call, %{media_state: relayed}) =~ "Connection: connected via relay ·"
 
       small = render_text(in_call, %{media_state: media}, {45, 14})
-      assert small =~ "Status:     in a call"
+      assert small =~ "Now:        in a call"
       assert small =~ "Connection: connected"
       refute small =~ "sent /"
       refute small =~ "Last:"

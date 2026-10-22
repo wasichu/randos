@@ -18,15 +18,15 @@ defmodule Tui.View do
   @you_color {:rgb, 8, 145, 178}
   @peer_color {:rgb, 124, 58, 237}
 
-  # Narrower than this, Status and Devices share one panel.
+  # Narrower than this, You and Devices share one panel.
   @side_by_side_min 90
 
   @doc "The screen for the app's `state`."
   def render(state, frame) do
     area = %Rect{x: 0, y: 0, width: frame.width, height: frame.height}
 
-    # Status and Devices side by side when there's room; on a narrow
-    # terminal (a tmux split) the devices go inside the Status panel.
+    # You and Devices side by side when there's room; on a narrow
+    # terminal (a tmux split) the devices go inside the You panel.
     side_by_side? = device_lines(state) != [] and frame.width >= @side_by_side_min
     status_rows = if side_by_side?, do: 2, else: length(status_lines(state, 80, true))
 
@@ -60,7 +60,7 @@ defmodule Tui.View do
     [
       {%Paragraph{
          text: status_text(state, status_area.width - 2, false),
-         block: panel(" Status ")
+         block: panel(" You ")
        }, status_area},
       {%Paragraph{
          text: state |> device_lines("") |> Enum.map_join("\n", &fit(&1, devices_area.width - 2)),
@@ -71,7 +71,7 @@ defmodule Tui.View do
 
   defp bottom_panels(state, area, false) do
     [
-      {%Paragraph{text: status_text(state, area.width - 2, true), block: panel(" Status ")}, area}
+      {%Paragraph{text: status_text(state, area.width - 2, true), block: panel(" You ")}, area}
     ]
   end
 
@@ -295,7 +295,7 @@ defmodule Tui.View do
 
   # The server is bringing the call's audio back (`call.recovering`: an ICE
   # restart or a wait, within its recovery budget), as the browser says. If
-  # the rando's connection to the server dropped, the Status line already
+  # the rando's connection to the server dropped, the Now line already
   # says so, and that's the news.
   defp recovering(%{call: %{"peer_reconnecting" => true}}), do: ""
   defp recovering(%{call: %{"recovering" => true}}), do: "\n\nReconnecting audio…"
@@ -358,7 +358,8 @@ defmodule Tui.View do
     state |> status_lines(width, devices?) |> Enum.map_join("\n", &fit(&1, width))
   end
 
-  # Status and connection, then (when they share the panel) the mic and
+  # What you're doing now and the connection (the "You" panel; the server's
+  # status is the status screen, s), then (when they share the panel) the mic and
   # speaker once the helper has said what devices there are, on every
   # screen, calls included.
   defp status_lines(%{model: model} = state, width, devices?) do
@@ -366,12 +367,12 @@ defmodule Tui.View do
     room = width - String.length(connection)
 
     [
-      "Status:     " <> status_label(model),
+      "Now:        " <> status_label(model),
       connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…")
     ] ++ if(devices?, do: device_lines(state, "   "), else: [])
   end
 
-  # `pad` lines the values up with the Status panel's when they share it.
+  # `pad` lines the values up with the You panel's when they share it.
   defp device_lines(state, pad \\ "")
 
   defp device_lines(
@@ -451,7 +452,7 @@ defmodule Tui.View do
   defp connected_via(_path), do: "connected"
 
   # Only while the mic test is on (t shows it, t again hides it): the key
-  # itself is in the help line, and the devices are in the Status panel.
+  # itself is in the help line, and the devices are in the You panel.
   defp mic_test_text(%{media_state: %{available?: true, mic_test: %{} = test}}),
     do: "\n\n" <> mic_test_line(test)
 
