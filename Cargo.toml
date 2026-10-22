@@ -8,3 +8,7 @@ resolver = "3"
 [profile.release]
 lto = true
 codegen-units = 1
+
+# Patched copies of dependencies (vendor/README.md says why, and when to drop them).
+[patch.crates-io]
+is = { path = "vendor/is" }

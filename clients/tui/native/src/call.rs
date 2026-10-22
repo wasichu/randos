@@ -266,10 +266,13 @@ impl Session {
         let socket = UdpSocket::bind(SocketAddr::new(ip, 0))?;
         let local = socket.local_addr()?;
 
-        let mut rtc = RtcConfig::new()
-            .clear_codecs()
-            .enable_opus(true, false)
-            .build(Instant::now());
+        // Notice a dead path in ~4 s, as browsers do (with the vendored ICE
+        // agent's shorter peer-request window, vendor/README.md): retry
+        // STUN at most every 750 ms, and give up after 5 unanswered.
+        let mut rtc_config = RtcConfig::new().clear_codecs().enable_opus(true, false);
+        rtc_config.set_max_stun_rto(Duration::from_millis(750));
+        rtc_config.set_max_stun_retransmits(5);
+        let mut rtc = rtc_config.build(Instant::now());
         let mut local_candidates = Vec::new();
         if !config.relay_only
             && let Some(host) = rtc.add_local_candidate(Candidate::host(local, "udp")?)

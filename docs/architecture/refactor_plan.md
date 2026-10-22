@@ -665,10 +665,14 @@ Not scheduled; pick up when relevant.
   `recovery_smoke.mjs`; the TUI (`call_restart` as offerer when the
   generation grows, the notice, `recovery_test.exs`: TUI↔TUI and
   TUI↔browser in both roles through the test relay, in `just tui-smoke`).
-  Open: the helper notices a dead path in ~14.6 s against Chrome's ~5.5 s
-  (str0m's ICE agent; tuning its STUN retransmits didn't change it), so a
-  TUI↔TUI call is silent ~17 s before it comes back (inside the budget,
-  which counts from detection). `just turn-check` passed 2026-10-22,
+  The helper noticed a dead path only after ~15 s (Chrome ~5.5 s): two
+  gates in str0m's ICE agent, a hard-coded 15 s window after the peer's
+  last binding request (`RECENT_BINDING_REQUEST` in `is`) and the default
+  STUN retransmit schedule (over 20 s alone). Owner's decision: a patched
+  copy of `is` in `vendor/is` (4 s; `vendor/README.md`) with the helper's
+  STUN timing tightened; now ~4 s, guarded by
+  `a_dead_path_is_noticed_within_seconds`. An upstream issue (configurable
+  window) is drafted, not filed. `just turn-check` passed 2026-10-22,
   including the restart through the real coturn (one helper rebound to a
   new socket mid-call). Design and
   outcome: `ice_restart.md`. Also: `just deploy` now refuses commits that

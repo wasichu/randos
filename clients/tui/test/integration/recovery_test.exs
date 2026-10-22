@@ -24,9 +24,10 @@ defmodule Tui.Integration.RecoveryTest do
 
   # Lifecycle.recovery_budget_seconds/0 (the server's; the TUI has no copy).
   @budget_ms 15_000
-  # A dead path is reported within this: Chrome takes ~5.5 s; the helper
-  # (str0m) ~14.6 s, whatever its STUN timing, for reasons not found yet.
-  @detect_ms 25_000
+  # A dead path is reported within this: Chrome takes ~5.5 s, the helper
+  # ~4 s (its STUN timing and the vendored ICE agent's peer-request
+  # window, vendor/README.md; it was ~15 s before). Room for CI load.
+  @detect_ms 10_000
   # Packets the cut can't explain: 3 s of audio (50 a second).
   @fresh 150
 

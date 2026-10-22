@@ -197,3 +197,40 @@ fn call_restart_without_a_call_is_an_error() {
     assert_eq!(reply["error"], "no call running");
     assert_eq!(helper.close(), 0);
 }
+
+/// How long after its path dies a helper says so (`call_state`
+/// `disconnected`): the server's recovery only starts then. Chrome takes
+/// about 5 s; so should we.
+#[test]
+fn a_dead_path_is_noticed_within_seconds() {
+    let mut turn = TestTurn::spawn();
+    let mut call = Call::start(&turn);
+    call.run(Duration::from_millis(3_500));
+    turn.command("cut-all");
+    let cut = Instant::now();
+
+    let disconnected = |seen: &[Value]| {
+        seen.iter()
+            .any(|e| e["event"] == "call_state" && e["state"] == "disconnected")
+    };
+    let mut noticed = (None, None);
+    while cut.elapsed() < Duration::from_secs(20) && (noticed.0.is_none() || noticed.1.is_none()) {
+        call.run(Duration::from_millis(100));
+        if noticed.0.is_none() && disconnected(&call.offerer_seen) {
+            noticed.0 = Some(cut.elapsed());
+        }
+        if noticed.1.is_none() && disconnected(&call.answerer_seen) {
+            noticed.1 = Some(cut.elapsed());
+        }
+    }
+    eprintln!(
+        "dead path noticed after: offerer {:?}, answerer {:?}",
+        noticed.0, noticed.1
+    );
+    let limit = Duration::from_secs(7);
+    assert!(
+        noticed.0.is_some_and(|t| t < limit) && noticed.1.is_some_and(|t| t < limit),
+        "noticed after {noticed:?} (limit {limit:?})"
+    );
+    call.stop();
+}
