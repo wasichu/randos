@@ -662,9 +662,14 @@ Not scheduled; pick up when relevant.
   (`reassess/2` in `CallCoordinator`), the browser (`restartIce`), the
   helper (`call_restart`, re-gathering from a new socket), the test TURN
   relay that can cut a client (`examples/test_turn.rs`, `just test-turn`),
-  `recovery_smoke.mjs`. In progress: the TUI's side (sending
-  `call_restart` when the generation grows, the notice, TUI↔TUI and
-  TUI↔browser tests, a `turn-check` scenario). Design and
+  `recovery_smoke.mjs`; the TUI (`call_restart` as offerer when the
+  generation grows, the notice, `recovery_test.exs`: TUI↔TUI and
+  TUI↔browser in both roles through the test relay, in `just tui-smoke`).
+  Open: the helper notices a dead path in ~14.6 s against Chrome's ~5.5 s
+  (str0m's ICE agent; tuning its STUN retransmits didn't change it), so a
+  TUI↔TUI call is silent ~17 s before it comes back (inside the budget,
+  which counts from detection); and `just turn-check`'s restart scenario
+  hasn't run against the real coturn yet (it needs the owner's secret). Design and
   outcome: `ice_restart.md`. Also: `just deploy` now refuses commits that
   aren't on `origin/main` (an unpushed commit once reached production).
 - **The extension vote shows what you chose (planned, after the
