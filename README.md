@@ -36,9 +36,10 @@ you both disappear. No accounts, no profiles, no video, no pressure.
    again straight away.
 4. You talk for ten minutes. When time is up, you both choose whether to
    keep going, ten more minutes at a time, up to thirty. Either of you can
-   end the call or move on to the next rando at any moment. If a
-   connection drops for a moment, the call waits a few seconds for it to
-   come back.
+   end the call or move on to the next rando at any moment. If your
+   network changes or drops for a moment (Wi-Fi to mobile data, a tunnel),
+   the call says "Reconnecting audio…" and comes back on its own, within
+   fifteen seconds, or ends if it can't.
 
 That's all there is. Nothing about the call is kept. The site itself is
 in English for now, with a language switcher in the header; translations

@@ -297,12 +297,13 @@ end-to-end tests check these, by number, for both clients
 | --- | --- | --- |
 | 1–4: start at the match, negotiate, report, `in_call` once both connect | "two people match and connect audio" | both roles, audio checked both ways |
 | 4: never connects → ends at the connect timeout | relay-only page | relay-only browser |
-| 4: unhealthy past the recovery budget | (unit tests: `call_coordinator_test.exs`; hard to cause from a real client) | (same) |
+| 4: unhealthy past the recovery budget | unit tests (`call_coordinator_test.exs`, one per scenario); the recovery itself in `recovery_smoke.mjs` | `recovery_test.exs` (both roles) |
 | 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
 | 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
 | 8: relay-only means relay only | `relay_only_smoke.mjs` (and a page that ignores the policy, which the server's filter must stop) | TUI ↔ TUI: `relay_only_test.exs` |
 | 9: survive a dropped connection | "obligation 9: a dropped connection to the server keeps the call" (the page's socket drops and comes back; same call, same peer connection, audio both ways) | TUI ↔ TUI: `resume_test.exs` (the websocket's TCP socket shut down mid-call) |
+| 10: restart when asked | `recovery_smoke.mjs`: relay-only through `test_turn`, both media paths cut, and a cut with the websocket drop; same call and peer connection, audio both ways | `recovery_test.exs`: TUI ↔ TUI and TUI ↔ browser in both roles; the helper's `tests/restart.rs` (including detection within 7 s) and `turn-check` through the real coturn |
 
 (Obligation 8's tests run against a server whose only TURN server never
 answers, `RANDOS_TEST_UNREACHABLE_RELAY=1`, so a call can connect only by

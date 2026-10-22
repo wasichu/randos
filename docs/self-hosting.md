@@ -50,7 +50,7 @@ the app itself serves plain HTTP on `PORT`.
 | `PORT` | | The HTTP port (default `4000`). |
 | `PHX_SERVER` | for releases | `true` starts the web server (`bin/server`, which the Docker image runs, sets it). |
 | `RANDOS_ALLOW_DIRECT_CALLS` | | `true` allows direct calls between the two people, with the relay as the fallback. Unset, calls go through the TURN relay only (see below). |
-| `RANDOS_ICE_SERVERS` | | When TURN isn't configured: the ICE servers to hand out, as JSON (default: Google's public STUN). |
+| `RANDOS_ICE_SERVERS` | | When TURN isn't configured: the ICE servers to hand out, as JSON (default: Google's public STUN). Each entry's `urls`, `username` and `credential` are read; other keys are ignored. A TURN entry here makes calls relay-only, as a configured TURN server does. |
 | `RANDOS_COMMIT` | | The commit the image was built from, shown and linked in the footer (`-dirty` if built from uncommitted changes). A Docker build argument: `just deploy` passes it; unset, no commit is shown. Point the footer's links at your fork too (`RandosWeb.Layouts`). |
 | `RANDOS_STATS_DIR` | | Where the status page keeps each day's aggregate counts across restarts (one small JSON file per day). Unset: memory only. Ours is a 1 GB Fly volume; the container's `bin/start` gives the directory to the app's user. |
 | `RANDOS_VOICE_PROCESSOR` | | Runs every browser call's mic through a voice processor (`passthrough`, `pitch_shift`; the voice lab's experiments). Unset: none, the mic is sent as it is. An unknown name stops the server from starting. |

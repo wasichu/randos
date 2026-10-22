@@ -80,7 +80,7 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 | --- | --- |
 | `just test [path]` | The server's tests (`just test-tui` for the terminal client's) |
 | `just precommit` | Everything CI checks per platform: compile with warnings as errors, format, Credo, both test suites, the Rust crates (fmt, clippy, tests, cargo-deny), and the Python harnesses' offline tests (`tools/translate`, `tools/voice-eval`; no models). **Run it before calling a change done**, and check its exit status. |
-| `just smoke` | Two headless Chromes with fake mics place a real call (`mix test` can't see the browser). Run after changing `assets/js/` or the call flow. |
+| `just smoke` | Two headless Chromes with fake mics place a real call (`mix test` can't see the browser). Run after changing `assets/js/` or the call flow. Includes `just recovery-smoke`: a relay-only call through the test TURN relay (`just test-turn`) has its media cut, alone and with a websocket drop, and must come back by ICE restart. |
 | `just tui-smoke` | Real terminal clients call each other and headless Chrome, with audio checked both ways, including recovery: relay-only through the test TURN relay, every path cut, and the call back on ICE restart (TUI ↔ TUI, and TUI ↔ browser in both roles; those tests start their own relay and server). Run after changing the terminal client, the helper, or the channel. |
 | `just check-privacy` | That the coturn settings [privacy.md](privacy.md) promises are still in its config (part of precommit). |
 | `just turn-check` | The helper against the real coturn, over UDP and TLS (owner only: needs the TURN secret). Run after changing the relay path. |
