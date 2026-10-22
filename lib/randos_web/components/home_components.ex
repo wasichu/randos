@@ -74,6 +74,7 @@ defmodule RandosWeb.HomeComponents do
   attr :peer_language, :string, default: nil
   attr :peer_reconnecting, :boolean, default: false
   attr :recovering, :boolean, default: false
+  attr :agreed_to_continue, :boolean, default: false
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
 
@@ -126,7 +127,7 @@ defmodule RandosWeb.HomeComponents do
             language_name={&language_name/1}
           />
         <% :extension_pending -> %>
-          <.extension_panel />
+          <.extension_panel agreed_to_continue={@agreed_to_continue} />
       <% end %>
 
       <.call_timer_panel
@@ -570,6 +571,8 @@ defmodule RandosWeb.HomeComponents do
     """
   end
 
+  attr :agreed_to_continue, :boolean, default: false
+
   defp extension_panel(assigns) do
     ~H"""
     <div id="extension-panel" class="col-span-full space-y-6 p-4 sm:p-7">
@@ -580,7 +583,20 @@ defmodule RandosWeb.HomeComponents do
       </h2>
 
       <div class="grid gap-2 sm:grid-cols-2 sm:gap-3">
+        <p
+          :if={@agreed_to_continue}
+          id="extension-waiting"
+          role="status"
+          class="flex items-center gap-2 rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"
+        >
+          <.icon name="hero-check-circle" class="size-5 shrink-0" />
+          <% gettext_comment(
+            "When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet."
+          ) %>
+          {gettext("You agreed to continue, waiting on your rando…")}
+        </p>
         <button
+          :if={!@agreed_to_continue}
           id="continue-call-button"
           phx-click="extension_vote"
           phx-value-vote="continue"

@@ -18,20 +18,20 @@
       "id"
     ],
     "strings": 142,
-    "at": "20261022T153547Z",
+    "at": "20261022T233833Z",
     "seconds": 724.0,
     "scored": {
       "metricx": {
-        "at": "20261022T160420Z",
-        "seconds": 47.1
+        "at": "20261022T234301Z",
+        "seconds": 48.9
       },
       "comet_kiwi": {
-        "at": "20261022T160601Z",
-        "seconds": 49.4
+        "at": "20261022T234326Z",
+        "seconds": 50.8
       },
       "judge": {
-        "at": "20261022T201840Z",
-        "seconds": 5303.1
+        "at": "20261022T234632Z",
+        "seconds": 5324.6
       }
     },
     "appended": [
@@ -42,31 +42,35 @@
       {
         "at": "20261022T153547Z",
         "seconds": 84.3
+      },
+      {
+        "at": "20261022T233833Z",
+        "seconds": 11.3
       }
     ]
   },
   "summary": {
     "es": {
       "strings": 142,
-      "all_checks_pass": 135,
+      "all_checks_pass": 136,
       "failed": {
-        "placeholders": 6,
+        "placeholders": 5,
         "glossary": 2,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 62.2
+      "mean_chrf": 62.6
     },
     "zh": {
       "strings": 142,
       "all_checks_pass": 97,
       "failed": {
-        "placeholders": 13,
-        "glossary": 13,
+        "placeholders": 12,
+        "glossary": 14,
         "length": 18,
         "script": 8
       },
-      "mean_chrf": 49.9
+      "mean_chrf": 50.0
     },
     "hi": {
       "strings": 142,
@@ -77,40 +81,40 @@
         "length": 0,
         "script": 5
       },
-      "mean_chrf": 50.5
+      "mean_chrf": 50.6
     },
     "ar": {
       "strings": 142,
-      "all_checks_pass": 124,
+      "all_checks_pass": 125,
       "failed": {
-        "placeholders": 9,
+        "placeholders": 8,
         "glossary": 6,
         "length": 1,
         "script": 4
       },
-      "mean_chrf": 49.4
+      "mean_chrf": 49.6
     },
     "pt": {
       "strings": 142,
-      "all_checks_pass": 135,
+      "all_checks_pass": 136,
       "failed": {
-        "placeholders": 6,
+        "placeholders": 5,
         "glossary": 2,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 63.3
+      "mean_chrf": 63.7
     },
     "bn": {
       "strings": 142,
-      "all_checks_pass": 121,
+      "all_checks_pass": 120,
       "failed": {
         "placeholders": 8,
-        "glossary": 9,
+        "glossary": 10,
         "length": 1,
         "script": 5
       },
-      "mean_chrf": 43.6
+      "mean_chrf": 43.4
     },
     "ru": {
       "strings": 142,
@@ -121,29 +125,29 @@
         "length": 0,
         "script": 4
       },
-      "mean_chrf": 54.0
+      "mean_chrf": 54.2
     },
     "ja": {
       "strings": 142,
       "all_checks_pass": 111,
       "failed": {
-        "placeholders": 13,
-        "glossary": 12,
+        "placeholders": 12,
+        "glossary": 13,
         "length": 4,
         "script": 8
       },
-      "mean_chrf": 46.1
+      "mean_chrf": 46.2
     },
     "fr": {
       "strings": 142,
-      "all_checks_pass": 130,
+      "all_checks_pass": 131,
       "failed": {
-        "placeholders": 7,
+        "placeholders": 6,
         "glossary": 6,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 60.1
+      "mean_chrf": 60.4
     },
     "de": {
       "strings": 142,
@@ -154,7 +158,7 @@
         "length": 1,
         "script": 0
       },
-      "mean_chrf": 63.9
+      "mean_chrf": 64.1
     },
     "ko": {
       "strings": 142,
@@ -165,18 +169,18 @@
         "length": 3,
         "script": 6
       },
-      "mean_chrf": 49.1
+      "mean_chrf": 49.2
     },
     "it": {
       "strings": 142,
-      "all_checks_pass": 134,
+      "all_checks_pass": 135,
       "failed": {
-        "placeholders": 7,
+        "placeholders": 6,
         "glossary": 2,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 60.2
+      "mean_chrf": 60.6
     },
     "tr": {
       "strings": 142,
@@ -187,18 +191,18 @@
         "length": 0,
         "script": 1
       },
-      "mean_chrf": 51.3
+      "mean_chrf": 51.5
     },
     "id": {
       "strings": 142,
-      "all_checks_pass": 135,
+      "all_checks_pass": 136,
       "failed": {
-        "placeholders": 5,
+        "placeholders": 4,
         "glossary": 3,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 56.7
+      "mean_chrf": 57.0
     }
   },
   "entries": [
@@ -1452,8 +1456,9 @@
           "score": 0.8555
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'mirar' is too literal",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -3580,45 +3585,6 @@
         "judge": {
           "score": 10,
           "reason": "Perfectly natural, keeps meaning and tone."
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "es",
-      "text": "cualquiera de los idiomas que has elegido",
-      "back_translation": "The languages you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 26.3,
-        "metricx": {
-          "score": 6.41
-        },
-        "comet_kiwi": {
-          "score": 0.8362
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
         }
       }
     },
@@ -8538,45 +8504,6 @@
       }
     },
     {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "zh",
-      "text": "您所选择的任何语言(0)",
-      "back_translation": "Any language you choose (0)",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 33.9,
-        "metricx": {
-          "score": 3.14
-        },
-        "comet_kiwi": {
-          "score": 0.6785
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Placeholder handling is awkward, tone slightly stiff"
-        }
-      }
-    },
-    {
       "key": "%{language} both ways",
       "msgid": "%{language} both ways",
       "msgctxt": null,
@@ -11360,8 +11287,9 @@
           "score": 0.8304
         },
         "judge": {
-          "score": 7,
-          "reason": "Awkward phrasing, more natural as 'देखना बंद करो'."
+          "score": 4,
+          "reason": "Wrong meaning, 'देखना' means 'watching', not 'searching'",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -13488,45 +13416,6 @@
         "judge": {
           "score": 4,
           "reason": "Placeholder repetition, unnatural phrasing"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "hi",
-      "text": "आपके द्वारा चुने गए किसी भी %{count} भाषा में",
-      "back_translation": "in any language you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 35.9,
-        "metricx": {
-          "score": 3.97
-        },
-        "comet_kiwi": {
-          "score": 0.7777
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff phrasing, 'द्वारा' is formal"
         }
       }
     },
@@ -16315,7 +16204,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more formal than needed"
+          "reason": "Slightly stiff, more formal than needed",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -18442,45 +18332,6 @@
         "judge": {
           "score": 7,
           "reason": "Placeholder format is correct, but 'أو' is too formal for this tone."
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "ar",
-      "text": "أي من اللغات التي اخترتها",
-      "back_translation": "The language you have chosen.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 33.4,
-        "metricx": {
-          "score": 5.56
-        },
-        "comet_kiwi": {
-          "score": 0.764
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more formal than needed"
         }
       }
     },
@@ -21268,8 +21119,9 @@
           "score": 0.8524
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
+          "score": 7,
+          "reason": "Slightly stiff, 'olhar' is too literal",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -23396,45 +23248,6 @@
         "judge": {
           "score": 7,
           "reason": "Placeholders are correct, but 'ou' is slightly formal"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "pt",
-      "text": "Qualquer das línguas que você escolheu",
-      "back_translation": "The languages you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 26.3,
-        "metricx": {
-          "score": 5.38
-        },
-        "comet_kiwi": {
-          "score": 0.8253
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone."
         }
       }
     },
@@ -26223,7 +26036,8 @@
         },
         "judge": {
           "score": 4,
-          "reason": "Unnatural phrasing, awkward tone"
+          "reason": "Unnatural phrasing, awkward for a button",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -28350,45 +28164,6 @@
         "judge": {
           "score": 4,
           "reason": "Placeholder mismatch, awkward repetition"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "bn",
-      "text": "যে কোনও ভাষা %{count} আপনি বেছে নিলেন",
-      "back_translation": "Any language %{count} you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.3,
-        "metricx": {
-          "score": 5.47
-        },
-        "comet_kiwi": {
-          "score": 0.8125
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Awkward phrasing, 'বেশে নিলেন' is unnatural"
         }
       }
     },
@@ -31176,8 +30951,9 @@
           "score": 0.859
         },
         "judge": {
-          "score": 7,
-          "reason": "Formal 'перестаньте' instead of informal 'перестань'"
+          "score": 4,
+          "reason": "Wrong meaning, 'смотреть' is 'watching', not 'searching'",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -33304,45 +33080,6 @@
         "judge": {
           "score": 4,
           "reason": "Unnatural placeholder format, lacks context"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "ru",
-      "text": "любой из %{count} языков, которые вы выбрали",
-      "back_translation": "any of the languages you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 41.5,
-        "metricx": {
-          "score": 2.83
-        },
-        "comet_kiwi": {
-          "score": 0.8429
-        },
-        "judge": {
-          "score": 7,
-          "reason": "slightly formal, 'выбрали' is stiff"
         }
       }
     },
@@ -36130,8 +35867,9 @@
           "score": 0.8546
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as '見るのをやめよう'"
+          "score": 4,
+          "reason": "Wrong meaning, '見る' is 'watch', not 'look'",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -38258,45 +37996,6 @@
         "judge": {
           "score": 4,
           "reason": "Placeholder format is unnatural, tone unclear"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "ja",
-      "text": "あなたが選んだ言語のいずれか。",
-      "back_translation": "Which of the languages you chose?",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 32.9,
-        "metricx": {
-          "score": 3.38
-        },
-        "comet_kiwi": {
-          "score": 0.8206
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more formal than needed"
         }
       }
     },
@@ -41084,8 +40783,9 @@
           "score": 0.8678
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'arrêtez' is formal"
+          "score": 4,
+          "reason": "Wrong meaning, 'regarder' doesn't fit 'searching'",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -42693,8 +42393,8 @@
           "score": 0.7429
         },
         "judge": {
-          "score": null,
-          "error": "unparsed reply: '```json\\n{\"score\": 7, \"reason\": \"Natural but slightly stiff; \\'en train d\\\\\\'appeler\\' would be more fluid.\"}\\n```'",
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'en train d'appeler' would be more fluid.",
           "context": "\nWhere it appears: A connection state label.\n"
         }
       }
@@ -43212,45 +42912,6 @@
         "judge": {
           "score": 7,
           "reason": "Placeholders are correct but 'ou' feels slightly stiff"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "fr",
-      "text": "Le langage que vous avez choisi",
-      "back_translation": "The language you chose",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 33.8,
-        "metricx": {
-          "score": 10.06
-        },
-        "comet_kiwi": {
-          "score": 0.6349
-        },
-        "judge": {
-          "score": 7,
-          "reason": "awkward phrasing, 'langage' is too formal"
         }
       }
     },
@@ -48170,45 +47831,6 @@
       }
     },
     {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "de",
-      "text": "eine der %{count} Sprachen, die Sie ausgewählt haben",
-      "back_translation": "One of the languages you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 32.4,
-        "metricx": {
-          "score": 1.3
-        },
-        "comet_kiwi": {
-          "score": 0.8223
-        },
-        "judge": {
-          "score": 7,
-          "reason": "slightly formal, 'Sie' instead of 'du'"
-        }
-      }
-    },
-    {
       "key": "%{language} both ways",
       "msgid": "%{language} both ways",
       "msgctxt": null,
@@ -50992,8 +50614,9 @@
           "score": 0.8607
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more formal than needed"
+          "score": 4,
+          "reason": "Wrong meaning, 'stop watching' is incorrect",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -53120,45 +52743,6 @@
         "judge": {
           "score": 7,
           "reason": "Placeholder format is correct, but 'or' is slightly stiff"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "ko",
-      "text": "당신이 선택한 언어 중 어느 것도 %{count}",
-      "back_translation": "Any of the languages you have chosen %{count}",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 52.9,
-        "metricx": {
-          "score": 6.47
-        },
-        "comet_kiwi": {
-          "score": 0.7073
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural with '선택한 언어 중 하나도'"
         }
       }
     },
@@ -55946,8 +55530,9 @@
           "score": 0.835
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'smettere' is formal"
+          "score": 4,
+          "reason": "wrong meaning, 'guardare' is 'watch', not 'look for'",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -58074,45 +57659,6 @@
         "judge": {
           "score": 10,
           "reason": "Perfectly natural, keeps meaning and tone."
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "it",
-      "text": "Qualsiasi delle lingue che hai scelto",
-      "back_translation": "The languages you have chosen",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 26.3,
-        "metricx": {
-          "score": 6.06
-        },
-        "comet_kiwi": {
-          "score": 0.8416
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone."
         }
       }
     },
@@ -60901,7 +60447,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly formal; 'bırak' is more casual"
+          "reason": "Slightly stiff, more natural would be 'Bakmayı durdur'",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -63029,45 +62576,6 @@
         "judge": {
           "score": 7,
           "reason": "Placeholders are correct, but 'veya' feels slightly formal"
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "tr",
-      "text": "Seçtiğiniz herhangi bir %{count} dil",
-      "back_translation": "Any language you choose",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 34.6,
-        "metricx": {
-          "score": 3.22
-        },
-        "comet_kiwi": {
-          "score": 0.8118
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'herhangi bir' is unnecessary"
         }
       }
     },
@@ -65856,7 +65364,8 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more natural as 'Berhenti mengintip' or 'Berhenti pandang-pandang'."
+          "reason": "Awkward phrasing, 'berhentilah melihat' is too literal",
+          "context": "\nWhere it appears: A button: stop searching for someone to talk to (not \"stop watching\").\n"
         }
       }
     },
@@ -67983,45 +67492,6 @@
         "judge": {
           "score": 10,
           "reason": "Correct, natural, and matches the informal tone."
-        }
-      }
-    },
-    {
-      "key": "any of the %{count} language you picked",
-      "msgid": "any of the %{count} language you picked",
-      "msgctxt": null,
-      "locale": "id",
-      "text": "Salah satu bahasa yang Anda pilih",
-      "back_translation": "The language you choose.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{count}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 33.8,
-        "metricx": {
-          "score": 4.72
-        },
-        "comet_kiwi": {
-          "score": 0.7948
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'Anda pilih' is formal; 'yang Anda pilih' is correct but less casual."
         }
       }
     },
@@ -78349,6 +77819,625 @@
         "judge": {
           "score": 7,
           "reason": "Slightly stiff, 'menghubungkan' is formal; 'mengulang koneksi audio' is more natural."
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "Estás de acuerdo en continuar, esperando tu rando...",
+      "back_translation": "You agree to continue, waiting for your rando...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 74.5,
+        "metricx": {
+          "score": 5.47
+        },
+        "comet_kiwi": {
+          "score": 0.5438
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "你同意继续,等待你的(0)......",
+      "back_translation": "You agree to continue, wait for you(0) ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "leftover tokens ['(0)']"
+        }
+      },
+      "scores": {
+        "chrf": 53.6,
+        "metricx": {
+          "score": 6.97
+        },
+        "comet_kiwi": {
+          "score": 0.4678
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "आप आगे बढ़ने के लिए सहमत हैं, अपने rando का इंतजार करते हैं ...",
+      "back_translation": "You agree to move forward, waiting for your rando ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 49.1,
+        "metricx": {
+          "score": 4.66
+        },
+        "comet_kiwi": {
+          "score": 0.6503
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "لقد وافقت على الاستمرار ، وانتظرك rando ...",
+      "back_translation": "I agreed to continue, and I’m waiting for you rando ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 61.6,
+        "metricx": {
+          "score": 5.75
+        },
+        "comet_kiwi": {
+          "score": 0.5173
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "pt",
+      "text": "Você concordou em continuar, aguardando seu rando...",
+      "back_translation": "You agreed to continue, waiting for your rando...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 83.7,
+        "metricx": {
+          "score": 6.41
+        },
+        "comet_kiwi": {
+          "score": 0.5854
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'aguardando' is formal",
+          "context": "\nWhere it appears: When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.\n"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "bn",
+      "text": "তুমি তুমি তুমি তুমি তুমি তুমি তুমি তুমি তুমি তুমি তুমি তুমি",
+      "back_translation": "You are You are You are You are You are You are You are You are You",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 11.0,
+        "metricx": {
+          "score": 10.5
+        },
+        "comet_kiwi": {
+          "score": 0.2732
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "Вы согласились продолжить, ждать вашего rando...",
+      "back_translation": "You agree to continue, waiting for yours rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 68.7,
+        "metricx": {
+          "score": 4.03
+        },
+        "comet_kiwi": {
+          "score": 0.5905
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Awkward phrasing, 'ждать вашего rando' is unnatural",
+          "context": "\nWhere it appears: When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.\n"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ja",
+      "text": "あなたは続けることに同意し、あなたの(0)を待っている。",
+      "back_translation": "You agree to continue and wait for your(0) .",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "leftover tokens ['(0)']"
+        }
+      },
+      "scores": {
+        "chrf": 48.3,
+        "metricx": {
+          "score": 8.81
+        },
+        "comet_kiwi": {
+          "score": 0.5422
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "Vous avez accepté de continuer, en attendant votre rando...",
+      "back_translation": "You agreed to continue, waiting for your rando...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 83.7,
+        "metricx": {
+          "score": 2.5
+        },
+        "comet_kiwi": {
+          "score": 0.692
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'en attendant' is formal",
+          "context": "\nWhere it appears: When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.\n"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "Sie stimmen zu, weiter zu gehen, warten auf Ihre rando ...",
+      "back_translation": "You agree to go further, waiting for your rando ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 50.4,
+        "metricx": {
+          "score": 4.75
+        },
+        "comet_kiwi": {
+          "score": 0.5951
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ko",
+      "text": "당신은 계속하기로 동의하고, 당신을 기다리고 있습니다 rando ...",
+      "back_translation": "You agree to continue and are waiting for you rando ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 57.8,
+        "metricx": {
+          "score": 9.12
+        },
+        "comet_kiwi": {
+          "score": 0.5489
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "Siete accettati di continuare, in attesa del vostro rando ...",
+      "back_translation": "You agree to continue, waiting for your rando ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 74.5,
+        "metricx": {
+          "score": 6.0
+        },
+        "comet_kiwi": {
+          "score": 0.5543
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "Sen devam etmeyi kabul ediyorsun, senin için bekliyorsun rando",
+      "back_translation": "You agree to continue, you are waiting for you rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.3,
+        "metricx": {
+          "score": 11.56
+        },
+        "comet_kiwi": {
+          "score": 0.5121
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "You agreed to continue, waiting on your rando…",
+      "msgid": "You agreed to continue, waiting on your rando…",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "Anda setuju untuk melanjutkan, menunggu Anda rando ...",
+      "back_translation": "You agree to continue, waiting for you rando ...",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 68.3,
+        "metricx": {
+          "score": 6.38
+        },
+        "comet_kiwi": {
+          "score": 0.5109
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         }
       }
     }

@@ -164,7 +164,7 @@
     "msgstr": "Ayuda a corregir una traducción"
   },
   "How calls ended": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Cómo terminaron las llamadas"
   },
   "How languages are counted": {
@@ -264,7 +264,7 @@
     "msgstr": "Preparar la llamada"
   },
   "Privacy": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Privacidad"
   },
   "Ready": {
@@ -304,8 +304,8 @@
     "msgstr": "Estado"
   },
   "Stop looking": {
-    "model": "m2m100",
-    "msgstr": "Deja de mirar"
+    "model": "madlad-400",
+    "msgstr": "Deja de buscar"
   },
   "Suggest a fix": {
     "model": "opus-mt",
@@ -372,7 +372,7 @@
     "msgstr": "El tiempo ha terminado. ¿Desea continuar durante otros %{minutes} minutos?"
   },
   "Today": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Hoy"
   },
   "Toggle dark mode": {
@@ -384,7 +384,7 @@
     "msgstr": "Traducciones"
   },
   "Typical length": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Longitud típica"
   },
   "View on GitHub": {
@@ -414,6 +414,10 @@
   "You": {
     "model": "m2m100",
     "msgstr": "Tú"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "madlad-400",
+    "msgstr": "Usted aceptó continuar, esperando su rando…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "translategemma-4b",

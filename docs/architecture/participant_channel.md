@@ -87,7 +87,7 @@ join reply, which carries the whole current `state`. Message by message
 | `signal` `media_state` (you → server) | The server never hears your change; a lost `connected` left a call `connecting` until it failed. | Obligation 9: repeat your last report after the resume (both clients do). |
 | `signal` offer / answer / ICE candidate, either way | While `connecting`: the call can't connect. Once `active`: a late candidate, harmless. | By design, the connect timeout ends the call as `connection_failed`, both are requeued, and the rematch window doesn't apply. |
 | a restart `offer` (either way) | The restart can't happen; the media stays down. | The server holds restarts while either person is away and asks again as soon as they're back (a new `ice_generation` in the resume reply and the `state` push); nobody resends an old offer. |
-| `vote` (you → server) | The vote isn't counted, and nothing shows it: the call can end at the vote timeout though you chose to continue. | **Known gap.** Planned: `call` says whether you've voted; clients show it, so after a resume an uncounted vote shows the buttons again. |
+| `vote` (you → server) | A `continue` isn't counted: the call could end at the vote timeout though you chose to continue. | `call.agreed_to_continue` says whether your `continue` counted; clients show the choice from it, so after a resume an uncounted vote shows the question again. A repeated `continue` is harmless. (A lost `end`: the call goes on, and you choose again.) |
 | `find`, `cancel_search`, `end_call`, `next` | Nothing happens. | You see nothing happen and do it again (without a call there's no resume: a rejoin is a new, `idle` participant). |
 | `status` | No reply. | Ask again (the TUI's status screen refreshes on its own). |
 
@@ -104,7 +104,7 @@ show up as [`state`](#state) pushes, not in the reply. The one exception is
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
 | `end_call` | `{}`, or `{"reason": …}` | in a call | Hang up and go `idle`. The peer goes back to `looking`. A client that can't carry the call sends a `reason`: `microphone_denied`, `microphone_not_found`, `audio_unavailable`, or `audio_failed` (anything else replies `invalid_message`); it comes back as this participant's `error`. |
 | `next` | `{}` | in a call | Hang up and go straight back to `looking`. |
-| `vote` | `{"vote": "continue" \| "end"}` | `extension_pending` | Vote on extending. Both `continue` → another segment; any `end` → call ends (voter goes `idle`). |
+| `vote` | `{"vote": "continue" \| "end"}` | `extension_pending` | Vote on extending. Both `continue` → another segment; any `end` → call ends (voter goes `idle`). A counted `continue` shows as `call.agreed_to_continue`; repeating it changes nothing. |
 | `signal` | `{"type": <signal type>, "payload": {…}}` | in a call | Relay a WebRTC signal to the peer (see [signals](#webrtc-signaling)). |
 | `status` | `{}` | always | Reply with the public status page's data (see [below](#status-the-public-status-page)). Changes nothing. |
 
@@ -221,6 +221,7 @@ e.g. `"in_call"`.
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
     "extension_duration_seconds": 600,
+    "agreed_to_continue": false,
     "ended_reason": null
   }
 }
@@ -255,6 +256,11 @@ e.g. `"in_call"`.
   `extension_deadline_unix_ms`: when the vote closes (20 s).
   `extension_duration_seconds`: how long a continued call runs on, for the
   vote's wording ("continue for another 10 minutes?"); don't hardcode it.
+  `agreed_to_continue`: `true` once the server has counted your
+  `continue` in this vote (back to `false` with the next one). Show it in
+  place of the question ("You agreed to continue, waiting on your
+  rando…"), keeping a way to end. Say what was chosen, never "you voted".
+  Nothing says whether your rando has chosen yet.
 - `error_message`: show this rather than wording your own, so every client
   says the same thing.
 - `peer_reconnecting`: `true` while the rando's connection to the server

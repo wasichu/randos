@@ -67,7 +67,9 @@ defmodule RandosWeb.ParticipantShellTest do
                media: %{self: nil, peer: nil},
                # The rando's language, a code: never who they are.
                peer_speaks: "en",
-               peer_reconnecting: false
+               peer_reconnecting: false,
+               # Whether your own `continue` counted: never the ids who voted.
+               agreed_to_continue: false
              }
            }
 

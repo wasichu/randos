@@ -283,6 +283,16 @@ defmodule RandosWeb.HomeLiveTest do
     assert has_element?(view_a, "#end-call-button")
     refute has_element?(view_a, "#find-new-after-extension-button")
     refute has_element?(view_a, "#extension-countdown")
+    refute has_element?(view_a, "#extension-waiting")
+
+    # Your counted `continue` shows in place of the button; your rando
+    # still has the choice.
+    view_b |> element("#continue-call-button") |> render_click()
+    assert eventually_has_element?(view_b, "#extension-waiting")
+    refute has_element?(view_b, "#continue-call-button")
+    assert has_element?(view_b, "#end-call-button")
+    assert has_element?(view_a, "#continue-call-button")
+    refute has_element?(view_a, "#extension-waiting")
 
     view_a |> element("#end-call-button") |> render_click()
     assert eventually_has_element?(view_a, "#idle-panel")

@@ -37,7 +37,7 @@ msgstr "À propos de randos"
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Accept the 18+ acknowledgment before looking for a rando."
-msgstr "Veuillez accepter la mention \"18 ans et plus\" avant de rechercher une randonnée."
+msgstr "Acceptez l’avis de 18+ avant de chercher un rando."
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -99,7 +99,7 @@ msgstr "Éphémère par défaut"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Finding a compatible rando."
-msgstr "Trouver un(e) partenaire de randonnée compatible."
+msgstr "Trouver un rando compatible."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -178,7 +178,7 @@ msgstr "Début de l’appel avec rando."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Stop looking"
-msgstr "Arrêtez de regarder"
+msgstr "Arrêtez de chercher"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -369,7 +369,7 @@ msgstr "Fin"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Find a rando"
-msgstr "Trouver une randonnée"
+msgstr "Trouver un rando"
 
 #. Button: turn your own microphone off.
 #: lib/randos_web/components/home_components.ex
@@ -383,7 +383,7 @@ msgstr "Muet"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Next rando"
-msgstr "Prochaine randonnée"
+msgstr "Prochain rando"
 
 #. Button: turn your own microphone back on.
 #: lib/randos_web/components/home_components.ex
@@ -466,7 +466,7 @@ msgstr "Je suis heureux d'entendre"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
-msgstr "Recherche d'un partenaire de randonnée qui parle %{hearing_languages} et qui souhaite communiquer en %{speaking_language}."
+msgstr "Je cherche un rando qui parle %{hearing_languages} et qui veut entendre %{speaking_language}."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -692,7 +692,7 @@ msgstr "vie privée"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando's connection dropped; waiting a few seconds for them to come back."
-msgstr "La connexion de votre randonneur a été interrompue ; attendez quelques secondes pour qu'il se reconnecte."
+msgstr "La connexion de votre rando a été interrompue ; attendez quelques secondes qu’ils se reconnectent."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -777,3 +777,9 @@ msgstr "Vous entendrez %{languages}"
 #, elixir-autogen, elixir-format
 msgid "Reconnecting audio…"
 msgstr "Reconnecter l'audio..."
+
+#. When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You agreed to continue, waiting on your rando…"
+msgstr "Vous avez accepté de continuer, en attendant votre rando..."

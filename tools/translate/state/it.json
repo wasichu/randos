@@ -140,7 +140,7 @@
     "msgstr": "Ogni chiamata passa attraverso il nostro relè, quindi nessuna delle due parti vede l’indirizzo dell’altra. Lo verifichiamo ogni pochi minuti creando una connessione relè reale."
   },
   "Find a phrase": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Trova una frase"
   },
   "Find a phrase, in English or %{language}": {
@@ -156,7 +156,7 @@
     "msgstr": "Trovare un rando"
   },
   "Finished": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Finito"
   },
   "Help fix a translation": {
@@ -228,7 +228,7 @@
     "msgstr": "Nessun relè è configurato"
   },
   "Not translated yet": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Non ancora tradotto"
   },
   "Nothing matches.": {
@@ -304,8 +304,8 @@
     "msgstr": "Stato"
   },
   "Stop looking": {
-    "model": "madlad-400",
-    "msgstr": "Smetti di guardare"
+    "model": "translategemma-4b",
+    "msgstr": "Smetta di cercare"
   },
   "Suggest a fix": {
     "model": "opus-mt",
@@ -372,7 +372,7 @@
     "msgstr": "Il tempo è scaduto. Vuoi continuare per altri %{minutes} minuti?"
   },
   "Today": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Oggi"
   },
   "Toggle dark mode": {
@@ -380,7 +380,7 @@
     "msgstr": "Attiva/disattiva modalità scura"
   },
   "Translations": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Traduzioni"
   },
   "Typical length": {
@@ -414,6 +414,10 @@
   "You": {
     "model": "hy-mt2",
     "msgstr": "Tu"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "opus-mt",
+    "msgstr": "Hai accettato di continuare, aspettando il tuo rando..."
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "translategemma-4b",
@@ -528,7 +532,7 @@
     "msgstr": "randos è una piattaforma per conversazioni linguistiche anonime, esclusivamente tramite audio."
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "randos è software libero (AGPL-3.0) e costruito in pubblico."
   },
   "remote audio needs a tap (%{summary})": {

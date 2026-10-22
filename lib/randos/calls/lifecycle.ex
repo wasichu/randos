@@ -136,7 +136,7 @@ defmodule Randos.Calls.Lifecycle do
   @doc "Time is up: ask both participants whether to continue."
   @spec request_extension(Call.t()) :: Call.t()
   def request_extension(%Call{status: :active} = call) do
-    %{call | status: :extension_pending, call_deadline_unix_ms: nil}
+    %{call | status: :extension_pending, call_deadline_unix_ms: nil, continuing: []}
   end
 
   @doc "Both participants voted to continue."
@@ -151,7 +151,8 @@ defmodule Randos.Calls.Lifecycle do
        call
        | status: :active,
          extension_count: call.extension_count + 1,
-         extension_deadline_unix_ms: nil
+         extension_deadline_unix_ms: nil,
+         continuing: []
      }}
   end
 

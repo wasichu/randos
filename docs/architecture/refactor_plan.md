@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `17bcc0c` (2026-10-22). Update this line, and
+Verified against the code at `af3337a` (2026-10-22). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -264,8 +264,14 @@ On the shootout's runs: 2,635 judgements instead of 13,270, at 0.75 s each
 instead of ~2.7 s (a batched check gave 128 of 128 verdicts identical);
 9 of 1,974 picks would differ from judging everything (the mean rank
 depends on which translations are left, and judging everything vetoes
-some that were never in contention). Next run: the extension-vote string;
-then new languages (`new_languages.md`).
+some that were never in contention). The first run with them
+(2026-10-22, the extension-vote string, plus "Stop looking" for the
+models that read its new comment): 67 judgements, about a minute. It
+showed a glossary-check bug: "rando" counted inside other words
+("espe*rando*", the French "*rando*nnée", a hike), so French had shipped
+"Trouver une randonnée" for "Find a rando"; fixed (a word of its own,
+Turkish suffixes allowed), and six French strings and one Portuguese
+re-picked. Next: new languages (`new_languages.md`), when the owner says.
 
 **Status (2026-10-21):** plumbing done (`RandosWeb.Locale`, the switcher,
 RTL, per-locale `.po` files, the precommit template check, hook text via
@@ -667,10 +673,8 @@ Not scheduled; pick up when relevant.
   was real: a `media_state` lost as the socket dropped left a call
   `connecting` until it failed. Fixed: after a resume both clients repeat
   their last report. The whole protocol was then audited message by
-  message ("What a drop can lose" in `participant_channel.md`). One gap
-  remains, the extension vote: a vote lost in a drop isn't counted and
-  nothing shows it. Planned (it adds UI strings, so after the translation
-  merge): `call` says whether you've voted, and both clients show it.
+  message ("What a drop can lose" in `participant_channel.md`). The one
+  gap, the extension vote, is closed (below).
   Also from this: the obligation 9 test needed timing fixes four times
   (the "timing fix more than once" trigger, raised with the owner); smoke
   failures now keep each scenario's server log and page consoles
@@ -706,11 +710,18 @@ Not scheduled; pick up when relevant.
   new socket mid-call). Design and
   outcome: `ice_restart.md`. Also: `just deploy` now refuses commits that
   aren't on `origin/main` (an unpushed commit once reached production).
-- **The extension vote shows what you chose (planned, after the
-  translation merge).** A vote lost in a drop isn't counted and nothing
-  shows it. `call` will say whether you've voted, and both clients name
-  the choice (owner's wording: "You agreed to continue, waiting on your
-  rando…", never "you voted").
+- **The extension vote shows what you chose (done 2026-10-22).** A vote
+  lost in a drop wasn't counted and nothing showed it. Now the call keeps
+  who agreed to continue (`Call.continuing`, reset with each vote) and
+  the coordinator broadcasts each counted `continue`; `call` carries
+  `agreed_to_continue` (your own only, never ids), and a repeat is
+  harmless. Both clients show the choice in place of the question
+  (owner's wording: "You agreed to continue, waiting on your rando…",
+  never "you voted"), keeping a way to end; after a resume an uncounted
+  vote shows the question again. Protocol: a new field, documented in
+  `participant_channel.md` (the mini-pass: both clients, the channel
+  test of a vote surviving a drop, the smoke's extension scenario). The
+  string was translated by the whole field, judged with the speedups.
 
 - **Hearing several languages (done 2026-10-21).** Each person speaks one language and
   picks any number they're comfortable hearing. Two people match when each

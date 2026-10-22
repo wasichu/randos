@@ -306,6 +306,14 @@ defmodule Tui.View do
       "in a call to try timers and extension votes."
   end
 
+  # The server counted our `continue` (`call.agreed_to_continue`); one lost
+  # in a drop shows the question again.
+  defp main_text(%{status: :extension_pending, call: %{"agreed_to_continue" => true}} = model) do
+    "Time is up. You agreed to continue, waiting on your rando…" <>
+      "#{time_left(model, " to decide")}\n\n" <>
+      "n: end#{recovering(model)}"
+  end
+
   defp main_text(%{status: :extension_pending} = model) do
     "Time is up. #{continue_question(model.call)}#{time_left(model, " to decide")}\n\n" <>
       "y: continue    n: end#{recovering(model)}"
@@ -351,6 +359,9 @@ defmodule Tui.View do
 
   defp help(%{status: s}) when s in [:connecting, :in_call],
     do: "e end call  n next rando  q quit"
+
+  defp help(%{status: :extension_pending, call: %{"agreed_to_continue" => true}}),
+    do: "n end  q quit"
 
   defp help(%{status: :extension_pending}), do: "y continue  n end  q quit"
   defp help(_model), do: "q quit"
@@ -417,6 +428,10 @@ defmodule Tui.View do
   defp status_label(%{status: :looking}), do: "looking for a rando"
   defp status_label(%{status: :connecting}), do: "matched, preparing the call"
   defp status_label(%{status: :in_call}), do: "in a call"
+
+  defp status_label(%{status: :extension_pending, call: %{"agreed_to_continue" => true}}),
+    do: "waiting on your rando"
+
   defp status_label(%{status: :extension_pending}), do: "time is up: continue?"
   defp status_label(_model), do: "—"
 

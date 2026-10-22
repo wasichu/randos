@@ -166,7 +166,8 @@ defmodule RandosWeb.HomeLive do
       ice_restart: false,
       recovering: false,
       peer_language: nil,
-      peer_reconnecting: false
+      peer_reconnecting: false,
+      agreed_to_continue: false
     ]
   end
 
@@ -180,7 +181,8 @@ defmodule RandosWeb.HomeLive do
       ice_restart: call.ice_restart?,
       recovering: call.recovering,
       peer_language: ParticipantShell.peer_speaks(call, participant_id),
-      peer_reconnecting: ParticipantShell.peer_reconnecting?(call, participant_id)
+      peer_reconnecting: ParticipantShell.peer_reconnecting?(call, participant_id),
+      agreed_to_continue: ParticipantShell.agreed_to_continue?(call, participant_id)
     ]
   end
 
@@ -206,6 +208,7 @@ defmodule RandosWeb.HomeLive do
             peer_language={@peer_language}
             peer_reconnecting={@peer_reconnecting}
             recovering={@recovering}
+            agreed_to_continue={@agreed_to_continue}
             form={@form}
             matchmaking_error={@matchmaking_error}
           />

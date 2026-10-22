@@ -212,8 +212,8 @@
     "msgstr": "Procurando"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
-    "model": "translategemma-4b",
-    "msgstr": "Procurando alguém que fale %{hearing_languages} e queira conversar em %{speaking_language}."
+    "model": "hy-mt2",
+    "msgstr": "Procurando por um rando que fale %{hearing_languages} e queira ouvir %{speaking_language}."
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "hy-mt2",
@@ -304,8 +304,8 @@
     "msgstr": "Status"
   },
   "Stop looking": {
-    "model": "m2m100",
-    "msgstr": "Pare de olhar"
+    "model": "hy-mt2",
+    "msgstr": "Pare de procurar"
   },
   "Suggest a fix": {
     "model": "translategemma-4b",
@@ -414,6 +414,10 @@
   "You": {
     "model": "madlad-400",
     "msgstr": "Você"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "m2m100",
+    "msgstr": "Você concordou em continuar, aguardando seu rando..."
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "translategemma-27b",

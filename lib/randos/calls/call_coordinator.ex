@@ -83,7 +83,6 @@ defmodule Randos.Calls.CallCoordinator do
     # When the call became active (monotonic), for its connected length.
     :activated_at,
     pubsub: Randos.PubSub,
-    extension_votes: %{},
     monitors: %{},
     # Participant id => the registry key of their current resume ticket.
     resume_keys: %{},
@@ -219,7 +218,6 @@ defmodule Randos.Calls.CallCoordinator do
   def handle_event(:enter, :active, :extension_pending, data) do
     timeout_ms = data.extension_response_timeout_ms
     data = put_in(data.call.extension_deadline_unix_ms, deadline(timeout_ms))
-    data = %{data | extension_votes: %{}}
     broadcast(data)
     {:keep_state, data, [{:state_timeout, timeout_ms, :vote_timeout}]}
   end
@@ -281,18 +279,25 @@ defmodule Randos.Calls.CallCoordinator do
         :extension_pending,
         data
       ) do
-    data = %{data | extension_votes: Map.put(data.extension_votes, participant_id, vote)}
-
     cond do
       vote == :end ->
         Logger.info("call extension declined")
         {:stop_and_reply, :normal, [{:reply, from, :ok}], end_call(data, :extension_declined)}
 
-      both_participants_voted_continue?(data) ->
-        extend_call(from, data)
+      participant_id in data.call.continuing ->
+        # A repeat (after a resume, say): already counted.
+        {:keep_state_and_data, [{:reply, from, :ok}]}
 
       true ->
-        {:keep_state, data, [{:reply, from, :ok}]}
+        data = update_in(data.call.continuing, &[participant_id | &1])
+
+        if both_participants_continuing?(data.call) do
+          extend_call(from, data)
+        else
+          # So each client can show whether its vote counted.
+          broadcast(data)
+          {:keep_state, data, [{:reply, from, :ok}]}
+        end
     end
   end
 
@@ -556,10 +561,8 @@ defmodule Randos.Calls.CallCoordinator do
     data
   end
 
-  defp both_participants_voted_continue?(%{call: %Call{match: match}} = data) do
-    Enum.all?([match.participant_a.id, match.participant_b.id], fn participant_id ->
-      Map.get(data.extension_votes, participant_id) == :continue
-    end)
+  defp both_participants_continuing?(%Call{match: match, continuing: continuing}) do
+    match.participant_a.id in continuing and match.participant_b.id in continuing
   end
 
   defp monitor_participants(match) do

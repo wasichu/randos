@@ -40,8 +40,8 @@
     "msgstr": "À propos de randos"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "translategemma-12b",
-    "msgstr": "Veuillez accepter la mention \"18 ans et plus\" avant de rechercher une randonnée."
+    "model": "hy-mt2",
+    "msgstr": "Acceptez l’avis de 18+ avant de chercher un rando."
   },
   "Attempting to reconnect": {
     "model": "opus-mt",
@@ -76,15 +76,15 @@
     "msgstr": "Sélectionnez les langues de conversation prises en charge."
   },
   "Choose your languages.": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Choisissez vos langues."
   },
   "Connected": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Connecté"
   },
   "Connecting": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Connexion"
   },
   "Connection lost": {
@@ -148,8 +148,8 @@
     "msgstr": "Trouvez une phrase, en anglais ou en %{language}"
   },
   "Finding a compatible rando.": {
-    "model": "translategemma-27b",
-    "msgstr": "Trouver un(e) partenaire de randonnée compatible."
+    "model": "madlad-400",
+    "msgstr": "Trouver un rando compatible."
   },
   "Finding a rando": {
     "model": "opus-mt",
@@ -168,7 +168,7 @@
     "msgstr": "Comment les appels se sont terminés"
   },
   "How languages are counted": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Comment les langues sont comptées"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
@@ -212,8 +212,8 @@
     "msgstr": "Recherche"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
-    "model": "translategemma-4b",
-    "msgstr": "Recherche d'un partenaire de randonnée qui parle %{hearing_languages} et qui souhaite communiquer en %{speaking_language}."
+    "model": "hy-mt2",
+    "msgstr": "Je cherche un rando qui parle %{hearing_languages} et qui veut entendre %{speaking_language}."
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "hy-mt2",
@@ -228,7 +228,7 @@
     "msgstr": "Aucun relais n'est configuré"
   },
   "Not translated yet": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Pas encore traduit"
   },
   "Nothing matches.": {
@@ -304,8 +304,8 @@
     "msgstr": "Le statut"
   },
   "Stop looking": {
-    "model": "m2m100",
-    "msgstr": "Arrêtez de regarder"
+    "model": "madlad-400",
+    "msgstr": "Arrêtez de chercher"
   },
   "Suggest a fix": {
     "model": "madlad-400",
@@ -384,7 +384,7 @@
     "msgstr": "Les traductions"
   },
   "Typical length": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Longueur typique"
   },
   "View on GitHub": {
@@ -415,6 +415,10 @@
     "model": "opus-mt",
     "msgstr": "Toi"
   },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "opus-mt",
+    "msgstr": "Vous avez accepté de continuer, en attendant votre rando..."
+  },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "translategemma-12b",
     "msgstr": "Vous choisissez la langue que vous souhaitez utiliser pour parler et la langue que vous souhaitez entendre. \"randos\" vous met en relation avec une personne compatible pour une courte conversation, puis vous laisse discuter librement."
@@ -432,8 +436,8 @@
     "msgstr": "Votre rando"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
-    "model": "translategemma-4b",
-    "msgstr": "La connexion de votre randonneur a été interrompue ; attendez quelques secondes pour qu'il se reconnecte."
+    "model": "hy-mt2",
+    "msgstr": "La connexion de votre rando a été interrompue ; attendez quelques secondes qu’ils se reconnectent."
   },
   "button\u0004Continue": {
     "model": "opus-mt",
@@ -444,16 +448,16 @@
     "msgstr": "Fin"
   },
   "button\u0004Find a rando": {
-    "model": "translategemma-4b",
-    "msgstr": "Trouver une randonnée"
+    "model": "opus-mt",
+    "msgstr": "Trouver un rando"
   },
   "button\u0004Mute": {
     "model": "hy-mt2",
     "msgstr": "Muet"
   },
   "button\u0004Next rando": {
-    "model": "translategemma-4b",
-    "msgstr": "Prochaine randonnée"
+    "model": "hy-mt2",
+    "msgstr": "Prochain rando"
   },
   "button\u0004Unmute": {
     "model": "madlad-400",

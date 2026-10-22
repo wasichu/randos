@@ -248,6 +248,13 @@ defmodule Tui.AppTest do
         })
 
       assert render_text(older) =~ "Time is up. Continue?"
+
+      # The server counted our `continue`: say so, and only `n` is left.
+      agreed = put_in(vote.call["agreed_to_continue"], true)
+      text = render_text(agreed, %{}, {140, 24})
+      assert text =~ "You agreed to continue, waiting on your rando…"
+      refute text =~ "y continue"
+      assert text =~ "n end"
     end
 
     test "a Devices panel beside You shows the mic and speaker on every screen (inside You when narrow)" do

@@ -178,7 +178,7 @@ msgstr "rando와 통화를 시작합니다."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Stop looking"
-msgstr "쳐다보는 것을 멈추라"
+msgstr "더 이상 찾지 마"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -776,3 +776,9 @@ msgstr "당신은 들을 것입니다 %{languages}"
 #, elixir-autogen, elixir-format
 msgid "Reconnecting audio…"
 msgstr "오디오 재연결 중…"
+
+#. When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You agreed to continue, waiting on your rando…"
+msgstr "당신은 당신의 rando을 기다리면서 계속하기로 동의했습니다..."

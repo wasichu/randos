@@ -57,6 +57,7 @@ try {
       b.waitFor(`!!document.querySelector("#extension-panel")`, "extension prompt", 60_000),
     ])
     await a.click("#continue-call-button")
+    await a.waitFor(`!!document.querySelector("#extension-waiting")`, "a's counted vote shown")
     await b.click("#continue-call-button")
     await a.waitFor(`!!document.querySelector("#call-panel")`, "call panel after extension")
     await sleep(1_500)

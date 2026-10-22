@@ -80,7 +80,7 @@
     "msgstr": "Pilih bahasa Anda."
   },
   "Connected": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Terhubung"
   },
   "Connecting": {
@@ -264,7 +264,7 @@
     "msgstr": "Persiapan panggilan"
   },
   "Privacy": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Privasi"
   },
   "Ready": {
@@ -300,7 +300,7 @@
     "msgstr": "Mulai panggilan dengan rando."
   },
   "Status": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Status"
   },
   "Stop looking": {
@@ -414,6 +414,10 @@
   "You": {
     "model": "translategemma-4b",
     "msgstr": "Saya"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "madlad-400",
+    "msgstr": "Anda setuju untuk melanjutkan, menunggu rando Anda…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "translategemma-12b",

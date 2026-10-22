@@ -102,7 +102,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
                     %{status: :extension_pending, extension_deadline_unix_ms: ^extension_deadline}}
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "a", :continue)
-    refute_receive {:call_updated, %{status: :active}}, 5
+    # Both hear that a's vote counted, so a's client can say so.
+    assert_receive {:call_updated, %{status: :extension_pending, continuing: ["a"]}}
+    assert_receive {:call_updated, %{status: :extension_pending, continuing: ["a"]}}
+    # A repeat (after a resume, say) is already counted.
+    assert :ok = CallCoordinator.vote_extension(call_pid, "a", :continue)
+    refute_receive {:call_updated, %{status: :extension_pending}}, 5
 
     assert :ok = CallCoordinator.vote_extension(call_pid, "b", :continue)
 
@@ -110,7 +115,8 @@ defmodule Randos.Calls.CallCoordinatorTest do
                     %{
                       status: :active,
                       extension_count: 1,
-                      call_deadline_unix_ms: extension_deadline
+                      call_deadline_unix_ms: extension_deadline,
+                      continuing: []
                     }}
 
     assert_receive {:call_updated,

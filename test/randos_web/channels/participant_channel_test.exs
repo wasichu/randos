@@ -16,6 +16,7 @@ defmodule RandosWeb.ParticipantChannelTest do
       has_element?: 2
     ]
 
+  alias Randos.Calls.CallCoordinator
   alias Randos.Matchmaking.Matchmaker
   alias RandosWeb.ParticipantSocket
 
@@ -340,6 +341,26 @@ defmodule RandosWeb.ParticipantChannelTest do
       # The spent ticket now starts a fresh participant.
       assert {:ok, %{state: %{status: :idle, call: nil}, resumed: false}, _socket} =
                join_with(%{"resume_ticket" => ticket})
+    end
+
+    test "the call says whether your vote to continue counted, also after a drop" do
+      {socket, _view, _call_id, ticket} = call_with_browser("it", "de")
+      call_pid = :sys.get_state(socket.channel_pid).assigns.participant.call_pid
+      CallCoordinator.force_time_up(call_pid)
+      assert_push "state", %{status: :extension_pending, call: %{agreed_to_continue: false}}
+
+      assert_reply push(socket, "vote", %{"vote" => "continue"}), :ok
+      assert_push "state", %{status: :extension_pending, call: %{agreed_to_continue: true}}
+
+      Process.unlink(socket.channel_pid)
+      ref = Process.monitor(socket.channel_pid)
+      Process.exit(socket.channel_pid, :kill)
+      assert_receive {:DOWN, ^ref, _, _, _}
+
+      assert {:ok, %{state: state, resumed: true}, _socket} =
+               join_with(%{"resume_ticket" => ticket})
+
+      assert %{status: :extension_pending, call: %{agreed_to_continue: true}} = state
     end
 
     test "a ticket that isn't live starts a fresh participant" do

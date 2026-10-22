@@ -178,7 +178,7 @@ msgstr "Начинаем звонок с rando."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Stop looking"
-msgstr "Прекратите искать"
+msgstr "Прекратите поиски"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -778,3 +778,9 @@ msgstr "Ты услышишь %{languages}"
 #, elixir-autogen, elixir-format
 msgid "Reconnecting audio…"
 msgstr "Переподключение звука..."
+
+#. When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You agreed to continue, waiting on your rando…"
+msgstr "Вы согласились продолжить, ждать вашего rando..."

@@ -178,7 +178,7 @@ msgstr "Iniciando chamada com rando."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Stop looking"
-msgstr "Pare de olhar"
+msgstr "Pare de procurar"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -466,7 +466,7 @@ msgstr "Fico feliz em ouvir"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
-msgstr "Procurando alguém que fale %{hearing_languages} e queira conversar em %{speaking_language}."
+msgstr "Procurando por um rando que fale %{hearing_languages} e queira ouvir %{speaking_language}."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -777,3 +777,9 @@ msgstr "Você ouvirá %{languages}"
 #, elixir-autogen, elixir-format
 msgid "Reconnecting audio…"
 msgstr "Reconectando áudio…"
+
+#. When the call's time is up, after you chose to keep talking: the other person hasn't chosen yet.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You agreed to continue, waiting on your rando…"
+msgstr "Você concordou em continuar, aguardando seu rando..."

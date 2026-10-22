@@ -236,7 +236,7 @@
     "msgstr": "Ничего не совпадает."
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Другие языки: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -300,12 +300,12 @@
     "msgstr": "Начинаем звонок с rando."
   },
   "Status": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Статус"
   },
   "Stop looking": {
     "model": "translategemma-4b",
-    "msgstr": "Прекратите искать"
+    "msgstr": "Прекратите поиски"
   },
   "Suggest a fix": {
     "model": "translategemma-4b",
@@ -372,7 +372,7 @@
     "msgstr": "Время истекло. Продолжить ещё на %{minutes} минут?"
   },
   "Today": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Сегодня"
   },
   "Toggle dark mode": {
@@ -384,7 +384,7 @@
     "msgstr": "Переводы"
   },
   "Typical length": {
-    "model": "m2m100",
+    "model": "opus-mt",
     "msgstr": "Типичная длина"
   },
   "View on GitHub": {
@@ -414,6 +414,10 @@
   "You": {
     "model": "madlad-400",
     "msgstr": "Ты"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "m2m100",
+    "msgstr": "Вы согласились продолжить, ждать вашего rando..."
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "hy-mt2",

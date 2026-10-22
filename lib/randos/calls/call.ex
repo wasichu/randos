@@ -23,7 +23,8 @@ defmodule Randos.Calls.Call do
           away: [String.t()],
           ice_restart?: boolean(),
           ice_generation: non_neg_integer(),
-          recovering: boolean()
+          recovering: boolean(),
+          continuing: [String.t()]
         }
 
   @typedoc """
@@ -55,7 +56,10 @@ defmodule Randos.Calls.Call do
     ice_generation: 0,
     # Unhealthy (someone's media down, or someone away) and within the
     # recovery budget; clients say "Reconnecting audio…".
-    recovering: false
+    recovering: false,
+    # Participants who agreed to continue in this extension vote (an `end`
+    # vote ends the call, so it's the only vote kept).
+    continuing: []
   ]
 
   @doc """

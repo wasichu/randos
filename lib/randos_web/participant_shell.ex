@@ -94,10 +94,18 @@ defmodule RandosWeb.ParticipantShell do
     # The rando's connection to the server dropped and the call is waiting
     # for them to come back (within Lifecycle.recovery_budget_seconds/0).
     |> Map.put(:peer_reconnecting, peer_reconnecting?(call, participant_id))
+    # This participant's `continue` vote counted (a vote lost in a drop
+    # leaves it false, so the client shows the choice again).
+    |> Map.put(:agreed_to_continue, agreed_to_continue?(call, participant_id))
     # So clients can say "continue for another N minutes" without their own
     # copy of the constant.
     |> Map.put(:extension_duration_seconds, Lifecycle.extension_duration_seconds())
   end
+
+  @doc "Whether the participant's vote to continue the call has counted."
+  @spec agreed_to_continue?(Call.t(), String.t()) :: boolean()
+  def agreed_to_continue?(%Call{continuing: continuing}, participant_id),
+    do: participant_id in continuing
 
   @doc "Whether the participant's rando dropped out of the call and may come back."
   @spec peer_reconnecting?(Call.t(), String.t()) :: boolean()
