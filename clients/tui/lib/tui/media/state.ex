@@ -42,7 +42,8 @@ defmodule Tui.Media.State do
           seq: pos_integer(),
           phase: :starting | :active,
           connection: :connecting | :connected | :disconnected | :failed,
-          stats: map() | nil
+          stats: map() | nil,
+          generation: non_neg_integer()
         }
   @type command ::
           {:request, Protocol.command()}
@@ -56,6 +57,7 @@ defmodule Tui.Media.State do
           role: String.t() | nil,
           ice_servers: list() | nil,
           relay_only?: boolean(),
+          ice_generation: non_neg_integer(),
           call: call() | nil,
           calls: non_neg_integer(),
           last_call_error: String.t() | nil,
@@ -70,6 +72,7 @@ defmodule Tui.Media.State do
             role: nil,
             ice_servers: nil,
             relay_only?: false,
+            ice_generation: 0,
             call: nil,
             calls: 0,
             last_call_error: nil,
@@ -161,7 +164,12 @@ defmodule Tui.Media.State do
   The server's state push: `status`, `webrtc_role`, and the call map, whose
   `ice_servers` are this call's STUN/TURN servers and whose
   `ice_transport_policy` `"relay"` means the call must go through the TURN
-  relay only, so the peer never learns our IP address.
+  relay only, so the peer never learns our IP address. When its
+  `ice_generation` grows past the one this call last acted on, the server
+  is asking for an ICE restart (obligation 10): as offerer, `call_restart`
+  (with the latest `ice_servers`); as answerer nothing, the helper
+  re-gathers when the restart offer arrives. A resume reply goes through
+  here too, so a restart asked for while we were away is acted on.
   """
   @spec server_state(t(), atom() | nil, String.t() | nil, map() | nil) :: {t(), [command()]}
   def server_state(state, status, role, call \\ nil) do
@@ -170,11 +178,13 @@ defmodule Tui.Media.State do
       | status: status,
         role: role,
         ice_servers: call && call["ice_servers"],
-        relay_only?: call != nil and call["ice_transport_policy"] == "relay"
+        relay_only?: call != nil and call["ice_transport_policy"] == "relay",
+        ice_generation: (call && call["ice_generation"]) || 0
     }
 
     cond do
-      status in @call_statuses -> maybe_start_call(state)
+      status in @call_statuses and state.call == nil -> maybe_start_call(state)
+      status in @call_statuses -> maybe_restart(state)
       state.call != nil -> stop_call(state)
       true -> {state, []}
     end
@@ -301,7 +311,14 @@ defmodule Tui.Media.State do
     {input, output} = with_choice(state, state.endpoints)
     seq = state.calls + 1
 
-    call = %{seq: seq, phase: :starting, connection: :connecting, stats: nil}
+    # `generation`: the server's ice_generation this call has acted on.
+    call = %{
+      seq: seq,
+      phase: :starting,
+      connection: :connecting,
+      stats: nil,
+      generation: state.ice_generation
+    }
 
     # The mic test would hold the devices; the call wins.
     {state, stop_test} = stop_mic_test_for_call(state)
@@ -311,6 +328,19 @@ defmodule Tui.Media.State do
   end
 
   defp maybe_start_call(state), do: {state, []}
+
+  # Obligation 10: only the offerer offers, so restart offers never cross.
+  defp maybe_restart(%{call: %{generation: acted}, ice_generation: asked} = state)
+       when asked > acted do
+    state = put_call(state, generation: asked)
+
+    case state.role do
+      "offerer" -> {state, [{:request, {:call_restart, state.ice_servers}}]}
+      _answerer -> {state, []}
+    end
+  end
+
+  defp maybe_restart(state), do: {state, []}
 
   defp stop_mic_test_for_call(%{mic_test: %{phase: phase}} = state)
        when phase in [:starting, :running],

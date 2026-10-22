@@ -339,7 +339,9 @@ defmodule Tui.Model do
       speaks: model.speaks,
       hears: model.hears,
       adult_acknowledged: model.adult_acknowledged?,
-      audio: model.audio?
+      audio: model.audio?,
+      # Our helper restarts ICE when the server asks (obligation 10).
+      ice_restart: model.audio?
     }
   end
 

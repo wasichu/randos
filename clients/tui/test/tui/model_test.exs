@@ -86,7 +86,13 @@ defmodule Tui.ModelTest do
 
     assert commands == [
              {:push, "find",
-              %{speaks: "es", hears: ["en", "fr"], adult_acknowledged: true, audio: false}}
+              %{
+                speaks: "es",
+                hears: ["en", "fr"],
+                adult_acknowledged: true,
+                audio: false,
+                ice_restart: false
+              }}
            ]
 
     assert model.adult_acknowledged?
