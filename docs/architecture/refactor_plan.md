@@ -26,7 +26,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 4 | TUI | Done: monitor, text client, call audio (STUN/TURN, echo cancellation, FEC), release builds, Homebrew tap (v0.2.0) |
 | — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
 | 6 | UI translations | **Next** |
-| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Planned, likely before Phase 5's voice lab; design drafted 2026-10-22, owner's decisions open |
+| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Planned, likely before Phase 5's voice lab; design drafted and decided 2026-10-22, not built |
 | 5 | Voice anonymization | Planned (alongside 6); its voice lab starts with a code-quality pass |
 
 ## How it fits together
@@ -679,8 +679,10 @@ Not scheduled; pick up when relevant.
   start, monitoring and 18+ check are reused), the token rides in the URL
   fragment (never in a log or a link preview), and an invitation call is
   an ordinary call marked `kind: :invitation` (both go idle after it, no
-  "Next"). Seven decisions for the owner at the end of the note. Likely
-  before the voice lab.
+  "Next"). The owner's decisions (2026-10-22): both go idle after the
+  call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
+  clients in the first cut; counted among calls started but not language
+  pairs; the button says "Invite someone". Likely before the voice lab.
 - **Translating the TUI** (left open, 2026-10-22). Its own strings aren't
   in gettext; English is fine for now (owner: "probably a good idea at
   some point"). It would take gettext in the TUI, a language setting, and

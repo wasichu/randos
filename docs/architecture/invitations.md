@@ -1,4 +1,4 @@
-# Invitation links (design, 2026-10-22; not built)
+# Invitation links (design, 2026-10-22; decided, not built)
 
 Proposed by the owner: **anonymous, one-time invitation links**, after
 Lichess's anonymous challenges. Two people who already found each other
@@ -122,22 +122,19 @@ whether they also count toward language pairs is a decision below.
   the link, audio flows both ways, both end idle; `tui-smoke`: a TUI
   accepts a browser's link (once the TUI has it).
 
-## Decisions for the owner
+## Decisions (the owner, 2026-10-22)
 
-1. **After an invitation call: idle** (proposed) or back to looking like
-   a random call?
-2. **The same 10 + 10 + 10-minute limit** (proposed: one kind of call), or
-   longer for invitations? People who know each other may want an hour;
-   but a separate limit is a second set of rules.
-3. **The token in the fragment** (proposed) or a plain path (`/join/<token>`,
-   simpler, but in logs unless filtered, and visible to previews)?
-4. **The expiry: 15 minutes** (proposed)? Long enough to paste into a
-   chat and wait for a reply; short enough that a leaked link is soon
-   dead.
-5. **The TUI in the first cut**, or browser first and the TUI after (the
-   protocol is the same; the TUI work is a screen and a key)?
-6. **The status page**: count invitation calls among calls started
-   (proposed: yes), and among language pairs (proposed: no; a pair the two
-   chose says nothing about who's looking for whom)?
-7. **The idle screen's wording**: "Invite someone" / "Talk with someone
-   you know"?
+1. **After an invitation call, both go idle**, never back to looking.
+2. **The same limit as any call:** 10 minutes, +10 by mutual vote, 30 at
+   most. One kind of call; they can make a new link to keep talking.
+3. **The token in the fragment** (`/join#<token>`).
+4. **A link expires after 15 minutes** unclaimed
+   (`Lifecycle.invitation_seconds/0`).
+5. **Both clients in the first cut**: the TUI gets `i` to invite (it shows
+   the link) and a prompt to paste one; `tui-smoke` covers browser↔TUI.
+6. **The status page** counts invitation calls among calls started, and
+   leaves them out of language pairs.
+7. **The button says "Invite someone"**, a quieter secondary button
+   beside "Find a rando".
+
+All seven were the proposals; nothing is open.
