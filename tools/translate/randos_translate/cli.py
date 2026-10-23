@@ -176,15 +176,17 @@ def judge(paths: list[Path], redo: bool, judges: list[str] | None = None) -> dic
     # verdict set on the table lands in the run it came from.
     table = review.latest_entries(list(runs.values()), {s.key for s in po.sources()})
     owner = {id(e["scores"]): path for path, data in runs.items() for e in data["entries"]}
+    judges = judges or list(scoring.JUDGES)
     if redo:
         # Afresh: an old verdict on a translation that isn't a finalist now
-        # would still veto or break ties.
+        # would still veto or break ties. Only these judges' verdicts: the
+        # others' stand.
         for entries in table.values():
             for entry in entries.values():
-                for score in scoring.JUDGE_SCORES.values():
+                for score in (scoring.JUDGE_SCORES[name] for name in judges):
                     entry["scores"][score] = scoring.pending_scores()[score]
     counts = {path.name: 0 for path in runs}
-    for name in judges or scoring.JUDGES:
+    for name in judges:
         mine = {k: v for k, v in table.items() if name in scoring.judges_for(k[0])}
         if mine:
             _judge_rounds(name, mine, runs, owner, cache, contexts, redo, counts)

@@ -170,6 +170,9 @@ def test_each_locale_has_its_judge_and_each_loads_only_when_needed(tmp_path, mon
     # One judge redone alone: the other's verdicts stand.
     cli.score("judge", runs, redo=True, judges=["mistral"])
     assert FakeJudge.loaded == ["mistral"]
+    scores = {(p.stem): json.loads(p.read_text())["entries"][0]["scores"] for p in runs}
+    assert scores["one-es"]["judge_qwen"]["by"] == "qwen"
+    assert scores["one-sw"]["judge_qwen"]["by"] == "qwen"
 
 
 def test_either_judge_can_veto_and_their_mean_breaks_ties():
