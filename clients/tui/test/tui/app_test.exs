@@ -54,7 +54,7 @@ defmodule Tui.AppTest do
 
     test "idle form shows languages, the 18+ box, and key help" do
       text = render_text(model("idle"))
-      assert text =~ "I will speak:     ◀ English (EN) ▶"
+      assert text =~ "I will speak:      ◀ English (EN) ▶"
       # The language under the cursor, then every checked one.
       assert text =~ "I'm happy to hear: ◀ [x] English (EN) ▶  EN"
       assert text =~ "[ ] I'm 18+"
@@ -220,7 +220,7 @@ defmodule Tui.AppTest do
                "who speaks Español (ES) or English (EN) and"
 
       assert render_text(%{model("looking") | hears: ~w(en es fr de)}) =~
-               "who speaks any of the 4 languages you picked and"
+               "who speaks any of the languages you picked (4) and"
 
       assert render_text(model("connecting")) =~ "Matched!"
 
@@ -278,7 +278,9 @@ defmodule Tui.AppTest do
       assert text =~ "Devices"
       assert text =~ "Mic:        Mic A (default)"
       assert text =~ "Speaker:    Speakers (default)"
-      assert text =~ "i mic  o speaker"
+      # The keys break between hints when they need a second row.
+      assert text =~ "i mic"
+      assert text =~ "o speaker"
 
       # On every screen, so a call shows them too.
       assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:        Mic A"

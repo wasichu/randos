@@ -20,6 +20,8 @@ defmodule Tui.App do
       it when they change; without one (tests), nothing is saved
     * `:test_pid` — receives `{:tui_model, app_pid, model}` after every change (tests)
   """
+
+  use Gettext, backend: Tui.Gettext
   use ExRatatui.App
 
   alias ExRatatui.Event
@@ -200,7 +202,10 @@ defmodule Tui.App do
       state
     else
       reply =
-        {:error, "the audio helper isn't running (is it built? cargo build -p randos_media)"}
+        {:error,
+         gettext("the audio helper isn't running (is it built? %{command})",
+           command: "cargo build -p randos_media"
+         )}
 
       run_media(state, MediaState.reply(state.media_state, command, reply))
     end

@@ -23,6 +23,8 @@ defmodule Tui.Media.State do
     * `{:after, ms, message}`: deliver `message` to the app later
   """
 
+  use Gettext, backend: Tui.Gettext
+
   alias Tui.Media.Protocol
 
   # Media starts at the match (`connecting`), not `in_call`: the server only
@@ -316,7 +318,7 @@ defmodule Tui.Media.State do
     state =
       case state.mic_test do
         %{phase: phase} when phase in [:starting, :running] ->
-          fail_mic_test(state, "the audio helper restarted")
+          fail_mic_test(state, gettext("the audio helper restarted"))
 
         _other ->
           state

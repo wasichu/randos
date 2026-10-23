@@ -21,6 +21,8 @@ defmodule Tui.Model do
   30 s while open, see `refresh_status/1`).
   """
 
+  use Gettext, backend: Tui.Gettext
+
   @max_log 30
   @status_refresh_ms 30_000
 
@@ -159,9 +161,9 @@ defmodule Tui.Model do
 
     model =
       cond do
-        first_join? -> log(model, "connected to the server")
-        resumed? -> log(model, "reconnected; back in the call")
-        true -> log(model, "reconnected as a new participant")
+        first_join? -> log(model, gettext("connected to the server"))
+        resumed? -> log(model, gettext("reconnected; back in the call"))
+        true -> log(model, gettext("reconnected as a new participant"))
       end
 
     {put_state(model, state), []}
@@ -169,7 +171,7 @@ defmodule Tui.Model do
 
   @spec disconnected(t()) :: {t(), [command()]}
   def disconnected(model) do
-    {log(%{model | connection: :connecting}, "disconnected; reconnecting"), []}
+    {log(%{model | connection: :connecting}, gettext("disconnected; reconnecting")), []}
   end
 
   @doc "A server push on the participant channel."
@@ -183,7 +185,9 @@ defmodule Tui.Model do
     model =
       log(
         model,
-        "peer offered audio; this client has none, so the call ended (Enter to look again)"
+        gettext(
+          "peer offered audio; this client has none, so the call ended (Enter to look again)"
+        )
       )
 
     {model, [{:push, "end_call", %{reason: "audio_unavailable"}}]}
@@ -207,7 +211,7 @@ defmodule Tui.Model do
   def reply(model, "status", _reply), do: {model, []}
 
   def reply(model, event, {:error, %{"reason" => reason}}),
-    do: {log(model, "#{event} refused: #{reason}"), []}
+    do: {log(model, gettext("%{request} refused: %{reason}", request: event, reason: reason)), []}
 
   def reply(model, _event, _reply), do: {model, []}
 
@@ -339,22 +343,23 @@ defmodule Tui.Model do
     }
 
     cond do
-      error && error != model.error -> log(updated, "error: #{error}")
+      error && error != model.error -> log(updated, gettext("error: %{message}", message: error))
       status != model.status and model.status != nil -> log(updated, status_line(status))
       true -> updated
     end
   end
 
-  defp status_line(:idle), do: "idle"
-  defp status_line(:looking), do: "looking for a rando"
-  defp status_line(:connecting), do: "matched; connecting"
-  defp status_line(:in_call), do: "in call"
-  defp status_line(:extension_pending), do: "time is up: continue? (y/n)"
+  # The log's line when the status changes.
+  defp status_line(:idle), do: pgettext("log", "idle")
+  defp status_line(:looking), do: pgettext("log", "looking for a rando")
+  defp status_line(:connecting), do: pgettext("log", "matched; connecting")
+  defp status_line(:in_call), do: pgettext("log", "in call")
+  defp status_line(:extension_pending), do: pgettext("log", "time is up: continue? (y/n)")
 
   # Without audio the server pairs us only with other text-only clients,
   # never with a browser user who would sit through a silent call.
   defp find(%{hears: []} = model),
-    do: {log(model, "pick at least one language to hear (space toggles one)"), []}
+    do: {log(model, gettext("pick at least one language to hear (space toggles one)")), []}
 
   defp find(model), do: {model, [{:push, "find", find_payload(model)}]}
 

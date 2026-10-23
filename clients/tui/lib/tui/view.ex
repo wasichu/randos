@@ -6,12 +6,15 @@ defmodule Tui.View do
   any screen without the app (`Tui.App.render/2` delegates here).
   """
 
+  use Gettext, backend: Tui.Gettext
+
   alias ExRatatui.Layout
   alias ExRatatui.Layout.Rect
   alias ExRatatui.Style
   alias ExRatatui.Widgets.{Block, List, Paragraph, Popup}
   alias Tui.Model
   alias Tui.View.StatusScreen
+  alias Tui.Width
 
   @call_statuses Tui.Model.call_statuses()
 
@@ -31,6 +34,11 @@ defmodule Tui.View do
     # terminal (a tmux split) the devices go inside the You panel.
     side_by_side? = device_lines(state) != [] and frame.width >= @side_by_side_min
     status_rows = if side_by_side?, do: 2, else: length(status_lines(state, 80, true))
+    model = state.model
+    # Two rows when the keys don't fit in one (translations run longer),
+    # broken between keys, never inside one.
+    help_lines = help_lines(help(model) ++ mic_help(state), frame.width)
+    help_rows = length(help_lines)
 
     # The main panel gives way first on a short terminal: the status lines
     # must stay visible.
@@ -39,10 +47,8 @@ defmodule Tui.View do
         {:length, 3},
         {:min, 3},
         {:length, status_rows + 2},
-        {:length, 1}
+        {:length, help_rows}
       ])
-
-    model = state.model
 
     [
       {header(state), header_area}
@@ -50,8 +56,7 @@ defmodule Tui.View do
     ] ++
       bottom_panels(state, status_area, side_by_side?) ++
       [
-        {%Paragraph{text: " " <> help(model) <> mic_help(state), style: %Style{fg: :dark_gray}},
-         help_area}
+        {%Paragraph{text: Enum.join(help_lines, "\n"), style: %Style{fg: :dark_gray}}, help_area}
       ]
   end
 
@@ -62,18 +67,19 @@ defmodule Tui.View do
     [
       {%Paragraph{
          text: status_text(state, status_area.width - 2, false),
-         block: panel(" You ")
+         block: panel(you())
        }, status_area},
       {%Paragraph{
-         text: state |> device_lines() |> Enum.map_join("\n", &fit(&1, devices_area.width - 2)),
-         block: panel(" Devices ")
+         text:
+           state |> device_lines() |> Enum.map_join("\n", &Width.fit(&1, devices_area.width - 2)),
+         block: panel(" #{gettext("Devices")} ")
        }, devices_area}
     ]
   end
 
   defp bottom_panels(state, area, false) do
     [
-      {%Paragraph{text: status_text(state, area.width - 2, true), block: panel(" You ")}, area}
+      {%Paragraph{text: status_text(state, area.width - 2, true), block: panel(you())}, area}
     ]
   end
 
@@ -84,8 +90,11 @@ defmodule Tui.View do
          _extra
        ) do
     screen =
-      {%Paragraph{text: StatusScreen.text(model), block: panel(" Server status "), wrap: true},
-       area}
+      {%Paragraph{
+         text: StatusScreen.text(model),
+         block: panel(" #{gettext("Server status")} "),
+         wrap: true
+       }, area}
 
     # i: "About these numbers", over the screen.
     about =
@@ -93,7 +102,7 @@ defmodule Tui.View do
         [
           {%Popup{
              content: %Paragraph{text: StatusScreen.about(), wrap: true},
-             block: panel(" About these numbers "),
+             block: panel(" #{gettext("About these numbers")} "),
              percent_width: 70,
              fixed_height: 7
            }, area}
@@ -110,12 +119,16 @@ defmodule Tui.View do
   defp main(%{connection: :connected, status: :idle} = model, area, mic_test) do
     [form_area, text_area] = Layout.split(area, :vertical, [{:length, 5}, {:min, 0}])
     ack = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
+    [speak, hear] = labels([gettext("I will speak:"), gettext("I'm happy to hear:")])
+
+    gettext_comment("The 18+ box on the form; its [x]/[ ] comes before it.")
+    adult = gettext("I'm 18+ and OK with anonymous, unmoderated calls")
 
     form = %List{
       items: [
-        "I will speak:     ◀ #{Model.language_name(model, model.speaks)} ▶",
-        "I'm happy to hear: #{hears_row(model)}",
-        "#{ack} I'm 18+ and OK with anonymous, unmoderated calls"
+        "#{speak}◀ #{Model.language_name(model, model.speaks)} ▶",
+        "#{hear}#{hears_row(model)}",
+        "#{ack} #{adult}"
       ],
       selected: Enum.find_index([:speaks, :hears, :ack], &(&1 == model.focus)),
       highlight_symbol: "▶ ",
@@ -123,11 +136,12 @@ defmodule Tui.View do
       block: panel(title(model))
     }
 
-    error = if model.error, do: "Error: #{model.error}\n\n", else: ""
+    error =
+      if model.error, do: gettext("Error: %{message}", message: model.error) <> "\n\n", else: ""
 
     [
       {form, form_area},
-      {%Paragraph{text: error <> "Press Enter to find a rando." <> mic_test, wrap: true},
+      {%Paragraph{text: error <> gettext("Press Enter to find a rando.") <> mic_test, wrap: true},
        text_area}
     ]
   end
@@ -183,13 +197,16 @@ defmodule Tui.View do
         you_y = peer_y - height - 1
 
         main(model, area, "") ++
-          meter("You", Model.language_name(model, model.speaks), levels.you, @you_color, rows, %{
-            inner
-            | y: you_y,
-              height: height
-          }) ++
           meter(
-            "Your rando",
+            gettext("You"),
+            Model.language_name(model, model.speaks),
+            levels.you,
+            @you_color,
+            rows,
+            %{inner | y: you_y, height: height}
+          ) ++
+          meter(
+            gettext("Your rando"),
             Model.language_name(model, Model.peer_speaks(model)),
             levels.peer,
             @peer_color,
@@ -249,13 +266,17 @@ defmodule Tui.View do
   defp cell(_fill, _half), do: " "
 
   defp header(%{model: model, uri: uri}) do
-    connection = if model.connection == :connected, do: "connected", else: "connecting…"
+    audio =
+      if model.audio?, do: gettext("Audio on."), else: gettext("Text only (no audio helper).")
 
-    %Paragraph{
-      text:
-        "#{if model.audio?, do: "Audio on", else: "Text only (no audio helper)"}.  #{connection} to #{server_name(uri)}",
-      block: panel(" randos ")
-    }
+    server = server_name(uri)
+
+    connection =
+      if model.connection == :connected,
+        do: gettext("connected to %{server}", server: server),
+        else: gettext("connecting to %{server}…", server: server)
+
+    %Paragraph{text: "#{audio}  #{connection}", block: panel(" randos ")}
   end
 
   # The server's host (and port, if not the scheme's default): the
@@ -270,55 +291,81 @@ defmodule Tui.View do
     end
   end
 
-  defp title(%{connection: :connecting}), do: " Connecting "
-  defp title(%{status: :idle}), do: " Find a rando "
-  defp title(%{status: :looking}), do: " Looking "
-  defp title(%{status: :connecting}), do: " Matched "
-  defp title(%{status: :in_call}), do: " In call "
-  defp title(%{status: :extension_pending}), do: " Time is up "
-  defp title(_model), do: " randos "
+  # A panel's title, framed by the border: "╭ Find a rando ╮".
+  defp title(model), do: " #{title_text(model)} "
+
+  defp title_text(%{connection: :connecting}), do: pgettext("panel title", "Connecting")
+  defp title_text(%{status: :idle}), do: pgettext("panel title", "Find a rando")
+  defp title_text(%{status: :looking}), do: pgettext("panel title", "Looking")
+  defp title_text(%{status: :connecting}), do: pgettext("panel title", "Matched")
+  defp title_text(%{status: :in_call}), do: pgettext("panel title", "In call")
+  defp title_text(%{status: :extension_pending}), do: pgettext("panel title", "Time is up")
+  defp title_text(_model), do: "randos"
 
   # "English, Español or Français"; past three, a count, as on the website,
   # so a long choice doesn't make a long sentence.
   defp hearing_summary(%{hears: hears} = model) when length(hears) <= 3 do
     case Enum.map(hears, &Model.language_name(model, &1)) do
-      [only] -> only
-      names -> Enum.join(Enum.drop(names, -1), ", ") <> " or " <> Elixir.List.last(names)
+      [only] ->
+        only
+
+      names ->
+        gettext_comment("Languages in a list: \"English, Español or Français\".")
+
+        gettext("%{first} or %{last}",
+          first: Enum.join(Enum.drop(names, -1), ", "),
+          last: Elixir.List.last(names)
+        )
     end
   end
 
-  defp hearing_summary(%{hears: hears}), do: "any of the #{length(hears)} languages you picked"
+  # The count in brackets, so no language has to agree a noun with it.
+  defp hearing_summary(%{hears: hears}),
+    do: gettext("any of the languages you picked (%{count})", count: length(hears))
 
-  defp main_text(%{connection: :connecting}), do: "Connecting to the server…"
+  defp main_text(%{connection: :connecting}), do: gettext("Connecting to the server…")
 
   defp main_text(%{status: :looking} = model) do
-    "Looking for a rando who speaks #{hearing_summary(model)} " <>
-      "and wants to hear #{Model.language_name(model, model.speaks)}…"
+    gettext_comment(
+      ~S|%{hearing}: one language, "A, B or C", or a count of the languages picked.|
+    )
+
+    gettext("Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…",
+      hearing: hearing_summary(model),
+      speaking: Model.language_name(model, model.speaks)
+    )
   end
 
-  defp main_text(%{status: :connecting}), do: "Matched! Starting the call…"
+  defp main_text(%{status: :connecting}), do: gettext("Matched! Starting the call…")
 
   defp main_text(%{status: :in_call, audio?: true} = model),
-    do: "You're in a call.#{time_left(model, " remaining")}#{recovering(model)}"
+    do: gettext("You're in a call.") <> time_left(model, :remaining) <> recovering(model)
 
   defp main_text(%{status: :in_call} = model) do
-    "You're in a call.#{time_left(model, " remaining")}\n\n" <>
-      "This client is running without audio (no media helper): if the peer offers audio (a browser), " <>
-      "the call ends and you go back to idle. Two terminal clients can stay " <>
-      "in a call to try timers and extension votes."
+    gettext("You're in a call.") <>
+      time_left(model, :remaining) <>
+      "\n\n" <>
+      gettext(
+        "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes."
+      )
   end
 
   # The server counted our `continue` (`call.agreed_to_continue`); one lost
   # in a drop shows the question again.
   defp main_text(%{status: :extension_pending, call: %{"agreed_to_continue" => true}} = model) do
-    "Time is up. You agreed to continue, waiting on your rando…" <>
-      "#{time_left(model, " to decide")}\n\n" <>
-      "n: end#{recovering(model)}"
+    gettext("Time is up. You agreed to continue, waiting on your rando…") <>
+      time_left(model, :to_decide) <>
+      "\n\n" <> keys([{"n", pgettext("key", "end")}]) <> recovering(model)
   end
 
   defp main_text(%{status: :extension_pending} = model) do
-    "Time is up. #{continue_question(model.call)}#{time_left(model, " to decide")}\n\n" <>
-      "y: continue    n: end#{recovering(model)}"
+    gettext("Time is up.") <>
+      " " <>
+      continue_question(model.call) <>
+      time_left(model, :to_decide) <>
+      "\n\n" <>
+      keys([{"y", pgettext("key", "continue")}, {"n", pgettext("key", "end")}]) <>
+      recovering(model)
   end
 
   defp main_text(_model), do: ""
@@ -328,58 +375,128 @@ defmodule Tui.View do
   # the rando's connection to the server dropped, the Now line already
   # says so, and that's the news.
   defp recovering(%{call: %{"peer_reconnecting" => true}}), do: ""
-  defp recovering(%{call: %{"recovering" => true}}), do: "\n\nReconnecting audio…"
+  defp recovering(%{call: %{"recovering" => true}}), do: "\n\n" <> gettext("Reconnecting audio…")
   defp recovering(_model), do: ""
 
   # The length comes from the server (`extension_duration_seconds`), never a
   # constant of our own; an older server that doesn't send it gets no number.
   defp continue_question(%{"extension_duration_seconds" => seconds}) when is_integer(seconds),
-    do: "Continue for another #{div(seconds, 60)} minutes?"
+    do: gettext("Continue for another %{minutes} minutes?", minutes: div(seconds, 60))
 
-  defp continue_question(_call), do: "Continue?"
+  defp continue_question(_call), do: gettext("Continue?")
 
-  defp time_left(model, suffix) do
+  # "  4:59 remaining", "  0:12 to decide".
+  defp time_left(model, kind) do
     case Model.seconds_left(model) do
-      nil -> ""
-      seconds -> "  #{div(seconds, 60)}:#{pad(rem(seconds, 60))}#{suffix}"
+      nil ->
+        ""
+
+      seconds ->
+        time = "#{div(seconds, 60)}:#{pad(rem(seconds, 60))}"
+        "  " <> time_left_text(kind, time)
     end
+  end
+
+  defp time_left_text(:remaining, time) do
+    gettext_comment("The call's time left, as m:ss.")
+    gettext("%{time} remaining", time: time)
+  end
+
+  defp time_left_text(:to_decide, time) do
+    gettext_comment("Time left to vote on continuing the call, as m:ss.")
+    gettext("%{time} to decide", time: time)
   end
 
   defp pad(n), do: n |> Integer.to_string() |> String.pad_leading(2, "0")
 
-  defp help(%{connection: :connecting}), do: "q quit"
+  # The help line: each key, then what it does ("q quit"). The keys stay as
+  # they are; the words are translated (`pgettext("key", …)`).
+  defp keys(hints), do: Enum.map_join(hints, "  ", fn {key, action} -> "#{key} #{action}" end)
 
-  defp help(%{status: :idle, status_page: %{info?: true}}), do: "i/esc close  q quit"
+  # The hints packed into rows of `width`, at most two (the rest are cut).
+  defp help_lines(hints, width) do
+    hints
+    |> Enum.map(fn {key, action} -> "#{key} #{action}" end)
+    |> Enum.reduce([], fn
+      hint, [] ->
+        [" " <> hint]
 
-  defp help(%{status: :idle, status_page: %{}}),
-    do: "s/esc back  r refresh  i about these numbers  q quit"
+      hint, [line | done] ->
+        joined = line <> "  " <> hint
+        if Width.of(joined) <= width, do: [joined | done], else: [" " <> hint, line | done]
+    end)
+    |> Enum.reverse()
+    |> Enum.take(2)
+    |> Enum.map(&Width.fit(&1, width))
+  end
 
-  defp help(%{status: :idle}),
-    do: "tab/↑↓ move  ←→ change  space check  enter find  s status  q quit"
+  defp quit, do: {"q", pgettext("key", "quit")}
 
-  defp help(%{status: :looking}), do: "c cancel  q quit"
+  defp help(%{connection: :connecting}), do: [quit()]
 
-  defp help(%{status: s}) when s in [:connecting, :in_call],
-    do: "e end call  n next rando  q quit"
+  defp help(%{status: :idle, status_page: %{info?: true}}),
+    do: [{"i/esc", pgettext("key", "close")}, quit()]
+
+  defp help(%{status: :idle, status_page: %{}}) do
+    [
+      {"s/esc", pgettext("key", "back")},
+      {"r", pgettext("key", "refresh")},
+      {"i", pgettext("key", "about these numbers")},
+      quit()
+    ]
+  end
+
+  defp help(%{status: :idle}) do
+    gettext_comment("Key help: space ticks or unticks the language under the cursor.")
+    check = pgettext("key", "check")
+
+    [
+      {"tab/↑↓", pgettext("key", "move")},
+      {"←→", pgettext("key", "change")},
+      {"space", check},
+      {"enter", pgettext("key", "find")},
+      {"s", pgettext("key", "status")},
+      {"l", pgettext("key", "language")},
+      quit()
+    ]
+  end
+
+  defp help(%{status: :looking}), do: [{"c", pgettext("key", "cancel")}, quit()]
+
+  defp help(%{status: s}) when s in [:connecting, :in_call] do
+    gettext_comment("Key help: end this call and find another person to talk to.")
+    next = pgettext("key", "next rando")
+    [{"e", pgettext("key", "end call")}, {"n", next}, quit()]
+  end
 
   defp help(%{status: :extension_pending, call: %{"agreed_to_continue" => true}}),
-    do: "n end  q quit"
+    do: [{"n", pgettext("key", "end")}, quit()]
 
-  defp help(%{status: :extension_pending}), do: "y continue  n end  q quit"
-  defp help(_model), do: "q quit"
+  defp help(%{status: :extension_pending}),
+    do: [{"y", pgettext("key", "continue")}, {"n", pgettext("key", "end")}, quit()]
 
-  defp mic_help(%{media_state: %{available?: false}}), do: ""
+  defp help(_model), do: [quit()]
 
-  defp mic_help(%{model: %{status_page: %{}}}), do: ""
+  defp mic_help(%{media_state: %{available?: false}}), do: []
 
-  defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}),
-    do: "  t mic test" <> if(media.devices, do: "  i mic  o speaker", else: "")
+  defp mic_help(%{model: %{status_page: %{}}}), do: []
+
+  defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}) do
+    [{"t", pgettext("key", "mic test")}] ++
+      if(media.devices,
+        do: [{"i", pgettext("key", "mic")}, {"o", pgettext("key", "speaker")}],
+        else: []
+      )
+  end
 
   defp mic_help(%{model: %{status: status, audio?: true}, media_state: %{call: call}})
-       when status in @call_statuses and is_map(call),
-       do: if(Map.get(call, :muted, false), do: "  m unmute", else: "  m mute")
+       when status in @call_statuses and is_map(call) do
+    if Map.get(call, :muted, false),
+      do: [{"m", pgettext("key", "unmute")}],
+      else: [{"m", pgettext("key", "mute")}]
+  end
 
-  defp mic_help(_state), do: ""
+  defp mic_help(_state), do: []
 
   defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
 
@@ -391,7 +508,7 @@ defmodule Tui.View do
   # pushes the next one out of the box): the connection line drops detail to
   # fit `width`, and anything still too long is cut with "…".
   defp status_text(state, width, devices?) do
-    state |> status_lines(width, devices?) |> Enum.map_join("\n", &fit(&1, width))
+    state |> status_lines(width, devices?) |> Enum.map_join("\n", &Width.fit(&1, width))
   end
 
   # What you're doing now and the connection (the "You" panel; the server's
@@ -399,92 +516,115 @@ defmodule Tui.View do
   # speaker once the helper has said what devices there are, on every
   # screen, calls included.
   defp status_lines(%{model: model} = state, width, devices?) do
-    connection = "Connection: "
-    room = width - String.length(connection)
+    [now, connection, _mic, _speaker] = row_labels()
+    room = width - Width.of(connection)
 
     [
-      "Now:        " <> status_label(model),
-      connection <> (connection_line(state) |> Enum.find(&(String.length(&1) <= room)) || "…")
+      now <> status_label(model),
+      connection <> (connection_line(state) |> Enum.find(&(Width.of(&1) <= room)) || "…")
     ] ++ if(devices?, do: device_lines(state), else: [])
+  end
+
+  # The You and Devices panels' labels, padded alike so their values line
+  # up (in every language: padded to the widest).
+  defp row_labels do
+    gettext_comment("A row of the You panel: what you're doing now.")
+    now = gettext("Now:")
+    labels([now, gettext("Connection:"), gettext("Mic:"), gettext("Speaker:")])
+  end
+
+  # Labels padded to the widest and a space: "Now:        ", "Connection: ".
+  defp labels(labels) do
+    widest = labels |> Enum.map(&Width.of/1) |> Enum.max()
+    Enum.map(labels, &Width.pad(&1, widest + 1))
   end
 
   # The values start in the You panel's column (after "Connection: "),
   # side by side or sharing its panel, so the two read as one table.
   defp device_lines(%{media_state: %{available?: true, devices: %{} = devices, choice: choice}}) do
+    [_now, _connection, mic, speaker] = row_labels()
+
     [
-      "Mic:        " <> device_label(choice.input, devices.default_input),
-      "Speaker:    " <> device_label(choice.output, devices.default_output)
+      mic <> device_label(choice.input, devices.default_input),
+      speaker <> device_label(choice.output, devices.default_output)
     ]
   end
 
   defp device_lines(_state), do: []
 
-  defp fit(line, width) do
-    if String.length(line) <= width,
-      do: line,
-      else: String.slice(line, 0, max(width - 1, 0)) <> "…"
-  end
-
-  defp status_label(%{connection: :connecting}), do: "connecting to the server…"
-  defp status_label(%{status: :idle}), do: "not looking"
-  defp status_label(%{status: :looking}), do: "looking for a rando"
-  defp status_label(%{status: :connecting}), do: "matched, preparing the call"
-  defp status_label(%{status: :in_call}), do: "in a call"
+  defp status_label(%{connection: :connecting}), do: gettext("connecting to the server…")
+  defp status_label(%{status: :idle}), do: gettext("not looking")
+  defp status_label(%{status: :looking}), do: gettext("looking for a rando")
+  defp status_label(%{status: :connecting}), do: gettext("matched, preparing the call")
+  defp status_label(%{status: :in_call}), do: gettext("in a call")
 
   defp status_label(%{status: :extension_pending, call: %{"agreed_to_continue" => true}}),
-    do: "waiting on your rando"
+    do: gettext("waiting on your rando")
 
-  defp status_label(%{status: :extension_pending}), do: "time is up: continue?"
+  defp status_label(%{status: :extension_pending}), do: gettext("time is up: continue?")
   defp status_label(_model), do: "—"
 
   # Each returns its versions from most to least detailed; `status_text`
   # shows the first that fits.
   # The rando's connection to the server dropped; the call waits for them.
   defp connection_line(%{model: %{call: %{"peer_reconnecting" => true}}}),
-    do: ["your rando's connection dropped; waiting for them to come back", "rando reconnecting…"]
+    do: [
+      gettext("your rando's connection dropped; waiting for them to come back"),
+      gettext("rando reconnecting…")
+    ]
 
   defp connection_line(%{model: %{status: status, audio?: true}} = state)
        when status in @call_statuses do
     lines = call_line(state.media_state)
 
     case state.media_state.call do
-      %{muted: true} -> Enum.map(lines, &("muted · " <> &1)) ++ ["muted"]
+      %{muted: true} -> Enum.map(lines, &(gettext("muted") <> " · " <> &1)) ++ [gettext("muted")]
       _call -> lines
     end
   end
 
   defp connection_line(%{model: %{status: status}})
        when status in @call_statuses,
-       do: ["text only (no audio)", "text only"]
+       do: [gettext("text only (no audio)"), gettext("text only")]
 
-  defp connection_line(_state), do: ["no call"]
+  defp connection_line(_state), do: [gettext("no call")]
 
   defp call_line(%{call: nil, last_call_error: error}) when is_binary(error), do: [error]
-  defp call_line(%{call: nil}), do: ["starting audio…"]
-  defp call_line(%{call: %{connection: :disconnected}}), do: ["reconnecting…"]
-  defp call_line(%{call: %{connection: :connecting}}), do: ["connecting…"]
+  defp call_line(%{call: nil}), do: [gettext("starting audio…")]
+  defp call_line(%{call: %{connection: :disconnected}}), do: [gettext("reconnecting…")]
+  defp call_line(%{call: %{connection: :connecting}}), do: [gettext("connecting…")]
 
   defp call_line(%{call: %{stats: %{} = s}}) do
     connected = connected_via(s["path"])
 
-    levels =
-      "#{connected} · you #{round(s["input_peak_dbfs"])} dBFS · " <>
-        "peer #{round(s["output_peak_dbfs"])} dBFS"
+    gettext_comment(
+      "The call's audio levels: what you send and what you hear, in dBFS (keep the unit)."
+    )
 
-    [
-      levels <> " · #{s["packets_sent"]} sent / #{s["packets_received"]} received",
-      levels,
-      connected,
-      "connected"
-    ]
+    levels =
+      gettext("%{connected} · you %{you} dBFS · peer %{peer} dBFS",
+        connected: connected,
+        you: round(s["input_peak_dbfs"]),
+        peer: round(s["output_peak_dbfs"])
+      )
+
+    gettext_comment("Audio packets this call has sent and received.")
+
+    packets =
+      gettext("%{sent} sent / %{received} received",
+        sent: s["packets_sent"],
+        received: s["packets_received"]
+      )
+
+    [levels <> " · " <> packets, levels, connected, gettext("connected")]
   end
 
-  defp call_line(%{call: %{}}), do: ["connected"]
+  defp call_line(%{call: %{}}), do: [gettext("connected")]
 
   # The helper's `path`: whether the call goes through a TURN server.
-  defp connected_via("relay"), do: "connected via relay"
-  defp connected_via("direct"), do: "connected directly"
-  defp connected_via(_path), do: "connected"
+  defp connected_via("relay"), do: gettext("connected via relay")
+  defp connected_via("direct"), do: gettext("connected directly")
+  defp connected_via(_path), do: gettext("connected")
 
   # Only while the mic test is on (t shows it, t again hides it): the key
   # itself is in the help line, and the devices are in the You panel.
@@ -493,24 +633,41 @@ defmodule Tui.View do
 
   defp mic_test_text(_state), do: ""
 
-  defp device_label(nil, nil), do: "system default"
-  defp device_label(nil, default), do: "#{default} (default)"
+  defp device_label(nil, nil), do: gettext("system default")
+
+  defp device_label(nil, default) do
+    gettext_comment("A sound device that is the system's default: its name, then (default).")
+    gettext("%{device} (default)", device: default)
+  end
+
   defp device_label(name, _default), do: name
 
-  defp mic_test_line(%{phase: :failed, error: error}), do: "Mic test failed: " <> error
+  defp mic_test_line(%{phase: :failed, error: error}),
+    do: gettext("Mic test failed: %{error}", error: error)
 
-  defp mic_test_line(%{levels: nil}), do: "Mic: opening…"
+  defp mic_test_line(%{levels: nil}), do: gettext("Mic: opening…")
 
   # One line: the bars (as the call's "You" meter has them) and the last
   # second's peak. Nothing is played back.
   defp mic_test_line(%{levels: levels, stats: stats}) do
-    peak = if stats, do: "  peak #{round(stats["input_peak_dbfs"])} dBFS", else: ""
-    "Mic: " <> Enum.map_join(levels, &level_char/1) <> peak <> "   (t to stop)"
+    peak =
+      if stats,
+        do: "  " <> gettext("peak %{level} dBFS", level: round(stats["input_peak_dbfs"])),
+        else: ""
+
+    gettext_comment("The mic test's level meter (bars), its peak, and how to stop it (t).")
+
+    gettext("Mic: %{bars}%{peak}   (t to stop)",
+      bars: Enum.map_join(levels, &level_char/1),
+      peak: peak
+    )
   end
 
   @level_chars ~w(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
   defp level_char(level),
     do: Enum.at(@level_chars, round(min(max(level, 0.0), 1.0) * 7))
+
+  defp you, do: " #{gettext("You")} "
 
   defp panel(title) do
     %Block{title: title, borders: [:all], border_type: :rounded, border_style: %Style{fg: :cyan}}

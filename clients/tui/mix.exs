@@ -10,7 +10,10 @@ defmodule Tui.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
       aliases: aliases(),
-      releases: releases()
+      releases: releases(),
+      # As the server's: no line numbers in the template, and no guessed
+      # (fuzzy) translations for a reworded string.
+      gettext: [write_reference_line_numbers: false, fuzzy_threshold: 1.0]
     ]
   end
 
@@ -79,6 +82,8 @@ defmodule Tui.MixProject do
         "deps.unlock --unused",
         "format",
         "credo --strict",
+        # The translation template must match the code (mix gettext.extract).
+        "gettext.extract --check-up-to-date",
         "test"
       ]
     ]

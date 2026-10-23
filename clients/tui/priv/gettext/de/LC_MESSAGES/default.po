@@ -1,0 +1,761 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. The call's audio levels: what you send and what you hear, in dBFS (keep the unit).
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{connected} · you %{you} dBFS · peer %{peer} dBFS"
+msgstr ""
+
+#. A sound device that is the system's default: its name, then (default).
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{device} (default)"
+msgstr ""
+
+#. Languages in a list: "English, Español or Français".
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{first} or %{last}"
+msgstr ""
+
+#. A language pair where both people spoke the same language.
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "%{language} both ways"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "%{minutes} min"
+msgstr ""
+
+#. A call's typical length, at the longest a call can run (min = minutes).
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "%{minutes} min or more"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "%{request} refused: %{reason}"
+msgstr ""
+
+#. Audio packets this call has sent and received.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{sent} sent / %{received} received"
+msgstr ""
+
+#. The call's time left, as m:ss.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{time} remaining"
+msgstr ""
+
+#. Time left to vote on continuing the call, as m:ss.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{time} to decide"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\"."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "About these numbers"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Asking the server…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Audio on."
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Calls started: %{started}"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Checking the relay…"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Connected: %{connected}"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting to the server…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Connection:"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Continue for another %{minutes} minutes?"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Continue?"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Continued"
+msgstr ""
+
+#. A count's label: calls whose two people chose to keep talking beyond the first %{minutes} minutes ("past" as in "beyond", not "in the past").
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Continued past %{minutes} minutes"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Counted across %{answered} of %{total} servers."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Devices"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Error: %{message}"
+msgstr ""
+
+#. How each of today's calls ended, with each kind's count.
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak:"
+msgstr ""
+
+#. The 18+ box on the form; its [x]/[ ] comes before it.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I'm 18+ and OK with anonymous, unmoderated calls"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I'm happy to hear:"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Languages spoken:"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Languages spoken: no calls yet"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Last checked at %{time} UTC."
+msgstr ""
+
+#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Matched! Starting the call…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic test failed: %{error}"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic:"
+msgstr ""
+
+#. The mic test's level meter (bars), its peak, and how to stop it (t).
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic: %{bars}%{peak}   (t to stop)"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic: opening…"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "No relay is configured on this server, so calls here go directly."
+msgstr ""
+
+#. A row of the You panel: what you're doing now.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Now:"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Other languages: %{calls}"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Over TLS (networks that block UDP)"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Over UDP (most calls)"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Press Enter to find a rando."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Reconnecting audio…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Server status"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Speaker:"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Text only (no audio helper)."
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "The relay is partly working."
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "The relay is working."
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "The relay isn't working."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes."
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "This server has no status page (it's older than the status request)."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Time is up."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Time is up. You agreed to continue, waiting on your rando…"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Today (counting since %{time} UTC on %{date}):"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "Typical length: %{length}"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "We count calls, not people: no addresses, no ids, nothing about anyone."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "You"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "You're in a call."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "any of the languages you picked (%{count})"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connected"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connected directly"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connected to %{server}"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "connected to the server"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connected via relay"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connecting to %{server}…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connecting to the server…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "connecting…"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "connection closed"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "couldn't connect"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "couldn't find the server"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "credentials refused"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "disconnected; reconnecting"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "error: %{message}"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "in a call"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "looking for a rando"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "matched, preparing the call"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "muted"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "no answer"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "no call"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "no credentials asked for"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "not enough calls yet"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "not working"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "peak %{level} dBFS"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "peer offered audio; this client has none, so the call ended (Enter to look again)"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to hear (space toggles one)"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "rando reconnecting…"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "reconnected as a new participant"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "reconnected; back in the call"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "reconnecting…"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "refused"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "secure connection failed"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "starting audio…"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "system default"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "text only"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "text only (no audio)"
+msgstr ""
+
+#: lib/tui/app.ex
+#, elixir-autogen, elixir-format
+msgid "the audio helper isn't running (is it built? %{command})"
+msgstr ""
+
+#: lib/tui/media/state.ex
+#, elixir-autogen, elixir-format
+msgid "the audio helper restarted"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "time is up: continue?"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "under 1 min"
+msgstr ""
+
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "unexpected reply"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "waiting on your rando"
+msgstr ""
+
+#. A relay server's state on the status screen: it is working (up).
+#: lib/tui/view/status_screen.ex
+#, elixir-autogen, elixir-format
+msgid "working"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "your rando's connection dropped; waiting for them to come back"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "about these numbers"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "back"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "cancel"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "change"
+msgstr ""
+
+#. Key help: space ticks or unticks the language under the cursor.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "check"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "close"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "continue"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "end"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "end call"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "find"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "language"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "mic"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "mic test"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "move"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "mute"
+msgstr ""
+
+#. Key help: end this call and find another person to talk to.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "next rando"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "quit"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "refresh"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "speaker"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "status"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "unmute"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "idle"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "in call"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "looking for a rando"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "matched; connecting"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "time is up: continue? (y/n)"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "Connecting"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "Find a rando"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "In call"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "Looking"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "Matched"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "Time is up"
+msgstr ""
