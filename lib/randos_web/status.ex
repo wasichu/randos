@@ -42,8 +42,6 @@ defmodule RandosWeb.Status do
   alias Randos.Stats
   alias RandosWeb.RelayHealth
 
-  @endings ~w(finished not_connected connection_lost canceled)a
-
   @doc "The status from the running processes."
   @spec snapshot() :: map()
   def snapshot,
@@ -107,7 +105,7 @@ defmodule RandosWeb.Status do
       "continued_after_minutes" => div(Lifecycle.call_duration_seconds(), 60),
       "median_minutes" => stats.median_minutes,
       "longest_minutes" => Stats.last_bucket(),
-      "endings" => Map.new(@endings, &{Atom.to_string(&1), Map.get(stats.endings, &1, 0)}),
+      "endings" => Map.new(Stats.endings(), &{Atom.to_string(&1), Map.get(stats.endings, &1, 0)}),
       "language_pairs" =>
         Enum.map(stats.pairs, fn {{a, b}, calls} -> %{"languages" => [a, b], "calls" => calls} end),
       "other_pairs_calls" => stats.other_pairs,

@@ -79,7 +79,7 @@ defmodule Randos.Stats.FileStore do
     }
   end
 
-  @endings ~w(finished not_connected connection_lost canceled)
+  @endings Enum.map(Randos.Stats.endings(), &Atom.to_string/1)
 
   @doc false
   def decode(%{"date" => date, "since" => since} = saved, expected) do

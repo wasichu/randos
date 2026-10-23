@@ -30,7 +30,7 @@ defmodule RandosWeb.ParticipantChannel do
   def join("participant", params, socket) do
     {participant, ticket, ice_servers} =
       case resume(params) do
-        {:ok, participant, ticket} -> {participant, ticket, RandosWeb.IceServers.list()}
+        {:ok, participant, ticket, ice_servers} -> {participant, ticket, ice_servers}
         :error -> {Participant.new(@default_preferences), nil, nil}
       end
 

@@ -43,16 +43,17 @@ defmodule RandosWeb.ParticipantShell do
   Takes over the participant a resume `ticket` belongs to, for this
   process: their connection dropped mid-call and their client came back
   with the ticket it was given (`ResumeTicket`). Returns the
-  participant (same id and topic, back in the call) and a fresh ticket for
-  the client, or `:error` (unknown, used, or the call is over: start fresh).
-  The caller subscribes to the participant's topic.
+  participant (same id and topic, back in the call), a fresh ticket for
+  the client, and fresh ICE servers for the call (as `run/2` gives when a
+  call starts), or `:error` (unknown, used, or the call is over: start
+  fresh). The caller subscribes to the participant's topic.
   """
-  @spec resume(term()) :: {:ok, Participant.t(), String.t()} | :error
+  @spec resume(term()) :: {:ok, Participant.t(), String.t(), [map()]} | :error
   def resume(ticket) do
     with {:ok, call_pid, id} <- ResumeTicket.lookup(ticket),
          {:ok, %{call: call, entry: entry, ticket: fresh}} <-
            CallCoordinator.resume(call_pid, id, ticket, self()) do
-      {:ok, Participant.resumed(entry, call), fresh}
+      {:ok, Participant.resumed(entry, call), fresh, IceServers.list()}
     else
       _invalid -> :error
     end

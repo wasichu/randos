@@ -89,6 +89,8 @@ defmodule Randos.Calls.CallCoordinator do
     tickets: ResumeTicket.registry(),
     recovery_budget_ms: Lifecycle.recovery_budget_seconds() * 1_000,
     ice_transport_policy: "all",
+    # How soon a call without audio goes active (there's no media to wait
+    # for). Not a Lifecycle constant: no client times anything by it.
     activation_delay_ms: 750,
     connect_timeout_ms: Lifecycle.connect_timeout_seconds() * 1_000,
     ice_restart_delay_ms: Lifecycle.ice_restart_delay_seconds() * 1_000,
@@ -168,10 +170,11 @@ defmodule Randos.Calls.CallCoordinator do
   def init(opts) do
     match = Keyword.fetch!(opts, :match)
 
+    data = struct!(__MODULE__, Keyword.take(opts, @overridable))
+
     data =
-      struct!(__MODULE__, Keyword.take(opts, @overridable))
-      |> Map.merge(%{
-        call: Call.new(self(), match, data_policy(opts)),
+      Map.merge(data, %{
+        call: Call.new(self(), match, data.ice_transport_policy),
         monitors: monitor_participants(match),
         started_at: System.monotonic_time()
       })
@@ -225,9 +228,7 @@ defmodule Randos.Calls.CallCoordinator do
   # Timers.
   def handle_event(:state_timeout, :activate, :connecting, data) do
     Logger.info("call activated")
-
-    {:next_state, :active,
-     %{data | call: Lifecycle.activate(data.call), activated_at: System.monotonic_time()}}
+    {:next_state, :active, activate(data)}
   end
 
   def handle_event(:state_timeout, :connect_timeout, :connecting, data) do
@@ -339,17 +340,12 @@ defmodule Randos.Calls.CallCoordinator do
       data = take_seat(data, role, participant_id, pid)
       {data, ticket} = issue_ticket(data, participant_id, :reply)
       Logger.info("call participant came back")
-      {data, actions} = reassess(state, data)
       # Whatever was asked while someone was away may never have arrived.
-      data = if restart_now?(state, data), do: bump_generation(data), else: data
-      broadcast(data)
+      {data, actions} = recover(state, data)
       entry = Map.fetch!(data.call.match, role)
 
       {:keep_state, data,
-       [
-         {:reply, from, {:ok, %{call: data.call, entry: entry, ticket: ticket}}}
-         | actions ++ retry_if_restarting(state, data)
-       ]}
+       [{:reply, from, {:ok, %{call: data.call, entry: entry, ticket: ticket}}} | actions]}
     else
       _invalid -> {:keep_state_and_data, [{:reply, from, {:error, :invalid_ticket}}]}
     end
@@ -384,10 +380,8 @@ defmodule Randos.Calls.CallCoordinator do
     if restarts?(state, data) do
       id = message.from_participant_id
       data = %{data | call: Lifecycle.put_media(data.call, id, :disconnected)}
-      {data, actions} = reassess(state, data)
-      data = if restart_now?(state, data), do: bump_generation(data), else: data
-      broadcast(data)
-      {:keep_state, data, [{:reply, from, :ok} | actions ++ retry_if_restarting(state, data)]}
+      {data, actions} = recover(state, data)
+      {:keep_state, data, [{:reply, from, :ok} | actions]}
     else
       {:stop_and_reply, @failed, [{:reply, from, :ok}], end_call(data, :connection_failed)}
     end
@@ -406,10 +400,7 @@ defmodule Randos.Calls.CallCoordinator do
       state == :connecting and Lifecycle.audio?(data.call) and
           Lifecycle.media_connected?(data.call) ->
         Logger.info("call media connected")
-
-        {:next_state, :active,
-         %{data | call: Lifecycle.activate(data.call), activated_at: System.monotonic_time()},
-         actions}
+        {:next_state, :active, activate(data), actions}
 
       unchanged? ->
         {:keep_state, data, actions}
@@ -423,6 +414,19 @@ defmodule Randos.Calls.CallCoordinator do
   # Healthy or not, after anything that can change it: unhealthy starts the
   # one recovery deadline (and shows `call.recovering`); healthy again ends
   # it and every restart timer.
+  defp activate(data),
+    do: %{data | call: Lifecycle.activate(data.call), activated_at: System.monotonic_time()}
+
+  # The call may have just turned unhealthy (or come back): its budget
+  # timer, and an ICE restart asked for now if one is due (with its
+  # retry), told to both participants.
+  defp recover(state, data) do
+    {data, actions} = reassess(state, data)
+    data = if restart_now?(state, data), do: bump_generation(data), else: data
+    broadcast(data)
+    {data, actions ++ retry_if_restarting(state, data)}
+  end
+
   defp reassess(state, data) do
     case {unhealthy?(state, data), data.call.recovering} do
       {true, false} ->
@@ -604,8 +608,6 @@ defmodule Randos.Calls.CallCoordinator do
   end
 
   defp enforce_policy(_call, message), do: {:ok, message}
-
-  defp data_policy(opts), do: Keyword.get(opts, :ice_transport_policy, "all")
 
   defp relay_signal_to_peer(data, message) do
     {:ok, peer} = Match.peer(data.call.match, message.from_participant_id)

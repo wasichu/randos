@@ -44,7 +44,7 @@ defmodule RandosWeb.HomeLive do
   # kept running meanwhile.
   defp resume(socket) do
     with ticket when is_binary(ticket) <- get_connect_params(socket)["resume_ticket"],
-         {:ok, participant, fresh} <- ParticipantShell.resume(ticket) do
+         {:ok, participant, fresh, ice_servers} <- ParticipantShell.resume(ticket) do
       Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
 
       preferences = %{
@@ -57,7 +57,7 @@ defmodule RandosWeb.HomeLive do
        socket
        |> assign(:preferences, preferences)
        |> assign_form(preferences)
-       |> assign(:ice_servers, Jason.encode!(RandosWeb.IceServers.list()))
+       |> assign(:ice_servers, Jason.encode!(ice_servers))
        |> assign_participant(participant)
        |> push_event("randos:resume_ticket", %{ticket: fresh})}
     end

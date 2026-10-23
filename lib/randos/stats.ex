@@ -162,8 +162,15 @@ defmodule Randos.Stats do
     }
   end
 
+  @typedoc "How a call ended, as the counts class it (`ending/1`)."
+  @type ending :: :finished | :not_connected | :connection_lost | :canceled
+
+  @doc "Every `t:ending/0`, in the order the status page lists them."
+  @spec endings() :: [ending()]
+  def endings, do: [:finished, :not_connected, :connection_lost, :canceled]
+
   @doc "The ending class of an `ended_reason`."
-  @spec ending(atom()) :: :finished | :not_connected | :connection_lost | :canceled
+  @spec ending(atom()) :: ending()
   def ending(:connection_failed), do: :not_connected
   def ending(:disconnected), do: :connection_lost
   def ending(:canceled), do: :canceled
