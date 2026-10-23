@@ -148,6 +148,11 @@ JUDGES = {
     "qwen": "mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit",
 }
 JUDGE_SCORES = {"mistral": "judge", "qwen": "judge_qwen"}
+# How each judge's tokenizer loads. Mistral's ships a wrong pre-tokenizer
+# regex (transformers warns at load); unfixed, a tenth of the judge's
+# prompts (Arabic, Bengali, Hindi, Persian, Turkish) tokenize wrongly.
+# Part of the cache key, so a change here judges afresh.
+_TOKENIZER = {"mistral": {"fix_mistral_regex": True}}
 _QWEN_ONLY = {"ur", "sw", "fil"}
 
 
@@ -169,7 +174,7 @@ class Judge:
 
         self.judge, self.repo = judge, JUDGES[judge]
         self._batch_generate = batch_generate
-        self._model, self._tokenizer = load(self.repo)
+        self._model, self._tokenizer = load(self.repo, tokenizer_config=_TOKENIZER.get(judge))
         self._contexts = current_contexts()
 
     def close(self) -> None:
@@ -217,8 +222,8 @@ def judge_prompt(language: str, entry: dict, context: str) -> str:
 
 class JudgeCache:
     """Verdicts already given, keyed by everything the judge saw (its
-    model, the rubric, the locale, the context, the English, the
-    translation): two models with the same output, or a re-run that
+    model and how its tokenizer loads, the rubric, the locale, the context,
+    the English, the translation): two models with the same output, or a re-run that
     changes nothing the judge sees, are judged once. A changed rubric or
     comment is a different key, so it's judged afresh. Only parsed
     verdicts are kept; a reply that wasn't the JSON asked for is retried."""
@@ -230,7 +235,9 @@ class JudgeCache:
 
     @staticmethod
     def key(locale: str, entry: dict, context: str, judge: str = "mistral") -> str:
-        seen = [JUDGES[judge], JUDGE_RUBRIC, locale, context, entry["msgid"], entry["text"]]
+        # A judge with load options adds them; one without keeps the key it had.
+        model = [JUDGES[judge], _TOKENIZER[judge]] if judge in _TOKENIZER else JUDGES[judge]
+        seen = [model, JUDGE_RUBRIC, locale, context, entry["msgid"], entry["text"]]
         return hashlib.sha256(json.dumps(seen, ensure_ascii=False).encode()).hexdigest()
 
     def get(

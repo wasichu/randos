@@ -195,3 +195,21 @@ def test_judges_vetoing_each_others_favourite_veto_nothing():
     entries["b"]["scores"]["judge_qwen"] = {"score": 8}
     picked = review.pick(entries)
     assert picked["model"] == "a" and "veto" not in picked["why"]
+
+
+def test_a_judges_tokenizer_options_are_part_of_its_cache_key():
+    import hashlib
+    import json
+
+    from randos_translate import scoring
+
+    entry_ = {"msgid": "Find a rando", "text": "Encontrar un rando"}
+
+    def old_key(judge):
+        seen = [scoring.JUDGES[judge], scoring.JUDGE_RUBRIC, "es", "", entry_["msgid"], entry_["text"]]
+        return hashlib.sha256(json.dumps(seen, ensure_ascii=False).encode()).hexdigest()
+
+    # Mistral now loads with its regex fixed: its old verdicts don't count.
+    assert scoring.JudgeCache.key("es", entry_, "", "mistral") != old_key("mistral")
+    # Qwen loads as before: its verdicts still do.
+    assert scoring.JudgeCache.key("es", entry_, "", "qwen") == old_key("qwen")
