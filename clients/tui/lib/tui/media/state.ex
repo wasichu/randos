@@ -39,6 +39,7 @@ defmodule Tui.Media.State do
   @type call :: %{
           optional(:levels) => %{you: [float()], peer: [float()]},
           optional(:muted) => boolean(),
+          id: String.t() | nil,
           seq: pos_integer(),
           phase: :starting | :active,
           connection: :connecting | :connected | :disconnected,
@@ -58,6 +59,7 @@ defmodule Tui.Media.State do
           ice_servers: list() | nil,
           relay_only?: boolean(),
           ice_generation: non_neg_integer(),
+          call_id: String.t() | nil,
           offline_limit_ms: non_neg_integer() | nil,
           offline: pos_integer() | nil,
           drops: non_neg_integer(),
@@ -76,6 +78,7 @@ defmodule Tui.Media.State do
             ice_servers: nil,
             relay_only?: false,
             ice_generation: 0,
+            call_id: nil,
             offline_limit_ms: nil,
             offline: nil,
             drops: 0,
@@ -185,10 +188,17 @@ defmodule Tui.Media.State do
   end
 
   defp call_fields(nil),
-    do: %{ice_servers: nil, relay_only?: false, ice_generation: 0, offline_limit_ms: nil}
+    do: %{
+      ice_servers: nil,
+      relay_only?: false,
+      ice_generation: 0,
+      call_id: nil,
+      offline_limit_ms: nil
+    }
 
   defp call_fields(call) do
     %{
+      call_id: call["id"],
       ice_servers: call["ice_servers"],
       relay_only?: call["ice_transport_policy"] == "relay",
       ice_generation: call["ice_generation"] || 0,
@@ -198,6 +208,16 @@ defmodule Tui.Media.State do
 
   defp follow_status(%{status: status, call: nil} = state) when status in @call_statuses,
     do: maybe_start_call(state)
+
+  # Straight into another call (the last one ended and we were matched again
+  # at once, so the status never left a call): the helper's session belongs
+  # to the old one, whose peer is gone; the new peer's offer would hit it.
+  defp follow_status(%{status: status, call: %{id: running}, call_id: id} = state)
+       when status in @call_statuses and is_binary(id) and running != id do
+    {state, stop} = stop_call(state)
+    {state, start} = maybe_start_call(state)
+    {state, stop ++ start}
+  end
 
   defp follow_status(%{status: status} = state) when status in @call_statuses,
     do: maybe_restart(state)
@@ -334,6 +354,7 @@ defmodule Tui.Media.State do
 
     # `generation`: the server's ice_generation this call has acted on.
     call = %{
+      id: state.call_id,
       seq: seq,
       phase: :starting,
       connection: :connecting,

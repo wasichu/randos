@@ -217,6 +217,17 @@ defmodule Tui.Media.StateTest do
       assert {_, []} = State.offline(in_call())
     end
 
+    test "matched again at once (still connecting, another call): the old session stops, a new one starts" do
+      next_call = %{"id" => "call-2", "ice_servers" => @ice}
+
+      assert {%{call: %{id: "call-2", phase: :starting}},
+              [{:request, :call_stop}, {:request, {:call_start, "answerer", @ice, _, _, _}}]} =
+               State.server_state(in_call(), :connecting, "answerer", next_call)
+
+      # The same call again (any state push) changes nothing.
+      assert {_, []} = State.server_state(in_call(), :in_call, "offerer", @call)
+    end
+
     test "the call ending (the server's status) stops the helper's call" do
       assert {%{call: nil}, [{:request, :call_stop}]} = State.server_state(in_call(), :idle, nil)
 
