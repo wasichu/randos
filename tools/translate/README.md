@@ -177,7 +177,9 @@ among the passing ones, ties sharing their rank), after the judges'
 vetoes (a translation either judge rates ≤ 4 while it rates another
 passing one ≥ 7; if the two judges' vetoes would leave nothing, each
 vetoing the other's favourite, none stands). The judges' mean breaks ties, or stands in beside
-MetricX when COMET-Kiwi has no score; MetricX alone never decides. Further ties go to back-translation chrF, then the shorter
+MetricX when COMET-Kiwi has no score; MetricX alone never decides
+(COMET-Kiwi alone does, when MetricX has none; with neither, the
+tie-breaks below decide alone). Further ties go to back-translation chrF, then the shorter
 text, then the text itself, never a model's name. A string that no
 translation passes stays empty, and the site shows the English.
 

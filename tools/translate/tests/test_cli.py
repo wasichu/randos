@@ -130,3 +130,34 @@ def test_a_stopped_score_resumes_with_the_locales_left(tmp_path, monkeypatch):
     cli.score("metricx", [results], redo=False)
     assert Stops.asked == ["es"]
     assert not list(tmp_path.glob(".*.tmp"))
+
+
+def test_fill_best_fills_each_strings_pick_with_its_model(tmp_path, monkeypatch):
+    def row(key, best, translations):
+        return {"key": key, "best": best, "translations": {m: {"text": t} for m, t in translations.items()}}
+
+    review_json = {
+        "locales": {
+            "es": {
+                "strings": [
+                    row("About", "opus-mt", {"opus-mt": "Acerca de", "m2m100": "Sobre"}),
+                    row("Mute", None, {"m2m100": "Muerte"}),
+                ]
+            }
+        }
+    }
+    (tmp_path / "review.json").write_text(json.dumps(review_json))
+    calls = []
+    monkeypatch.setattr(cli.po, "fill", lambda *args, **kwargs: calls.append((args, kwargs)) or {"filled": 1})
+
+    assert cli.fill_best("es", False, tmp_path) == {"filled": 1}
+    # Nothing picked for "Mute" (none passed): it isn't filled, so the English shows.
+    assert calls == [(("es", {"About": "Acerca de"}, {"About": "opus-mt"}), {"redo": False})]
+
+
+def test_tidy_rewrites_old_runs_and_counts_what_changed(tmp_path):
+    run = tmp_path / "old.json"
+    entries = [{"msgid": "Looking…", "text": "Buscando..."}, {"msgid": "About", "text": "Acerca de"}]
+    run.write_text(json.dumps({"entries": entries}))
+    assert cli.tidy([run]) == {"old.json": 1}
+    assert [e["text"] for e in json.loads(run.read_text())["entries"]] == ["Buscando…", "Acerca de"]

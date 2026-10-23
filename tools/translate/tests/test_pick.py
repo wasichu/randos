@@ -84,3 +84,31 @@ def test_tied_scores_share_their_rank():
         "b": 1.5,
         "c": 3.0,
     }
+
+
+def test_the_only_one_left_after_a_veto_ships_and_says_so():
+    entries = {"a": entry("A", metricx=1.0, comet=0.9, judge=3), "b": entry("B", metricx=2.0, comet=0.8, judge=8)}
+    picked = review.pick(entries)
+    assert picked == {"model": "b", "why": "the only one left after the judge's veto of a"}
+
+
+def test_without_quality_scores_the_tie_breaks_decide_alone():
+    # Neither MetricX nor COMET-Kiwi has scored: the judge's rank, then chrF.
+    entries = {"a": entry("A", judge=6, chrf=90.0), "b": entry("B", judge=8, chrf=40.0)}
+    picked = review.pick(entries)
+    assert picked["model"] == "b" and "the tie-breaks alone" in picked["why"]
+
+
+def test_comet_kiwi_alone_decides_when_metricx_has_no_score():
+    # Unlike MetricX alone (which TranslateGemma was trained to flatter).
+    entries = {"a": entry("A", comet=0.70, chrf=90.0), "b": entry("B", comet=0.90, chrf=40.0)}
+    picked = review.pick(entries)
+    assert picked["model"] == "b" and "COMET-Kiwi" in picked["why"]
+
+
+def test_metricx_with_some_finalists_unjudged_doesnt_decide():
+    # The judge can't stand in beside MetricX without judging all: then the
+    # tie-breaks decide, and an unjudged translation ranks last among them.
+    entries = {"a": entry("A", metricx=1.0), "b": entry("B", metricx=2.0, judge=9)}
+    picked = review.pick(entries)
+    assert picked["model"] == "b" and "the tie-breaks alone" in picked["why"]
