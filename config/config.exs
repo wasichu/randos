@@ -9,6 +9,10 @@ import Config
 
 config :randos, generators: [timestamp_type: :utc_datetime]
 
+# This deployment's source (AGPL: a modified copy offers its own). The
+# footer, the About page and the translations' "Suggest a fix" link here.
+config :randos, source_url: "https://github.com/wasichu/randos"
+
 config :randos, RandosWeb.IceServers,
   servers: [
     %{urls: "stun:stun.l.google.com:19302"}

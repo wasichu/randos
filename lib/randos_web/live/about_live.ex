@@ -104,7 +104,7 @@ defmodule RandosWeb.AboutLive do
                 )}
                 <a
                   id="privacy-link"
-                  href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
+                  href={RandosWeb.source_url("/blob/main/docs/privacy.md")}
                   class="font-medium text-teal-700 underline decoration-teal-200 underline-offset-4 transition hover:text-teal-900 hover:decoration-teal-700"
                 >
                   <% gettext_comment(
@@ -139,7 +139,7 @@ defmodule RandosWeb.AboutLive do
                 {gettext("randos is free software (AGPL-3.0) and built in public.")}
               </p>
               <a
-                href="https://github.com/wasichu/randos"
+                href={RandosWeb.source_url()}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 font-medium text-stone-700 transition hover:text-teal-800"

@@ -19,6 +19,9 @@ defmodule RandosWeb do
 
   def static_paths, do: ~w(assets fonts images favicon.ico favicon.svg robots.txt)
 
+  @doc "This deployment's source repository (`:source_url`), with `path` appended."
+  def source_url(path \\ ""), do: Application.fetch_env!(:randos, :source_url) <> path
+
   def router do
     quote do
       use Phoenix.Router, helpers: false

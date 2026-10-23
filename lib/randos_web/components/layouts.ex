@@ -115,7 +115,7 @@ defmodule RandosWeb.Layouts do
       </.link>
       <a
         id="footer-privacy"
-        href="https://github.com/wasichu/randos/blob/main/docs/privacy.md"
+        href={RandosWeb.source_url("/blob/main/docs/privacy.md")}
         class="transition hover:text-stone-900"
       >
         <% gettext_comment("Footer link to the page on what randos sees, logs and keeps (privacy).") %>
@@ -123,7 +123,7 @@ defmodule RandosWeb.Layouts do
       </a>
       <a
         id="footer-source"
-        href="https://github.com/wasichu/randos"
+        href={RandosWeb.source_url()}
         class="transition hover:text-stone-900"
       >
         <% gettext_comment("Footer link to the source code; AGPL-3.0 is its license (keep it as is).") %>
@@ -132,7 +132,7 @@ defmodule RandosWeb.Layouts do
       <a
         :if={@commit != ""}
         id="footer-commit"
-        href={"https://github.com/wasichu/randos/commit/" <> String.replace_suffix(@commit, "-dirty", "")}
+        href={RandosWeb.source_url("/commit/" <> String.replace_suffix(@commit, "-dirty", ""))}
         title={
           if String.ends_with?(@commit, "-dirty"),
             do: gettext("Running this commit plus changes not yet committed"),

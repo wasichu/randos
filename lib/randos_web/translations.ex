@@ -7,8 +7,6 @@ defmodule RandosWeb.Translations do
   but the fix filled in; its parameters are the form's field ids.
   """
 
-  @issues "https://github.com/wasichu/randos/issues/new"
-
   @type entry :: %{msgid: String.t(), msgctxt: String.t() | nil, msgstr: String.t()}
 
   @locales for {code, _name} <- RandosWeb.Locale.all(), code != "en", do: code
@@ -56,7 +54,7 @@ defmodule RandosWeb.Translations do
   @doc "The GitHub link that opens a fix for `entry` in `locale`, filled in but for the fix."
   @spec suggest_url(String.t(), entry()) :: String.t()
   def suggest_url(locale, entry) do
-    @issues <>
+    RandosWeb.source_url("/issues/new") <>
       "?" <>
       URI.encode_query(%{
         "template" => "translation.yml",
