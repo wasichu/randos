@@ -144,7 +144,7 @@ impl Call {
 
         let (commands, inbox) = mpsc::channel();
         let worker = thread::Builder::new().name("call".into()).spawn(move || {
-            let result = session.run(config.role, &inbox);
+            let result = session.run(&inbox);
             if let Err(err) = &result {
                 notify(Event::CallState {
                     state: "failed".into(),
@@ -259,12 +259,7 @@ impl Session {
     ) -> Result<Self, Error> {
         let acoustic =
             matches!(capture, Capture::Device(_)) && matches!(playback, Playback::Device(_));
-        let ip = match config.bind_ip {
-            Some(ip) => ip,
-            None => default_route_ip()?,
-        };
-        let socket = UdpSocket::bind(SocketAddr::new(ip, 0))?;
-        let local = socket.local_addr()?;
+        let (socket, local) = bind_socket(config.bind_ip)?;
 
         // Notice a dead path in ~4 s, as browsers do (with the vendored ICE
         // agent's shorter peer-request window, vendor/README.md): retry
@@ -273,16 +268,9 @@ impl Session {
         rtc_config.set_max_stun_rto(Duration::from_millis(750));
         rtc_config.set_max_stun_retransmits(5);
         let mut rtc = rtc_config.build(Instant::now());
-        let mut local_candidates = Vec::new();
-        if !config.relay_only
-            && let Some(host) = rtc.add_local_candidate(Candidate::host(local, "udp")?)
-        {
-            local_candidates.push(host.clone());
-        }
+        let local_candidates = host_candidate(&mut rtc, local, config.relay_only)?;
         let mut report = Report::new();
-        if config.relay_only {
-            report.local_candidates.clear();
-        }
+        report.local_candidates = offered_kinds(config.relay_only);
 
         Ok(Self {
             rtc,
@@ -321,13 +309,13 @@ impl Session {
         })
     }
 
-    fn run(&mut self, role: Role, inbox: &Receiver<Command>) -> Result<(), Error> {
+    fn run(&mut self, inbox: &Receiver<Command>) -> Result<(), Error> {
         // Resolve the STUN and TURN servers here, not in `Call::start`: DNS
         // can be slow, and the Port must keep answering meanwhile.
         self.candidates =
             Candidates::from_ice_servers(&self.ice_servers, self.local, self.relay_only);
 
-        if role == Role::Offerer {
+        if self.role == Role::Offerer {
             self.send_offer()?;
         }
         self.drain()?;
@@ -434,22 +422,11 @@ impl Session {
             self.drain()?;
         }
 
-        let ip = match self.bind_ip {
-            Some(ip) => ip,
-            None => default_route_ip()?,
-        };
-        self.socket = UdpSocket::bind(SocketAddr::new(ip, 0))?;
-        self.local = self.socket.local_addr()?;
+        (self.socket, self.local) = bind_socket(self.bind_ip)?;
         self.candidates =
             Candidates::from_ice_servers(&self.ice_servers, self.local, self.relay_only);
-        self.report.local_candidates.clear();
-        if !self.relay_only {
-            let host = Candidate::host(self.local, "udp")?;
-            if let Some(host) = self.rtc.add_local_candidate(host) {
-                self.local_candidates.push(host.clone());
-            }
-            self.report.local_candidates.push("host".into());
-        }
+        self.local_candidates = host_candidate(&mut self.rtc, self.local, self.relay_only)?;
+        self.report.local_candidates = offered_kinds(self.relay_only);
         self.drain()
     }
 
@@ -863,8 +840,7 @@ fn remote_candidate(payload: &Value, report: &mut Report) -> Option<Candidate> {
     }
 }
 
-/// The local address of the default route: what peers on the network can
-/// reach. Connecting a UDP socket sends nothing; it only picks a route.
+/// The voice processor `config` asks for, with its parameters set.
 fn voice_processor(config: &CallConfig) -> Processor {
     let mut processor = Processor::new(config.voice, crate::codec::SAMPLE_RATE as f32);
     for (index, value) in config.voice_params.iter().enumerate() {
@@ -873,6 +849,47 @@ fn voice_processor(config: &CallConfig) -> Processor {
     processor
 }
 
+/// A UDP socket for the call on `bind_ip`, or else on the default route's
+/// address, and the address it got.
+fn bind_socket(bind_ip: Option<IpAddr>) -> Result<(UdpSocket, SocketAddr), Error> {
+    let ip = match bind_ip {
+        Some(ip) => ip,
+        None => default_route_ip()?,
+    };
+    let socket = UdpSocket::bind(SocketAddr::new(ip, 0))?;
+    let local = socket.local_addr()?;
+    Ok((socket, local))
+}
+
+/// `local` offered as the host candidate (none in a relay-only call): what
+/// str0m kept, so a restart can invalidate it.
+fn host_candidate(
+    rtc: &mut Rtc,
+    local: SocketAddr,
+    relay_only: bool,
+) -> Result<Vec<Candidate>, Error> {
+    if relay_only {
+        return Ok(Vec::new());
+    }
+    Ok(rtc
+        .add_local_candidate(Candidate::host(local, "udp")?)
+        .cloned()
+        .into_iter()
+        .collect())
+}
+
+/// `call_stats`' `local_candidates` at the start (and after a restart):
+/// the host candidate, unless the call is relay-only.
+fn offered_kinds(relay_only: bool) -> Vec<String> {
+    if relay_only {
+        Vec::new()
+    } else {
+        vec!["host".into()]
+    }
+}
+
+/// The local address of the default route: what peers on the network can
+/// reach. Connecting a UDP socket sends nothing; it only picks a route.
 fn default_route_ip() -> Result<IpAddr, Error> {
     let probe = UdpSocket::bind((Ipv4Addr::UNSPECIFIED, 0))?;
     match probe.connect((Ipv4Addr::new(192, 0, 2, 1), 9)) {
@@ -957,6 +974,28 @@ mod tests {
         relay_until(a, b, duration, || false);
     }
 
+    /// Relays until both peers have heard the other (50 packets, about a
+    /// second of audio), 15 s at most: however long connecting takes on a
+    /// busy CI machine, a test then measures from a connected call.
+    fn connect(a: (&Call, &Mutex<Seen>), b: (&Call, &Mutex<Seen>)) {
+        let received = |seen: &Mutex<Seen>| {
+            seen.lock()
+                .unwrap()
+                .stats
+                .last()
+                .map_or(0, |s| s.packets_received)
+        };
+        relay_until(a, b, Duration::from_secs(15), || {
+            received(a.1) > 50 && received(b.1) > 50
+        });
+        assert!(
+            received(a.1) > 50 && received(b.1) > 50,
+            "never connected: {} and {} packets",
+            received(a.1),
+            received(b.1)
+        );
+    }
+
     /// Like `relay`, but stops as soon as `done()` holds (`duration` is then
     /// a deadline): for counts that depend on how soon the call connects,
     /// which a busy CI machine slows down.
@@ -1021,7 +1060,7 @@ mod tests {
         let (offerer, offerer_seen) = peer(Role::Offerer);
         let (answerer, answerer_seen) = peer(Role::Answerer);
         let pair = ((&offerer, &*offerer_seen), (&answerer, &*answerer_seen));
-        relay(pair.0, pair.1, Duration::from_millis(2_500));
+        connect(pair.0, pair.1);
         let received_before = answerer_seen
             .lock()
             .unwrap()
@@ -1070,11 +1109,10 @@ mod tests {
             },
             Output::Wav(heard.clone()),
         );
-        relay(
-            (&offerer, &offerer_seen),
-            (&answerer, &answerer_seen),
-            Duration::from_millis(3_000),
-        );
+        let pair = ((&offerer, &*offerer_seen), (&answerer, &*answerer_seen));
+        connect(pair.0, pair.1);
+        // The last second heard is then all from the connected call.
+        relay(pair.0, pair.1, Duration::from_millis(1_500));
         offerer.stop().unwrap();
         answerer.stop().unwrap();
 
@@ -1100,12 +1138,7 @@ mod tests {
     fn two_peers_connect_and_carry_audio_both_ways() {
         let (offerer, offerer_seen) = peer(Role::Offerer);
         let (answerer, answerer_seen) = peer(Role::Answerer);
-
-        relay(
-            (&offerer, &offerer_seen),
-            (&answerer, &answerer_seen),
-            Duration::from_millis(3_500),
-        );
+        connect((&offerer, &offerer_seen), (&answerer, &answerer_seen));
 
         for (name, seen) in [("offerer", &offerer_seen), ("answerer", &answerer_seen)] {
             let seen = seen.lock().unwrap();
@@ -1161,11 +1194,10 @@ mod tests {
 
         let (offerer, offerer_seen) = peer_with(Role::Offerer, ice);
         let (answerer, answerer_seen) = peer(Role::Answerer);
-        relay(
-            (&offerer, &offerer_seen),
-            (&answerer, &answerer_seen),
-            Duration::from_millis(3_500),
-        );
+        let pair = ((&offerer, &*offerer_seen), (&answerer, &*answerer_seen));
+        connect(pair.0, pair.1);
+        // A stats report more, so it lists every candidate gathered.
+        relay(pair.0, pair.1, Duration::from_millis(1_000));
 
         let seen = offerer_seen.lock().unwrap();
         assert!(
@@ -1211,11 +1243,10 @@ mod tests {
 
         let (offerer, offerer_seen) = peer_with(Role::Offerer, ice);
         let (answerer, answerer_seen) = peer(Role::Answerer);
-        relay(
-            (&offerer, &offerer_seen),
-            (&answerer, &answerer_seen),
-            Duration::from_millis(3_500),
-        );
+        let pair = ((&offerer, &*offerer_seen), (&answerer, &*answerer_seen));
+        connect(pair.0, pair.1);
+        // A stats report more, so it lists every candidate gathered.
+        relay(pair.0, pair.1, Duration::from_millis(1_000));
 
         let seen = offerer_seen.lock().unwrap();
         assert!(
@@ -1248,14 +1279,14 @@ mod tests {
         answerer.stop().unwrap();
     }
 
-    /// TURN over TLS, end to end: two relay-only peers whose only TURN
-    /// server is coturn's `turns:` endpoint (TLS on 5349), so the whole
-    /// call (allocation, permissions, every packet) goes over TLS streams.
-    #[test]
-    #[ignore = "needs coturn credentials in the environment"]
-    fn production_turns_carries_a_whole_relay_only_call() {
+    type Peer = (Call, Arc<Mutex<Seen>>);
+
+    /// Two relay-only peers through the real coturn at `urls` (from the
+    /// default route's address, so coturn must be reachable), with the
+    /// short-lived credentials `just turn-check` puts in the environment.
+    fn production_relay_only_pair(urls: &str) -> (Peer, Peer) {
         let ice = json!([{
-            "urls": "turns:turn.slowinput.org:5349",
+            "urls": urls,
             "username": std::env::var("TURN_TEST_USERNAME").unwrap(),
             "credential": std::env::var("TURN_TEST_CREDENTIAL").unwrap(),
         }]);
@@ -1266,8 +1297,40 @@ mod tests {
                 ..CallConfig::new(role)
             })
         };
-        let (offerer, offerer_seen) = relay_only(Role::Offerer);
-        let (answerer, answerer_seen) = relay_only(Role::Answerer);
+        (relay_only(Role::Offerer), relay_only(Role::Answerer))
+    }
+
+    /// A whole call through the relay, as one side saw it: connected, only
+    /// relay candidates and the relay path, audio received and heard.
+    fn assert_relay_call(seen: &Seen) {
+        assert!(
+            seen.states.contains(&"connected".to_owned()),
+            "states: {:?}",
+            seen.states
+        );
+        let last = seen.stats.last().expect("stats");
+        assert_eq!(last.local_candidates, vec!["relay"]);
+        assert_eq!(last.path.as_deref(), Some("relay"));
+        assert!(
+            last.packets_received > 100,
+            "received {}",
+            last.packets_received
+        );
+        assert!(
+            last.output_peak_dbfs > -15.0,
+            "heard {} dBFS",
+            last.output_peak_dbfs
+        );
+    }
+
+    /// TURN over TLS, end to end: two relay-only peers whose only TURN
+    /// server is coturn's `turns:` endpoint (TLS on 5349), so the whole
+    /// call (allocation, permissions, every packet) goes over TLS streams.
+    #[test]
+    #[ignore = "needs coturn credentials in the environment"]
+    fn production_turns_carries_a_whole_relay_only_call() {
+        let ((offerer, offerer_seen), (answerer, answerer_seen)) =
+            production_relay_only_pair("turns:turn.slowinput.org:5349");
         relay(
             (&offerer, &offerer_seen),
             (&answerer, &answerer_seen),
@@ -1275,25 +1338,7 @@ mod tests {
         );
 
         for seen in [&offerer_seen, &answerer_seen] {
-            let seen = seen.lock().unwrap();
-            assert!(
-                seen.states.contains(&"connected".to_owned()),
-                "states: {:?}",
-                seen.states
-            );
-            let last = seen.stats.last().expect("stats");
-            assert_eq!(last.local_candidates, vec!["relay"]);
-            assert_eq!(last.path.as_deref(), Some("relay"));
-            assert!(
-                last.packets_received > 100,
-                "received {}",
-                last.packets_received
-            );
-            assert!(
-                last.output_peak_dbfs > -15.0,
-                "heard {} dBFS",
-                last.output_peak_dbfs
-            );
+            assert_relay_call(&seen.lock().unwrap());
         }
         offerer.stop().unwrap();
         answerer.stop().unwrap();
@@ -1305,21 +1350,8 @@ mod tests {
     #[test]
     #[ignore = "needs coturn credentials in the environment"]
     fn production_turn_carries_a_whole_relay_only_call() {
-        let ice = json!([{
-            "urls": "turn:turn.slowinput.org:3478",
-            "username": std::env::var("TURN_TEST_USERNAME").unwrap(),
-            "credential": std::env::var("TURN_TEST_CREDENTIAL").unwrap(),
-        }]);
-        // The default route's address: coturn must be reachable.
-        let relay_only = |role| {
-            peer_from(CallConfig {
-                ice_servers: ice.clone(),
-                relay_only: true,
-                ..CallConfig::new(role)
-            })
-        };
-        let (offerer, offerer_seen) = relay_only(Role::Offerer);
-        let (answerer, answerer_seen) = relay_only(Role::Answerer);
+        let ((offerer, offerer_seen), (answerer, answerer_seen)) =
+            production_relay_only_pair("turn:turn.slowinput.org:3478");
         relay(
             (&offerer, &offerer_seen),
             (&answerer, &answerer_seen),
@@ -1327,25 +1359,7 @@ mod tests {
         );
 
         for seen in [&offerer_seen, &answerer_seen] {
-            let seen = seen.lock().unwrap();
-            assert!(
-                seen.states.contains(&"connected".to_owned()),
-                "states: {:?}",
-                seen.states
-            );
-            let last = seen.stats.last().expect("stats");
-            assert_eq!(last.local_candidates, vec!["relay"]);
-            assert_eq!(last.path.as_deref(), Some("relay"));
-            assert!(
-                last.packets_received > 100,
-                "received {}",
-                last.packets_received
-            );
-            assert!(
-                last.output_peak_dbfs > -15.0,
-                "heard {} dBFS",
-                last.output_peak_dbfs
-            );
+            assert_relay_call(&seen.lock().unwrap());
         }
         offerer.stop().unwrap();
         answerer.stop().unwrap();
@@ -1358,20 +1372,8 @@ mod tests {
     #[test]
     #[ignore = "needs coturn credentials in the environment"]
     fn production_turn_call_comes_back_after_an_ice_restart() {
-        let ice = json!([{
-            "urls": "turn:turn.slowinput.org:3478",
-            "username": std::env::var("TURN_TEST_USERNAME").unwrap(),
-            "credential": std::env::var("TURN_TEST_CREDENTIAL").unwrap(),
-        }]);
-        let relay_only = |role| {
-            peer_from(CallConfig {
-                ice_servers: ice.clone(),
-                relay_only: true,
-                ..CallConfig::new(role)
-            })
-        };
-        let (offerer, offerer_seen) = relay_only(Role::Offerer);
-        let (answerer, answerer_seen) = relay_only(Role::Answerer);
+        let ((offerer, offerer_seen), (answerer, answerer_seen)) =
+            production_relay_only_pair("turn:turn.slowinput.org:3478");
         let received = |seen: &Mutex<Seen>| {
             seen.lock()
                 .unwrap()

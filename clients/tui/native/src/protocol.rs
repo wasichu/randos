@@ -135,8 +135,9 @@ pub struct CallStats {
     pub skipped_candidates: u64,
     /// UDP sends that failed (e.g. to an unreachable candidate); not fatal.
     pub send_errors: u64,
-    /// Kinds of our candidates offered so far: "host", then "srflx" once a
-    /// STUN server answered.
+    /// Kinds of our candidates offered since the call started or its latest
+    /// restart: "host" (not in a relay-only call), then "srflx" once a STUN
+    /// server answered and "relay" once a TURN allocation succeeded.
     pub local_candidates: Vec<String>,
     /// How this second's packets went: "direct", or "relay" (through a TURN
     /// server, ours or the peer's); `null` if nothing was sent.
