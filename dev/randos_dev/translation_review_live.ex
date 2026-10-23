@@ -331,7 +331,7 @@ defmodule RandosDev.TranslationReviewLive do
     ~H"""
     <nav id="review-catalogs" class="flex gap-4 text-sm" aria-label="Which strings">
       <.link
-        :for={{catalog, label, href} <- [{"site", "Website", ~p"/dev/translations"}, {"tui", "Terminal client", ~p"/dev/translations?catalog=tui"}]}
+        :for={{catalog, label, href} <- [{"site", "Website", "/dev/translations"}, {"tui", "Terminal client", "/dev/translations?catalog=tui"}]}
         id={"review-catalog-#{catalog}"}
         navigate={href}
         aria-current={if catalog == @catalog, do: "page"}
