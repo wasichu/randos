@@ -88,8 +88,8 @@
     "msgstr": "कनेक्शन हो रहा है"
   },
   "Connection lost": {
-    "model": "translategemma-4b",
-    "msgstr": "कनेक्शन टूट गया"
+    "model": "opus-mt",
+    "msgstr": "कनेक्शन गुम हो गया है"
   },
   "Connection:": {
     "model": "m2m100",
@@ -100,8 +100,8 @@
     "msgstr": "10 मिनट से अधिक समय तक जारी रहा"
   },
   "Conversation is active.": {
-    "model": "opus-mt",
-    "msgstr": "वार्तालाप सक्रिय है."
+    "model": "hy-mt2",
+    "msgstr": "बातचीत जारी है।"
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "hy-mt2",
@@ -208,8 +208,8 @@
     "msgstr": "अंतिम बार जांच %{time} यूटीसी समय पर की गई थी।"
   },
   "Looking": {
-    "model": "madlad-400",
-    "msgstr": "देख रहा है"
+    "model": "opus-mt",
+    "msgstr": "देखा जा रहा है"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "madlad-400",
@@ -232,8 +232,8 @@
     "msgstr": "अभी तक अनुवादित नहीं"
   },
   "Nothing matches.": {
-    "model": "translategemma-12b",
-    "msgstr": "कोई भी चीज़ मेल नहीं खाती।"
+    "model": "madlad-400",
+    "msgstr": "कुछ भी मेल नहीं खाता।"
   },
   "Other languages: %{calls}": {
     "model": "opus-mt",
@@ -332,8 +332,8 @@
     "msgstr": "यह कॉल इसलिए समाप्त हुई क्योंकि कोई माइक्रोफोन नहीं मिला।"
   },
   "The commit this server runs": {
-    "model": "hy-mt2",
-    "msgstr": "यह सर्वर जो कमिट चलाता है"
+    "model": "madlad-400",
+    "msgstr": "इस सर्वर द्वारा चलाया गया कमिट"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "hy-mt2",
@@ -364,8 +364,8 @@
     "msgstr": "इस वेबसाइट पर दिए गए अनुवाद मशीन द्वारा किए गए हैं। यदि आपको कोई वाक्य या अर्थ गलत लगे, तो उसे नीचे खोजें और “सुझाव दें” बटन दबाएँ: यह GitHub पर एक नया अनुरोध (इश्यू) खोलेगा, जिसमें सभी जानकारी पहले से भरी होगी, सिवाय आपके द्वारा किए गए सुधार के (इसके लिए आपको GitHub पर एक खाता होना आवश्यक है)। आपके सुधार के साथ एक नया अनुरोध अपने आप खुल जाएगा, और समीक्षा के बाद यह तुरंत लागू कर दिया जाएगा।"
   },
   "Time is up": {
-    "model": "translategemma-4b",
-    "msgstr": "समय समाप्त हो गया"
+    "model": "opus-mt",
+    "msgstr": "समय समाप्त हो गया है"
   },
   "Time is up. Continue for another %{minutes} minutes?": {
     "model": "hy-mt2",
@@ -384,8 +384,8 @@
     "msgstr": "अनुवाद"
   },
   "Typical length": {
-    "model": "translategemma-4b",
-    "msgstr": "सामान्य अवधि"
+    "model": "opus-mt",
+    "msgstr": "सामान्य लम्बाई"
   },
   "View on GitHub": {
     "model": "madlad-400",
@@ -424,8 +424,8 @@
     "msgstr": "आप वह भाषा चुनते हैं जो आप बोलना चाहते हैं और वह भाषा जो आप सुनना चाहते हैं. randos आपको एक छोटी बातचीत के लिए किसी उपयुक्त व्यक्ति के साथ जोड़ता है, फिर रास्ते से बाहर हो जाता है."
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "madlad-400",
-    "msgstr": "आप मेल खाते हैं. कॉल खुलने पर ऑडियो शुरू होता है."
+    "model": "opus-mt",
+    "msgstr": "आप मेल खाते हैं. जब कॉल प्रारंभ होता है तो ऑडियो प्रारंभ होता है."
   },
   "You'll hear %{languages}": {
     "model": "opus-mt",
@@ -444,8 +444,8 @@
     "msgstr": "जारी रखें"
   },
   "button\u0004End": {
-    "model": "hy-mt2",
-    "msgstr": "समाप्त करें"
+    "model": "translategemma-4b",
+    "msgstr": "समाप्त"
   },
   "button\u0004Find a rando": {
     "model": "opus-mt",
@@ -468,8 +468,8 @@
     "msgstr": "बंद करें"
   },
   "connection state\u0004answering": {
-    "model": "madlad-400",
-    "msgstr": "जवाब दे रहा है"
+    "model": "translategemma-4b",
+    "msgstr": "उत्तर देना"
   },
   "connection state\u0004calling": {
     "model": "hy-mt2",

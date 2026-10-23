@@ -28,12 +28,12 @@
     "msgstr": "একটি দরজা, একটি প্লাটফর্ম না"
   },
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
-    "model": "hy-mt2",
-    "msgstr": "কোনো ভাষা-দম্পতি যখন কমপক্ষে %{min}টি কল পায়, তখনই তা দেখানো হয়; কম সংখ্যক কলযুক্ত দম্পতিগুলো “অন্যান্য” বিভাগে গণ্য হয়।"
+    "model": "translategemma-12b",
+    "msgstr": "একটি ভাষা জুটির তথ্য তখনই প্রদর্শিত হবে যখন সেই ভাষায় অন্তত %{min} সংখ্যক কথোপকথন (কল) সম্পন্ন হবে; অন্যথায়, ছোট আকারের ভাষা জুটির তথ্য \"অন্যান্য\" বিভাগে গণনা করা হবে।"
   },
   "About": {
-    "model": "m2m100",
-    "msgstr": "সম্পর্কে"
+    "model": "translategemma-4b",
+    "msgstr": "আমাদের সম্পর্কে"
   },
   "About randos": {
     "model": "madlad-400",
@@ -128,8 +128,8 @@
     "msgstr": "বর্তমান কল"
   },
   "Done": {
-    "model": "m2m100",
-    "msgstr": "ডোন"
+    "model": "madlad-400",
+    "msgstr": "সম্পন্ন"
   },
   "Ephemeral by default": {
     "model": "madlad-400",
@@ -156,8 +156,8 @@
     "msgstr": "একটি rando খুঁজছি"
   },
   "Finished": {
-    "model": "m2m100",
-    "msgstr": "শেষ"
+    "model": "madlad-400",
+    "msgstr": "সম্পন্ন"
   },
   "Help fix a translation": {
     "model": "madlad-400",
@@ -168,8 +168,8 @@
     "msgstr": "কলগুলো কীভাবে শেষ হলো"
   },
   "How languages are counted": {
-    "model": "madlad-400",
-    "msgstr": "কিভাবে ভাষা গণনা করা হয়"
+    "model": "translategemma-12b",
+    "msgstr": "ভাষাগুলো কীভাবে গণনা করা হয়?"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "hy-mt2",
@@ -184,8 +184,8 @@
     "msgstr": "আমি শুনতে খুশি"
   },
   "In call": {
-    "model": "madlad-400",
-    "msgstr": "কলের মধ্যে"
+    "model": "hy-mt2",
+    "msgstr": "কলের সময়"
   },
   "Intentionally minimal": {
     "model": "madlad-400",
@@ -220,8 +220,8 @@
     "msgstr": "কোনো অ্যাকাউন্ট নয়, কোনো প্রোফাইল নয়, কোনো ভিডিও নয়। কোনো চাপ নেই।"
   },
   "No calls yet.": {
-    "model": "translategemma-12b",
-    "msgstr": "এখনো কোনো ফোন আসেনি।"
+    "model": "translategemma-27b",
+    "msgstr": "এখনো পর্যন্ত কোনো ফোন আসেনি।"
   },
   "No relay is configured": {
     "model": "madlad-400",
@@ -304,8 +304,8 @@
     "msgstr": "বর্তমান অবস্থা"
   },
   "Stop looking": {
-    "model": "madlad-400",
-    "msgstr": "খুঁজতে থামো"
+    "model": "translategemma-4b",
+    "msgstr": "অনুসন্ধান বন্ধ করুন"
   },
   "Suggest a fix": {
     "model": "madlad-400",
@@ -320,8 +320,8 @@
     "msgstr": "কলটি শেষ হয়ে গেছে কারণ এখানে অডিও পাওয়া যাচ্ছে না।"
   },
   "The call ended because audio stopped working on this device.": {
-    "model": "translategemma-4b",
-    "msgstr": "এই ডিভাইসে অডিও কাজ করা বন্ধ হয়ে যাওয়ায় কলটি শেষ হয়ে যায়।"
+    "model": "hy-mt2",
+    "msgstr": "এই ডিভাইসে অডিও কাজ করা বন্ধ হয়ে যাওয়ায় কলটি শেষ হয়ে গেল।"
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
     "model": "translategemma-27b",
@@ -332,8 +332,8 @@
     "msgstr": "কোনো মাইক্রোফোন না পাওয়ায় কলটি শেষ হয়ে গেল।"
   },
   "The commit this server runs": {
-    "model": "hy-mt2",
-    "msgstr": "এই সার্ভারটি যে কমিটগুলো চালায়"
+    "model": "madlad-400",
+    "msgstr": "এই সার্ভারটি যে কমান্ড চালায়"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "hy-mt2",
@@ -360,8 +360,8 @@
     "msgstr": "এখানে কোনো অ্যাকাউন্ট, প্রোফাইল, পরিচিতি, অনুসারী, ফিড, ধারাবাহিকতা, স্কোর অথবা স্থায়ী সামাজিক নেটওয়ার্ক নেই। randos, সামাজিক মাধ্যম-এর চেয়ে বরং একটি কথোপকথনমূলক পরিকাঠামোর কাছাকাছি।"
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
-    "model": "madlad-400",
-    "msgstr": "এই সাইটের অনুবাদ মেশিন দ্বারা করা হয়েছে। যদি কিছু ভুল পড়ে থাকে, তাহলে নীচে তা খুঁজে বের করুন এবং “সংশোধন করার প্রস্তাব দিন” বাটনটি চাপুন: এটি আপনার সংশোধন ব্যতীত সবকিছু পূরণ করে GitHub-এ একটি ইস্যু খুলে দেবে (আপনার একটি GitHub অ্যাকাউন্ট প্রয়োজন)। আপনার সংশোধন সহ একটি pull request নিজে থেকেই খুলে যাবে, এবং এটি পর্যালোচনা করা হলে তা সক্রিয় হয়ে যাবে।"
+    "model": "translategemma-27b",
+    "msgstr": "এই সাইটের অনুবাদগুলো স্বয়ংক্রিয়ভাবে তৈরি করা হয়েছে। যদি কোনো কিছু ভুল বা অস্পষ্ট মনে হয়, তাহলে নিচে সেটি খুঁজে বের করে “Suggest a fix” (“সংশোধনের প্রস্তাব দিন”) অপশনটিতে ক্লিক করুন: এটি গিটহাব-এ একটি নতুন ইস্যু খুলবে, যেখানে প্রায় সবকিছু আগে থেকেই লেখা থাকবে, শুধু আপনার প্রস্তাবিত সংশোধনটি যোগ করতে হবে (এর জন্য আপনার একটি গিটহাব অ্যাকাউন্ট থাকতে হবে)। আপনার প্রস্তাবিত সংশোধনসহ একটি পুল রিকোয়েস্ট স্বয়ংক্রিয়ভাবে তৈরি হবে এবং পর্যালোচনার পর সেটি কার্যকর করা হবে।"
   },
   "Time is up": {
     "model": "madlad-400",
@@ -392,8 +392,8 @@
     "msgstr": "গিটহাব-এ দেখুন"
   },
   "We can't find the internet": {
-    "model": "m2m100",
-    "msgstr": "ইন্টারনেট খুঁজে পাওয়া যায় না"
+    "model": "madlad-400",
+    "msgstr": "আমরা ইন্টারনেট খুঁজে পাচ্ছি না"
   },
   "We couldn't start that call. Please try again.": {
     "model": "hy-mt2",
@@ -444,8 +444,8 @@
     "msgstr": "চলুন"
   },
   "button\u0004End": {
-    "model": "madlad-400",
-    "msgstr": "শেষ"
+    "model": "hy-mt2",
+    "msgstr": "শেষ করুন"
   },
   "button\u0004Find a rando": {
     "model": "madlad-400",
@@ -464,8 +464,8 @@
     "msgstr": "মিউট অফ করুন"
   },
   "close": {
-    "model": "madlad-400",
-    "msgstr": "বন্ধ করো"
+    "model": "m2m100",
+    "msgstr": "বন্ধ"
   },
   "connection state\u0004answering": {
     "model": "translategemma-4b",
@@ -536,8 +536,8 @@
     "msgstr": "randos হলো ফ্রি সফটওয়্যার (AGPL-3.0) এবং এটি পাবলিকভাবে তৈরি করা হয়েছে।"
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "hy-mt2",
-    "msgstr": "রিমোট অডিওর জন্য একটি ট্যাপ দরকার (%{summary})"
+    "model": "translategemma-27b",
+    "msgstr": "দূরবর্তী অডিওর জন্য একটি ট্যাপ প্রয়োজন (%{summary})।"
   },
   "remote audio playing (%{summary})": {
     "model": "madlad-400",

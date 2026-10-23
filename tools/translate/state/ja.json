@@ -108,8 +108,8 @@
     "msgstr": "会話はプライベートなものであり、記録として保存されることはありません。サーバーは通話を円滑に進める役割を果たしますが、通話内容を録音したり、誰と通話したかの履歴を作成したりすることはありません。"
   },
   "Couldn't connect": {
-    "model": "translategemma-4b",
-    "msgstr": "接続できませんでした"
+    "model": "m2m100",
+    "msgstr": "接続できない"
   },
   "Counted across %{answered} of %{total} servers.": {
     "model": "hy-mt2",
@@ -236,8 +236,8 @@
     "msgstr": "何も一致しません。"
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
-    "msgstr": "その他の言語：%{calls}"
+    "model": "m2m100",
+    "msgstr": "他の言語: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
     "model": "translategemma-27b",
