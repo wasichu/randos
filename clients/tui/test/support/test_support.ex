@@ -12,10 +12,13 @@ defmodule Tui.TestSupport do
   @doc "The server the integration tests use (`RANDOS_URL`; `just tui-smoke` sets it)."
   def server_url, do: System.get_env("RANDOS_URL") || "ws://localhost:4010/participant/websocket"
 
-  @doc "Starts (supervised by the test) a text-only TUI against `server_url/0`."
-  def start_app(id, size \\ {100, 24}) do
+  @doc """
+  Starts (supervised by the test) a text-only TUI against `server_url/0`;
+  `opts` go to `Tui.App` (e.g. `language:`; English otherwise).
+  """
+  def start_app(id, size \\ {100, 24}, opts \\ []) do
     ExUnit.Callbacks.start_supervised!(
-      {Tui.App, name: nil, test_mode: size, uri: server_url(), test_pid: self()},
+      {Tui.App, [name: nil, test_mode: size, uri: server_url(), test_pid: self()] ++ opts},
       id: id
     )
   end
