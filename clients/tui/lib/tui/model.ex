@@ -49,7 +49,8 @@ defmodule Tui.Model do
           call: map() | nil,
           now_ms: integer(),
           log: [String.t()],
-          status_page: status_page() | nil
+          status_page: status_page() | nil,
+          language: String.t()
         }
 
   # `info?`: the "About these numbers" pop-up is open (i).
@@ -74,7 +75,8 @@ defmodule Tui.Model do
             call: nil,
             now_ms: 0,
             log: [],
-            status_page: nil
+            status_page: nil,
+            language: "en"
 
   @statuses %{
     "idle" => :idle,
@@ -118,13 +120,14 @@ defmodule Tui.Model do
     }
   end
 
-  @doc "What `Tui.Config` keeps of the form."
+  @doc "What `Tui.Config` keeps of the form, and the interface language."
   @spec saved(t()) :: map()
   def saved(model),
     do: %{
       "speaks" => model.speaks,
       "hears" => model.hears,
-      "adult_acknowledged" => model.adult_acknowledged?
+      "adult_acknowledged" => model.adult_acknowledged?,
+      "language" => model.language
     }
 
   ## Server messages
@@ -245,6 +248,9 @@ defmodule Tui.Model do
   def key(%{status: :idle, status_page: %{}} = model, _key), do: {model, []}
 
   def key(%{status: :idle} = model, "s"), do: ask_status(model)
+
+  def key(%{status: :idle} = model, "l"),
+    do: {%{model | language: Tui.Language.next(model.language)}, []}
 
   def key(%{status: :idle} = model, key) do
     case key do

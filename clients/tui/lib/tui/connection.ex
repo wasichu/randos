@@ -37,6 +37,13 @@ defmodule Tui.Connection do
   def push(connection, event, payload), do: GenServer.cast(connection, {:push, event, payload})
 
   @doc """
+  The interface language the next join asks for (`locale`: the server's
+  own words come in it). Takes effect when the channel next joins.
+  """
+  @spec set_locale(GenServer.server(), String.t()) :: :ok
+  def set_locale(connection, locale), do: GenServer.cast(connection, {:set_locale, locale})
+
+  @doc """
   Says we're leaving the call on purpose (`signal` `peer_disconnected`,
   Client obligation 7) and waits for the server's reply, so it's sent
   before the channel closes. `:ok`, or `{:error, reason}` on a timeout or
@@ -54,7 +61,14 @@ defmodule Tui.Connection do
     owner = Keyword.fetch!(opts, :owner)
 
     {:ok, socket} = connect(Keyword.take(opts, [:uri, :test_mode?]))
-    {:ok, assign(socket, owner: owner, pending: %{}, resume_ticket: nil)}
+
+    {:ok,
+     assign(socket,
+       owner: owner,
+       pending: %{},
+       resume_ticket: nil,
+       locale: Keyword.get(opts, :locale, "en")
+     )}
   end
 
   @doc false
@@ -66,8 +80,8 @@ defmodule Tui.Connection do
   def handle_connect(socket) do
     params =
       case socket.assigns.resume_ticket do
-        nil -> %{}
-        ticket -> %{resume_ticket: ticket}
+        nil -> %{locale: socket.assigns.locale}
+        ticket -> %{locale: socket.assigns.locale, resume_ticket: ticket}
       end
 
     {:ok, join(socket, @topic, params)}
@@ -135,6 +149,8 @@ defmodule Tui.Connection do
   end
 
   @impl Slipstream
+  def handle_cast({:set_locale, locale}, socket), do: {:noreply, assign(socket, :locale, locale)}
+
   def handle_cast({:push, event, payload}, socket) do
     case push(socket, @topic, event, payload) do
       {:ok, ref} ->

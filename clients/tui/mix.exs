@@ -66,6 +66,8 @@ defmodule Tui.MixProject do
       # SocketTest helper; the alternative is hand-writing that protocol.
       {:slipstream, "~> 1.2"},
       {:jason, "~> 1.4"},
+      # The interface's translations, as the server does them.
+      {:gettext, "~> 1.0"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end

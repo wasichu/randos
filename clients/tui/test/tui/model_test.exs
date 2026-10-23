@@ -131,7 +131,8 @@ defmodule Tui.ModelTest do
     assert Model.saved(model) == %{
              "speaks" => "fr",
              "hears" => ["es"],
-             "adult_acknowledged" => true
+             "adult_acknowledged" => true,
+             "language" => "en"
            }
 
     # Nothing usable: the defaults.
@@ -294,5 +295,11 @@ defmodule Tui.ModelTest do
 
     assert Model.seconds_left(model) == 15
     assert Model.seconds_left(joined()) == nil
+  end
+
+  test "l on the idle screen moves to the next interface language" do
+    model = %Model{status: :idle, connection: :connected}
+    {next, []} = Model.key(model, "l")
+    assert next.language == Tui.Language.next("en")
   end
 end

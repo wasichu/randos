@@ -5,9 +5,11 @@ defmodule Tui.Config do
   computer only (nothing here goes to the server):
 
       {"speaks": "en", "hears": ["en", "es"], "adult_acknowledged": true,
-       "input": "MacBook Pro Microphone", "output": null}
+       "language": "es", "input": "MacBook Pro Microphone", "output": null}
 
-  `input`/`output` are device names (`null`: the system default). Where it
+  `language` is the interface's (`Tui.Language`; a file from before it
+  had one still loads). `input`/`output` are device names (`null`: the
+  system default). Where it
   lives comes from the app config (`:config_path`): the user's config
   directory in an installed build (`~/.config/randos/config.json` on Linux,
   `~/Library/Application Support/randos/config.json` on macOS), `tmp/` in

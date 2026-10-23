@@ -37,13 +37,24 @@ defmodule Tui.App do
 
   @impl true
   def mount(opts) do
+    config = Keyword.get(opts, :config)
+    saved = Config.load(config)
+    language = language(opts, saved)
+    Tui.Language.apply(language)
+
     {connection, owned?} =
       case Keyword.fetch(opts, :connection) do
         {:ok, pid} ->
           {pid, false}
 
         :error ->
-          {:ok, pid} = Connection.start_link(uri: Keyword.fetch!(opts, :uri), owner: self())
+          {:ok, pid} =
+            Connection.start_link(
+              uri: Keyword.fetch!(opts, :uri),
+              owner: self(),
+              locale: language
+            )
+
           {pid, true}
       end
 
@@ -52,14 +63,12 @@ defmodule Tui.App do
     # weren't registered yet): ask it for what "ready" would have.
     if media_running?(Keyword.get(opts, :media)), do: send(self(), :media_started)
 
-    config = Keyword.get(opts, :config)
-    saved = Config.load(config)
-
     state = %{
       model:
         Model.new(now_ms())
         |> Model.set_audio(media_running?(Keyword.get(opts, :media)))
-        |> Model.restore(saved),
+        |> Model.restore(saved)
+        |> Map.put(:language, language),
       connection: connection,
       owned?: owned?,
       uri: Keyword.get(opts, :uri, "(test)"),
@@ -254,6 +263,11 @@ defmodule Tui.App do
       Connection.push(state.connection, event, payload)
     end)
 
+    if model.language != state.model.language do
+      Tui.Language.apply(model.language)
+      Connection.set_locale(state.connection, model.language)
+    end
+
     # The screen shows only the latest notice; the full history goes to the
     # log file (`tmp/tui.log`), for debugging a call afterwards.
     with [line | _] when model.log != state.model.log <- model.log do
@@ -278,6 +292,16 @@ defmodule Tui.App do
 
   defp settings(state),
     do: Map.merge(Model.saved(state.model), MediaState.saved_choice(state.media_state))
+
+  # `:language` (tests pass one); a test app (`test_mode`) without one is in
+  # English whatever the machine's LANG, since tests read the screen's text.
+  defp language(opts, saved) do
+    cond do
+      language = opts[:language] -> language
+      opts[:test_mode] -> "en"
+      true -> Tui.Language.resolve(saved["language"])
+    end
+  end
 
   defp now_ms, do: System.system_time(:millisecond)
 end
