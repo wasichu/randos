@@ -6,10 +6,11 @@
 - Reference-free quality estimation with two independent models, MetricX-24
   (ungated) and COMET-Kiwi (gated): never rank on MetricX alone, since
   TranslateGemma was trained against it.
-- A tone judge (meaning kept, calm and informal) from a model family no
-  contestant belongs to: Mistral Small 3.2.
+- Two tone judges (meaning kept, calm and informal) from model families no
+  contestant belongs to: Mistral Small 3.2 and Qwen3 30B-A3B (`JUDGES`;
+  Qwen alone where Mistral's card doesn't list the language).
 
-The last three run afterwards with `cli score`, one scorer per process (so
+The last four run afterwards with `cli score`, one scorer per process (so
 a scorer never shares memory with a contestant), over every run in
 results/: a model scored by fewer scorers than the rest would get a skewed
 mean rank on the review page. Until then a run holds them as `"pending"`.

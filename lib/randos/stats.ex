@@ -17,8 +17,9 @@ defmodule Randos.Stats do
 
   Nothing else: no IPs, no participant or call ids, nothing per person (call
   ids arrive as telemetry metadata and are never stored). Counts live in
-  this process's memory and reset at UTC midnight, and whenever the server
-  restarts (Fly stops it when idle).
+  this process's memory and reset at UTC midnight; with a `:store`
+  (`Randos.Stats.FileStore` when `RANDOS_STATS_DIR` is set, as in
+  production) each day's counts survive a restart.
 
   ## Raw counters and what's published
 
@@ -35,9 +36,9 @@ defmodule Randos.Stats do
         pairs: %{{"en", "es"} => 5, {"de", "fr"} => 1}
       }
 
-  `:store` is the seam for keeping each node's daily counters across
-  restarts later: a module with `load(Date.t()) :: raw | nil` and
-  `save(Date.t(), raw)`. None is configured today (memory only).
+  `:store` keeps each node's daily counters across restarts: a module with
+  `load(Date.t()) :: raw | nil` and `save(Date.t(), raw)`
+  (`Randos.Stats.FileStore`); without one, memory only.
   """
 
   use GenServer

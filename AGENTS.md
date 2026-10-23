@@ -18,10 +18,13 @@ are product requirements, not suggestions. Don't add features that violate them.
     if something already answers on :4000 it reuses it and exits.
     `just serve-stop` stops it (only a BEAM on the port)
   - `just tui` — the terminal client against the local dev server (`RANDOS_URL`/`--url`
-    to override); `just tui-smoke` — through a throwaway server, two real TUI clients call
-    each other, and a TUI (helper playing a tone) calls headless Chrome in both
-    WebRTC roles with audio checked both ways (run after changing `clients/tui`,
-    the helper, the channel, or the browser call; needs the helper built, node, Chrome)
+    to override); `just test-tui [path]` runs the TUI's own tests. `just tui-smoke` —
+    through a throwaway server, two real TUI clients call each other, and a TUI
+    (helper playing a tone) calls headless Chrome in both WebRTC roles with audio
+    checked both ways; then the relay-only pass and the recovery tests (ICE
+    restart through the test TURN relay, `just test-turn` builds it). Run it after
+    changing `clients/tui`, the helper, the channel, or the browser call; needs
+    the helper built, node, Chrome
   - `just screenshots` — regenerates the README's screenshots (`docs/assets/`)
     from a real call on a throwaway server: headless Chrome peers and VHS
     driving the TUI with `RANDOS_FAKE_AUDIO=1` (a test tone, no speaker, no
@@ -30,15 +33,20 @@ are product requirements, not suggestions. Don't add features that violate them.
     queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
   - `just test [path]`, `just test-failed`
   - `just precommit` — **run before declaring any change done** and fix everything it reports
-    (warnings-as-errors compile, unused deps, format, `credo --strict`, tests).
+    (the server's warnings-as-errors compile, unused deps, format, `credo --strict`,
+    tests; then `native-check`, the TUI's own precommit, and the Python harnesses'
+    offline tests, `translate-test` with Ruff and `voice-eval-test`).
     Check its exit status, not filtered output: piping it through `grep`/`tail`
     hides failures. CI (`.github/workflows/ci.yml`) runs it on macOS and Linux
     with `RANDOS_REQUIRE_NATIVE=1`, plus `just smoke` and `just tui-smoke`;
     inspect runs with `gh run list` / `gh run view --log-failed`.
-  - `just smoke` — browser end-to-end check (`test/e2e/call_smoke.mjs`): two
-    headless Chromes with fake mics place a real WebRTC call, extend it, and
-    check mic teardown. **Run it after any change to `assets/js/` or the call
+  - `just smoke` — the browser end-to-end checks: `call_smoke.mjs` (two
+    headless Chromes with fake mics place a real WebRTC call, extend it, drop
+    and resume a socket, check mic teardown), `relay_only_smoke.mjs`,
+    `voice_lab_smoke.mjs`, and `just recovery-smoke` (ICE restart through the
+    test TURN relay). **Run it after any change to `assets/js/` or the call
     flow**; `mix test` can't see browser behavior. Needs Chrome (or `CHROME_BIN`).
+    `docs/development.md` describes every recipe for contributors.
   - Production check: `BASE_URL=https://randos.slowinput.org SMOKE_SKIP_EXTENSION=1 node test/e2e/call_smoke.mjs`
     (the canonical host; `randos.fly.dev` rejects browser sockets by design)
   - `RANDOS_CALL_SEGMENT_MS=8000 just dev` — dev-only short call segments for
@@ -122,6 +130,12 @@ venv and `uv run --group X` re-syncs it, so never run one while another
 group's model is running; what needs no model, the tests, `review`,
 `fill` and `tidy`, runs in `.venv-test` with `UV_PROJECT_ENVIRONMENT=.venv-test`,
 which `just translate-test` and so `just precommit` use, safe during a run). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, rebuilt by `UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli review`).
+  The public `/translations` page (`RandosWeb.TranslationsLive`, from
+  `RandosWeb.Translations`) lists every string with a "Suggest a fix" link to
+  a GitHub issue form; `.github/workflows/translation-fix.yml` turns such an
+  issue into a pull request (`randos_translate.issue_fix`, then
+  `mix randos.translation_fix`). The issue's text is untrusted: it never
+  reaches a shell.
 - `docs/architecture/refactor_plan.md` is the living roadmap (status, how the
   pieces fit, Phase 4 TUI and 5 voice anonymization, open items, decisions).
   Keep it in sync: symbols not line numbers, and update its "Verified" line.
@@ -237,7 +251,8 @@ which `just translate-test` and so `just precommit` use, safe during a run). Its
   user's call.
 - **stdout is the Port.** Never print to it (`print_stdout` is denied); write
   frames via `frame::write_frame`. Diagnostics go to stderr.
-- **No `unsafe`** (`forbid(unsafe_code)` in Cargo.toml). If a dependency
+- **No `unsafe`** (`#![forbid(unsafe_code)]` in the helper's `main.rs`; the
+  workspace lints deny it everywhere). If a dependency
   forces FFI, isolate it and document why in the crate README.
 - **The Port protocol is a contract**, documented in
   `clients/tui/native/README.md`; change the doc, the Rust side, and the

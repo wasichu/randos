@@ -14,9 +14,11 @@ defmodule Randos.Calls.Lifecycle do
   A call carries audio when its participants do (`Entry.audio?`). Then it
   stays `:connecting` until both report their media `:connected`, and the ten
   minutes start only then; if that takes longer than the connect timeout,
-  or a participant's media stays `:disconnected` past the grace period (or
-  reports `:failed`), the call ends `:connection_failed`. The server owns
-  these rules so the browser and the TUI don't each implement them.
+  the call ends `:connection_failed`. Once active, a call that turns
+  unhealthy (someone's media down, or someone's connection to the server
+  gone) has one recovery budget to come back, with ICE restarts inside it
+  when both clients support them; past it, it ends. The server owns these
+  rules so the browser and the TUI don't each implement them.
 
   Transitions from the wrong status raise `FunctionClauseError`: callers are
   expected to know the current status. The one legitimate refusal is

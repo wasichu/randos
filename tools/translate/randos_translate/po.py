@@ -147,8 +147,8 @@ def fill(
             continue
         entry.msgstr = translations[key]
         # A fresh translation of this very msgid: a "fuzzy" left by a merge
-        # (the English was reworded) no longer applies, and Gettext skips
-        # fuzzy entries, so it would never show.
+        # (the English was reworded) no longer applies. (Gettext doesn't
+        # skip fuzzy entries: a merge's guess would show as it is.)
         if "fuzzy" in entry.flags:
             entry.flags.remove("fuzzy")
         state[key] = {"msgstr": translations[key], "model": model if isinstance(model, str) else model[key]}

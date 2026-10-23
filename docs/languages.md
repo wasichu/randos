@@ -61,7 +61,8 @@ few places:
   `tools/translate/randos_translate/po.py` (`LOCALES`), `checks.py`
   (the script a translation should be written in), `models/__init__.py`
   (`NAMES`), each contestant's locale list and code map (`models/`), and
-  the judge for it (`scoring.JUDGE_FOR`); then a run with `run --append`
+  its judges (`scoring.judges_for`: both, or Qwen alone where Mistral's
+  card doesn't list the language); then a run with `run --append`
   (`tools/translate/README.md`).
 
 The TUI needs no change: it gets the list from the server when it joins.

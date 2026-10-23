@@ -1,12 +1,10 @@
 # randos_media: the TUI's media helper
 
-A small Rust binary the TUI runs as an Erlang Port. It will own all call
-media (WebRTC via str0m, Opus, mic/speaker via cpal, later echo
-cancellation); Elixir keeps signaling and UI. Design:
-[`docs/architecture/tui_audio.md`](../../../docs/architecture/tui_audio.md).
-
-**Status: Stage 0.** Port framing (ping/pong) and a mic → Opus → speaker
-loopback for measuring latency by hand.
+A small Rust binary the TUI runs as an Erlang Port. It owns all call media
+(WebRTC via str0m, Opus, mic/speaker via cpal, echo cancellation, the voice
+processor); Elixir keeps signaling and UI. Design and its history:
+[`docs/architecture/tui_audio.md`](../../../docs/architecture/tui_audio.md);
+the Port protocol is this README's (below).
 
 ## Loopback
 
@@ -21,7 +19,8 @@ draws `loopback_levels` as a silent meter. Once a second it reports where the la
 buffers (from cpal's callback timestamps), the two rings, and the codec's
 fixed 26.5 ms (one 20 ms frame plus 6.5 ms of Opus lookahead). That's the
 pipeline's own latency, not an acoustic mouth-to-ear measurement. Use
-headphones: there is no echo cancellation yet (Stage 3).
+headphones: the loopback plays your voice back on purpose, so it has no
+echo cancellation (calls do).
 
 Devices run at 48 kHz when they offer it. Otherwise the helper takes the
 highest f32 rate with whole 20 ms frames (so Bluetooth headphones' 44.1 kHz
@@ -69,11 +68,13 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 | `stream_error` | `error`; a device stream reported a problem |
 | `call_signal` | `type`, `payload`: a signal for the peer in the channel's shape; push it as the channel's `signal` event unchanged |
 | `call_state` | `state`: `connected`, `disconnected` (may recover), or `failed` (the call session stopped with an error and can't come back; `reason`. The TUI ends the call with `audio_failed`) |
-| `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed` (frames of loss concealment: all but the last of a gap, at most 5 per gap), `recovered` (lost frames rebuilt from the next packet's in-band FEC, which the encoder includes, planning for 10% loss), `dropped`, `skipped_candidates`, `send_errors` (cumulative), `local_candidates` (kinds offered so far: `host`, then `srflx` and/or `relay` as they arrive), `path` (this second: `direct`, or `relay` through a TURN server, ours or the peer's; `null` if nothing was sent; inferred from what was sent, as str0m doesn't expose the chosen pair), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
+| `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed` (frames of loss concealment: all but the last of a gap, at most 5 per gap), `recovered` (lost frames rebuilt from the next packet's in-band FEC, which the encoder includes, planning for 10% loss), `dropped`, `skipped_candidates`, `send_errors` (cumulative), `local_candidates` (kinds offered since the call started or its latest restart: `host`, then `srflx` and/or `relay` as they arrive; no `host` in a relay-only call), `path` (this second: `direct`, or `relay` through a TURN server, ours or the peer's; `null` if nothing was sent; inferred from what was sent, as str0m doesn't expose the chosen pair), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
 | `call_levels` | every 50 ms: `you` (as sent) and `peer` (as played), 12 bars each, 0..1, lowest frequencies first: the website visualizer's numbers (`src/spectrum.rs` does what its `AnalyserNode` does), drawn as the TUI's audio meters |
 
 **Calls.** The helper binds one UDP socket and offers it as its host
-candidate, which is in the offer or answer SDP (no local trickle yet). Remote
+candidate, which is in the offer or answer SDP; its server-reflexive and
+relay candidates follow as `ice_candidate` signals as they're gathered,
+each with its `usernameFragment`. Remote
 `ice_candidate`s are applied once the remote description is set (earlier
 ones are buffered); end-of-candidates and browsers' mDNS `.local` host
 candidates are skipped (counted in `skipped_candidates`), since the
@@ -136,9 +137,13 @@ The helper exits when its stdin closes (the Port is closed or the TUI dies),
 stopping any loopback. It never writes to stderr in Port mode except a fatal
 startup error, since stderr is the user's terminal.
 
-Contract tests: `tests/port.rs` drives the built binary over stdin/stdout;
-`clients/tui/test/tui/media_test.exs` drives it through `Tui.Media`. Both use
-`sine`/`null`, so neither needs audio hardware.
+Contract tests: `tests/port.rs` drives the built binary over stdin/stdout,
+and `tests/restart.rs` runs relay-only calls through the test TURN relay
+(`examples/test_turn.rs`), cuts them and restarts ICE; both share
+`tests/common` (the helper over its Port, and a `Call` that plays the
+server between two helpers). `clients/tui/test/tui/media_test.exs` drives
+the binary through `Tui.Media`. All use `sine`/`null`, so none needs audio
+hardware.
 
 ## Dependencies
 
@@ -176,7 +181,7 @@ with short-lived TURN REST credentials derived from the shared secret
 without printing it. Coturn refuses made-up credentials; two allocations
 relay data to each other; and two whole calls run relay-only (no host or
 STUN candidates, like a browser's `iceTransportPolicy: "relay"`;
-`CallConfig::relay_only`, not in the Port protocol), one through UDP TURN
+`call_start`'s `relay_only`), one through UDP TURN
 and one through TLS TURN (`turns:` only), so ICE, DTLS and audio all go
 through coturn. The hermetic tests
 use a fake TURN server and can't prove that: on one machine the host pair

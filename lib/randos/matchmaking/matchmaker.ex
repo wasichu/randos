@@ -8,7 +8,7 @@ defmodule Randos.Matchmaking.Matchmaker do
   Everyone waits in one list, oldest first. A joiner is matched with the
   person who has waited longest among those they're compatible with
   (`Randos.Matchmaking.Entry.compatible?/2`: each speaks a language the other
-  hears). Fifteen languages and a small queue make a scan cheap.
+  hears). Twenty languages and a small queue make a scan cheap.
 
   Two people who just had a call aren't matched with each other again for
   `Randos.Calls.Lifecycle.rematch_window_seconds/0` after it ends, so "Next"

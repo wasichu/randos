@@ -10,8 +10,7 @@ and works out:
   the ones to look at come first;
 - **evaluator conflict**: whether the scorers disagree on which model did
   best, i.e. some model is ranked first by one scorer and last by another.
-  It needs at least two scorers with scores (only back-translation chrF
-  runs today, so none conflict yet);
+  It needs at least two scorers with scores;
 - **best**: the translation that ships (`pick`): among those passing every
   check, the best mean rank over MetricX and COMET-Kiwi, the judge breaking
   ties; `fill --best` writes these, string by string;

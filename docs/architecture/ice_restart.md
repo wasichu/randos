@@ -21,8 +21,18 @@ helper's half is `call_restart`. Tested: `call_coordinator_test.exs`
 (one test per scenario), `test/e2e/recovery_smoke.mjs` (two Chromes
 through `test_turn`, both paths cut, and a cut with the websocket drop),
 and the helper's `tests/restart.rs`. The current rules are in
-`participant_channel.md` (obligations 4, 9, 10); what follows is the
-design as proposed.
+`participant_channel.md` (obligations 4, 9, 10, and 11's offline limit,
+added 2026-10-23); what follows is the design as proposed.
+
+Where the helper's build differs from it: the offerer restarts with
+`ice_restart(true)` after invalidating the old candidates (the new host
+candidate is kept); trickled candidates carry their `usernameFragment`
+(done, `Candidates::trickle`); and the helper noticed a dead path only
+after ~15 s until a patched copy of str0m's `is` crate (`vendor/is`,
+`vendor/README.md`) and tighter STUN timing brought it to ~4 s. A
+helper whose call session stops ends the call `audio_failed`
+(obligation 6), not `media_state` `failed`, since no restart can bring
+it back.
 
 ## Recommendation in short
 

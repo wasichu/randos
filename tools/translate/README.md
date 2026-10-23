@@ -1,7 +1,7 @@
 # The translation shootout (Phase 6)
 
 Machine-translates the website's strings (`priv/gettext/default.pot`) into
-the 14 other practice languages, checks and scores every translation, and
+the 19 other interface languages, checks and scores every translation, and
 fills the `.po` files with each string's best translation. No person chooses
 or reviews them (the owner's rule): the models, the evaluators and the
 checks decide everything; a visitor's "Suggest a fix" (`/translations`) is
@@ -47,8 +47,8 @@ COMET-Kiwi, CC-BY-NC-SA, used only to score, never shipped).
 ## What a run does
 
 `run` translates each source string, translates it back to English, and
-records for each one (in `results/<model>-<time>.json`, which the results
-page is built from):
+records for each one (in `results/<model>-<time>.json`; the runs kept are
+renamed `results/shootout-<model>.json`, and `run --append` extends one):
 
 - **checks** (`checks.py`): placeholders such as `%{time}` intact; the
   glossary terms "randos" and "rando" kept exactly, lowercase included
@@ -196,8 +196,7 @@ and string) and re-runs the checks, so an improved check applies to old
 runs. For each locale and string it puts the models' translations side by
 side and works out how much they **disagree** (1 − mean pairwise chrF,
 strings sorted by it), whether the **evaluators disagree** (a model ranked
-first by one scorer and last by another; needs two scorers, so it lights
-up once MetricX or COMET-Kiwi runs), the translation that **ships**
+first by one scorer and last by another), the translation that **ships**
 (above), and per locale the model **picked most**. The dev-only page
 (`RandosDev.TranslationReviewLive`) shows it, with filters for each of
 those.

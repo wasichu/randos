@@ -539,7 +539,8 @@ the advisor. Each item: **extract**, **merge**, **link**, or **leave** (with why
   repeat the env, port, trap, and wait-for-server lines verbatim.
 - **Leave the three signal-relay loops** (`call.rs` tests, `tests/port.rs`,
   `app_test.exs`): three interfaces in two languages, and each loop is its
-  test's subject.
+  test's subject. (Since 2026-10-23 the Port one is `tests/common::Call`,
+  shared by `port.rs` and `restart.rs`.)
 - **Leave the e2e scripts**: `cdp.mjs` is the shared part; the scripts are
   different scenarios.
 
@@ -631,7 +632,8 @@ same/different table), and AGENTS' TUI row now cover STUN/TURN.
 - e2e tests never reach the internet: the test server hands out no ICE
   servers (`RANDOS_ICE_SERVERS='[]'`); srflx is covered by the Rust tests.
 - `relay_only` stays test-only (`CallConfig`), not a Port field; it's a
-  one-line field if a user's network ever needs diagnosing.
+  one-line field if a user's network ever needs diagnosing. (Superseded:
+  relay-only calls made it `call_start`'s `relay_only`, 2026-10-21.)
 
 ## Quality pass before packaging (done 2026-10-21)
 
@@ -792,7 +794,7 @@ Not scheduled; pick up when relevant.
   language is pre-checked among the hearing languages (and can be
   unchecked); among several compatible people, whoever has waited longest
   is matched. The Matchmaker's `{speaks, listens}` keys become a scan of
-  the waiting list (fine at 15 languages); the browser form gets
+  the waiting list (fine at 15 languages, then 20); the browser form gets
   checkboxes; the TUI a multi-select; the channel's `find` accepts a list
   while still taking a single language from v0.2.0 TUIs (a protocol change:
   the mini-pass applies). Built as designed, plus: the speaking language
@@ -849,8 +851,9 @@ Not scheduled; pick up when relevant.
   with the boot check a missing relay fails at startup.
 - **Surviving a connection blip (done 2026-10-21).** A participant whose
   connection drops mid-call is marked away (`call.away`; the rando sees
-  `peer_reconnecting`), and the call waits
-  `Lifecycle.reconnect_grace_seconds/0` (10 s). The client rejoins with a
+  `peer_reconnecting`), and the call waits (then
+  `Lifecycle.reconnect_grace_seconds/0`, 10 s; since 2026-10-22 the one
+  recovery budget, `Lifecycle.recovery_budget_seconds/0`, 15 s). The client rejoins with a
   one-time resume ticket (`Randos.Calls.ResumeTicket`: hash kept in a
   Registry owned by the coordinator; memory-only in clients) and takes
   the same seat. The browser's LiveSocket params carry it and its WebRTC

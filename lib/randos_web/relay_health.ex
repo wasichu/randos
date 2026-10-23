@@ -1,7 +1,9 @@
 defmodule RandosWeb.RelayHealth do
+  @interval 300_000
+
   @moduledoc """
   Whether the TURN relay works, for the public status page: every
-  #{div(300_000, 60_000)} minutes (and at start), a real TURN allocation over UDP (`turn:`)
+  #{div(@interval, 60_000)} minutes (and at start), a real TURN allocation over UDP (`turn:`)
   and over TLS (`turns:`) with fresh credentials from
   `RandosWeb.IceServers`, released at once (`RandosWeb.RelayHealth.Turn`).
 
@@ -22,7 +24,6 @@ defmodule RandosWeb.RelayHealth do
   alias RandosWeb.IceServers
   alias RandosWeb.RelayHealth.Turn
 
-  @interval 300_000
   @topic "relay_health"
 
   @typedoc "One transport's last result."

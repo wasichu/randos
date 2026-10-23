@@ -1,6 +1,8 @@
 # TUI audio (Phase 4.3): design
 
-Status: **accepted 2026-10-19** (decisions below). Stage 0 in progress.
+Status: **accepted 2026-10-19** (decisions below); built, Stages 0–3
+(the roadmap, `refactor_plan.md`, has what shipped). The Port protocol as
+built is in `clients/tui/native/README.md`, its one source.
 Researched 2026-10-19. Each claim is marked **[run]** (we ran it here, Elixir
 1.20.4 / OTP 29.1.1, macOS arm64), **[source]** (read in package source,
 metadata, or official docs), or **[unverified]** (reported but not checked;
@@ -243,10 +245,11 @@ reason the helper owns both streams.
     `peer_disconnected`, exactly as the browser does.
   - `Tui.Model` gains only "media up/down" display state. The participant
     state machine stays on the server.
-- **Port protocol:** length-prefixed frames (`{:packet, 4}`), JSON or ETF
-  control messages (start, signal in/out, stats, error) plus binary PCM frames
-  when the seam's bounce mode is on (below). The helper exits when stdin
-  closes.
+- **Port protocol** (as proposed; built with JSON messages only, no PCM
+  frames: `clients/tui/native/README.md`): length-prefixed frames
+  (`{:packet, 4}`), JSON or ETF control messages (start, signal in/out,
+  stats, error) plus binary PCM frames when the seam's bounce mode is on
+  (below). The helper exits when stdin closes.
 - **Our TURN URLs need no server change**: the helper parses
   `turn:`/`turns:` itself, using UDP for `turn:` without `?transport=` (what
   browsers do).

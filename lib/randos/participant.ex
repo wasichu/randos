@@ -3,8 +3,8 @@ defmodule Randos.Participant do
   The UI-agnostic core of one person using randos: their flow from choosing
   languages, through the queue, into calls and back.
 
-  Pure and process-free. A shell (the LiveView today; a Channel/TUI later)
-  feeds it events and runs the effects it returns:
+  Pure and process-free. A shell (`RandosWeb.ParticipantShell`, under the
+  LiveView and the participant channel) feeds it events and runs the effects it returns:
 
       {participant, effects} = Participant.handle(participant, event)
 

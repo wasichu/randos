@@ -49,8 +49,8 @@ defmodule Randos.Calls.Call do
     # Participants whose connection to the server dropped, waiting for them
     # to come back (within Lifecycle.recovery_budget_seconds/0).
     away: [],
-    # Both clients can restart ICE (obligation 10); otherwise the call
-    # keeps the plain disconnected grace.
+    # Both clients can restart ICE (obligation 10); otherwise media
+    # `failed` ends the call at once (nothing can fix it).
     ice_restart?: false,
     # Bumped by the coordinator to ask the offerer for an ICE restart.
     ice_generation: 0,
