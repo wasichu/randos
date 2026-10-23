@@ -138,3 +138,13 @@ kitty #2109, Ghostty `harfbuzz.zig`, Alacritty #663, Windows Terminal
 (it reordered itself and came out reversed in Terminal.app). Still to
 check by eye, with Arabic in the TUI: Terminal.app (a reordering one)
 and Ghostty (a plain one).
+
+Checked by eye 2026-10-23 (window screenshots, the TUI in Arabic):
+both read right to left. Terminal.app reorders the logical text itself;
+Ghostty gets it reordered by `Tui.Bidi` and joins the letters (the
+research said it didn't). One fix came of it: the `←→` key is only
+arrows, neutral in bidi, so between two Arabic words Terminal.app paired
+it with the wrong action; in a right-to-left interface that hint now
+comes first, held by the line's start. Left as the terminals draw it:
+the cell grid spaces Arabic letters out, and a lam-alef ligature (لا)
+leaves a gap where its second cell was.

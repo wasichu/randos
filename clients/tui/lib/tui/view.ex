@@ -527,15 +527,23 @@ defmodule Tui.View do
     gettext_comment("Key help: space ticks or unticks the language under the cursor.")
     check = pgettext("key", "check")
 
-    [
-      {"tab/↑↓", pgettext("key", "move")},
-      {"←→", pgettext("key", "change")},
-      {"space", check},
-      {"enter", pgettext("key", "find")},
-      {"s", pgettext("key", "status")},
-      {"l", pgettext("key", "language")},
-      quit()
-    ]
+    # ←→ is only arrows (neutral in bidi): between two right-to-left
+    # words a reordering terminal would pair it with the wrong one, so in a
+    # right-to-left interface it goes first, held by the line's start.
+    arrows = {"←→", pgettext("key", "change")}
+    move = {"tab/↑↓", pgettext("key", "move")}
+
+    if(Tui.Terminal.rtl?(Gettext.get_locale(Tui.Gettext)),
+      do: [arrows, move],
+      else: [move, arrows]
+    ) ++
+      [
+        {"space", check},
+        {"enter", pgettext("key", "find")},
+        {"s", pgettext("key", "status")},
+        {"l", pgettext("key", "language")},
+        quit()
+      ]
   end
 
   defp help(%{status: :looking}), do: [{"c", pgettext("key", "cancel")}, quit()]
