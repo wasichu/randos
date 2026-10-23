@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} 分"
   },
+  "%{minutes}+ min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes}+ 分"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "残り時間：%{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "hy-mt2",
     "msgstr": "接続状態："
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "madlad-400",
+    "msgstr": "過去 %{minutes} 分間継続"
   },
   "Continued past 10 minutes": {
     "model": "madlad-400",
@@ -467,6 +475,10 @@
     "model": "m2m100",
     "msgstr": "閉じる"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "接続が切断されました"
+  },
   "connection state\u0004answering": {
     "model": "hy-mt2",
     "msgstr": "応答中"
@@ -511,6 +523,18 @@
     "model": "hy-mt2",
     "msgstr": "あなたのrandoを待っています"
   },
+  "couldn't connect": {
+    "model": "m2m100",
+    "msgstr": "接続できない"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "サーバが見つかりませんでした"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "認証情報が拒否されました"
+  },
   "crosstalk": {
     "model": "hy-mt2",
     "msgstr": "クロストーク"
@@ -523,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "マイクが使えません"
   },
+  "no answer": {
+    "model": "translategemma-4b",
+    "msgstr": "応答なし"
+  },
+  "no credentials asked for": {
+    "model": "translategemma-4b",
+    "msgstr": "認証情報が要求されなかった"
+  },
   "privacy": {
     "model": "m2m100",
     "msgstr": "プライバシー"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "hy-mt2",
     "msgstr": "randosはフリーソフトウェア（AGPL-3.0）であり、公開されて作成されています。"
+  },
+  "refused": {
+    "model": "hy-mt2",
+    "msgstr": "拒否されました"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "hy-mt2",
@@ -551,9 +587,17 @@
     "model": "madlad-400",
     "msgstr": "マイクを頼む"
   },
+  "secure connection failed": {
+    "model": "translategemma-4b",
+    "msgstr": "安全な接続が失敗しました"
+  },
   "under 1 min": {
     "model": "m2m100",
     "msgstr": "1分以内"
+  },
+  "unexpected reply": {
+    "model": "m2m100",
+    "msgstr": "予期せぬ回答"
   },
   "waiting for microphone": {
     "model": "m2m100",

@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} menit"
   },
+  "%{minutes}+ min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes}+ mnt"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Waktu tersisa: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "opus-mt",
     "msgstr": "Koneksi:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "Diteruskan setelah melewati %{minutes} menit"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "opus-mt",
     "msgstr": "tutup"
   },
+  "connection closed": {
+    "model": "hy-mt2",
+    "msgstr": "koneksinya terputus"
+  },
   "connection state\u0004answering": {
     "model": "translategemma-4b",
     "msgstr": "menjawab"
@@ -511,6 +523,18 @@
     "model": "opus-mt",
     "msgstr": "menunggu rando Anda"
   },
+  "couldn't connect": {
+    "model": "m2m100",
+    "msgstr": "Tidak bisa terhubung"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "Tidak dapat menemukan server"
+  },
+  "credentials refused": {
+    "model": "hy-mt2",
+    "msgstr": "kredensial ditolak"
+  },
   "crosstalk": {
     "model": "opus-mt",
     "msgstr": "crosstalk"
@@ -523,6 +547,14 @@
     "model": "m2m100",
     "msgstr": "Mikrofon tidak tersedia"
   },
+  "no answer": {
+    "model": "hy-mt2",
+    "msgstr": "tidak ada jawaban"
+  },
+  "no credentials asked for": {
+    "model": "opus-mt",
+    "msgstr": "tidak ada kredensial yang diminta"
+  },
   "privacy": {
     "model": "m2m100",
     "msgstr": "Privasi"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-12b",
     "msgstr": "randos adalah perangkat lunak gratis (berlisensi AGPL-3.0) dan dikembangkan secara terbuka."
+  },
+  "refused": {
+    "model": "opus-mt",
+    "msgstr": "ditolak"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-12b",
@@ -551,9 +587,17 @@
     "model": "opus-mt",
     "msgstr": "meminta mikrofon"
   },
+  "secure connection failed": {
+    "model": "opus-mt",
+    "msgstr": "koneksi aman gagal"
+  },
   "under 1 min": {
     "model": "madlad-400",
     "msgstr": "kurang dari 1 menit"
+  },
+  "unexpected reply": {
+    "model": "madlad-400",
+    "msgstr": "jawaban tak terduga"
   },
   "waiting for microphone": {
     "model": "madlad-400",

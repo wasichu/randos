@@ -11,6 +11,10 @@
     "model": "opus-mt",
     "msgstr": "%{minutes} min"
   },
+  "%{minutes}+ min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes}+ minutos"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Tiempo restante: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "opus-mt",
     "msgstr": "Conexión:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "opus-mt",
+    "msgstr": "Continuó después de %{minutes} minutos"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "opus-mt",
     "msgstr": "cerrar"
   },
+  "connection closed": {
+    "model": "opus-mt",
+    "msgstr": "Conexión cerrada"
+  },
   "connection state\u0004answering": {
     "model": "hy-mt2",
     "msgstr": "respondiendo"
@@ -511,6 +523,18 @@
     "model": "m2m100",
     "msgstr": "A la espera de tu rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "No se pudo conectar"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "No puedo encontrar el servidor"
+  },
+  "credentials refused": {
+    "model": "opus-mt",
+    "msgstr": "credenciales denegadas"
+  },
   "crosstalk": {
     "model": "opus-mt",
     "msgstr": "crosstalk"
@@ -523,6 +547,14 @@
     "model": "translategemma-4b",
     "msgstr": "Micrófono no disponible"
   },
+  "no answer": {
+    "model": "hy-mt2",
+    "msgstr": "no hubo respuesta"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "No se piden credenciales"
+  },
   "privacy": {
     "model": "m2m100",
     "msgstr": "Privacidad"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "hy-mt2",
     "msgstr": "randos es software libre (AGPL-3.0) y fue desarrollado de forma pública."
+  },
+  "refused": {
+    "model": "opus-mt",
+    "msgstr": "rechazado"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "opus-mt",
     "msgstr": "solicitando micrófono"
   },
+  "secure connection failed": {
+    "model": "m2m100",
+    "msgstr": "La conexión segura fracasó"
+  },
   "under 1 min": {
     "model": "m2m100",
     "msgstr": "menos de 1 minuto"
+  },
+  "unexpected reply": {
+    "model": "opus-mt",
+    "msgstr": "respuesta inesperada"
   },
   "waiting for microphone": {
     "model": "hy-mt2",

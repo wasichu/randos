@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} min"
   },
+  "%{minutes}+ min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes}+ min"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Tempo restante: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "hy-mt2",
     "msgstr": "Conexão:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "madlad-400",
+    "msgstr": "Continuado nos últimos %{minutes} minutos"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "madlad-400",
     "msgstr": "fechar"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "conexão encerrada"
+  },
   "connection state\u0004answering": {
     "model": "hy-mt2",
     "msgstr": "respondendo"
@@ -511,6 +523,18 @@
     "model": "hy-mt2",
     "msgstr": "aguardando seu rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "não consegui conectar"
+  },
+  "couldn't find the server": {
+    "model": "translategemma-4b",
+    "msgstr": "não consegui encontrar o servidor"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "credenciais recusadas"
+  },
   "crosstalk": {
     "model": "madlad-400",
     "msgstr": "crosstalk"
@@ -523,6 +547,14 @@
     "model": "m2m100",
     "msgstr": "Microfone não disponível"
   },
+  "no answer": {
+    "model": "m2m100",
+    "msgstr": "Não há resposta"
+  },
+  "no credentials asked for": {
+    "model": "hy-mt2",
+    "msgstr": "não foram solicitadas credenciais"
+  },
   "privacy": {
     "model": "hy-mt2",
     "msgstr": "privacidade"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-4b",
     "msgstr": "randos é um software de código aberto (AGPL-3.0) e foi desenvolvido publicamente."
+  },
+  "refused": {
+    "model": "m2m100",
+    "msgstr": "rejeitado"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-12b",
@@ -551,9 +587,17 @@
     "model": "madlad-400",
     "msgstr": "solicitando o microfone"
   },
+  "secure connection failed": {
+    "model": "m2m100",
+    "msgstr": "conexão segura falhou"
+  },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "menos de 1 minuto"
+  },
+  "unexpected reply": {
+    "model": "m2m100",
+    "msgstr": "Resposta inesperada"
   },
   "waiting for microphone": {
     "model": "hy-mt2",

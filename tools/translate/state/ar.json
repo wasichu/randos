@@ -11,6 +11,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes} دقيقة"
   },
+  "%{minutes}+ min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes}+ دقيقة"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "الوقت المتبقي: %{time}"
@@ -90,6 +94,10 @@
   "Connection:": {
     "model": "translategemma-27b",
     "msgstr": "اتصال:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "m2m100",
+    "msgstr": "استمر في الماضي %{minutes} دقائق"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -455,6 +463,10 @@
     "model": "hy-mt2",
     "msgstr": "أغلق"
   },
+  "connection closed": {
+    "model": "madlad-400",
+    "msgstr": "الوصلة مغلقة"
+  },
   "connection state\u0004answering": {
     "model": "translategemma-4b",
     "msgstr": "الرد"
@@ -499,6 +511,18 @@
     "model": "madlad-400",
     "msgstr": "في انتظارك rando"
   },
+  "couldn't connect": {
+    "model": "m2m100",
+    "msgstr": "لا أستطيع الاتصال"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "لا أستطيع العثور على الخادم"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "وثائق التفويض المرفوضة"
+  },
   "crosstalk": {
     "model": "m2m100",
     "msgstr": "كروسستالك"
@@ -511,6 +535,14 @@
     "model": "m2m100",
     "msgstr": "الميكروفون غير متوفر"
   },
+  "no answer": {
+    "model": "opus-mt",
+    "msgstr": "لا جواب"
+  },
+  "no credentials asked for": {
+    "model": "m2m100",
+    "msgstr": "لا توجد شهادات مطلوبة"
+  },
   "privacy": {
     "model": "m2m100",
     "msgstr": "الخصوصية"
@@ -522,6 +554,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "madlad-400",
     "msgstr": "randos هي برمجيات حرة (AGPL-3.0) وبنيت في القطاع العام."
+  },
+  "refused": {
+    "model": "translategemma-4b",
+    "msgstr": "رفض"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -539,9 +575,17 @@
     "model": "madlad-400",
     "msgstr": "طلب ميكروفون"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "فشل الاتصال الآمن"
+  },
   "under 1 min": {
     "model": "translategemma-4b",
     "msgstr": "أقل من دقيقة"
+  },
+  "unexpected reply": {
+    "model": "hy-mt2",
+    "msgstr": "رد غير متوقع"
   },
   "waiting for microphone": {
     "model": "hy-mt2",

@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} دقیقه"
   },
+  "%{minutes}+ min": {
+    "model": "m2m100",
+    "msgstr": "%{minutes} + دقیقه"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "زمان باقی‌مانده: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "hy-mt2",
     "msgstr": "وضعیت اتصال:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "ادامه یافتن پس از گذشت %{minutes} دقیقه"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "hy-mt2",
     "msgstr": "بسته"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "اتصال قطع شد"
+  },
   "connection state\u0004answering": {
     "model": "translategemma-4b",
     "msgstr": "پاسخ دادن"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "منتظر rando شما"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "نتوانست اتصال برقرار کند"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "نمی توانم سرور را پیدا کنم"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "اعتبارنامه‌ها رد شدند"
+  },
   "crosstalk": {
     "model": "madlad-400",
     "msgstr": "کراس‌تاک"
@@ -523,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "میکروفون در دسترس نیست"
   },
+  "no answer": {
+    "model": "m2m100",
+    "msgstr": "بدون پاسخ"
+  },
+  "no credentials asked for": {
+    "model": "m2m100",
+    "msgstr": "هیچ گواهی درخواست نشده"
+  },
   "privacy": {
     "model": "madlad-400",
     "msgstr": "حریم خصوصی"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-12b",
     "msgstr": "randos یک نرم‌افزار رایگان است (با مجوز AGPL-3.0) و به صورت عمومی توسعه یافته است."
+  },
+  "refused": {
+    "model": "m2m100",
+    "msgstr": "رد شد"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "hy-mt2",
     "msgstr": "درخواست استفاده از میکروفون"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "اتصال امن شکست خورد"
+  },
   "under 1 min": {
     "model": "madlad-400",
     "msgstr": "کمتر از ۱ دقیقه"
+  },
+  "unexpected reply": {
+    "model": "translategemma-4b",
+    "msgstr": "پاسخی غیرمنتظره"
   },
   "waiting for microphone": {
     "model": "madlad-400",

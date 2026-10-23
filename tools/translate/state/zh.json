@@ -11,6 +11,10 @@
     "model": "opus-mt",
     "msgstr": "%{minutes}分钟"
   },
+  "%{minutes}+ min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes}+分钟"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "剩余时间：%{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "madlad-400",
     "msgstr": "连接："
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "通话时长已超过 %{minutes} 分钟"
   },
   "Continued past 10 minutes": {
     "model": "translategemma-4b",
@@ -467,6 +475,10 @@
     "model": "m2m100",
     "msgstr": "关闭"
   },
+  "connection closed": {
+    "model": "opus-mt",
+    "msgstr": "连接已关闭"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "回答"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "等待你的回复 rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "无法连接"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "无法找到服务器"
+  },
+  "credentials refused": {
+    "model": "opus-mt",
+    "msgstr": "代表证书被拒绝"
+  },
   "crosstalk": {
     "model": "opus-mt",
     "msgstr": "交叉交谈"
@@ -523,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "麦克风不可用"
   },
+  "no answer": {
+    "model": "madlad-400",
+    "msgstr": "无答复"
+  },
+  "no credentials asked for": {
+    "model": "translategemma-4b",
+    "msgstr": "未要求任何身份验证"
+  },
   "privacy": {
     "model": "opus-mt",
     "msgstr": "隐私"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-4b",
     "msgstr": "randos 是一款免费的软件（采用 AGPL-3.0 协议），并且是开源的。"
+  },
+  "refused": {
+    "model": "translategemma-4b",
+    "msgstr": "拒绝"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "opus-mt",
     "msgstr": "请求麦克风"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "安全连接失败"
+  },
   "under 1 min": {
     "model": "opus-mt",
     "msgstr": "1分钟以下"
+  },
+  "unexpected reply": {
+    "model": "hy-mt2",
+    "msgstr": "意外的回复"
   },
   "waiting for microphone": {
     "model": "madlad-400",

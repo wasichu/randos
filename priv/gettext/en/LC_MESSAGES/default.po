@@ -775,13 +775,13 @@ msgstr ""
 msgid "You agreed to continue, waiting on your rando…"
 msgstr ""
 
-#. A call's typical length: this many minutes or more (min = minutes).
+#. A call's typical length, at the longest a call can run; the "+" already says "or more", so don't add words for it (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{minutes}+ min"
 msgstr ""
 
-#. A count on the status page: calls that were continued past their first minutes.
+#. A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes ("past" as in "beyond", not "in the past").
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Continued past %{minutes} minutes"

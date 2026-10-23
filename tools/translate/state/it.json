@@ -11,6 +11,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes} minuti"
   },
+  "%{minutes}+ min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes}+ min"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Tempo rimanente: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "opus-mt",
     "msgstr": "Connessione:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "madlad-400",
+    "msgstr": "Continuato negli ultimi %{minutes} minuti"
   },
   "Continued past 10 minutes": {
     "model": "translategemma-4b",
@@ -467,6 +475,10 @@
     "model": "opus-mt",
     "msgstr": "chiudi"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "la connessione è stata interrotta"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "Rispondendo"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "In attesa del vostro rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "Impossibile connettersi"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "Non riesco a trovare il server"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "le credenziali sono state rifiutate"
+  },
   "crosstalk": {
     "model": "opus-mt",
     "msgstr": "crosstalk"
@@ -523,6 +547,14 @@
     "model": "translategemma-4b",
     "msgstr": "Microfono non disponibile"
   },
+  "no answer": {
+    "model": "m2m100",
+    "msgstr": "Nessuna risposta"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "Non sono richieste credenziali"
+  },
   "privacy": {
     "model": "madlad-400",
     "msgstr": "Informativa sulla privacy"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "opus-mt",
     "msgstr": "randos è software libero (AGPL-3.0) e costruito in pubblico."
+  },
+  "refused": {
+    "model": "opus-mt",
+    "msgstr": "rifiutato"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "madlad-400",
     "msgstr": "Richiesta di microfono"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "Connessione sicura non riuscita"
+  },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "meno di 1 minuto"
+  },
+  "unexpected reply": {
+    "model": "opus-mt",
+    "msgstr": "risposta inattesa"
   },
   "waiting for microphone": {
     "model": "hy-mt2",

@@ -11,6 +11,10 @@
     "model": "opus-mt",
     "msgstr": "%{minutes} min"
   },
+  "%{minutes}+ min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes}+ min"
+  },
   "%{time} remaining": {
     "model": "opus-mt",
     "msgstr": "%{time} restant"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "madlad-400",
     "msgstr": "Connexion:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "translategemma-4b",
+    "msgstr": "Durée supérieure à %{minutes} minutes"
   },
   "Continued past 10 minutes": {
     "model": "madlad-400",
@@ -467,6 +475,10 @@
     "model": "opus-mt",
     "msgstr": "fermer"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "la connexion a été interrompue"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "répondant"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "En attente de votre rando"
   },
+  "couldn't connect": {
+    "model": "opus-mt",
+    "msgstr": "Impossible de se connecter"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "Impossible de trouver le serveur"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "les identifiants ont été refusés"
+  },
   "crosstalk": {
     "model": "opus-mt",
     "msgstr": "crosstalk"
@@ -523,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "Le microphone est indisponible"
   },
+  "no answer": {
+    "model": "opus-mt",
+    "msgstr": "Pas de réponse"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "Aucune information d'identification demandée"
+  },
   "privacy": {
     "model": "opus-mt",
     "msgstr": "vie privée"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "hy-mt2",
     "msgstr": "randos est un logiciel libre (AGPL-3.0) et a été développé en public."
+  },
+  "refused": {
+    "model": "hy-mt2",
+    "msgstr": "a refusé"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "opus-mt",
     "msgstr": "demande de microphone"
   },
+  "secure connection failed": {
+    "model": "opus-mt",
+    "msgstr": "la connexion sécurisée a échoué"
+  },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "moins d’une minute"
+  },
+  "unexpected reply": {
+    "model": "opus-mt",
+    "msgstr": "réponse inattendue"
   },
   "waiting for microphone": {
     "model": "translategemma-4b",

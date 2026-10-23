@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} मिनट"
   },
+  "%{minutes}+ min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes}+ मिनट"
+  },
   "%{time} remaining": {
     "model": "opus-mt",
     "msgstr": "%{time} शेष"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "m2m100",
     "msgstr": "कनेक्शन :"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} मिनट से अधिक समय तक जारी रहना"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "opus-mt",
     "msgstr": "बंद करें"
   },
+  "connection closed": {
+    "model": "opus-mt",
+    "msgstr": "कनेक्शन बन्द"
+  },
   "connection state\u0004answering": {
     "model": "translategemma-4b",
     "msgstr": "उत्तर देना"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "आपके rando की प्रतीक्षा कर रहा है"
   },
+  "couldn't connect": {
+    "model": "opus-mt",
+    "msgstr": "कनेक्ट नहीं हो सका"
+  },
+  "couldn't find the server": {
+    "model": "opus-mt",
+    "msgstr": "सर्वर नहीं मिला"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "प्रमाणपत्र अस्वीकृत"
+  },
   "crosstalk": {
     "model": "translategemma-4b",
     "msgstr": "क्रॉसटॉक"
@@ -523,6 +547,14 @@
     "model": "m2m100",
     "msgstr": "माइक्रोफोन उपलब्ध नहीं"
   },
+  "no answer": {
+    "model": "m2m100",
+    "msgstr": "कोई जवाब नहीं"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "कोई प्रमाणपत्र पूछा नहीं गया"
+  },
   "privacy": {
     "model": "opus-mt",
     "msgstr": "गोपनीयता"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "m2m100",
     "msgstr": "randos मुक्त सॉफ्टवेयर (AGPL-3.0) है और सार्वजनिक रूप से बनाया गया है।"
+  },
+  "refused": {
+    "model": "opus-mt",
+    "msgstr": "अस्वीकृत"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "m2m100",
@@ -551,9 +587,17 @@
     "model": "madlad-400",
     "msgstr": "माइक्रोफोन निवेदन"
   },
+  "secure connection failed": {
+    "model": "translategemma-4b",
+    "msgstr": "सुरक्षित कनेक्शन विफल"
+  },
   "under 1 min": {
     "model": "madlad-400",
     "msgstr": "1 मिनट से कम"
+  },
+  "unexpected reply": {
+    "model": "madlad-400",
+    "msgstr": "अप्रत्याशित उत्तर"
   },
   "waiting for microphone": {
     "model": "m2m100",

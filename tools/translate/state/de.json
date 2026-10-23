@@ -11,6 +11,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes} Minuten"
   },
+  "%{minutes}+ min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes}+ Minuten oder mehr"
+  },
   "%{time} remaining": {
     "model": "opus-mt",
     "msgstr": "%{time} verbleibend"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "opus-mt",
     "msgstr": "Verbindung:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "opus-mt",
+    "msgstr": "Fortsetzung nach %{minutes} Minuten"
   },
   "Continued past 10 minutes": {
     "model": "opus-mt",
@@ -467,6 +475,10 @@
     "model": "hy-mt2",
     "msgstr": "schließen"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "Verbindung wurde geschlossen"
+  },
   "connection state\u0004answering": {
     "model": "opus-mt",
     "msgstr": "Antwort"
@@ -511,6 +523,18 @@
     "model": "m2m100",
     "msgstr": "Sie warten auf Ihre rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "Konnte keine Verbindung herstellen"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "Der Server konnte nicht gefunden werden"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "Anmeldeinformationen abgelehnt"
+  },
   "crosstalk": {
     "model": "madlad-400",
     "msgstr": "Übersprechen"
@@ -523,6 +547,14 @@
     "model": "opus-mt",
     "msgstr": "Mikrofon nicht verfügbar"
   },
+  "no answer": {
+    "model": "opus-mt",
+    "msgstr": "keine Antwort"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "Keine Anmeldeinformationen erforderlich"
+  },
   "privacy": {
     "model": "translategemma-4b",
     "msgstr": "Datenschutz"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-12b",
     "msgstr": "randos ist eine freie Software (AGPL-3.0) und wird öffentlich entwickelt."
+  },
+  "refused": {
+    "model": "m2m100",
+    "msgstr": "abgelehnt"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "opus-mt",
@@ -551,9 +587,17 @@
     "model": "madlad-400",
     "msgstr": "Anforderung eines Mikrofons"
   },
+  "secure connection failed": {
+    "model": "opus-mt",
+    "msgstr": "Sichere Verbindung fehlgeschlagen"
+  },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "unter 1 Minute"
+  },
+  "unexpected reply": {
+    "model": "madlad-400",
+    "msgstr": "unerwartete Antwort"
   },
   "waiting for microphone": {
     "model": "hy-mt2",

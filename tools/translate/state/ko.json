@@ -11,6 +11,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}분"
   },
+  "%{minutes}+ min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes}+ 분"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "남은 시간: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "madlad-400",
     "msgstr": "연결:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "madlad-400",
+    "msgstr": "지난 %{minutes} 분 동안 계속됨"
   },
   "Continued past 10 minutes": {
     "model": "translategemma-4b",
@@ -467,6 +475,10 @@
     "model": "madlad-400",
     "msgstr": "닫기"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "연결이 종료됨"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "응답 중"
@@ -511,6 +523,18 @@
     "model": "m2m100",
     "msgstr": "당신을 기다리고 있습니다 rando"
   },
+  "couldn't connect": {
+    "model": "m2m100",
+    "msgstr": "연결할 수 없음"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "서버를 찾을 수 없음"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "인증 정보 거부"
+  },
   "crosstalk": {
     "model": "hy-mt2",
     "msgstr": "크로스토크"
@@ -523,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "마이크 사용할 수 없음"
   },
+  "no answer": {
+    "model": "translategemma-4b",
+    "msgstr": "응답 없음"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "자격 증명이 요구되지 않음"
+  },
   "privacy": {
     "model": "translategemma-12b",
     "msgstr": "개인 정보 보호"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-4b",
     "msgstr": "randos는 무료 소프트웨어(AGPL-3.0)이며, 공개적으로 개발되었습니다."
+  },
+  "refused": {
+    "model": "translategemma-4b",
+    "msgstr": "거부"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "madlad-400",
     "msgstr": "마이크 요청 중"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "보안 연결 실패"
+  },
   "under 1 min": {
     "model": "madlad-400",
     "msgstr": "1분 미만"
+  },
+  "unexpected reply": {
+    "model": "translategemma-4b",
+    "msgstr": "예상치 못한 답변"
   },
   "waiting for microphone": {
     "model": "madlad-400",

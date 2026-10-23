@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} dakika"
   },
+  "%{minutes}+ min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes}+ dakika"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} iliyobaki"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "translategemma-4b",
     "msgstr": "Muunganisho:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "madlad-400",
+    "msgstr": "Kuendelea nyuma %{minutes} dakika"
   },
   "Continued past 10 minutes": {
     "model": "m2m100",
@@ -467,6 +475,10 @@
     "model": "translategemma-4b",
     "msgstr": "kumalizia"
   },
+  "connection closed": {
+    "model": "madlad-400",
+    "msgstr": "uhusiano imefungwa"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "kujibu"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "kusubiri kwa yako rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "haikuweza kuungana"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "haikuweza kupata server"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "vitambulisho kukataa"
+  },
   "crosstalk": {
     "model": "translategemma-12b",
     "msgstr": "msongamano wa lugha"
@@ -523,6 +547,14 @@
     "model": "translategemma-4b",
     "msgstr": "Mikrofoni haipo"
   },
+  "no answer": {
+    "model": "translategemma-4b",
+    "msgstr": "hakuna majibu"
+  },
+  "no credentials asked for": {
+    "model": "translategemma-4b",
+    "msgstr": "hakuna taarifa za uthibitisho zilitolewa"
+  },
   "privacy": {
     "model": "translategemma-4b",
     "msgstr": "faragha"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "m2m100",
     "msgstr": "randos ni programu ya bure (AGPL-3.0) na iliyoundwa kwa umma."
+  },
+  "refused": {
+    "model": "madlad-400",
+    "msgstr": "kukataliwa"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-12b",
@@ -551,9 +587,17 @@
     "model": "m2m100",
     "msgstr": "Maombi ya Mikrofoni"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "uhusiano salama kushindwa"
+  },
   "under 1 min": {
     "model": "madlad-400",
     "msgstr": "chini ya dakika 1"
+  },
+  "unexpected reply": {
+    "model": "madlad-400",
+    "msgstr": "jibu isiyotarajiwa"
   },
   "waiting for microphone": {
     "model": "m2m100",

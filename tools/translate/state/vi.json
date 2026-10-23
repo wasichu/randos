@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} phút"
   },
+  "%{minutes}+ min": {
+    "model": "m2m100",
+    "msgstr": "%{minutes} + phút"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} còn lại"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "madlad-400",
     "msgstr": "Kết nối:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "Tiếp tục sau %{minutes} phút"
   },
   "Continued past 10 minutes": {
     "model": "madlad-400",
@@ -467,6 +475,10 @@
     "model": "hy-mt2",
     "msgstr": "đóng lại"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "mối kết nối đã bị ngắt"
+  },
   "connection state\u0004answering": {
     "model": "m2m100",
     "msgstr": "Trả lời"
@@ -511,6 +523,18 @@
     "model": "madlad-400",
     "msgstr": "Đang chờ rando của bạn"
   },
+  "couldn't connect": {
+    "model": "m2m100",
+    "msgstr": "Không thể kết nối"
+  },
+  "couldn't find the server": {
+    "model": "m2m100",
+    "msgstr": "Không thể tìm được máy chủ"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "chứng thực bị từ chối"
+  },
   "crosstalk": {
     "model": "translategemma-12b",
     "msgstr": "giao tiếp chéo ngôn ngữ"
@@ -523,6 +547,14 @@
     "model": "translategemma-4b",
     "msgstr": "Không có micro"
   },
+  "no answer": {
+    "model": "translategemma-4b",
+    "msgstr": "không có phản hồi"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "không yêu cầu thông tin tài khoản"
+  },
   "privacy": {
     "model": "hy-mt2",
     "msgstr": "quyền riêng tư"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-4b",
     "msgstr": "randos là phần mềm mã nguồn mở (AGPL-3.0) và được phát triển công khai."
+  },
+  "refused": {
+    "model": "translategemma-4b",
+    "msgstr": "từ chối"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-12b",
@@ -551,9 +587,17 @@
     "model": "translategemma-4b",
     "msgstr": "yêu cầu sử dụng micro"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "kết nối bảo mật thất bại"
+  },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "dưới 1 phút"
+  },
+  "unexpected reply": {
+    "model": "hy-mt2",
+    "msgstr": "phản hồi bất ngờ"
   },
   "waiting for microphone": {
     "model": "madlad-400",

@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} dakika"
   },
+  "%{minutes}+ min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes}+ min"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "Kalan süre: %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "opus-mt",
     "msgstr": "Bağlantı:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} dakikanın ötesine devam eden aramalar"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "opus-mt",
     "msgstr": "kapat"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "bağlantı kesildi"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "cevaplıyorum"
@@ -511,6 +523,18 @@
     "model": "m2m100",
     "msgstr": "Sizin için bekliyorum rando"
   },
+  "couldn't connect": {
+    "model": "translategemma-4b",
+    "msgstr": "Bağlantı kurulamadı"
+  },
+  "couldn't find the server": {
+    "model": "opus-mt",
+    "msgstr": "Sunucu bulunamadı"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "Kimlik bilgileri reddedildi"
+  },
   "crosstalk": {
     "model": "hy-mt2",
     "msgstr": "çapraz konuşma"
@@ -523,6 +547,14 @@
     "model": "opus-mt",
     "msgstr": "mikrofon kullanılamaz"
   },
+  "no answer": {
+    "model": "m2m100",
+    "msgstr": "Cevap yok"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "kimlik bilgileri istenmedi"
+  },
   "privacy": {
     "model": "madlad-400",
     "msgstr": "gizlilik"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-4b",
     "msgstr": "randos, ücretsiz bir yazılım (AGPL-3.0) olup, kamuya açık bir şekilde geliştirilmiştir."
+  },
+  "refused": {
+    "model": "m2m100",
+    "msgstr": "reddedildi"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-12b",
@@ -551,9 +587,17 @@
     "model": "m2m100",
     "msgstr": "Mikrofon isteği"
   },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "güvenli bağlantı başarısız"
+  },
   "under 1 min": {
     "model": "madlad-400",
     "msgstr": "1 dakikadan az"
+  },
+  "unexpected reply": {
+    "model": "opus-mt",
+    "msgstr": "Beklenmedik cevap"
   },
   "waiting for microphone": {
     "model": "m2m100",

@@ -11,6 +11,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes} minuto"
   },
+  "%{minutes}+ min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes}+ minuto"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "%{time} na lang ang natitira"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "madlad-400",
     "msgstr": "Koneksyon:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "opus-mt",
+    "msgstr": "Nagpatuloy sa nakalipas na %{minutes} minuto"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "hy-mt2",
     "msgstr": "sarado"
   },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "natanggal ang koneksyon"
+  },
   "connection state\u0004answering": {
     "model": "hy-mt2",
     "msgstr": "pag-sagot"
@@ -511,6 +523,18 @@
     "model": "hy-mt2",
     "msgstr": "Naghihintay sa iyong rando"
   },
+  "couldn't connect": {
+    "model": "hy-mt2",
+    "msgstr": "hindi makakonekta"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "hindi mahanap ang server"
+  },
+  "credentials refused": {
+    "model": "opus-mt",
+    "msgstr": "Tinanggihan ang mga kredensiyal"
+  },
   "crosstalk": {
     "model": "madlad-400",
     "msgstr": "crosstalk"
@@ -523,6 +547,14 @@
     "model": "opus-mt",
     "msgstr": "Walang mikropono"
   },
+  "no answer": {
+    "model": "opus-mt",
+    "msgstr": "walang sagot"
+  },
+  "no credentials asked for": {
+    "model": "m2m100",
+    "msgstr": "Walang mga credentials na kailangan"
+  },
   "privacy": {
     "model": "madlad-400",
     "msgstr": "pagkapribado"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-4b",
     "msgstr": "Ang randos ay libreng software (sa ilalim ng AGPL-3.0) at nabuo sa publiko."
+  },
+  "refused": {
+    "model": "translategemma-4b",
+    "msgstr": "tinanggihan"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-27b",
@@ -551,9 +587,17 @@
     "model": "translategemma-4b",
     "msgstr": "Humihiling ng mikropono"
   },
+  "secure connection failed": {
+    "model": "opus-mt",
+    "msgstr": "Bigo ang matibay na koneksyon"
+  },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "mas mababa sa 1 minuto"
+  },
+  "unexpected reply": {
+    "model": "madlad-400",
+    "msgstr": "hindi inaasahang tugon"
   },
   "waiting for microphone": {
     "model": "opus-mt",

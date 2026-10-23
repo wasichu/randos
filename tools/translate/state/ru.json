@@ -11,6 +11,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes} минуты"
   },
+  "%{minutes}+ min": {
+    "model": "m2m100",
+    "msgstr": "%{minutes} + минуты"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "Осталось %{time}"
@@ -94,6 +98,10 @@
   "Connection:": {
     "model": "opus-mt",
     "msgstr": "Подключение:"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "translategemma-4b",
+    "msgstr": "Продолжалось более %{minutes} минут"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",
@@ -467,6 +475,10 @@
     "model": "m2m100",
     "msgstr": "Закрыть"
   },
+  "connection closed": {
+    "model": "madlad-400",
+    "msgstr": "соединение закрыто"
+  },
   "connection state\u0004answering": {
     "model": "madlad-400",
     "msgstr": "отвечает"
@@ -511,6 +523,18 @@
     "model": "m2m100",
     "msgstr": "В ожидании вашего rando"
   },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "не удалось подключиться"
+  },
+  "couldn't find the server": {
+    "model": "hy-mt2",
+    "msgstr": "не удалось найти сервера"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "предоставленные учетные данные были отклонены"
+  },
   "crosstalk": {
     "model": "opus-mt",
     "msgstr": "Перекрёстный разговор"
@@ -523,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "микрофон недоступен"
   },
+  "no answer": {
+    "model": "hy-mt2",
+    "msgstr": "ответа нет"
+  },
+  "no credentials asked for": {
+    "model": "m2m100",
+    "msgstr": "Никаких подтверждений не требуется"
+  },
   "privacy": {
     "model": "m2m100",
     "msgstr": "Приватность"
@@ -534,6 +566,10 @@
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-12b",
     "msgstr": "randos – это бесплатное программное обеспечение (лицензия AGPL-3.0), разработанное в открытом доступе."
+  },
+  "refused": {
+    "model": "madlad-400",
+    "msgstr": "отказано"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "translategemma-12b",
@@ -551,9 +587,17 @@
     "model": "hy-mt2",
     "msgstr": "запрос микрофона"
   },
+  "secure connection failed": {
+    "model": "translategemma-4b",
+    "msgstr": "не удалось установить безопасное соединение"
+  },
   "under 1 min": {
     "model": "m2m100",
     "msgstr": "менее 1 минуты"
+  },
+  "unexpected reply": {
+    "model": "m2m100",
+    "msgstr": "Неожиданный ответ"
   },
   "waiting for microphone": {
     "model": "m2m100",

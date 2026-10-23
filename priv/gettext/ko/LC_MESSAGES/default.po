@@ -774,68 +774,68 @@ msgstr "오디오 재연결 중…"
 msgid "You agreed to continue, waiting on your rando…"
 msgstr "당신은 당신의 rando을 기다리면서 계속하기로 동의했습니다…"
 
-#. A call's typical length: this many minutes or more (min = minutes).
+#. A call's typical length, at the longest a call can run; the "+" already says "or more", so don't add words for it (min = minutes).
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{minutes}+ min"
-msgstr ""
+msgstr "%{minutes}+ 분"
 
-#. A count on the status page: calls that were continued past their first minutes.
+#. A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes ("past" as in "beyond", not "in the past").
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Continued past %{minutes} minutes"
-msgstr ""
+msgstr "지난 %{minutes} 분 동안 계속됨"
 
 #. Why the relay check failed: the relay server closed the connection.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "connection closed"
-msgstr ""
+msgstr "연결이 종료됨"
 
 #. Why the relay check failed: no connection to the relay server.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "couldn't connect"
-msgstr ""
+msgstr "연결할 수 없음"
 
 #. Why the relay check failed: the relay server's name didn't resolve (DNS).
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "couldn't find the server"
-msgstr ""
+msgstr "서버를 찾을 수 없음"
 
 #. Why the relay check failed: the relay server refused our credentials.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "credentials refused"
-msgstr ""
+msgstr "인증 정보 거부"
 
 #. Why the relay check failed: the relay server didn't answer.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "no answer"
-msgstr ""
+msgstr "응답 없음"
 
 #. Why the relay check failed: the relay server didn't ask for credentials.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "no credentials asked for"
-msgstr ""
+msgstr "자격 증명이 요구되지 않음"
 
 #. Why the relay check failed: the relay server refused the request.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "refused"
-msgstr ""
+msgstr "거부"
 
 #. Why the relay check failed: the secure (TLS) connection failed.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "secure connection failed"
-msgstr ""
+msgstr "보안 연결 실패"
 
 #. Why the relay check failed: the relay server's reply made no sense.
 #: lib/randos_web/relay_reasons.ex
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
-msgstr ""
+msgstr "예상치 못한 답변"
