@@ -155,21 +155,28 @@ export class WebRTCClient {
     logEvent("media.microphone_muted", {muted})
   }
 
-  // Returns a promise for this signal's handling (rejecting if it fails) while
-  // keeping the chain alive for the signals after it.
+  // Runs `step(peerConnection)` after everything queued before it, once the
+  // peer connection is ready (not at all if the call was cleaned up first).
+  // Returns a promise for this step (rejecting if it fails) while keeping
+  // the chain alive for the steps after it.
+  enqueue(step) {
+    const done = this.signalChain.then(async () => {
+      await this.ready.catch(() => {})
+      if (this.cleaned || !this.peerConnection) return
+      await step(this.peerConnection)
+    })
+
+    this.signalChain = done.catch(() => {})
+    return done
+  }
+
   receiveSignal(signal) {
     if (this.cleaned) return Promise.resolve()
 
-    const handled = this.signalChain.then(async () => {
-      await this.ready.catch(() => {})
-      if (this.cleaned || !this.peerConnection) return
-
+    return this.enqueue(async () => {
       logDebug("signaling.received", {type: signal.type})
       await this.handleSignal(signal)
     })
-
-    this.signalChain = handled.catch(() => {})
-    return handled
   }
 
   async handleSignal(signal) {
@@ -229,11 +236,7 @@ export class WebRTCClient {
   restartIce(iceServers) {
     if (this.cleaned || this.role !== "offerer") return Promise.resolve()
 
-    const restarted = this.signalChain.then(async () => {
-      await this.ready.catch(() => {})
-      const pc = this.peerConnection
-      if (this.cleaned || !pc) return
-
+    return this.enqueue(async pc => {
       // The resume reply's servers, in case the old credentials have aged.
       if (iceServers?.length) pc.setConfiguration({...pc.getConfiguration(), iceServers})
       pc.restartIce()
@@ -244,9 +247,6 @@ export class WebRTCClient {
       this.pushSignal("offer", {sdp: serializeSessionDescription(pc.localDescription)})
       logEvent("webrtc.ice_restart_offer_sent")
     })
-
-    this.signalChain = restarted.catch(() => {})
-    return restarted
   }
 
   close() {

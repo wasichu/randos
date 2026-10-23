@@ -9,7 +9,7 @@
 // (see cdp.mjs; CHROME_BIN picks the browser).
 
 import {watch} from "./failures.mjs"
-import {Browser, BASE_URL, inboundAudio, sleep} from "./cdp.mjs"
+import {Browser, BASE_URL, appeared, eventually, inboundAudio, launchBehind, sleep} from "./cdp.mjs"
 import {startDropProxy} from "./drop_proxy.mjs"
 
 // The server's connect timeout; just smoke shortens it (RANDOS_CONNECT_TIMEOUT_MS).
@@ -72,9 +72,10 @@ try {
     await a.waitFor(`!!document.querySelector("#extension-waiting")`, "a's counted vote shown")
     await b.click("#continue-call-button")
     await a.waitFor(`!!document.querySelector("#call-panel")`, "call panel after extension")
-    await sleep(1_500)
-    const painted = await a.paintedPixels("local-waveform-canvas")
-    assert(painted > 0, `local visualizer canvas is blank after extension (painted=${painted})`)
+    await eventually(
+      async () => (await a.paintedPixels("local-waveform-canvas")) > 0,
+      "the local visualizer drawn after the extension",
+    )
   })
 
   await scenario("next rando releases the microphone", async () => {
@@ -82,9 +83,7 @@ try {
     assert(streams > 0, "page A never captured a mic stream")
     await a.inCall()
     await a.click("#next-rando-button")
-    await sleep(1_000)
-    const live = await a.liveMicTracks(streams)
-    assert(live === 0, `${live} mic track(s) from the finished call still live`)
+    await eventually(async () => (await a.liveMicTracks(streams)) === 0, "the finished call's mic tracks stopped")
   })
 
   await scenario("ending a call stays on the page, goes idle, and releases the microphone", async () => {
@@ -101,9 +100,7 @@ try {
     await e.click("#end-call-button")
     await e.waitFor(`!!document.querySelector("#idle-panel")`, "idle after ending")
     assert(await e.eval(`window.__sameDocument === true`), "ending the call reloaded the page")
-    await sleep(500)
-    const live = await e.liveMicTracks(streams)
-    assert(live === 0, `${live} mic track(s) still live after ending the call`)
+    await eventually(async () => (await e.liveMicTracks(streams)) === 0, "the mic tracks stopped after ending the call")
   })
 
   await scenario("peer hanging up during the mic prompt releases the microphone", async () => {
@@ -167,9 +164,7 @@ try {
     // that can cut its connection the way a network does; its WebRTC media
     // (UDP, not proxied) keeps flowing, as it would.
     const proxy = await startDropProxy()
-    const proxied = await Browser.launch({
-      extraArgs: [`--proxy-server=127.0.0.1:${proxy.port}`, "--proxy-bypass-list=<-loopback>"],
-    })
+    const proxied = await launchBehind(proxy)
 
     try {
       const dropper = await proxied.newPage("dropper")
@@ -193,9 +188,7 @@ try {
       const heardBefore = (await inboundAudio(stayer))?.packetsReceived ?? 0
       // The server's only visible sign that it saw the drop and the
       // resume: the rando's "reconnecting" notice, shown then cleared.
-      await stayer.eval(`window.__sawReconnecting = false; new MutationObserver(() => {
-        if (document.getElementById("peer-reconnecting")) window.__sawReconnecting = true
-      }).observe(document, {subtree: true, childList: true})`)
+      await stayer.watchAppears("peer-reconnecting")
 
       // The dropper's network goes away for 2 s; its call doesn't need the
       // server, so audio keeps going meanwhile.
@@ -208,7 +201,7 @@ try {
       // call element is what proves the resume there: a refused ticket would
       // mount a fresh participant, with a new element, who could still hang up.
       const behindEdge = !/^http:\/\/(localhost|127\.0\.0\.1)/.test(BASE_URL)
-      if (!behindEdge) await stayer.waitFor(`window.__sawReconnecting`, "the rando shown reconnecting")
+      if (!behindEdge) await stayer.waitFor(appeared("peer-reconnecting"), "the rando shown reconnecting")
       await sleep(1_000)
       const heardDuring = (await inboundAudio(stayer))?.packetsReceived ?? 0
       assert(heardDuring > heardBefore, `audio stopped while the socket was down (${heardBefore} → ${heardDuring})`)
@@ -233,8 +226,10 @@ try {
       })()`, "the dropper's countdown current after the drop", 5_000)
       assert((await dropper.eval(`window.__randosPeers.length`)) === peersBefore, "a new peer connection was made")
       const heardAfter = (await inboundAudio(dropper))?.packetsReceived ?? 0
-      await sleep(500)
-      assert(((await inboundAudio(dropper))?.packetsReceived ?? 0) > heardAfter, "the dropper hears nothing after coming back")
+      await eventually(
+        async () => ((await inboundAudio(dropper))?.packetsReceived ?? 0) > heardAfter,
+        "the dropper hearing audio after coming back",
+      )
 
       // It still talks to the server for this call: ending works.
       await dropper.hangUp()

@@ -14,6 +14,19 @@ import {join} from "node:path"
 export const BASE_URL = process.env.BASE_URL ?? "http://localhost:4000"
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
+// Polls `check` (an async function, e.g. one of a page's helpers) until it
+// returns something truthy, which it returns; 5 s at most (AGENTS.md: only
+// a failing wait runs that long).
+export async function eventually(check, label, timeoutMs = 5_000) {
+  const deadline = Date.now() + timeoutMs
+  for (;;) {
+    const result = await check().catch(() => false)
+    if (result) return result
+    if (Date.now() >= deadline) throw new Error(`timed out waiting for ${label}`)
+    await sleep(150)
+  }
+}
+
 function findChrome() {
   if (process.env.CHROME_BIN) return {bin: process.env.CHROME_BIN, headlessFlag: "--headless=new"}
 
@@ -302,6 +315,15 @@ export class Page {
       .flatMap(s => s.getTracks()).filter(t => t.readyState === "live").length`)
   }
 
+  // From now on, notes whether the element `id` ever appears (even if it's
+  // gone again by the time anyone asks): `appeared(id)` in a waitFor.
+  async watchAppears(id) {
+    const key = JSON.stringify(id)
+    await this.eval(`(window.__appeared ??= {})[${key}] = false; new MutationObserver(() => {
+      if (document.getElementById(${key})) window.__appeared[${key}] = true
+    }).observe(document, {subtree: true, childList: true})`)
+  }
+
   // Non-transparent pixels on a visualizer canvas currently in the DOM.
   paintedPixels(canvasId) {
     return this.eval(`(() => {
@@ -315,6 +337,28 @@ export class Page {
   }
 }
 
+
+// The waitFor expression for `watchAppears`.
+export const appeared = id => `window.__appeared?.[${JSON.stringify(id)}] === true`
+
+// A browser whose page connections go through `proxy` (drop_proxy.mjs), so a
+// test can cut its websocket the way a network does; WebRTC media (UDP)
+// doesn't go through it.
+export const launchBehind = proxy =>
+  Browser.launch({extraArgs: [`--proxy-server=127.0.0.1:${proxy.port}`, "--proxy-bypass-list=<-loopback>"]})
+
+// Audio is arriving: packets grow within half a second, tried until
+// `timeoutMs` (after a restart the new path takes a moment).
+export async function audioFlows(page, label, timeoutMs = 5_000) {
+  const heard = async () => (await inboundAudio(page))?.packetsReceived ?? 0
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    const before = await heard()
+    await sleep(500)
+    if ((await heard()) > before) return
+  }
+  throw new Error(`${label} hears nothing`)
+}
 
 // Inbound audio on the page's latest peer connection: packets and Chrome's
 // own energy measure, which is zero for silence.

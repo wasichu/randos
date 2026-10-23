@@ -12,7 +12,7 @@
 
 import {spawn} from "node:child_process"
 import {createInterface} from "node:readline"
-import {Browser, inboundAudio, sleep} from "./cdp.mjs"
+import {Browser, appeared, audioFlows, launchBehind, sleep} from "./cdp.mjs"
 import {startDropProxy} from "./drop_proxy.mjs"
 import {watch} from "./failures.mjs"
 
@@ -69,28 +69,6 @@ async function startServer(port) {
   throw new Error(`the test server didn't come up (see ${SERVER_LOG})`)
 }
 
-const heard = async page => (await inboundAudio(page))?.packetsReceived ?? 0
-
-// Audio is arriving (within `timeoutMs`: after a restart it takes the new
-// path a moment).
-async function audioFlows(page, label, timeoutMs = 5_000) {
-  const deadline = Date.now() + timeoutMs
-  while (Date.now() < deadline) {
-    const before = await heard(page)
-    await sleep(500)
-    if ((await heard(page)) > before) return
-  }
-  throw new Error(`${label} hears nothing`)
-}
-
-// The page shows "Reconnecting audio…" at some point (the server's
-// recovery budget), and doesn't any more by the end.
-async function watchRecovering(page) {
-  await page.eval(`window.__sawRecovering = false; new MutationObserver(() => {
-    if (document.getElementById("call-recovering")) window.__sawRecovering = true
-  }).observe(document, {subtree: true, childList: true})`)
-}
-
 const turn = await startTurn()
 const server = await startServer(turn.port)
 const browser = await Browser.launch()
@@ -111,13 +89,13 @@ try {
     const callElement = `document.querySelector("[id^='call-media-']")?.id`
     const before = await a.eval(callElement)
     const peers = await a.eval(`window.__randosPeers.length`)
-    await Promise.all([watchRecovering(a), watchRecovering(b)])
+    await Promise.all([a.watchAppears("call-recovering"), b.watchAppears("call-recovering")])
 
     // Both clients' relay 5-tuples die, as after a move.
     turn.send("cut-all")
 
     // Back within the budget (15 s): the restart's new allocations carry it.
-    await a.waitFor(`window.__sawRecovering`, "A told it's reconnecting", 15_000)
+    await a.waitFor(appeared("call-recovering"), "A told it's reconnecting", 15_000)
     await a.waitFor(`!document.querySelector("#call-recovering")`, "A recovered", 20_000)
     await b.waitFor(`!document.querySelector("#call-recovering")`, "B recovered", 5_000)
     // Gone because it recovered, not because the call ended.
@@ -139,9 +117,7 @@ try {
 
   await scenario("a network change (media and websocket at once): back in the same call", async () => {
     const proxy = await startDropProxy()
-    const proxied = await Browser.launch({
-      extraArgs: [`--proxy-server=127.0.0.1:${proxy.port}`, "--proxy-bypass-list=<-loopback>"],
-    })
+    const proxied = await launchBehind(proxy)
     try {
       const mover = await proxied.newPage("mover")
       const stayer = await browser.newPage("stayer")
@@ -154,14 +130,14 @@ try {
         stayer.waitFor(`!!document.querySelector("#call-panel")`, "the call active for the stayer"),
       ])
       const before = await mover.eval(`document.querySelector("[id^='call-media-']")?.id`)
-      await watchRecovering(stayer)
+      await stayer.watchAppears("call-recovering")
 
       turn.send("cut-all")
       proxy.outage(3_000)
 
       // The websocket comes back first; ICE notices the dead path a few
       // seconds later, and the restart follows. Both within the budget.
-      await stayer.waitFor(`window.__sawRecovering`, "the stayer told the audio is reconnecting", 15_000)
+      await stayer.waitFor(appeared("call-recovering"), "the stayer told the audio is reconnecting", 15_000)
       await stayer.waitFor(`!document.querySelector("#peer-reconnecting, #call-recovering")`,
         "the stayer sees it recover", 20_000)
       assert(await stayer.eval(`!!document.querySelector("#call-panel, #extension-panel")`),
