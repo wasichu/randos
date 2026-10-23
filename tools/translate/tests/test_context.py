@@ -41,6 +41,6 @@ def test_the_judge_sees_the_comment_and_rejudges_when_it_changes():
     assert scoring.judge_context(None, "") == ""
     # A judgement from before comments existed saw only the button rule.
     old = {"msgctxt": "button", "scores": {"judge": {"score": 7}}}
-    assert scoring.judged_context(old) == scoring.judge_context("button", "")
+    assert scoring.judged_context(old, "judge") == scoring.judge_context("button", "")
     new = {"msgctxt": None, "scores": {"judge": {"score": 7, "context": "\nWhere it appears: x\n"}}}
-    assert scoring.judged_context(new) == "\nWhere it appears: x\n"
+    assert scoring.judged_context(new, "judge") == "\nWhere it appears: x\n"

@@ -18,14 +18,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 import time
-from datetime import UTC, datetime
 from pathlib import Path
 
-from . import checks, po, review, scoring
+from . import checks, judging, po, review, scoring
 from . import models as contestants
+from .runs import note_scored, stamp, write_atomically
 
 RESULTS = Path(__file__).resolve().parents[1] / "results"
 JUDGE_CACHE = RESULTS / "judge-cache.json"
@@ -100,26 +99,16 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
             "mean_chrf": round(sum(e["scores"]["chrf"] for e in mine) / len(mine), 1) if mine else None,
         }
 
-    stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    at = stamp()
     RESULTS.mkdir(exist_ok=True)
-    meta = {"model": model_name, "locales": locales, "strings": len(sources), "at": stamp, "seconds": seconds}
+    meta = {"model": model_name, "locales": locales, "strings": len(sources), "at": at, "seconds": seconds}
     if earlier:
         # The first run's time stays (it's the comparable one); top-ups are noted.
         meta |= {k: v for k, v in earlier["run"].items() if k in ("seconds", "scored")}
-        meta["appended"] = earlier["run"].get("appended", []) + [{"at": stamp, "seconds": seconds}]
-    out = append or RESULTS / f"{model_name}-{stamp}.json"
-    out.write_text(
-        json.dumps(
-            {
-                "run": meta,
-                "summary": summary,
-                "entries": entries,
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n"
-    )
+        meta["appended"] = earlier["run"].get("appended", []) + [{"at": at, "seconds": seconds}]
+    out = append or RESULTS / f"{model_name}-{at}.json"
+    # Atomically: with `append`, it rewrites a run that took hours.
+    write_atomically(out, {"run": meta, "summary": summary, "entries": entries})
     return out
 
 
@@ -127,7 +116,7 @@ def score(scorer_name: str, paths: list[Path], redo: bool, judges: list[str] | N
     """Fills in one scorer's scores in each results file, locale by locale
     (the judge: `judge`, all its judges or only `judges`)."""
     if scorer_name == "judge":
-        return judge(paths, redo, judges)
+        return judging.judge(paths, redo, judges, JUDGE_CACHE)
     scorer = scoring.SCORERS[scorer_name]()
     counts = {}
     for path in paths:
@@ -143,122 +132,12 @@ def score(scorer_name: str, paths: list[Path], redo: bool, judges: list[str] | N
             seconds = time.monotonic() - began
             # Saved after every locale, so a stopped run (the judge takes
             # hours) resumes with the next one: the time adds up across runs.
-            done = data["run"].setdefault("scored", {}).get(scorer_name, {})
-            data["run"]["scored"][scorer_name] = {
-                "at": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
-                "seconds": round(done.get("seconds", 0) + seconds, 1),
-            }
-            _write_atomically(path, data)
+            note_scored(data["run"], scorer_name, seconds)
+            write_atomically(path, data)
             print(f"{scorer_name}: {path.name}: {locale}: {len(mine)} scored in {seconds:.0f} s", file=sys.stderr, flush=True)
         counts[path.name] = len(todo)
         print(f"{scorer_name}: {path.name}: {len(todo)} scored", file=sys.stderr, flush=True)
     return counts
-
-
-def judge(paths: list[Path], redo: bool, judges: list[str] | None = None) -> dict[str, int]:
-    """The tone judges over every run at once, since what a judge must see
-    depends on all the models' translations of a string: only the ones
-    passing every check, of strings still in the template, and of those
-    only the finalists (`review.to_judge`), in rounds until no string needs
-    more. Each locale has its judges (`scoring.judges_for`), each filling
-    its own score and choosing its own finalists; one is loaded at a time,
-    and only when something isn't in the cache. MetricX and
-    COMET-Kiwi must have scored first, or every passing translation is a
-    finalist. A verdict already given for the same thing
-    (`scoring.JudgeCache`) is reused; `--redo` judges them afresh. A
-    judgement made with a context the template has since changed, or by
-    another judge, counts as none. Saved after every locale of every
-    round, so a stop loses little."""
-    cache = scoring.JudgeCache(JUDGE_CACHE)
-    contexts = scoring.current_contexts()
-    runs = {path: data for path in paths if "entries" in (data := json.loads(path.read_text()))}
-    # latest_entries copies each entry but shares its "scores" dict, so a
-    # verdict set on the table lands in the run it came from.
-    table = review.latest_entries(list(runs.values()), {s.key for s in po.sources()})
-    owner = {id(e["scores"]): path for path, data in runs.items() for e in data["entries"]}
-    judges = judges or list(scoring.JUDGES)
-    if redo:
-        # Afresh: an old verdict on a translation that isn't a finalist now
-        # would still veto or break ties. Only these judges' verdicts: the
-        # others' stand.
-        for entries in table.values():
-            for entry in entries.values():
-                for score in (scoring.JUDGE_SCORES[name] for name in judges):
-                    entry["scores"][score] = scoring.pending_scores()[score]
-    counts = {path.name: 0 for path in runs}
-    for name in judges:
-        mine = {k: v for k, v in table.items() if name in scoring.judges_for(k[0])}
-        if mine:
-            _judge_rounds(name, mine, runs, owner, cache, contexts, redo, counts)
-    return counts
-
-
-def _judge_rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
-    """One judge's rounds over its locales' strings (`judge`)."""
-    scorer, score = None, scoring.JUDGE_SCORES[name]
-    tried: set[int] = set()
-    given: dict[str, dict] = {}  # this session's verdicts, parsed or not, by JudgeCache.key
-
-    def context(entry: dict) -> str:
-        return scoring.judge_context(entry["msgctxt"], contexts.get(entry["key"], ""))
-
-    def settled(entry: dict) -> bool:
-        if id(entry["scores"]) in tried:
-            return True
-        verdict = entry["scores"].get(score) or {}
-        return verdict.get("score") is not None and scoring.judged_context(entry, score) == context(entry)
-
-    try:
-        while due := [
-            (loc, entries[m]) for (loc, _key), entries in table.items() for m in review.to_judge(entries, settled, score)
-        ]:
-            for locale in sorted({loc for loc, _ in due}):
-                mine = [e for loc, e in due if loc == locale]
-                began = time.monotonic()
-                # One judgement for each thing the judge would see (models often agree).
-                keys = {id(e["scores"]): scoring.JudgeCache.key(locale, e, context(e), name) for e in mine}
-                fresh = {}
-                for e in mine:
-                    if not cache.get(locale, e, context(e), name, only_new=redo):
-                        fresh.setdefault(keys[id(e["scores"])], e)
-                if fresh and scorer is None:
-                    scorer = scoring.SCORERS["judge"](name)
-                for key, verdict in zip(fresh, scorer.score(locale, list(fresh.values())) if fresh else []):
-                    cache.put(locale, fresh[key], verdict)
-                    given[key] = verdict
-                seconds = time.monotonic() - began
-                touched: dict[Path, int] = {}
-                for e in mine:
-                    e["scores"][score] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
-                    tried.add(id(e["scores"]))
-                    touched[owner[id(e["scores"])]] = touched.get(owner[id(e["scores"])], 0) + 1
-                for path, n in touched.items():
-                    counts[path.name] += n
-                    # The judging time, shared out by how many of each run's entries it judged.
-                    done = runs[path]["run"].setdefault("scored", {}).get(score, {})
-                    runs[path]["run"]["scored"][score] = {
-                        "at": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
-                        "seconds": round(done.get("seconds", 0) + seconds * n / len(mine), 1),
-                    }
-                    _write_atomically(path, runs[path])
-                cache.save()
-                print(
-                    f"judge ({name}): {locale}: {len(fresh)} judged, "
-                    f"{len(mine) - len(fresh)} from the cache or a twin, in {seconds:.0f} s",
-                    file=sys.stderr,
-                    flush=True,
-                )
-    finally:
-        if scorer is not None and hasattr(scorer, "close"):
-            scorer.close()
-
-
-def _write_atomically(path: Path, data: dict) -> None:
-    """A temp file beside it, then a rename: a stop mid-write never leaves
-    half a results file."""
-    tmp = path.with_name(f".{path.name}.tmp")
-    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
-    os.replace(tmp, path)
 
 
 def fill(results: Path, locale: str, redo: bool) -> dict[str, int]:
@@ -289,7 +168,7 @@ def tidy(paths: list[Path]) -> dict[str, int]:
             if fixed != entry["text"]:
                 entry["text"], changed = fixed, changed + 1
         if changed:
-            _write_atomically(path, data)
+            write_atomically(path, data)
         counts[path.name] = changed
     return counts
 

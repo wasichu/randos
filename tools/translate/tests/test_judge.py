@@ -18,9 +18,9 @@ def test_the_best_ranked_is_judged_first_and_alone_when_it_cannot_be_vetoed():
         "b": entry("B", metricx=2.0, comet=0.8),
         "c": entry("C", metricx=3.0, comet=0.7),
     }
-    assert review.to_judge(entries, settled) == ["a"]
+    assert review.to_judge(entries, settled, "judge") == ["a"]
     entries["a"]["scores"]["judge"]["score"] = 5
-    assert review.to_judge(entries, settled) == []
+    assert review.to_judge(entries, settled, "judge") == []
 
 
 def test_a_low_rated_leader_brings_in_the_next_until_one_could_veto_it():
@@ -29,12 +29,12 @@ def test_a_low_rated_leader_brings_in_the_next_until_one_could_veto_it():
         "b": entry("B", metricx=2.0, comet=0.8),
         "c": entry("C", metricx=3.0, comet=0.7),
     }
-    assert review.to_judge(entries, settled) == ["b"]
+    assert review.to_judge(entries, settled, "judge") == ["b"]
     # b can't be vetoed, but a is vetoed only if something rates 7 or more.
     entries["b"]["scores"]["judge"]["score"] = 6
-    assert review.to_judge(entries, settled) == ["c"]
+    assert review.to_judge(entries, settled, "judge") == ["c"]
     entries["c"]["scores"]["judge"]["score"] = 8
-    assert review.to_judge(entries, settled) == []
+    assert review.to_judge(entries, settled, "judge") == []
     assert review.pick(entries)["model"] == "b"
 
 
@@ -44,17 +44,17 @@ def test_a_tied_group_is_judged_together():
         "b": entry("B", metricx=1.0, comet=0.9),
         "c": entry("C", metricx=3.0, comet=0.7),
     }
-    assert review.to_judge(entries, settled) == ["a", "b"]
+    assert review.to_judge(entries, settled, "judge") == ["a", "b"]
 
 
 def test_failing_translations_and_lone_ones_are_never_judged():
     entries = {"a": entry("A", metricx=1.0, comet=0.9, checks=FAIL), "b": entry("B", metricx=2.0, comet=0.8)}
-    assert review.to_judge(entries, settled) == []
+    assert review.to_judge(entries, settled, "judge") == []
 
 
 def test_without_both_quality_scores_every_passing_one_is_judged():
     entries = {"a": entry("A", metricx=1.0), "b": entry("B", metricx=2.0), "c": entry("C", metricx=3.0, checks=FAIL)}
-    assert review.to_judge(entries, settled) == ["a", "b"]
+    assert review.to_judge(entries, settled, "judge") == ["a", "b"]
 
 
 def test_the_judge_breaks_ties_among_the_judged_while_others_are_unjudged():

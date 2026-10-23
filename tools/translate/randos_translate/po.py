@@ -15,11 +15,15 @@ from pathlib import Path
 
 import polib
 
+from .models import NAMES
+
 REPO = Path(__file__).resolve().parents[3]
 GETTEXT = REPO / "priv" / "gettext"
 STATE = Path(__file__).resolve().parents[1] / "state"
 
-LOCALES = ["es", "zh", "hi", "ar", "pt", "bn", "ru", "ja", "fr", "de", "ko", "it", "tr", "id", "vi", "ur", "sw", "fa", "fil"]
+# The interface languages besides English: one list, `models.NAMES`
+# (tests/test_po.py checks it against priv/gettext and checks' scripts).
+LOCALES = list(NAMES)
 
 
 @dataclass(frozen=True)

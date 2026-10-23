@@ -25,13 +25,14 @@ need no model), so a check improved since a run applies to it too.
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime
 from itertools import combinations
 from pathlib import Path
 
 from sacrebleu.metrics import CHRF
 
 from . import checks, po
+from .runs import stamp
+from .scoring import JUDGE_SCORES
 
 # Which way each score points (MetricX is an error score: lower is better).
 SCORERS = {
@@ -43,7 +44,7 @@ SCORERS = {
 }
 # The judges' scores (`scoring.JUDGE_SCORES`): either can veto, and their
 # mean breaks ties.
-JUDGES = ("judge", "judge_qwen")
+JUDGES = tuple(JUDGE_SCORES.values())
 
 _chrf = CHRF()
 
@@ -192,7 +193,7 @@ def _judge_ranks(passing: dict[str, dict]) -> dict[str, float]:
     return {m: ranked.get(m, len(judged) + 1) for m in passing}
 
 
-def to_judge(entries: dict[str, dict], settled, judge: str = "judge") -> list[str]:
+def to_judge(entries: dict[str, dict], settled, judge: str) -> list[str]:
     """The models whose translation of one string the judge must see next
     for `pick` to come out as if it had judged them all (`settled(entry)`:
     judged already, or tried). Only the ones passing every check; none when
@@ -289,7 +290,7 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
         data["summary"] = summary
         data["winner"] = _winner(summary)
     return {
-        "generated_at": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
+        "generated_at": stamp(),
         "runs": [
             {k: r["run"][k] for k in ("model", "locales", "strings", "at")}
             for r in sorted(runs, key=lambda r: r["run"]["at"])

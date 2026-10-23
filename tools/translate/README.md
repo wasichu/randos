@@ -147,7 +147,7 @@ Never rank on MetricX alone: TranslateGemma was trained with MetricX as its
 reward, so it's the one scorer that knows how to flatter it.
 
 The judge runs last, after MetricX and COMET-Kiwi, and over every run at
-once (`score --scorer judge results/*.json`: what it must see depends on
+once (`score --scorer judge results/shootout-*.json`, `judging.py`: what it must see depends on
 all the models' translations of a string). It sees only what can change a
 pick (`review.to_judge`): translations passing every check, of strings
 still in the template, and of those the finalists, best mean rank over
@@ -197,7 +197,7 @@ translates one string, a plural needs a form per plural rule.
 ## The review page
 
 ```bash
-uv run python -m randos_translate.cli review   # results/*.json -> results/review.json
+uv run python -m randos_translate.cli review   # results/*.json (not archive/) -> results/review.json
 just dev                                         # then http://localhost:4000/dev/translations
 ```
 
@@ -230,18 +230,13 @@ terminology prompt carries the glossary; TranslateGemma's chat template
 takes the text alone. Both get a string's context (above). All decode
 greedily or with beam search, so a rerun gives the same text.
 
-## Status (2026-10-21)
+## History
 
-Proved end to end on Opus-MT en→es and es→en (about 600 MB each in the
-Hugging Face cache) on the first 12 strings: 12/12 pass the checks, mean
-chrF 82.6; chrF singles out the one bad translation ("About randos" →
-"Alrededor de randos", "around randos", 43.9). The proof's output is
-`results/proof-opus-mt-es.json`. No `.po` file has been filled.
-
-Then, for the review page: both small models on all 85 strings for `es`,
-and the first 20 for `ar` (both) and `ja` (M2M100 only; no direct Opus-MT
-pair). Opus-MT wins `es` (85/85 pass, mean chrF 78.3, vs 82/85 and 65.5);
-M2M100 wins `ar` (19/20 vs 10/20: Opus-MT's en→ar returns nothing, "& &
-&", or a loop of "hey" for short strings). Useful catches: M2M100 turned
-"Mute" into "Muerte" (death), and "& & &" passing the script check exposed
-a hole, now closed (no letters at all fails when the source has some).
+The first runs (2026-10-21) are kept in `results/archive/`, out of the
+review: the end-to-end proof (Opus-MT en→es on 12 strings, 12/12 passing,
+chrF singling out "About randos" → "Alrededor de randos", "around randos")
+and the small models' first review-page runs, which caught M2M100 turning
+"Mute" into "Muerte" (death) and "& & &" passing the script check (closed:
+no letters at all fails when the source has some). Every later run is a
+`results/shootout-<model>.json`; `docs/architecture/new_languages.md` has
+the five languages added 2026-10-22.

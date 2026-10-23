@@ -2,7 +2,7 @@
 .venv-test/
 __pycache__/
 .pytest_cache/
-# Runs are kept only when they matter: rename one to keep it (like the
-# proof, or the shown-* runs the committed review.json is built from).
+# Runs are kept only when they matter: rename one to keep it (the
+# shootout-* runs review.json is built from; superseded ones go in archive/).
 results/*-2???????T??????Z.json
 logs/

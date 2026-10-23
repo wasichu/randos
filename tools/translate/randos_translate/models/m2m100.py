@@ -5,12 +5,12 @@ the second contestant that gives the review page real disagreements."""
 
 from __future__ import annotations
 
-from . import protect, restore
+from . import NAMES, protect, restore
 
 REPO = "facebook/m2m100_418M"
 # M2M100 covers all 19; its codes match ours but Filipino's, which it
 # calls Tagalog (`tl`).
-LOCALES = ["es", "zh", "hi", "ar", "pt", "bn", "ru", "ja", "fr", "de", "ko", "it", "tr", "id", "vi", "ur", "sw", "fa", "fil"]
+LOCALES = list(NAMES)
 _CODES = {"fil": "tl"}
 
 

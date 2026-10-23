@@ -128,3 +128,13 @@ def test_plural_strings_are_left_to_people(tmp_path):
     assert counts["filled"] == 1
     plural = next(e for e in polib.pofile(str(path)) if e.msgid_plural)
     assert plural.msgstr == "" and not any(plural.msgstr_plural.values())
+
+
+def test_one_list_of_locales_matches_the_site_and_the_scripts():
+    from randos_translate import checks
+
+    on_disk = {p.parent.parent.name for p in po.GETTEXT.glob("*/LC_MESSAGES/default.po")} - {"en"}
+    assert set(po.LOCALES) == on_disk
+    # Every locale's script is known, once.
+    assert set(po.LOCALES) == checks.LATIN_LOCALES | set(checks.SCRIPTS)
+    assert not checks.LATIN_LOCALES & set(checks.SCRIPTS)

@@ -170,7 +170,7 @@ class Judge:
     name = "judge"
     BATCH = 64
 
-    def __init__(self, judge: str = "mistral") -> None:
+    def __init__(self, judge: str) -> None:
         from mlx_lm import batch_generate, load
 
         self.judge, self.repo = judge, JUDGES[judge]
@@ -235,14 +235,14 @@ class JudgeCache:
         self._new: set[str] = set()
 
     @staticmethod
-    def key(locale: str, entry: dict, context: str, judge: str = "mistral") -> str:
+    def key(locale: str, entry: dict, context: str, judge: str) -> str:
         # A judge with load options adds them; one without keeps the key it had.
         model = [JUDGES[judge], _TOKENIZER[judge]] if judge in _TOKENIZER else JUDGES[judge]
         seen = [model, JUDGE_RUBRIC, locale, context, entry["msgid"], entry["text"]]
         return hashlib.sha256(json.dumps(seen, ensure_ascii=False).encode()).hexdigest()
 
     def get(
-        self, locale: str, entry: dict, context: str, judge: str = "mistral", only_new: bool = False
+        self, locale: str, entry: dict, context: str, judge: str, only_new: bool = False
     ) -> dict | None:
         """The verdict given before (`only_new`: only one given since this
         cache was opened, as `--redo` wants)."""
@@ -278,7 +278,7 @@ def judge_context(msgctxt: str | None, context: str) -> str:
     return "\n" + "\n".join(lines) + "\n" if lines else ""
 
 
-def judged_context(entry: dict, score: str = "judge") -> str:
+def judged_context(entry: dict, score: str) -> str:
     """The context an entry's judgement saw (judgements from before comments
     existed saw only the button rule)."""
     result = entry["scores"].get(score) or {}
