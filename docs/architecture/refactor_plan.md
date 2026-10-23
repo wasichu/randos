@@ -26,6 +26,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 4 | TUI | Done: monitor, text client, call audio (STUN/TURN, echo cancellation, FEC), release builds, Homebrew tap (v0.2.0) |
 | — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
 | 6 | UI translations | **Next** |
+| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Planned, likely before Phase 5's voice lab; design drafted 2026-10-22, owner's decisions open |
 | 5 | Voice anonymization | Planned (alongside 6); its voice lab starts with a code-quality pass |
 
 ## How it fits together
@@ -668,6 +669,22 @@ No behaviour changes.
 ## Open items
 
 Not scheduled; pick up when relevant.
+
+- **Invitation links (proposed by the owner, 2026-10-22).** Anonymous,
+  one-time links, after Lichess's anonymous challenges: create a link,
+  share it elsewhere, the first to open it is in a one-to-one call with
+  you; it dies once used, after 15 minutes, or when you leave. Design in
+  [`invitations.md`](invitations.md): the Matchmaker holds invitations (a
+  waiting entry found by token, so claims are serialized and the call
+  start, monitoring and 18+ check are reused), the token rides in the URL
+  fragment (never in a log or a link preview), and an invitation call is
+  an ordinary call marked `kind: :invitation` (both go idle after it, no
+  "Next"). Seven decisions for the owner at the end of the note. Likely
+  before the voice lab.
+- **Translating the TUI** (left open, 2026-10-22). Its own strings aren't
+  in gettext; English is fine for now (owner: "probably a good idea at
+  some point"). It would take gettext in the TUI, a language setting, and
+  a shootout run for its strings.
 
 - **Lost messages in a drop (audited 2026-10-22).** Obligation 9's flake
   was real: a `media_state` lost as the socket dropped left a call
