@@ -4,7 +4,7 @@ defmodule Tui.Integration.BrowserCallTest do
   calls a real headless Chrome (`test/e2e/tui_browser_call.mjs`, fake mic)
   through a running server: Stage 1's interop test. Both roles: whoever
   waits in the queue first offers. Passes when the TUI connected, sent
-  `connection_established`, and audio arrived both ways (the TUI's stats,
+  `media_state` `connected`, and audio arrived both ways (the TUI's stats,
   and Chrome's own inbound-rtp energy).
 
   Run with `just tui-smoke` (it starts the server). Needs node, Chrome
@@ -25,21 +25,8 @@ defmodule Tui.Integration.BrowserCallTest do
   defp browser(speaks, listens, env \\ []),
     do: Tui.TestSupport.start_browser(speaks, listens, @hold_ms, env)
 
-  defp await_browser(port, event) do
-    receive do
-      {^port, {:data, {:eol, line}}} ->
-        case Jason.decode!(line) do
-          %{"event" => ^event} = message -> message
-          %{"event" => "error", "message" => message} -> flunk("browser: #{message}")
-          _other -> await_browser(port, event)
-        end
-    after
-      30_000 -> flunk("timed out waiting for the browser to report #{event}")
-    end
-  end
-
   # Until the browser's result arrives: the TUI must push
-  # connection_established and hear the browser's tone.
+  # media_state connected and hear the browser's tone.
   defp await_call(app, port, seen \\ %{connected?: false, heard?: false}) do
     receive do
       {:tui_media, ^app, %{call: %{connection: :connected, stats: stats}}} when is_map(stats) ->

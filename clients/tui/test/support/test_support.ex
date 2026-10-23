@@ -12,6 +12,14 @@ defmodule Tui.TestSupport do
   @doc "The server the integration tests use (`RANDOS_URL`; `just tui-smoke` sets it)."
   def server_url, do: System.get_env("RANDOS_URL") || "ws://localhost:4010/participant/websocket"
 
+  @doc "Starts (supervised by the test) a text-only TUI against `server_url/0`."
+  def start_app(id, size \\ {100, 24}) do
+    ExUnit.Callbacks.start_supervised!(
+      {Tui.App, name: nil, test_mode: size, uri: server_url(), test_pid: self()},
+      id: id
+    )
+  end
+
   @doc """
   Starts (supervised by the test) a TUI against `server_url/0` with its own
   media helper, which plays `audio` (`{input, output}`; default a test tone
@@ -48,7 +56,7 @@ defmodule Tui.TestSupport do
   closes. `env`: the script's options (EXPECT, MIC_ERROR, RELAY_ONLY,
   REPORT_EVERY_MS).
   """
-  def start_browser(speaks, listens, hold_ms, env \\ []) do
+  def start_browser(speaks, hears, hold_ms, env \\ []) do
     node = System.find_executable("node") || flunk("node not found")
     %URI{host: host, port: port} = URI.parse(server_url())
 
@@ -61,22 +69,16 @@ defmodule Tui.TestSupport do
        Enum.map([{"BASE_URL", "http://#{host}:#{port}"} | env], fn {k, v} ->
          {String.to_charlist(k), String.to_charlist(v)}
        end)},
-      args: ["test/e2e/tui_browser_call.mjs", speaks, listens, Integer.to_string(hold_ms)]
+      args: ["test/e2e/tui_browser_call.mjs", speaks, hears, Integer.to_string(hold_ms)]
     ])
   end
 
   @doc """
   Waits for the app's media state (`{:tui_media, app, state}`) to satisfy
-  `fun`, and returns it.
+  `fun` within `timeout` ms, and returns it.
   """
-  def await_media(app, fun, timeout \\ 20_000) do
-    receive do
-      {:tui_media, ^app, media} ->
-        if fun.(media), do: media, else: await_media(app, fun, timeout)
-    after
-      timeout -> flunk("timed out waiting for #{inspect(app)}'s media state")
-    end
-  end
+  def await_media(app, fun, timeout \\ 20_000),
+    do: await(:tui_media, app, fun, deadline(timeout), "media state")
 
   @doc "Presses keys on a running app."
   def keys(app, codes),
@@ -84,14 +86,45 @@ defmodule Tui.TestSupport do
 
   @doc """
   Waits for the app's model (`{:tui_model, app, model}`, sent when the app
-  has a `test_pid`) to satisfy `fun`, and returns it.
+  has a `test_pid`) to satisfy `fun` within `timeout` ms, and returns it.
   """
-  def await_model(app, fun, timeout \\ 20_000) do
+  def await_model(app, fun, timeout \\ 20_000),
+    do: await(:tui_model, app, fun, deadline(timeout), "model")
+
+  # Against a deadline, not a timeout per message: in a call both stream
+  # all the time (levels, 20 a second), so a per-message timeout never fires.
+  defp await(tag, app, fun, deadline, what) do
     receive do
-      {:tui_model, ^app, model} ->
-        if fun.(model), do: model, else: await_model(app, fun, timeout)
+      {^tag, ^app, value} ->
+        if fun.(value), do: value, else: await(tag, app, fun, deadline, what)
     after
-      timeout -> flunk("timed out waiting for #{inspect(app)}'s model")
+      max(deadline - System.monotonic_time(:millisecond), 0) ->
+        flunk("timed out waiting for #{inspect(app)}'s #{what}")
+    end
+  end
+
+  defp deadline(timeout), do: System.monotonic_time(:millisecond) + timeout
+
+  @doc """
+  Waits for the browser script on `port` (`test/e2e/tui_browser_call.mjs`)
+  to report `event` satisfying `fun`, and returns it; its `error` fails
+  the test.
+  """
+  def await_browser(port, event, fun \\ fn _ -> true end) do
+    receive do
+      {^port, {:data, {:eol, line}}} ->
+        case Jason.decode!(line) do
+          %{"event" => ^event} = message ->
+            if fun.(message), do: message, else: await_browser(port, event, fun)
+
+          %{"event" => "error", "message" => message} ->
+            flunk("browser: #{message}")
+
+          _other ->
+            await_browser(port, event, fun)
+        end
+    after
+      30_000 -> flunk("timed out waiting for the browser to report #{event}")
     end
   end
 

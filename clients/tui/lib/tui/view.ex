@@ -13,6 +13,8 @@ defmodule Tui.View do
   alias Tui.Model
   alias Tui.View.StatusScreen
 
+  @call_statuses Tui.Model.call_statuses()
+
   # The audio meters use the website's colours: cyan-600 for you, violet-600
   # for your rando (`assets/js/randos/audio_visualizer.js`).
   @you_color {:rgb, 8, 145, 178}
@@ -301,7 +303,7 @@ defmodule Tui.View do
 
   defp main_text(%{status: :in_call} = model) do
     "You're in a call.#{time_left(model, " remaining")}\n\n" <>
-      "This client has no audio yet: if the peer offers audio (a browser), " <>
+      "This client is running without audio (no media helper): if the peer offers audio (a browser), " <>
       "the call ends and you go back to idle. Two terminal clients can stay " <>
       "in a call to try timers and extension votes."
   end
@@ -374,7 +376,7 @@ defmodule Tui.View do
     do: "  t mic test" <> if(media.devices, do: "  i mic  o speaker", else: "")
 
   defp mic_help(%{model: %{status: status, audio?: true}, media_state: %{call: call}})
-       when status in [:connecting, :in_call, :extension_pending] and is_map(call),
+       when status in @call_statuses and is_map(call),
        do: if(Map.get(call, :muted, false), do: "  m unmute", else: "  m mute")
 
   defp mic_help(_state), do: ""
@@ -442,7 +444,7 @@ defmodule Tui.View do
     do: ["your rando's connection dropped; waiting for them to come back", "rando reconnecting…"]
 
   defp connection_line(%{model: %{status: status, audio?: true}} = state)
-       when status in [:connecting, :in_call, :extension_pending] do
+       when status in @call_statuses do
     lines = call_line(state.media_state)
 
     case state.media_state.call do
@@ -452,7 +454,7 @@ defmodule Tui.View do
   end
 
   defp connection_line(%{model: %{status: status}})
-       when status in [:connecting, :in_call, :extension_pending],
+       when status in @call_statuses,
        do: ["text only (no audio)", "text only"]
 
   defp connection_line(_state), do: ["no call"]

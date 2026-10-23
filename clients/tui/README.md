@@ -46,7 +46,7 @@ randos --reset-settings   # forget it; the next start begins fresh
 `just tui-release` (repo root) builds `dist/randos-VERSION-OS-ARCH.tar.gz`:
 a `mix release` directory with ERTS, the app, the media helper (in the
 app's `priv/`), and `bin/randos`, the command people run (`Tui.CLI`: `--url`,
-`--check`, `--version`, `--help`). Unpacked anywhere it runs as is, and
+`--check`, `--version`, `--help`, and the settings flags above). Unpacked anywhere it runs as is, and
 it defaults to production (`config/config.exs`; `mix tui` defaults to the
 local dev server). A release named `randos` would own `bin/randos` itself,
 so the release is `randos_tui` and `bin/randos` is a small wrapper that

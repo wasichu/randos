@@ -2,7 +2,7 @@
 // participant (fake mic) that finds a match and holds the call. Driven by
 // clients/tui/test/integration/browser_call_test.exs, which plays the TUI.
 //
-//   BASE_URL=http://localhost:4010 node test/e2e/tui_browser_call.mjs <speaks> <listens> <hold_ms>
+//   BASE_URL=http://localhost:4010 node test/e2e/tui_browser_call.mjs <speaks> <hears> <hold_ms>
 //
 // Environment (failure modes for the "Client obligations" scenarios):
 //   EXPECT=connected (default) | call_ends — what this run waits for
@@ -26,7 +26,7 @@
 
 import {Browser, BASE_URL, inboundAudio, sleep} from "./cdp.mjs"
 
-const [speaks, listens, holdMs] = process.argv.slice(2)
+const [speaks, hears, holdMs] = process.argv.slice(2)
 const expect = process.env.EXPECT ?? "connected"
 const connectTimeoutMs = Number(process.env.RANDOS_CONNECT_TIMEOUT_MS ?? 15_000)
 const report = event => console.log(JSON.stringify(event))
@@ -46,7 +46,7 @@ try {
     relayOnly: process.env.RELAY_ONLY === "1",
   })
   await page.open(BASE_URL)
-  await page.findRando(speaks, listens)
+  await page.findRando(speaks, hears)
   // Either we wait in the queue, or a peer was already waiting and we match
   // at once (then there's no "looking" to report). A failing call can come
   // and go faster than this poll, so call_ends runs skip it and rely on the

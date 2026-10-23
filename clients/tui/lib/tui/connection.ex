@@ -8,7 +8,7 @@ defmodule Tui.Connection do
     * `{:joined, reply}` — join reply (`%{"state" => _, "languages" => _,
       "resumed" => _}`); after a reconnect mid-call it's the same
       participant, back in its call (`"resumed" => true`), else a fresh one
-    * `{:push, event, payload}` — server pushes (`state`, `signal`, `ice_servers`)
+    * `{:push, event, payload}` — server pushes (`state`, `signal`; `resume_ticket` stays here, below)
     * `{:reply, event, {:ok | :error, payload}}` — replies to our pushes
     * `:disconnected` — Slipstream reconnects (and we rejoin) automatically
 

@@ -27,7 +27,7 @@ defmodule Tui.Media.State do
 
   # Media starts at the match (`connecting`), not `in_call`: the server only
   # reports `in_call` once both sides' audio is up.
-  @call_statuses [:connecting, :in_call, :extension_pending]
+  @call_statuses Tui.Model.call_statuses()
 
   @type phase :: :starting | :running | :failed
   @type mic_test :: %{

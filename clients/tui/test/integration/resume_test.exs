@@ -13,13 +13,6 @@ defmodule Tui.Integration.ResumeTest do
   @moduletag :integration
   @moduletag timeout: 60_000
 
-  defp start_app(id) do
-    start_supervised!(
-      {Tui.App, name: nil, test_mode: {100, 24}, uri: server_url(), test_pid: self()},
-      id: id
-    )
-  end
-
   # The app's own Tui.Connection (it starts and links it).
   defp connection_of(app) do
     {:links, links} = Process.info(app, :links)
@@ -63,9 +56,9 @@ defmodule Tui.Integration.ResumeTest do
     await_model(b, &match?(%{call: %{"peer_reconnecting" => true}}, &1))
 
     back =
-      await_model(a, &(&1.connection == :connected and "reconnected; back in the call" in &1.log))
+      await_model(a, &(&1.connection == :connected and match?(%{call: %{"id" => ^call_id}}, &1)))
 
-    assert %{status: :in_call, call: %{"id" => ^call_id}} = back
+    assert back.status == :in_call
     await_model(b, &match?(%{call: %{"id" => ^call_id, "peer_reconnecting" => false}}, &1))
 
     # Still in the call together: ending it from A ends it for B.

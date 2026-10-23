@@ -88,6 +88,13 @@ defmodule Tui.Model do
   def new(now_ms \\ 0), do: %__MODULE__{now_ms: now_ms}
 
   @doc """
+  The statuses that carry a call, from the match (`connecting`: media starts
+  then) to its end: guards take it as `@call_statuses Tui.Model.call_statuses()`.
+  """
+  @spec call_statuses() :: [status()]
+  def call_statuses, do: [:connecting, :in_call, :extension_pending]
+
+  @doc """
   The form as the person left it last time (`Tui.Config`): speaking and
   hearing languages and the 18+ acknowledgment. Codes the server doesn't
   offer are dropped when its languages arrive (`joined/2`).
@@ -165,8 +172,6 @@ defmodule Tui.Model do
   @doc "A server push on the participant channel."
   @spec push(t(), String.t(), map()) :: {t(), [command()]}
   def push(model, "state", state), do: {put_state(model, state), []}
-
-  def push(model, "ice_servers", _payload), do: {model, []}
 
   def push(%{audio?: false} = model, "signal", %{"type" => "offer"}) do
     # end_call (not connection_failed): it ends the call with us stopping, so

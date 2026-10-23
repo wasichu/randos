@@ -14,7 +14,7 @@ const CONNECT_TIMEOUT_MS = Number(process.env.RANDOS_CONNECT_TIMEOUT_MS ?? 15_00
 const browser = await Browser.launch()
 const results = []
 
-async function scenario(name, options, [speaks, listens]) {
+async function scenario(name, options, [speaks, hears]) {
   try {
     const a = await browser.newPage(`${name} A`, options)
     const b = await browser.newPage(`${name} B`, options)
@@ -25,8 +25,8 @@ async function scenario(name, options, [speaks, listens]) {
         if (document.querySelector("#webrtc-audio[data-webrtc-state='connected']")) window.__connected = true
       }).observe(document, {subtree: true, childList: true, attributes: true, attributeFilter: ["data-webrtc-state"]})`)
 
-    await a.findRando(speaks, listens)
-    await b.findRando(listens, speaks)
+    await a.findRando(speaks, hears)
+    await b.findRando(hears, speaks)
     await a.waitFor(`!!document.querySelector("#webrtc-audio[data-ice-transport-policy='relay']")`, "a relay-only call")
 
     const limitMs = CONNECT_TIMEOUT_MS + 6_000

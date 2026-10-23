@@ -13,13 +13,6 @@ defmodule Tui.Integration.TwoClientsTest do
 
   alias Tui.Model
 
-  defp start_app(id) do
-    start_supervised!(
-      {Tui.App, name: nil, test_mode: {100, 24}, uri: server_url(), test_pid: self()},
-      id: id
-    )
-  end
-
   test "two terminal clients match, reach the vote, and one ends the call" do
     a = start_app(:a)
     b = start_app(:b)

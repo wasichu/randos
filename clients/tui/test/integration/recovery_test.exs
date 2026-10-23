@@ -97,41 +97,6 @@ defmodule Tui.Integration.RecoveryTest do
     end
   end
 
-  # Like await_model/await_media, but against a deadline: their timeout
-  # restarts with every message, and both stream all the time in a call.
-  defp within(ms, what, fun) do
-    deadline = System.monotonic_time(:millisecond) + ms
-    within_until(deadline, what, fun)
-  end
-
-  defp within_until(deadline, what, fun) do
-    left = deadline - System.monotonic_time(:millisecond)
-
-    receive do
-      message ->
-        case fun.(message) do
-          {:ok, value} -> value
-          :no -> within_until(deadline, what, fun)
-        end
-    after
-      max(left, 0) -> flunk("timed out (#{what})")
-    end
-  end
-
-  defp model_of(app, ms, what, fun) do
-    within(ms, what, fn
-      {:tui_model, ^app, model} -> if fun.(model), do: {:ok, model}, else: :no
-      _other -> :no
-    end)
-  end
-
-  defp media_of(app, ms, what, fun) do
-    within(ms, what, fn
-      {:tui_media, ^app, media} -> if fun.(media), do: {:ok, media}, else: :no
-      _other -> :no
-    end)
-  end
-
   defp packets(%{call: %{stats: %{"packets_received" => n}}}), do: n
   defp packets(_media), do: 0
 
@@ -143,15 +108,14 @@ defmodule Tui.Integration.RecoveryTest do
   # comes first: detecting a dead path takes the clients a few seconds
   # (@detect_ms), so from the cut it's detection plus recovery.
   defp assert_recovers(app, call_id, cut_at) do
-    model_of(app, @detect_ms, "recovering", &match?(%{call: %{"recovering" => true}}, &1))
+    await_model(app, &match?(%{call: %{"recovering" => true}}, &1), @detect_ms)
     unhealthy_at = System.monotonic_time(:millisecond)
 
     back =
-      model_of(
+      await_model(
         app,
-        @budget_ms,
-        "back from recovering",
-        &match?(%{call: %{"id" => ^call_id, "recovering" => false}}, &1)
+        &match?(%{call: %{"id" => ^call_id, "recovering" => false}}, &1),
+        @budget_ms
       )
 
     now = System.monotonic_time(:millisecond)
@@ -164,24 +128,6 @@ defmodule Tui.Integration.RecoveryTest do
 
     assert now - cut_at < @detect_ms + @budget_ms,
            "unhealthy #{unhealthy_at - cut_at} ms after the cut, back #{now - unhealthy_at} ms later"
-  end
-
-  defp await_browser(port, event, fun \\ fn _ -> true end) do
-    receive do
-      {^port, {:data, {:eol, line}}} ->
-        case Jason.decode!(line) do
-          %{"event" => ^event} = message ->
-            if fun.(message), do: message, else: await_browser(port, event, fun)
-
-          %{"event" => "error", "message" => message} ->
-            flunk("browser: #{message}")
-
-          _other ->
-            await_browser(port, event, fun)
-        end
-    after
-      30_000 -> flunk("timed out waiting for the browser to report #{event}")
-    end
   end
 
   defp browser_heard(%{"inbound" => %{"packetsReceived" => n}}), do: n
@@ -206,8 +152,8 @@ defmodule Tui.Integration.RecoveryTest do
     cut_all(turn)
     assert_recovers(a, call_id, cut_at)
 
-    media_of(a, 20_000, "a hears again", &(packets(&1) > heard_a + @fresh))
-    media_of(b, 20_000, "b hears again", &(packets(&1) > heard_b + @fresh))
+    await_media(a, &(packets(&1) > heard_a + @fresh), 20_000)
+    await_media(b, &(packets(&1) > heard_b + @fresh), 20_000)
 
     keys(a, ["e"])
     await_model(a, &(&1.status == :idle))
@@ -246,7 +192,7 @@ defmodule Tui.Integration.RecoveryTest do
       cut_all(turn)
       assert_recovers(app, call_id, cut_at)
 
-      media_of(app, 20_000, "the TUI hears again", &(packets(&1) > heard_tui + @fresh))
+      await_media(app, &(packets(&1) > heard_tui + @fresh), 20_000)
       await_browser(port, "inbound", &(browser_heard(&1) > heard_browser + @fresh))
     end
   end

@@ -12,10 +12,7 @@ defmodule Tui.Integration.StatusTest do
   @moduletag timeout: 30_000
 
   test "s opens the status screen with the server's status; esc goes back" do
-    app =
-      start_supervised!(
-        {Tui.App, name: nil, test_mode: {100, 30}, uri: server_url(), test_pid: self()}
-      )
+    app = start_app(:app, {100, 30})
 
     await_model(app, &(&1.status == :idle))
     keys(app, ["s"])

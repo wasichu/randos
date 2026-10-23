@@ -33,6 +33,7 @@ defmodule Tui.App do
   require Logger
 
   @tick_ms 1_000
+  @call_statuses Model.call_statuses()
 
   @impl true
   def mount(opts) do
@@ -147,7 +148,7 @@ defmodule Tui.App do
         %Event.Key{code: "m", kind: "press"},
         %{model: %{status: status, audio?: true}} = state
       )
-      when status in [:connecting, :in_call, :extension_pending] do
+      when status in @call_statuses do
     {:noreply, run_media(state, MediaState.toggle_mute(state.media_state))}
   end
 
@@ -163,7 +164,7 @@ defmodule Tui.App do
     # Quitting mid-call is leaving on purpose: say so (as the browser does on
     # page hide), so the call ends `peer_disconnected` rather than looking
     # like a lost connection.
-    if state.model.status in [:connecting, :in_call, :extension_pending],
+    if state.model.status in @call_statuses,
       do: Connection.leave(state.connection)
 
     # Closing the channel ends our participant: the server takes us out of
