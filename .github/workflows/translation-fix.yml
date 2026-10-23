@@ -28,9 +28,14 @@ jobs:
     env:
       ISSUE: ${{ github.event.issue.number }}
       BRANCH: translation/issue-${{ github.event.issue.number }}
-      OUT: ${{ runner.temp }}/fix
       GH_TOKEN: ${{ github.token }}
     steps:
+      # The `runner` context isn't available in a job's `env:` (GitHub
+      # rejected the whole file), so the work directory comes from the
+      # runner's own variable.
+      - name: Work directory
+        run: echo "OUT=$RUNNER_TEMP/fix" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v7
 
       - uses: jdx/mise-action@v5
