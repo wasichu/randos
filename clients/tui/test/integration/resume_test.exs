@@ -5,6 +5,8 @@ defmodule Tui.Integration.ResumeTest do
   call's resume ticket and is back in the same call; its rando sees it
   reconnecting meanwhile. Against a running server (`just tui-smoke`).
   The browser side is `call_smoke.mjs`'s "obligation 9" scenario.
+  With audio, the call's media keeps going through the drop and after it,
+  on the same helper session.
   """
   use ExUnit.Case, async: false
 
@@ -27,6 +29,22 @@ defmodule Tui.Integration.ResumeTest do
     end) || flunk("no Tui.Connection linked to the app")
   end
 
+  # Drops the app's websocket as the network would: shuts its TCP socket
+  # down, so both ends see it close (the server's channel process goes
+  # away, and Slipstream reconnects).
+  defp drop_websocket(app) do
+    websocket = Tui.Connection.__connection_pid__(connection_of(app))
+    {:links, links} = Process.info(websocket, :links)
+
+    [tcp | _] =
+      for port <- links, is_port(port), Port.info(port, :name) == {:name, ~c"tcp_inet"}, do: port
+
+    :ok = :gen_tcp.shutdown(tcp, :read_write)
+  end
+
+  defp packets(%{call: %{stats: %{"packets_received" => n}}}), do: n
+  defp packets(_media), do: 0
+
   test "a dropped connection rejoins with its ticket and is back in the call" do
     a = start_app(:resume_a)
     b = start_app(:resume_b)
@@ -41,16 +59,7 @@ defmodule Tui.Integration.ResumeTest do
     %{call: %{"id" => call_id}} = await_model(a, &(&1.status == :in_call))
     await_model(b, &(&1.status == :in_call))
 
-    # Drop A's websocket as the network would: shut its TCP socket down, so
-    # both ends see it close (the server's channel process goes away, and
-    # Slipstream reconnects).
-    websocket = Tui.Connection.__connection_pid__(connection_of(a))
-    {:links, links} = Process.info(websocket, :links)
-
-    [tcp | _] =
-      for port <- links, is_port(port), Port.info(port, :name) == {:name, ~c"tcp_inet"}, do: port
-
-    :ok = :gen_tcp.shutdown(tcp, :read_write)
+    drop_websocket(a)
 
     # B sees its rando reconnecting; A comes back into the same call.
     await_model(b, &match?(%{call: %{"peer_reconnecting" => true}}, &1))
@@ -65,5 +74,37 @@ defmodule Tui.Integration.ResumeTest do
     keys(a, ["e"])
     await_model(a, &(&1.status == :idle))
     await_model(b, &(&1.status in [:looking, :idle]))
+  end
+
+  test "with audio: the call's media keeps going through the drop, on the same session" do
+    a = start_audio_tui(:resume_audio_a)
+    b = start_audio_tui(:resume_audio_b)
+    a_model = await_model(a, &(&1.status == :idle and &1.audio?))
+    b_model = await_model(b, &(&1.status == :idle and &1.audio?))
+
+    find(a, a_model, "fa", "ur")
+    await_model(a, &(&1.status == :looking))
+    find(b, b_model, "ur", "fa")
+
+    %{call: %{"id" => call_id}} = await_model(a, &(&1.status == :in_call))
+    await_model(b, &(&1.status == :in_call))
+    %{call: %{seq: session}} = await_media(a, &(packets(&1) > 50))
+    heard = packets(await_media(b, &(packets(&1) > 50)))
+
+    drop_websocket(a)
+    await_model(b, &match?(%{call: %{"peer_reconnecting" => true}}, &1))
+    # A's audio doesn't need the server: B goes on hearing it meanwhile.
+    heard = packets(await_media(b, &(packets(&1) > heard + 25)))
+
+    await_model(a, &(&1.connection == :connected and match?(%{call: %{"id" => ^call_id}}, &1)))
+    await_model(b, &match?(%{call: %{"id" => ^call_id, "peer_reconnecting" => false}}, &1))
+
+    # The same helper session (no new call_start), and audio both ways.
+    %{call: %{seq: ^session}} = media = await_media(a, &(packets(&1) > 0))
+    await_media(a, &(packets(&1) > packets(media) + 25))
+    await_media(b, &(packets(&1) > heard + 25))
+
+    keys(a, ["e"])
+    await_model(a, &(&1.status == :idle))
   end
 end
