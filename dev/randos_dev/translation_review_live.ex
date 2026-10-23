@@ -273,7 +273,7 @@ defmodule RandosDev.TranslationReviewLive do
                     <%= for {scorer, meta} <- @scorers do %>
                       <dt class="text-stone-500">{meta["label"]}</dt>
                       <dd class="tabular-nums" data-scorer={scorer}>
-                        {format_score(t["scores"][scorer])}
+                        {format_score(scorer, t["scores"][scorer])}
                         <span :if={t["ranks"][scorer]} class="text-stone-400">#{t["ranks"][scorer]}</span>
                       </dd>
                     <% end %>
@@ -308,7 +308,15 @@ defmodule RandosDev.TranslationReviewLive do
   defp scorer_label(scorers, scorer),
     do: Enum.find_value(scorers, scorer, fn {name, meta} -> name == scorer && meta["label"] end)
 
-  defp format_score(nil), do: "—"
-  defp format_score(score) when is_float(score), do: :erlang.float_to_binary(score, decimals: 1)
-  defp format_score(score), do: to_string(score)
+  # COMET-Kiwi is 0–1 and picks turn on its second and third decimals
+  # (0.87 against 0.86); the others read fine at one.
+  defp format_score(_scorer, nil), do: "—"
+
+  defp format_score("comet_kiwi", score) when is_float(score),
+    do: :erlang.float_to_binary(score, decimals: 3)
+
+  defp format_score(_scorer, score) when is_float(score),
+    do: :erlang.float_to_binary(score, decimals: 1)
+
+  defp format_score(_scorer, score), do: to_string(score)
 end
