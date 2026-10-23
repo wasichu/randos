@@ -134,6 +134,17 @@ MLX = {
 }
 
 
+def takes_context(name: str) -> bool:
+    """Whether the model reads a string's context (`MLXChat.takes_context`),
+    known without loading it."""
+    return name in MLX
+
+
+def uv_group(name: str) -> str:
+    """The uv dependency group the model runs in (`uv run --group …`)."""
+    return "mlx" if name in MLX else "models"
+
+
 def get(name: str) -> Translator:
     if name == "opus-mt":
         from .opus_mt import OpusMT

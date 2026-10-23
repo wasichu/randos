@@ -4,6 +4,8 @@
   uv run python -m randos_translate.cli fill results/<run>.json --locale es [--redo]
   uv run --group models python -m randos_translate.cli score --scorer metricx results/*.json
   uv run python -m randos_translate.cli review
+  uv run python -m randos_translate.cli plan
+
 
 `run` translates the source strings, back-translates them, runs every check
 and score, and writes results/<model>-<date>.json (what the results page
@@ -11,7 +13,8 @@ is built from). It never touches the .po files. `score` runs one model-based sco
 (scoring.SCORERS) over runs already made, filling in its pending scores
 (the judge last, given every run: it sees only the finalists, `judge`). `fill` writes one run's
 translations into a locale's .po, filling only empty entries (`--redo`:
-also entries the machine wrote and nobody has changed since).
+also entries the machine wrote and nobody has changed since). `plan` lists
+the shootout runs the template has outgrown, for `just translate-update`.
 """
 
 from __future__ import annotations
@@ -33,6 +36,34 @@ RESULTS = RESULTS_ROOT
 JUDGE_CACHE = RESULTS_ROOT / "judge-cache.json"
 
 
+def shootout_runs() -> list[Path]:
+    """The catalog's shootout: one run per model (results/shootout-<model>.json)."""
+    return sorted(p for p in RESULTS.glob("shootout-*.json") if p.name != "shootout-summary.json")
+
+
+def stale(earlier: dict | None, sources: list[po.Source], locale: str, takes_context: bool) -> list[po.Source]:
+    """The sources an earlier run (None: there is none) lacks in `locale`,
+    and for a model that takes context, those whose context changed since."""
+    if earlier is None:
+        return list(sources)
+    have = {e["key"]: e.get("context", "") for e in earlier["entries"] if e["locale"] == locale}
+    return [s for s in sources if s.key not in have or (takes_context and have[s.key] != s.context)]
+
+
+def plan() -> list[tuple[str, str, list[str], Path, int]]:
+    """Each shootout run with strings to top up (`run --append`): its
+    model's uv group, the model, its locales, the run, how many strings.
+    No model is loaded."""
+    sources, todo = po.sources(), []
+    for path in shootout_runs():
+        data = json.loads(path.read_text())
+        model, locales = data["run"]["model"], data["run"]["locales"]
+        count = sum(len(stale(data, sources, loc, contestants.takes_context(model))) for loc in locales)
+        if count:
+            todo.append((contestants.uv_group(model), model, locales, path, count))
+    return todo
+
+
 def run(model_name: str, locales: list[str], limit: int | None, append: Path | None = None) -> Path:
     """Translates the template's strings into `locales`. With `append`, an
     earlier run of the same model: only the strings it lacks (the template
@@ -41,17 +72,9 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
     model = contestants.get(model_name)
     sources = po.sources()[:limit] if limit else po.sources()
     earlier = json.loads(append.read_text()) if append else None
-    have: dict[tuple[str, str], str] = {}
-    if earlier:
-        if earlier["run"]["model"] != model_name:
-            sys.exit(f"{append} is a run of {earlier['run']['model']}, not {model_name}")
-        have = {(e["locale"], e["key"]): e.get("context", "") for e in earlier["entries"]}
+    if earlier and earlier["run"]["model"] != model_name:
+        sys.exit(f"{append} is a run of {earlier['run']['model']}, not {model_name}")
     takes_context = getattr(model, "takes_context", False)
-
-    def stale(locale: str, source: po.Source) -> bool:
-        if (locale, source.key) not in have:
-            return True
-        return takes_context and have[(locale, source.key)] != source.context
 
     unsupported = [loc for loc in locales if loc not in model.locales]
     if unsupported:
@@ -60,7 +83,7 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
     entries, started = [], time.monotonic()
     for locale in locales:
         began = time.monotonic()
-        todo = [s for s in sources if stale(locale, s)]
+        todo = stale(earlier, sources, locale, takes_context)
         texts = model.translate([s.msgid for s in todo], locale, [s.context for s in todo]) if todo else []
         texts = [contestants.tidy(s.msgid, t) for s, t in zip(todo, texts)]
         backs = model.back_translate(texts, locale) if todo else []
@@ -117,11 +140,11 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
 
 def score(scorer_name: str, paths: list[Path], redo: bool, judges: list[str] | None = None) -> dict[str, int]:
     """Fills in one scorer's scores in each results file, locale by locale
-    (the judge: `judge`, all its judges or only `judges`)."""
+    (the judge: `judge`, all its judges or only `judges`). The scorer's
+    model is loaded only when something needs it."""
     if scorer_name == "judge":
         return judging.judge(paths, redo, judges, JUDGE_CACHE)
-    scorer = scoring.SCORERS[scorer_name]()
-    counts = {}
+    scorer, counts = None, {}
     for path in paths:
         data = json.loads(path.read_text())
         if "entries" not in data:  # the summary, not a run
@@ -130,6 +153,8 @@ def score(scorer_name: str, paths: list[Path], redo: bool, judges: list[str] | N
         for locale in sorted({e["locale"] for e in todo}):
             mine = [e for e in todo if e["locale"] == locale]
             began = time.monotonic()
+            if scorer is None:
+                scorer = scoring.SCORERS[scorer_name]()
             for entry, result in zip(mine, scorer.score(locale, mine)):
                 entry["scores"][scorer_name] = result
             seconds = time.monotonic() - began
@@ -211,13 +236,14 @@ def main(argv: list[str] | None = None) -> None:
     f.add_argument("--redo", action="store_true")
     s = sub.add_parser("score", help="run one model-based scorer over results files")
     s.add_argument("--scorer", required=True, choices=sorted(scoring.SCORERS))
-    s.add_argument("results", type=Path, nargs="+")
+    s.add_argument("results", type=Path, nargs="*", help="runs to score (default: the catalog's shootout)")
     s.add_argument("--redo", action="store_true", help="also rescore entries that already have a score")
     s.add_argument(
         "--judge", action="append", choices=sorted(scoring.JUDGES), help="with --scorer judge: only this judge (repeatable)"
     )
     b = sub.add_parser("tidy", help="apply models.tidy (brand case, ellipsis, placeholders, NFC) to runs made before it")
     b.add_argument("results", type=Path, nargs="+")
+    sub.add_parser("plan", help="list the shootout runs with strings to top up (group, model, locales, run, count)")
     sub.add_parser(
         "review", help="combine results/*.json into results/review.json (the review page's data) and shootout-summary.json"
     )
@@ -227,7 +253,11 @@ def main(argv: list[str] | None = None) -> None:
     if args.command == "run":
         print(run(args.model, args.locales.split(","), args.limit, args.append))
     elif args.command == "score":
-        print(score(args.scorer, [p for p in args.results if p.name != "review.json"], args.redo, args.judge))
+        paths = [p for p in args.results if p.name != "review.json"] or shootout_runs()
+        print(score(args.scorer, paths, args.redo, args.judge))
+    elif args.command == "plan":
+        for group, model, locales, path, count in plan():
+            print(group, model, ",".join(locales), path, count, sep="\t")
     elif args.command == "tidy":
         print(tidy(args.results))
     elif args.command == "review":

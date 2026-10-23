@@ -13,6 +13,7 @@ Its own Python project, never part of the app: Python 3.13 and exact
 versions in `pyproject.toml` / `uv.lock`, installed by `uv`.
 
 ```bash
+just translate-update [site|tui]     # after changing UI strings: only what changed, every step
 just translate-test                  # the checks and the fill rule (offline, no models)
 cd tools/translate
 uv run --group models python -m randos_translate.cli run --model opus-mt --locales es --limit 12
@@ -22,6 +23,16 @@ uv run python -m randos_translate.cli review                     # picks each st
 uv run python -m randos_translate.cli fill --best --locale all --redo
 uv run python -m randos_translate.cli --catalog tui review        # the same for the terminal client's strings
 ```
+
+`just translate-update` is the whole pipeline for a change to the
+strings, run by hand after one (it takes the machine for a while, so
+nothing runs it on its own): it extracts the template, asks `cli plan`
+(no model) which shootout runs lack a string or, for a model that takes
+context, have a string whose context changed, tops each of those up
+(`run --append`, one model at a time), scores what's pending (a scorer's
+model loads only when something is), and fills every language with
+`fill --best --redo`. A few changed strings take minutes per model, most
+of it loading; the first run of a catalog takes hours.
 
 Two catalogs: the website's strings (`--catalog site`, the default:
 `priv/gettext`, `results/`, `state/`) and the terminal client's

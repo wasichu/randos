@@ -138,3 +138,10 @@ def test_one_list_of_locales_matches_the_site_and_the_scripts():
     # Every locale's script is known, once.
     assert set(po.LOCALES) == checks.LATIN_LOCALES | set(checks.SCRIPTS)
     assert not checks.LATIN_LOCALES & set(checks.SCRIPTS)
+
+
+def test_fill_keeps_its_record_in_the_catalogs_state_by_default(tmp_path, monkeypatch):
+    root, state = setup(tmp_path)
+    monkeypatch.setattr(po, "STATE", state)
+    po.fill("es", {"Ready": "Listo"}, "m1", root=root)
+    assert po.load_state("es") == {"Ready": {"msgstr": "Listo", "model": "m1"}}

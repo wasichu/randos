@@ -105,6 +105,11 @@ internet; the smoke tests start their own throwaway server on :4010.
   on first run); commit its `results/benchmark.json`.
   `just translate-test` and `just voice-eval-test` run the two harnesses'
   offline tests (part of `just precommit`).
+- `just translate-update [site|tui]`: after changing UI strings, every
+  model translates only the new or reworded ones, which are scored and
+  judged, and each language's `.po` gets the picks (a person's fix is
+  never overwritten). Models run locally, one at a time, for a while;
+  `tools/translate/README.md` has the details.
 - `/status` (also in production): the relay check and today's counts.
 - `/translations` (also in production): every string per language, each
   with a link to a prefilled GitHub issue. Such an issue becomes a pull

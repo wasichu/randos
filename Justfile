@@ -242,12 +242,47 @@ screenshots:
     cd clients/tui && mix compile
     BASE_URL=http://localhost:4010 RANDOS_CALL_SEGMENT_MS=600000 test/e2e/with_test_server.sh tmp/screenshots-server.log node tools/screenshots/screenshots.mjs
 
-# The translation shootout's checks and fill rule (tools/translate; offline,
-# no models). Running models: tools/translate/README.md
-# (in its own environment, .venv-test: syncing the shared .venv would
-# remove a running model's packages)
+# Running models: tools/translate/README.md. In its own environment,
+# .venv-test: syncing the shared .venv would remove a running model's
+# packages.
+# The translation shootout's checks and fill rule (offline, no models)
 translate-test:
     cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev ruff check --quiet . && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev pytest -q
+
+# After changing UI strings: the template is extracted, each model of the
+# catalog's shootout translates only what's new or reworded (`cli plan`,
+# then `run --append`), the scorers and judges score only those (judged
+# verdicts are cached), and every language's .po gets the picks: empty
+# entries and the machine's own, never a person's fix. One model at a
+# time, in the shared .venv, so it refuses to start beside another run.
+# Re-translate the strings that changed (catalog: site or tui)
+translate-update catalog="site":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if pgrep -f "[r]andos_translate.cli" >/dev/null; then
+      echo "error: a translation model is already running (see pgrep -fl randos_translate)" >&2
+      exit 1
+    fi
+    case "{{catalog}}" in
+      site) mix gettext.extract --merge ;;
+      tui) (cd clients/tui && mix gettext.extract --merge) ;;
+      *) echo "error: catalog is site or tui" >&2; exit 1 ;;
+    esac
+    cd tools/translate
+    cli="python -m randos_translate.cli --catalog {{catalog}}"
+    plan=$(UV_PROJECT_ENVIRONMENT=.venv-test uv run $cli plan)
+    if [ -z "$plan" ]; then echo "every model has every string; scoring anything left over"; fi
+    while IFS=$'\t' read -r group model locales run count; do
+      [ -n "$group" ] || continue
+      echo "== $model: $count to translate"
+      uv run --group "$group" $cli run --model "$model" --locales "$locales" --append "$run" < /dev/null
+    done <<< "$plan"
+    uv run --group models $cli score --scorer metricx > /dev/null
+    uv run --group comet $cli score --scorer comet_kiwi > /dev/null
+    uv run --group mlx $cli score --scorer judge > /dev/null
+    export UV_PROJECT_ENVIRONMENT=.venv-test
+    uv run $cli review > /dev/null
+    uv run $cli fill --best --locale all --redo
 
 # The voice-anonymization benchmark (tools/voice-eval): can ECAPA-TDNN still
 # identify a speaker after each processor, and can Whisper understand them?

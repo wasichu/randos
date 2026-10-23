@@ -41,4 +41,6 @@ Don't change a `msgid`: it's the English source, and it comes from the
 code (`mix gettext.extract --merge` regenerates these files). Your fixes
 are kept when the machine translations are re-run: the pipeline
 (`tools/translate/`) fills only empty entries, and never overwrites one a
-person has changed.
+person has changed. (After changing strings in the code, `just
+translate-update` translates just those; `just translate-update tui` for
+the terminal client's.)

@@ -177,3 +177,41 @@ def test_a_catalog_moves_sources_fill_state_and_runs_together(tmp_path, monkeypa
     finally:
         cli.use_catalog("site")
     assert po.GETTEXT == po.CATALOGS["site"] and po.STATE == po.STATES and cli.RESULTS == tmp_path
+
+
+def test_plan_lists_only_the_runs_the_template_outgrew(tmp_path, monkeypatch):
+    monkeypatch.setattr(cli, "RESULTS", tmp_path)
+    # hy-mt2 reads context, opus-mt doesn't, as the real ones.
+    monkeypatch.setattr(
+        cli.contestants, "get", lambda name: type("M", (Upper,), {"takes_context": name == "hy-mt2"})()
+    )
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready", comment="On a button.")])
+    for name in ("opus-mt", "hy-mt2"):
+        cli.run(name, ["es"], None).rename(tmp_path / f"shootout-{name}.json")
+    (tmp_path / "shootout-summary.json").write_text("{}")
+    assert cli.plan() == []
+
+    # A new string: every run lacks it. A changed comment: only the model
+    # that reads context translates again.
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready", comment="On a link."), po.Source("New")])
+    assert [(group, name, count) for group, name, _locales, _path, count in cli.plan()] == [
+        ("mlx", "hy-mt2", 2),
+        ("models", "opus-mt", 1),
+    ]
+
+
+def test_score_loads_its_model_only_when_something_needs_it(tmp_path, monkeypatch):
+    monkeypatch.setattr(cli, "RESULTS", tmp_path)
+    monkeypatch.setattr(cli.contestants, "get", lambda name: Upper())
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready")])
+    path = cli.run("upper", ["es"], None)
+    data = json.loads(path.read_text())
+    for entry in data["entries"]:
+        entry["scores"]["metricx"] = {"score": 1.0}
+    path.write_text(json.dumps(data))
+
+    def load():
+        raise AssertionError("loaded a scorer with nothing to score")
+
+    monkeypatch.setitem(cli.scoring.SCORERS, "metricx", load)
+    assert cli.score("metricx", [path], redo=False) == {path.name: 0}
