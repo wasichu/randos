@@ -388,17 +388,17 @@ defmodule RandosWeb.HomeLiveTest do
   end
 
   defp eventually_call_pid(call_id) do
-    pid =
-      eventually(fn ->
-        Randos.Calls.CallSupervisor
-        |> DynamicSupervisor.which_children()
-        |> Enum.find_value(fn
-          {_, pid, _, _} when is_pid(pid) -> if coordinator_call_id(pid) == call_id, do: pid
-          _child -> nil
-        end)
-      end)
-
+    pid = eventually(fn -> call_pid(call_id) end)
     if pid, do: {:ok, pid}, else: :error
+  end
+
+  defp call_pid(call_id) do
+    Randos.Calls.CallSupervisor
+    |> DynamicSupervisor.which_children()
+    |> Enum.find_value(fn
+      {_, pid, _, _} when is_pid(pid) -> if coordinator_call_id(pid) == call_id, do: pid
+      _child -> nil
+    end)
   end
 
   defp coordinator_call_id(pid) do

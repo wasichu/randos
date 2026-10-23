@@ -301,7 +301,7 @@ defmodule RandosWeb.StatusLive do
 
   defp median_text(longest, longest) do
     gettext_comment(
-      "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes)."
+      ~S|A call's typical length, at the longest a call can run; the "+" already says "or more", so don't add words for it (min = minutes).|
     )
 
     gettext("%{minutes}+ min", minutes: longest)
