@@ -135,6 +135,14 @@ a model scored by fewer scorers gets a skewed mean rank in `review`.
   ("Lenguaje" for the interface's "Language", 7), which Mistral caught.
   Each catches what the other misses: hence two judges, either vetoing.
 
+  Mistral's tokenizer had shipped a wrong pre-tokenizer regex until
+  2026-10-23 (`scoring._TOKENIZER` fixes it; a tenth of the judge's prompts,
+  Arabic, Bengali, Hindi, Persian and Turkish, tokenized differently), so
+  its verdicts were redone. Calibrated again (finalists only now, so a
+  different sample): within one point on 62%, 66% and 59% of es, hi and
+  bn, opposite sides of the veto on 8%, 8% and 2%. Hindi and Bengali,
+  the scripts the regex broke, agree more.
+
 Never rank on MetricX alone: TranslateGemma was trained with MetricX as its
 reward, so it's the one scorer that knows how to flatter it.
 
