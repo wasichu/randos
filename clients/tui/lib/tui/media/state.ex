@@ -58,6 +58,9 @@ defmodule Tui.Media.State do
           ice_servers: list() | nil,
           relay_only?: boolean(),
           ice_generation: non_neg_integer(),
+          offline_limit_ms: non_neg_integer() | nil,
+          offline: pos_integer() | nil,
+          drops: non_neg_integer(),
           call: call() | nil,
           calls: non_neg_integer(),
           last_call_error: String.t() | nil,
@@ -73,6 +76,9 @@ defmodule Tui.Media.State do
             ice_servers: nil,
             relay_only?: false,
             ice_generation: 0,
+            offline_limit_ms: nil,
+            offline: nil,
+            drops: 0,
             call: nil,
             calls: 0,
             last_call_error: nil,
@@ -178,13 +184,15 @@ defmodule Tui.Media.State do
     |> follow_status()
   end
 
-  defp call_fields(nil), do: %{ice_servers: nil, relay_only?: false, ice_generation: 0}
+  defp call_fields(nil),
+    do: %{ice_servers: nil, relay_only?: false, ice_generation: 0, offline_limit_ms: nil}
 
   defp call_fields(call) do
     %{
       ice_servers: call["ice_servers"],
       relay_only?: call["ice_transport_policy"] == "relay",
-      ice_generation: call["ice_generation"] || 0
+      ice_generation: call["ice_generation"] || 0,
+      offline_limit_ms: call["offline_limit_seconds"] && call["offline_limit_seconds"] * 1000
     }
   end
 
@@ -375,6 +383,33 @@ defmodule Tui.Media.State do
     do: {state, [{:push, "signal", %{type: "media_state", payload: %{state: connection}}}]}
 
   def resumed(state), do: {state, []}
+
+  @doc """
+  The connection to the server dropped (obligation 11): the call's audio
+  goes on, but only for the call's offline limit. Past it the server has
+  ended the call, so `offline_limit/2` stops the helper's rather than keep
+  the mic on for nobody. Each drop is numbered, so an earlier drop's limit
+  can't end the call during a later one.
+  """
+  @spec offline(t()) :: {t(), [command()]}
+  def offline(%{call: %{}, offline_limit_ms: limit_ms, drops: drops} = state)
+      when is_integer(limit_ms) do
+    drop = drops + 1
+    {%{state | offline: drop, drops: drop}, [{:after, limit_ms, {:offline_limit, drop}}]}
+  end
+
+  def offline(state), do: {state, []}
+
+  @doc "Back in touch with the server: no limit is running any more."
+  @spec online(t()) :: {t(), [command()]}
+  def online(state), do: {%{state | offline: nil}, []}
+
+  @doc "A drop's limit passed (`offline/1`): stop the call if it's still that drop."
+  @spec offline_limit(t(), pos_integer()) :: {t(), [command()]}
+  def offline_limit(%{offline: drop, call: %{}} = state, drop),
+    do: stop_call(%{state | offline: nil})
+
+  def offline_limit(state, _drop), do: {state, []}
 
   # Each change of the helper's connection goes to the server, which decides
   # what it means for the call.

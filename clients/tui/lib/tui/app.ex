@@ -113,6 +113,9 @@ defmodule Tui.App do
   def handle_info(:media_started, state),
     do: {:noreply, run_media(state, MediaState.helper_started(state.media_state))}
 
+  def handle_info({:offline_limit, drop}, state),
+    do: {:noreply, run_media(state, MediaState.offline_limit(state.media_state, drop))}
+
   def handle_info(_message, state), do: {:noreply, state}
 
   @impl true
@@ -205,13 +208,22 @@ defmodule Tui.App do
 
   # Server messages that matter to call audio, after the model has them.
   defp follow_call(state, {:joined, %{"resumed" => true}}) do
+    state = run_media(state, MediaState.online(state.media_state))
     state = run_media(state, server_state(state))
     run_media(state, MediaState.resumed(state.media_state))
   end
 
-  defp follow_call(state, {:joined, _reply}), do: run_media(state, server_state(state))
+  defp follow_call(state, {:joined, _reply}) do
+    state = run_media(state, MediaState.online(state.media_state))
+    run_media(state, server_state(state))
+  end
+
   defp follow_call(state, {:push, "state", _}), do: run_media(state, server_state(state))
-  defp follow_call(state, :disconnected), do: run_media(state, server_state(state))
+
+  defp follow_call(state, :disconnected) do
+    state = run_media(state, server_state(state))
+    run_media(state, MediaState.offline(state.media_state))
+  end
 
   defp follow_call(
          %{model: %{audio?: true}} = state,

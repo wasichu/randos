@@ -181,6 +181,42 @@ defmodule Tui.Media.StateTest do
                })
     end
 
+    test "out of reach past the call's offline limit: the helper's call stops (obligation 11)" do
+      {state, _} =
+        State.server_state(
+          in_call(),
+          :in_call,
+          "offerer",
+          Map.put(@call, "offline_limit_seconds", 17)
+        )
+
+      assert {offline, [{:after, 17_000, {:offline_limit, drop}}]} = State.offline(state)
+      assert {%{call: nil}, [{:request, :call_stop}]} = State.offline_limit(offline, drop)
+    end
+
+    test "a reconnect inside the limit keeps the call, and an old drop's limit can't end a later one" do
+      {state, _} =
+        State.server_state(
+          in_call(),
+          :in_call,
+          "offerer",
+          Map.put(@call, "offline_limit_seconds", 17)
+        )
+
+      {offline, [{:after, _, {:offline_limit, first}}]} = State.offline(state)
+      {back, []} = State.online(offline)
+      assert {%{call: %{}}, []} = State.offline_limit(back, first)
+
+      {again, [{:after, _, {:offline_limit, second}}]} = State.offline(back)
+      assert {%{call: %{}}, []} = State.offline_limit(again, first)
+      assert {%{call: nil}, _} = State.offline_limit(again, second)
+    end
+
+    test "no call, or a server that sent no limit: nothing to time" do
+      assert {_, []} = State.offline(audio())
+      assert {_, []} = State.offline(in_call())
+    end
+
     test "the call ending (the server's status) stops the helper's call" do
       assert {%{call: nil}, [{:request, :call_stop}]} = State.server_state(in_call(), :idle, nil)
 

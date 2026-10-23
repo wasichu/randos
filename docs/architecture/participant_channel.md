@@ -54,8 +54,10 @@ the first `state` push of the call):
 ```
 
 Keep only the latest one, **in memory only** (never stored), and forget it
-when the call ends (`call` becomes `null`). If the socket drops during the
-call, rejoin with it:
+when the call ends (`call` becomes `null`). (The browser keeps it until the
+next one replaces it: clearing it could race an instant rematch's new
+ticket, and the server refuses a finished call's ticket anyway.) If the
+socket drops during the call, rejoin with it:
 
 ```json
 ["2", "2", "participant", "phx_join", {"resume_ticket": "q7X…"}]
@@ -221,6 +223,8 @@ e.g. `"in_call"`.
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
     "extension_duration_seconds": 600,
+    "offline_limit_seconds": 17,
+    "peer_reconnecting": false,
     "agreed_to_continue": false,
     "ended_reason": null
   }
@@ -256,6 +260,8 @@ e.g. `"in_call"`.
   `extension_deadline_unix_ms`: when the vote closes (20 s).
   `extension_duration_seconds`: how long a continued call runs on, for the
   vote's wording ("continue for another 10 minutes?"); don't hardcode it.
+  `offline_limit_seconds`: how long to keep this call's media going while
+  you can't reach the server (obligation 11).
   `agreed_to_continue`: `true` once the server has counted your
   `continue` in this vote (back to `false` with the next one). Show it in
   place of the question ("You agreed to continue, waiting on your
@@ -303,13 +309,14 @@ end-to-end tests check these, by number, for both clients
 | --- | --- | --- |
 | 1–4: start at the match, negotiate, report, `in_call` once both connect | "two people match and connect audio" | both roles, audio checked both ways |
 | 4: never connects → ends at the connect timeout | relay-only page | relay-only browser |
-| 4: unhealthy past the recovery budget | unit tests (`call_coordinator_test.exs`, one per scenario); the recovery itself in `recovery_smoke.mjs` | `recovery_test.exs` (both roles) |
+| 4: unhealthy past the recovery budget | unit tests (`call_coordinator_test.exs`, one per scenario); the recovery itself in `recovery_smoke.mjs` | `recovery_test.exs` (both roles) recovers within it; ending past it is the server's (the same unit tests), which the TUI follows as any status (obligation 5) |
 | 5: tear down on the status change | hang-up and "Next" scenarios | every scenario ends through the status |
 | 6: can't start → `end_call` with a reason | mic denied | TUI without audio; browser mic denied |
 | 7: leaving on purpose | page hide sends `peer_disconnected` | quitting mid-call sends it (`connection_test.exs`, `app_test.exs`) |
 | 8: relay-only means relay only | `relay_only_smoke.mjs` (and a page that ignores the policy, which the server's filter must stop) | TUI ↔ TUI: `relay_only_test.exs` |
 | 9: survive a dropped connection | "obligation 9: a dropped connection to the server keeps the call" (the page's socket drops and comes back; same call, same peer connection, audio both ways) | TUI ↔ TUI: `resume_test.exs` (the websocket's TCP socket shut down mid-call) |
 | 10: restart when asked | `recovery_smoke.mjs`: relay-only through `test_turn`, both media paths cut, and a cut with the websocket drop; same call and peer connection, audio both ways | `recovery_test.exs`: TUI ↔ TUI and TUI ↔ browser in both roles; the helper's `tests/restart.rs` (including detection within 7 s) and `turn-check` through the real coturn |
+| 11: out of reach too long → stop | not end to end (it would need a 17 s outage in every smoke run): the hook's offline timer (`call_hook.js` `disconnected`) reads `data-offline-limit-ms` | `Tui.Media.State` (`state_test.exs`): a drop past the limit stops the helper's call; a reconnect inside it, or an earlier drop's limit, doesn't |
 
 (Obligation 8's tests run against a server whose only TURN server never
 answers, `RANDOS_TEST_UNREACHABLE_RELAY=1`, so a call can connect only by
@@ -396,6 +403,14 @@ going direct: `just smoke` and `just tui-smoke` run them.)
     restart offers never cross. Keep the call's media, DTLS and tracks;
     report `media_state` as usual (no new value): the server knows a
     restart is in flight because it asked for one.
+11. **Out of reach too long? Stop.** While your socket to the server is
+    down (obligation 9), keep the call's media going for at most the
+    call's `offline_limit_seconds` (17 s: the recovery budget and a little
+    slack). By then the server has ended the call, so stop the mic and
+    the peer connection rather than keep them on for nobody; when you're
+    back, the server's state says what happened. A reconnect inside the
+    limit cancels it. This is the one timer a client runs: it can't ask
+    the server, and the server sets its length.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media

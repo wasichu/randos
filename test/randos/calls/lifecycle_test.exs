@@ -38,6 +38,10 @@ defmodule Randos.Calls.LifecycleTest do
     assert Lifecycle.extension_response_timeout_seconds() == 20
   end
 
+  test "a client out of reach stops a little after the server ends the call" do
+    assert Lifecycle.offline_limit_seconds() > Lifecycle.recovery_budget_seconds()
+  end
+
   test "walks the happy path through two extensions" do
     call = call() |> Lifecycle.activate()
     assert call.status == :active

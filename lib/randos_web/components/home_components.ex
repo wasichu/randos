@@ -494,7 +494,7 @@ defmodule RandosWeb.HomeComponents do
       data-ice-transport-policy={@ice_transport_policy}
       data-ice-generation={@ice_generation}
       data-ice-restart={to_string(@ice_restart)}
-      data-recovery-budget-ms={Randos.Calls.Lifecycle.recovery_budget_seconds() * 1000}
+      data-offline-limit-ms={Randos.Calls.Lifecycle.offline_limit_seconds() * 1000}
       data-voice-processor={@voice_processor}
       data-webrtc-state="not_started"
       data-microphone-muted="false"

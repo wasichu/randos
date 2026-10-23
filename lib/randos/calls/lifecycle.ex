@@ -55,6 +55,7 @@ defmodule Randos.Calls.Lifecycle do
   @connect_timeout_seconds 15
   @rematch_window_seconds 90
   @recovery_budget_seconds 15
+  @offline_slack_seconds 2
   @ice_restart_delay_seconds 2
   @ice_restart_retry_seconds 5
 
@@ -96,6 +97,16 @@ defmodule Randos.Calls.Lifecycle do
   """
   @spec recovery_budget_seconds() :: pos_integer()
   def recovery_budget_seconds, do: @recovery_budget_seconds
+
+  @doc """
+  How long a client keeps a call's media running while it can't reach the
+  server (obligation 11): the recovery budget, past which the server has
+  ended the call, and a little slack so the server's own timer decides
+  first. A client can't ask the server then, so this is the one call
+  timer clients run, and the server tells them its length.
+  """
+  @spec offline_limit_seconds() :: pos_integer()
+  def offline_limit_seconds, do: @recovery_budget_seconds + @offline_slack_seconds
 
   @doc """
   ICE restart (calls whose two clients support it, `Call.ice_restart?`):

@@ -100,6 +100,9 @@ defmodule RandosWeb.ParticipantShell do
     # So clients can say "continue for another N minutes" without their own
     # copy of the constant.
     |> Map.put(:extension_duration_seconds, Lifecycle.extension_duration_seconds())
+    # How long to keep the call's media going without the server
+    # (obligation 11).
+    |> Map.put(:offline_limit_seconds, Lifecycle.offline_limit_seconds())
   end
 
   @doc "Whether the participant's vote to continue the call has counted."

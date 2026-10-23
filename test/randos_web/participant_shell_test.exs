@@ -59,6 +59,7 @@ defmodule RandosWeb.ParticipantShellTest do
                extension_deadline_unix_ms: nil,
                extension_count: 0,
                extension_duration_seconds: Lifecycle.extension_duration_seconds(),
+               offline_limit_seconds: Lifecycle.offline_limit_seconds(),
                ended_reason: nil,
                ice_transport_policy: "all",
                ice_generation: 0,

@@ -111,14 +111,15 @@ export const WebRTCAudio = {
   // the LiveSocket reconnects with this call's resume ticket, and if the
   // server takes us back the same element (and this hook) carries on;
   // otherwise the element goes and destroyed() cleans up. If the server
-  // stays out of reach past the call's reconnect grace, it has ended the
-  // call by then: stop the mic rather than keep it on for nobody.
+  // stays out of reach past the call's offline limit, it has ended the
+  // call by then: stop the mic rather than keep it on for nobody
+  // (obligation 11).
   disconnected() {
     if (this.cleaned) return
-    const graceMs = Number(this.el.dataset.recoveryBudgetMs) || 0
-    logEvent("call.socket_disconnected", {graceMs})
+    const limitMs = Number(this.el.dataset.offlineLimitMs) || 0
+    logEvent("call.socket_disconnected", {limitMs})
     clearTimeout(this.offlineTimer)
-    this.offlineTimer = setTimeout(() => this.cleanup(), graceMs + 2_000)
+    this.offlineTimer = setTimeout(() => this.cleanup(), limitMs)
   },
 
   // Back in the same call: say our media state again (obligation 9), since
