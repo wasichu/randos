@@ -47,7 +47,7 @@ into the other languages are on their way. They're machine-made, so
 [/translations](https://randos.slowinput.org/translations) lists every
 string next to the English: "Suggest a fix" opens a GitHub issue with
 everything filled in but your fix, and a pull request follows on its own.
-Why these 15 languages, and how to add one:
+Why these 20 languages, and how to add one:
 [docs/languages.md](docs/languages.md).
 
 [randos.slowinput.org/status](https://randos.slowinput.org/status) shows

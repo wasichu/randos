@@ -19,14 +19,19 @@ defmodule RandosWeb.LocaleTest do
       assert Locale.from_accept_language("") == nil
       assert Locale.from_accept_language(nil) == nil
       assert Locale.from_accept_language("de;q=nonsense") == "de"
+      assert Locale.from_accept_language("tl,en;q=0.5") == "fil"
     end
   end
 
   test "every interface language is a practice language, with its own name" do
     assert {"en", "English"} = hd(Locale.all())
     assert {"ar", "العربية"} in Locale.all()
-    assert length(Locale.all()) == 15
+    assert length(Locale.all()) == 20
+    # A three-letter code leaves the label too.
+    assert {"fil", "Filipino"} in Locale.all()
     assert Locale.dir("ar") == "rtl"
+    assert Locale.dir("ur") == "rtl"
+    assert Locale.dir("fa") == "rtl"
     assert Locale.dir("ja") == "ltr"
   end
 

@@ -95,7 +95,7 @@ defmodule RandosWeb.HomeLiveTest do
   end
 
   test "an unsupported locale falls back to English", %{conn: conn} do
-    conn = put_connect_params(conn, %{"browser_locale" => "tl-PH"})
+    conn = put_connect_params(conn, %{"browser_locale" => "mr-IN"})
 
     {:ok, view, _html} = live(conn, ~p"/")
 

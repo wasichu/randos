@@ -1,6 +1,6 @@
 defmodule RandosWeb.Locale do
   @moduledoc """
-  The interface language: English plus the 14 other practice languages.
+  The interface language: English plus the 19 other practice languages.
 
   Resolved per request, in order: the person's explicit choice (the
   switcher in the header, remembered in the `randos_locale` cookie, which
@@ -11,7 +11,7 @@ defmodule RandosWeb.Locale do
   As a plug (in the `:browser` pipeline) it sets the request's locale and
   puts it in the session; as an `on_mount` hook it sets the LiveView
   process's locale from the session and assigns `:locale` for the root
-  layout (`lang`, and `dir="rtl"` for Arabic).
+  layout (`lang`, and `dir="rtl"` for Arabic, Urdu and Persian).
   """
   @behaviour Plug
 
@@ -21,11 +21,11 @@ defmodule RandosWeb.Locale do
   # A year: a preference, not an identifier (only the code is stored).
   @cookie_max_age 60 * 60 * 24 * 365
   @default "en"
-  @rtl ~w(ar)
+  @rtl ~w(ar ur fa)
 
   # The same languages, and endonyms, as the conversation languages.
   @locales Enum.map(Randos.ConversationLanguages.all(), fn {label, code} ->
-             {code, String.replace(label, ~r/ \([A-Z]{2}\)$/, "")}
+             {code, String.replace(label, ~r/ \([A-Z]{2,3}\)$/, "")}
            end)
   @codes Enum.map(@locales, &elem(&1, 0))
 
@@ -37,7 +37,7 @@ defmodule RandosWeb.Locale do
   @spec supported?(term()) :: boolean()
   def supported?(code), do: code in @codes
 
-  @doc ~s(The text direction for a locale: `"rtl"` for Arabic, else `"ltr"`.)
+  @doc ~s(The text direction for a locale: `"rtl"` for Arabic, Urdu and Persian, else `"ltr"`.)
   @spec dir(String.t()) :: String.t()
   def dir(locale) when locale in @rtl, do: "rtl"
   def dir(_locale), do: "ltr"
@@ -59,8 +59,8 @@ defmodule RandosWeb.Locale do
 
   @doc """
   The best supported locale for an `Accept-Language` header, or `nil`.
-  Region subtags are ignored (`pt-BR` is `pt`, `zh-Hant` is `zh`); `q`
-  weights order the choices.
+  Region subtags are ignored (`pt-BR` is `pt`, `zh-Hant` is `zh`), an old
+  code finds its language (`tl` is `fil`); `q` weights order the choices.
   """
   @spec from_accept_language(String.t() | nil) :: String.t() | nil
   def from_accept_language(nil), do: nil
@@ -71,7 +71,7 @@ defmodule RandosWeb.Locale do
     |> Enum.map(&parse_language_range/1)
     |> Enum.reject(&is_nil/1)
     |> Enum.sort_by(fn {_code, q} -> q end, :desc)
-    |> Enum.find_value(fn {code, _q} -> if supported?(code), do: code end)
+    |> Enum.find_value(fn {code, _q} -> Randos.ConversationLanguages.resolve(code) end)
   end
 
   defp parse_language_range(range) do

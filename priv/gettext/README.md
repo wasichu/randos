@@ -3,7 +3,8 @@
 Each language is one file: `<code>/LC_MESSAGES/default.po` (`es` Spanish,
 `zh` Chinese, `hi` Hindi, `ar` Arabic, `pt` Portuguese, `bn` Bengali, `ru`
 Russian, `ja` Japanese, `fr` French, `de` German, `ko` Korean, `it`
-Italian, `tr` Turkish, `id` Indonesian). The translations were made by
+Italian, `tr` Turkish, `id` Indonesian, `vi` Vietnamese, `ur` Urdu, `sw`
+Swahili, `fa` Persian, `fil` Filipino). The translations were made by
 machine and nobody has reviewed them yet, so fixes are very welcome.
 
 **The easy way:** [randos.slowinput.org/translations](https://randos.slowinput.org/translations)

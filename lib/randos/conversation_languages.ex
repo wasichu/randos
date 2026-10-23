@@ -18,9 +18,28 @@ defmodule Randos.ConversationLanguages do
     {"한국어 (KO)", "ko"},
     {"Italiano (IT)", "it"},
     {"Türkçe (TR)", "tr"},
-    {"Bahasa Indonesia (ID)", "id"}
+    {"Bahasa Indonesia (ID)", "id"},
+    {"Tiếng Việt (VI)", "vi"},
+    {"اردو (UR)", "ur"},
+    {"Kiswahili (SW)", "sw"},
+    {"فارسی (FA)", "fa"},
+    {"Filipino (FIL)", "fil"}
   ]
   @supported_language_codes Enum.map(@languages, fn {_name, code} -> code end)
+
+  # Codes browsers send for a language randos lists under another code:
+  # Filipino is standardized Tagalog, and a few browsers still say `tl`.
+  @aliases %{"tl" => "fil"}
+
+  @doc """
+  The supported code for a primary language subtag: itself, or the code
+  randos lists it under (`tl` is `fil`); `nil` for anything else.
+  """
+  @spec resolve(String.t()) :: String.t() | nil
+  def resolve(code) when is_binary(code) do
+    code = Map.get(@aliases, code, code)
+    if code in @supported_language_codes, do: code
+  end
 
   @doc """
   Returns conversation language names and stable internal codes.
@@ -62,10 +81,8 @@ defmodule Randos.ConversationLanguages do
     |> String.split(["-", "_"], parts: 2)
     |> List.first()
     |> String.downcase()
-    |> case do
-      code when code in @supported_language_codes -> code
-      _code -> "en"
-    end
+    |> resolve()
+    |> Kernel.||("en")
   end
 
   def code_from_locale(_locale), do: "en"

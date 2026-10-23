@@ -19,7 +19,12 @@ defmodule Randos.ConversationLanguagesTest do
              {"한국어 (KO)", "ko"},
              {"Italiano (IT)", "it"},
              {"Türkçe (TR)", "tr"},
-             {"Bahasa Indonesia (ID)", "id"}
+             {"Bahasa Indonesia (ID)", "id"},
+             {"Tiếng Việt (VI)", "vi"},
+             {"اردو (UR)", "ur"},
+             {"Kiswahili (SW)", "sw"},
+             {"فارسی (FA)", "fa"},
+             {"Filipino (FIL)", "fil"}
            ]
   end
 
@@ -39,8 +44,19 @@ defmodule Randos.ConversationLanguagesTest do
              "ko",
              "it",
              "tr",
-             "id"
+             "id",
+             "vi",
+             "ur",
+             "sw",
+             "fa",
+             "fil"
            ]
+  end
+
+  test "a browser's Filipino, as fil or the older tl, is fil" do
+    assert ConversationLanguages.code_from_locale("fil-PH") == "fil"
+    assert ConversationLanguages.code_from_locale("tl") == "fil"
+    assert ConversationLanguages.code_from_locale("ur-PK") == "ur"
   end
 
   test "checks supported stable internal language codes" do
@@ -59,7 +75,7 @@ defmodule Randos.ConversationLanguagesTest do
     assert ConversationLanguages.code_from_locale("pt-BR") == "pt"
     assert ConversationLanguages.code_from_locale("ja-JP") == "ja"
     assert ConversationLanguages.code_from_locale("zh_Hans_CN") == "zh"
-    assert ConversationLanguages.code_from_locale("tl-PH") == "en"
+    assert ConversationLanguages.code_from_locale("mr-IN") == "en"
     assert ConversationLanguages.code_from_locale(nil) == "en"
   end
 end
