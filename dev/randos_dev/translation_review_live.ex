@@ -24,7 +24,9 @@ defmodule RandosDev.TranslationReviewLive do
         {:ok, review} ->
           # The locale with the most strings first. (Not `:locale`: the root
           # layout reads that for the page's own lang and dir.)
-          {locale, _data} = Enum.max_by(review["locales"], fn {_code, d} -> length(d["strings"]) end)
+          {locale, _data} =
+            Enum.max_by(review["locales"], fn {_code, d} -> length(d["strings"]) end)
+
           assign(socket, review: review, error: nil, review_locale: locale)
 
         {:error, error} ->
@@ -72,7 +74,8 @@ defmodule RandosDev.TranslationReviewLive do
       assign(assigns,
         data: data,
         rows: TranslationReview.strings(data, assigns.filter),
-        counts: Map.new(TranslationReview.filters(), &{&1, length(TranslationReview.strings(data, &1))}),
+        counts:
+          Map.new(TranslationReview.filters(), &{&1, length(TranslationReview.strings(data, &1))}),
         scorers: ordered_scorers(assigns.review["scorers"]),
         dir: RandosWeb.Locale.dir(assigns.review_locale)
       )
@@ -89,8 +92,11 @@ defmodule RandosDev.TranslationReviewLive do
               model; red where a translation failed an automatic check.
             </p>
             <p id="review-runs" class="text-sm text-stone-500">
-              {length(@review["runs"])} runs:
-              {Enum.map_join(@review["runs"], ", ", &"#{&1["model"]} (#{Enum.join(&1["locales"], ", ")})")}
+              {length(@review["runs"])} runs: {Enum.map_join(
+                @review["runs"],
+                ", ",
+                &"#{&1["model"]} (#{Enum.join(&1["locales"], ", ")})"
+              )}
             </p>
           </header>
 
@@ -114,7 +120,10 @@ defmodule RandosDev.TranslationReviewLive do
             </button>
           </nav>
 
-          <section id="review-summary" class="overflow-x-auto rounded-lg border border-stone-200 bg-white">
+          <section
+            id="review-summary"
+            class="overflow-x-auto rounded-lg border border-stone-200 bg-white"
+          >
             <table class="w-full text-left text-sm">
               <thead class="border-b border-stone-200 text-stone-500">
                 <tr>
@@ -187,17 +196,22 @@ defmodule RandosDev.TranslationReviewLive do
                   {row["msgid"]}
                   <span :if={row["msgctxt"]} class="ms-1 text-xs text-stone-500">({row["msgctxt"]})</span>
                 </p>
-                <div class="flex items-center gap-2 text-xs text-stone-500" title="1 − mean pairwise chrF between the models' translations">
+                <div
+                  class="flex items-center gap-2 text-xs text-stone-500"
+                  title="1 − mean pairwise chrF between the models' translations"
+                >
                   <span>models disagree</span>
                   <span class="review-disagreement flex gap-0.5" aria-hidden="true">
                     <span
                       :for={step <- 1..10}
                       class={[
                         "h-1.5 w-2 rounded-sm",
-                        if(step <= round(row["disagreement"] * 10), do: "bg-teal-600", else: "bg-stone-200")
+                        if(step <= round(row["disagreement"] * 10),
+                          do: "bg-teal-600",
+                          else: "bg-stone-200"
+                        )
                       ]}
-                    >
-                    </span>
+                    ></span>
                   </span>
                   <span class="tabular-nums">{round(row["disagreement"] * 100)}%</span>
                 </div>
@@ -207,9 +221,15 @@ defmodule RandosDev.TranslationReviewLive do
                 :if={row["conflict"]}
                 class="review-conflict mt-2 rounded-md bg-amber-50 px-3 py-1.5 text-sm text-amber-900 dark:bg-amber-950 dark:text-amber-200"
               >
-                Evaluators disagree: {Enum.map_join(row["conflict"]["first_by"], ", ", &scorer_label(@scorers, &1))}
-                rank {row["conflict"]["model"]} first,
-                {Enum.map_join(row["conflict"]["last_by"], ", ", &scorer_label(@scorers, &1))} last.
+                Evaluators disagree: {Enum.map_join(
+                  row["conflict"]["first_by"],
+                  ", ",
+                  &scorer_label(@scorers, &1)
+                )} rank {row["conflict"]["model"]} first, {Enum.map_join(
+                  row["conflict"]["last_by"],
+                  ", ",
+                  &scorer_label(@scorers, &1)
+                )} last.
               </p>
 
               <div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -234,7 +254,9 @@ defmodule RandosDev.TranslationReviewLive do
                       ships
                     </span>
                   </div>
-                  <p :if={t["text"] != ""} dir={@dir} lang={@review_locale} class="text-base">{t["text"]}</p>
+                  <p :if={t["text"] != ""} dir={@dir} lang={@review_locale} class="text-base">
+                    {t["text"]}
+                  </p>
                   <p :if={t["text"] == ""} class="text-base italic text-stone-500">(empty)</p>
                   <p class="text-xs text-stone-500">back: {t["back_translation"]}</p>
                   <ul :if={t["failed"] != []} class="flex flex-wrap gap-1">
@@ -260,7 +282,9 @@ defmodule RandosDev.TranslationReviewLive do
               </div>
             </li>
           </ol>
-          <p :if={@rows == []} id="review-empty" class="text-stone-500">No strings match this filter.</p>
+          <p :if={@rows == []} id="review-empty" class="text-stone-500">
+            No strings match this filter.
+          </p>
         </div>
       </div>
     </Layouts.app>
@@ -274,7 +298,7 @@ defmodule RandosDev.TranslationReviewLive do
 
   # The review's order (a JSON object, so a map here): chrF first, then the
   # QE models, then the judge; any other scorer after them.
-  @scorer_order ~w(chrf metricx comet_kiwi judge)
+  @scorer_order ~w(chrf metricx comet_kiwi judge judge_qwen)
   defp ordered_scorers(scorers) do
     Enum.sort_by(scorers, fn {name, _meta} ->
       Enum.find_index(@scorer_order, &(&1 == name)) || length(@scorer_order)

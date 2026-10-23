@@ -93,7 +93,7 @@ def write_run(path, model, texts, at, locale="es"):
             "back_translation": key,
             "checks": {},
             "scores": {"chrf": 50.0, "metricx": {"score": metricx}, "comet_kiwi": {"score": comet}}
-            | {"judge": scoring.pending_scores()["judge"]},
+            | {"judge": scoring.pending_scores()["judge"], "judge_qwen": scoring.pending_scores()["judge_qwen"]},
         }
         for key, (text, metricx, comet) in texts.items()
     ]
@@ -102,6 +102,8 @@ def write_run(path, model, texts, at, locale="es"):
 
 
 def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, monkeypatch):
+    # One judge, to follow its finalists and its cache.
+    monkeypatch.setattr(cli.scoring, "judges_for", lambda locale: ["mistral"])
     monkeypatch.setattr(cli, "JUDGE_CACHE", tmp_path / "judge-cache.json")
     monkeypatch.setitem(cli.scoring.SCORERS, "judge", FakeJudge)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready"), po.Source("Close %{time}")])
@@ -151,10 +153,33 @@ def test_each_locale_has_its_judge_and_each_loads_only_when_needed(tmp_path, mon
     FakeJudge.asked, FakeJudge.loaded = [], []
     cli.score("judge", runs, redo=False)
     assert FakeJudge.loaded == ["mistral", "qwen"]
-    by = {json.loads(p.read_text())["entries"][0]["scores"]["judge"].get("by") for p in runs}
-    assert by == {"mistral", "qwen", None}
+    # Both judge Spanish, each in its own score; Qwen alone judges Swahili.
+    scores = {(p.stem): json.loads(p.read_text())["entries"][0]["scores"] for p in runs}
+    assert scores["one-es"]["judge"]["by"] == "mistral"
+    assert scores["one-es"]["judge_qwen"]["by"] == "qwen"
+    assert scores["one-sw"]["judge_qwen"]["by"] == "qwen"
+    assert scores["one-sw"]["judge"]["score"] is None
+    # Each judge's leader rated 8: nobody else needed judging.
+    assert scores["two-es"]["judge"]["score"] is None and scores["two-sw"]["judge_qwen"]["score"] is None
 
     # Nothing new: neither judge loads.
     FakeJudge.loaded = []
     cli.score("judge", runs, redo=False)
     assert FakeJudge.loaded == []
+
+
+def test_either_judge_can_veto_and_their_mean_breaks_ties():
+    # a leads on quality; Mistral likes it but Qwen rates it 3 while rating b 8.
+    entries = {
+        "a": entry("A", metricx=1.0, comet=0.9, judge=8),
+        "b": entry("B", metricx=2.0, comet=0.8, judge=7),
+    }
+    entries["a"]["scores"]["judge_qwen"] = {"score": 3}
+    entries["b"]["scores"]["judge_qwen"] = {"score": 8}
+    assert review.pick(entries)["model"] == "b"
+
+    tied = {"a": entry("A", metricx=1.0, comet=0.9, judge=9), "b": entry("B", metricx=1.0, comet=0.9, judge=6)}
+    tied["a"]["scores"]["judge_qwen"] = {"score": 5}
+    tied["b"]["scores"]["judge_qwen"] = {"score": 9}
+    # Means 7 and 7.5: b.
+    assert review.pick(tied)["model"] == "b"

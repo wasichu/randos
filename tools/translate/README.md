@@ -107,12 +107,15 @@ a model scored by fewer scorers gets a skewed mean rank in `review`.
 - **The tone judges** (`judge`): a 1–10 rating for meaning kept and the
   site's calm, informal register, with a one-line reason
   (`scoring.JUDGE_RUBRIC`), from a family no contestant belongs to (models
-  favour their own output). Mistral Small 3.2 24B Instruct (4-bit MLX,
-  Apache-2.0, ~14 GB) judges the languages its card lists; Qwen3 30B-A3B
-  Instruct 2507 (4-bit MLX, Apache-2.0, ~17 GB, a mixture of experts with
-  3B active, 119 languages on its card) judges Urdu, Swahili and Filipino,
-  which Mistral's card doesn't list (`scoring.JUDGE_FOR`). Each verdict
-  says which judge gave it (`by`); one judge is loaded at a time. Their
+  favour their own output): Mistral Small 3.2 24B Instruct (4-bit MLX,
+  Apache-2.0, ~14 GB; score `judge`) and Qwen3 30B-A3B Instruct 2507
+  (4-bit MLX, Apache-2.0, ~17 GB, a mixture of experts with 3B active,
+  119 languages on its card; score `judge_qwen`). Both judge every
+  locale, except that Mistral sits out Urdu, Swahili and Filipino, which
+  its card doesn't list (`scoring.judges_for`). **Either can veto**, each
+  on its own ratings, and the mean of the two breaks ties. Each finds its
+  own finalists; each verdict says which judge gave it (`by`); one judge
+  is loaded at a time (the owner's decision, 2026-10-22). Their
   reply must be the JSON asked for; anything else is a missing score,
   never a guess.
 
@@ -123,8 +126,8 @@ a model scored by fewer scorers gets a skewed mean rank in `review`.
   one, those disagreements mostly favour Qwen, which caught meaning errors
   Mistral rated 7 ("Encontrar *una* rando", a Hindi 18+ acknowledgement
   cut to its first clause, Hindi word order broken), against one miss
-  ("Lenguaje" for the interface's "Language", 7). So Qwen judges its
-  three languages fully, veto included.
+  ("Lenguaje" for the interface's "Language", 7), which Mistral caught.
+  Each catches what the other misses: hence two judges, either vetoing.
 
 Never rank on MetricX alone: TranslateGemma was trained with MetricX as its
 reward, so it's the one scorer that knows how to flatter it.
@@ -156,9 +159,10 @@ string's judge column ranks models only when the judge saw them all.
 
 Each string on its own (`review.pick`): among the translations passing
 every check, the best mean rank over **MetricX and COMET-Kiwi** (ranked
-among the passing ones, ties sharing their rank). The judge breaks ties,
-or stands in beside MetricX when COMET-Kiwi has no score; MetricX alone
-never decides. Further ties go to back-translation chrF, then the shorter
+among the passing ones, ties sharing their rank), after the judges'
+vetoes (a translation either judge rates ≤ 4 while it rates another
+passing one ≥ 7). The judges' mean breaks ties, or stands in beside
+MetricX when COMET-Kiwi has no score; MetricX alone never decides. Further ties go to back-translation chrF, then the shorter
 text, then the text itself, never a model's name. A string that no
 translation passes stays empty, and the site shows the English.
 

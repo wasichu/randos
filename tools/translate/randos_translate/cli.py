@@ -162,8 +162,9 @@ def judge(paths: list[Path], redo: bool) -> dict[str, int]:
     depends on all the models' translations of a string: only the ones
     passing every check, of strings still in the template, and of those
     only the finalists (`review.to_judge`), in rounds until no string needs
-    more. Each locale has its judge (`scoring.judge_for`); one is loaded at
-    a time, and only when something isn't in the cache. MetricX and
+    more. Each locale has its judges (`scoring.judges_for`), each filling
+    its own score and choosing its own finalists; one is loaded at a time,
+    and only when something isn't in the cache. MetricX and
     COMET-Kiwi must have scored first, or every passing translation is a
     finalist. A verdict already given for the same thing
     (`scoring.JudgeCache`) is reused; `--redo` judges them afresh. A
@@ -182,17 +183,19 @@ def judge(paths: list[Path], redo: bool) -> dict[str, int]:
         # would still veto or break ties.
         for entries in table.values():
             for entry in entries.values():
-                entry["scores"]["judge"] = scoring.pending_scores()["judge"]
+                for score in scoring.JUDGE_SCORES.values():
+                    entry["scores"][score] = scoring.pending_scores()[score]
     counts = {path.name: 0 for path in runs}
-    for name in sorted({scoring.judge_for(loc) for loc, _key in table}):
-        mine = {k: v for k, v in table.items() if scoring.judge_for(k[0]) == name}
-        _judge_rounds(name, mine, runs, owner, cache, contexts, redo, counts)
+    for name in scoring.JUDGES:
+        mine = {k: v for k, v in table.items() if name in scoring.judges_for(k[0])}
+        if mine:
+            _judge_rounds(name, mine, runs, owner, cache, contexts, redo, counts)
     return counts
 
 
 def _judge_rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
     """One judge's rounds over its locales' strings (`judge`)."""
-    scorer = None
+    scorer, score = None, scoring.JUDGE_SCORES[name]
     tried: set[int] = set()
     given: dict[str, dict] = {}  # this session's verdicts, parsed or not, by JudgeCache.key
 
@@ -202,10 +205,13 @@ def _judge_rounds(name, table, runs, owner, cache, contexts, redo, counts) -> No
     def settled(entry: dict) -> bool:
         if id(entry["scores"]) in tried:
             return True
-        return scoring.judged_by(entry) == name and scoring.judged_context(entry) == context(entry)
+        verdict = entry["scores"].get(score) or {}
+        return verdict.get("score") is not None and scoring.judged_context(entry, score) == context(entry)
 
     try:
-        while due := [(loc, entries[m]) for (loc, _key), entries in table.items() for m in review.to_judge(entries, settled)]:
+        while due := [
+            (loc, entries[m]) for (loc, _key), entries in table.items() for m in review.to_judge(entries, settled, score)
+        ]:
             for locale in sorted({loc for loc, _ in due}):
                 mine = [e for loc, e in due if loc == locale]
                 began = time.monotonic()
@@ -223,14 +229,14 @@ def _judge_rounds(name, table, runs, owner, cache, contexts, redo, counts) -> No
                 seconds = time.monotonic() - began
                 touched: dict[Path, int] = {}
                 for e in mine:
-                    e["scores"]["judge"] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
+                    e["scores"][score] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
                     tried.add(id(e["scores"]))
                     touched[owner[id(e["scores"])]] = touched.get(owner[id(e["scores"])], 0) + 1
                 for path, n in touched.items():
                     counts[path.name] += n
                     # The judging time, shared out by how many of each run's entries it judged.
-                    done = runs[path]["run"].setdefault("scored", {}).get("judge", {})
-                    runs[path]["run"]["scored"]["judge"] = {
+                    done = runs[path]["run"].setdefault("scored", {}).get(score, {})
+                    runs[path]["run"]["scored"][score] = {
                         "at": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
                         "seconds": round(done.get("seconds", 0) + seconds * n / len(mine), 1),
                     }

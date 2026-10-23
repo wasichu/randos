@@ -39,8 +39,12 @@ SCORERS = {
     "chrf": {"label": "Back-translation chrF", "higher_is_better": True},
     "metricx": {"label": "MetricX-24", "higher_is_better": False},
     "comet_kiwi": {"label": "COMET-Kiwi", "higher_is_better": True},
-    "judge": {"label": "Tone judge", "higher_is_better": True},
+    "judge": {"label": "Tone judge (Mistral)", "higher_is_better": True},
+    "judge_qwen": {"label": "Tone judge (Qwen)", "higher_is_better": True},
 }
+# The judges' scores (`scoring.JUDGE_SCORES`): either can veto, and their
+# mean breaks ties.
+JUDGES = ("judge", "judge_qwen")
 
 _chrf = CHRF()
 
@@ -48,6 +52,12 @@ _chrf = CHRF()
 def _score(entry: dict, scorer: str) -> float | None:
     value = entry["scores"].get(scorer)
     return value.get("score") if isinstance(value, dict) else value
+
+
+def _judged(entry: dict) -> float | None:
+    """The mean of the judges' ratings that an entry has, or None."""
+    scores = [s for j in JUDGES if (s := _score(entry, j)) is not None]
+    return sum(scores) / len(scores) if scores else None
 
 
 def similarity(a: str, b: str) -> float:
@@ -136,7 +146,8 @@ def pick(entries: dict[str, dict]) -> dict | None:
 
     deciding = {s: r for s in QUALITY if (r := ranked(s)) is not None}
     if set(deciding) == {"metricx"}:
-        judge = ranked("judge")
+        judged = {m: _judged(e) for m, e in passing.items()}
+        judge = None if None in judged.values() else average_ranks(judged, True)
         deciding = {"metricx": deciding["metricx"], "judge": judge} if judge else {}
     tiebreak = _judge_ranks(passing)
 
@@ -158,12 +169,15 @@ VETO_AT_MOST, VETO_IF_ANOTHER_AT_LEAST = 4, 7
 
 
 def _vetoed(passing: dict[str, dict]) -> set[str]:
-    """The passing translations the judge vetoes. Only judged ones count on
-    either side: a missing judgement never vetoes, nor is vetoed."""
-    judged = {m: s for m, e in passing.items() if (s := _score(e, "judge")) is not None}
-    if not any(s >= VETO_IF_ANOTHER_AT_LEAST for s in judged.values()):
-        return set()
-    return {m for m, s in judged.items() if s <= VETO_AT_MOST}
+    """The passing translations a judge vetoes: either judge, each on its
+    own ratings. Only judged ones count on either side: a missing
+    judgement never vetoes, nor is vetoed."""
+    vetoed: set[str] = set()
+    for judge in JUDGES:
+        judged = {m: s for m, e in passing.items() if (s := _score(e, judge)) is not None}
+        if any(s >= VETO_IF_ANOTHER_AT_LEAST for s in judged.values()):
+            vetoed |= {m for m, s in judged.items() if s <= VETO_AT_MOST}
+    return vetoed
 
 
 def _judge_ranks(passing: dict[str, dict]) -> dict[str, float]:
@@ -171,12 +185,12 @@ def _judge_ranks(passing: dict[str, dict]) -> dict[str, float]:
     (the judge sees only finalists, `to_judge`) rank after them. They are
     never tied with a winner on MetricX and COMET-Kiwi, so it only matters
     among those the judge saw."""
-    judged = {m: s for m, e in passing.items() if (s := _score(e, "judge")) is not None}
-    ranked = average_ranks(judged, SCORERS["judge"]["higher_is_better"]) if judged else {}
+    judged = {m: s for m, e in passing.items() if (s := _judged(e)) is not None}
+    ranked = average_ranks(judged, True) if judged else {}
     return {m: ranked.get(m, len(judged) + 1) for m in passing}
 
 
-def to_judge(entries: dict[str, dict], settled) -> list[str]:
+def to_judge(entries: dict[str, dict], settled, judge: str = "judge") -> list[str]:
     """The models whose translation of one string the judge must see next
     for `pick` to come out as if it had judged them all (`settled(entry)`:
     judged already, or tried). Only the ones passing every check; none when
@@ -185,7 +199,8 @@ def to_judge(entries: dict[str, dict], settled) -> list[str]:
     the first group holding one rated above the veto (it can't be vetoed),
     unless one rated at or below it came before and nothing yet rates high
     enough to veto it. Without them the judge stands in beside MetricX, so
-    all of them."""
+    all of them. `judge` is the score of the judge in question: each judge
+    finds its own finalists, so each can veto as if it judged alone."""
     passing = {m: e for m, e in entries.items() if _passes(e)}
     if len(passing) < 2:
         return []
@@ -200,7 +215,7 @@ def to_judge(entries: dict[str, dict], settled) -> list[str]:
         group = sorted(m for m in passing if primary[m] == rank)
         if due := [m for m in group if not settled(passing[m])]:
             return due
-        scores = [_score(passing[m], "judge") for m in group]
+        scores = [_score(passing[m], judge) for m in group]
         high_seen = high_seen or any(s is not None and s >= VETO_IF_ANOTHER_AT_LEAST for s in scores)
         if any(s is None or s > VETO_AT_MOST for s in scores) and (not low_before or high_seen):
             return []

@@ -35,7 +35,8 @@ def back_translation_chrf(source: str, back: str) -> float:
 PENDING = {
     "metricx": "MetricX-24-Hybrid XL (google/metricx-24-hybrid-xl-v2p6-bfloat16): ~7 GB, ungated",
     "comet_kiwi": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)",
-    "judge": "LLM tone judge (Mistral Small 3.2 24B, or Qwen3 30B-A3B for ur, sw, fil; 4-bit MLX): ~14-17 GB, ungated",
+    "judge": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated",
+    "judge_qwen": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated",
 }
 
 
@@ -139,26 +140,20 @@ def parse_judgement(reply: str) -> dict:
 
 
 # The judges, each from a family no contestant belongs to (models favour
-# their own output), 4-bit MLX, Apache-2.0. Mistral Small 3.2 judges the
-# languages its card lists; Qwen3 30B-A3B (a mixture of experts, 3B active;
-# its card lists 119 languages) the ones Mistral's doesn't.
+# their own output), 4-bit MLX, Apache-2.0, and the score each one fills.
+# Both judge every locale, but Mistral sits out Urdu, Swahili and Filipino,
+# which its card doesn't list (Qwen3 30B-A3B's lists 119 languages).
 JUDGES = {
     "mistral": "mlx-community/Mistral-Small-3.2-24B-Instruct-2506-4bit",
     "qwen": "mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit",
 }
-JUDGE_FOR = {"ur": "qwen", "sw": "qwen", "fil": "qwen"}
+JUDGE_SCORES = {"mistral": "judge", "qwen": "judge_qwen"}
+_QWEN_ONLY = {"ur", "sw", "fil"}
 
 
-def judge_for(locale: str) -> str:
-    """The judge (a `JUDGES` name) for a locale."""
-    return JUDGE_FOR.get(locale, "mistral")
-
-
-def judged_by(entry: dict) -> str | None:
-    """The judge whose verdict an entry holds (verdicts from before there
-    were two are Mistral's)."""
-    verdict = entry["scores"].get("judge") or {}
-    return verdict.get("by", "mistral") if verdict.get("score") is not None else None
+def judges_for(locale: str) -> list[str]:
+    """The judges (`JUDGES` names) for a locale."""
+    return ["qwen"] if locale in _QWEN_ONLY else ["mistral", "qwen"]
 
 
 class Judge:
@@ -275,10 +270,10 @@ def judge_context(msgctxt: str | None, context: str) -> str:
     return "\n" + "\n".join(lines) + "\n" if lines else ""
 
 
-def judged_context(entry: dict) -> str:
+def judged_context(entry: dict, score: str = "judge") -> str:
     """The context an entry's judgement saw (judgements from before comments
     existed saw only the button rule)."""
-    result = entry["scores"].get("judge") or {}
+    result = entry["scores"].get(score) or {}
     return result["context"] if "context" in result else judge_context(entry["msgctxt"], "")
 
 
