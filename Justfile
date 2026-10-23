@@ -247,7 +247,7 @@ screenshots:
 # (in its own environment, .venv-test: syncing the shared .venv would
 # remove a running model's packages)
 translate-test:
-    cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev pytest -q
+    cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev ruff check --quiet . && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev pytest -q
 
 # The voice-anonymization benchmark (tools/voice-eval): can ECAPA-TDNN still
 # identify a speaker after each processor, and can Whisper understand them?
