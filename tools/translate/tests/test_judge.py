@@ -167,6 +167,10 @@ def test_each_locale_has_its_judge_and_each_loads_only_when_needed(tmp_path, mon
     cli.score("judge", runs, redo=False)
     assert FakeJudge.loaded == []
 
+    # One judge redone alone: the other's verdicts stand.
+    cli.score("judge", runs, redo=True, judges=["mistral"])
+    assert FakeJudge.loaded == ["mistral"]
+
 
 def test_either_judge_can_veto_and_their_mean_breaks_ties():
     # a leads on quality; Mistral likes it but Qwen rates it 3 while rating b 8.

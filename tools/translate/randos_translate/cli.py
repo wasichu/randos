@@ -124,11 +124,11 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
     return out
 
 
-def score(scorer_name: str, paths: list[Path], redo: bool) -> dict[str, int]:
+def score(scorer_name: str, paths: list[Path], redo: bool, judges: list[str] | None = None) -> dict[str, int]:
     """Fills in one scorer's scores in each results file, locale by locale
-    (the judge: `judge`)."""
+    (the judge: `judge`, all its judges or only `judges`)."""
     if scorer_name == "judge":
-        return judge(paths, redo)
+        return judge(paths, redo, judges)
     scorer = scoring.SCORERS[scorer_name]()
     counts = {}
     for path in paths:
@@ -156,7 +156,7 @@ def score(scorer_name: str, paths: list[Path], redo: bool) -> dict[str, int]:
     return counts
 
 
-def judge(paths: list[Path], redo: bool) -> dict[str, int]:
+def judge(paths: list[Path], redo: bool, judges: list[str] | None = None) -> dict[str, int]:
     """The tone judges over every run at once, since what a judge must see
     depends on all the models' translations of a string: only the ones
     passing every check, of strings still in the template, and of those
@@ -185,7 +185,7 @@ def judge(paths: list[Path], redo: bool) -> dict[str, int]:
                 for score in scoring.JUDGE_SCORES.values():
                     entry["scores"][score] = scoring.pending_scores()[score]
     counts = {path.name: 0 for path in runs}
-    for name in scoring.JUDGES:
+    for name in judges or scoring.JUDGES:
         mine = {k: v for k, v in table.items() if name in scoring.judges_for(k[0])}
         if mine:
             _judge_rounds(name, mine, runs, owner, cache, contexts, redo, counts)
@@ -319,6 +319,9 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--scorer", required=True, choices=sorted(scoring.SCORERS))
     s.add_argument("results", type=Path, nargs="+")
     s.add_argument("--redo", action="store_true", help="also rescore entries that already have a score")
+    s.add_argument(
+        "--judge", action="append", choices=sorted(scoring.JUDGES), help="with --scorer judge: only this judge (repeatable)"
+    )
     b = sub.add_parser("tidy", help="apply models.tidy (brand case, ellipsis, placeholders, NFC) to runs made before it")
     b.add_argument("results", type=Path, nargs="+")
     sub.add_parser(
@@ -329,7 +332,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.command == "run":
         print(run(args.model, args.locales.split(","), args.limit, args.append))
     elif args.command == "score":
-        print(score(args.scorer, [p for p in args.results if p.name != "review.json"], args.redo))
+        print(score(args.scorer, [p for p in args.results if p.name != "review.json"], args.redo, args.judge))
     elif args.command == "tidy":
         print(tidy(args.results))
     elif args.command == "review":
