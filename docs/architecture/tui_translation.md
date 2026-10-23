@@ -69,10 +69,24 @@ hand-computed rows (`meter_rows`, `text_rows`) are what it checks. ratatui measu
 so CJK lays out; what doesn't fit is the layout's to fix (wrapping),
 not the translation's.
 
-**Right-to-left.** Terminals don't agree on bidirectional text: ratatui
-draws cells left to right, and whether Arabic, Persian or Urdu then
-reads right depends on the terminal (iTerm2 and GNOME Terminal do some
-bidi, macOS Terminal and many others don't). A decision below.
+**Right-to-left.** Researched 2026-10-23 (the spike below has the table):
+terminals split. macOS Terminal, iTerm2 3.7+, GNOME Terminal (VTE),
+Konsole, mintty and mlterm run the bidi algorithm on what an app writes
+and join Arabic letters; Ghostty, Alacritty, Windows Terminal, WezTerm
+(by default), VS Code's terminal and VHS (our screenshots) do neither;
+kitty joins letters but keeps words in logical order. Reordering in the
+app would reverse twice in Terminal.app and Konsole, which can't be told
+not to. So the TUI writes logical order (as ratatui does), and:
+
+- **keeps right-to-left text from spilling across a row**: a reordering
+  terminal treats the whole row as one paragraph, so Arabic in two
+  side-by-side panels could swap them (Helix has this bug). Each panel's
+  text is closed with a left-to-right mark (U+200E, no width), which
+  keeps a run inside its panel;
+- **warns where it can't read right**: choosing Arabic, Persian or Urdu
+  in a terminal known not to reorder (`TERM_PROGRAM` ghostty, vscode,
+  WezTerm; `ALACRITTY_*`, `WT_SESSION`) says so on screen, and inside
+  tmux (which hides the terminal) the note names the terminals that work.
 
 ## Tests
 
@@ -99,14 +113,25 @@ bidi, macOS Terminal and many others don't). A decision below.
    English.
 4. (Not a question: the channel's `locale` param is part of this.)
 
-## The bidi spike (first)
+## The bidi spike (done 2026-10-23)
 
-What each terminal does with right-to-left text drawn cell by cell
-(ratatui writes cells left to right, in logical order): reorders it
-(bidi), shapes Arabic letters (joined forms), both, or neither.
-Documented behaviour of macOS Terminal, iTerm2, GNOME Terminal (VTE),
-Konsole, kitty, Alacritty, WezTerm and Windows Terminal, then checked on
-the ones here. The outcome picks one of: hand terminals logical text
-(right where they do bidi), reorder it ourselves (right where they
-don't, doubled where they do), or detect and choose, plus the warning
-for the rest.
+| Terminal | Reorders (bidi) | Joins Arabic letters | Can be told "already reordered" |
+| --- | --- | --- | --- |
+| macOS Terminal | yes, by default | yes | unknown |
+| iTerm2 | since 3.7.0 by default (3.6 opt-in) | yes | 3.7.5+ (`CSI 8 l`) |
+| GNOME Terminal (VTE ≥ 0.58) | yes, by default | yes (even when told) | yes |
+| Konsole | yes, by default | yes | no |
+| kitty | no (letters within a word only) | yes | no |
+| Ghostty | no | no | no |
+| Alacritty | no | no | no |
+| Windows Terminal | no | no | no |
+| WezTerm | off by default | unknown | yes |
+| xterm.js (VS Code, VHS) | no (its DOM renderer by accident) | no | no |
+
+Sources: the terminal-wg BiDi pages, each terminal's changelog, source
+and issues (iTerm2 #13102, VTE `src/bidi.cc`, Konsole `TerminalDisplay`,
+kitty #2109, Ghostty `harfbuzz.zig`, Alacritty #663, Windows Terminal
+#538, WezTerm #784, xterm.js #701), and Claude Code's own issue #34134
+(it reordered itself and came out reversed in Terminal.app). Still to
+check by eye, with Arabic in the TUI: Terminal.app (a reordering one)
+and Ghostty (a plain one).
