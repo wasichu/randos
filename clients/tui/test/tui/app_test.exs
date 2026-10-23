@@ -142,6 +142,31 @@ defmodule Tui.AppTest do
       assert render_text(model) =~ "This server has no status page"
     end
 
+    test "right to left: a note where the terminal may not show it, and panels kept apart" do
+      arabic = %{model("idle") | language: "ar"}
+      assert render_text(arabic, %{bidi: :no}) =~ "doesn't show right-to-left text right"
+      assert render_text(arabic, %{bidi: :unknown}) =~ "needs a terminal that shows it"
+      refute render_text(arabic, %{bidi: :yes}) =~ "right-to-left"
+      refute render_text(model("idle"), %{bidi: :no}) =~ "right-to-left"
+
+      # Devices stack inside You, never side by side, in a right-to-left interface.
+      {media, _} =
+        MediaState.reply(
+          MediaState.new(true),
+          :devices,
+          {:ok,
+           %{
+             "inputs" => ["Mic A"],
+             "outputs" => ["Speakers"],
+             "default_input" => "Mic A",
+             "default_output" => "Speakers"
+           }}
+        )
+
+      assert render_text(model("idle"), %{media_state: media}, {120, 24}) =~ "Devices"
+      refute render_text(arabic, %{media_state: media}, {120, 24}) =~ "Devices"
+    end
+
     test "the idle screen offers the status screen" do
       assert render_text(model("idle"), %{}, {120, 24}) =~ "s status"
     end

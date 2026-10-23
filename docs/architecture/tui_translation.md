@@ -80,9 +80,12 @@ not to. So the TUI writes logical order (as ratatui does), and:
 
 - **keeps right-to-left text from spilling across a row**: a reordering
   terminal treats the whole row as one paragraph, so Arabic in two
-  side-by-side panels could swap them (Helix has this bug). Each panel's
-  text is closed with a left-to-right mark (U+200E, no width), which
-  keeps a run inside its panel;
+  side-by-side panels could swap them (Helix has this bug). In a
+  right-to-left interface the You and Devices panels stack (as on a
+  narrow terminal), so every row is one panel between its own borders,
+  which the bidi algorithm keeps in place. (A left-to-right mark would
+  have done it too, but ratatui drops zero-width characters, so it never
+  reaches the terminal.)
 - **warns where it can't read right**: choosing Arabic, Persian or Urdu
   in a terminal known not to reorder (`TERM_PROGRAM` ghostty, vscode,
   WezTerm; `ALACRITTY_*`, `WT_SESSION`) says so on screen, and inside

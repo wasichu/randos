@@ -23,6 +23,8 @@ defmodule Tui.View do
   @you_color {:rgb, 8, 145, 178}
   @peer_color {:rgb, 124, 58, 237}
 
+  @rtl_terminals "macOS Terminal, iTerm2 3.7+, GNOME Terminal or Konsole (press l for another language)."
+
   # Narrower than this, You and Devices share one panel.
   @side_by_side_min 90
 
@@ -32,7 +34,13 @@ defmodule Tui.View do
 
     # You and Devices side by side when there's room; on a narrow
     # terminal (a tmux split) the devices go inside the You panel.
-    side_by_side? = device_lines(state) != [] and frame.width >= @side_by_side_min
+    # Not in a right-to-left interface: a terminal that reorders treats a
+    # whole row as one paragraph, so two Arabic panels side by side could
+    # swap; stacked, each row is one panel between its own borders.
+    side_by_side? =
+      device_lines(state) != [] and frame.width >= @side_by_side_min and
+        not Tui.Terminal.rtl?(state.model.language)
+
     status_rows = if side_by_side?, do: 2, else: length(status_lines(state, 80, true))
     model = state.model
     # Two rows when the keys don't fit in one (translations run longer),
@@ -71,7 +79,12 @@ defmodule Tui.View do
        }, status_area},
       {%Paragraph{
          text:
-           state |> device_lines() |> Enum.map_join("\n", &Width.fit(&1, devices_area.width - 2)),
+           state
+           |> device_lines()
+           |> Enum.map_join(
+             "\n",
+             &Width.fit(&1, devices_area.width - 2)
+           ),
          block: panel(" #{gettext("Devices")} ")
        }, devices_area}
     ]
@@ -510,9 +523,25 @@ defmodule Tui.View do
 
   defp mic_help(_state), do: []
 
-  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state)
+  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state) <> rtl_note(state)
 
   defp extra_text(_state), do: ""
+
+  # Right-to-left text in a terminal that may not show it right: said in
+  # English on purpose (in such a terminal the translation reads reversed).
+  defp rtl_note(%{model: %{language: language}} = state) do
+    case {Tui.Terminal.rtl?(language), Map.get(state, :bidi, :yes)} do
+      {true, :no} ->
+        "\n\nThis terminal doesn't show right-to-left text right (it may read reversed). " <>
+          @rtl_terminals
+
+      {true, :unknown} ->
+        "\n\nRight-to-left text needs a terminal that shows it: " <> @rtl_terminals
+
+      _fine ->
+        ""
+    end
+  end
 
   # The current state at a glance, like the website's status label and its
   # "Connection:" line (notices, e.g. errors, go to tmp/tui.log; errors also
@@ -520,7 +549,9 @@ defmodule Tui.View do
   # pushes the next one out of the box): the connection line drops detail to
   # fit `width`, and anything still too long is cut with "…".
   defp status_text(state, width, devices?) do
-    state |> status_lines(width, devices?) |> Enum.map_join("\n", &Width.fit(&1, width))
+    state
+    |> status_lines(width, devices?)
+    |> Enum.map_join("\n", &Width.fit(&1, width))
   end
 
   # What you're doing now and the connection (the "You" panel; the server's

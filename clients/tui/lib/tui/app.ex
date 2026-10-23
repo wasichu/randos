@@ -83,7 +83,13 @@ defmodule Tui.App do
         )
         |> MediaState.restore_choice(saved),
       config: config,
-      test_pid: Keyword.get(opts, :test_pid)
+      test_pid: Keyword.get(opts, :test_pid),
+      # Whether this terminal shows right-to-left text right (a test app:
+      # as told, else as if it does).
+      bidi:
+        Keyword.get_lazy(opts, :bidi, fn ->
+          if opts[:test_mode], do: :yes, else: Tui.Terminal.bidi()
+        end)
     }
 
     {:ok, Map.put(state, :saved, settings(state))}
