@@ -21,6 +21,7 @@ import json
 import os
 import sys
 import time
+import unicodedata
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -60,7 +61,8 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
         began = time.monotonic()
         todo = [s for s in sources if stale(locale, s)]
         texts = model.translate([s.msgid for s in todo], locale, [s.context for s in todo]) if todo else []
-        texts = [contestants.brand_case(t) for t in texts]
+        # NFC: one form for every letter, so the checks and the .po see the same text.
+        texts = [unicodedata.normalize("NFC", contestants.brand_case(t)) for t in texts]
         backs = model.back_translate(texts, locale) if todo else []
         print(f"{model_name}: {locale}: {len(texts)} strings in {time.monotonic() - began:.0f} s", file=sys.stderr, flush=True)
         for source, text, back in zip(todo, texts, backs):
@@ -83,7 +85,8 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
         keys, redone = {s.key for s in sources}, {(e["locale"], e["key"]) for e in entries}
         kept = [e for e in earlier["entries"] if e["key"] in keys and (e["locale"], e["key"]) not in redone]
         entries = kept + entries
-        locales = earlier["run"]["locales"]
+        # New locales join the run's list (and its summary).
+        locales = earlier["run"]["locales"] + [loc for loc in locales if loc not in earlier["run"]["locales"]]
 
     summary = {}
     for locale in locales:
@@ -155,76 +158,93 @@ def score(scorer_name: str, paths: list[Path], redo: bool) -> dict[str, int]:
 
 
 def judge(paths: list[Path], redo: bool) -> dict[str, int]:
-    """The tone judge over every run at once, since what it must see depends
-    on all the models' translations of a string: only the ones passing
-    every check, of strings still in the template, and of those only the
-    finalists (`review.to_judge`), in rounds until no string needs more.
-    MetricX and COMET-Kiwi must have scored first, or every passing
-    translation is a finalist. A verdict already given for the same thing
+    """The tone judges over every run at once, since what a judge must see
+    depends on all the models' translations of a string: only the ones
+    passing every check, of strings still in the template, and of those
+    only the finalists (`review.to_judge`), in rounds until no string needs
+    more. Each locale has its judge (`scoring.judge_for`); one is loaded at
+    a time, and only when something isn't in the cache. MetricX and
+    COMET-Kiwi must have scored first, or every passing translation is a
+    finalist. A verdict already given for the same thing
     (`scoring.JudgeCache`) is reused; `--redo` judges them afresh. A
-    judgement made with a context the template has since changed counts as
-    none. Saved after every locale of every round, so a stop loses little."""
-    scorer = scoring.SCORERS["judge"]()
+    judgement made with a context the template has since changed, or by
+    another judge, counts as none. Saved after every locale of every
+    round, so a stop loses little."""
     cache = scoring.JudgeCache(JUDGE_CACHE)
+    contexts = scoring.current_contexts()
     runs = {path: data for path in paths if "entries" in (data := json.loads(path.read_text()))}
     # latest_entries copies each entry but shares its "scores" dict, so a
     # verdict set on the table lands in the run it came from.
     table = review.latest_entries(list(runs.values()), {s.key for s in po.sources()})
     owner = {id(e["scores"]): path for path, data in runs.items() for e in data["entries"]}
-    tried: set[int] = set()
-    given: dict[str, dict] = {}  # this session's verdicts, parsed or not, by JudgeCache.key
     if redo:
         # Afresh: an old verdict on a translation that isn't a finalist now
         # would still veto or break ties.
         for entries in table.values():
             for entry in entries.values():
                 entry["scores"]["judge"] = scoring.pending_scores()["judge"]
+    counts = {path.name: 0 for path in runs}
+    for name in sorted({scoring.judge_for(loc) for loc, _key in table}):
+        mine = {k: v for k, v in table.items() if scoring.judge_for(k[0]) == name}
+        _judge_rounds(name, mine, runs, owner, cache, contexts, redo, counts)
+    return counts
+
+
+def _judge_rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
+    """One judge's rounds over its locales' strings (`judge`)."""
+    scorer = None
+    tried: set[int] = set()
+    given: dict[str, dict] = {}  # this session's verdicts, parsed or not, by JudgeCache.key
+
+    def context(entry: dict) -> str:
+        return scoring.judge_context(entry["msgctxt"], contexts.get(entry["key"], ""))
 
     def settled(entry: dict) -> bool:
         if id(entry["scores"]) in tried:
             return True
-        verdict = entry["scores"].get("judge") or {}
-        return verdict.get("score") is not None and scoring.judged_context(entry) == scorer.context(entry)
+        return scoring.judged_by(entry) == name and scoring.judged_context(entry) == context(entry)
 
-    counts = {path.name: 0 for path in runs}
-    while due := [(loc, entries[m]) for (loc, _key), entries in table.items() for m in review.to_judge(entries, settled)]:
-        for locale in sorted({loc for loc, _ in due}):
-            mine = [e for loc, e in due if loc == locale]
-            began = time.monotonic()
-            # One judgement for each thing the judge would see (models often agree).
-            keys = {id(e["scores"]): scoring.JudgeCache.key(locale, e, scorer.context(e)) for e in mine}
-            fresh = {}
-            for e in mine:
-                if not cache.get(locale, e, scorer.context(e), only_new=redo):
-                    fresh.setdefault(keys[id(e["scores"])], e)
-            for key, verdict in zip(fresh, scorer.score(locale, list(fresh.values())) if fresh else []):
-                cache.put(locale, fresh[key], verdict)
-                given[key] = verdict
-            seconds = time.monotonic() - began
-            verdicts = {}
-            for e in mine:
-                verdicts[id(e["scores"])] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, scorer.context(e))
-            touched: dict[Path, int] = {}
-            for entry in mine:
-                entry["scores"]["judge"] = verdicts[id(entry["scores"])]
-                tried.add(id(entry["scores"]))
-                touched[owner[id(entry["scores"])]] = touched.get(owner[id(entry["scores"])], 0) + 1
-            for path, n in touched.items():
-                counts[path.name] += n
-                # The judging time, shared out by how many of each run's entries it judged.
-                done = runs[path]["run"].setdefault("scored", {}).get("judge", {})
-                runs[path]["run"]["scored"]["judge"] = {
-                    "at": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
-                    "seconds": round(done.get("seconds", 0) + seconds * n / len(mine), 1),
-                }
-                _write_atomically(path, runs[path])
-            cache.save()
-            print(
-                f"judge: {locale}: {len(fresh)} judged, {len(mine) - len(fresh)} from the cache or a twin, in {seconds:.0f} s",
-                file=sys.stderr,
-                flush=True,
-            )
-    return counts
+    try:
+        while due := [(loc, entries[m]) for (loc, _key), entries in table.items() for m in review.to_judge(entries, settled)]:
+            for locale in sorted({loc for loc, _ in due}):
+                mine = [e for loc, e in due if loc == locale]
+                began = time.monotonic()
+                # One judgement for each thing the judge would see (models often agree).
+                keys = {id(e["scores"]): scoring.JudgeCache.key(locale, e, context(e), name) for e in mine}
+                fresh = {}
+                for e in mine:
+                    if not cache.get(locale, e, context(e), name, only_new=redo):
+                        fresh.setdefault(keys[id(e["scores"])], e)
+                if fresh and scorer is None:
+                    scorer = scoring.SCORERS["judge"](name)
+                for key, verdict in zip(fresh, scorer.score(locale, list(fresh.values())) if fresh else []):
+                    cache.put(locale, fresh[key], verdict)
+                    given[key] = verdict
+                seconds = time.monotonic() - began
+                touched: dict[Path, int] = {}
+                for e in mine:
+                    e["scores"]["judge"] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
+                    tried.add(id(e["scores"]))
+                    touched[owner[id(e["scores"])]] = touched.get(owner[id(e["scores"])], 0) + 1
+                for path, n in touched.items():
+                    counts[path.name] += n
+                    # The judging time, shared out by how many of each run's entries it judged.
+                    done = runs[path]["run"].setdefault("scored", {}).get("judge", {})
+                    runs[path]["run"]["scored"]["judge"] = {
+                        "at": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
+                        "seconds": round(done.get("seconds", 0) + seconds * n / len(mine), 1),
+                    }
+                    _write_atomically(path, runs[path])
+                cache.save()
+                print(
+                    f"judge ({name}): {locale}: {len(fresh)} judged, "
+                    f"{len(mine) - len(fresh)} from the cache or a twin, in {seconds:.0f} s",
+                    file=sys.stderr,
+                    flush=True,
+                )
+    finally:
+        if scorer is not None and hasattr(scorer, "close"):
+            scorer.close()
 
 
 def _write_atomically(path: Path, data: dict) -> None:

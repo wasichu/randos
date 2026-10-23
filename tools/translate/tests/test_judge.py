@@ -68,22 +68,27 @@ def test_the_judge_breaks_ties_among_the_judged_while_others_are_unjudged():
 
 class FakeJudge:
     asked: list[tuple[str, str]] = []
+    loaded: list[str] = []
 
-    def context(self, entry):
-        return scoring.judge_context(entry["msgctxt"], "")
+    def __init__(self, judge="mistral"):
+        self.judge = judge
+        FakeJudge.loaded.append(judge)
 
     def score(self, locale, entries):
         FakeJudge.asked += [(locale, e["text"]) for e in entries]
-        return [{"score": 3 if e["text"].startswith("bad") else 8, "reason": "", "context": self.context(e)} for e in entries]
+        return [
+            {"score": 3 if e["text"].startswith("bad") else 8, "reason": "", "context": "", "by": self.judge}
+            for e in entries
+        ]
 
 
-def write_run(path, model, texts, at):
+def write_run(path, model, texts, at, locale="es"):
     entries = [
         {
             "key": key,
             "msgid": key,
             "msgctxt": None,
-            "locale": "es",
+            "locale": locale,
             "text": text,
             "back_translation": key,
             "checks": {},
@@ -100,6 +105,7 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
     monkeypatch.setattr(cli, "JUDGE_CACHE", tmp_path / "judge-cache.json")
     monkeypatch.setitem(cli.scoring.SCORERS, "judge", FakeJudge)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready"), po.Source("Close %{time}")])
+    monkeypatch.setattr(cli.scoring, "current_contexts", lambda: {})
     one = write_run(tmp_path / "one.json", "one", {"Ready": ("bad listo", 1.0, 0.9), "Close %{time}": ("Cerrar", 1.0, 0.9)}, "1")
     two = write_run(tmp_path / "two.json", "two", {"Ready": ("Listo", 2.0, 0.8), "Close %{time}": ("Cerrar %{time}", 2.0, 0.8)}, "2")
     three = write_run(tmp_path / "three.json", "three", {"Ready": ("Listo", 2.0, 0.8)}, "3")
@@ -129,3 +135,26 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
 
     cli.score("judge", [one, two, three, four], redo=True)
     assert FakeJudge.asked == [("es", "bad listo"), ("es", "Listo")]
+
+
+def test_each_locale_has_its_judge_and_each_loads_only_when_needed(tmp_path, monkeypatch):
+    monkeypatch.setattr(cli, "JUDGE_CACHE", tmp_path / "judge-cache.json")
+    monkeypatch.setitem(cli.scoring.SCORERS, "judge", FakeJudge)
+    monkeypatch.setattr(cli.scoring, "current_contexts", lambda: {})
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready")])
+    runs = [
+        write_run(tmp_path / f"{m}-{loc}.json", m, {"Ready": (text, mx, 0.5)}, f"{m}{loc}", loc)
+        for loc, text in (("es", "Listo"), ("sw", "Tayari"))
+        for m, mx in (("one", 1.0), ("two", 2.0))
+    ]
+
+    FakeJudge.asked, FakeJudge.loaded = [], []
+    cli.score("judge", runs, redo=False)
+    assert FakeJudge.loaded == ["mistral", "qwen"]
+    by = {json.loads(p.read_text())["entries"][0]["scores"]["judge"].get("by") for p in runs}
+    assert by == {"mistral", "qwen", None}
+
+    # Nothing new: neither judge loads.
+    FakeJudge.loaded = []
+    cli.score("judge", runs, redo=False)
+    assert FakeJudge.loaded == []

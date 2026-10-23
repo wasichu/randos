@@ -1,4 +1,17 @@
-# Five new languages (research, 2026-10-22; not implemented)
+# Five new languages (research, 2026-10-22; built the same day)
+
+**Outcome (2026-10-22).** All five added, as practice and interface
+languages, appended to the list. The owner's decisions: all five; `fil`
+for Filipino; for Swahili, MADLAD-400 (the 7B, which was already in the
+field and runs one string at a time: the line below saying it failed on
+the Mac is out of date, so the 3B wasn't needed) with Opus-MT left out of
+`sw`; and a second judge, Qwen3 30B-A3B, for ur, sw and fil, where
+Mistral's card doesn't list the language (`scoring.JUDGE_FOR`). Taken as
+suggested: the system font for Urdu, no Hindi–Urdu hint for now, and no
+human read (the owner's rule: models and checks decide). Of the extra
+checks: NFC, "unchanged from English" and the Arabic letter forms were
+built; language ID wasn't (lingua is a 172 MB dependency of every check
+run; the judges catch a wrong language). The research follows as it was.
 
 Research for adding **Vietnamese (`vi`), Urdu (`ur`) and Swahili (`sw`)**,
 and, if wanted, **Persian (`fa`) and Filipino (`fil` or `tl`)** as practice
@@ -8,12 +21,8 @@ metadata, the repo's code, and the 2026-10-22 shootout results
 (`tools/translate/results/shootout-summary.json`, on the translation
 worktree branch). Re-check the cards before downloading anything.
 
-**Where the code lives.** The shootout code this plan refers to (`NAMES`
-in `models/__init__.py`, `models/mlx_chat.py`, `models/madlad.py`, the three
-scorers, `run --append`, the `shape` check) exists only on the translation
-run's branch (`worktree-agent-ad5fcd2a740090f14`), not on `main`. Make the
-changes below after that branch merges, and leave the running worktree
-alone.
+**Where the code lives.** At the time of writing, the shootout code was
+on the translation run's branch; it has since merged into `main`.
 
 ## 1. Translation contestants
 

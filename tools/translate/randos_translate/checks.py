@@ -24,8 +24,10 @@ SCRIPTS = {
     "hi": {"DEVANAGARI"},
     "bn": {"BENGALI"},
     "ru": {"CYRILLIC"},
+    "ur": {"ARABIC"},
+    "fa": {"ARABIC"},
 }
-LATIN_LOCALES = {"es", "pt", "fr", "de", "it", "tr", "id"}
+LATIN_LOCALES = {"es", "pt", "fr", "de", "it", "tr", "id", "vi", "sw", "fil"}
 
 
 def placeholders(source: str, text: str) -> tuple[bool, str]:
@@ -35,9 +37,10 @@ def placeholders(source: str, text: str) -> tuple[bool, str]:
 
 _LATIN = r"A-Za-z\u00C0-\u024F"
 
-# Turkish adds its suffixes to the word ("randoyu", "randolar"); elsewhere a
-# Latin letter after the term makes another word ("randonnée", a hike).
-_SUFFIXED = {"tr"}
+# Turkish adds its suffixes to the word ("randoyu", "randolar"), Filipino
+# its linker ("randong kausap"); elsewhere a Latin letter after the term
+# makes another word ("randonnée", a hike).
+_SUFFIXED = {"tr", "fil"}
 
 
 def _has_term(term: str, text: str, locale: str | None = None) -> bool:
@@ -141,6 +144,28 @@ def shape(source: str, text: str) -> tuple[bool, str]:
     return (not leftover, "" if not leftover else f"leftover tokens {leftover}")
 
 
+def unchanged(source: str, text: str) -> tuple[bool, str]:
+    """Not the English left as it was. Only for a source of three words or
+    more: a short label can rightly stay the same ("Status" in German)."""
+    if len(PLACEHOLDER.sub("", source).split()) < 3:
+        return (True, "")
+    same = " ".join(source.split()).casefold() == " ".join(text.split()).casefold()
+    return (not same, "the English, untranslated" if same else "")
+
+
+# Urdu and Persian write YEH and KEHEH (U+06CC, U+06A9), not Arabic's YEH
+# and KAF (U+064A, U+0643), which look alike: a common slip, and a sign of
+# Arabic text.
+_ARABIC_FORMS = {"\u064a": "ARABIC LETTER YEH", "\u0643": "ARABIC LETTER KAF"}
+
+
+def letter_forms(locale: str, text: str) -> tuple[bool, str]:
+    if locale not in ("ur", "fa"):
+        return (True, "")
+    found = [name for char, name in _ARABIC_FORMS.items() if char in text]
+    return (not found, f"Arabic letter forms: {', '.join(found)}" if found else "")
+
+
 def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dict[str, dict]:
     results = {
         "placeholders": placeholders(source, text),
@@ -148,5 +173,7 @@ def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dic
         "length": length(source, text, button=button, locale=locale),
         "script": script(locale, text, source),
         "shape": shape(source, text),
+        "unchanged": unchanged(source, text),
+        "letter_forms": letter_forms(locale, text),
     }
     return {name: {"ok": ok, "detail": detail} for name, (ok, detail) in results.items()}

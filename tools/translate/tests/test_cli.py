@@ -42,6 +42,21 @@ def test_append_translates_only_what_the_run_lacks(tmp_path, monkeypatch):
     assert len(data["run"]["appended"]) == 1
 
 
+def test_append_adds_new_locales_to_the_run(tmp_path, monkeypatch):
+    model = type("M", (Upper,), {"locales": ["es", "vi"]})()
+    monkeypatch.setattr(cli, "RESULTS", tmp_path)
+    monkeypatch.setattr(cli.contestants, "get", lambda name: model)
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready")])
+    first = cli.run("upper", ["es"], None)
+
+    model.asked = []
+    cli.run("upper", ["vi"], None, append=first)
+    assert model.asked == ["Ready"]
+    data = json.loads(first.read_text())
+    assert data["run"]["locales"] == ["es", "vi"]
+    assert set(data["summary"]) == {"es", "vi"}
+
+
 def test_a_changed_comment_retranslates_only_for_a_model_that_takes_context(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "RESULTS", tmp_path)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("About"), po.Source("Cancel")])

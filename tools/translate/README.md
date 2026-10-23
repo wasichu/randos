@@ -55,7 +55,13 @@ page is built from):
   (tighter for buttons, looser for dense CJK); the letters in the locale's
   script (Latin names copied from the English don't count); one
   translation shaped like the source (no list of alternatives, no
-  leftover protect token);
+  leftover protect token); not the English left as it was (a source of
+  three words or more); for Urdu and Persian, not Arabic's look-alike YEH
+  and KAF. Outputs are NFC-normalized first, and so is what `fill`
+  writes. (Language identification was left out: the detector, lingua,
+  is a 172 MB wheel every run of the checks would need, and a
+  translation in the wrong language is what the judge's "1: not
+  {language}" catches);
 - **scores** (`scoring.py`): back-translation chrF against the English.
   The model-based scores come afterwards from `score` (below) and are
   `"pending"` until then;
@@ -98,11 +104,27 @@ a model scored by fewer scorers gets a skewed mean rank in `review`.
 - **COMET-Kiwi** (`comet_kiwi`; Unbabel/wmt22-cometkiwi-da, ~2 GB, gated,
   non-commercial, so it only scores): 0 to 1, higher is better. Runs on the
   CPU (COMET's Lightning setup doesn't take MPS).
-- **The tone judge** (`judge`; Mistral Small 3.2 24B Instruct, 4-bit MLX,
-  Apache-2.0, ~14 GB): a 1–10 rating for meaning kept and the site's calm,
-  informal register, with a one-line reason (`scoring.JUDGE_RUBRIC`).
-  Mistral, because no contestant is from that family. Its reply must be the
-  JSON asked for; anything else is a missing score, never a guess.
+- **The tone judges** (`judge`): a 1–10 rating for meaning kept and the
+  site's calm, informal register, with a one-line reason
+  (`scoring.JUDGE_RUBRIC`), from a family no contestant belongs to (models
+  favour their own output). Mistral Small 3.2 24B Instruct (4-bit MLX,
+  Apache-2.0, ~14 GB) judges the languages its card lists; Qwen3 30B-A3B
+  Instruct 2507 (4-bit MLX, Apache-2.0, ~17 GB, a mixture of experts with
+  3B active, 119 languages on its card) judges Urdu, Swahili and Filipino,
+  which Mistral's card doesn't list (`scoring.JUDGE_FOR`). Each verdict
+  says which judge gave it (`by`); one judge is loaded at a time. Their
+  reply must be the JSON asked for; anything else is a missing score,
+  never a guess.
+
+  Qwen was calibrated against Mistral's stored verdicts on 128 passing
+  translations each of es, hi and bn (2026-10-22): within one point of
+  Mistral on 66%, 55% and 51%, on opposite sides of the veto (one ≤ 4,
+  the other ≥ 7) on 6–8%, 0.26 s a judgement (Mistral 0.75 s). Read one by
+  one, those disagreements mostly favour Qwen, which caught meaning errors
+  Mistral rated 7 ("Encontrar *una* rando", a Hindi 18+ acknowledgement
+  cut to its first clause, Hindi word order broken), against one miss
+  ("Lenguaje" for the interface's "Language", 7). So Qwen judges its
+  three languages fully, veto included.
 
 Never rank on MetricX alone: TranslateGemma was trained with MetricX as its
 reward, so it's the one scorer that knows how to flatter it.
@@ -173,12 +195,12 @@ those.
 
 | Name | Model | License | Group | Locales |
 | --- | --- | --- | --- | --- |
-| `opus-mt` | Helsinki-NLP Marian, one per pair (`models/opus_mt.py`) | Apache-2.0 / CC-BY-4.0 per pair | `models` | 10 (no pt, ko, bn, ja) |
-| `m2m100` | facebook/m2m100_418M | MIT | `models` | all 14 |
-| `madlad-400` | google/madlad400-7b-mt, bf16, one string at a time (the 10B didn't fit: `models/madlad.py`) | Apache-2.0 | `models` | all 14 |
-| `hy-mt2` | Tencent Hy-MT2 7B, 8-bit MLX | Apache-2.0 | `mlx` | all 14 |
-| `translategemma-4b`, `-12b` | Google TranslateGemma, 8-bit MLX | Gemma terms | `mlx` | all 14 |
-| `translategemma-27b` | Google TranslateGemma 27B, 4-bit MLX | Gemma terms | `mlx` | all 14 |
+| `opus-mt` | Helsinki-NLP Marian, one per pair (`models/opus_mt.py`; ur and fa through a multi-target Indo-Iranian model) | Apache-2.0 / CC-BY-4.0 per pair | `models` | 14 (no pt, ko, bn, ja, sw) |
+| `m2m100` | facebook/m2m100_418M (Filipino as `tl`) | MIT | `models` | all 19 |
+| `madlad-400` | google/madlad400-7b-mt, bf16, one string at a time (the 10B didn't fit: `models/madlad.py`) | Apache-2.0 | `models` | all 19 |
+| `hy-mt2` | Tencent Hy-MT2 7B, 8-bit MLX | Apache-2.0 | `mlx` | 18 (no sw: not on its card) |
+| `translategemma-4b`, `-12b` | Google TranslateGemma, 8-bit MLX (Filipino as `fil-PH`) | Gemma terms | `mlx` | all 19 |
+| `translategemma-27b` | Google TranslateGemma 27B, 4-bit MLX | Gemma terms | `mlx` | all 19 |
 
 The seq2seq models (Opus-MT, M2M100, MADLAD) get placeholders and glossary
 terms swapped for `[0]`, `[1]`... tokens and restored after

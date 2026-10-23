@@ -1,3 +1,5 @@
+import unicodedata
+
 from randos_translate import checks
 from randos_translate.models import protect, restore
 
@@ -64,3 +66,29 @@ def test_protect_and_restore_round_trip():
     text, kept = protect("Looking for a rando speaking %{speaking_language}.")
     assert "%{" not in text and "rando" not in text
     assert restore(text, kept) == "Looking for a rando speaking %{speaking_language}."
+
+
+def test_the_new_locales_scripts():
+    assert checks.script("ur", "ایک rando تلاش کریں", "Find a rando")[0]
+    assert checks.script("fa", "یک rando پیدا کنید", "Find a rando")[0]
+    assert not checks.script("ur", "एक rando खोजें", "Find a rando")[0]
+    # Vietnamese, composed or decomposed, is Latin.
+    assert checks.script("vi", "Tìm một rando", "Find a rando")[0]
+    assert checks.script("vi", unicodedata.normalize("NFD", "Tiếng Việt"), "Vietnamese")[0]
+
+
+def test_english_left_as_it_was_fails_unless_it_is_a_short_label():
+    assert not checks.unchanged("Looking for a rando", "looking for a rando")[0]
+    assert checks.unchanged("Status", "Status")[0]
+    assert checks.unchanged("Looking for a rando", "Naghahanap ng rando")[0]
+
+
+def test_urdu_and_persian_dont_use_arabic_letter_forms():
+    assert not checks.letter_forms("fa", "يک rando پيدا کنيد")[0]
+    assert not checks.letter_forms("ur", "ایک rando تلاش كریں")[0]
+    assert checks.letter_forms("fa", "یک rando پیدا کنید")[0]
+    assert checks.letter_forms("ar", "ابحث عن rando لكي")[0]
+
+
+def test_a_filipino_linker_keeps_the_term():
+    assert checks.glossary("waiting on your rando", "hinihintay ang iyong randong kausap", "fil")[0]

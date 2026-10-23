@@ -18,6 +18,11 @@ from __future__ import annotations
 from . import NAMES
 
 LOCALES = list(NAMES)
+# Hy-MT2's card lists 33 languages, Swahili not among them.
+HY_MT2_LOCALES = [loc for loc in LOCALES if loc != "sw"]
+# TranslateGemma's chat template maps codes to names, and knows Filipino
+# only as `fil-PH` (a plain `fil` reaches it undefined).
+_GEMMA_CODES = {"fil": "fil-PH"}
 
 # Hy-MT2's terminology prompt (its model card, verbatim: it was trained on
 # these strings), with our glossary.
@@ -27,13 +32,13 @@ _HY_TERMS = "Reference the following translations:\nrando translates to rando\nr
 class MLXChat:
     """One MLX chat model; `style` picks the prompt (hy-mt2 or translategemma)."""
 
-    locales = LOCALES
     takes_context = True
 
     def __init__(self, name: str, repo: str, style: str) -> None:
         from mlx_lm import generate, load
 
         self.name, self.repo, self._style = name, repo, style
+        self.locales = HY_MT2_LOCALES if style == "hy-mt2" else LOCALES
         self._generate = generate
         self._model, self._tokenizer = load(repo)
         # TranslateGemma's tokenizer lists only <eos> as an end, but its turns
@@ -63,7 +68,8 @@ class MLXChat:
 def prompt_messages(style: str, text: str, source: str, target: str, context: str = "") -> list[dict]:
     """The chat messages for one string: each model card's documented prompt."""
     if style == "translategemma":
-        content = [{"type": "text", "source_lang_code": source, "target_lang_code": target, "text": text}]
+        codes = (_GEMMA_CODES.get(source, source), _GEMMA_CODES.get(target, target))
+        content = [{"type": "text", "source_lang_code": codes[0], "target_lang_code": codes[1], "text": text}]
         return [{"role": "user", "content": content}]
     terms = _HY_TERMS if target != "en" else ""
     language = NAMES.get(target, "English")

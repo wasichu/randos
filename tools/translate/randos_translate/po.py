@@ -9,6 +9,7 @@ replaces only entries that still hold exactly what it wrote last time
 from __future__ import annotations
 
 import json
+import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -18,7 +19,7 @@ REPO = Path(__file__).resolve().parents[3]
 GETTEXT = REPO / "priv" / "gettext"
 STATE = Path(__file__).resolve().parents[1] / "state"
 
-LOCALES = ["es", "zh", "hi", "ar", "pt", "bn", "ru", "ja", "fr", "de", "ko", "it", "tr", "id"]
+LOCALES = ["es", "zh", "hi", "ar", "pt", "bn", "ru", "ja", "fr", "de", "ko", "it", "tr", "id", "vi", "ur", "sw", "fa", "fil"]
 
 
 @dataclass(frozen=True)
@@ -115,6 +116,9 @@ def fill(
     `model` names who wrote them: one model, or one per key (per-string
     selection). Returns counts of what happened.
     """
+    # One form for every letter (Vietnamese can come decomposed): the same
+    # text is the same bytes, in the .po and its diffs.
+    translations = {key: unicodedata.normalize("NFC", text) for key, text in translations.items()}
     path = po_path(locale, root)
     po = polib.pofile(str(path))
     state = load_state(locale, state_dir)

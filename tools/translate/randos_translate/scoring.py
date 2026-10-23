@@ -35,7 +35,7 @@ def back_translation_chrf(source: str, back: str) -> float:
 PENDING = {
     "metricx": "MetricX-24-Hybrid XL (google/metricx-24-hybrid-xl-v2p6-bfloat16): ~7 GB, ungated",
     "comet_kiwi": "COMET-Kiwi (Unbabel/wmt22-cometkiwi-da): ~2 GB, gated (accept CC-BY-NC-SA terms)",
-    "judge": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated",
+    "judge": "LLM tone judge (Mistral Small 3.2 24B, or Qwen3 30B-A3B for ur, sw, fil; 4-bit MLX): ~14-17 GB, ungated",
 }
 
 
@@ -138,22 +138,54 @@ def parse_judgement(reply: str) -> dict:
         return {"score": None, "error": f"unparsed reply: {reply[:200]!r}"}
 
 
+# The judges, each from a family no contestant belongs to (models favour
+# their own output), 4-bit MLX, Apache-2.0. Mistral Small 3.2 judges the
+# languages its card lists; Qwen3 30B-A3B (a mixture of experts, 3B active;
+# its card lists 119 languages) the ones Mistral's doesn't.
+JUDGES = {
+    "mistral": "mlx-community/Mistral-Small-3.2-24B-Instruct-2506-4bit",
+    "qwen": "mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit",
+}
+JUDGE_FOR = {"ur": "qwen", "sw": "qwen", "fil": "qwen"}
+
+
+def judge_for(locale: str) -> str:
+    """The judge (a `JUDGES` name) for a locale."""
+    return JUDGE_FOR.get(locale, "mistral")
+
+
+def judged_by(entry: dict) -> str | None:
+    """The judge whose verdict an entry holds (verdicts from before there
+    were two are Mistral's)."""
+    verdict = entry["scores"].get("judge") or {}
+    return verdict.get("by", "mistral") if verdict.get("score") is not None else None
+
+
 class Judge:
-    """The tone judge: Mistral Small 3.2 24B (Apache-2.0), 4-bit MLX,
-    greedy. Mistral is a family none of the contestants belongs to.
-    Prompts go to mlx-lm's `batch_generate` together (`BATCH` at a time),
-    which keeps the GPU busy between short replies."""
+    """One tone judge (`JUDGES`), greedy. Prompts go to mlx-lm's
+    `batch_generate` together (`BATCH` at a time), which keeps the GPU busy
+    between short replies."""
 
     name = "judge"
-    REPO = "mlx-community/Mistral-Small-3.2-24B-Instruct-2506-4bit"
     BATCH = 64
 
-    def __init__(self) -> None:
+    def __init__(self, judge: str = "mistral") -> None:
         from mlx_lm import batch_generate, load
 
+        self.judge, self.repo = judge, JUDGES[judge]
         self._batch_generate = batch_generate
-        self._model, self._tokenizer = load(self.REPO)
+        self._model, self._tokenizer = load(self.repo)
         self._contexts = current_contexts()
+
+    def close(self) -> None:
+        """Frees the model's memory, so the next judge can load."""
+        import gc
+
+        import mlx.core as mx
+
+        del self._model, self._tokenizer
+        gc.collect()
+        mx.clear_cache()
 
     def context(self, entry: dict) -> str:
         """The context the judge sees for an entry now: its string's
@@ -180,7 +212,7 @@ class Judge:
                 for e, context in zip(chunk, contexts)
             ]
             replies = self._batch_generate(self._model, self._tokenizer, prompts, max_tokens=80).texts
-            out += [parse_judgement(r) | {"context": c} for r, c in zip(replies, contexts)]
+            out += [parse_judgement(r) | {"context": c, "by": self.judge} for r, c in zip(replies, contexts)]
         return out
 
 
@@ -202,21 +234,23 @@ class JudgeCache:
         self._new: set[str] = set()
 
     @staticmethod
-    def key(locale: str, entry: dict, context: str) -> str:
-        seen = [Judge.REPO, JUDGE_RUBRIC, locale, context, entry["msgid"], entry["text"]]
+    def key(locale: str, entry: dict, context: str, judge: str = "mistral") -> str:
+        seen = [JUDGES[judge], JUDGE_RUBRIC, locale, context, entry["msgid"], entry["text"]]
         return hashlib.sha256(json.dumps(seen, ensure_ascii=False).encode()).hexdigest()
 
-    def get(self, locale: str, entry: dict, context: str, only_new: bool = False) -> dict | None:
+    def get(
+        self, locale: str, entry: dict, context: str, judge: str = "mistral", only_new: bool = False
+    ) -> dict | None:
         """The verdict given before (`only_new`: only one given since this
         cache was opened, as `--redo` wants)."""
-        key = self.key(locale, entry, context)
+        key = self.key(locale, entry, context, judge)
         verdict = self._verdicts.get(key) if not only_new or key in self._new else None
-        return verdict and verdict | {"context": context}
+        return verdict and verdict | {"context": context, "by": judge}
 
     def put(self, locale: str, entry: dict, verdict: dict) -> None:
         if verdict.get("score") is not None:
             kept = {k: verdict[k] for k in ("score", "reason")}
-            key = self.key(locale, entry, verdict["context"])
+            key = self.key(locale, entry, verdict["context"], verdict.get("by", "mistral"))
             self._verdicts[key] = kept
             self._new.add(key)
 

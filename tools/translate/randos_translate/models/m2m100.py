@@ -8,8 +8,10 @@ from __future__ import annotations
 from . import protect, restore
 
 REPO = "facebook/m2m100_418M"
-# M2M100 covers all 14 (its language codes match ours).
-LOCALES = ["es", "zh", "hi", "ar", "pt", "bn", "ru", "ja", "fr", "de", "ko", "it", "tr", "id"]
+# M2M100 covers all 19; its codes match ours but Filipino's, which it
+# calls Tagalog (`tl`).
+LOCALES = ["es", "zh", "hi", "ar", "pt", "bn", "ru", "ja", "fr", "de", "ko", "it", "tr", "id", "vi", "ur", "sw", "fa", "fil"]
+_CODES = {"fil": "tl"}
 
 
 class M2M100:
@@ -28,6 +30,7 @@ class M2M100:
     def _run(self, texts: list[str], source: str, target: str, batch: int = 16) -> list[str]:
         # Small batches: one batch of every string stalled on MPS for 25
         # minutes (bn), the long strings' padding and beams multiplying.
+        source, target = _CODES.get(source, source), _CODES.get(target, target)
         self._tokenizer.src_lang = source
         out: list[str] = []
         for i in range(0, len(texts), batch):

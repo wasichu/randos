@@ -29,8 +29,8 @@ class Translator(Protocol):
     def back_translate(self, texts: list[str], source: str) -> list[str]: ...
 
 
-# Our 14 practice languages, by the English names the instruction models'
-# prompts use (Chinese: the site is in Simplified).
+# Our 19 practice languages besides English, by the English names the
+# instruction models' prompts use (Chinese: the site is in Simplified).
 NAMES = {
     "es": "Spanish",
     "zh": "Simplified Chinese",
@@ -46,6 +46,11 @@ NAMES = {
     "it": "Italian",
     "tr": "Turkish",
     "id": "Indonesian",
+    "vi": "Vietnamese",
+    "ur": "Urdu",
+    "sw": "Swahili",
+    "fa": "Persian",
+    "fil": "Filipino",
 }
 
 _TOKEN = re.compile(r"\[(\d+)\]")

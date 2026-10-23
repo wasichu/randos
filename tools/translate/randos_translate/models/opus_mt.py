@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from . import protect, restore
 
+_IIR = "Helsinki-NLP/opus-mt-tc-bible-big-deu_eng_fra_por_spa-iir"
+
 # locale -> (en->X model, X->en model for back-translation)
 PAIRS = {
     "es": ("Helsinki-NLP/opus-mt-en-es", "Helsinki-NLP/opus-mt-es-en"),
@@ -21,13 +23,25 @@ PAIRS = {
     "id": ("Helsinki-NLP/opus-mt-en-id", "Helsinki-NLP/opus-mt-id-en"),
     # Only a tc-big model goes en->tr (CC-BY-4.0).
     "tr": ("Helsinki-NLP/opus-mt-tc-big-en-tr", "Helsinki-NLP/opus-mt-tr-en"),
+    "vi": ("Helsinki-NLP/opus-mt-en-vi", "Helsinki-NLP/opus-mt-vi-en"),
+    # Urdu and Persian through a multi-target model of the Indo-Iranian
+    # languages (trained on OPUS, the Bible among it): the direct en->ur is
+    # weaker (Tatoeba chrF 0.39 against Flores 0.48), and en->fa doesn't
+    # exist. Persian back through the Indo-Iranian model too.
+    "ur": (_IIR, "Helsinki-NLP/opus-mt-ur-en"),
+    "fa": (_IIR, "Helsinki-NLP/opus-mt-tc-bible-big-iir-en"),
+    # Filipino is standardized Tagalog: the tl pairs.
+    "fil": ("Helsinki-NLP/opus-mt-en-tl", "Helsinki-NLP/opus-mt-tl-en"),
 }
 # Not wired: pt (an en->pt tc-big model, but no pt->en to translate back
 # with), ko (en->ko is multi-target and its card names no valid target
-# token), bn and ja (no direct pair).
+# token), bn and ja (no direct pair), sw (en->sw exists, but the only way
+# back is Congo Swahili, `swc`, another variety: the owner's call, left out).
 
 # Multi-target models need the target as a sentence-initial token.
-TARGET_TOKEN = {"zh": ">>cmn_Hans<< "}
+# Urdu and Iranian Persian (`pes`, not `fas`, the macrolanguage, nor
+# `prs`, Dari).
+TARGET_TOKEN = {"zh": ">>cmn_Hans<< ", "ur": ">>urd<< ", "fa": ">>pes<< "}
 
 
 class OpusMT:
