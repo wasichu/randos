@@ -28,7 +28,7 @@ msgstr "门道,不是站台"
 msgid "About"
 msgstr "关于我们"
 
-#. Title of the page that explains what randos is ("about us"), not "approximately". randos is the site's name: keep it as it is, in Latin letters, lowercase.
+#. Title of the page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
@@ -263,7 +263,6 @@ msgstr "你可以选择自己想使用的语言，以及希望对方使用的语
 msgid "You have matched. Audio starts when the call opens."
 msgstr "您已成功匹配。通话开始时，音频会自动开始播放。"
 
-#. Label of the other person's audio level in a call. "rando" is our word for the person you talk to: keep it as it is, in Latin letters.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando"
@@ -348,6 +347,7 @@ msgstr "远程音频播放（%{summary}）"
 msgid "remote audio received (%{summary})"
 msgstr "已接收到远程音频（%{summary}）"
 
+#. Status beside your microphone while the browser asks your permission to use it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "requesting microphone"
@@ -465,7 +465,6 @@ msgstr "等待你的回复 rando"
 msgid "I'm happy to hear"
 msgstr "我很高兴听到"
 
-#. Shown while searching. "rando" is our word for the person you'll talk to: keep it as it is, in Latin letters.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."

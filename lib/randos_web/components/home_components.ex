@@ -294,9 +294,6 @@ defmodule RandosWeb.HomeComponents do
           {gettext("Finding a rando")}
         </h2>
         <p id="looking-status" class="mt-3 leading-7 text-stone-600">
-          <% gettext_comment(
-            "Shown while searching. \"rando\" is our word for the person you'll talk to: keep it as it is, in Latin letters."
-          ) %>
           {gettext(
             "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.",
             hearing_languages: hearing_summary(@preferences["hearing_languages"], @language_name),
@@ -419,9 +416,6 @@ defmodule RandosWeb.HomeComponents do
           label={gettext("You")}
           language={@language_name.(@preferences["speaking_language"])}
         />
-        <% gettext_comment(
-          "Label of the other person's audio level in a call. \"rando\" is our word for the person you talk to: keep it as it is, in Latin letters."
-        ) %>
         <.waveform
           id="remote-waveform"
           label={gettext("Your rando")}
@@ -675,15 +669,21 @@ defmodule RandosWeb.HomeComponents do
   # Text the call hook sets itself (assets/js/randos/labels.js), translated
   # here; the hook falls back to English for a missing key.
   defp call_labels do
-    # A translator comment applies to the next string, so this one is bound first.
+    # A translator comment applies to the next string, so these are bound first.
     gettext_comment("Button: turn your own microphone back on.")
     unmute = pgettext("button", "Unmute")
+
+    gettext_comment(
+      "Status beside your microphone while the browser asks your permission to use it."
+    )
+
+    requesting_microphone = gettext("requesting microphone")
 
     JSON.encode!(%{
       mute: pgettext("button", "Mute"),
       unmute: unmute,
       microphone_ready: gettext("microphone ready"),
-      requesting_microphone: gettext("requesting microphone"),
+      requesting_microphone: requesting_microphone,
       microphone_unavailable: gettext("microphone unavailable"),
       waiting_for_remote_audio: gettext("waiting for remote audio"),
       remote_audio_received: gettext("remote audio received (%{summary})", summary: "%{summary}"),

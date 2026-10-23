@@ -28,7 +28,7 @@ msgstr "mlango, si jukwaa"
 msgid "About"
 msgstr "Kuhusu"
 
-#. Title of the page that explains what randos is ("about us"), not "approximately". randos is the site's name: keep it as it is, in Latin letters, lowercase.
+#. Title of the page that explains what randos is ("about us"), not "approximately".
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
@@ -163,7 +163,7 @@ msgstr "Uunganisho salama wa sauti unaanza."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Short anonymous conversations for language practice."
-msgstr "Mazungumzo mafupi yasiyo na majina, yaliyokusudiwa kwa ajili ya mazoezi ya lugha."
+msgstr "Mazungumzo fupi na bila majina kwa madhumuni ya mazoezi ya lugha."
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -263,7 +263,6 @@ msgstr "Unaweza kuchagua lugha ambayo ungependa kuzungumza na lugha ambayo ungep
 msgid "You have matched. Audio starts when the call opens."
 msgstr "Mmeunganishwa. Sauti itaanza kusikika baada ya simu kuunganishwa."
 
-#. Label of the other person's audio level in a call. "rando" is our word for the person you talk to: keep it as it is, in Latin letters.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando"
@@ -348,6 +347,7 @@ msgstr "Uchezaji wa sauti kutoka kwa umbali (%{summary})."
 msgid "remote audio received (%{summary})"
 msgstr "Sauti iliyopokelewa kutoka kwa umbali (%{summary})"
 
+#. Status beside your microphone while the browser asks your permission to use it.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "requesting microphone"
@@ -465,7 +465,6 @@ msgstr "kusubiri kwa yako rando"
 msgid "I'm happy to hear"
 msgstr "Mimi ni furaha ya kusikia"
 
-#. Shown while searching. "rando" is our word for the person you'll talk to: keep it as it is, in Latin letters.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."

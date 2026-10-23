@@ -35,12 +35,12 @@
         "seconds": 55.7
       },
       "judge": {
-        "at": "20261023T031425Z",
-        "seconds": 4235.2
+        "at": "20261023T105909Z",
+        "seconds": 4255.9
       },
       "judge_qwen": {
-        "at": "20261023T033011Z",
-        "seconds": 192.0
+        "at": "20261023T105951Z",
+        "seconds": 201.8
       }
     },
     "appended": [
@@ -815,14 +815,15 @@
           "score": 0.7773
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": ""
+          "score": 7,
+          "reason": "Natural but slightly stiff, missing 'right now' context",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": 4,
-          "reason": "Too short, lacks natural flow, and doesn't convey ongoing action",
-          "context": "",
+          "reason": "Missing context; 'Conexión' is a noun, not the status 'Connecting'",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -3306,13 +3307,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'solicitando' is formal",
-          "context": ""
+          "reason": "slightly stiff, 'solicitando' is formal",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal; perfect for the tone and context.",
-          "context": "",
+          "score": 8,
+          "reason": "Natural and calm, minor formality in 'solicitando'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -13914,8 +13916,15 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'कनेक्शन' is unnatural; 'जुड़ रहा है' would be better.",
-          "context": ""
+          "reason": "Awkward phrasing, 'कनेक्शन' is unnatural",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfectly matches the tone and meaning.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -16423,12 +16432,13 @@
         "judge": {
           "score": 7,
           "reason": "Awkward phrasing, 'निवेदन' is too formal",
-          "context": ""
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 3,
-          "reason": "Unnatural phrasing; 'निवेदन' is too formal and not idiomatic for this context.",
-          "context": "",
+          "score": 4,
+          "reason": "Unnatural phrasing; 'निवेदन' is too formal and incorrect for context",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -20519,9 +20529,16 @@
           "score": 0.7086
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and meaning.",
-          "context": ""
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'اتصال' is more action-oriented",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 4,
+          "reason": "Too brief and lacks context; should convey 'connecting' as an ongoing state",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -23016,13 +23033,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'طلب' is formal; 'ميكروفون' is correct but awkward phrasing.",
-          "context": ""
+          "reason": "Slightly stiff, more natural to say 'طلب الوصول إلى الميكروفون'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and accurate, slightly formal tone",
-          "context": "",
+          "score": 6,
+          "reason": "Slightly stiff; 'طلب ميكروفون' sounds more formal and less natural than needed.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -23866,8 +23884,8 @@
           "context": ""
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward; \"لسماع\" should be \"لسماعك\" for natural flow\"}'",
+          "score": 7,
+          "reason": "Slight awkwardness; should be 'سعيد لسماع' or 'سعيد بسماع'",
           "context": "",
           "by": "qwen"
         }
@@ -29555,9 +29573,16 @@
           "score": 0.7594
         },
         "judge": {
-          "score": 7,
-          "reason": "slightly formal, 'solicitando' is stiff",
-          "context": ""
+          "score": 10,
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, minor formality in 'solicitando'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "qwen"
         }
       }
     },
@@ -31109,7 +31134,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slightly stiff; \"Como\" feels formal for the tone\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"Como\" feels too formal for the tone\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -33600,8 +33625,15 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'সংযোগ করা হচ্ছে' is unnatural. 'সংযোগ হচ্ছে' would be better.",
-          "context": ""
+          "reason": "Awkward phrasing, 'সংযোগ করা হচ্ছে' is more natural",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and informal; accurately conveys 'Connecting' as a status.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -40187,14 +40219,15 @@
           "score": 0.8197
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": ""
+          "score": 7,
+          "reason": "Slightly stiff, 'connecting' is more natural",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 7,
-          "reason": "Natural, but slightly stiff; could be more informal like 'Соединяемся'",
-          "context": "",
+          "score": 6,
+          "reason": "Slightly stiff; 'Подключение' is neutral, lacks calm informal tone",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -42672,13 +42705,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, more natural as 'запрос микрофона'",
-          "context": ""
+          "reason": "slightly stiff, more natural to say 'ожидание микрофона'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 7,
-          "reason": "Slightly stiff; should be more natural like 'запрашивает микрофон'",
-          "context": "",
+          "score": 6,
+          "reason": "Slightly stiff; 'запрашивая' sounds technical, not natural for this context.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -46781,9 +46815,16 @@
           "score": 0.8455
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more formal than needed",
-          "context": ""
+          "score": 10,
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and matches the informal tone perfectly.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -49266,13 +49307,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing; '頼む' is too casual for this context.",
-          "context": ""
+          "reason": "Slightly stiff, more natural to say 'マイクを使ってもいい？'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 3, \"reason\": \"Incorrect verb \\'頼む\\' (request) for microphone; should be \\'マイクの使用をリクエスト\\'}'",
-          "context": "",
+          "score": 3,
+          "reason": "Incorrect verb '頼む' (request) used; should be 'マイクの許可を待機中'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -51940,8 +51982,8 @@
           "context": ""
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"実行している\" feels technical, not calm and informal.\"}'",
+          "score": 6,
+          "reason": "Slightly stiff; '実行している' feels technical, not calm and informal.",
           "context": "",
           "by": "qwen"
         }
@@ -53333,14 +53375,15 @@
           "score": 0.7883
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, matches tone and keeps meaning.",
-          "context": ""
+          "score": 7,
+          "reason": "Slightly stiff, 'Connexion' is formal; 'en cours de connexion' would be more natural.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'Connexion' feels more formal than the calm, informal tone",
-          "context": "",
+          "score": 4,
+          "reason": "Missing context; 'Connexion' is too vague and formal for the tone and meaning.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -53770,8 +53813,8 @@
           "context": ""
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slightly stiff; \"parler en\" feels incomplete without context like language or dialect.\"}'",
+          "score": 7,
+          "reason": "Slightly stiff; 'parler en' feels incomplete without context",
           "context": "",
           "by": "qwen"
         }
@@ -59106,8 +59149,8 @@
           "context": ""
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"aidez-nous à le corriger\" feels a bit formal for the tone\"}'",
+          "score": 8,
+          "reason": "Natural and clear, minor stiffness in phrasing",
           "context": "",
           "by": "qwen"
         }
@@ -59882,6 +59925,12 @@
           "score": 1,
           "reason": "Not German, just the English word.",
           "context": ""
+        },
+        "judge_qwen": {
+          "score": 1,
+          "reason": "Missing translation; 'Connecting' not in German",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -62388,13 +62437,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more natural would be 'Mikrofonanfrage'",
-          "context": ""
+          "reason": "Slightly stiff, more natural would be 'Mikrofon wird angefordert'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": 4,
-          "reason": "Too formal; lacks calm, friendly tone. Should be more natural and informal.",
-          "context": "",
+          "reason": "Too formal; lacks calm, friendly tone; sounds bureaucratic",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -65081,7 +65131,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"den\" feels redundant, \"der Commit, den dieser Server ausführt\" is correct but stiff.\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"den dieser Server ausführt\" feels clunky and overly formal.\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -66487,12 +66537,13 @@
         "judge": {
           "score": 10,
           "reason": "Natural, correct, and matches the calm tone.",
-          "context": ""
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and informal; perfect for the context.",
-          "context": "",
+          "reason": "Natural, calm, and informal; accurately conveys 'connecting' status.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -69000,13 +69051,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, more natural as '마이크 사용 요청 중'",
-          "context": ""
+          "reason": "Slightly stiff, more natural to say '마이크 사용 요청 중'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and calm, slight formality in '요청 중'",
-          "context": "",
+          "reason": "Natural and accurate, slightly formal but acceptable",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -73116,8 +73168,15 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the calm tone.",
-          "context": ""
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, slightly formal but acceptable for status display.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -75606,13 +75665,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the calm tone.",
-          "context": ""
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Slightly stiff; 'richiesta' sounds more formal than needed",
-          "context": "",
+          "reason": "Slightly stiff; 'Richiesta' feels formal, not calm and informal like the tone.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -78280,8 +78340,8 @@
           "context": ""
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"eseguito\" feels too formal for the tone.\"}'",
+          "score": 7,
+          "reason": "Slight stiffness; 'eseguito' feels too formal for the tone.",
           "context": "",
           "by": "qwen"
         }
@@ -86141,14 +86201,15 @@
           "score": 0.7854
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone.",
-          "context": ""
+          "score": 7,
+          "reason": "Slightly stiff, 'menghubungkan' is more action-oriented",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal; matches the tone and meaning perfectly.",
-          "context": "",
+          "score": 7,
+          "reason": "Slightly stiff; 'sedang menghubungkan' would sound more natural and calm.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -88608,13 +88669,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Correct but slightly stiff; 'minta mikrofon' is more natural.",
-          "context": ""
+          "reason": "Natural but slightly stiff; 'meminta' is formal",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and calm, but slightly formal; could be more conversational.",
-          "context": "",
+          "reason": "Natural and calm, but slightly more formal than ideal",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
           "by": "qwen"
         }
       }
@@ -93499,14 +93561,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the calm tone.",
-          "context": "",
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and matches the tone perfectly.",
-          "context": "",
+          "reason": "Natural, calm, and matches the context perfectly.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -94023,7 +94085,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" lacks natural flow for context\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" feels incomplete without context like time or language\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -101678,9 +101740,9 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'اتصال قائم کیا جارہا ہے' sounds formal and technical",
-          "context": "",
+          "score": 8,
+          "reason": "Natural and calm tone, accurate meaning, slight formality in 'قائم کیا جارہا ہے'",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
@@ -121087,7 +121149,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward; \"rando\" should not be transliterated\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward; \"rando\" should not be translated and should be integrated naturally.\"}'",
           "context": "\nIt is a button label: it must be short.\n",
           "by": "qwen"
         }
@@ -124091,7 +124153,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"ارسال\" is not ideal for \"commit\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"ارسال\" better as \"کامیت\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -125977,8 +126039,8 @@
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Slightly stiff; 'Nag-uugnay' or 'Kumokonekta' would sound more natural and informal.",
-          "context": "",
+          "reason": "Slightly stiff; 'Nag-uugnay' would sound more natural and informal.",
+          "context": "\nWhere it appears: The call's status: its audio is connecting right now (a state, not the action \"log in\").\n",
           "by": "qwen"
         }
       }
