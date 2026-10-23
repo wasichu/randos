@@ -61,8 +61,7 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
         began = time.monotonic()
         todo = [s for s in sources if stale(locale, s)]
         texts = model.translate([s.msgid for s in todo], locale, [s.context for s in todo]) if todo else []
-        # NFC: one form for every letter, so the checks and the .po see the same text.
-        texts = [unicodedata.normalize("NFC", contestants.brand_case(t)) for t in texts]
+        texts = [contestants.tidy(s.msgid, t) for s, t in zip(todo, texts)]
         backs = model.back_translate(texts, locale) if todo else []
         print(f"{model_name}: {locale}: {len(texts)} strings in {time.monotonic() - began:.0f} s", file=sys.stderr, flush=True)
         for source, text, back in zip(todo, texts, backs):
@@ -275,9 +274,9 @@ def fill(results: Path, locale: str, redo: bool) -> dict[str, int]:
     return po.fill(locale, translations, data["run"]["model"], redo=redo)
 
 
-def brand_case(paths: list[Path]) -> dict[str, int]:
-    """Applies `models.brand_case` to the outputs of runs made before it
-    existed (`run` applies it to every new one)."""
+def tidy(paths: list[Path]) -> dict[str, int]:
+    """Applies `models.tidy` to the outputs of runs made before it (or one
+    of its rules) existed; `run` applies it to every new one."""
     counts = {}
     for path in paths:
         data = json.loads(path.read_text())
@@ -285,7 +284,7 @@ def brand_case(paths: list[Path]) -> dict[str, int]:
             continue
         changed = 0
         for entry in data["entries"]:
-            fixed = contestants.brand_case(entry["text"])
+            fixed = contestants.tidy(entry["msgid"], entry["text"])
             if fixed != entry["text"]:
                 entry["text"], changed = fixed, changed + 1
         if changed:
@@ -320,7 +319,7 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--scorer", required=True, choices=sorted(scoring.SCORERS))
     s.add_argument("results", type=Path, nargs="+")
     s.add_argument("--redo", action="store_true", help="also rescore entries that already have a score")
-    b = sub.add_parser("brand-case", help="lowercase randos/rando in runs made before run did it")
+    b = sub.add_parser("tidy", help="apply models.tidy (brand case, ellipsis, NFC) to runs made before it")
     b.add_argument("results", type=Path, nargs="+")
     sub.add_parser(
         "review", help="combine results/*.json into results/review.json (the review page's data) and shootout-summary.json"
@@ -331,8 +330,8 @@ def main(argv: list[str] | None = None) -> None:
         print(run(args.model, args.locales.split(","), args.limit, args.append))
     elif args.command == "score":
         print(score(args.scorer, [p for p in args.results if p.name != "review.json"], args.redo))
-    elif args.command == "brand-case":
-        print(brand_case(args.results))
+    elif args.command == "tidy":
+        print(tidy(args.results))
     elif args.command == "review":
         print(review.write(RESULTS))
         print(review.write_summary(RESULTS))

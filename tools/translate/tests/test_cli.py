@@ -86,16 +86,16 @@ def test_a_changed_comment_retranslates_only_for_a_model_that_takes_context(tmp_
     assert plain.asked == ["About", "Cancel"]
 
 
-def test_every_output_goes_through_brand_case(tmp_path, monkeypatch):
+def test_every_output_goes_through_tidy(tmp_path, monkeypatch):
     class Capitalizes(Upper):
         def translate(self, texts, target, contexts=None):
-            return ["Randos est un lieu" for _ in texts]
+            return ["Randos est un lieu..." for _ in texts]
 
     monkeypatch.setattr(cli, "RESULTS", tmp_path)
     monkeypatch.setattr(cli.contestants, "get", lambda name: Capitalizes())
-    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("randos is a place")])
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("randos is a place…")])
     out = cli.run("upper", ["es"], None)
-    assert json.loads(out.read_text())["entries"][0]["text"] == "randos est un lieu"
+    assert json.loads(out.read_text())["entries"][0]["text"] == "randos est un lieu…"
 
 
 class Stops:

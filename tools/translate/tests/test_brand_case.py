@@ -25,3 +25,12 @@ def test_the_glossary_check_is_case_sensitive():
     assert not ok and detail == "capitalized ['randos']"
     ok, detail = checks.glossary("Your rando", "Votre partenaire")
     assert not ok and detail == "missing ['rando']"
+
+
+def test_the_sources_ellipsis_stays_one_character():
+    from randos_translate.models import ellipsis, tidy
+
+    assert ellipsis("Looking for a rando…", "Buscando un rando...") == "Buscando un rando…"
+    # Only where the English has one: "..." elsewhere is the model's to keep.
+    assert ellipsis("Wait", "Espera...") == "Espera..."
+    assert tidy("Connecting…", "Randos se conecta...") == "randos se conecta…"

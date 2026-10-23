@@ -15,6 +15,7 @@ Every contestant's output then goes through `brand_case`.
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Protocol
 
 from ..checks import GLOSSARY, PLACEHOLDER
@@ -82,6 +83,19 @@ def brand_case(text: str) -> str:
     particle ("Randosは") attached: what `restore` guarantees the seq2seq
     models, for every contestant."""
     return _BRAND.sub(lambda m: m.group(0).lower(), text)
+
+
+def ellipsis(source: str, text: str) -> str:
+    """The source's "…" stays one character: models often write "...",
+    which the checks can't tell from a typo and the .po shouldn't mix."""
+    return text.replace("...", "…") if "…" in source else text
+
+
+def tidy(source: str, text: str) -> str:
+    """What every machine translation goes through before the checks:
+    `brand_case`, `ellipsis`, and NFC (one form for every letter, so the
+    checks and the .po see the same text)."""
+    return unicodedata.normalize("NFC", ellipsis(source, brand_case(text)))
 
 
 # The MLX instruction models: name -> (repo, prompt style). Sizes chosen to

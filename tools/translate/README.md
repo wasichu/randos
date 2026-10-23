@@ -68,9 +68,11 @@ page is built from):
 - a per-locale summary: how many pass every check, failures by check,
   mean chrF.
 
-Every contestant's output goes through `models.brand_case` first, which
-lowercases "randos"/"rando" wherever a model capitalized it ("Randos est…",
-"Randoslar"); `cli brand-case` applies it to runs made before it existed.
+Every contestant's output goes through `models.tidy` first:
+`brand_case` lowercases "randos"/"rando" wherever a model capitalized it
+("Randos est…", "Randoslar"), `ellipsis` turns "..." back into the
+source's "…", and NFC gives every letter one form. `cli tidy` applies it
+to runs made before it (or one of its rules) existed.
 
 `run` never touches the `.po` files. `run --append <its earlier run>`
 translates only what that run lacks: strings the template gained and, for
