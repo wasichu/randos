@@ -27,9 +27,17 @@ On the start screen, ←→ picks the language you'll speak; on the "I'm happy
 to hear" row, ←→ moves through the languages and space checks or unchecks
 one (pick as many as you like; your speaking language starts checked).
 
+The TUI speaks your language too: it starts in your system's
+(`LC_ALL`, `LC_MESSAGES`, `LANG`), else English, and `l` on the start
+screen moves to the next one. Its text is translated by machine, as the
+website's is (`tools/translate`, `--catalog tui`); the server's own
+messages (errors) come in the same language. The command line's own help
+(`--help`, `--check`) stays in English.
+
 Your choices are kept for next time in a small settings file on your own
-computer (nothing about it goes to the server): the languages, that you
-confirmed the 18+ notice, and the mic and speaker (`i`/`o`). It's
+computer (nothing about it goes to the server): the languages, the
+TUI's own language, that you confirmed the 18+ notice, and the mic and
+speaker (`i`/`o`). It's
 `tmp/tui-config.json` for `mix tui`, and in an installed copy
 `~/.config/randos/config.json` on Linux or
 `~/Library/Application Support/randos/config.json` on macOS (the idle

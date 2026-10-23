@@ -65,4 +65,10 @@ few places:
   card doesn't list the language); then a run with `run --append`
   (`tools/translate/README.md`).
 
-The TUI needs no change: it gets the list from the server when it joins.
+- the TUI's text: `clients/tui/priv/gettext/<code>/LC_MESSAGES/default.po`
+  (`cd clients/tui && mix gettext.merge priv/gettext --locale <code>`),
+  filled by the same shootout with `--catalog tui`. The TUI offers every
+  language it has a file for (`Tui.Language`).
+
+The TUI's conversation languages need no change: it gets the list from
+the server when it joins.
