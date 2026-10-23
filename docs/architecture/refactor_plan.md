@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `af3337a` (2026-10-22). Update this line, and
+Verified against the code at `8c0f513` (2026-10-23). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -687,6 +687,79 @@ split). Done before Phases 5 and 6 run in parallel, so the pass and Phase
 | `Randos.Signaling`'s candidate parsing vs the helper's own in Rust | **Left** | Different languages and jobs (filter vs gather); nothing to share |
 
 No behaviour changes.
+
+## Quality pass before the voice lab, second (done 2026-10-23)
+
+Over what landed since the last pass (`966f085`..: recovery and ICE
+restart, the status page and its stats, the voice seam, the translation
+tool, the extension vote, five languages). Four read-only reviews
+(server, clients, Rust and voice, the translation tool and user docs),
+each claim checked against the code before it reached the owner; the
+owner decided in two rounds of questions. Each commit ran its suite;
+the batch ran `just precommit`, `just smoke`, `just tui-smoke`, and
+`just turn-check` (the relay path moved).
+
+**Bugs fixed** (behaviour changes, approved):
+
+| What | Fix |
+| --- | --- |
+| The browser's call countdown froze after a dropped socket came back | the hook no longer stops it on `disconnected` (the deadline is the clock's); the call smoke checks it |
+| A TUI helper session that died mid-call left the call to fail at the budget, requeuing both | `audio_failed` (obligation 6, widened to "can't go on") |
+| A TUI matched again at once (status never left a call) kept the old helper session, so the new call died | the media state follows the server's call id; it was behind tui-smoke's connect-timeout flake (4 in 10) and likely its "Chrome heard silence" |
+| The TUI kept the mic open while the server was out of reach | obligation 11: `Lifecycle.offline_limit_seconds/0`, sent in the call; both clients stop at it |
+| The pick crashed when the judges vetoed each other's favourite | vetoes that would leave nothing stand down (the owner's rule) |
+| Mistral's tokenizer shipped a broken regex (a tenth of the judge's prompts) | fixed at load, part of the cache key; Mistral re-judged (46 strings changed) |
+| `--redo --judge X` wiped the other judge's verdicts | only X's are reset |
+| `just precommit` re-synced the shared venv under a running model | the model-free commands use `.venv-test` |
+| Gettext shows fuzzy entries, so a reworded string shipped a merge's guess | `fuzzy_threshold: 1.0` (English until the shootout fills it) |
+| "..." for "…", "٪{minutes}" for "%{minutes}" | `models.tidy`; 29 strings, and Arabic's `%{minutes} min` filled |
+| A translation could add a number ("%{minutes} + 1") and pass every check | the `numbers` check (localized digits and spelled-out English numbers count) |
+| The README said calls go direct when they can; `privacy.md` had a spliced bullet | fixed |
+| The repo URL in six places (a fork's "Suggest a fix" opened issues here) | `config :randos, :source_url` |
+| Digested favicons were 404 in production | `only_matching: ~w(favicon)`; the call smoke fetches every icon |
+| The status page typed "10 minutes" and "30+" (web and TUI) | the snapshot carries both numbers |
+| Relay failure reasons were English on every page | codes (`RelayHealth.Turn.reason/0`), put into words by `RandosWeb.RelayReasons` and the TUI |
+
+**Merged / extracted** (no behaviour change): `bind_socket`/`host_candidate`
+in the helper's `call.rs`; `recover/2` and `activate/1` in
+`CallCoordinator`; `ParticipantShell.resume/1` returns the ICE servers;
+`Stats.endings/0`; `Tui.Model.call_statuses/0`; `enqueue` in
+`webrtc_client.js`; `cdp.mjs`'s `eventually`, `launchBehind`,
+`watchAppears` and `audioFlows`; `tests/common::Call` (the helper's Port
+tests); `Randos.Eventually` (server tests); `Tui.TestSupport`'s
+`start_app` and `await_browser`; in the translation tool, `judging.py`
+(the judges' rounds, out of `cli.py`) and `runs.py` (the results write,
+now atomic for `run --append` too), one locale list (`models.NAMES`,
+checked against `priv/gettext` by a test), the score names from
+`scoring.JUDGE_SCORES`, judge parameters required rather than defaulting
+to Mistral, and the superseded first runs in `results/archive/`. Ruff
+checks the Python.
+
+**Test waits** (the "timing fix more than once" trigger, twice): the
+helper's in-crate call tests wait for the call to connect, not a fixed
+3.5 s; `Tui.TestSupport`'s waits have deadlines (a per-message timeout
+never fired in a call). New coverage: obligation 9 with audio in the
+TUI, the pick rule's untested branches, `fill_best` and `tidy`.
+
+**Docs**: AGENTS.md (the Calls row, the timing constants, what smoke,
+tui-smoke and precommit run, the translations page), the helper README,
+`ice_restart.md`, `tui_audio.md`, `call_flow.md`, `participant_channel.md`
+(obligation 11, `peer_reconnecting`, the ticket exception, the tests
+table), the translation README, moduledocs that had gone stale.
+
+**Left** (with reasons): the two TURN pump loops (test_support's
+in-process counters vs the cuttable `test_turn`); a restart's blocking
+DNS and loopback fallback (the server's 5 s retry covers it inside the
+budget); the TUI ignoring `stream_error` (the README says it may
+recover); the shells' twin `handle_info`s and the
+`{:shutdown, :connection_failed}` contract (link, don't extract); the
+TUI status screen's 30 s poll; the coordinator's health predicates
+staying in it (move them if the recovery tests need another timing
+fix); `cli tidy` keeping pre-tidy scores (typographic changes only);
+both offerer guards for ICE restart (each has its own job). The voice
+processor isn't in the protocol yet: Phase 5's decision.
+
+Not inventoried: `.github/workflows/ci.yml`, `config/`, `infra/`.
 
 ## Open items
 
