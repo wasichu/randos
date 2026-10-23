@@ -183,3 +183,15 @@ def test_either_judge_can_veto_and_their_mean_breaks_ties():
     tied["b"]["scores"]["judge_qwen"] = {"score": 9}
     # Means 7 and 7.5: b.
     assert review.pick(tied)["model"] == "b"
+
+
+def test_judges_vetoing_each_others_favourite_veto_nothing():
+    # Mistral likes a and rates b 3; Qwen the reverse: both vetoed, so neither is.
+    entries = {
+        "a": entry("A", metricx=1.0, comet=0.9, judge=8),
+        "b": entry("B", metricx=2.0, comet=0.8, judge=3),
+    }
+    entries["a"]["scores"]["judge_qwen"] = {"score": 3}
+    entries["b"]["scores"]["judge_qwen"] = {"score": 8}
+    picked = review.pick(entries)
+    assert picked["model"] == "a" and "veto" not in picked["why"]

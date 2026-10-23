@@ -130,6 +130,9 @@ def pick(entries: dict[str, dict]) -> dict | None:
     if not passing:
         return None
     vetoed = _vetoed(passing)
+    # Each judge vetoing the other's favourite can leave nothing: they all
+    # passed every check and the judges simply disagree, so no veto stands.
+    vetoed = vetoed if len(vetoed) < len(passing) else set()
     passing = {m: e for m, e in passing.items() if m not in vetoed}
     if len(passing) == 1 and vetoed:
         model = next(iter(passing))
