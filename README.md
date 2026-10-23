@@ -105,10 +105,9 @@ desktop distributions have).
 
 - **No accounts and no history.** There is no database: the waiting room and
   the calls exist only in the server's memory and vanish when they end.
-- **The server never hears you.** Audio goes directly between the two of
-  you, encrypted (WebRTC). When a direct connection isn't possible, it goes
-  through a relay that passes the encrypted audio along without being able
-  to decrypt it.
+- **The server never hears you.** Audio is encrypted between the two of
+  you (WebRTC) and passes through our relay, which forwards it without
+  being able to decrypt it.
 - **No recording, no ads, no tracking.** The site loads nothing from other
   companies: no analytics, no fonts, no CDNs.
 - **Your IP address stays between you and our servers.** Like any

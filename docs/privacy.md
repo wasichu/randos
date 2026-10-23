@@ -48,10 +48,6 @@ something can't be checked from the outside, this says so.
   addresses, no ids, nothing per person, no cookies. Published only above
   small counts: a language pair shows once it has 3 calls (smaller ones are
   summed under "other"), and the typical length once 3 calls connected.
-- **The translations page** (`/translations`): read-only; it stores and
-  sends nothing. "Suggest a fix" is a plain link to GitHub, so nothing
-  reaches GitHub until you follow it, and what you submit there is a
-  public issue under your GitHub account.
   The relay check sets up and releases a test allocation with fresh
   credentials; it involves no one's call. Each day's counts are kept in a
   small JSON file on the server's disk (a Fly volume), so they survive
@@ -60,6 +56,10 @@ something can't be checked from the outside, this says so.
   files are kept, as a history of totals; they hold nothing about anyone.
   The terminal client shows the same data, fetched over its channel
   (`status`); asking sends nothing about the asker.
+- **The translations page** (`/translations`): read-only; it stores and
+  sends nothing. "Suggest a fix" is a plain link to GitHub, so nothing
+  reaches GitHub until you follow it, and what you submit there is a
+  public issue under your GitHub account.
 - **Resume tickets.** During a call, each person's client holds a
   one-time resume ticket, 128 random bits that name only their seat in
   that call, so a dropped connection can rejoin without ending the call.
