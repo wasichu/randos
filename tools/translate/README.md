@@ -20,7 +20,14 @@ uv run --group models python -m randos_translate.cli score --scorer metricx resu
 export UV_PROJECT_ENVIRONMENT=.venv-test                          # no model needed from here on
 uv run python -m randos_translate.cli review                     # picks each string's translation
 uv run python -m randos_translate.cli fill --best --locale all --redo
+uv run python -m randos_translate.cli --catalog tui review        # the same for the terminal client's strings
 ```
+
+Two catalogs: the website's strings (`--catalog site`, the default:
+`priv/gettext`, `results/`, `state/`) and the terminal client's
+(`--catalog tui`: `clients/tui/priv/gettext`, `results/tui/`,
+`state/tui/`). Every command takes it; the checks, contestants, judges and
+pick are the same, and the judge's verdict cache is shared.
 
 `uv run --group X` re-syncs the one shared `.venv` to that group, removing
 the others' packages: never run it while a model of another group is

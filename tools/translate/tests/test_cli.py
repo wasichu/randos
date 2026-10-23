@@ -161,3 +161,19 @@ def test_tidy_rewrites_old_runs_and_counts_what_changed(tmp_path):
     run.write_text(json.dumps({"entries": entries}))
     assert cli.tidy([run]) == {"old.json": 1}
     assert [e["text"] for e in json.loads(run.read_text())["entries"]] == ["Buscando…", "Acerca de"]
+
+
+def test_a_catalog_moves_sources_fill_state_and_runs_together(tmp_path, monkeypatch):
+    monkeypatch.setattr(cli, "RESULTS_ROOT", tmp_path)
+    cache = cli.JUDGE_CACHE
+    try:
+        cli.use_catalog("tui")
+        assert po.GETTEXT == po.REPO / "clients" / "tui" / "priv" / "gettext"
+        assert po.po_path("es") == po.GETTEXT / "es" / "LC_MESSAGES" / "default.po"
+        assert po.STATE == po.STATES / "tui"
+        assert cli.RESULTS == tmp_path / "tui"
+        # The judge's verdicts stay one cache.
+        assert cli.JUDGE_CACHE == cache
+    finally:
+        cli.use_catalog("site")
+    assert po.GETTEXT == po.CATALOGS["site"] and po.STATE == po.STATES and cli.RESULTS == tmp_path

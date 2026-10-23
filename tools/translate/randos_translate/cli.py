@@ -26,8 +26,11 @@ from . import checks, judging, po, review, scoring
 from . import models as contestants
 from .runs import note_scored, stamp, write_atomically
 
-RESULTS = Path(__file__).resolve().parents[1] / "results"
-JUDGE_CACHE = RESULTS / "judge-cache.json"
+RESULTS_ROOT = Path(__file__).resolve().parents[1] / "results"
+# One catalog's runs and review (`--catalog`: the site's here, others in a
+# folder of their own); the judge's verdicts are shared (keyed by all it saw).
+RESULTS = RESULTS_ROOT
+JUDGE_CACHE = RESULTS_ROOT / "judge-cache.json"
 
 
 def run(model_name: str, locales: list[str], limit: int | None, append: Path | None = None) -> Path:
@@ -173,10 +176,18 @@ def tidy(paths: list[Path]) -> dict[str, int]:
     return counts
 
 
-def fill_best(locale: str, redo: bool, results: Path = RESULTS) -> dict[str, int]:
+def use_catalog(catalog: str) -> None:
+    """Every command works on one catalog's strings (`po.CATALOGS`)."""
+    global RESULTS
+    po.use(catalog)
+    RESULTS = RESULTS_ROOT if catalog == "site" else RESULTS_ROOT / catalog
+    RESULTS.mkdir(parents=True, exist_ok=True)
+
+
+def fill_best(locale: str, redo: bool, results: Path | None = None) -> dict[str, int]:
     """Fills the locale string by string with each string's pick (review.json's
     "best", `review.pick`), recording which model wrote each one."""
-    data = json.loads((results / "review.json").read_text())
+    data = json.loads(((results or RESULTS) / "review.json").read_text())
     rows = [r for r in data["locales"][locale]["strings"] if r["best"]]
     translations = {r["key"]: r["translations"][r["best"]]["text"] for r in rows}
     return po.fill(locale, translations, {r["key"]: r["best"] for r in rows}, redo=redo)
@@ -184,6 +195,9 @@ def fill_best(locale: str, redo: bool, results: Path = RESULTS) -> dict[str, int
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="randos_translate")
+    parser.add_argument(
+        "--catalog", choices=sorted(po.CATALOGS), default="site", help="which strings: the website's or the TUI's"
+    )
     sub = parser.add_subparsers(dest="command", required=True)
     r = sub.add_parser("run")
     r.add_argument("--model", required=True)
@@ -208,6 +222,7 @@ def main(argv: list[str] | None = None) -> None:
         "review", help="combine results/*.json into results/review.json (the review page's data) and shootout-summary.json"
     )
     args = parser.parse_args(argv)
+    use_catalog(args.catalog)
 
     if args.command == "run":
         print(run(args.model, args.locales.split(","), args.limit, args.append))

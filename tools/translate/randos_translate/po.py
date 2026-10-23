@@ -18,8 +18,20 @@ import polib
 from .models import NAMES
 
 REPO = Path(__file__).resolve().parents[3]
-GETTEXT = REPO / "priv" / "gettext"
-STATE = Path(__file__).resolve().parents[1] / "state"
+# The catalogs the shootout fills: the website's strings and the terminal
+# client's, each with its template, .po files and fill state.
+CATALOGS = {"site": REPO / "priv" / "gettext", "tui": REPO / "clients" / "tui" / "priv" / "gettext"}
+STATES = Path(__file__).resolve().parents[1] / "state"
+GETTEXT = CATALOGS["site"]
+STATE = STATES
+
+
+def use(catalog: str) -> None:
+    """Points sources, fill and the state at `catalog` (`CATALOGS`; the site
+    by default): the CLI's `--catalog`."""
+    global GETTEXT, STATE
+    GETTEXT = CATALOGS[catalog]
+    STATE = STATES if catalog == "site" else STATES / catalog
 
 # The interface languages besides English: one list, `models.NAMES`
 # (tests/test_po.py checks it against priv/gettext and checks' scripts).
@@ -50,7 +62,8 @@ class Source:
         return f"A {self.msgctxt} label." if self.msgctxt else ""
 
 
-def sources(pot: Path = GETTEXT / "default.pot") -> list[Source]:
+def sources(pot: Path | None = None) -> list[Source]:
+    pot = pot or GETTEXT / "default.pot"
     return [
         Source(
             msgid=e.msgid,
@@ -65,8 +78,8 @@ def sources(pot: Path = GETTEXT / "default.pot") -> list[Source]:
     ]
 
 
-def po_path(locale: str, root: Path = GETTEXT) -> Path:
-    return root / locale / "LC_MESSAGES" / "default.po"
+def po_path(locale: str, root: Path | None = None) -> Path:
+    return (root or GETTEXT) / locale / "LC_MESSAGES" / "default.po"
 
 
 def _save(po: polib.POFile, path: Path) -> None:
@@ -94,11 +107,12 @@ def _leading_comments(text: str) -> list[str]:
 
 
 def _state_path(locale: str, state_dir: Path) -> Path:
+    state_dir.mkdir(parents=True, exist_ok=True)
     return state_dir / f"{locale}.json"
 
 
-def load_state(locale: str, state_dir: Path = STATE) -> dict:
-    path = _state_path(locale, state_dir)
+def load_state(locale: str, state_dir: Path | None = None) -> dict:
+    path = _state_path(locale, state_dir or STATE)
     return json.loads(path.read_text()) if path.exists() else {}
 
 
@@ -108,8 +122,8 @@ def fill(
     model: str | dict[str, str],
     *,
     redo: bool = False,
-    root: Path = GETTEXT,
-    state_dir: Path = STATE,
+    root: Path | None = None,
+    state_dir: Path | None = None,
 ) -> dict[str, int]:
     """Write `translations` (Source.key -> text) into the locale's .po.
 
@@ -159,5 +173,5 @@ def fill(
 
     _save(po, path)
     state_dir.mkdir(parents=True, exist_ok=True)
-    _state_path(locale, state_dir).write_text(json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+    _state_path(locale, state_dir or STATE).write_text(json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     return counts
