@@ -144,10 +144,10 @@ defmodule Tui.AppTest do
 
     test "right to left: a note where the terminal may not show it, and panels kept apart" do
       arabic = %{model("idle") | language: "ar"}
-      assert render_text(arabic, %{bidi: :no}) =~ "doesn't show right-to-left text right"
       assert render_text(arabic, %{bidi: :unknown}) =~ "needs a terminal that shows it"
       refute render_text(arabic, %{bidi: :yes}) =~ "right-to-left"
-      refute render_text(model("idle"), %{bidi: :no}) =~ "right-to-left"
+      refute render_text(arabic, %{bidi: :no}) =~ "right-to-left"
+      refute render_text(model("idle"), %{bidi: :unknown}) =~ "right-to-left"
 
       # Devices stack inside You, never side by side, in a right-to-left interface.
       {media, _} =

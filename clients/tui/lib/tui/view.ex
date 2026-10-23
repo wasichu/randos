@@ -12,6 +12,7 @@ defmodule Tui.View do
   alias ExRatatui.Layout.Rect
   alias ExRatatui.Style
   alias ExRatatui.Widgets.{Block, List, Paragraph, Popup}
+  alias Tui.Bidi
   alias Tui.Model
   alias Tui.View.StatusScreen
   alias Tui.Width
@@ -58,15 +59,66 @@ defmodule Tui.View do
         {:length, help_rows}
       ])
 
-    [
-      {header(state), header_area}
-      | main_with_meters(state, main_area)
-    ] ++
-      bottom_panels(state, status_area, side_by_side?) ++
-      [
-        {%Paragraph{text: Enum.join(help_lines, "\n"), style: %Style{fg: :dark_gray}}, help_area}
-      ]
+    ([{header(state), header_area} | main_with_meters(state, main_area)] ++
+       bottom_panels(state, status_area, side_by_side?) ++
+       [
+         {%Paragraph{text: Enum.join(help_lines, "\n"), style: %Style{fg: :dark_gray}}, help_area}
+       ])
+    |> in_display_order(state)
   end
+
+  # Right-to-left text for a terminal that won't reorder it (`Tui.Bidi`):
+  # every widget's text, wrapped here to its width (each screen line is
+  # reordered on its own), then reordered. Any other terminal or language
+  # gets the text as it is.
+  defp in_display_order(widgets, %{model: %{language: language}} = state) do
+    if Tui.Terminal.rtl?(language) and Map.get(state, :bidi) == :no,
+      do: Enum.map(widgets, &reorder/1),
+      else: widgets
+  end
+
+  defp reorder({%Paragraph{} = paragraph, area}),
+    do: {reorder(paragraph, inner(area.width, paragraph.block)), area}
+
+  defp reorder({%List{} = list, area}),
+    do:
+      {%{list | items: Enum.map(list.items, &Bidi.visual/1), block: reorder_title(list.block)},
+       area}
+
+  defp reorder({%Popup{content: content} = popup, area}) do
+    width = div(area.width * popup.percent_width, 100)
+
+    {%{
+       popup
+       | content: reorder(content, inner(width, popup.block)),
+         block: reorder_title(popup.block)
+     }, area}
+  end
+
+  defp reorder(widget), do: widget
+
+  defp reorder(%Paragraph{} = paragraph, width) do
+    lines =
+      if paragraph.wrap,
+        do: Bidi.wrap(paragraph.text, width),
+        else: String.split(paragraph.text, "\n")
+
+    %{
+      paragraph
+      | text: Enum.map_join(lines, "\n", &Bidi.visual/1),
+        wrap: false,
+        block: reorder_title(paragraph.block)
+    }
+  end
+
+  defp reorder_title(%Block{title: title} = block) when is_binary(title),
+    do: %{block | title: Bidi.visual(title)}
+
+  defp reorder_title(block), do: block
+
+  # A widget's text width inside its borders.
+  defp inner(width, %Block{borders: [_ | _]}), do: max(width - 2, 1)
+  defp inner(width, _no_borders), do: max(width, 1)
 
   defp bottom_panels(state, area, true) do
     [status_area, devices_area] =
@@ -527,14 +579,11 @@ defmodule Tui.View do
 
   defp extra_text(_state), do: ""
 
-  # Right-to-left text in a terminal that may not show it right: said in
-  # English on purpose (in such a terminal the translation reads reversed).
+  # Right-to-left text in a terminal we can't identify (we reorder for one
+  # that doesn't, `in_display_order/2`): said in English on purpose, as in
+  # the wrong kind the translation reads reversed.
   defp rtl_note(%{model: %{language: language}} = state) do
     case {Tui.Terminal.rtl?(language), Map.get(state, :bidi, :yes)} do
-      {true, :no} ->
-        "\n\nThis terminal doesn't show right-to-left text right (it may read reversed). " <>
-          @rtl_terminals
-
       {true, :unknown} ->
         "\n\nRight-to-left text needs a terminal that shows it: " <> @rtl_terminals
 
