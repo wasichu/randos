@@ -24,11 +24,9 @@ export const CallCountdown = {
     this.tick()
   },
 
+  // No disconnected(): the deadline is the clock's, and a call goes on
+  // through a dropped socket (it resumes), so the countdown keeps going.
   destroyed() {
-    this.cleanup()
-  },
-
-  disconnected() {
     this.cleanup()
   },
 

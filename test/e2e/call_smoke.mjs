@@ -221,6 +221,16 @@ try {
       await dropper.waitFor(`!!document.querySelector("[data-phx-main].phx-connected")`, "the dropper reconnected")
       await dropper.waitFor(`!!document.querySelector("#call-panel, #extension-panel")`, "the dropper back in the call")
       assert((await dropper.eval(callElement)) === before, "the dropper's call element changed (a new call?)")
+      // Its countdown kept running through the drop (it once froze there,
+      // after one tick from the rejoin's render: hence the wait first).
+      await sleep(2_500)
+      await dropper.waitFor(`(() => {
+        const el = document.querySelector("#call-countdown")
+        const shown = el?.querySelector("[data-countdown-value]")?.textContent.match(/(\\d+):(\\d\\d)/)
+        if (!shown) return false
+        const left = Math.ceil((Number(el.dataset.deadlineUnixMs) - Date.now()) / 1000)
+        return Math.abs(Number(shown[1]) * 60 + Number(shown[2]) - left) <= 1
+      })()`, "the dropper's countdown current after the drop", 5_000)
       assert((await dropper.eval(`window.__randosPeers.length`)) === peersBefore, "a new peer connection was made")
       const heardAfter = (await inboundAudio(dropper))?.packetsReceived ?? 0
       await sleep(500)
