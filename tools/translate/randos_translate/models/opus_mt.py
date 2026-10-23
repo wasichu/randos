@@ -64,16 +64,25 @@ class OpusMT:
             self._loaded[repo] = (tokenizer, model)
         return self._loaded[repo]
 
-    def _run(self, repo: str, texts: list[str], prefix: str = "", batch: int = 16) -> list[str]:
+    # Batches of 4: with 16, the 4 beams of a batch of long strings still
+    # reached 36 GB of GPU memory within the budget below.
+    def _run(self, repo: str, texts: list[str], prefix: str = "", batch: int = 4) -> list[str]:
         tokenizer, model = self._load(repo)
         out: list[str] = []
         for i in range(0, len(texts), batch):
             protected = [protect(t) for t in texts[i : i + batch]]
             inputs = tokenizer([prefix + p for p, _ in protected], return_tensors="pt", padding=True).to(self._device)
+            # An output budget scaled to the input, as for MADLAD: en->vi
+            # repeats itself to any limit, and 4 beams of 16 strings run to
+            # 256 tokens took 45 GB of GPU memory in its first batch.
+            budget = min(256, 3 * inputs["input_ids"].shape[1] + 16)
             with self._torch.no_grad():
-                generated = model.generate(**inputs, num_beams=4, max_new_tokens=256)
+                generated = model.generate(**inputs, num_beams=4, max_new_tokens=budget)
             decoded = tokenizer.batch_decode(generated, skip_special_tokens=True)
             out += [restore(d, kept) for d, (_, kept) in zip(decoded, protected)]
+            if self._device == "mps":
+                del inputs, generated
+                self._torch.mps.empty_cache()
         return out
 
     def translate(self, texts: list[str], target: str, contexts: list[str] | None = None) -> list[str]:
