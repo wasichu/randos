@@ -1,6 +1,8 @@
 defmodule Randos.Calls.CallCoordinatorTest do
   use ExUnit.Case
 
+  import Randos.Eventually
+
   alias Randos.Calls.CallCoordinator
   alias Randos.Matchmaking.{Entry, Match}
 
@@ -531,10 +533,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
       # Refused at once (the call is gone)...
       assert {:error, _} = CallCoordinator.resume(call_pid, "a", ticket, self())
       # ...and the registry forgets it as soon as it notices the call ended.
-      assert Enum.any?(1..50, fn _ ->
-               Process.sleep(10)
-               ResumeTicket.lookup(ticket) == :error
-             end)
+      assert eventually(fn -> ResumeTicket.lookup(ticket) == :error end)
 
       Enum.each(pids, &send(&1, :stop))
     end

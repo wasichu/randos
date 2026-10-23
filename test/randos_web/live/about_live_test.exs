@@ -8,10 +8,10 @@ defmodule RandosWeb.AboutLiveTest do
   test "renders a minimal public about page", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/about")
 
-    assert has_element?(view, "h1", "About randos")
+    assert has_element?(view, "h1#about-title")
     assert has_element?(view, "img[src='/images/logo.svg']")
-    assert has_element?(view, "a[href='/about']", "About")
-    assert has_element?(view, "a[href='https://github.com/wasichu/randos']", "View on GitHub")
+    assert has_element?(view, "#header-about-link[href='/about']")
+    assert has_element?(view, "#about-source-link[href='#{RandosWeb.source_url()}']")
     assert has_element?(view, "#theme-toggle[data-theme-toggle]")
   end
 
@@ -27,6 +27,6 @@ defmodule RandosWeb.AboutLiveTest do
   test "links to the about page from the app header", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/")
 
-    assert has_element?(view, "a[href='/about']", "About")
+    assert has_element?(view, "#header-about-link[href='/about']")
   end
 end

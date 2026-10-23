@@ -27,7 +27,7 @@ defmodule RandosWeb.AboutLive do
           <header class="space-y-5">
             <div class="flex items-center gap-3">
               <img src={~p"/images/logo.svg"} alt="" class="size-11" />
-              <h1 class="text-4xl font-semibold tracking-normal text-stone-950">
+              <h1 id="about-title" class="text-4xl font-semibold tracking-normal text-stone-950">
                 <% gettext_comment(
                   "Title of the page that explains what randos is (\"about us\"), not \"approximately\"."
                 ) %>
@@ -139,6 +139,7 @@ defmodule RandosWeb.AboutLive do
                 {gettext("randos is free software (AGPL-3.0) and built in public.")}
               </p>
               <a
+                id="about-source-link"
                 href={RandosWeb.source_url()}
                 target="_blank"
                 rel="noopener noreferrer"

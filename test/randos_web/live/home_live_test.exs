@@ -1,6 +1,8 @@
 defmodule RandosWeb.HomeLiveTest do
   use RandosWeb.ConnCase
 
+  import Randos.Eventually
+
   import Phoenix.LiveViewTest
 
   alias Randos.Calls.CallCoordinator
@@ -345,17 +347,8 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#extension-countdown")
   end
 
-  defp eventually_gone?(view, selector, attempts \\ 500)
-  defp eventually_gone?(_view, _selector, 0), do: false
-
-  defp eventually_gone?(view, selector, attempts) do
-    if has_element?(view, selector) do
-      Process.sleep(10)
-      eventually_gone?(view, selector, attempts - 1)
-    else
-      true
-    end
-  end
+  defp eventually_gone?(view, selector),
+    do: eventually(fn -> not has_element?(view, selector) end)
 
   defp connect_media(view),
     do:
@@ -378,18 +371,8 @@ defmodule RandosWeb.HomeLiveTest do
 
   # Up to 5 s (500 × 10 ms), like assert_receive's default here: a busy CI
   # runner can be slow; only a failing wait takes that long.
-  defp eventually_has_element?(view, selector, attempts \\ 500)
-
-  defp eventually_has_element?(_view, _selector, 0), do: false
-
-  defp eventually_has_element?(view, selector, attempts) do
-    if has_element?(view, selector) do
-      true
-    else
-      Process.sleep(10)
-      eventually_has_element?(view, selector, attempts - 1)
-    end
-  end
+  defp eventually_has_element?(view, selector),
+    do: eventually(fn -> has_element?(view, selector) end)
 
   # This view's call (the page renders its id): not just any call under the
   # app-wide supervisor, which other tests running meanwhile may have too.
@@ -404,25 +387,18 @@ defmodule RandosWeb.HomeLiveTest do
     String.replace_prefix(id, "call-media-", "")
   end
 
-  defp eventually_call_pid(call_id, attempts \\ 500)
+  defp eventually_call_pid(call_id) do
+    pid =
+      eventually(fn ->
+        Randos.Calls.CallSupervisor
+        |> DynamicSupervisor.which_children()
+        |> Enum.find_value(fn
+          {_, pid, _, _} when is_pid(pid) -> if coordinator_call_id(pid) == call_id, do: pid
+          _child -> nil
+        end)
+      end)
 
-  defp eventually_call_pid(_call_id, 0), do: :error
-
-  defp eventually_call_pid(call_id, attempts) do
-    Randos.Calls.CallSupervisor
-    |> DynamicSupervisor.which_children()
-    |> Enum.find_value(fn
-      {_, pid, _, _} when is_pid(pid) -> if coordinator_call_id(pid) == call_id, do: pid
-      _child -> nil
-    end)
-    |> case do
-      nil ->
-        Process.sleep(10)
-        eventually_call_pid(call_id, attempts - 1)
-
-      pid ->
-        {:ok, pid}
-    end
+    if pid, do: {:ok, pid}, else: :error
   end
 
   defp coordinator_call_id(pid) do

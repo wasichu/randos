@@ -16,6 +16,8 @@ defmodule RandosWeb.ParticipantChannelTest do
       has_element?: 2
     ]
 
+  import Randos.Eventually
+
   alias Randos.Calls.CallCoordinator
   alias Randos.Matchmaking.Matchmaker
   alias RandosWeb.ParticipantSocket
@@ -115,8 +117,10 @@ defmodule RandosWeb.ParticipantChannelTest do
     Process.unlink(socket.channel_pid)
     ref = leave(socket)
     assert_reply ref, :ok
-    Process.sleep(50)
-    refute Map.has_key?(Matchmaker.snapshot().queues, {"tr", ["id"], false})
+
+    assert eventually(fn ->
+             not Map.has_key?(Matchmaker.snapshot().queues, {"tr", ["id"], false})
+           end)
   end
 
   test "end_call takes an optional reason from the documented list" do
