@@ -29,7 +29,7 @@ defmodule RandosWeb.AboutLive do
               <img src={~p"/images/logo.svg"} alt="" class="size-11" />
               <h1 class="text-4xl font-semibold tracking-normal text-stone-950">
                 <% gettext_comment(
-                  "Title of the page that explains what randos is (\"about us\"), not \"approximately\"."
+                  "Title of the page that explains what randos is (\"about us\"), not \"approximately\". randos is the site's name: keep it as it is, in Latin letters, lowercase."
                 ) %>
                 {gettext("About randos")}
               </h1>

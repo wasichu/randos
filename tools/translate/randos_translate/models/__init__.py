@@ -91,11 +91,26 @@ def ellipsis(source: str, text: str) -> str:
     return text.replace("...", "…") if "…" in source else text
 
 
+# Percent signs a model may write in a placeholder: Arabic's and the
+# full-width one (Chinese, Japanese).
+_PERCENTS = ("\u066a", "\uff05")
+
+
+def placeholders(source: str, text: str) -> str:
+    """The source's placeholders with a look-alike percent sign
+    ("٪{minutes}") written back as they are: the name is right, only the
+    typography slipped."""
+    for name in set(PLACEHOLDER.findall(source)):
+        for percent in _PERCENTS:
+            text = text.replace(percent + name[1:], name)
+    return text
+
+
 def tidy(source: str, text: str) -> str:
     """What every machine translation goes through before the checks:
-    `brand_case`, `ellipsis`, and NFC (one form for every letter, so the
-    checks and the .po see the same text)."""
-    return unicodedata.normalize("NFC", ellipsis(source, brand_case(text)))
+    `brand_case`, `ellipsis`, `placeholders`, and NFC (one form for every
+    letter, so the checks and the .po see the same text)."""
+    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(text))))
 
 
 # The MLX instruction models: name -> (repo, prompt style). Sizes chosen to

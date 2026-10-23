@@ -319,7 +319,7 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--scorer", required=True, choices=sorted(scoring.SCORERS))
     s.add_argument("results", type=Path, nargs="+")
     s.add_argument("--redo", action="store_true", help="also rescore entries that already have a score")
-    b = sub.add_parser("tidy", help="apply models.tidy (brand case, ellipsis, NFC) to runs made before it")
+    b = sub.add_parser("tidy", help="apply models.tidy (brand case, ellipsis, placeholders, NFC) to runs made before it")
     b.add_argument("results", type=Path, nargs="+")
     sub.add_parser(
         "review", help="combine results/*.json into results/review.json (the review page's data) and shootout-summary.json"

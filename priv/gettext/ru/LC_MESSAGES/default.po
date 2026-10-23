@@ -28,7 +28,7 @@ msgstr "Дверь, а не платформа"
 msgid "About"
 msgstr "О нас"
 
-#. Title of the page that explains what randos is ("about us"), not "approximately".
+#. Title of the page that explains what randos is ("about us"), not "approximately". randos is the site's name: keep it as it is, in Latin letters, lowercase.
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
@@ -64,6 +64,7 @@ msgstr "Выберите поддерживаемые языки разгово�
 msgid "Choose your languages."
 msgstr "Выберите свой язык."
 
+#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
@@ -262,6 +263,7 @@ msgstr "Вы выбираете язык, на котором хотите го�
 msgid "You have matched. Audio starts when the call opens."
 msgstr "Вы успешно соединены. Звук начнётся после установления соединения."
 
+#. Label of the other person's audio level in a call. "rando" is our word for the person you talk to: keep it as it is, in Latin letters.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando"
@@ -463,6 +465,7 @@ msgstr "В ожидании вашего rando"
 msgid "I'm happy to hear"
 msgstr "Я рад услышать"
 
+#. Shown while searching. "rando" is our word for the person you'll talk to: keep it as it is, in Latin letters.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."

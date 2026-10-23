@@ -294,6 +294,9 @@ defmodule RandosWeb.HomeComponents do
           {gettext("Finding a rando")}
         </h2>
         <p id="looking-status" class="mt-3 leading-7 text-stone-600">
+          <% gettext_comment(
+            "Shown while searching. \"rando\" is our word for the person you'll talk to: keep it as it is, in Latin letters."
+          ) %>
           {gettext(
             "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.",
             hearing_languages: hearing_summary(@preferences["hearing_languages"], @language_name),
@@ -331,6 +334,9 @@ defmodule RandosWeb.HomeComponents do
     >
       <div>
         <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+          <% gettext_comment(
+            "The call's status: its audio is connecting right now (a state, not the action \"log in\")."
+          ) %>
           {gettext("Connecting")}
         </p>
         <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
@@ -413,6 +419,9 @@ defmodule RandosWeb.HomeComponents do
           label={gettext("You")}
           language={@language_name.(@preferences["speaking_language"])}
         />
+        <% gettext_comment(
+          "Label of the other person's audio level in a call. \"rando\" is our word for the person you talk to: keep it as it is, in Latin letters."
+        ) %>
         <.waveform
           id="remote-waveform"
           label={gettext("Your rando")}

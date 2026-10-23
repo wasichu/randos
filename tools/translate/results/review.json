@@ -1,5 +1,5 @@
 {
-  "generated_at": "20261023T103544Z",
+  "generated_at": "20261023T103941Z",
   "runs": [
     {
       "model": "opus-mt",
@@ -2510,178 +2510,6 @@
           }
         },
         {
-          "key": "%{minutes} min",
-          "msgid": "%{minutes} min",
-          "msgctxt": null,
-          "disagreement": 0.789,
-          "conflict": null,
-          "best": null,
-          "best_why": null,
-          "translations": {
-            "hy-mt2": {
-              "text": "٪{minutes} دقيقة",
-              "back_translation": "%{minutes} minute",
-              "failed": [
-                {
-                  "check": "placeholders",
-                  "detail": "expected ['%{minutes}'], got []"
-                }
-              ],
-              "scores": {
-                "chrf": 94.5,
-                "metricx": 2.34,
-                "comet_kiwi": 0.633,
-                "judge": 10,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 1.0,
-                "metricx": 6.0,
-                "comet_kiwi": 5.0,
-                "judge": 1.5
-              }
-            },
-            "m2m100": {
-              "text": "[ 0 ] دقيقة",
-              "back_translation": "[ 0 ] a minute",
-              "failed": [
-                {
-                  "check": "placeholders",
-                  "detail": "expected ['%{minutes}'], got []"
-                }
-              ],
-              "scores": {
-                "chrf": 33.3,
-                "metricx": 1.26,
-                "comet_kiwi": 0.6505,
-                "judge": 7,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 6.0,
-                "metricx": 3.0,
-                "comet_kiwi": 4.0,
-                "judge": 4.5
-              }
-            },
-            "madlad-400": {
-              "text": "[صفر] دقيقة",
-              "back_translation": "[0] minutes",
-              "failed": [
-                {
-                  "check": "placeholders",
-                  "detail": "expected ['%{minutes}'], got []"
-                }
-              ],
-              "scores": {
-                "chrf": 43.8,
-                "metricx": 2.3,
-                "comet_kiwi": 0.6092,
-                "judge": 7,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 4.0,
-                "metricx": 5.0,
-                "comet_kiwi": 6.0,
-                "judge": 4.5
-              }
-            },
-            "opus-mt": {
-              "text": "[الوضع في الميـكن",
-              "back_translation": "[Status in place",
-              "failed": [
-                {
-                  "check": "placeholders",
-                  "detail": "expected ['%{minutes}'], got []"
-                }
-              ],
-              "scores": {
-                "chrf": 8.9,
-                "metricx": 6.12,
-                "comet_kiwi": 0.3528,
-                "judge": 1,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 7.0,
-                "metricx": 7.0,
-                "comet_kiwi": 7.0,
-                "judge": 7.0
-              }
-            },
-            "translategemma-12b": {
-              "text": "%{minutes} دقيقة.",
-              "back_translation": "{minutes} minutes.",
-              "failed": [
-                {
-                  "check": "shape",
-                  "detail": "ends a sentence the source doesn't"
-                }
-              ],
-              "scores": {
-                "chrf": 83.7,
-                "metricx": 2.17,
-                "comet_kiwi": 0.7182,
-                "judge": 10,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 2.0,
-                "metricx": 4.0,
-                "comet_kiwi": 3.0,
-                "judge": 1.5
-              }
-            },
-            "translategemma-27b": {
-              "text": "‏%{دقائق} دقيقة‎‎",
-              "back_translation": "Minutes.",
-              "failed": [
-                {
-                  "check": "placeholders",
-                  "detail": "expected ['%{minutes}'], got []"
-                }
-              ],
-              "scores": {
-                "chrf": 34.8,
-                "metricx": 1.09,
-                "comet_kiwi": 0.7849,
-                "judge": 7,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 5.0,
-                "metricx": 2.0,
-                "comet_kiwi": 1.0,
-                "judge": 4.5
-              }
-            },
-            "translategemma-4b": {
-              "text": "{دقائق}",
-              "back_translation": "{Minutes}",
-              "failed": [
-                {
-                  "check": "placeholders",
-                  "detail": "expected ['%{minutes}'], got []"
-                }
-              ],
-              "scores": {
-                "chrf": 46.1,
-                "metricx": 0.55,
-                "comet_kiwi": 0.7645,
-                "judge": 7,
-                "judge_qwen": null
-              },
-              "ranks": {
-                "chrf": 3.0,
-                "metricx": 1.0,
-                "comet_kiwi": 2.0,
-                "judge": 4.5
-              }
-            }
-          }
-        },
-        {
           "key": "connection state\u0004starting",
           "msgid": "starting",
           "msgctxt": "connection state",
@@ -2832,6 +2660,173 @@
                 "metricx": 5.0,
                 "comet_kiwi": 4.0,
                 "judge": 3.0
+              }
+            }
+          }
+        },
+        {
+          "key": "%{minutes} min",
+          "msgid": "%{minutes} min",
+          "msgctxt": null,
+          "disagreement": 0.784,
+          "conflict": null,
+          "best": "hy-mt2",
+          "best_why": "the only translation passing every check",
+          "translations": {
+            "hy-mt2": {
+              "text": "%{minutes} دقيقة",
+              "back_translation": "%{minutes} minute",
+              "failed": [],
+              "scores": {
+                "chrf": 94.5,
+                "metricx": 2.34,
+                "comet_kiwi": 0.633,
+                "judge": 10,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 1.0,
+                "metricx": 6.0,
+                "comet_kiwi": 5.0,
+                "judge": 1.5
+              }
+            },
+            "m2m100": {
+              "text": "[ 0 ] دقيقة",
+              "back_translation": "[ 0 ] a minute",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{minutes}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 33.3,
+                "metricx": 1.26,
+                "comet_kiwi": 0.6505,
+                "judge": 7,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 6.0,
+                "metricx": 3.0,
+                "comet_kiwi": 4.0,
+                "judge": 4.5
+              }
+            },
+            "madlad-400": {
+              "text": "[صفر] دقيقة",
+              "back_translation": "[0] minutes",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{minutes}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 43.8,
+                "metricx": 2.3,
+                "comet_kiwi": 0.6092,
+                "judge": 7,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 4.0,
+                "metricx": 5.0,
+                "comet_kiwi": 6.0,
+                "judge": 4.5
+              }
+            },
+            "opus-mt": {
+              "text": "[الوضع في الميـكن",
+              "back_translation": "[Status in place",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{minutes}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 8.9,
+                "metricx": 6.12,
+                "comet_kiwi": 0.3528,
+                "judge": 1,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 7.0,
+                "metricx": 7.0,
+                "comet_kiwi": 7.0,
+                "judge": 7.0
+              }
+            },
+            "translategemma-12b": {
+              "text": "%{minutes} دقيقة.",
+              "back_translation": "{minutes} minutes.",
+              "failed": [
+                {
+                  "check": "shape",
+                  "detail": "ends a sentence the source doesn't"
+                }
+              ],
+              "scores": {
+                "chrf": 83.7,
+                "metricx": 2.17,
+                "comet_kiwi": 0.7182,
+                "judge": 10,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 2.0,
+                "metricx": 4.0,
+                "comet_kiwi": 3.0,
+                "judge": 1.5
+              }
+            },
+            "translategemma-27b": {
+              "text": "‏%{دقائق} دقيقة‎‎",
+              "back_translation": "Minutes.",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{minutes}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 34.8,
+                "metricx": 1.09,
+                "comet_kiwi": 0.7849,
+                "judge": 7,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 5.0,
+                "metricx": 2.0,
+                "comet_kiwi": 1.0,
+                "judge": 4.5
+              }
+            },
+            "translategemma-4b": {
+              "text": "{دقائق}",
+              "back_translation": "{Minutes}",
+              "failed": [
+                {
+                  "check": "placeholders",
+                  "detail": "expected ['%{minutes}'], got []"
+                }
+              ],
+              "scores": {
+                "chrf": 46.1,
+                "metricx": 0.55,
+                "comet_kiwi": 0.7645,
+                "judge": 7,
+                "judge_qwen": null
+              },
+              "ranks": {
+                "chrf": 3.0,
+                "metricx": 1.0,
+                "comet_kiwi": 2.0,
+                "judge": 4.5
               }
             }
           }
@@ -22066,10 +22061,10 @@
       "summary": {
         "hy-mt2": {
           "strings": 142,
-          "all_checks_pass": 110,
+          "all_checks_pass": 111,
           "mean_chrf": 61.5,
           "mean_rank": 3.08,
-          "best_count": 36
+          "best_count": 37
         },
         "m2m100": {
           "strings": 142,
@@ -22116,7 +22111,7 @@
       },
       "winner": {
         "model": "hy-mt2",
-        "why": "picked for 36 of the 138 strings filled"
+        "why": "picked for 37 of the 139 strings filled"
       }
     },
     "bn": {

@@ -71,7 +71,8 @@ page is built from):
 Every contestant's output goes through `models.tidy` first:
 `brand_case` lowercases "randos"/"rando" wherever a model capitalized it
 ("Randos est…", "Randoslar"), `ellipsis` turns "..." back into the
-source's "…", and NFC gives every letter one form. `cli tidy` applies it
+source's "…", `placeholders` writes "٪{minutes}" (a look-alike percent
+sign) back as "%{minutes}", and NFC gives every letter one form. `cli tidy` applies it
 to runs made before it (or one of its rules) existed.
 
 `run` never touches the `.po` files. `run --append <its earlier run>`

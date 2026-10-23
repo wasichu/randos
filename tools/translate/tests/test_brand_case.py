@@ -34,3 +34,12 @@ def test_the_sources_ellipsis_stays_one_character():
     # Only where the English has one: "..." elsewhere is the model's to keep.
     assert ellipsis("Wait", "Espera...") == "Espera..."
     assert tidy("Connecting…", "Randos se conecta...") == "randos se conecta…"
+
+
+def test_a_look_alike_percent_sign_is_written_back():
+    from randos_translate.models import placeholders
+
+    assert placeholders("%{minutes} min", "٪{minutes} دقيقة") == "%{minutes} دقيقة"
+    assert placeholders("%{minutes} min", "％{minutes}分") == "%{minutes}分"
+    # Not a name the source has: left for the placeholder check to fail.
+    assert placeholders("%{minutes} min", "٪{دقائق} دقيقة") == "٪{دقائق} دقيقة"
