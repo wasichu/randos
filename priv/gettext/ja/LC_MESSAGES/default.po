@@ -784,7 +784,7 @@ msgstr "%{minutes}+ 分"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Continued past %{minutes} minutes"
-msgstr "過去 %{minutes} 分間継続"
+msgstr "%{minutes}分以上継続"
 
 #. Why the relay check failed: the relay server closed the connection.
 #: lib/randos_web/relay_reasons.ex

@@ -60,7 +60,9 @@ renamed `results/shootout-<model>.json`, and `run --append` extends one):
   translation shaped like the source (no list of alternatives, no
   leftover protect token); not the English left as it was (a source of
   three words or more); for Urdu and Persian, not Arabic's look-alike YEH
-  and KAF. Outputs are NFC-normalized first, and so is what `fill`
+  and KAF; no number the English doesn't have ("%{minutes}+" became
+  "%{minutes} + 1"; localized digits and spelled-out English numbers
+  count, so "at least one" may be 1つ). Outputs are NFC-normalized first, and so is what `fill`
   writes. (Language identification was left out: the detector, lingua,
   is a 172 MB wheel every run of the checks would need, and a
   translation in the wrong language is what the judge's "1: not

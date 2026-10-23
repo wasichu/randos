@@ -13,7 +13,7 @@
   },
   "%{minutes}+ min": {
     "model": "hy-mt2",
-    "msgstr": "%{minutes}+ دقيقة"
+    "msgstr": "%{minutes}+ دقيقة على الأقل"
   },
   "%{time} remaining": {
     "model": "translategemma-27b",
@@ -96,8 +96,8 @@
     "msgstr": "اتصال:"
   },
   "Continued past %{minutes} minutes": {
-    "model": "m2m100",
-    "msgstr": "استمر في الماضي %{minutes} دقائق"
+    "model": "hy-mt2",
+    "msgstr": "استمرار المكالمة بعد مرور %{minutes} دقيقة"
   },
   "Continued past 10 minutes": {
     "model": "hy-mt2",

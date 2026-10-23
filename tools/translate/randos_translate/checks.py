@@ -166,6 +166,28 @@ def letter_forms(locale: str, text: str) -> tuple[bool, str]:
     return (not found, f"Arabic letter forms: {', '.join(found)}" if found else "")
 
 
+_NUMBER = re.compile(r"\d+")
+
+
+def _numbers(text: str) -> set[str]:
+    """The numbers in a text, outside placeholders, in ASCII digits (so a
+    Persian ۱۸ is 18)."""
+    return {"".join(str(unicodedata.digit(c)) for c in n) for n in _NUMBER.findall(PLACEHOLDER.sub("", text))}
+
+
+# English number words count as their numbers: "at least one" may be 1つ.
+_WORDS = dict(
+    zip("one two three four five six seven eight nine ten eleven twelve".split(), map(str, range(1, 13)), strict=True)
+)
+
+
+def numbers(source: str, text: str) -> tuple[bool, str]:
+    """No number the English doesn't have (\"%{minutes}+\" as \"%{minutes} + 1\")."""
+    spelled = {_WORDS[w] for w in re.findall(r"[a-z]+", source.lower()) if w in _WORDS}
+    extra = sorted(_numbers(text) - _numbers(source) - spelled)
+    return (not extra, f"numbers not in the source: {extra}" if extra else "")
+
+
 def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dict[str, dict]:
     results = {
         "placeholders": placeholders(source, text),
@@ -175,5 +197,6 @@ def run_all(locale: str, source: str, text: str, *, button: bool = False) -> dic
         "shape": shape(source, text),
         "unchanged": unchanged(source, text),
         "letter_forms": letter_forms(locale, text),
+        "numbers": numbers(source, text),
     }
     return {name: {"ok": ok, "detail": detail} for name, (ok, detail) in results.items()}

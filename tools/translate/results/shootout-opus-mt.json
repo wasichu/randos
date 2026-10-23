@@ -30,12 +30,12 @@
         "seconds": 64.2
       },
       "judge": {
-        "at": "20261023T130306Z",
-        "seconds": 4215.3
+        "at": "20261023T131046Z",
+        "seconds": 4222.9
       },
       "judge_qwen": {
-        "at": "20261023T130425Z",
-        "seconds": 127.0
+        "at": "20261023T131119Z",
+        "seconds": 130.3
       }
     },
     "appended": [
@@ -95341,12 +95341,16 @@
           "score": 0.4858
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfectly natural, matches tone and format exactly.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "qwen"
         }
       }
     },
@@ -95399,13 +95403,13 @@
         "judge": {
           "score": 7,
           "reason": "Slightly stiff, 'Fortsetzung' is formal",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, minor stiffness in 'Fortsetzung'",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 7,
+          "reason": "Slight stiffness; 'Fortsetzung' feels formal, 'nach' is less natural than 'nach über'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -95749,8 +95753,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"für\" feels out of place\"}'",
+          "score": 6,
+          "reason": "Slightly awkward phrasing; 'für' feels out of place, should be 'gefordert' or similar.",
           "context": "\nWhere it appears: Why the relay check failed: the relay server didn't ask for credentials.\n",
           "by": "qwen"
         }
@@ -95983,15 +95987,15 @@
           "score": 0.4858
         },
         "judge": {
-          "score": 7,
-          "reason": "Unnatural phrasing, 'min' is fine but '+' is awkward",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "score": 10,
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the tone and format.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -96044,14 +96048,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'continuó' is past tense but context is ongoing",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Slightly stiff, 'continuó después' is formal",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 7,
-          "reason": "Slight stiffness; 'después de' feels less natural than 'más de' for time thresholds.",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 6,
+          "reason": "Slightly stiff; 'después de' feels less natural than 'más de' for time duration.",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -97259,9 +97263,9 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Missing 'min' abbreviation; should be 'min' for consistency and naturalness.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "score": 8,
+          "reason": "Natural and accurate, minor formality in 'mi' vs. 'min'",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -97318,8 +97322,8 @@
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Slightly awkward phrasing; 'nakalipas na' feels unnatural for time duration.",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Slightly awkward; 'nakalipas' feels too literal, 'beyond' not clearly conveyed.",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -97884,14 +97888,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, matches tone and format exactly.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -99170,14 +99174,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Avoids 'mnt' abbreviation; 'menit' is clearer",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Natural but 'mnt' is informal; 'menit' is clearer",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 7,
-          "reason": "Natural but slightly stiff; 'mnt' is informal but less common than 'menit'.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "score": 8,
+          "reason": "Natural and concise; minor abbreviation 'mnt' slightly less common than 'menit'",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -99810,14 +99814,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the tone and format.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -101064,14 +101068,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -101127,8 +101131,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 3,
+          "reason": "Incorrect use of 'geçmişe' (past), unnatural phrasing",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -101704,8 +101710,8 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -102948,14 +102954,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }

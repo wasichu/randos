@@ -92,3 +92,11 @@ def test_urdu_and_persian_dont_use_arabic_letter_forms():
 
 def test_a_filipino_linker_keeps_the_term():
     assert checks.glossary("waiting on your rando", "hinihintay ang iyong randong kausap", "fil")[0]
+
+
+def test_no_number_the_english_doesnt_have():
+    assert not checks.numbers("%{minutes}+ min", "%{minutes} + 1 دقيقة")[0]
+    assert checks.numbers("I am 18 or older", "Tengo 18 años o más")[0]
+    # Localized digits are the same number; a spelled-out one counts.
+    assert checks.numbers("I am 18 or older", "من ۱۸ سال یا بیشتر دارم")[0]
+    assert checks.numbers("Pick at least one language to hear", "聞くための言語を1つ以上選んでください")[0]

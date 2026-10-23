@@ -23,24 +23,24 @@
       "fil"
     ],
     "strings": 151,
-    "at": "20261023T125814Z",
+    "at": "20261023T130917Z",
     "seconds": 6336.3,
     "scored": {
       "metricx": {
-        "at": "20261023T125835Z",
-        "seconds": 114.1
+        "at": "20261023T130927Z",
+        "seconds": 116.0
       },
       "comet_kiwi": {
-        "at": "20261023T125912Z",
-        "seconds": 184.3
+        "at": "20261023T130944Z",
+        "seconds": 186.2
       },
       "judge": {
-        "at": "20261023T121543Z",
-        "seconds": 5803.8
+        "at": "20261023T131027Z",
+        "seconds": 5804.5
       },
       "judge_qwen": {
-        "at": "20261023T130403Z",
-        "seconds": 72.4
+        "at": "20261023T131111Z",
+        "seconds": 73.7
       }
     },
     "appended": [
@@ -67,6 +67,10 @@
       {
         "at": "20261023T125814Z",
         "seconds": 452.4
+      },
+      {
+        "at": "20261023T130917Z",
+        "seconds": 83.6
       }
     ]
   },
@@ -80,7 +84,7 @@
         "length": 8,
         "script": 0
       },
-      "mean_chrf": 61.6
+      "mean_chrf": 61.7
     },
     "zh": {
       "strings": 151,
@@ -97,12 +101,12 @@
       "strings": 151,
       "all_checks_pass": 93,
       "failed": {
-        "placeholders": 13,
+        "placeholders": 12,
         "glossary": 16,
         "length": 19,
         "script": 20
       },
-      "mean_chrf": 48.6
+      "mean_chrf": 48.7
     },
     "ar": {
       "strings": 151,
@@ -113,18 +117,18 @@
         "length": 16,
         "script": 17
       },
-      "mean_chrf": 50.1
+      "mean_chrf": 49.9
     },
     "pt": {
       "strings": 151,
       "all_checks_pass": 117,
       "failed": {
-        "placeholders": 8,
+        "placeholders": 7,
         "glossary": 10,
         "length": 5,
         "script": 0
       },
-      "mean_chrf": 61.4
+      "mean_chrf": 61.5
     },
     "bn": {
       "strings": 151,
@@ -135,7 +139,7 @@
         "length": 8,
         "script": 8
       },
-      "mean_chrf": 46.9
+      "mean_chrf": 47.0
     },
     "ru": {
       "strings": 151,
@@ -150,9 +154,9 @@
     },
     "ja": {
       "strings": 151,
-      "all_checks_pass": 108,
+      "all_checks_pass": 109,
       "failed": {
-        "placeholders": 4,
+        "placeholders": 3,
         "glossary": 12,
         "length": 9,
         "script": 15
@@ -179,18 +183,18 @@
         "length": 17,
         "script": 0
       },
-      "mean_chrf": 54.6
+      "mean_chrf": 54.7
     },
     "ko": {
       "strings": 151,
       "all_checks_pass": 110,
       "failed": {
-        "placeholders": 9,
+        "placeholders": 8,
         "glossary": 12,
         "length": 5,
         "script": 8
       },
-      "mean_chrf": 47.9
+      "mean_chrf": 48.0
     },
     "it": {
       "strings": 151,
@@ -201,7 +205,7 @@
         "length": 3,
         "script": 1
       },
-      "mean_chrf": 57.9
+      "mean_chrf": 57.7
     },
     "tr": {
       "strings": 151,
@@ -212,24 +216,24 @@
         "length": 7,
         "script": 1
       },
-      "mean_chrf": 50.4
+      "mean_chrf": 50.7
     },
     "id": {
       "strings": 151,
       "all_checks_pass": 120,
       "failed": {
-        "placeholders": 6,
+        "placeholders": 5,
         "glossary": 10,
         "length": 5,
         "script": 0
       },
-      "mean_chrf": 59.2
+      "mean_chrf": 59.1
     },
     "vi": {
       "strings": 151,
       "all_checks_pass": 48,
       "failed": {
-        "placeholders": 2,
+        "placeholders": 3,
         "glossary": 11,
         "length": 6,
         "script": 0,
@@ -237,7 +241,7 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 54.0
+      "mean_chrf": 53.8
     },
     "ur": {
       "strings": 151,
@@ -251,17 +255,17 @@
         "unchanged": 0,
         "letter_forms": 1
       },
-      "mean_chrf": 38.8
+      "mean_chrf": 38.9
     },
     "sw": {
       "strings": 151,
-      "all_checks_pass": 51,
+      "all_checks_pass": 52,
       "failed": {
-        "placeholders": 2,
+        "placeholders": 3,
         "glossary": 11,
         "length": 3,
         "script": 0,
-        "shape": 93,
+        "shape": 91,
         "unchanged": 0,
         "letter_forms": 0
       },
@@ -279,13 +283,13 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 48.6
+      "mean_chrf": 48.7
     },
     "fil": {
       "strings": 151,
       "all_checks_pass": 50,
       "failed": {
-        "placeholders": 2,
+        "placeholders": 3,
         "glossary": 7,
         "length": 6,
         "script": 0,
@@ -293,7 +297,7 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 53.4
+      "mean_chrf": 53.3
     }
   },
   "entries": [
@@ -50684,8 +50688,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \\'keadaan hari ini\\' sounds formal, could be more natural as \\'hari ini bagaimana?\\'\"}}'",
+          "score": 7,
+          "reason": "Slight stiffness; 'keadaan hari ini' sounds formal, could be more natural as 'hari ini bagaimana ya?'",
           "context": "",
           "by": "qwen"
         }
@@ -129338,118 +129342,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "es",
-      "text": "%{minutos}+ min.",
-      "back_translation": "{minutes}+ min.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{minutos}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 91.1,
-        "metricx": {
-          "score": 3.94
-        },
-        "comet_kiwi": {
-          "score": 0.7522
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "es",
-      "text": "Continuadas tras superar los %{minutes} minutos.",
-      "back_translation": "Resumes after {minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 52.0,
-        "metricx": {
-          "score": 6.28
-        },
-        "comet_kiwi": {
-          "score": 0.5917
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -129942,118 +129834,6 @@
         },
         "comet_kiwi": {
           "score": 0.8675
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "zh",
-      "text": "%{分钟}+ 分钟",
-      "back_translation": "[Number] minutes + [Number] minutes.\n\n\n\n(Note: “%{分钟}” and “分钟” are placeholders for numbers. The translation reflects this.)",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 20.6,
-        "metricx": {
-          "score": 2.84
-        },
-        "comet_kiwi": {
-          "score": 0.7515
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "zh",
-      "text": "已持续通话超过%{minutes}分钟。",
-      "back_translation": "The call has been ongoing for over %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 52.1,
-        "metricx": {
-          "score": 2.34
-        },
-        "comet_kiwi": {
-          "score": 0.5618
         },
         "judge": {
           "score": null,
@@ -130570,118 +130350,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "hi",
-      "text": "%{मिनट}+ मिनट।",
-      "back_translation": "{Number of minutes} + minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 69.0,
-        "metricx": {
-          "score": 4.12
-        },
-        "comet_kiwi": {
-          "score": 0.7768
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "hi",
-      "text": "%{मिनट} मिनट से अधिक समय तक जारी रखी गई कॉलें।",
-      "back_translation": "Calls lasting longer than {minute} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 43.4,
-        "metricx": {
-          "score": 3.22
-        },
-        "comet_kiwi": {
-          "score": 0.6993
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -131174,118 +130842,6 @@
         },
         "comet_kiwi": {
           "score": 0.7429
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "ar",
-      "text": "‏%{دقائق}+ دقيقة أو أكثر.‎",
-      "back_translation": "A few minutes, or longer.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 34.8,
-        "metricx": {
-          "score": 2.53
-        },
-        "comet_kiwi": {
-          "score": 0.646
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "ar",
-      "text": "تجاوزت مدتها %{minutes} دقيقة.",
-      "back_translation": "It has exceeded {minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 52.8,
-        "metricx": {
-          "score": 3.27
-        },
-        "comet_kiwi": {
-          "score": 0.4727
         },
         "judge": {
           "score": null,
@@ -131802,118 +131358,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "pt",
-      "text": "%{minutos}+ min.",
-      "back_translation": "{minutes}+ min.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{minutos}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 91.1,
-        "metricx": {
-          "score": 3.94
-        },
-        "comet_kiwi": {
-          "score": 0.7522
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "pt",
-      "text": "Continuadas após %{minutos} minutos.",
-      "back_translation": "Resuming in {minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{minutos}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.0,
-        "metricx": {
-          "score": 7.94
-        },
-        "comet_kiwi": {
-          "score": 0.5487
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -132406,118 +131850,6 @@
         },
         "comet_kiwi": {
           "score": 0.8682
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "bn",
-      "text": "%{মিনিট}+ মিনিট।",
-      "back_translation": "{Number} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.0,
-        "metricx": {
-          "score": 4.09
-        },
-        "comet_kiwi": {
-          "score": 0.8207
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "bn",
-      "text": "%{মিনিট}-এর বেশি সময় ধরে চলমান কল।",
-      "back_translation": "Call has been ongoing for more than {minute}.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 23.7,
-        "metricx": {
-          "score": 2.66
-        },
-        "comet_kiwi": {
-          "score": 0.6938
         },
         "judge": {
           "score": null,
@@ -133034,118 +132366,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "ru",
-      "text": "%{minutes}+ мин.",
-      "back_translation": "%{minutes}+ minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 91.9,
-        "metricx": {
-          "score": 4.19
-        },
-        "comet_kiwi": {
-          "score": 0.6733
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "ru",
-      "text": "Продолжительность разговора превысила %{minutes} минут.",
-      "back_translation": "The conversation lasted longer than %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.2,
-        "metricx": {
-          "score": 2.48
-        },
-        "comet_kiwi": {
-          "score": 0.5492
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -133638,118 +132858,6 @@
         },
         "comet_kiwi": {
           "score": 0.8583
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "ja",
-      "text": "%{minutes}分以上。",
-      "back_translation": "More than {minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 53.1,
-        "metricx": {
-          "score": 3.52
-        },
-        "comet_kiwi": {
-          "score": 0.5441
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "ja",
-      "text": "%{分}を超えて継続された通話。",
-      "back_translation": "A call that continued for more than {minutes}.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 43.6,
-        "metricx": {
-          "score": 2.25
-        },
-        "comet_kiwi": {
-          "score": 0.6313
         },
         "judge": {
           "score": null,
@@ -134266,118 +133374,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "fr",
-      "text": "%{minutes} min. ou plus.",
-      "back_translation": "%{minutes} min. or more.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 64.2,
-        "metricx": {
-          "score": 3.88
-        },
-        "comet_kiwi": {
-          "score": 0.7222
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "fr",
-      "text": "Dépassant les %{minutes} minutes.",
-      "back_translation": "Exceeding %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 57.2,
-        "metricx": {
-          "score": 7.47
-        },
-        "comet_kiwi": {
-          "score": 0.4454
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -134870,118 +133866,6 @@
         },
         "comet_kiwi": {
           "score": 0.8707
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "de",
-      "text": "%{minuten}+ min.",
-      "back_translation": "%{minuten}+ min.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{minuten}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 65.5,
-        "metricx": {
-          "score": 2.59
-        },
-        "comet_kiwi": {
-          "score": 0.7848
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "de",
-      "text": "Anrufe, die nach %{minutes} Minuten fortgesetzt wurden.",
-      "back_translation": "Calls that were resumed after %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 53.2,
-        "metricx": {
-          "score": 4.41
-        },
-        "comet_kiwi": {
-          "score": 0.5776
         },
         "judge": {
           "score": null,
@@ -135498,118 +134382,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "ko",
-      "text": "%{분} 이상.",
-      "back_translation": "More than [number] minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 34.4,
-        "metricx": {
-          "score": 1.95
-        },
-        "comet_kiwi": {
-          "score": 0.6216
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "ko",
-      "text": "%{분} 이상 통화 지속.",
-      "back_translation": "Call duration exceeds {number} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 29.3,
-        "metricx": {
-          "score": 1.34
-        },
-        "comet_kiwi": {
-          "score": 0.599
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -136102,118 +134874,6 @@
         },
         "comet_kiwi": {
           "score": 0.8735
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "it",
-      "text": "%{minuti}+ min.",
-      "back_translation": "{minutes}+ min.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{minuti}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 91.1,
-        "metricx": {
-          "score": 3.66
-        },
-        "comet_kiwi": {
-          "score": 0.7653
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "it",
-      "text": "Proseguite oltre i %{minutes} minuti.",
-      "back_translation": "Continue for more than %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 69.8,
-        "metricx": {
-          "score": 7.31
-        },
-        "comet_kiwi": {
-          "score": 0.6522
         },
         "judge": {
           "score": null,
@@ -136730,118 +135390,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "tr",
-      "text": "%{dakika}+ dakika.",
-      "back_translation": "%{minute}+ minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{dakika}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 70.7,
-        "metricx": {
-          "score": 4.03
-        },
-        "comet_kiwi": {
-          "score": 0.8069
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "tr",
-      "text": "İlk {dakika} dakikanın ardından devam eden aramalar.",
-      "back_translation": "Calls that continue after the initial {number} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 39.2,
-        "metricx": {
-          "score": 12.0
-        },
-        "comet_kiwi": {
-          "score": 0.5879
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -137334,118 +135882,6 @@
         },
         "comet_kiwi": {
           "score": 0.5791
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "id",
-      "text": "%{menit}+ menit.",
-      "back_translation": "{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{menit}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 60.0,
-        "metricx": {
-          "score": 3.7
-        },
-        "comet_kiwi": {
-          "score": 0.7828
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "id",
-      "text": "Dilanjutkan setelah %{menit} menit.",
-      "back_translation": "Continuing in %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got ['%{menit}']"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 68.6,
-        "metricx": {
-          "score": 3.7
-        },
-        "comet_kiwi": {
-          "score": 0.6794
         },
         "judge": {
           "score": null,
@@ -137962,118 +136398,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "vi",
-      "text": "%{minutes} phút trở lên.",
-      "back_translation": "%{minutes} minutes or more.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.4,
-        "metricx": {
-          "score": 5.12
-        },
-        "comet_kiwi": {
-          "score": 0.5573
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "vi",
-      "text": "Tiếp tục sau %{minutes} phút.",
-      "back_translation": "Continue in %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 73.3,
-        "metricx": {
-          "score": 4.41
-        },
-        "comet_kiwi": {
-          "score": 0.6048
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -138566,118 +136890,6 @@
         },
         "comet_kiwi": {
           "score": 0.7837
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "ur",
-      "text": "%{minutes} منٹ یا اس سے زیادہ۔",
-      "back_translation": "%{minutes} minutes or more.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.4,
-        "metricx": {
-          "score": 3.16
-        },
-        "comet_kiwi": {
-          "score": 0.5932
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "ur",
-      "text": "%{منٹ} سے زیادہ وقت تک جاری رہنے والی کالیں ۔",
-      "back_translation": "Calls lasting longer than {minute}.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 27.1,
-        "metricx": {
-          "score": 3.44
-        },
-        "comet_kiwi": {
-          "score": 0.7279
         },
         "judge": {
           "score": null,
@@ -139194,118 +137406,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "sw",
-      "text": "%{minutes}+ dakika.",
-      "back_translation": "{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 60.0,
-        "metricx": {
-          "score": 5.84
-        },
-        "comet_kiwi": {
-          "score": 0.666
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "sw",
-      "text": "Iliendelea kwa zaidi ya dakika %{minutes}.",
-      "back_translation": "It lasted for more than %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 56.5,
-        "metricx": {
-          "score": 3.7
-        },
-        "comet_kiwi": {
-          "score": 0.6852
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -139798,118 +137898,6 @@
         },
         "comet_kiwi": {
           "score": 0.8546
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "fa",
-      "text": "%{minutes} دقیقه یا بیشتر.",
-      "back_translation": "%{minutes} minutes or more.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.4,
-        "metricx": {
-          "score": 3.12
-        },
-        "comet_kiwi": {
-          "score": 0.6003
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "fa",
-      "text": "بیش از %{minutes} دقیقه ادامه یافته‌اند.",
-      "back_translation": "It has been ongoing for more than {minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 50.5,
-        "metricx": {
-          "score": 5.38
-        },
-        "comet_kiwi": {
-          "score": 0.5429
         },
         "judge": {
           "score": null,
@@ -140426,118 +138414,6 @@
       }
     },
     {
-      "key": "%{minutes}+ min",
-      "msgid": "%{minutes}+ min",
-      "msgctxt": null,
-      "context": "A call's typical length: this many minutes or more (min = minutes).",
-      "locale": "fil",
-      "text": "%{minutes}+ minuto.",
-      "back_translation": "{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 60.0,
-        "metricx": {
-          "score": 4.72
-        },
-        "comet_kiwi": {
-          "score": 0.7002
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Continued past %{minutes} minutes",
-      "msgid": "Continued past %{minutes} minutes",
-      "msgctxt": null,
-      "context": "A count on the status page: calls that were continued past their first minutes.",
-      "locale": "fil",
-      "text": "Nagpatuloy nang higit sa %{minutes} minuto.",
-      "back_translation": "It continued for more than %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 68.4,
-        "metricx": {
-          "score": 4.16
-        },
-        "comet_kiwi": {
-          "score": 0.6382
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "connection closed",
       "msgid": "connection closed",
       "msgctxt": null,
@@ -141030,6 +138906,2140 @@
         },
         "comet_kiwi": {
           "score": 0.6496
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "es",
+      "text": "%{minutos}+ min.",
+      "back_translation": "{minutes}+ min.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{minutos}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 91.1,
+        "metricx": {
+          "score": 3.94
+        },
+        "comet_kiwi": {
+          "score": 0.7522
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "es",
+      "text": "Conversaciones que continuaron más allá de los %{minutes} minutos.",
+      "back_translation": "Conversations that continued for longer than %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 63.8,
+        "metricx": {
+          "score": 7.56
+        },
+        "comet_kiwi": {
+          "score": 0.6003
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "zh",
+      "text": "%{分钟}+ 分钟",
+      "back_translation": "[Number] minutes + [Number] minutes.\n\n\n\n(Note: “%{分钟}” and “分钟” are placeholders for numbers. The translation reflects this.)",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 20.6,
+        "metricx": {
+          "score": 2.84
+        },
+        "comet_kiwi": {
+          "score": 0.7515
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "zh",
+      "text": "持续通话超过%{minutes}分钟。",
+      "back_translation": "The call has been ongoing for over %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.1,
+        "metricx": {
+          "score": 2.47
+        },
+        "comet_kiwi": {
+          "score": 0.5299
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "hi",
+      "text": "%{मिनट}+ मिनट",
+      "back_translation": "{Number of minutes} + minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 69.0,
+        "metricx": {
+          "score": 2.56
+        },
+        "comet_kiwi": {
+          "score": 0.7879
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "hi",
+      "text": "%{minutes} मिनट से अधिक समय तक जारी रही।",
+      "back_translation": "It continued for more than {minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 65.4,
+        "metricx": {
+          "score": 5.31
+        },
+        "comet_kiwi": {
+          "score": 0.7127
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "ar",
+      "text": "%{دقائق}+ دقيقة.",
+      "back_translation": "A few minutes. / Several minutes. / Minutes. (depending on context - the “دقائق” suggests plurality, but the “+” implies an indefinite amount).",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 16.8,
+        "metricx": {
+          "score": 1.57
+        },
+        "comet_kiwi": {
+          "score": 0.774
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "ar",
+      "text": "استمرت المحادثات لأكثر من %{minutes} دقيقة.",
+      "back_translation": "The discussions/conversations lasted for more than %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 50.2,
+        "metricx": {
+          "score": 3.38
+        },
+        "comet_kiwi": {
+          "score": 0.5239
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "pt",
+      "text": "%{minutos}+ min.",
+      "back_translation": "{minutes}+ min.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{minutos}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 91.1,
+        "metricx": {
+          "score": 3.94
+        },
+        "comet_kiwi": {
+          "score": 0.7522
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "pt",
+      "text": "Continuou após os %{minutes} minutos.",
+      "back_translation": "Continued after %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 75.9,
+        "metricx": {
+          "score": 7.69
+        },
+        "comet_kiwi": {
+          "score": 0.6302
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "bn",
+      "text": "%{মিনিট}+ মিনিট।",
+      "back_translation": "{Number} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 40.0,
+        "metricx": {
+          "score": 4.16
+        },
+        "comet_kiwi": {
+          "score": 0.8207
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "bn",
+      "text": "%{মিনিট}-এর বেশি সময় ধরে কথোপকথন চালিয়ে যাওয়া হয়েছে।",
+      "back_translation": "The conversation has been ongoing for more than {minute} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.8,
+        "metricx": {
+          "score": 1.02
+        },
+        "comet_kiwi": {
+          "score": 0.6717
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "ru",
+      "text": "%{minutes}+ мин.",
+      "back_translation": "%{minutes}+ minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 91.9,
+        "metricx": {
+          "score": 4.19
+        },
+        "comet_kiwi": {
+          "score": 0.6733
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "ru",
+      "text": "Продолжительность разговора превысила %{minutes} минут.",
+      "back_translation": "The conversation lasted longer than %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.2,
+        "metricx": {
+          "score": 2.47
+        },
+        "comet_kiwi": {
+          "score": 0.5492
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "ja",
+      "text": "%{minutes}分以上",
+      "back_translation": "For {minutes} minutes or more.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.4,
+        "metricx": {
+          "score": 1.67
+        },
+        "comet_kiwi": {
+          "score": 0.5407
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, '以上' is formal",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "ja",
+      "text": "%{minutes}分を超えて会話が続いている。",
+      "back_translation": "The conversation has been going on for over {minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.7,
+        "metricx": {
+          "score": 4.38
+        },
+        "comet_kiwi": {
+          "score": 0.5838
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "fr",
+      "text": "%{minutes} min ou plus.",
+      "back_translation": "%{minutes} minutes or more.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 61.4,
+        "metricx": {
+          "score": 3.78
+        },
+        "comet_kiwi": {
+          "score": 0.7303
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "fr",
+      "text": "Dépassement des %{minutes} minutes.",
+      "back_translation": "Exceeded {minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.5,
+        "metricx": {
+          "score": 8.0
+        },
+        "comet_kiwi": {
+          "score": 0.4315
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "de",
+      "text": "%{minuten}+ min.",
+      "back_translation": "%{minuten}+ min.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{minuten}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 65.5,
+        "metricx": {
+          "score": 2.59
+        },
+        "comet_kiwi": {
+          "score": 0.7848
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "de",
+      "text": "Gespräche, die über die anfänglichen %{minutes} Minuten hinaus fortgesetzt wurden.",
+      "back_translation": "Conversations that continued beyond the initial %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 62.6,
+        "metricx": {
+          "score": 2.48
+        },
+        "comet_kiwi": {
+          "score": 0.6155
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "ko",
+      "text": "%{분} 이상.",
+      "back_translation": "More than [number] minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 34.4,
+        "metricx": {
+          "score": 1.95
+        },
+        "comet_kiwi": {
+          "score": 0.6216
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "ko",
+      "text": "%{minutes}분을 초과하여 계속된 통화.",
+      "back_translation": "The call lasted longer than {minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 53.0,
+        "metricx": {
+          "score": 3.75
+        },
+        "comet_kiwi": {
+          "score": 0.582
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "it",
+      "text": "%{minuti}+ min.",
+      "back_translation": "{minutes}+ min.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{minuti}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 91.1,
+        "metricx": {
+          "score": 3.66
+        },
+        "comet_kiwi": {
+          "score": 0.7653
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "it",
+      "text": "Conversazioni proseguite oltre i %{minutes} minuti iniziali.",
+      "back_translation": "Conversations continued beyond the initial %{minutes}.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.0,
+        "metricx": {
+          "score": 6.84
+        },
+        "comet_kiwi": {
+          "score": 0.6788
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "tr",
+      "text": "%{dakika}+ dk.",
+      "back_translation": "%{minutes}+ mins.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{dakika}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 96.6,
+        "metricx": {
+          "score": 3.55
+        },
+        "comet_kiwi": {
+          "score": 0.834
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "tr",
+      "text": "%{dakika} dakikanın ötesinde devam eden görüşmeler.",
+      "back_translation": "Meetings that continued beyond {minute} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{dakika}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.8,
+        "metricx": {
+          "score": 9.31
+        },
+        "comet_kiwi": {
+          "score": 0.6359
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "id",
+      "text": "%{menit}+ menit.",
+      "back_translation": "{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{menit}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.0,
+        "metricx": {
+          "score": 3.7
+        },
+        "comet_kiwi": {
+          "score": 0.7828
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "id",
+      "text": "Berlangsung lebih dari %{minutes} menit.",
+      "back_translation": "Lasted for more than %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 57.2,
+        "metricx": {
+          "score": 3.75
+        },
+        "comet_kiwi": {
+          "score": 0.5132
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "vi",
+      "text": "%{phút}+ phút.",
+      "back_translation": "{number} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.1,
+        "metricx": {
+          "score": 3.3
+        },
+        "comet_kiwi": {
+          "score": 0.7585
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "vi",
+      "text": "Tiếp tục cuộc trò chuyện sau %{minutes} phút đầu.",
+      "back_translation": "Continue the conversation after the initial %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 62.2,
+        "metricx": {
+          "score": 7.31
+        },
+        "comet_kiwi": {
+          "score": 0.6035
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "ur",
+      "text": "%{منٹ} یا اس سے زیادہ۔",
+      "back_translation": "A minute or more.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 30.0,
+        "metricx": {
+          "score": 1.2
+        },
+        "comet_kiwi": {
+          "score": 0.6974
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "ur",
+      "text": "%{minutes} منٹ سے زیادہ طویل گفتگو جاری رہی۔",
+      "back_translation": "The conversation continued for more than {minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.6,
+        "metricx": {
+          "score": 4.12
+        },
+        "comet_kiwi": {
+          "score": 0.5953
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "sw",
+      "text": "%{dakika}+ dakika",
+      "back_translation": "{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{dakika}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.0,
+        "metricx": {
+          "score": 3.23
+        },
+        "comet_kiwi": {
+          "score": 0.8223
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "sw",
+      "text": "Iliendelea zaidi ya dakika %{minutes}",
+      "back_translation": "It lasted for more than %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 56.5,
+        "metricx": {
+          "score": 3.97
+        },
+        "comet_kiwi": {
+          "score": 0.6522
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, minor stiffness in 'zaidi ya'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "fa",
+      "text": "%{minutes} دقیقه یا بیشتر.",
+      "back_translation": "%{minutes} minutes or more.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 61.4,
+        "metricx": {
+          "score": 3.11
+        },
+        "comet_kiwi": {
+          "score": 0.6003
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "fa",
+      "text": "ادامه مکالمات پس از %{minutes} دقیقه.",
+      "back_translation": "The conversation will continue after {minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 58.6,
+        "metricx": {
+          "score": 3.72
+        },
+        "comet_kiwi": {
+          "score": 0.6057
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{minutes}+ min",
+      "msgid": "%{minutes}+ min",
+      "msgctxt": null,
+      "context": "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).",
+      "locale": "fil",
+      "text": "%{minuto}+ min.",
+      "back_translation": "{minuto} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{minutes}'], got ['%{minuto}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 53.5,
+        "metricx": {
+          "score": 4.22
+        },
+        "comet_kiwi": {
+          "score": 0.7267
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Continued past %{minutes} minutes",
+      "msgid": "Continued past %{minutes} minutes",
+      "msgctxt": null,
+      "context": "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").",
+      "locale": "fil",
+      "text": "Nagpatuloy nang higit sa %{minutes} minuto.",
+      "back_translation": "It continued for more than %{minutes} minutes.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 68.4,
+        "metricx": {
+          "score": 4.16
+        },
+        "comet_kiwi": {
+          "score": 0.6382
         },
         "judge": {
           "score": null,

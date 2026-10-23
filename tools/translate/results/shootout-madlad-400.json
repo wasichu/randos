@@ -35,12 +35,12 @@
         "seconds": 59.5
       },
       "judge": {
-        "at": "20261023T130303Z",
-        "seconds": 4861.3
+        "at": "20261023T131046Z",
+        "seconds": 4878.6
       },
       "judge_qwen": {
-        "at": "20261023T130425Z",
-        "seconds": 234.5
+        "at": "20261023T131116Z",
+        "seconds": 240.6
       }
     },
     "appended": [
@@ -96907,7 +96907,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" feels incomplete without context\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" lacks natural flow for context\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -135766,15 +135766,15 @@
           "score": 0.4858
         },
         "judge": {
-          "score": 7,
-          "reason": "Unnatural phrasing, 'min' is fine but '+' is awkward",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "score": 10,
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the tone and format.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -136399,14 +136399,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -137109,14 +137109,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Awkward phrasing, 'जारी' is formal",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Awkward phrasing, 'पिछले' suggests past, not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly awkward phrasing; 'पिछले' implies past time, not duration",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": null,
+          "error": "unparsed reply: '{\"score\": 5, \"reason\": \"Incorrectly uses \\'पिछले\\' (past), should be \\'अधिक\\' or \\'बाद\\'}'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -138351,14 +138351,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -138410,15 +138410,15 @@
           "score": 0.6792
         },
         "judge": {
-          "score": 7,
-          "reason": "Awkward phrasing, 'nos últimos' is unnecessary",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 4,
+          "reason": "wrong meaning, 'últimos' implies recent, not beyond",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly awkward phrasing; 'nos últimos' feels less natural than needed.",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 4,
+          "reason": "Wrong meaning; 'nos últimos' implies 'in the last', not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -139043,14 +139043,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'গত' is formal",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Slightly stiff, 'গত' implies past tense, not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, but 'ধরে' feels slightly stiff; 'পার' would be more informal.",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 4,
+          "reason": "Wrong tense and meaning; 'গত' means 'past', not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -139699,14 +139699,14 @@
         },
         "judge": {
           "score": 4,
-          "reason": "awkward phrasing, wrong meaning",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Wrong meaning, awkward phrasing",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 4,
-          "reason": "Wrong meaning, 'за последние' implies recent past, not continuation",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 3,
+          "reason": "Wrong meaning; 'за последние' implies 'in the last', not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -140277,14 +140277,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -140337,14 +140337,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, '継続' is formal",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Awkward phrasing, '過去' is unnecessary",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 4,
-          "reason": "Unnatural phrasing; '過去' is incorrect; should be '〜分以上'",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "reason": "Incorrect use of '過去' (past), sounds unnatural and misleading",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -140917,14 +140917,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, matches tone and format exactly.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -141556,12 +141556,16 @@
           "score": 0.4858
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfectly natural, matches tone and format exactly.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "qwen"
         }
       }
     },
@@ -141612,15 +141616,15 @@
           "score": 0.6611
         },
         "judge": {
-          "score": 7,
-          "reason": "Awkward phrasing, 'in den letzten' is unnecessary",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 4,
+          "reason": "Wrong meaning, 'in den letzten' implies 'recent', not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \\'in den letzten\\' feels less natural than \\'nach\\'}'",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 3,
+          "reason": "Wrong tense and meaning; 'in den letzten' implies recent past, not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -142209,14 +142213,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -142270,13 +142274,13 @@
         "judge": {
           "score": 7,
           "reason": "Slightly stiff, '지난' feels formal",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and accurate, slightly formal tone",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 6,
+          "reason": "Sounds slightly stiff; '지난' implies past tense, not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -142861,14 +142865,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the tone and format.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -142920,15 +142924,15 @@
           "score": 0.6987
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly awkward phrasing, 'negli ultimi' is unnecessary",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 4,
+          "reason": "Wrong meaning, 'ultimi' implies recent, not beyond",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly awkward phrasing; 'negli ultimi' doesn't match the original's clarity and tone.",
-          "context": "\nWhere it appears: A count on the status page: calls that were continued past their first minutes.\n",
+          "score": 4,
+          "reason": "Wrong meaning; 'negli ultimi' implies recent past, not 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
       }
@@ -143510,13 +143514,13 @@
         "judge": {
           "score": 10,
           "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -143568,12 +143572,16 @@
           "score": 0.6522
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly awkward phrasing, 'son' is ambiguous",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 4,
+          "reason": "Incorrect tense and awkward phrasing; loses natural tone and clarity.",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -145421,8 +145429,8 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -145478,8 +145486,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 5,
+          "reason": "Incorrect use of 'گزشتہ' (past), should be 'سے زیادہ' for 'beyond'",
+          "context": "\nWhere it appears: A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
+          "by": "qwen"
         }
       }
     },
@@ -146047,8 +146057,8 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Perfectly natural, matches tone and structure exactly.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }
@@ -147317,8 +147327,8 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: A call's typical length: this many minutes or more (min = minutes).\n",
+          "reason": "Natural, accurate, and matches the calm, informal tone with correct placeholder use.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
           "by": "qwen"
         }
       }

@@ -780,13 +780,13 @@ msgstr "Вы согласились продолжить, ожидая ваше�
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{minutes}+ min"
-msgstr "%{minutes} + минуты"
+msgstr "%{minutes}+ минут"
 
 #. A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes ("past" as in "beyond", not "in the past").
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Continued past %{minutes} minutes"
-msgstr "Продолжалось более %{minutes} минут"
+msgstr "Продолжение разговора после %{minutes} минут"
 
 #. Why the relay check failed: the relay server closed the connection.
 #: lib/randos_web/relay_reasons.ex

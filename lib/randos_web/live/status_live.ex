@@ -150,7 +150,7 @@ defmodule RandosWeb.StatusLive do
           value={@usage["calls_connected"]}
         />
         <% gettext_comment(
-          "A count on the status page: calls that were continued past their first minutes."
+          "A count on the status page: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\")."
         ) %>
         <.count
           id="usage-continued"
@@ -300,7 +300,10 @@ defmodule RandosWeb.StatusLive do
   end
 
   defp median_text(longest, longest) do
-    gettext_comment("A call's typical length: this many minutes or more (min = minutes).")
+    gettext_comment(
+      "A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes)."
+    )
+
     gettext("%{minutes}+ min", minutes: longest)
   end
 
