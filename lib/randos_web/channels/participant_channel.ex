@@ -28,6 +28,8 @@ defmodule RandosWeb.ParticipantChannel do
 
   @impl true
   def join("participant", params, socket) do
+    put_locale(params)
+
     {participant, ticket, ice_servers} =
       case resume(params) do
         {:ok, participant, ticket, ice_servers} -> {participant, ticket, ice_servers}
@@ -56,6 +58,15 @@ defmodule RandosWeb.ParticipantChannel do
     do: ParticipantShell.resume(ticket)
 
   defp resume(_params), do: :error
+
+  # The client's interface language, for the words this channel sends
+  # (`error_message`, the status reply): Gettext's locale is this process's.
+  # Only a language the site has; anything else stays English.
+  defp put_locale(%{"locale" => code}) when is_binary(code) do
+    if RandosWeb.Locale.supported?(code), do: Gettext.put_locale(RandosWeb.Gettext, code)
+  end
+
+  defp put_locale(_params), do: :ok
 
   @impl true
   def handle_in(

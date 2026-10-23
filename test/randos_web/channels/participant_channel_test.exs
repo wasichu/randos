@@ -22,11 +22,11 @@ defmodule RandosWeb.ParticipantChannelTest do
   alias Randos.Matchmaking.Matchmaker
   alias RandosWeb.ParticipantSocket
 
-  defp join_participant do
+  defp join_participant(params \\ %{}) do
     {:ok, %{state: state, languages: [_ | _]}, socket} =
       ParticipantSocket
       |> socket(nil, %{})
-      |> subscribe_and_join(RandosWeb.ParticipantChannel, "participant")
+      |> subscribe_and_join(RandosWeb.ParticipantChannel, "participant", params)
 
     {state, socket}
   end
@@ -64,6 +64,24 @@ defmodule RandosWeb.ParticipantChannelTest do
     {_state, socket} = join_participant()
     find(socket, "fr", "de", false)
     assert_push "state", %{status: :idle, error: :adult_terms_required}
+  end
+
+  test "the locale join param picks the language of the server's words; an unknown one is English" do
+    spanish =
+      Gettext.with_locale(RandosWeb.Gettext, "es", fn ->
+        RandosWeb.ParticipantErrors.message(:adult_terms_required)
+      end)
+
+    english = RandosWeb.ParticipantErrors.message(:adult_terms_required)
+    refute spanish == english
+
+    {_state, socket} = join_participant(%{"locale" => "es"})
+    find(socket, "fr", "de", false)
+    assert_push "state", %{error_message: ^spanish}
+
+    {_state, socket} = join_participant(%{"locale" => "xx"})
+    find(socket, "fr", "de", false)
+    assert_push "state", %{error_message: ^english}
   end
 
   test "find queues the participant; cancel_search leaves the queue" do

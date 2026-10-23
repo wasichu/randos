@@ -27,7 +27,11 @@ Tests: `test/randos_web/channels/participant_channel_test.exs`.
 
 ## Joining
 
-Join topic `"participant"` with `{}`. The reply carries the initial
+Join topic `"participant"` with `{}`, or `{"locale": "es"}`: your
+interface language, a code from the site's interface languages, so the
+words the server sends (`error_message`, the `status` reply's) are in it
+(anything else, or none, is English; only the code, never more of the
+environment's locale). The reply carries the initial
 [state](#state) and the supported conversation languages (use these codes in
 `find`; don't hardcode the list):
 
