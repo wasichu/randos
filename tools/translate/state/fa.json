@@ -1,0 +1,570 @@
+{
+  "%{first} or %{last}": {
+    "model": "madlad-400",
+    "msgstr": "%{first} یا %{last}"
+  },
+  "%{language} both ways": {
+    "model": "opus-mt",
+    "msgstr": "%{language} هر دو راه"
+  },
+  "%{minutes} min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes} دقیقه"
+  },
+  "%{time} remaining": {
+    "model": "translategemma-27b",
+    "msgstr": "زمان باقی‌مانده: %{time}"
+  },
+  "30+ min": {
+    "model": "translategemma-4b",
+    "msgstr": "30 دقیقه یا بیشتر"
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "translategemma-12b",
+    "msgstr": "مدت زمان یک مکالمه، %{call} دقیقه است. پس از اتمام این زمان، مکالمه می‌تواند به مدت %{extension} دقیقه دیگر ادامه یابد، اما فقط در صورتی که هر دو طرف موافق باشند. در مجموع، مدت زمان مکالمه نباید از %{max} دقیقه تجاوز کند. شما می‌توانید در هر زمانی از مکالمه خارج شوید."
+  },
+  "A doorway, not a platform": {
+    "model": "m2m100",
+    "msgstr": "یک دروازه، نه یک پلت فرم"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "translategemma-27b",
+    "msgstr": "وقتی تعداد درخواست‌ها برای یک جفت زبانی به حداقلِ %{min} برسد، آن جفت زبانی نمایش داده می‌شود؛ در غیر این صورت، در دسته‌ی «سایر» قرار می‌گیرد."
+  },
+  "About": {
+    "model": "hy-mt2",
+    "msgstr": "درباره ما"
+  },
+  "About randos": {
+    "model": "madlad-400",
+    "msgstr": "در مورد randos"
+  },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "madlad-400",
+    "msgstr": "قبل از جستجو برای rando تأیید ۱۸+ را بپذیرید."
+  },
+  "Attempting to reconnect": {
+    "model": "hy-mt2",
+    "msgstr": "تلاش برای اتصال مجدد"
+  },
+  "Both people choose whether to continue.": {
+    "model": "translategemma-27b",
+    "msgstr": "هر دو نفر تصمیم می‌گیرند که آیا به این کار ادامه دهند یا نه."
+  },
+  "Calls started": {
+    "model": "madlad-400",
+    "msgstr": "تماس‌ها آغاز شدند"
+  },
+  "Cancel": {
+    "model": "madlad-400",
+    "msgstr": "لغو"
+  },
+  "Canceled": {
+    "model": "opus-mt",
+    "msgstr": "لغو شد"
+  },
+  "Change": {
+    "model": "madlad-400",
+    "msgstr": "تغییر"
+  },
+  "Checking the relay…": {
+    "model": "opus-mt",
+    "msgstr": "در حال بررسی رله..."
+  },
+  "Choose supported conversation languages.": {
+    "model": "opus-mt",
+    "msgstr": "زبان های گفتگوی پشتیبانی شده را انتخاب کنید."
+  },
+  "Choose your languages.": {
+    "model": "translategemma-27b",
+    "msgstr": "زبان‌های مورد نظرتان را انتخاب کنید."
+  },
+  "Connected": {
+    "model": "hy-mt2",
+    "msgstr": "اتصال برقرار شد"
+  },
+  "Connecting": {
+    "model": "hy-mt2",
+    "msgstr": "اتصال برقرار کردن"
+  },
+  "Connection lost": {
+    "model": "hy-mt2",
+    "msgstr": "اتصال قطع شد"
+  },
+  "Connection:": {
+    "model": "hy-mt2",
+    "msgstr": "وضعیت اتصال:"
+  },
+  "Continued past 10 minutes": {
+    "model": "hy-mt2",
+    "msgstr": "بیش از ۱۰ دقیقه ادامه یافت"
+  },
+  "Conversation is active.": {
+    "model": "translategemma-4b",
+    "msgstr": "مکالمه در جریان است."
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "translategemma-12b",
+    "msgstr": "مکالمات خصوصی هستند و ذخیره نمی‌شوند. سرور، هماهنگی تماس را بر عهده دارد، اما هیچ گونه ضبطی از مکالمات انجام نمی‌دهد و هیچ سابقه ای از افرادی که با آنها صحبت کرده‌اید، ثبت نمی‌کند."
+  },
+  "Couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "نتوانست اتصال برقرار کند"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "hy-mt2",
+    "msgstr": "بر روی %{answered} از مجموع %{total} سرور شمارش شد."
+  },
+  "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
+    "model": "hy-mt2",
+    "msgstr": "شمارش از ساعت %{time} UTC در تاریخ %{date} آغاز شده است. این سرور هر بار که خاموش می‌شود یا به‌روزرسانی می‌گردد، دوباره از ابتدا شروع می‌شود؛ بنابراین این‌ها تماس‌های امروز از آن زمان هستند."
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "translategemma-27b",
+    "msgstr": "از ساعت %{time} به وقت گرینویچ در تاریخ %{date} تا به امروز، تعداد تماس‌های انجام‌شده به شرح زیر است."
+  },
+  "Current call": {
+    "model": "m2m100",
+    "msgstr": "تماس فعلی"
+  },
+  "Done": {
+    "model": "madlad-400",
+    "msgstr": "انجام شد"
+  },
+  "Ephemeral by default": {
+    "model": "translategemma-4b",
+    "msgstr": "به طور پیش‌فرض، موقتی"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "hy-mt2",
+    "msgstr": "هر تماس از طریق رله ما انجام می‌شود، بنابراین هیچ‌کدام از افراد آدرس طرف مقابل را نمی‌بینند. ما هر چند دقیقه یکبار آن را با برقراری یک اتصال رله واقعی آزمایش می‌کنیم."
+  },
+  "Find a phrase": {
+    "model": "hy-mt2",
+    "msgstr": "یک عبارت پیدا کنید"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "m2m100",
+    "msgstr": "پیدا کردن یک عبارت، به زبان انگلیسی یا %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "opus-mt",
+    "msgstr": "پیدا کردن یک سازگار rando."
+  },
+  "Finding a rando": {
+    "model": "madlad-400",
+    "msgstr": "پیدا کردن یک rando"
+  },
+  "Finished": {
+    "model": "opus-mt",
+    "msgstr": "کار تمام شد"
+  },
+  "Help fix a translation": {
+    "model": "m2m100",
+    "msgstr": "کمک به اصلاح ترجمه"
+  },
+  "How calls ended": {
+    "model": "m2m100",
+    "msgstr": "چگونه تماس ها به پایان رسید"
+  },
+  "How languages are counted": {
+    "model": "translategemma-12b",
+    "msgstr": "چگونه تعداد زبان‌ها شمارش می‌شود؟"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "hy-mt2",
+    "msgstr": "من ۱۸ ساله یا بالاتر هستم و می‌دانم که گفتگوها ناشناس و بدون نظارت هستند."
+  },
+  "I will speak in": {
+    "model": "translategemma-4b",
+    "msgstr": "من صحبت خواهم کرد در"
+  },
+  "I'm happy to hear": {
+    "model": "m2m100",
+    "msgstr": "خوشحالم که شنیدم"
+  },
+  "In call": {
+    "model": "translategemma-4b",
+    "msgstr": "در تماس تلفنی"
+  },
+  "Intentionally minimal": {
+    "model": "translategemma-4b",
+    "msgstr": "به طور عمدی، با حداقل امکانات"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "translategemma-27b",
+    "msgstr": "هدف آن، تسهیل %{crosstalk}، تبادل زبان، تمرین مهارت شنیداری، و گفت‌وگوهای روزمره و غیررسمی است، بدون اینکه افراد را به الگوها یا دسته‌بندی‌های سفت و سخت مجبور کنیم."
+  },
+  "Language": {
+    "model": "opus-mt",
+    "msgstr": "زبان"
+  },
+  "Languages spoken": {
+    "model": "hy-mt2",
+    "msgstr": "زبان‌های صحبت‌شده"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "translategemma-12b",
+    "msgstr": "آخرین بررسی در تاریخ %{time} به وقت جهانی (UTC) انجام شده است."
+  },
+  "Looking": {
+    "model": "madlad-400",
+    "msgstr": "در حال جستجو"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "madlad-400",
+    "msgstr": "در جستجوی rando که %{hearing_languages} صحبت می‌کند و می‌خواهد %{speaking_language} را بشنود."
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "translategemma-4b",
+    "msgstr": "بدون حساب کاربری. بدون پروفایل. بدون ویدیو. بدون فشار."
+  },
+  "No calls yet.": {
+    "model": "translategemma-12b",
+    "msgstr": "هنوز هیچ تماسی برقرار نشده است."
+  },
+  "No relay is configured": {
+    "model": "madlad-400",
+    "msgstr": "هیچ رله‌ای پیکربندی نشده است"
+  },
+  "Not translated yet": {
+    "model": "opus-mt",
+    "msgstr": "هنوز ترجمه نشده است"
+  },
+  "Nothing matches.": {
+    "model": "translategemma-27b",
+    "msgstr": "هیچ‌چیز با هم مطابقت ندارد."
+  },
+  "Other languages: %{calls}": {
+    "model": "opus-mt",
+    "msgstr": "زبان های دیگر: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-27b",
+    "msgstr": "از طریق TLS (شبکه‌هایی که پروتکل UDP را مسدود می‌کنند)."
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-12b",
+    "msgstr": "از طریق پروتکل UDP (اکثر تماس‌ها)."
+  },
+  "Pick at least one language to hear": {
+    "model": "m2m100",
+    "msgstr": "حداقل یک زبان را برای شنیدن انتخاب کنید"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "hy-mt2",
+    "msgstr": "هر زبانی را که در گوش دادن به آن احساس راحتی می‌کنید، انتخاب کنید."
+  },
+  "Pick the language you'd like to check.": {
+    "model": "madlad-400",
+    "msgstr": "زبانی که می‌خواهید بررسی کنید را انتخاب کنید."
+  },
+  "Preparing the call": {
+    "model": "translategemma-4b",
+    "msgstr": "آماده‌سازی برای تماس"
+  },
+  "Privacy": {
+    "model": "madlad-400",
+    "msgstr": "حریم خصوصی"
+  },
+  "Ready": {
+    "model": "translategemma-4b",
+    "msgstr": "آماده"
+  },
+  "Reconnecting audio…": {
+    "model": "translategemma-12b",
+    "msgstr": "در حال برقراری مجدد اتصال صدا..."
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "madlad-400",
+    "msgstr": "اجرای این ارسال به علاوه تغییراتی که هنوز ارسال نشده‌اند"
+  },
+  "Secure audio connection is starting.": {
+    "model": "translategemma-27b",
+    "msgstr": "اتصال صوتی امن در حال برقراری است."
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "m2m100",
+    "msgstr": "مکالمات کوتاه ناشناس برای تمرین زبان"
+  },
+  "Something went wrong!": {
+    "model": "opus-mt",
+    "msgstr": "چیزی اشتباه بود!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "opus-mt",
+    "msgstr": "منبع (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "madlad-400",
+    "msgstr": "شروع تماس با rando."
+  },
+  "Status": {
+    "model": "madlad-400",
+    "msgstr": "وضعیت"
+  },
+  "Stop looking": {
+    "model": "m2m100",
+    "msgstr": "نگاه کردن را متوقف کنید"
+  },
+  "Suggest a fix": {
+    "model": "translategemma-4b",
+    "msgstr": "پیشنهادی برای بهبود"
+  },
+  "Switch theme": {
+    "model": "hy-mt2",
+    "msgstr": "تغییر تم"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "translategemma-12b",
+    "msgstr": "تماس قطع شد، زیرا امکان پخش صدا در اینجا وجود ندارد."
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "translategemma-12b",
+    "msgstr": "تماس به دلیل از کار افتادن سیستم صوتی این دستگاه قطع شد."
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "translategemma-12b",
+    "msgstr": "تماس قطع شد، زیرا دسترسی به میکروفون مسدود شده بود. به آن اجازه دهید، و سپس دوباره امتحان کنید."
+  },
+  "The call ended because no microphone was found.": {
+    "model": "translategemma-4b",
+    "msgstr": "این تماس به دلیل عدم یافتن میکروفون، قطع شد."
+  },
+  "The commit this server runs": {
+    "model": "hy-mt2",
+    "msgstr": "کمیتی که این سرور اجرا می‌کند"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "translategemma-27b",
+    "msgstr": "رابط کاربری به‌طور عمدی ساده و کم‌حاشیه طراحی شده است. هدف، ایجاد فضایی آرام و بدون فشار روانی برای کاربر است، نه ایجاد حس رقابت یا تشویق به استفاده‌ی مداوم."
+  },
+  "The relay is partly working": {
+    "model": "opus-mt",
+    "msgstr": "رله تا حدی کار می کند"
+  },
+  "The relay is working": {
+    "model": "m2m100",
+    "msgstr": "رله کار می کند"
+  },
+  "The relay isn't working": {
+    "model": "opus-mt",
+    "msgstr": "رله کار نمی کند"
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "hy-mt2",
+    "msgstr": "ترجمه‌های این وب‌سایت توسط ماشین انجام شده و هنوز توسط انسان‌ها بررسی نشده‌اند. اگر متن در زبان شما به درستی نمایش داده نمی‌شود، لطفاً در اصلاح آن کمک کنید: متن مورد نظر را پیدا کرده، نحوه نوشتار صحیح آن را بنویسید و ما بقیه کارها را انجام خواهیم داد."
+  },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "hy-mt2",
+    "msgstr": "هیچ حساب، پروفایل، تماس، دنبال‌کننده، فید، رکورد، امتیاز یا نمودار اجتماعی دائمی وجود ندارد. randos بیشتر شبیه به زیرساخت‌های گفت‌وگویی است تا رسانه‌های اجتماعی."
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "translategemma-12b",
+    "msgstr": "ترجمه‌های این وب‌سایت توسط یک سیستم خودکار انجام شده‌اند. اگر متوجه اشتباهی شدید، آن را در قسمت زیر پیدا کنید و روی گزینه \"پیشنهاد اصلاح\" کلیک کنید. این کار یک درخواست در GitHub ایجاد می‌کند که تمام اطلاعات لازم در آن پر شده‌اند، به جز اصلاحی که شما ارائه می‌دهید (شما به یک حساب کاربری در GitHub نیاز دارید). یک درخواست اصلاحی به طور خودکار ایجاد می‌شود و پس از بررسی، به صورت نهایی منتشر خواهد شد."
+  },
+  "Time is up": {
+    "model": "madlad-400",
+    "msgstr": "وقت تموم شد"
+  },
+  "Time is up. Continue for another %{minutes} minutes?": {
+    "model": "translategemma-4b",
+    "msgstr": "زمان به پایان رسید. آیا می‌خواهید به مدت %{minutes} دقیقه دیگر ادامه دهید؟"
+  },
+  "Today": {
+    "model": "opus-mt",
+    "msgstr": "امروز"
+  },
+  "Toggle dark mode": {
+    "model": "translategemma-4b",
+    "msgstr": "فعال/غیرفعال کردن حالت تاریک"
+  },
+  "Translations": {
+    "model": "madlad-400",
+    "msgstr": "ترجمه‌ها"
+  },
+  "Typical length": {
+    "model": "translategemma-4b",
+    "msgstr": "طول معمول"
+  },
+  "View on GitHub": {
+    "model": "translategemma-4b",
+    "msgstr": "مشاهده در گیت‌هاب"
+  },
+  "We can't find the internet": {
+    "model": "m2m100",
+    "msgstr": "نمی توانیم اینترنت را پیدا کنیم"
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "translategemma-4b",
+    "msgstr": "ما نمی‌توانستیم آن تماس را برقرار کنیم. لطفاً دوباره امتحان کنید."
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "hy-mt2",
+    "msgstr": "ما تعداد تماس‌ها را شمارش می‌کنیم، نه افراد را: هیچ آدرسی، هیچ شناسه‌ای، هیچ اطلاعاتی درباره کسی وجود ندارد؛ فقط این ارقام کلی ثبت می‌شوند."
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "translategemma-12b",
+    "msgstr": "هر بخش از نرم‌افزار randos چه اطلاعاتی را مشاهده، ثبت و نگهداری می‌کند، و همچنین تنظیمات مربوط به هر یک از این عملکردها چیست؟"
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "translategemma-27b",
+    "msgstr": "آیا در حال حاضر امکان برقراری تماس وجود دارد، و اینکه امروز اوضاع چگونه پیش می‌رود."
+  },
+  "You": {
+    "model": "madlad-400",
+    "msgstr": "تو"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "madlad-400",
+    "msgstr": "شما موافقت کردید که ادامه دهید، در انتظار rando خود..."
+  },
+  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
+    "model": "madlad-400",
+    "msgstr": "شما زبانی را که می خواهید صحبت کنید و زبانی را که می خواهید بشنوید را انتخاب می کنید. randos شما را برای یک مکالمه کوتاه با کسی که با شما سازگار است جفت می کند، و سپس از سر راه شما دور می شود."
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "translategemma-27b",
+    "msgstr": "اتصال برقرار شد. با باز شدن تماس، پخش صدا آغاز می‌شود."
+  },
+  "You'll hear %{languages}": {
+    "model": "translategemma-12b",
+    "msgstr": "شما به زبان‌های زیر گوش خواهید داد: %{languages}"
+  },
+  "Your rando": {
+    "model": "madlad-400",
+    "msgstr": "شما rando"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "madlad-400",
+    "msgstr": "اتصال rando شما قطع شد؛ در حال انتظار چند ثانیه برای بازگشت آنها."
+  },
+  "button\u0004Continue": {
+    "model": "madlad-400",
+    "msgstr": "ادامه"
+  },
+  "button\u0004End": {
+    "model": "madlad-400",
+    "msgstr": "پایان"
+  },
+  "button\u0004Find a rando": {
+    "model": "madlad-400",
+    "msgstr": "پیدا کردن یک rando"
+  },
+  "button\u0004Mute": {
+    "model": "hy-mt2",
+    "msgstr": "خاموش کردن صدا"
+  },
+  "button\u0004Next rando": {
+    "model": "madlad-400",
+    "msgstr": "بعدی rando"
+  },
+  "button\u0004Unmute": {
+    "model": "hy-mt2",
+    "msgstr": "صدا را فعال کنید"
+  },
+  "close": {
+    "model": "hy-mt2",
+    "msgstr": "بسته"
+  },
+  "connection state\u0004answering": {
+    "model": "translategemma-4b",
+    "msgstr": "پاسخ دادن"
+  },
+  "connection state\u0004calling": {
+    "model": "madlad-400",
+    "msgstr": "صدا زدن"
+  },
+  "connection state\u0004connected": {
+    "model": "hy-mt2",
+    "msgstr": "متصل"
+  },
+  "connection state\u0004connecting": {
+    "model": "hy-mt2",
+    "msgstr": "اتصال برقرار کردن"
+  },
+  "connection state\u0004ended": {
+    "model": "m2m100",
+    "msgstr": "پایان یافت"
+  },
+  "connection state\u0004failed": {
+    "model": "hy-mt2",
+    "msgstr": "شکست خورد"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "m2m100",
+    "msgstr": "میکروفون رد شد"
+  },
+  "connection state\u0004not started": {
+    "model": "madlad-400",
+    "msgstr": "آغاز نشده"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "m2m100",
+    "msgstr": "درخواست میکروفون"
+  },
+  "connection state\u0004starting": {
+    "model": "opus-mt",
+    "msgstr": "شروع"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "madlad-400",
+    "msgstr": "منتظر rando شما"
+  },
+  "crosstalk": {
+    "model": "madlad-400",
+    "msgstr": "کراس‌تاک"
+  },
+  "microphone ready": {
+    "model": "madlad-400",
+    "msgstr": "میکروفون آماده است"
+  },
+  "microphone unavailable": {
+    "model": "madlad-400",
+    "msgstr": "میکروفون در دسترس نیست"
+  },
+  "privacy": {
+    "model": "madlad-400",
+    "msgstr": "حریم خصوصی"
+  },
+  "randos is a place for anonymous, audio-only language conversation.": {
+    "model": "opus-mt",
+    "msgstr": "randos مکانی برای گفتگوی ناشناس و فقط به زبان صوتی است."
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "translategemma-12b",
+    "msgstr": "randos یک نرم‌افزار رایگان است (با مجوز AGPL-3.0) و به صورت عمومی توسعه یافته است."
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "translategemma-27b",
+    "msgstr": "برای دسترسی به صدای پخش‌شده از راه دور، یک بار روی صفحه لمسی ضربه بزنید (%{summary}) ."
+  },
+  "remote audio playing (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "پخش صدا از راه دور (%{summary})"
+  },
+  "remote audio received (%{summary})": {
+    "model": "hy-mt2",
+    "msgstr": "صدای راه دور دریافت شد (%{summary})"
+  },
+  "requesting microphone": {
+    "model": "hy-mt2",
+    "msgstr": "درخواست میکروفون"
+  },
+  "under 1 min": {
+    "model": "madlad-400",
+    "msgstr": "کمتر از ۱ دقیقه"
+  },
+  "waiting for microphone": {
+    "model": "madlad-400",
+    "msgstr": "منتظر میکروفون"
+  },
+  "waiting for remote audio": {
+    "model": "translategemma-4b",
+    "msgstr": "در انتظار دریافت صدا از راه دور"
+  },
+  "working": {
+    "model": "translategemma-4b",
+    "msgstr": "در حال کار کردن"
+  }
+}

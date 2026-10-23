@@ -60,8 +60,8 @@
     "msgstr": "Batalkan"
   },
   "Canceled": {
-    "model": "opus-mt",
-    "msgstr": "Dibatalkan"
+    "model": "m2m100",
+    "msgstr": "dibatalkan"
   },
   "Change": {
     "model": "opus-mt",
@@ -96,8 +96,8 @@
     "msgstr": "Koneksi:"
   },
   "Continued past 10 minutes": {
-    "model": "translategemma-4b",
-    "msgstr": "Melanjutkan setelah 10 menit"
+    "model": "hy-mt2",
+    "msgstr": "Berlanjut lebih dari 10 menit"
   },
   "Conversation is active.": {
     "model": "translategemma-12b",
@@ -208,8 +208,8 @@
     "msgstr": "Terakhir diperiksa pada pukul %{time} UTC."
   },
   "Looking": {
-    "model": "hy-mt2",
-    "msgstr": "Mencari teman bicara"
+    "model": "opus-mt",
+    "msgstr": "Mencari"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "hy-mt2",
@@ -288,8 +288,8 @@
     "msgstr": "Percakapan anonim singkat untuk latihan bahasa."
   },
   "Something went wrong!": {
-    "model": "madlad-400",
-    "msgstr": "Ada yang salah!"
+    "model": "opus-mt",
+    "msgstr": "Ada yang tidak beres!"
   },
   "Source (AGPL-3.0)": {
     "model": "madlad-400",
@@ -304,8 +304,8 @@
     "msgstr": "Status"
   },
   "Stop looking": {
-    "model": "m2m100",
-    "msgstr": "Berhentilah melihat"
+    "model": "opus-mt",
+    "msgstr": "Berhenti mencari"
   },
   "Suggest a fix": {
     "model": "madlad-400",
@@ -320,8 +320,8 @@
     "msgstr": "Panggilan terputus karena fitur audio tidak tersedia di sini."
   },
   "The call ended because audio stopped working on this device.": {
-    "model": "translategemma-12b",
-    "msgstr": "Panggilan tersebut berakhir karena fungsi audio pada perangkat ini berhenti bekerja."
+    "model": "translategemma-4b",
+    "msgstr": "Panggilan berakhir karena fungsi audio pada perangkat ini tidak berfungsi."
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
     "model": "hy-mt2",
@@ -352,8 +352,8 @@
     "msgstr": "Relai tidak bekerja"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
-    "model": "hy-mt2",
-    "msgstr": "Terjemahan situs ini dibuat oleh mesin dan belum ditinjau oleh manusia. Jika ada bagian yang salah dalam bahasa Anda, tolong bantu perbaikinya: temukan teksnya, tuliskan bagaimana seharusnya tertulis, dan kami akan menangani sisanya."
+    "model": "translategemma-27b",
+    "msgstr": "Terjemahan di situs web ini dibuat oleh mesin dan belum diperiksa oleh manusia. Jika ada bagian yang terasa tidak tepat dalam bahasa Anda, mohon bantu perbaiki: temukan teks tersebut, tuliskan bagaimana seharusnya terjemahannya, dan kami akan melakukan sisanya."
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
     "model": "translategemma-27b",
@@ -376,8 +376,8 @@
     "msgstr": "Hari ini"
   },
   "Toggle dark mode": {
-    "model": "translategemma-4b",
-    "msgstr": "Aktifkan mode gelap"
+    "model": "hy-mt2",
+    "msgstr": "Beralih ke mode gelap"
   },
   "Translations": {
     "model": "madlad-400",
@@ -472,8 +472,8 @@
     "msgstr": "menjawab"
   },
   "connection state\u0004calling": {
-    "model": "opus-mt",
-    "msgstr": "memanggil"
+    "model": "m2m100",
+    "msgstr": "panggilan"
   },
   "connection state\u0004connected": {
     "model": "madlad-400",
@@ -512,8 +512,8 @@
     "msgstr": "menunggu rando Anda"
   },
   "crosstalk": {
-    "model": "m2m100",
-    "msgstr": "Crosstalk"
+    "model": "opus-mt",
+    "msgstr": "crosstalk"
   },
   "microphone ready": {
     "model": "m2m100",

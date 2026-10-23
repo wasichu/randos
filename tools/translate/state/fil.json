@@ -1,0 +1,570 @@
+{
+  "%{first} or %{last}": {
+    "model": "opus-mt",
+    "msgstr": "%{first} o %{last}"
+  },
+  "%{language} both ways": {
+    "model": "madlad-400",
+    "msgstr": "%{language} parehong paraan"
+  },
+  "%{minutes} min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes} minuto"
+  },
+  "%{time} remaining": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} na lang ang natitira"
+  },
+  "30+ min": {
+    "model": "hy-mt2",
+    "msgstr": "30 minuto o higit pa"
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "translategemma-12b",
+    "msgstr": "Ang isang pag-uusap ay tumatagal ng %{call} minuto. Kapag natapos na ang oras, maaari itong magpatuloy pa ng %{extension} minuto, basta't pareho kayong pumayag, hanggang sa kabuuang %{max} minuto. Maaari kang umalis anumang oras."
+  },
+  "A doorway, not a platform": {
+    "model": "opus-mt",
+    "msgstr": "Isang pintuan, hindi isang plataporma"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "translategemma-27b",
+    "msgstr": "Ipinapakita ang isang pares ng wika kapag mayroon na itong hindi bababa sa %{min} na bilang ng mga paggamit; ang mga may mas kaunting bilang ay isinasama sa kategoryang “iba pa”."
+  },
+  "About": {
+    "model": "madlad-400",
+    "msgstr": "Tungkol sa"
+  },
+  "About randos": {
+    "model": "madlad-400",
+    "msgstr": "Tungkol sa randos"
+  },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Tanggapin muna ang pahayag na 18+ bago maghanap ng rando."
+  },
+  "Attempting to reconnect": {
+    "model": "opus-mt",
+    "msgstr": "Pagsisikap na Makipag - ugnayang muli"
+  },
+  "Both people choose whether to continue.": {
+    "model": "translategemma-12b",
+    "msgstr": "Parehong ang mga tao ang nagdedesisyon kung itutuloy pa ba ito."
+  },
+  "Calls started": {
+    "model": "madlad-400",
+    "msgstr": "Nagsimula ang mga tawag"
+  },
+  "Cancel": {
+    "model": "madlad-400",
+    "msgstr": "I-cancel"
+  },
+  "Canceled": {
+    "model": "madlad-400",
+    "msgstr": "Nakansela"
+  },
+  "Change": {
+    "model": "opus-mt",
+    "msgstr": "Pagbabago"
+  },
+  "Checking the relay…": {
+    "model": "opus-mt",
+    "msgstr": "Sinusuri ang relay..."
+  },
+  "Choose supported conversation languages.": {
+    "model": "hy-mt2",
+    "msgstr": "Pumili ng mga suportadong wika para sa pag-uusap."
+  },
+  "Choose your languages.": {
+    "model": "opus-mt",
+    "msgstr": "Piliin ang inyong mga wika."
+  },
+  "Connected": {
+    "model": "madlad-400",
+    "msgstr": "Nakakonekta"
+  },
+  "Connecting": {
+    "model": "hy-mt2",
+    "msgstr": "Nagkokonekta"
+  },
+  "Connection lost": {
+    "model": "madlad-400",
+    "msgstr": "Nawala ang koneksyon"
+  },
+  "Connection:": {
+    "model": "madlad-400",
+    "msgstr": "Koneksyon:"
+  },
+  "Continued past 10 minutes": {
+    "model": "hy-mt2",
+    "msgstr": "Nagpatuloy nang higit sa 10 minuto"
+  },
+  "Conversation is active.": {
+    "model": "hy-mt2",
+    "msgstr": "Aktibo ang pag-uusap."
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "hy-mt2",
+    "msgstr": "Ang mga pag-uusap ay pribado at hindi iniimbak. Ang server ang namamahala sa tawag, ngunit hindi ito nag-iimbak ng mga rekord o lumilikha ng talaan kung sino ang kinakausap mo."
+  },
+  "Couldn't connect": {
+    "model": "opus-mt",
+    "msgstr": "Hindi makakonekta"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "translategemma-27b",
+    "msgstr": "Binilang batay sa %{answered} sa %{total} na mga server."
+  },
+  "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
+    "model": "translategemma-27b",
+    "msgstr": "Simula noong %{time} UTC, %{date}. Ang server na ito ay nagsisimula muli sa tuwing ito ay nagpapahinga o ina-update, kaya’t ito ang mga koneksyon/tawag na natanggap simula noon, sa araw na ito."
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "translategemma-12b",
+    "msgstr": "Bilang simula ng %{time} UTC noong %{date}: ang kabuuang bilang ng mga tawag ngayong araw hanggang ngayon."
+  },
+  "Current call": {
+    "model": "madlad-400",
+    "msgstr": "Kasalukuyang tawag"
+  },
+  "Done": {
+    "model": "opus-mt",
+    "msgstr": "Tapos"
+  },
+  "Ephemeral by default": {
+    "model": "opus-mt",
+    "msgstr": "Ephemeral sa pamamagitan ng default"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "hy-mt2",
+    "msgstr": "Bawat tawag ay dumadaan sa aming relay, kaya hindi nakikita ng alin mang tao ang address ng isa’t isa. Sinusubok namin ito tuwing ilang minuto sa pamamagitan ng paggawa ng tunay na koneksyon sa relay."
+  },
+  "Find a phrase": {
+    "model": "madlad-400",
+    "msgstr": "Hanapin ang isang parirala"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "translategemma-4b",
+    "msgstr": "Hanapin ang isang parirala, sa Ingles o sa %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Paghahanap ng kaukulang rando."
+  },
+  "Finding a rando": {
+    "model": "hy-mt2",
+    "msgstr": "Paghahanap ng rando"
+  },
+  "Finished": {
+    "model": "madlad-400",
+    "msgstr": "Natapos na"
+  },
+  "Help fix a translation": {
+    "model": "opus-mt",
+    "msgstr": "Tumulong sa pagsasaayos ng isang salin"
+  },
+  "How calls ended": {
+    "model": "hy-mt2",
+    "msgstr": "Paano nagwakas ang mga tawag"
+  },
+  "How languages are counted": {
+    "model": "madlad-400",
+    "msgstr": "Paano binibilang ang mga wika"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "translategemma-4b",
+    "msgstr": "Ako ay 18 taong gulang o mas matanda, at nauunawaan ko na ang mga pag-uusap ay hindi nagtataglay ng personal na impormasyon at walang moderator."
+  },
+  "I will speak in": {
+    "model": "opus-mt",
+    "msgstr": "Ako'y makikipag - usap"
+  },
+  "I'm happy to hear": {
+    "model": "opus-mt",
+    "msgstr": "Natutuwa akong marinig ito"
+  },
+  "In call": {
+    "model": "translategemma-4b",
+    "msgstr": "Sa tawag"
+  },
+  "Intentionally minimal": {
+    "model": "madlad-400",
+    "msgstr": "Sinasadyang minimal"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "hy-mt2",
+    "msgstr": "Ito ay nakalaan para sa %{crosstalk}, pagpapalitan ng wika, pagsasanay sa pakikinig, at karaniwang impormal na pag-uusap, nang hindi pinipilit ang mga tao sa mga mahigpit na pamamaraan o kategorya."
+  },
+  "Language": {
+    "model": "opus-mt",
+    "msgstr": "Wika"
+  },
+  "Languages spoken": {
+    "model": "translategemma-4b",
+    "msgstr": "Mga wika na ginagamit"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "hy-mt2",
+    "msgstr": "Huling tiningnan noong %{time} UTC."
+  },
+  "Looking": {
+    "model": "madlad-400",
+    "msgstr": "Naghahanap"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "hy-mt2",
+    "msgstr": "Naghahanap ng rando na nakakapagsalita ng %{hearing_languages} at gustong makarinig ng %{speaking_language}."
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "madlad-400",
+    "msgstr": "Walang mga account. Walang mga profile. Walang video. Walang presyon."
+  },
+  "No calls yet.": {
+    "model": "opus-mt",
+    "msgstr": "Wala pang mga tawag."
+  },
+  "No relay is configured": {
+    "model": "opus-mt",
+    "msgstr": "Walang relay ang nakaayos"
+  },
+  "Not translated yet": {
+    "model": "opus-mt",
+    "msgstr": "Hindi pa isinalin"
+  },
+  "Nothing matches.": {
+    "model": "translategemma-27b",
+    "msgstr": "Walang magkatugma."
+  },
+  "Other languages: %{calls}": {
+    "model": "hy-mt2",
+    "msgstr": "Iba pang wika: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-27b",
+    "msgstr": "Sa pamamagitan ng TLS (mga network na hindi pinapayagan ang UDP)."
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-27b",
+    "msgstr": "Sa pamamagitan ng UDP (karamihan ng mga tawag)."
+  },
+  "Pick at least one language to hear": {
+    "model": "hy-mt2",
+    "msgstr": "Pumili ng kahit isang wika para pakinggan"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "opus-mt",
+    "msgstr": "Pumili ng bawat wika na gusto mong pakinggan."
+  },
+  "Pick the language you'd like to check.": {
+    "model": "opus-mt",
+    "msgstr": "Pumili ng wikang gusto mong tingnan."
+  },
+  "Preparing the call": {
+    "model": "translategemma-4b",
+    "msgstr": "Paghahanda para sa tawag"
+  },
+  "Privacy": {
+    "model": "hy-mt2",
+    "msgstr": "Pribasiya"
+  },
+  "Ready": {
+    "model": "opus-mt",
+    "msgstr": "Handa"
+  },
+  "Reconnecting audio…": {
+    "model": "madlad-400",
+    "msgstr": "Muling pagkonekta ng audio…"
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "opus-mt",
+    "msgstr": "Pagtakbo sa gawaing ito pati na ang mga pagbabagong hindi pa ginagawa"
+  },
+  "Secure audio connection is starting.": {
+    "model": "hy-mt2",
+    "msgstr": "Nagsisimula na ang ligtas na koneksyon sa audio."
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "hy-mt2",
+    "msgstr": "Mga maikling pag-uusap na hindi nagpapakilala para sa pagsasanay sa wika."
+  },
+  "Something went wrong!": {
+    "model": "hy-mt2",
+    "msgstr": "May nangyaring mali!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "opus-mt",
+    "msgstr": "Pinagmulan (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "opus-mt",
+    "msgstr": "Pagsisimula ng pagtawag sa rando."
+  },
+  "Status": {
+    "model": "opus-mt",
+    "msgstr": "Kalagayan"
+  },
+  "Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "Huwag nang maghanap"
+  },
+  "Suggest a fix": {
+    "model": "translategemma-4b",
+    "msgstr": "Magmungkahi ng solusyon"
+  },
+  "Switch theme": {
+    "model": "madlad-400",
+    "msgstr": "Baguhin ang tema"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "madlad-400",
+    "msgstr": "Natapos ang tawag dahil hindi available ang audio dito."
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "translategemma-12b",
+    "msgstr": "Natapos ang tawag dahil hindi na gumagana ang audio sa aparatong ito."
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "translategemma-27b",
+    "msgstr": "Natapos ang tawag dahil hindi pinayagan ang paggamit ng mikropono. Payagan ito, at subukan muli."
+  },
+  "The call ended because no microphone was found.": {
+    "model": "hy-mt2",
+    "msgstr": "Natapos ang tawag dahil walang natagpuang mikropono."
+  },
+  "The commit this server runs": {
+    "model": "hy-mt2",
+    "msgstr": "Ang commit na isinasagawa ng server na ito"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "hy-mt2",
+    "msgstr": "Sinasadyang tahimik ang interface. Ang layunin ay magkaroon ng presyur na mababa sa presensya ng tao, hindi ang pagpapakita ng performance o mga mekanismo para sa interaksyon."
+  },
+  "The relay is partly working": {
+    "model": "opus-mt",
+    "msgstr": "Ang relay ay bahagyang gumagana"
+  },
+  "The relay is working": {
+    "model": "madlad-400",
+    "msgstr": "Ang relay ay gumagana"
+  },
+  "The relay isn't working": {
+    "model": "opus-mt",
+    "msgstr": "Hindi gumagana ang relay"
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "hy-mt2",
+    "msgstr": "Ang mga pagsasalin sa website na ito ay ginawa ng makina at hindi pa nasusuri ng mga tao. Kung may mali sa pagsasalin sa iyong wika, pakitulungan kaming itama ito: hanapin ang teksto, isulat kung paano ito dapat basahin, at kami na ang gagawa ng natitira."
+  },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "hy-mt2",
+    "msgstr": "Walang mga account, profile, contact, follower, feed, streak, score, o permanenteng social graph. Ang randos ay mas malapit sa imprastraktura para sa pag-uusap kaysa sa social media."
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "hy-mt2",
+    "msgstr": "Ang mga pagsasalin sa site na ito ay ginawa ng makina. Kung may mali sa pagbabasa, hanapin ito sa ibaba at pindutin ang “Suggest a fix”: magbubukas ito ng isyu sa GitHub kung saan nakalagay na ang lahat ng impormasyon maliban sa iyong solusyon (kailangan mo ng account sa GitHub). Ang pull request na may iyong solusyon ay awtomatikong magbubukas, at ito ay magiging aktibo kapag na-review na."
+  },
+  "Time is up": {
+    "model": "opus-mt",
+    "msgstr": "Tapos na ang panahon"
+  },
+  "Time is up. Continue for another %{minutes} minutes?": {
+    "model": "translategemma-12b",
+    "msgstr": "Tapos na ang oras. Gusto mo bang ipagpatuloy pa ito ng %{minutes} minuto?"
+  },
+  "Today": {
+    "model": "opus-mt",
+    "msgstr": "Ngayon"
+  },
+  "Toggle dark mode": {
+    "model": "madlad-400",
+    "msgstr": "I-toggle ang madilim na mode"
+  },
+  "Translations": {
+    "model": "opus-mt",
+    "msgstr": "Mga Salin"
+  },
+  "Typical length": {
+    "model": "madlad-400",
+    "msgstr": "Karaniwang haba"
+  },
+  "View on GitHub": {
+    "model": "madlad-400",
+    "msgstr": "Tingnan sa GitHub"
+  },
+  "We can't find the internet": {
+    "model": "opus-mt",
+    "msgstr": "Hindi namin makita ang internet"
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "opus-mt",
+    "msgstr": "Hindi namin masimulan ang tawag na iyon. Mangyaring subukan muli."
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "translategemma-12b",
+    "msgstr": "Binibilang namin ang mga tawag, hindi ang mga tao: walang mga address, walang mga identification, walang anumang impormasyon tungkol sa kahit sino; tanging ang mga kabuuang bilang lamang ang itinatala."
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "hy-mt2",
+    "msgstr": "Ano ang nakikita, iniuulat, at iniingatan ng bawat bahagi ng randos, kasama ang mga setting sa likod ng bawat claim:"
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "hy-mt2",
+    "msgstr": "Kung makakakonekta ba ang mga tawag ngayon, at kumusta naman ang araw na ito."
+  },
+  "You": {
+    "model": "opus-mt",
+    "msgstr": "Ikaw"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "opus-mt",
+    "msgstr": "Pumayag kang magpatuloy, naghihintay sa iyong rando..."
+  },
+  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
+    "model": "translategemma-27b",
+    "msgstr": "Ikaw ang pumipili ng wikang gusto mong gamitin at ng wikang gusto mong marinig. Ipinapares ka ng randos sa isang taong may pagkakatugma para sa isang maikling usapan, at pagkatapos ay hindi na ito nakikialam pa."
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "translategemma-27b",
+    "msgstr": "Nagkatugma na kayo. Magsisimula ang audio kapag nagsimula na ang tawag."
+  },
+  "You'll hear %{languages}": {
+    "model": "hy-mt2",
+    "msgstr": "Maririnig mo ang %{languages}"
+  },
+  "Your rando": {
+    "model": "opus-mt",
+    "msgstr": "Ang iyong rando"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "hy-mt2",
+    "msgstr": "Nawala ang koneksyon ng iyong rando; naghihintay ng ilang segundo hanggang sila ay makabalik."
+  },
+  "button\u0004Continue": {
+    "model": "hy-mt2",
+    "msgstr": "Ipagpatuloy"
+  },
+  "button\u0004End": {
+    "model": "translategemma-4b",
+    "msgstr": "Tapos"
+  },
+  "button\u0004Find a rando": {
+    "model": "madlad-400",
+    "msgstr": "Maghanap ng rando"
+  },
+  "button\u0004Mute": {
+    "model": "translategemma-4b",
+    "msgstr": "Patayin ang mikropono"
+  },
+  "button\u0004Next rando": {
+    "model": "hy-mt2",
+    "msgstr": "Susunod na rando"
+  },
+  "button\u0004Unmute": {
+    "model": "madlad-400",
+    "msgstr": "I-unmute"
+  },
+  "close": {
+    "model": "hy-mt2",
+    "msgstr": "sarado"
+  },
+  "connection state\u0004answering": {
+    "model": "hy-mt2",
+    "msgstr": "pag-sagot"
+  },
+  "connection state\u0004calling": {
+    "model": "translategemma-27b",
+    "msgstr": "tumatawag"
+  },
+  "connection state\u0004connected": {
+    "model": "madlad-400",
+    "msgstr": "konektado"
+  },
+  "connection state\u0004connecting": {
+    "model": "hy-mt2",
+    "msgstr": "nagkokonekta"
+  },
+  "connection state\u0004ended": {
+    "model": "hy-mt2",
+    "msgstr": "tapos na"
+  },
+  "connection state\u0004failed": {
+    "model": "madlad-400",
+    "msgstr": "nabigo"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "opus-mt",
+    "msgstr": "Hindi ibinigay ang mikropono"
+  },
+  "connection state\u0004not started": {
+    "model": "opus-mt",
+    "msgstr": "hindi nagsimula"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "translategemma-4b",
+    "msgstr": "Humihiling ng mikropono"
+  },
+  "connection state\u0004starting": {
+    "model": "madlad-400",
+    "msgstr": "pagsisimula"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "hy-mt2",
+    "msgstr": "Naghihintay sa iyong rando"
+  },
+  "crosstalk": {
+    "model": "madlad-400",
+    "msgstr": "crosstalk"
+  },
+  "microphone ready": {
+    "model": "translategemma-4b",
+    "msgstr": "handa na ang mikropono"
+  },
+  "microphone unavailable": {
+    "model": "opus-mt",
+    "msgstr": "Walang mikropono"
+  },
+  "privacy": {
+    "model": "madlad-400",
+    "msgstr": "pagkapribado"
+  },
+  "randos is a place for anonymous, audio-only language conversation.": {
+    "model": "translategemma-27b",
+    "msgstr": "Ang randos ay isang plataporma kung saan maaaring mag-usap ang mga tao sa pamamagitan lamang ng boses, nang hindi kinakailangang ibunyag ang kanilang pagkakakilanlan."
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "translategemma-4b",
+    "msgstr": "Ang randos ay libreng software (sa ilalim ng AGPL-3.0) at nabuo sa publiko."
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "translategemma-27b",
+    "msgstr": "Kailangan ng pag-tap para gumana ang audio sa malayo (%{summary})."
+  },
+  "remote audio playing (%{summary})": {
+    "model": "translategemma-4b",
+    "msgstr": "Pag-play ng audio mula sa malayo (%{summary})"
+  },
+  "remote audio received (%{summary})": {
+    "model": "translategemma-27b",
+    "msgstr": "natanggap ang audio mula sa malayo (%{summary})"
+  },
+  "requesting microphone": {
+    "model": "translategemma-4b",
+    "msgstr": "Humihiling ng mikropono"
+  },
+  "under 1 min": {
+    "model": "hy-mt2",
+    "msgstr": "mas mababa sa 1 minuto"
+  },
+  "waiting for microphone": {
+    "model": "opus-mt",
+    "msgstr": "naghihintay ng mikropono"
+  },
+  "waiting for remote audio": {
+    "model": "translategemma-4b",
+    "msgstr": "naghihintay ng audio mula sa malayo"
+  },
+  "working": {
+    "model": "opus-mt",
+    "msgstr": "nagtatrabaho"
+  }
+}

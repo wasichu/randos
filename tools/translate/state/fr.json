@@ -84,8 +84,8 @@
     "msgstr": "Connecté"
   },
   "Connecting": {
-    "model": "opus-mt",
-    "msgstr": "Connexion"
+    "model": "hy-mt2",
+    "msgstr": "Se connecter"
   },
   "Connection lost": {
     "model": "madlad-400",
@@ -96,8 +96,8 @@
     "msgstr": "Connexion:"
   },
   "Continued past 10 minutes": {
-    "model": "opus-mt",
-    "msgstr": "Suite des 10 dernières minutes"
+    "model": "madlad-400",
+    "msgstr": "Poursuite au-delà de 10 minutes"
   },
   "Conversation is active.": {
     "model": "translategemma-4b",
@@ -156,8 +156,8 @@
     "msgstr": "Trouver un rando"
   },
   "Finished": {
-    "model": "m2m100",
-    "msgstr": "Finalisé"
+    "model": "hy-mt2",
+    "msgstr": "Terminé"
   },
   "Help fix a translation": {
     "model": "hy-mt2",
@@ -352,8 +352,8 @@
     "msgstr": "Le relais ne fonctionne pas"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
-    "model": "madlad-400",
-    "msgstr": "Les traductions de ce site ont été faites par machine et n'ont pas encore été vérifiées par des personnes.Si quelque chose ne se lit pas correctement dans votre langue, aidez-nous à le corriger: trouvez le texte, écrivez comment il devrait se lire, et nous ferons le reste."
+    "model": "translategemma-4b",
+    "msgstr": "Les traductions de ce site ont été réalisées par un logiciel et n'ont pas encore été vérifiées par des personnes. Si quelque chose ne vous semble pas correct dans votre langue, veuillez nous aider à le corriger : trouvez le texte, indiquez comment il devrait être traduit, et nous nous occuperons du reste."
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
     "model": "madlad-400",
@@ -464,24 +464,24 @@
     "msgstr": "Désactiver le son"
   },
   "close": {
-    "model": "madlad-400",
-    "msgstr": "close"
+    "model": "opus-mt",
+    "msgstr": "fermer"
   },
   "connection state\u0004answering": {
-    "model": "m2m100",
-    "msgstr": "Répondre"
+    "model": "madlad-400",
+    "msgstr": "répondant"
   },
   "connection state\u0004calling": {
-    "model": "m2m100",
-    "msgstr": "appeler"
+    "model": "opus-mt",
+    "msgstr": "Appel"
   },
   "connection state\u0004connected": {
     "model": "opus-mt",
     "msgstr": "connecté"
   },
   "connection state\u0004connecting": {
-    "model": "m2m100",
-    "msgstr": "Connexion"
+    "model": "opus-mt",
+    "msgstr": "connexion"
   },
   "connection state\u0004ended": {
     "model": "m2m100",
@@ -512,8 +512,8 @@
     "msgstr": "En attente de votre rando"
   },
   "crosstalk": {
-    "model": "m2m100",
-    "msgstr": "Crosstalk"
+    "model": "opus-mt",
+    "msgstr": "crosstalk"
   },
   "microphone ready": {
     "model": "m2m100",
@@ -540,8 +540,8 @@
     "msgstr": "un simple clic suffit pour activer le son à distance (%{summary})"
   },
   "remote audio playing (%{summary})": {
-    "model": "opus-mt",
-    "msgstr": "lecture audio à distance (%{summary})"
+    "model": "hy-mt2",
+    "msgstr": "Reproduction audio à distance (%{summary})"
   },
   "remote audio received (%{summary})": {
     "model": "translategemma-12b",

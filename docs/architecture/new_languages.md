@@ -11,7 +11,12 @@ suggested: the system font for Urdu, no Hindi–Urdu hint for now, and no
 human read (the owner's rule: models and checks decide). Of the extra
 checks: NFC, "unchanged from English" and the Arabic letter forms were
 built; language ID wasn't (lingua is a 172 MB dependency of every check
-run; the judges catch a wrong language). The research follows as it was.
+run; the judges catch a wrong language). Later the same day the owner
+made Qwen a judge of every locale beside Mistral (Mistral still sits out
+ur, sw and fil). Result: 142 of 142 strings in each of the five; MADLAD
+7B picked most in ur, sw and fa, Hy-MT2 in vi and fil (the thin Swahili
+field was MADLAD's to carry, as expected). The research follows as it
+was.
 
 Research for adding **Vietnamese (`vi`), Urdu (`ur`) and Swahili (`sw`)**,
 and, if wanted, **Persian (`fa`) and Filipino (`fil` or `tl`)** as practice

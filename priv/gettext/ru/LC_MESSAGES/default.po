@@ -213,7 +213,7 @@ msgstr "Интерфейс намеренно выполнен в минимал
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
-msgstr "В randos нет аккаунтов, профилей, контактов, подписчиков, лент новостей, последовательностей, оценок или постоянной социальной сети. randos больше похож на инфраструктуру для общения, чем на социальные сети."
+msgstr "В системе нет ни аккаунтов, ни профилей, ни списков контактов, ни подписчиков, ни новостных лент, ни рейтингов, ни постоянной социальной сети. randos скорее представляет собой платформу для общения, чем социальную сеть."
 
 #. Your status when the call's time has run out and both people choose whether to go on.
 #: lib/randos_web/components/home_components.ex
@@ -349,7 +349,7 @@ msgstr "Получен удаленный аудиосигнал (краткое
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "requesting microphone"
-msgstr "просьба предоставить микрофон"
+msgstr "запрашивая микрофон"
 
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
@@ -396,7 +396,7 @@ msgstr "Включить звук"
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "answering"
-msgstr "Ответ"
+msgstr "отвечает"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -426,7 +426,7 @@ msgstr "Закончено"
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "failed"
-msgstr "Неудача"
+msgstr "Ошибка"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -489,7 +489,7 @@ msgstr[2] ""
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "%{language} both ways"
-msgstr "%{language} Оба способа"
+msgstr "%{language} в обоих направлениях"
 
 #. A call's typical length in minutes (min = minutes).
 #: lib/randos_web/live/status_live.ex
@@ -512,7 +512,7 @@ msgstr "Отменено"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Checking the relay…"
-msgstr "Проверка реле…"
+msgstr "Проверяю реле…"
 
 #. A count on the status page: how many calls connected today.
 #: lib/randos_web/live/status_live.ex
@@ -569,7 +569,7 @@ msgstr "Пока звонков нет."
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "No relay is configured"
-msgstr "Реле не настроено"
+msgstr "Никакой ретранслятор не настроен"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -606,7 +606,7 @@ msgstr "Реле работает"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "The relay isn't working"
-msgstr "Реле не работает"
+msgstr "Релей не работает"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -661,7 +661,7 @@ msgstr "Подсчёт с %{time} UTC по %{date}: звонки сегодня 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Privacy"
-msgstr "Приватность"
+msgstr "Конфиденциальность"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -783,4 +783,4 @@ msgstr "Переподключение звука..."
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You agreed to continue, waiting on your rando…"
-msgstr "Вы согласились продолжить, ждать вашего rando..."
+msgstr "Вы согласились продолжить, ожидая вашего rando…"

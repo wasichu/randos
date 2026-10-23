@@ -136,8 +136,8 @@
     "msgstr": "ابحث عن عبارة"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "translategemma-4b",
-    "msgstr": "ابحث عن عبارة، باللغة الإنجليزية أو اللغة: %{language}"
+    "model": "madlad-400",
+    "msgstr": "ابحث عن عبارة، باللغة الإنجليزية أو %{language}"
   },
   "Finding a compatible rando.": {
     "model": "m2m100",
@@ -168,12 +168,12 @@
     "msgstr": "أنا في الثامنة عشرة من عمري أو أكبر، وأدرك أن المحادثات مجهولة الهوية وغير خاضعة للرقابة."
   },
   "I will speak in": {
-    "model": "m2m100",
-    "msgstr": "سوف أتحدث في"
+    "model": "hy-mt2",
+    "msgstr": "سأتحدث في"
   },
   "I'm happy to hear": {
-    "model": "madlad-400",
-    "msgstr": "أنا سعيد لسماع"
+    "model": "m2m100",
+    "msgstr": "أنا سعيد أن أسمع"
   },
   "In call": {
     "model": "translategemma-4b",
@@ -292,16 +292,16 @@
     "msgstr": "الحالة"
   },
   "Stop looking": {
-    "model": "m2m100",
-    "msgstr": "توقف عن النظر"
+    "model": "madlad-400",
+    "msgstr": "توقفي عن البحث"
   },
   "Suggest a fix": {
     "model": "translategemma-4b",
     "msgstr": "اقترح حلاً"
   },
   "Switch theme": {
-    "model": "hy-mt2",
-    "msgstr": "غيّر الثيم"
+    "model": "translategemma-4b",
+    "msgstr": "تغيير المظهر"
   },
   "The call ended because audio isn't available here.": {
     "model": "hy-mt2",
@@ -325,11 +325,11 @@
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "translategemma-27b",
-    "msgstr": "الواجهة مُصمَّمة لتكون هادئة عن قصد. والهدف هو تحقيق تواصل إنساني مريح وغير مُرهِق، وليس التركيز على الأداء أو خلق حلقات تفاعلية مستمرة."
+    "msgstr": "الواجهة مُصمَّمة لتكون هادئة عن قصد. والهدف هو تحقيق تواصل إنساني مريح وغير مُرهِق، وليس التركيز على الأداء أو خلق حلقات تفاعلية مستمرة."
   },
   "The relay is partly working": {
-    "model": "m2m100",
-    "msgstr": "الراديو يعمل جزئياً"
+    "model": "madlad-400",
+    "msgstr": "المرحّل يعمل جزئيا"
   },
   "The relay is working": {
     "model": "madlad-400",
@@ -372,8 +372,8 @@
     "msgstr": "ترجمات"
   },
   "Typical length": {
-    "model": "madlad-400",
-    "msgstr": "الطول النموذجي"
+    "model": "hy-mt2",
+    "msgstr": "المدة المعتادة"
   },
   "View on GitHub": {
     "model": "translategemma-4b",
@@ -412,8 +412,8 @@
     "msgstr": "أنت تختار اللغة التي تريد التحدث بها، واللغة التي تريد الاستماع إليها. يقوم تطبيق \"randos\" بربطك بشخص متوافق لإجراء محادثة قصيرة، ثم يبتعد."
   },
   "You have matched. Audio starts when the call opens.": {
-    "model": "hy-mt2",
-    "msgstr": "لقد تم التطابق. يبدأ التسجيل الصوتي عند فتح المكالمة."
+    "model": "translategemma-27b",
+    "msgstr": "تمّ إيجاد تطابق. سيبدأ تشغيل الصوت عند بدء المكالمة."
   },
   "You'll hear %{languages}": {
     "model": "translategemma-12b",
@@ -428,8 +428,8 @@
     "msgstr": "استمر"
   },
   "button\u0004End": {
-    "model": "madlad-400",
-    "msgstr": "النهاية"
+    "model": "m2m100",
+    "msgstr": "نهاية"
   },
   "button\u0004Find a rando": {
     "model": "m2m100",
@@ -452,8 +452,8 @@
     "msgstr": "أغلق"
   },
   "connection state\u0004answering": {
-    "model": "madlad-400",
-    "msgstr": "الإجابة على الأسئلة"
+    "model": "translategemma-4b",
+    "msgstr": "الرد"
   },
   "connection state\u0004calling": {
     "model": "madlad-400",
@@ -544,8 +544,8 @@
     "msgstr": "في انتظار الميكروفون"
   },
   "waiting for remote audio": {
-    "model": "m2m100",
-    "msgstr": "في انتظار الصوت عن بعد"
+    "model": "hy-mt2",
+    "msgstr": "في انتظار الصوت عن بُعد"
   },
   "working": {
     "model": "hy-mt2",

@@ -44,8 +44,8 @@
     "msgstr": "एक rando के लिए देखने से पहले 18+ स्वीकृति स्वीकारें."
   },
   "Attempting to reconnect": {
-    "model": "hy-mt2",
-    "msgstr": "पुनः कनेक्ट होने का प्रयास कर रहा हूँ"
+    "model": "m2m100",
+    "msgstr": "फिर से जुड़ने की कोशिश"
   },
   "Both people choose whether to continue.": {
     "model": "translategemma-4b",
@@ -208,8 +208,8 @@
     "msgstr": "अंतिम बार जांच %{time} यूटीसी समय पर की गई थी।"
   },
   "Looking": {
-    "model": "opus-mt",
-    "msgstr": "देखा जा रहा है"
+    "model": "madlad-400",
+    "msgstr": "देख रहा है"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "madlad-400",
@@ -240,8 +240,8 @@
     "msgstr": "अन्य भाषाएँ: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
-    "model": "translategemma-27b",
-    "msgstr": "टीएलएस के माध्यम से (ऐसे नेटवर्क जिनमें यूडीपी अवरुद्ध है)।"
+    "model": "translategemma-4b",
+    "msgstr": "टीएलएस (नेटवर्क जो यूडीपी को ब्लॉक करते हैं) के माध्यम से।"
   },
   "Over UDP (most calls)": {
     "model": "translategemma-27b",
@@ -320,8 +320,8 @@
     "msgstr": "यह कॉल इसलिए समाप्त हुई क्योंकि यहां ऑडियो उपलब्ध नहीं है।"
   },
   "The call ended because audio stopped working on this device.": {
-    "model": "hy-mt2",
-    "msgstr": "इस डिवाइस पर ऑडियो काम करना बंद हो जाने के कारण कॉल समाप्त हो गई।"
+    "model": "translategemma-4b",
+    "msgstr": "यह कॉल इसलिए समाप्त हुई क्योंकि इस डिवाइस पर ऑडियो काम करना बंद हो गया।"
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
     "model": "translategemma-12b",
@@ -428,8 +428,8 @@
     "msgstr": "आप मेल खाते हैं. कॉल खुलने पर ऑडियो शुरू होता है."
   },
   "You'll hear %{languages}": {
-    "model": "madlad-400",
-    "msgstr": "आप सुनेंगे %{languages}"
+    "model": "opus-mt",
+    "msgstr": "आप सुन सकते हैं %{languages}"
   },
   "Your rando": {
     "model": "opus-mt",
@@ -444,24 +444,24 @@
     "msgstr": "जारी रखें"
   },
   "button\u0004End": {
-    "model": "translategemma-4b",
-    "msgstr": "समाप्त"
+    "model": "hy-mt2",
+    "msgstr": "समाप्त करें"
   },
   "button\u0004Find a rando": {
     "model": "opus-mt",
     "msgstr": "ढूंढें rando"
   },
   "button\u0004Mute": {
-    "model": "madlad-400",
-    "msgstr": "मौन"
+    "model": "hy-mt2",
+    "msgstr": "म्यूट करें"
   },
   "button\u0004Next rando": {
     "model": "opus-mt",
     "msgstr": "अगला rando"
   },
   "button\u0004Unmute": {
-    "model": "madlad-400",
-    "msgstr": "अनम्यूट"
+    "model": "opus-mt",
+    "msgstr": "अनमुट"
   },
   "close": {
     "model": "opus-mt",
@@ -480,8 +480,8 @@
     "msgstr": "जुड़े हुए"
   },
   "connection state\u0004connecting": {
-    "model": "opus-mt",
-    "msgstr": "कनेक्ट कर रहा है"
+    "model": "hy-mt2",
+    "msgstr": "कनेक्ट हो रहा है"
   },
   "connection state\u0004ended": {
     "model": "m2m100",
@@ -544,8 +544,8 @@
     "msgstr": "रिमोट ऑडियो प्ले हो रहा है (%{summary})"
   },
   "remote audio received (%{summary})": {
-    "model": "m2m100",
-    "msgstr": "रिमोट ऑडियो प्राप्त (%{summary})"
+    "model": "hy-mt2",
+    "msgstr": "रिमोट ऑडियो प्राप्त हुआ (%{summary})"
   },
   "requesting microphone": {
     "model": "madlad-400",

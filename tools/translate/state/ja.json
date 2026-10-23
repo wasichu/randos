@@ -60,8 +60,8 @@
     "msgstr": "キャンセル"
   },
   "Canceled": {
-    "model": "hy-mt2",
-    "msgstr": "キャンセルされました"
+    "model": "madlad-400",
+    "msgstr": "キャンセル"
   },
   "Change": {
     "model": "m2m100",
@@ -88,8 +88,8 @@
     "msgstr": "接続"
   },
   "Connection lost": {
-    "model": "translategemma-4b",
-    "msgstr": "接続が切断されました"
+    "model": "hy-mt2",
+    "msgstr": "接続が切れました"
   },
   "Connection:": {
     "model": "hy-mt2",
@@ -220,8 +220,8 @@
     "msgstr": "アカウントは不要。プロフィールも不要。動画も不要。プレッシャーもありません。"
   },
   "No calls yet.": {
-    "model": "translategemma-4b",
-    "msgstr": "まだ電話は来ない。"
+    "model": "translategemma-27b",
+    "msgstr": "まだ電話は来ていません。"
   },
   "No relay is configured": {
     "model": "madlad-400",
@@ -248,24 +248,24 @@
     "msgstr": "UDP経由（ほとんどの通話）"
   },
   "Pick at least one language to hear": {
-    "model": "madlad-400",
-    "msgstr": "少なくとも一つの聞きたい言語を選択"
+    "model": "hy-mt2",
+    "msgstr": "聞くための言語を1つ以上選んでください"
   },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-4b",
     "msgstr": "自分が聞き慣れているすべての言語を選んでください。"
   },
   "Pick the language you'd like to check.": {
-    "model": "m2m100",
-    "msgstr": "チェックしたい言語を選択します。"
+    "model": "translategemma-4b",
+    "msgstr": "確認したい言語を選択してください。"
   },
   "Preparing the call": {
-    "model": "translategemma-4b",
-    "msgstr": "通話の準備"
+    "model": "hy-mt2",
+    "msgstr": "通話の準備をしています"
   },
   "Privacy": {
-    "model": "translategemma-27b",
-    "msgstr": "プライバシーポリシー"
+    "model": "madlad-400",
+    "msgstr": "プライバシー"
   },
   "Ready": {
     "model": "translategemma-4b",
@@ -288,8 +288,8 @@
     "msgstr": "言語練習のための短い匿名の会話。"
   },
   "Something went wrong!": {
-    "model": "madlad-400",
-    "msgstr": "何かおかしい！"
+    "model": "translategemma-4b",
+    "msgstr": "何らかの問題が発生しました！"
   },
   "Source (AGPL-3.0)": {
     "model": "translategemma-12b",
@@ -324,12 +324,12 @@
     "msgstr": "このデバイスでオーディオが動作しなくなったため、通話が終了しました。"
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
-    "model": "translategemma-4b",
-    "msgstr": "通話が終了したのは、マイクへのアクセスが遮断されたことが原因です。アクセスを許可してから、再度確認してください。"
+    "model": "translategemma-12b",
+    "msgstr": "通話が終了したのは、マイクへのアクセスが許可されていなかったためです。アクセスを許可してから、再度試してみてください。"
   },
   "The call ended because no microphone was found.": {
-    "model": "madlad-400",
-    "msgstr": "マイクが見つからなかったため、通話は終了しました。"
+    "model": "translategemma-27b",
+    "msgstr": "マイクが見つからなかったため、通話が終了しました。"
   },
   "The commit this server runs": {
     "model": "hy-mt2",
@@ -384,8 +384,8 @@
     "msgstr": "翻訳"
   },
   "Typical length": {
-    "model": "madlad-400",
-    "msgstr": "典型的な長さ"
+    "model": "translategemma-12b",
+    "msgstr": "平均通話時間"
   },
   "View on GitHub": {
     "model": "translategemma-27b",
@@ -496,8 +496,8 @@
     "msgstr": "マイク拒否"
   },
   "connection state\u0004not started": {
-    "model": "hy-mt2",
-    "msgstr": "まだ開始されていません"
+    "model": "madlad-400",
+    "msgstr": "始まっていません"
   },
   "connection state\u0004requesting microphone": {
     "model": "madlad-400",
@@ -520,8 +520,8 @@
     "msgstr": "マイク準備完了"
   },
   "microphone unavailable": {
-    "model": "translategemma-4b",
-    "msgstr": "マイクが使用できない"
+    "model": "madlad-400",
+    "msgstr": "マイクが使えません"
   },
   "privacy": {
     "model": "m2m100",
@@ -532,8 +532,8 @@
     "msgstr": "randosは、匿名で音声のみを利用した言語交換のプラットフォームです。"
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "m2m100",
-    "msgstr": "randosは無料ソフトウェア(AGPL-3.0)であり、公共で構築されています。"
+    "model": "hy-mt2",
+    "msgstr": "randosはフリーソフトウェア（AGPL-3.0）であり、公開されて作成されています。"
   },
   "remote audio needs a tap (%{summary})": {
     "model": "hy-mt2",
@@ -548,8 +548,8 @@
     "msgstr": "遠隔オーディオ受信(%{summary})"
   },
   "requesting microphone": {
-    "model": "translategemma-4b",
-    "msgstr": "マイクの貸し出しを希望"
+    "model": "madlad-400",
+    "msgstr": "マイクを頼む"
   },
   "under 1 min": {
     "model": "m2m100",

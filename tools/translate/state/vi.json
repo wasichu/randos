@@ -1,0 +1,570 @@
+{
+  "%{first} or %{last}": {
+    "model": "hy-mt2",
+    "msgstr": "%{first} hoặc %{last}"
+  },
+  "%{language} both ways": {
+    "model": "m2m100",
+    "msgstr": "%{language} Cả hai cách"
+  },
+  "%{minutes} min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes} phút"
+  },
+  "%{time} remaining": {
+    "model": "madlad-400",
+    "msgstr": "%{time} còn lại"
+  },
+  "30+ min": {
+    "model": "hy-mt2",
+    "msgstr": "30 phút trở lên"
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "translategemma-27b",
+    "msgstr": "Một cuộc trò chuyện kéo dài %{call} phút. Khi hết thời gian, cuộc trò chuyện sẽ tiếp tục thêm %{extension} phút nữa nếu cả hai người đều đồng ý, nhưng tổng thời gian tối đa là %{max} phút. Bạn có thể kết thúc cuộc trò chuyện bất cứ lúc nào."
+  },
+  "A doorway, not a platform": {
+    "model": "m2m100",
+    "msgstr": "Một cánh cửa, không phải một nền tảng"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "translategemma-27b",
+    "msgstr": "Một cặp ngôn ngữ chỉ được hiển thị khi có ít nhất %{min} lượt yêu cầu; các cặp ngôn ngữ có số lượng yêu cầu nhỏ hơn sẽ được tính vào mục “khác”."
+  },
+  "About": {
+    "model": "hy-mt2",
+    "msgstr": "Giới thiệu về chúng tôi"
+  },
+  "About randos": {
+    "model": "translategemma-4b",
+    "msgstr": "Giới thiệu về randos"
+  },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Hãy chấp nhận điều kiện chỉ dành cho người trên 18 tuổi trước khi tìm kiếm một rando."
+  },
+  "Attempting to reconnect": {
+    "model": "madlad-400",
+    "msgstr": "Đang cố kết nối lại"
+  },
+  "Both people choose whether to continue.": {
+    "model": "translategemma-27b",
+    "msgstr": "Cả hai người đều có quyền quyết định xem có tiếp tục hay không."
+  },
+  "Calls started": {
+    "model": "m2m100",
+    "msgstr": "Các cuộc gọi bắt đầu"
+  },
+  "Cancel": {
+    "model": "translategemma-4b",
+    "msgstr": "Hủy"
+  },
+  "Canceled": {
+    "model": "translategemma-4b",
+    "msgstr": "Đã hủy"
+  },
+  "Change": {
+    "model": "madlad-400",
+    "msgstr": "Thay đổi"
+  },
+  "Checking the relay…": {
+    "model": "hy-mt2",
+    "msgstr": "Đang kiểm tra bộ truyền tín hiệu…"
+  },
+  "Choose supported conversation languages.": {
+    "model": "translategemma-4b",
+    "msgstr": "Chọn các ngôn ngữ hội thoại được hỗ trợ."
+  },
+  "Choose your languages.": {
+    "model": "translategemma-12b",
+    "msgstr": "Chọn ngôn ngữ của bạn."
+  },
+  "Connected": {
+    "model": "hy-mt2",
+    "msgstr": "Đã kết nối"
+  },
+  "Connecting": {
+    "model": "madlad-400",
+    "msgstr": "Đang kết nối"
+  },
+  "Connection lost": {
+    "model": "hy-mt2",
+    "msgstr": "Kết nối bị mất"
+  },
+  "Connection:": {
+    "model": "madlad-400",
+    "msgstr": "Kết nối:"
+  },
+  "Continued past 10 minutes": {
+    "model": "madlad-400",
+    "msgstr": "Tiếp tục sau 10 phút"
+  },
+  "Conversation is active.": {
+    "model": "hy-mt2",
+    "msgstr": "Cuộc trò chuyện đang diễn ra sôi nổi."
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "hy-mt2",
+    "msgstr": "Các cuộc trò chuyện được giữ bí mật và không được lưu trữ. Máy chủ đảm nhiệm việc điều phối cuộc gọi, nhưng nó không lưu lại bất kỳ bản ghi nào hay tạo ra lịch sử về những người bạn đã nói chuyện."
+  },
+  "Couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "Không thể kết nối"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "translategemma-27b",
+    "msgstr": "Được tính dựa trên kết quả từ %{answered} trên tổng số %{total} máy chủ."
+  },
+  "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
+    "model": "hy-mt2",
+    "msgstr": "Đang đếm kể từ thời điểm %{time} UTC vào ngày %{date}. Máy chủ này sẽ bắt đầu đếm lại mỗi khi tạm ngừng hoạt động hoặc được cập nhật, vì vậy đây là số lần gọi trong hôm nay kể từ thời điểm đó."
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "translategemma-12b",
+    "msgstr": "Kể từ %{time} giờ UTC ngày %{date}: số lượng cuộc gọi trong hôm nay tính đến thời điểm hiện tại."
+  },
+  "Current call": {
+    "model": "madlad-400",
+    "msgstr": "Cuộc gọi hiện tại"
+  },
+  "Done": {
+    "model": "translategemma-4b",
+    "msgstr": "Hoàn thành"
+  },
+  "Ephemeral by default": {
+    "model": "translategemma-4b",
+    "msgstr": "Mặc định là tạm thời"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "translategemma-27b",
+    "msgstr": "Mỗi cuộc gọi đều được định tuyến qua hệ thống của chúng tôi, do đó không bên nào có thể thấy địa chỉ của bên còn lại. Chúng tôi kiểm tra hệ thống này bằng cách thiết lập một kết nối thực tế mỗi vài phút."
+  },
+  "Find a phrase": {
+    "model": "madlad-400",
+    "msgstr": "Tìm một cụm từ"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "m2m100",
+    "msgstr": "Tìm một cụm từ, bằng tiếng Anh hoặc %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Tìm một rando phù hợp."
+  },
+  "Finding a rando": {
+    "model": "madlad-400",
+    "msgstr": "Tìm một rando"
+  },
+  "Finished": {
+    "model": "translategemma-4b",
+    "msgstr": "Hoàn thành"
+  },
+  "Help fix a translation": {
+    "model": "hy-mt2",
+    "msgstr": "Giúp sửa một bản dịch"
+  },
+  "How calls ended": {
+    "model": "madlad-400",
+    "msgstr": "Cuộc gọi kết thúc như thế nào"
+  },
+  "How languages are counted": {
+    "model": "translategemma-4b",
+    "msgstr": "Cách đếm số lượng các ngôn ngữ"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "translategemma-27b",
+    "msgstr": "Tôi đủ 18 tuổi trở lên và hiểu rằng các cuộc trò chuyện sẽ được giữ bí danh và không được kiểm duyệt."
+  },
+  "I will speak in": {
+    "model": "translategemma-4b",
+    "msgstr": "Tôi sẽ nói bằng"
+  },
+  "I'm happy to hear": {
+    "model": "madlad-400",
+    "msgstr": "Tôi rất vui khi nghe"
+  },
+  "In call": {
+    "model": "madlad-400",
+    "msgstr": "Trong cuộc gọi"
+  },
+  "Intentionally minimal": {
+    "model": "hy-mt2",
+    "msgstr": "Cố tình giữ ở mức tối thiểu"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "translategemma-27b",
+    "msgstr": "Dự kiến, nó sẽ được sử dụng cho %{crosstalk}, giao lưu ngôn ngữ, luyện nghe và các cuộc trò chuyện thông thường, thoải mái mà không cần phải áp đặt bất kỳ khuôn mẫu hay quy tắc cứng nhắc nào lên người tham gia."
+  },
+  "Language": {
+    "model": "hy-mt2",
+    "msgstr": "Ngôn ngữ"
+  },
+  "Languages spoken": {
+    "model": "translategemma-4b",
+    "msgstr": "Ngôn ngữ sử dụng"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "translategemma-12b",
+    "msgstr": "Lần kiểm tra cuối cùng: lúc %{time} giờ UTC."
+  },
+  "Looking": {
+    "model": "hy-mt2",
+    "msgstr": "Đang tìm kiếm"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "hy-mt2",
+    "msgstr": "Đang tìm một rando có thể nói tiếng %{hearing_languages} và muốn nghe tiếng %{speaking_language}."
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "translategemma-4b",
+    "msgstr": "Không có tài khoản. Không có hồ sơ cá nhân. Không có video. Không áp lực."
+  },
+  "No calls yet.": {
+    "model": "opus-mt",
+    "msgstr": "Chưa có cuộc gọi nào."
+  },
+  "No relay is configured": {
+    "model": "madlad-400",
+    "msgstr": "Chưa cấu hình bộ chuyển tiếp"
+  },
+  "Not translated yet": {
+    "model": "m2m100",
+    "msgstr": "chưa được dịch"
+  },
+  "Nothing matches.": {
+    "model": "translategemma-4b",
+    "msgstr": "Không có gì tương đồng."
+  },
+  "Other languages: %{calls}": {
+    "model": "m2m100",
+    "msgstr": "Các ngôn ngữ khác: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-27b",
+    "msgstr": "Thông qua giao thức TLS (trên các mạng chặn giao thức UDP)."
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-12b",
+    "msgstr": "Qua giao thức UDP (đa số các cuộc gọi)."
+  },
+  "Pick at least one language to hear": {
+    "model": "m2m100",
+    "msgstr": "Chọn ít nhất một ngôn ngữ để nghe"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "translategemma-4b",
+    "msgstr": "Chọn tất cả các ngôn ngữ mà bạn cảm thấy thoải mái khi nghe."
+  },
+  "Pick the language you'd like to check.": {
+    "model": "m2m100",
+    "msgstr": "Chọn ngôn ngữ bạn muốn kiểm tra."
+  },
+  "Preparing the call": {
+    "model": "madlad-400",
+    "msgstr": "Đang chuẩn bị cuộc gọi"
+  },
+  "Privacy": {
+    "model": "madlad-400",
+    "msgstr": "Quyền riêng tư"
+  },
+  "Ready": {
+    "model": "translategemma-4b",
+    "msgstr": "Sẵn sàng"
+  },
+  "Reconnecting audio…": {
+    "model": "hy-mt2",
+    "msgstr": "Đang kết nối lại âm thanh…"
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "hy-mt2",
+    "msgstr": "Thực thi lần commit này cùng với các thay đổi chưa được commit"
+  },
+  "Secure audio connection is starting.": {
+    "model": "m2m100",
+    "msgstr": "Kết nối âm thanh an toàn bắt đầu."
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "translategemma-12b",
+    "msgstr": "Những cuộc trò chuyện ngắn, ẩn danh để luyện tập ngôn ngữ."
+  },
+  "Something went wrong!": {
+    "model": "madlad-400",
+    "msgstr": "Có chuyện gì đó không ổn!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "madlad-400",
+    "msgstr": "Nguồn (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "madlad-400",
+    "msgstr": "Bắt đầu cuộc gọi với rando."
+  },
+  "Status": {
+    "model": "hy-mt2",
+    "msgstr": "Trạng thái"
+  },
+  "Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "Dừng tìm"
+  },
+  "Suggest a fix": {
+    "model": "madlad-400",
+    "msgstr": "Gợi ý sửa lỗi"
+  },
+  "Switch theme": {
+    "model": "hy-mt2",
+    "msgstr": "Thay đổi chủ đề"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "hy-mt2",
+    "msgstr": "Cuộc gọi đã kết thúc vì ở đây không có kết nối âm thanh."
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "hy-mt2",
+    "msgstr": "Cuộc gọi kết thúc vì âm thanh trên thiết bị này không hoạt động được nữa."
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "translategemma-12b",
+    "msgstr": "Cuộc gọi đã kết thúc vì quyền truy cập vào micro đã bị chặn. Vui lòng cho phép quyền truy cập đó, sau đó thử lại."
+  },
+  "The call ended because no microphone was found.": {
+    "model": "madlad-400",
+    "msgstr": "Cuộc gọi kết thúc vì không tìm thấy microphone."
+  },
+  "The commit this server runs": {
+    "model": "hy-mt2",
+    "msgstr": "Lệnh commit mà máy chủ này thực thi"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "translategemma-12b",
+    "msgstr": "Giao diện được thiết kế đơn giản, không cầu kỳ. Mục tiêu là tạo ra một môi trường thân thiện, giảm áp lực cho người dùng, thay vì tập trung vào hiệu suất hay các tương tác liên tục."
+  },
+  "The relay is partly working": {
+    "model": "m2m100",
+    "msgstr": "Mạng lưới hoạt động một phần"
+  },
+  "The relay is working": {
+    "model": "m2m100",
+    "msgstr": "Relay đang hoạt động"
+  },
+  "The relay isn't working": {
+    "model": "m2m100",
+    "msgstr": "Relay không hoạt động"
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "translategemma-12b",
+    "msgstr": "Các bản dịch trên trang web này được tạo ra bằng máy và chưa được kiểm duyệt bởi con người. Nếu bạn nhận thấy có lỗi trong bản dịch bằng ngôn ngữ của mình, vui lòng giúp chúng tôi sửa lại: tìm đoạn văn bản, viết lại theo cách đúng, và chúng tôi sẽ thực hiện phần còn lại."
+  },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "translategemma-27b",
+    "msgstr": "Không có tài khoản, hồ sơ người dùng, danh bạ, người theo dõi, nguồn cấp dữ liệu, chuỗi thành tích, điểm số hay mạng lưới quan hệ xã hội cố định. randos gần giống với một nền tảng hỗ trợ giao tiếp hơn là một mạng xã hội."
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "hy-mt2",
+    "msgstr": "Các bản dịch trên trang này được thực hiện bởi máy tính. Nếu có điều gì bị dịch sai, hãy tìm nó ở phía dưới và nhấn “Đề xuất sửa chữa”: điều này sẽ mở một ticket trên GitHub với mọi thông tin đã được điền sẵn, cùng với đề xuất sửa chữa của bạn (bạn cần có tài khoản GitHub). Yêu cầu pull request với đề xuất sửa chữa của bạn sẽ được tạo tự động, và nó sẽ được công bố sau khi được xem xét."
+  },
+  "Time is up": {
+    "model": "translategemma-4b",
+    "msgstr": "Thời gian đã hết"
+  },
+  "Time is up. Continue for another %{minutes} minutes?": {
+    "model": "translategemma-12b",
+    "msgstr": "Thời gian đã hết. Bạn có muốn tiếp tục thêm %{minutes} phút nữa không?"
+  },
+  "Today": {
+    "model": "madlad-400",
+    "msgstr": "Hôm nay"
+  },
+  "Toggle dark mode": {
+    "model": "madlad-400",
+    "msgstr": "Bật/ tắt chế độ tối"
+  },
+  "Translations": {
+    "model": "hy-mt2",
+    "msgstr": "Các bản dịch"
+  },
+  "Typical length": {
+    "model": "madlad-400",
+    "msgstr": "Chiều dài điển hình"
+  },
+  "View on GitHub": {
+    "model": "madlad-400",
+    "msgstr": "Xem trên GitHub"
+  },
+  "We can't find the internet": {
+    "model": "madlad-400",
+    "msgstr": "Chúng tôi không thể tìm thấy Internet"
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "hy-mt2",
+    "msgstr": "Chúng tôi không thể bắt đầu cuộc gọi đó. Vui lòng thử lại."
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "translategemma-12b",
+    "msgstr": "Chúng tôi chỉ đếm số lượng cuộc gọi, không phải số lượng người. Chúng tôi không thu thập địa chỉ, thông tin cá nhân, hay bất kỳ dữ liệu nào về người gọi; chỉ ghi lại tổng số cuộc gọi."
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "translategemma-4b",
+    "msgstr": "Mỗi phần của randos ghi lại, lưu trữ và quản lý những gì, cùng với cấu hình đằng sau mỗi thông tin:"
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "hy-mt2",
+    "msgstr": "Không biết hiện tại có thể gọi điện được không, và hôm nay mọi thứ diễn ra thế nào."
+  },
+  "You": {
+    "model": "translategemma-4b",
+    "msgstr": "Tôi"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "hy-mt2",
+    "msgstr": "Bạn đã đồng ý tiếp tục, chờ đợi người rando của mình…"
+  },
+  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
+    "model": "m2m100",
+    "msgstr": "Bạn chọn ngôn ngữ bạn muốn nói và ngôn ngữ bạn muốn nghe. randos kết hợp bạn với ai đó tương thích cho một cuộc trò chuyện ngắn, sau đó đi ra ngoài."
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "hy-mt2",
+    "msgstr": "Hai người đã được kết nối. Âm thanh sẽ bắt đầu phát khi cuộc gọi được mở."
+  },
+  "You'll hear %{languages}": {
+    "model": "translategemma-4b",
+    "msgstr": "Bạn sẽ nghe các ngôn ngữ: %{languages}"
+  },
+  "Your rando": {
+    "model": "madlad-400",
+    "msgstr": "rando của bạn"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "hy-mt2",
+    "msgstr": "Kết nối với rando của bạn đã bị ngắt; hãy chờ vài giây để họ kết nối trở lại."
+  },
+  "button\u0004Continue": {
+    "model": "madlad-400",
+    "msgstr": "Tiếp tục"
+  },
+  "button\u0004End": {
+    "model": "madlad-400",
+    "msgstr": "Kết thúc"
+  },
+  "button\u0004Find a rando": {
+    "model": "madlad-400",
+    "msgstr": "Tìm một rando"
+  },
+  "button\u0004Mute": {
+    "model": "hy-mt2",
+    "msgstr": "Tắt tiếng"
+  },
+  "button\u0004Next rando": {
+    "model": "hy-mt2",
+    "msgstr": "rando tiếp theo"
+  },
+  "button\u0004Unmute": {
+    "model": "hy-mt2",
+    "msgstr": "Bật micrô lại"
+  },
+  "close": {
+    "model": "hy-mt2",
+    "msgstr": "đóng lại"
+  },
+  "connection state\u0004answering": {
+    "model": "m2m100",
+    "msgstr": "Trả lời"
+  },
+  "connection state\u0004calling": {
+    "model": "hy-mt2",
+    "msgstr": "gọi điện"
+  },
+  "connection state\u0004connected": {
+    "model": "madlad-400",
+    "msgstr": "kết nối"
+  },
+  "connection state\u0004connecting": {
+    "model": "madlad-400",
+    "msgstr": "đang kết nối"
+  },
+  "connection state\u0004ended": {
+    "model": "m2m100",
+    "msgstr": "kết thúc"
+  },
+  "connection state\u0004failed": {
+    "model": "madlad-400",
+    "msgstr": "thất bại"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "translategemma-4b",
+    "msgstr": "Không cho phép sử dụng micro"
+  },
+  "connection state\u0004not started": {
+    "model": "hy-mt2",
+    "msgstr": "chưa bắt đầu"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "translategemma-4b",
+    "msgstr": "yêu cầu micro"
+  },
+  "connection state\u0004starting": {
+    "model": "translategemma-4b",
+    "msgstr": "bắt đầu"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "madlad-400",
+    "msgstr": "Đang chờ rando của bạn"
+  },
+  "crosstalk": {
+    "model": "translategemma-12b",
+    "msgstr": "giao tiếp chéo ngôn ngữ"
+  },
+  "microphone ready": {
+    "model": "madlad-400",
+    "msgstr": "micro sẵn sàng"
+  },
+  "microphone unavailable": {
+    "model": "translategemma-4b",
+    "msgstr": "Không có micro"
+  },
+  "privacy": {
+    "model": "hy-mt2",
+    "msgstr": "quyền riêng tư"
+  },
+  "randos is a place for anonymous, audio-only language conversation.": {
+    "model": "translategemma-12b",
+    "msgstr": "randos là một nền tảng dành cho những cuộc trò chuyện ngôn ngữ ẩn danh, chỉ sử dụng âm thanh."
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "translategemma-4b",
+    "msgstr": "randos là phần mềm mã nguồn mở (AGPL-3.0) và được phát triển công khai."
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "translategemma-12b",
+    "msgstr": "Âm thanh từ xa cần được kích hoạt bằng một thao tác chạm (%{summary})."
+  },
+  "remote audio playing (%{summary})": {
+    "model": "translategemma-4b",
+    "msgstr": "chơi âm thanh từ xa (%{summary})"
+  },
+  "remote audio received (%{summary})": {
+    "model": "translategemma-12b",
+    "msgstr": "Âm thanh nhận được từ xa (%{summary})."
+  },
+  "requesting microphone": {
+    "model": "translategemma-4b",
+    "msgstr": "yêu cầu micro"
+  },
+  "under 1 min": {
+    "model": "hy-mt2",
+    "msgstr": "dưới 1 phút"
+  },
+  "waiting for microphone": {
+    "model": "madlad-400",
+    "msgstr": "đợi micrô"
+  },
+  "waiting for remote audio": {
+    "model": "translategemma-4b",
+    "msgstr": "chờ đợi tín hiệu âm thanh từ xa"
+  },
+  "working": {
+    "model": "m2m100",
+    "msgstr": "làm việc"
+  }
+}

@@ -25,9 +25,9 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
 | 4 | TUI | Done: monitor, text client, call audio (STUN/TURN, echo cancellation, FEC), release builds, Homebrew tap (v0.2.0) |
 | — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
-| 6 | UI translations | **Next** |
+| 6 | UI translations | Done (2026-10-22): 19 languages, machine-made, fixes welcome through "Suggest a fix" |
 | — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Planned, likely before Phase 5's voice lab; design drafted and decided 2026-10-22, not built |
-| 5 | Voice anonymization | Planned (alongside 6); its voice lab starts with a code-quality pass |
+| 5 | Voice anonymization | **Next**; its voice lab starts with a code-quality pass (the owner's call: run it now, 2026-10-22) |
 
 ## How it fits together
 
@@ -237,6 +237,25 @@ off: it needs 4.3 Stage 1 (real call audio) and 4.4 (release binaries).
   differently.
 
 ## Phase 6: UI translations (after the first release; alongside Phase 5)
+
+**Status (2026-10-22, later): done, 19 languages.** Vietnamese, Urdu,
+Swahili, Persian and Filipino added (`new_languages.md`), 142 of 142
+strings each. Owner's decisions: two judges everywhere (Mistral and
+Qwen3 30B-A3B; Mistral sits out ur, sw and fil, which its card doesn't
+list), either can veto, their mean breaks ties; the new checks
+(untranslated English, Arabic letter forms in ur/fa, NFC) re-run on every
+locale and the 14 existing ones refilled with `--redo`: 121 strings
+re-picked (Arabic's "الراديو", *the radio*, for the relay, and
+"التسجيل الصوتي", *recording*, for audio, among them gone; Spanish's
+"Conexión", "En una llamada telefónica" and "Su rando" now "Conectando",
+"En llamada", "Tu rando"; German's "Sie" now "Du"). Picked most: MADLAD
+7B in ur, sw and fa, Hy-MT2 in vi and fil. Judging all 19 locales took
+21 minutes (3,765 Qwen, 366 Mistral judgements). The run found a GPU
+memory blow-up: Opus-MT and M2M100 repeating themselves to the output
+limit took 45–55 GB on MPS and swapped the Mac to a halt; their outputs
+are now budgeted to the input, batches are smaller, and M2M100 runs on
+the CPU (3.3 GB). Layout checked in ur, fa (right to left) and vi: no
+clipping with the system font, so no `:lang` rule or webfont.
 
 Numbered after Phase 5 but started first: after 4.4/4.5 ship, before the
 voice lab gets going, and worked on in parallel with it. Scoped 2026-10-20;

@@ -41,9 +41,9 @@ you both disappear. No accounts, no profiles, no video, no pressure.
    the call says "Reconnecting audio…" and comes back on its own, within
    fifteen seconds, or ends if it can't.
 
-That's all there is. Nothing about the call is kept. The site itself is
-in English for now, with a language switcher in the header; translations
-into the other languages are on their way. They're machine-made, so
+That's all there is. Nothing about the call is kept. The site speaks
+all 20 languages, with a switcher in the header. Its translations are
+machine-made, so
 [/translations](https://randos.slowinput.org/translations) lists every
 string next to the English: "Suggest a fix" opens a GitHub issue with
 everything filled in but your fix, and a pull request follows on its own.

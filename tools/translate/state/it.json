@@ -32,8 +32,8 @@
     "msgstr": "Una combinazione linguistica viene mostrata una volta raggiunte almeno %{min} chiamate; le combinazioni con un numero inferiore vengono raggruppate sotto la voce “altre”."
   },
   "About": {
-    "model": "hy-mt2",
-    "msgstr": "Informazioni su di noi"
+    "model": "translategemma-4b",
+    "msgstr": "Chi siamo"
   },
   "About randos": {
     "model": "opus-mt",
@@ -68,12 +68,12 @@
     "msgstr": "Variazione"
   },
   "Checking the relay…": {
-    "model": "hy-mt2",
-    "msgstr": "Controllo il relè…"
+    "model": "opus-mt",
+    "msgstr": "Controllo il relè..."
   },
   "Choose supported conversation languages.": {
-    "model": "madlad-400",
-    "msgstr": "Scegli le lingue di conversazione supportate."
+    "model": "translategemma-27b",
+    "msgstr": "Scegli le lingue supportate per la conversazione."
   },
   "Choose your languages.": {
     "model": "translategemma-4b",
@@ -196,8 +196,8 @@
     "msgstr": "È pensato per %{crosstalk}, lo scambio linguistico, l'esercitazione dell'ascolto e le conversazioni informali, senza imporre schemi rigidi o etichette."
   },
   "Language": {
-    "model": "m2m100",
-    "msgstr": "Il linguaggio"
+    "model": "opus-mt",
+    "msgstr": "Lingua"
   },
   "Languages spoken": {
     "model": "hy-mt2",
@@ -272,8 +272,8 @@
     "msgstr": "Pronto"
   },
   "Reconnecting audio…": {
-    "model": "hy-mt2",
-    "msgstr": "Riconnessione audio…"
+    "model": "madlad-400",
+    "msgstr": "Riconnessione audio in corso…"
   },
   "Running this commit plus changes not yet committed": {
     "model": "hy-mt2",
@@ -444,8 +444,8 @@
     "msgstr": "Continua"
   },
   "button\u0004End": {
-    "model": "m2m100",
-    "msgstr": "finito"
+    "model": "hy-mt2",
+    "msgstr": "Terminare"
   },
   "button\u0004Find a rando": {
     "model": "opus-mt",
@@ -468,8 +468,8 @@
     "msgstr": "chiudi"
   },
   "connection state\u0004answering": {
-    "model": "m2m100",
-    "msgstr": "Rispondi"
+    "model": "madlad-400",
+    "msgstr": "Rispondendo"
   },
   "connection state\u0004calling": {
     "model": "opus-mt",
@@ -512,8 +512,8 @@
     "msgstr": "In attesa del vostro rando"
   },
   "crosstalk": {
-    "model": "m2m100",
-    "msgstr": "di Crosstalk"
+    "model": "opus-mt",
+    "msgstr": "crosstalk"
   },
   "microphone ready": {
     "model": "opus-mt",

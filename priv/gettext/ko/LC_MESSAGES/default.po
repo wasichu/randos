@@ -89,7 +89,7 @@ msgstr "대화는 비공개이며 저장되지 않습니다. 서버는 통화를
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Current call"
-msgstr "현재 진행 중인 통화"
+msgstr "현재 통화"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
@@ -183,7 +183,7 @@ msgstr "더 이상 찾지 마"
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Switch theme"
-msgstr "테마 변경"
+msgstr "테마 바꾸기"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
@@ -334,7 +334,7 @@ msgstr "마이크 사용할 수 없음"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "remote audio needs a tap (%{summary})"
-msgstr "원격 오디오는 탭이 필요합니다 (%{summary})"
+msgstr "원격 오디오 연결을 위해 탭이 필요합니다. (%{summary})"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -620,7 +620,7 @@ msgstr "일반적인 소요 시간"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Whether calls can connect right now, and how today is going."
-msgstr "전화가 지금 연결될 수 있는지, 그리고 오늘은 어떻게 진행되고 있는지."
+msgstr "지금 전화가 연결될 수 있는지, 그리고 오늘은 어떻게 지내고 있는지."
 
 #. A relay server's state on the status page: it is working (up).
 #: lib/randos_web/live/status_live.ex
@@ -653,13 +653,13 @@ msgstr "UTC 시간 %{time}에 %{date}부터 집계를 시작했습니다. 이 �
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Counting since %{time} UTC on %{date}: today's calls so far."
-msgstr "%{date}의 %{time} UTC부터 집계된 수치: 오늘까지의 총 통화 횟수입니다."
+msgstr "%{date} %{time} UTC 기준 이후, 오늘까지의 통화 건수입니다."
 
 #. Footer link to the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Privacy"
-msgstr "개인 정보 보호 정책"
+msgstr "개인 정보 보호"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -675,7 +675,7 @@ msgstr "소스 (AGPL-3.0)"
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "The commit this server runs"
-msgstr "이 서버가 실행하는 커밋"
+msgstr "이 서버에서 실행 중인 커밋"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format

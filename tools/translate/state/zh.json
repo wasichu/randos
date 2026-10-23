@@ -4,8 +4,8 @@
     "msgstr": "%{first}或%{last}"
   },
   "%{language} both ways": {
-    "model": "opus-mt",
-    "msgstr": "%{language} 两种方式"
+    "model": "hy-mt2",
+    "msgstr": "%{language} 两种方向均可"
   },
   "%{minutes} min": {
     "model": "opus-mt",
@@ -156,8 +156,8 @@
     "msgstr": "查找 rando"
   },
   "Finished": {
-    "model": "m2m100",
-    "msgstr": "结束"
+    "model": "madlad-400",
+    "msgstr": "已完成"
   },
   "Help fix a translation": {
     "model": "opus-mt",
@@ -348,12 +348,12 @@
     "msgstr": "中继器起作用了"
   },
   "The relay isn't working": {
-    "model": "madlad-400",
-    "msgstr": "继电器不工作"
+    "model": "opus-mt",
+    "msgstr": "接力器坏了"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
-    "model": "hy-mt2",
-    "msgstr": "该网站的翻译是由机器完成的，尚未经过人工审核。如果您发现某些内容在您的语言中表达有误，请帮忙修正：找到相关文本，写出正确的表达方式，其余工作我们会处理。"
+    "model": "translategemma-27b",
+    "msgstr": "本网站上的翻译是由机器完成的，尚未经过人工校对。如果您发现有任何地方的翻译不准确或不自然，请帮助我们改进：找到相关文本，写出您认为正确的译文，其余的修改工作由我们来完成。"
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
     "model": "translategemma-12b",
@@ -384,8 +384,8 @@
     "msgstr": "翻译结果"
   },
   "Typical length": {
-    "model": "opus-mt",
-    "msgstr": "典型长度"
+    "model": "translategemma-4b",
+    "msgstr": "典型时长"
   },
   "View on GitHub": {
     "model": "madlad-400",
@@ -412,16 +412,16 @@
     "msgstr": "现在电话能否接通，以及今天的一切进展如何。"
   },
   "You": {
-    "model": "translategemma-4b",
-    "msgstr": "我"
+    "model": "m2m100",
+    "msgstr": "你"
   },
   "You agreed to continue, waiting on your rando…": {
     "model": "opus-mt",
     "msgstr": "你同意继续,等待你的rando..."
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "translategemma-4b",
-    "msgstr": "您可以选择您想说和想听的语言。randos会为您匹配一位合适的对话对象，然后让双方自行交流。"
+    "model": "translategemma-27b",
+    "msgstr": "你可以选择自己想使用的语言，以及希望对方使用的语言。randos会为你匹配一位合适的对话伙伴，让你们进行简短的交流，之后便不再干预。"
   },
   "You have matched. Audio starts when the call opens.": {
     "model": "translategemma-12b",
@@ -512,8 +512,8 @@
     "msgstr": "等待你的回复 rando"
   },
   "crosstalk": {
-    "model": "madlad-400",
-    "msgstr": "串扰"
+    "model": "opus-mt",
+    "msgstr": "交叉交谈"
   },
   "microphone ready": {
     "model": "opus-mt",

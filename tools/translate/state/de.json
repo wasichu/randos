@@ -12,8 +12,8 @@
     "msgstr": "%{minutes} Minuten"
   },
   "%{time} remaining": {
-    "model": "madlad-400",
-    "msgstr": "%{time} noch verfügbar"
+    "model": "opus-mt",
+    "msgstr": "%{time} verbleibend"
   },
   "30+ min": {
     "model": "translategemma-4b",
@@ -68,8 +68,8 @@
     "msgstr": "Ändern"
   },
   "Checking the relay…": {
-    "model": "translategemma-4b",
-    "msgstr": "Überprüfung des Relais…"
+    "model": "opus-mt",
+    "msgstr": "Ich überprüfe das Relais..."
   },
   "Choose supported conversation languages.": {
     "model": "hy-mt2",
@@ -208,8 +208,8 @@
     "msgstr": "Letzte Überprüfung: %{time} UTC."
   },
   "Looking": {
-    "model": "opus-mt",
-    "msgstr": "Suchen"
+    "model": "hy-mt2",
+    "msgstr": "Nach jemandem zum Reden suchen"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "hy-mt2",
@@ -224,8 +224,8 @@
     "msgstr": "Bisher keine Anrufe."
   },
   "No relay is configured": {
-    "model": "madlad-400",
-    "msgstr": "Es ist kein Relais konfiguriert"
+    "model": "opus-mt",
+    "msgstr": "Kein Relais konfiguriert"
   },
   "Not translated yet": {
     "model": "opus-mt",
@@ -312,8 +312,8 @@
     "msgstr": "Eine Korrektur vorschlagen"
   },
   "Switch theme": {
-    "model": "hy-mt2",
-    "msgstr": "Theme wechseln"
+    "model": "madlad-400",
+    "msgstr": "Thema wechseln"
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-12b",
@@ -412,8 +412,8 @@
     "msgstr": "Ob Anrufe jetzt verbunden werden können und wie der Tag verläuft."
   },
   "You": {
-    "model": "opus-mt",
-    "msgstr": "Sie"
+    "model": "hy-mt2",
+    "msgstr": "Du"
   },
   "You agreed to continue, waiting on your rando…": {
     "model": "hy-mt2",
@@ -472,8 +472,8 @@
     "msgstr": "Antwort"
   },
   "connection state\u0004calling": {
-    "model": "translategemma-4b",
-    "msgstr": "Anruf"
+    "model": "opus-mt",
+    "msgstr": "Anrufen"
   },
   "connection state\u0004connected": {
     "model": "madlad-400",
@@ -500,8 +500,8 @@
     "msgstr": "nicht gestartet"
   },
   "connection state\u0004requesting microphone": {
-    "model": "madlad-400",
-    "msgstr": "Anforderung eines Mikrofons"
+    "model": "opus-mt",
+    "msgstr": "Mikrofon anfordern"
   },
   "connection state\u0004starting": {
     "model": "madlad-400",
@@ -536,8 +536,8 @@
     "msgstr": "randos ist eine freie Software (AGPL-3.0) und wird öffentlich entwickelt."
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "translategemma-27b",
-    "msgstr": "Für die Fernsteuerung des Audios ist ein Tippen erforderlich (%{summary})."
+    "model": "opus-mt",
+    "msgstr": "Remote-Audio benötigt einen Tipp (%{summary})"
   },
   "remote audio playing (%{summary})": {
     "model": "translategemma-27b",
@@ -548,16 +548,16 @@
     "msgstr": "Remote-Audio empfangen (%{summary})"
   },
   "requesting microphone": {
-    "model": "madlad-400",
-    "msgstr": "Anforderung eines Mikrofons"
+    "model": "opus-mt",
+    "msgstr": "Mikrofon anfordern"
   },
   "under 1 min": {
     "model": "hy-mt2",
     "msgstr": "unter 1 Minute"
   },
   "waiting for microphone": {
-    "model": "opus-mt",
-    "msgstr": "Warten auf Mikrofon"
+    "model": "hy-mt2",
+    "msgstr": "warte auf das Mikrofon"
   },
   "waiting for remote audio": {
     "model": "madlad-400",

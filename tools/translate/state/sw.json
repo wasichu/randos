@@ -1,0 +1,570 @@
+{
+  "%{first} or %{last}": {
+    "model": "translategemma-27b",
+    "msgstr": "%{first} au %{last}"
+  },
+  "%{language} both ways": {
+    "model": "madlad-400",
+    "msgstr": "%{language} njia zote mbili"
+  },
+  "%{minutes} min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes} dakika"
+  },
+  "%{time} remaining": {
+    "model": "madlad-400",
+    "msgstr": "%{time} iliyobaki"
+  },
+  "30+ min": {
+    "model": "m2m100",
+    "msgstr": "Muda wa 30+"
+  },
+  "A conversation lasts %{call} minutes. When time is up, it continues for another %{extension} minutes only if both people choose to, up to %{max} minutes in all. You can leave at any time.": {
+    "model": "translategemma-27b",
+    "msgstr": "Mazungumzo yanaweza kudumu kwa dakika %{call}. Wakati huu ukiisha, yanaweza kuendelea kwa dakika %{extension} nyingine, lakini tu iwapo wote wawili wataamua hivyo, na kwa jumla si zaidi ya dakika %{max}. Unaweza kuacha mazungumzo wakati wowote."
+  },
+  "A doorway, not a platform": {
+    "model": "madlad-400",
+    "msgstr": "mlango, si jukwaa"
+  },
+  "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
+    "model": "translategemma-27b",
+    "msgstr": "Jozi ya lugha huonekana mara baada ya kuwa na angalau %{min} matumizi; yale yaliyopungua hayo huhesabiwa chini ya “vingine”."
+  },
+  "About": {
+    "model": "madlad-400",
+    "msgstr": "Kuhusu"
+  },
+  "About randos": {
+    "model": "madlad-400",
+    "msgstr": "Kuhusu randos"
+  },
+  "Accept the 18+ acknowledgment before looking for a rando.": {
+    "model": "madlad-400",
+    "msgstr": "Kukubali 18+ kukiri kabla ya kutafuta rando."
+  },
+  "Attempting to reconnect": {
+    "model": "m2m100",
+    "msgstr": "kujaribu kuunganisha tena"
+  },
+  "Both people choose whether to continue.": {
+    "model": "translategemma-12b",
+    "msgstr": "Watu wote wawili huamua kama watataka kuendelea."
+  },
+  "Calls started": {
+    "model": "m2m100",
+    "msgstr": "Maombi ya kuanza"
+  },
+  "Cancel": {
+    "model": "m2m100",
+    "msgstr": "Kuzuia"
+  },
+  "Canceled": {
+    "model": "madlad-400",
+    "msgstr": "Imesitishwa"
+  },
+  "Change": {
+    "model": "translategemma-4b",
+    "msgstr": "Badilisha"
+  },
+  "Checking the relay…": {
+    "model": "translategemma-4b",
+    "msgstr": "Tafadhali, angalia swichi…"
+  },
+  "Choose supported conversation languages.": {
+    "model": "translategemma-12b",
+    "msgstr": "Chagua lugha ambazo zinaungwa mkono kwa ajili ya mazungumzo."
+  },
+  "Choose your languages.": {
+    "model": "translategemma-12b",
+    "msgstr": "Chagua lugha zako."
+  },
+  "Connected": {
+    "model": "m2m100",
+    "msgstr": "kuunganishwa"
+  },
+  "Connecting": {
+    "model": "translategemma-4b",
+    "msgstr": "kuunganisha"
+  },
+  "Connection lost": {
+    "model": "madlad-400",
+    "msgstr": "Uhusiano umepotea"
+  },
+  "Connection:": {
+    "model": "translategemma-4b",
+    "msgstr": "Muunganisho:"
+  },
+  "Continued past 10 minutes": {
+    "model": "m2m100",
+    "msgstr": "Kuendelea kwa dakika 10 iliyopita"
+  },
+  "Conversation is active.": {
+    "model": "translategemma-4b",
+    "msgstr": "Mazungumzo yanaendelea."
+  },
+  "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
+    "model": "madlad-400",
+    "msgstr": "Mazungumzo ni ya faragha na hayahifadhiwi. Seva inaratibu simu, lakini haihifadhi rekodi au kujenga historia kuhusu mtu uliyezungumza naye."
+  },
+  "Couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "Hakuweza kuunganishwa"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "translategemma-27b",
+    "msgstr": "Imehesabiwa kutoka kwa %{answered} kati ya %{total} ya seva zilizopo."
+  },
+  "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
+    "model": "translategemma-27b",
+    "msgstr": "Kuhesabu kuanzia saa %{time} za UTC tarehe %{date}. Huduma hii huanzishwa upya kila inapoingia katika hali ya “usingizi” (sleep mode) au inapofanyiwa marekebisho, kwa hivyo, haya ni matokeo ya leo tangu wakati huo."
+  },
+  "Counting since %{time} UTC on %{date}: today's calls so far.": {
+    "model": "translategemma-12b",
+    "msgstr": "Kuanzia saa ya %{time} UTC siku ya %{date}: idadi ya simu zilizopigwa hadi sasa leo."
+  },
+  "Current call": {
+    "model": "madlad-400",
+    "msgstr": "wito wa sasa"
+  },
+  "Done": {
+    "model": "madlad-400",
+    "msgstr": "Imekwisha"
+  },
+  "Ephemeral by default": {
+    "model": "translategemma-4b",
+    "msgstr": "Kwa chaguo, kwa kawaida"
+  },
+  "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
+    "model": "translategemma-27b",
+    "msgstr": "Kila simu inapitishwa kupitia mfumo wetu, hivyo hakuna mtu anayeweza kuona anwani ya mtu mwingine. Hili tunalihakikisha kwa kufanya majaribio kila baada ya dakika chache kwa kuunda muunganisho halisi wa simu."
+  },
+  "Find a phrase": {
+    "model": "m2m100",
+    "msgstr": "kutafuta maneno"
+  },
+  "Find a phrase, in English or %{language}": {
+    "model": "madlad-400",
+    "msgstr": "Kupata kauli, kwa Kiingereza au %{language}"
+  },
+  "Finding a compatible rando.": {
+    "model": "madlad-400",
+    "msgstr": "Kupata sambamba rando."
+  },
+  "Finding a rando": {
+    "model": "madlad-400",
+    "msgstr": "Kutafuta rando"
+  },
+  "Finished": {
+    "model": "madlad-400",
+    "msgstr": "Imekwisha"
+  },
+  "Help fix a translation": {
+    "model": "translategemma-4b",
+    "msgstr": "Msaada wa kurekebisha tafsiri"
+  },
+  "How calls ended": {
+    "model": "translategemma-4b",
+    "msgstr": "Jinsi majadiliano zilimalizia"
+  },
+  "How languages are counted": {
+    "model": "translategemma-4b",
+    "msgstr": "Jinsi lugha zinahesabiwa"
+  },
+  "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
+    "model": "translategemma-27b",
+    "msgstr": "Nina umri wa miaka 18 au zaidi, na ninaelewa kuwa mazungumzo yote yatafanyika bila kujulikana na hayataangaliwa na yeyote."
+  },
+  "I will speak in": {
+    "model": "madlad-400",
+    "msgstr": "Mimi nitazungumza katika"
+  },
+  "I'm happy to hear": {
+    "model": "madlad-400",
+    "msgstr": "Mimi ni furaha ya kusikia"
+  },
+  "In call": {
+    "model": "translategemma-4b",
+    "msgstr": "Katika simu"
+  },
+  "Intentionally minimal": {
+    "model": "translategemma-4b",
+    "msgstr": "Kwa nia ya kuwa hafifu"
+  },
+  "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
+    "model": "translategemma-27b",
+    "msgstr": "Imeundwa kwa ajili ya %{crosstalk}, mazungumzo ya lugha mbalimbali, mazoezi ya kusikiliza, na mazungumzo ya kawaida bila kulazimisha watu kufuata mifumo au vitambulisho vingine."
+  },
+  "Language": {
+    "model": "madlad-400",
+    "msgstr": "Lugha"
+  },
+  "Languages spoken": {
+    "model": "translategemma-4b",
+    "msgstr": "Lugha zinazotumiwa"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "translategemma-4b",
+    "msgstr": "Imepimwa mwisho saa %{time} UTC."
+  },
+  "Looking": {
+    "model": "m2m100",
+    "msgstr": "kuangalia"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "madlad-400",
+    "msgstr": "Kuangalia kwa rando ambaye anaongea %{hearing_languages} na anataka kusikia %{speaking_language}."
+  },
+  "No accounts. No profiles. No video. No pressure.": {
+    "model": "madlad-400",
+    "msgstr": "Hakuna akaunti. Hakuna wasifu. Hakuna video. Hakuna shinikizo."
+  },
+  "No calls yet.": {
+    "model": "translategemma-27b",
+    "msgstr": "Hakuna simu zilizopokelewa hadi sasa."
+  },
+  "No relay is configured": {
+    "model": "translategemma-4b",
+    "msgstr": "Hakuna njia ya usaidizi iliyowekwa"
+  },
+  "Not translated yet": {
+    "model": "m2m100",
+    "msgstr": "Hakuna kutafsiriwa"
+  },
+  "Nothing matches.": {
+    "model": "translategemma-12b",
+    "msgstr": "Hakuna kitu kinacholingana."
+  },
+  "Other languages: %{calls}": {
+    "model": "translategemma-12b",
+    "msgstr": "Lugha zingine: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-12b",
+    "msgstr": "Kupitia TLS (mitandao ambayo inazuia matumizi ya UDP)."
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-12b",
+    "msgstr": "Kupitia UDP (katika simu nyingi)."
+  },
+  "Pick at least one language to hear": {
+    "model": "translategemma-4b",
+    "msgstr": "Chagua lugha moja au zaidi ili kusikiliza"
+  },
+  "Pick every language you're comfortable listening to.": {
+    "model": "translategemma-12b",
+    "msgstr": "Chagua lugha zote ambazo unaweza kusikiliza kwa urahisi."
+  },
+  "Pick the language you'd like to check.": {
+    "model": "translategemma-12b",
+    "msgstr": "Chagua lugha unayotaka kuangalia."
+  },
+  "Preparing the call": {
+    "model": "translategemma-4b",
+    "msgstr": "Kupanga simu"
+  },
+  "Privacy": {
+    "model": "m2m100",
+    "msgstr": "Usalama wa"
+  },
+  "Ready": {
+    "model": "translategemma-4b",
+    "msgstr": "Tayari"
+  },
+  "Reconnecting audio…": {
+    "model": "madlad-400",
+    "msgstr": "Kuunganisha tena sauti…"
+  },
+  "Running this commit plus changes not yet committed": {
+    "model": "translategemma-4b",
+    "msgstr": "Kufanya hili na pia mabadiliko ambazo hazijafanyiwa \"commit\""
+  },
+  "Secure audio connection is starting.": {
+    "model": "translategemma-27b",
+    "msgstr": "Uunganisho salama wa sauti unaanza."
+  },
+  "Short anonymous conversations for language practice.": {
+    "model": "translategemma-27b",
+    "msgstr": "Mazungumzo mafupi yasiyo na majina, yaliyokusudiwa kwa ajili ya mazoezi ya lugha."
+  },
+  "Something went wrong!": {
+    "model": "madlad-400",
+    "msgstr": "Kuna kitu kilikwenda vibaya!"
+  },
+  "Source (AGPL-3.0)": {
+    "model": "madlad-400",
+    "msgstr": "Chanzo (AGPL-3.0)"
+  },
+  "Starting call with rando.": {
+    "model": "translategemma-4b",
+    "msgstr": "Simu ya kwanza na rando."
+  },
+  "Status": {
+    "model": "madlad-400",
+    "msgstr": "Hali:"
+  },
+  "Stop looking": {
+    "model": "madlad-400",
+    "msgstr": "Kuacha kuangalia"
+  },
+  "Suggest a fix": {
+    "model": "madlad-400",
+    "msgstr": "Kupendekeza marekebisho"
+  },
+  "Switch theme": {
+    "model": "translategemma-4b",
+    "msgstr": "Badilisha mtindo"
+  },
+  "The call ended because audio isn't available here.": {
+    "model": "translategemma-12b",
+    "msgstr": "Simu imekatika kwa sababu sauti haipatikani hapa."
+  },
+  "The call ended because audio stopped working on this device.": {
+    "model": "madlad-400",
+    "msgstr": "Wito umemalizika kwa sababu sauti imeacha kufanya kazi kwenye kifaa hiki."
+  },
+  "The call ended because microphone access was blocked. Allow it, then look again.": {
+    "model": "translategemma-27b",
+    "msgstr": "Simu ilikatika kwa sababu idhini ya matumizi ya maikrofoni ilikuwa imefungwa. Tafadhali, ruhusu, kisha jaribu tena."
+  },
+  "The call ended because no microphone was found.": {
+    "model": "madlad-400",
+    "msgstr": "Wito ulimalizika kwa sababu hakuna mikrofoni kupatikana."
+  },
+  "The commit this server runs": {
+    "model": "m2m100",
+    "msgstr": "Mchakato wa mtandao huu hufanya kazi"
+  },
+  "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
+    "model": "translategemma-27b",
+    "msgstr": "Muonekano wa mtumiaji umekusudiwa kuwa tulivu kwa makusudi. Lengo ni kuwezesha uwepo wa mtumiaji kwa njia ya asili na utulivu, si kwa lengo la kuonyesha uwezo au kuhamasisha shughuli za kurudia-rudia."
+  },
+  "The relay is partly working": {
+    "model": "m2m100",
+    "msgstr": "Mchakato hufanya kazi kwa sehemu"
+  },
+  "The relay is working": {
+    "model": "translategemma-4b",
+    "msgstr": "Mfumo unafanya kazi"
+  },
+  "The relay isn't working": {
+    "model": "m2m100",
+    "msgstr": "Reli haina kazi"
+  },
+  "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
+    "model": "translategemma-12b",
+    "msgstr": "Tafsiri za tovuti hii zimetengenezwa kwa kutumia programu, na bado hazijapitia ukaguzi wa watu. Ikiwa kuna kitu ambacho hakisomeki vizuri katika lugha yako, tafadhali saidia kurekebisha: tafuta maandishi, andika jinsi kinapaswa kusomwa, na sisi tutashughulikia mambo mengine."
+  },
+  "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
+    "model": "translategemma-27b",
+    "msgstr": "Hakuna akaunti, wasifu, orodha ya marafiki, wafuasi, habari za matukio, alama, au muundo wa uhusiano wa kijamii unaodumu. randos ni zaidi kama miundombinu ya mawasiliano ya kawaida kuliko mitandao ya kijamii."
+  },
+  "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
+    "model": "translategemma-12b",
+    "msgstr": "Tafsiri za tovuti hii zimetengenezwa kwa kutumia programu. Ikiwa kuna kitu ambacho hakielezeki vizuri, tafuta sehemu hiyo hapa chini na ubofye \"Pendekeza marekebisho\": hii itafungua ombi kwenye GitHub ambapo kila kitu kimeandikwa isipokuwa marekebisho yako (unahitaji akaunti ya GitHub). Ombi la marekebisho litafunguliwa kiotomatiki, na litatumika baada ya kukaguliwa."
+  },
+  "Time is up": {
+    "model": "translategemma-4b",
+    "msgstr": "Muda umisha"
+  },
+  "Time is up. Continue for another %{minutes} minutes?": {
+    "model": "translategemma-12b",
+    "msgstr": "Wakati umekwisha. Je, ungependa kuendelea kwa dakika nyingine %{minutes}?"
+  },
+  "Today": {
+    "model": "m2m100",
+    "msgstr": "Siku hii"
+  },
+  "Toggle dark mode": {
+    "model": "madlad-400",
+    "msgstr": "Toggle hali ya giza"
+  },
+  "Translations": {
+    "model": "madlad-400",
+    "msgstr": "Tafsiri"
+  },
+  "Typical length": {
+    "model": "translategemma-4b",
+    "msgstr": "Urefu wa kawaida"
+  },
+  "View on GitHub": {
+    "model": "translategemma-4b",
+    "msgstr": "Angalia kwenye GitHub"
+  },
+  "We can't find the internet": {
+    "model": "m2m100",
+    "msgstr": "Hatuwezi kupata mtandao"
+  },
+  "We couldn't start that call. Please try again.": {
+    "model": "madlad-400",
+    "msgstr": "Hatukuweza kuanza wito huo. Tafadhali jaribu tena."
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
+    "model": "translategemma-27b",
+    "msgstr": "Sisi tunahesabu idadi ya simu zilizopigwa, si watu; hatutunzi taarifa za anwani, vitambulisho, au taarifa yoyote kuhusu mtu yeyote; tunahifadhi tu takwimu hizo za jumla."
+  },
+  "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
+    "model": "translategemma-12b",
+    "msgstr": "Kila sehemu ya programu ya \"randos\" inaona, husajili, na kuhifadhi data, pamoja na maelezo ya usanidi ambayo huambatana na kila ombi."
+  },
+  "Whether calls can connect right now, and how today is going.": {
+    "model": "translategemma-12b",
+    "msgstr": "Je, simu zinaweza kuunganishwa sasa, na jinsi mambo yanavyoendelea leo."
+  },
+  "You": {
+    "model": "translategemma-4b",
+    "msgstr": "Wewe"
+  },
+  "You agreed to continue, waiting on your rando…": {
+    "model": "madlad-400",
+    "msgstr": "Wewe walikubaliana kuendelea, kusubiri juu yako rando…"
+  },
+  "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
+    "model": "translategemma-4b",
+    "msgstr": "Unaweza kuchagua lugha ambayo ungependa kuzungumza na lugha ambayo ungependa kusikiliza. randos hukufanya kuungana na mtu anayefaa kwa mazungumzo fupi, na kisha huondoka."
+  },
+  "You have matched. Audio starts when the call opens.": {
+    "model": "translategemma-27b",
+    "msgstr": "Mmeunganishwa. Sauti itaanza kusikika baada ya simu kuunganishwa."
+  },
+  "You'll hear %{languages}": {
+    "model": "translategemma-12b",
+    "msgstr": "Utasikia lugha za: %{languages}"
+  },
+  "Your rando": {
+    "model": "madlad-400",
+    "msgstr": "yako rando"
+  },
+  "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "madlad-400",
+    "msgstr": "rando yako ya uhusiano kuanguka; kusubiri sekunde chache kwa ajili yao kuja nyuma."
+  },
+  "button\u0004Continue": {
+    "model": "m2m100",
+    "msgstr": "kuendelea"
+  },
+  "button\u0004End": {
+    "model": "m2m100",
+    "msgstr": "Mwisho wa"
+  },
+  "button\u0004Find a rando": {
+    "model": "madlad-400",
+    "msgstr": "Kupata rando"
+  },
+  "button\u0004Mute": {
+    "model": "madlad-400",
+    "msgstr": "Kuzima"
+  },
+  "button\u0004Next rando": {
+    "model": "madlad-400",
+    "msgstr": "Ifuatayo rando"
+  },
+  "button\u0004Unmute": {
+    "model": "translategemma-4b",
+    "msgstr": "Fungua sauti"
+  },
+  "close": {
+    "model": "translategemma-4b",
+    "msgstr": "kumalizia"
+  },
+  "connection state\u0004answering": {
+    "model": "madlad-400",
+    "msgstr": "kujibu"
+  },
+  "connection state\u0004calling": {
+    "model": "m2m100",
+    "msgstr": "Kuwasiliana"
+  },
+  "connection state\u0004connected": {
+    "model": "m2m100",
+    "msgstr": "kuunganishwa"
+  },
+  "connection state\u0004connecting": {
+    "model": "m2m100",
+    "msgstr": "Kuunganisha"
+  },
+  "connection state\u0004ended": {
+    "model": "translategemma-4b",
+    "msgstr": "imeisha"
+  },
+  "connection state\u0004failed": {
+    "model": "madlad-400",
+    "msgstr": "kushindwa"
+  },
+  "connection state\u0004microphone denied": {
+    "model": "translategemma-4b",
+    "msgstr": "mikrofoni imekataliwa"
+  },
+  "connection state\u0004not started": {
+    "model": "madlad-400",
+    "msgstr": "haijaanza"
+  },
+  "connection state\u0004requesting microphone": {
+    "model": "m2m100",
+    "msgstr": "Maombi ya Mikrofoni"
+  },
+  "connection state\u0004starting": {
+    "model": "m2m100",
+    "msgstr": "kuanza"
+  },
+  "connection state\u0004waiting for your rando": {
+    "model": "madlad-400",
+    "msgstr": "kusubiri kwa yako rando"
+  },
+  "crosstalk": {
+    "model": "translategemma-12b",
+    "msgstr": "msongamano wa lugha"
+  },
+  "microphone ready": {
+    "model": "madlad-400",
+    "msgstr": "mikrofoni tayari"
+  },
+  "microphone unavailable": {
+    "model": "translategemma-4b",
+    "msgstr": "Mikrofoni haipo"
+  },
+  "privacy": {
+    "model": "translategemma-4b",
+    "msgstr": "faragha"
+  },
+  "randos is a place for anonymous, audio-only language conversation.": {
+    "model": "translategemma-12b",
+    "msgstr": "randos ni jukwaa ambapo watu wanaweza kuzungumza lugha tofauti kwa sauti tu, bila kufichua utambulisho wao."
+  },
+  "randos is free software (AGPL-3.0) and built in public.": {
+    "model": "m2m100",
+    "msgstr": "randos ni programu ya bure (AGPL-3.0) na iliyoundwa kwa umma."
+  },
+  "remote audio needs a tap (%{summary})": {
+    "model": "translategemma-12b",
+    "msgstr": "Sauti iliyoangaziwa kwa umbali inahitaji kuguswa ili ifanye kazi (%{summary})."
+  },
+  "remote audio playing (%{summary})": {
+    "model": "translategemma-12b",
+    "msgstr": "Uchezaji wa sauti kutoka kwa umbali (%{summary})."
+  },
+  "remote audio received (%{summary})": {
+    "model": "translategemma-27b",
+    "msgstr": "Sauti iliyopokelewa kutoka kwa umbali (%{summary})"
+  },
+  "requesting microphone": {
+    "model": "m2m100",
+    "msgstr": "Maombi ya Mikrofoni"
+  },
+  "under 1 min": {
+    "model": "madlad-400",
+    "msgstr": "chini ya dakika 1"
+  },
+  "waiting for microphone": {
+    "model": "m2m100",
+    "msgstr": "Kutarajia mikrofoni"
+  },
+  "waiting for remote audio": {
+    "model": "translategemma-4b",
+    "msgstr": "kuendelea kusikiliza sauti kutoka mbali"
+  },
+  "working": {
+    "model": "m2m100",
+    "msgstr": "kufanya kazi"
+  }
+}

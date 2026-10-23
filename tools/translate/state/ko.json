@@ -120,12 +120,12 @@
     "msgstr": "UTC 시간 %{time}에 %{date}부터 집계를 시작했습니다. 이 서버는 잠시 중단되거나 업데이트될 때마다 새로 시작되므로, 이것들은 그 이후로 발생한 오늘의 호출들입니다."
   },
   "Counting since %{time} UTC on %{date}: today's calls so far.": {
-    "model": "hy-mt2",
-    "msgstr": "%{date}의 %{time} UTC부터 집계된 수치: 오늘까지의 총 통화 횟수입니다."
+    "model": "translategemma-12b",
+    "msgstr": "%{date} %{time} UTC 기준 이후, 오늘까지의 통화 건수입니다."
   },
   "Current call": {
-    "model": "translategemma-4b",
-    "msgstr": "현재 진행 중인 통화"
+    "model": "madlad-400",
+    "msgstr": "현재 통화"
   },
   "Done": {
     "model": "translategemma-4b",
@@ -264,8 +264,8 @@
     "msgstr": "전화 준비"
   },
   "Privacy": {
-    "model": "translategemma-12b",
-    "msgstr": "개인 정보 보호 정책"
+    "model": "translategemma-4b",
+    "msgstr": "개인 정보 보호"
   },
   "Ready": {
     "model": "translategemma-4b",
@@ -312,8 +312,8 @@
     "msgstr": "수정 사항 제안하기"
   },
   "Switch theme": {
-    "model": "hy-mt2",
-    "msgstr": "테마 변경"
+    "model": "madlad-400",
+    "msgstr": "테마 바꾸기"
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-4b",
@@ -332,8 +332,8 @@
     "msgstr": "마이크를 찾을 수 없어 통화가 종료되었습니다."
   },
   "The commit this server runs": {
-    "model": "hy-mt2",
-    "msgstr": "이 서버가 실행하는 커밋"
+    "model": "translategemma-4b",
+    "msgstr": "이 서버에서 실행 중인 커밋"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "translategemma-12b",
@@ -408,8 +408,8 @@
     "msgstr": "randos가 각 부분에서 보고, 기록하고, 저장하는 내용과, 각 기능이 작동하는 방식에 대한 설정 정보:"
   },
   "Whether calls can connect right now, and how today is going.": {
-    "model": "m2m100",
-    "msgstr": "전화가 지금 연결될 수 있는지, 그리고 오늘은 어떻게 진행되고 있는지."
+    "model": "hy-mt2",
+    "msgstr": "지금 전화가 연결될 수 있는지, 그리고 오늘은 어떻게 지내고 있는지."
   },
   "You": {
     "model": "translategemma-4b",
@@ -536,8 +536,8 @@
     "msgstr": "randos는 무료 소프트웨어(AGPL-3.0)이며, 공개적으로 개발되었습니다."
   },
   "remote audio needs a tap (%{summary})": {
-    "model": "m2m100",
-    "msgstr": "원격 오디오는 탭이 필요합니다 (%{summary})"
+    "model": "translategemma-27b",
+    "msgstr": "원격 오디오 연결을 위해 탭이 필요합니다. (%{summary})"
   },
   "remote audio playing (%{summary})": {
     "model": "hy-mt2",

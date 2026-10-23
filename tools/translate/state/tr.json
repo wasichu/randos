@@ -124,8 +124,8 @@
     "msgstr": "\"%{date}\" tarihinde, saat %{time} (UTC) itibarıyla: Bugün şimdiye kadar yapılan çağrıların sayısı."
   },
   "Current call": {
-    "model": "madlad-400",
-    "msgstr": "Mevcut Çağrı"
+    "model": "translategemma-4b",
+    "msgstr": "Şu anki görüşme"
   },
   "Done": {
     "model": "opus-mt",
@@ -160,8 +160,8 @@
     "msgstr": "Tamamlandı"
   },
   "Help fix a translation": {
-    "model": "m2m100",
-    "msgstr": "Bir çeviri düzeltmeye yardımcı olun"
+    "model": "opus-mt",
+    "msgstr": "Çeviriyi düzeltmeye yardım et"
   },
   "How calls ended": {
     "model": "madlad-400",
@@ -332,8 +332,8 @@
     "msgstr": "Çağrı sona erdi çünkü mikrofon bulunamadı."
   },
   "The commit this server runs": {
-    "model": "hy-mt2",
-    "msgstr": "Bu sunucunun çalıştırdığı komit"
+    "model": "madlad-400",
+    "msgstr": "Bu sunucuda çalıştırılan commit"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "translategemma-12b",
@@ -500,12 +500,12 @@
     "msgstr": "henüz başlamadı"
   },
   "connection state\u0004requesting microphone": {
-    "model": "m2m100",
-    "msgstr": "Mikrofon isteği"
+    "model": "translategemma-4b",
+    "msgstr": "Mikrofon talep ediyorum"
   },
   "connection state\u0004starting": {
-    "model": "m2m100",
-    "msgstr": "Başlangıç"
+    "model": "madlad-400",
+    "msgstr": "başlıyor"
   },
   "connection state\u0004waiting for your rando": {
     "model": "m2m100",

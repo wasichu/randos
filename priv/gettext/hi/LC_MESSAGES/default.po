@@ -42,7 +42,7 @@ msgstr "एक rando के लिए देखने से पहले 18+ �
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
-msgstr "पुनः कनेक्ट होने का प्रयास कर रहा हूँ"
+msgstr "फिर से जुड़ने की कोशिश"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -136,7 +136,7 @@ msgstr "भाषा"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking"
-msgstr "देखा जा रहा है"
+msgstr "देख रहा है"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -193,7 +193,7 @@ msgstr "यह कॉल इसलिए समाप्त हुई क्य�
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "The call ended because audio stopped working on this device."
-msgstr "इस डिवाइस पर ऑडियो काम करना बंद हो जाने के कारण कॉल समाप्त हो गई।"
+msgstr "यह कॉल इसलिए समाप्त हुई क्योंकि इस डिवाइस पर ऑडियो काम करना बंद हो गया।"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
@@ -344,7 +344,7 @@ msgstr "रिमोट ऑडियो प्ले हो रहा है (%{
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "remote audio received (%{summary})"
-msgstr "रिमोट ऑडियो प्राप्त (%{summary})"
+msgstr "रिमोट ऑडियो प्राप्त हुआ (%{summary})"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -363,7 +363,7 @@ msgstr "जारी रखें"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "End"
-msgstr "समाप्त"
+msgstr "समाप्त करें"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -376,7 +376,7 @@ msgstr "ढूंढें rando"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Mute"
-msgstr "मौन"
+msgstr "म्यूट करें"
 
 #. Button: end this call and find another person to talk to.
 #: lib/randos_web/components/home_components.ex
@@ -390,7 +390,7 @@ msgstr "अगला rando"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Unmute"
-msgstr "अनम्यूट"
+msgstr "अनमुट"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -414,7 +414,7 @@ msgstr "जुड़े हुए"
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "connecting"
-msgstr "कनेक्ट कर रहा है"
+msgstr "कनेक्ट हो रहा है"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -578,7 +578,7 @@ msgstr "अन्य भाषाएँ: %{calls}"
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
 msgid "Over TLS (networks that block UDP)"
-msgstr "टीएलएस के माध्यम से (ऐसे नेटवर्क जिनमें यूडीपी अवरुद्ध है)।"
+msgstr "टीएलएस (नेटवर्क जो यूडीपी को ब्लॉक करते हैं) के माध्यम से।"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -771,7 +771,7 @@ msgstr "सुनने के लिए कम से कम एक भाष�
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You'll hear %{languages}"
-msgstr "आप सुनेंगे %{languages}"
+msgstr "आप सुन सकते हैं %{languages}"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format

@@ -45,23 +45,23 @@
   },
   "Attempting to reconnect": {
     "model": "translategemma-4b",
-    "msgstr": "পুনরায় সংযোগ স্থাপনের চেষ্টা"
+    "msgstr": "পুনরায় সংযোগ স্থাপনের চেষ্টা"
   },
   "Both people choose whether to continue.": {
     "model": "translategemma-12b",
-    "msgstr": "উভয় ব্যক্তিই সিদ্ধান্ত নেন যে তারা এটি চালিয়ে যেতে চান কিনা।"
+    "msgstr": "উভয় ব্যক্তিই সিদ্ধান্ত নেন যে তারা এটি চালিয়ে যেতে চান কিনা।"
   },
   "Calls started": {
     "model": "madlad-400",
-    "msgstr": "কল আরম্ভ হয়েছে"
+    "msgstr": "কল আরম্ভ হয়েছে"
   },
   "Cancel": {
     "model": "hy-mt2",
     "msgstr": "বাতিল করুন"
   },
   "Canceled": {
-    "model": "madlad-400",
-    "msgstr": "বাতিল করা হয়েছে"
+    "model": "translategemma-4b",
+    "msgstr": "বাতিল"
   },
   "Change": {
     "model": "translategemma-4b",
@@ -109,11 +109,11 @@
   },
   "Couldn't connect": {
     "model": "madlad-400",
-    "msgstr": "সংযোগ স্থাপন করা যায়নি"
+    "msgstr": "সংযোগ স্থাপন করা যায়নি"
   },
   "Counted across %{answered} of %{total} servers.": {
     "model": "translategemma-12b",
-    "msgstr": "মোট %{total} সার্ভারের মধ্যে %{answered} সংখ্যক সার্ভারে এই তথ্য পাওয়া গেছে।"
+    "msgstr": "মোট %{total} সার্ভারের মধ্যে %{answered} সংখ্যক সার্ভারে এই তথ্য পাওয়া গেছে।"
   },
   "Counting since %{time} UTC on %{date}. This server starts fresh whenever it sleeps or is updated, so these are today's calls since then.": {
     "model": "hy-mt2",
@@ -133,7 +133,7 @@
   },
   "Ephemeral by default": {
     "model": "madlad-400",
-    "msgstr": "ডিফল্টভাবে অস্থায়ী"
+    "msgstr": "ডিফল্টভাবে অস্থায়ী"
   },
   "Every call goes through our relay, so neither person sees the other's address. We test it every few minutes by setting up a real relay connection.": {
     "model": "hy-mt2",
@@ -169,7 +169,7 @@
   },
   "How languages are counted": {
     "model": "madlad-400",
-    "msgstr": "কিভাবে ভাষা গণনা করা হয়"
+    "msgstr": "কিভাবে ভাষা গণনা করা হয়"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "hy-mt2",
@@ -193,7 +193,7 @@
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-4b",
-    "msgstr": "এটি %{crosstalk}, ভাষা বিনিময়ের অনুশীলন, শোনার অনুশীলন এবং স্বাভাবিক, অনানুষ্ঠানিক কথোপকথনের জন্য বিশেষভাবে তৈরি করা হয়েছে, যেখানে মানুষকে কঠোর নিয়ম বা লেবেল চাপিয়ে দেওয়া হয় না।"
+    "msgstr": "এটি %{crosstalk}, ভাষা বিনিময়ের অনুশীলন, শোনার অনুশীলন এবং স্বাভাবিক, অনানুষ্ঠানিক কথোপকথনের জন্য বিশেষভাবে তৈরি করা হয়েছে, যেখানে মানুষকে কঠোর নিয়ম বা লেবেল চাপিয়ে দেওয়া হয় না।"
   },
   "Language": {
     "model": "hy-mt2",
@@ -201,7 +201,7 @@
   },
   "Languages spoken": {
     "model": "madlad-400",
-    "msgstr": "যেসব ভাষায় কথা বলা হয়"
+    "msgstr": "যেসব ভাষায় কথা বলা হয়"
   },
   "Last checked at %{time} UTC.": {
     "model": "hy-mt2",
@@ -213,11 +213,11 @@
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
     "model": "madlad-400",
-    "msgstr": "একজন rando খুঁজছি যে %{hearing_languages} কথা বলে এবং %{speaking_language} শুনতে চায়।"
+    "msgstr": "একজন rando খুঁজছি যে %{hearing_languages} কথা বলে এবং %{speaking_language} শুনতে চায়।"
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-12b",
-    "msgstr": "কোনো অ্যাকাউন্ট নয়, কোনো প্রোফাইল নয়, কোনো ভিডিও নয়। কোনো চাপ নেই।"
+    "msgstr": "কোনো অ্যাকাউন্ট নয়, কোনো প্রোফাইল নয়, কোনো ভিডিও নয়। কোনো চাপ নেই।"
   },
   "No calls yet.": {
     "model": "translategemma-12b",
@@ -241,7 +241,7 @@
   },
   "Over TLS (networks that block UDP)": {
     "model": "translategemma-12b",
-    "msgstr": "টিএলএস-এর মাধ্যমে (যে নেটওয়ার্কগুলো ইউডিপি ব্লক করে)।"
+    "msgstr": "টিএলএস-এর মাধ্যমে (যে নেটওয়ার্কগুলো ইউডিপি ব্লক করে)।"
   },
   "Over UDP (most calls)": {
     "model": "translategemma-27b",
@@ -252,8 +252,8 @@
     "msgstr": "শুনতে অন্তত একটি ভাষা বেছে নিন"
   },
   "Pick every language you're comfortable listening to.": {
-    "model": "hy-mt2",
-    "msgstr": "আপনি যেসব ভাষার শব্দ শুনতে স্বাচ্ছন্দ্য বোধ করেন, সেগুলো সবই নির্বাচন করুন।"
+    "model": "translategemma-27b",
+    "msgstr": "আপনি যে ভাষাগুলো শুনতে স্বচ্ছন্দ বোধ করেন, সেগুলো বেছে নিন।"
   },
   "Pick the language you'd like to check.": {
     "model": "hy-mt2",
@@ -261,7 +261,7 @@
   },
   "Preparing the call": {
     "model": "translategemma-4b",
-    "msgstr": "কল করার জন্য প্রস্তুতি নেওয়া"
+    "msgstr": "কল করার জন্য প্রস্তুতি নেওয়া"
   },
   "Privacy": {
     "model": "hy-mt2",
@@ -277,7 +277,7 @@
   },
   "Running this commit plus changes not yet committed": {
     "model": "madlad-400",
-    "msgstr": "এই কমান্ড চালানো হচ্ছে এবং এখনো কমান্ড করা হয়নি এমন পরিবর্তন করা হচ্ছে"
+    "msgstr": "এই কমান্ড চালানো হচ্ছে এবং এখনো কমান্ড করা হয়নি এমন পরিবর্তন করা হচ্ছে"
   },
   "Secure audio connection is starting.": {
     "model": "m2m100",
@@ -289,7 +289,7 @@
   },
   "Something went wrong!": {
     "model": "translategemma-4b",
-    "msgstr": "কিছু ভুল হয়েছে!"
+    "msgstr": "কিছু ভুল হয়েছে!"
   },
   "Source (AGPL-3.0)": {
     "model": "translategemma-27b",
@@ -297,7 +297,7 @@
   },
   "Starting call with rando.": {
     "model": "madlad-400",
-    "msgstr": "rando দিয়ে কল শুরু করা হচ্ছে।"
+    "msgstr": "rando দিয়ে কল শুরু করা হচ্ছে।"
   },
   "Status": {
     "model": "translategemma-4b",
@@ -317,15 +317,15 @@
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-12b",
-    "msgstr": "কলটি শেষ হয়ে গেছে কারণ এখানে অডিও পাওয়া যাচ্ছে না।"
+    "msgstr": "কলটি শেষ হয়ে গেছে কারণ এখানে অডিও পাওয়া যাচ্ছে না।"
   },
   "The call ended because audio stopped working on this device.": {
     "model": "translategemma-4b",
-    "msgstr": "এই ডিভাইসে অডিও কাজ করা বন্ধ হয়ে যাওয়ায় কলটি শেষ হয়ে যায়।"
+    "msgstr": "এই ডিভাইসে অডিও কাজ করা বন্ধ হয়ে যাওয়ায় কলটি শেষ হয়ে যায়।"
   },
   "The call ended because microphone access was blocked. Allow it, then look again.": {
     "model": "translategemma-27b",
-    "msgstr": "মাইক্রোফোনের ব্যবহারের অনুমতি দেওয়া হয়নি, তাই কলটি শেষ হয়ে গেছে। অনুমতি দিন, তারপর আবার চেষ্টা করুন।"
+    "msgstr": "মাইক্রোফোনের ব্যবহারের অনুমতি দেওয়া হয়নি, তাই কলটি শেষ হয়ে গেছে। অনুমতি দিন, তারপর আবার চেষ্টা করুন।"
   },
   "The call ended because no microphone was found.": {
     "model": "hy-mt2",
@@ -352,8 +352,8 @@
     "msgstr": "রিলে কাজ করছে না"
   },
   "The translations of this site were made by machine and haven't been reviewed by people yet. If something reads wrong in your language, please help fix it: find the text, write how it should read, and we'll do the rest.": {
-    "model": "madlad-400",
-    "msgstr": "এই সাইটের অনুবাদ মেশিনের মাধ্যমে করা হয়েছে এবং এখনো তা মানুষের দ্বারা পর্যালোচনা করা হয়নি। যদি আপনার ভাষায় কোন কিছু ভুলভাবে পড়া হয়, তাহলে দয়া করে তা ঠিক করতে সাহায্য করুন: লেখাটি খুঁজে বের করুন, লিখুন কিভাবে এটি পড়া উচিত, এবং আমরা বাকি কাজটি করব।"
+    "model": "translategemma-27b",
+    "msgstr": "এই সাইটের অনুবাদগুলো স্বয়ংক্রিয়ভাবে করা হয়েছে এবং এখনো পর্যন্ত কোনো মানুষ তা যাচাই করেনি। যদি কোনো অনুবাদ আপনার ভাষায় ভুল মনে হয়, তাহলে অনুগ্রহ করে সেটি সংশোধন করুন: ভুল অংশটি খুঁজে বের করুন, এরপর আপনার মতে সেটি কীভাবে লেখা উচিত তা জানান, বাকি কাজ আমরা করে দেব।"
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
     "model": "translategemma-27b",
@@ -361,15 +361,15 @@
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "madlad-400",
-    "msgstr": "এই সাইটের অনুবাদ মেশিন দ্বারা করা হয়েছে। যদি কিছু ভুল পড়ে থাকে, তাহলে নীচে তা খুঁজে বের করুন এবং “সংশোধন করার প্রস্তাব দিন” বাটনটি চাপুন: এটি আপনার সংশোধন ব্যতীত সবকিছু পূরণ করে GitHub-এ একটি ইস্যু খুলে দেবে (আপনার একটি GitHub অ্যাকাউন্ট প্রয়োজন)। আপনার সংশোধন সহ একটি pull request নিজে থেকেই খুলে যাবে, এবং এটি পর্যালোচনা করা হলে তা সক্রিয় হয়ে যাবে।"
+    "msgstr": "এই সাইটের অনুবাদ মেশিন দ্বারা করা হয়েছে। যদি কিছু ভুল পড়ে থাকে, তাহলে নীচে তা খুঁজে বের করুন এবং “সংশোধন করার প্রস্তাব দিন” বাটনটি চাপুন: এটি আপনার সংশোধন ব্যতীত সবকিছু পূরণ করে GitHub-এ একটি ইস্যু খুলে দেবে (আপনার একটি GitHub অ্যাকাউন্ট প্রয়োজন)। আপনার সংশোধন সহ একটি pull request নিজে থেকেই খুলে যাবে, এবং এটি পর্যালোচনা করা হলে তা সক্রিয় হয়ে যাবে।"
   },
   "Time is up": {
     "model": "madlad-400",
-    "msgstr": "সময় শেষ"
+    "msgstr": "সময় শেষ"
   },
   "Time is up. Continue for another %{minutes} minutes?": {
     "model": "translategemma-12b",
-    "msgstr": "সময় শেষ। আপনি কি আরও %{minutes} মিনিটের জন্য সময় বাড়াতে চান?"
+    "msgstr": "সময় শেষ। আপনি কি আরও %{minutes} মিনিটের জন্য সময় বাড়াতে চান?"
   },
   "Today": {
     "model": "madlad-400",
@@ -417,11 +417,11 @@
   },
   "You agreed to continue, waiting on your rando…": {
     "model": "madlad-400",
-    "msgstr": "আপনি অগ্রসর হতে সম্মত হয়েছেন, আপনার rando-এর অপেক্ষায়..."
+    "msgstr": "আপনি অগ্রসর হতে সম্মত হয়েছেন, আপনার rando-এর অপেক্ষায়..."
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "madlad-400",
-    "msgstr": "আপনি যে ভাষায় কথা বলতে চান এবং যে ভাষায় শুনতে চান সেটা বেছে নিন। randos আপনাকে সংক্ষিপ্ত কথোপকথনের জন্য উপযুক্ত কারো সাথে জুড়ে দেবে, তারপর পথ থেকে সরে যাবে।"
+    "msgstr": "আপনি যে ভাষায় কথা বলতে চান এবং যে ভাষায় শুনতে চান সেটা বেছে নিন। randos আপনাকে সংক্ষিপ্ত কথোপকথনের জন্য উপযুক্ত কারো সাথে জুড়ে দেবে, তারপর পথ থেকে সরে যাবে।"
   },
   "You have matched. Audio starts when the call opens.": {
     "model": "translategemma-4b",
@@ -437,7 +437,7 @@
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
-    "msgstr": "আপনার rando'র সংযোগ বিচ্ছিন্ন হয়েছে; পুনরায় সংযোগ স্থাপনের জন্য কয়েক সেকেন্ড অপেক্ষা করুন।"
+    "msgstr": "আপনার rando'র সংযোগ বিচ্ছিন্ন হয়েছে; পুনরায় সংযোগ স্থাপনের জন্য কয়েক সেকেন্ড অপেক্ষা করুন।"
   },
   "button\u0004Continue": {
     "model": "m2m100",
@@ -469,7 +469,7 @@
   },
   "connection state\u0004answering": {
     "model": "translategemma-4b",
-    "msgstr": "উত্তর দেওয়া"
+    "msgstr": "উত্তর দেওয়া"
   },
   "connection state\u0004calling": {
     "model": "madlad-400",
@@ -493,11 +493,11 @@
   },
   "connection state\u0004microphone denied": {
     "model": "madlad-400",
-    "msgstr": "মাইক্রোফোন অস্বীকার করা হয়েছে"
+    "msgstr": "মাইক্রোফোন অস্বীকার করা হয়েছে"
   },
   "connection state\u0004not started": {
     "model": "translategemma-4b",
-    "msgstr": "শুরু হয়নি"
+    "msgstr": "শুরু হয়নি"
   },
   "connection state\u0004requesting microphone": {
     "model": "translategemma-4b",
@@ -521,11 +521,11 @@
   },
   "microphone unavailable": {
     "model": "madlad-400",
-    "msgstr": "মাইক্রোফোন বিদ্যমান নয়"
+    "msgstr": "মাইক্রোফোন বিদ্যমান নয়"
   },
   "privacy": {
     "model": "madlad-400",
-    "msgstr": "গোপনীয়তা"
+    "msgstr": "গোপনীয়তা"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
     "model": "madlad-400",
