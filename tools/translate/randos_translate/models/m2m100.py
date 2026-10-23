@@ -23,7 +23,11 @@ class M2M100:
         from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
 
         self._torch = torch
-        self._device = "mps" if torch.backends.mps.is_available() else "cpu"
+        # The CPU, not MPS: a beam search that runs long (Urdu back to
+        # English, repeating itself to the budget) took 53 GB of GPU memory
+        # for a batch of 8 and 12.9 GB for one string, where the CPU stays at
+        # 3.3 GB and is barely slower for a model this size.
+        self._device = "cpu"
         self._tokenizer = M2M100Tokenizer.from_pretrained(REPO)
         self._model = M2M100ForConditionalGeneration.from_pretrained(REPO).to(self._device).eval()
 
@@ -49,9 +53,7 @@ class M2M100:
                 )
             decoded = self._tokenizer.batch_decode(generated, skip_special_tokens=True)
             out += [restore(d, kept) for d, (_, kept) in zip(decoded, protected)]
-            if self._device == "mps":
-                del inputs, generated
-                self._torch.mps.empty_cache()
+
         return out
 
     def translate(self, texts: list[str], target: str, contexts: list[str] | None = None) -> list[str]:
