@@ -25,9 +25,10 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | — | coturn audit, hardening and rebuild; infra on OpenTofu with encrypted state | Done (see [`coturn_audit.md`](coturn_audit.md)) |
 | 4 | TUI | Done: monitor, text client, call audio (STUN/TURN, echo cancellation, FEC), release builds, Homebrew tap (v0.2.0) |
 | — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
-| 6 | UI translations | Done (2026-10-22): 19 languages, machine-made, fixes welcome through "Suggest a fix" |
-| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Planned, likely before Phase 5's voice lab; design drafted and decided 2026-10-22, not built |
-| 5 | Voice anonymization | **Next**; its voice lab starts with a code-quality pass (the owner's call: run it now, 2026-10-22) |
+| 6 | UI translations | Done (2026-10-22): 20 languages (English and 19 machine translations), fixes welcome through "Suggest a fix" |
+| — | Translating the TUI | **Next** (the owner's order, 2026-10-23); see Open items |
+| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | After the TUI's translation; design drafted and decided 2026-10-22, not built |
+| 5 | Voice anonymization | After invitations; its voice lab starts with a code-quality pass (inventoried 2026-10-23, decisions with the owner) |
 
 ## How it fits together
 
@@ -702,10 +703,33 @@ Not scheduled; pick up when relevant.
   call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
   clients in the first cut; counted among calls started but not language
   pairs; the button says "Invite someone". Likely before the voice lab.
-- **Translating the TUI** (left open, 2026-10-22). Its own strings aren't
-  in gettext; English is fine for now (owner: "probably a good idea at
-  some point"). It would take gettext in the TUI, a language setting, and
-  a shootout run for its strings.
+- **Translating the TUI** (next, the owner's call 2026-10-23; left open
+  2026-10-22). Its own strings aren't in gettext. It takes gettext in the
+  TUI, a language setting, and a shootout run for its strings: none of
+  them is one of the site's msgids word for word (checked 2026-10-23), so
+  nothing carries over; the pipeline runs new strings end to end.
+- **Translations still off (2026-10-23).** Arabic leaves "Your rando",
+  "About randos" and "Looking for a rando…" empty (English shows): every
+  model writes "rando" in Arabic letters or translates it away, and a
+  translator comment telling models to keep it in Latin letters made most
+  locales quote or explain the word ("Dein „rando“"), so it was taken out
+  again. Japanese "requesting microphone" (マイクを頼む) and German
+  ("Anforderung eines Mikrofons") still read oddly. Italian "Terminare"
+  for the End button is left: it had context, both judges passed it, and
+  the infinitive is an accepted Italian button style. Judging only
+  finalists hadn't converged everywhere: each re-run today re-picked one
+  or two strings outside the ones it was for, when Qwen judged a finalist
+  for the first time. The translation-fix workflow has never run on a
+  real issue (it was invalid until 2026-10-22's fix).
+- **The helper's restart-test flake (fixed 2026-10-23).** Not a timing
+  problem: the test relay filed the events one helper sent while the test
+  waited on its reply under the other helper, and never relayed them (a
+  lost `answer`: no call; a misfiled `disconnected`: credited to the wrong
+  side). One harness (`tests/common::Call`) now keeps each side's events
+  in its own inbox, for `port.rs` and `restart.rs`; it also waits for the
+  call to connect rather than a fixed 3.5 s. This doesn't count toward
+  the "timing fix more than once" trigger; the helper's in-crate call
+  tests, which still wait fixed times, are in the quality pass.
 
 - **Lost messages in a drop (audited 2026-10-22).** Obligation 9's flake
   was real: a `media_state` lost as the socket dropped left a call
