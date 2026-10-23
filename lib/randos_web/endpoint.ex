@@ -30,7 +30,10 @@ defmodule RandosWeb.Endpoint do
     at: "/",
     from: :randos,
     gzip: not code_reloading?,
-    only: RandosWeb.static_paths()
+    only: RandosWeb.static_paths(),
+    # Production digests file names (favicon-<hash>.ico) and the layout
+    # links those; `only` matches a whole first segment, so it misses them.
+    only_matching: ~w(favicon)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

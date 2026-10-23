@@ -44,6 +44,18 @@ try {
   const b = await browser.newPage("B")
   await Promise.all([a.open(), b.open()])
 
+  // The links the page itself uses: production digests their names, and
+  // a static-file rule once served the plain names only.
+  await scenario("the page's icons are served", async () => {
+    const missing = await a.eval(`(async () => {
+      const hrefs = [...document.querySelectorAll("link[rel~=icon]")].map(l => l.href)
+      if (hrefs.length === 0) return ["no icon links"]
+      const statuses = await Promise.all(hrefs.map(h => fetch(h).then(r => [h, r.status])))
+      return statuses.filter(([, status]) => status !== 200).map(([h, status]) => h + ": " + status)
+    })()`)
+    assert(missing.length === 0, `icons not served: ${missing.join(", ")}`)
+  })
+
   await scenario("two people match and connect audio", async () => {
     await a.findRando("en", "es")
     await b.findRando("es", "en")
