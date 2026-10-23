@@ -5,8 +5,13 @@ defmodule Tui.TerminalTest do
 
   test "which terminals reorder right-to-left text, from what they set" do
     assert Terminal.bidi(%{"TERM_PROGRAM" => "Apple_Terminal"}) == :yes
-    assert Terminal.bidi(%{"TERM_PROGRAM" => "iTerm.app", "TERM_PROGRAM_VERSION" => "3.7.5"}) == :yes
-    assert Terminal.bidi(%{"TERM_PROGRAM" => "iTerm.app", "TERM_PROGRAM_VERSION" => "3.6.2"}) == :no
+
+    assert Terminal.bidi(%{"TERM_PROGRAM" => "iTerm.app", "TERM_PROGRAM_VERSION" => "3.7.5"}) ==
+             :yes
+
+    assert Terminal.bidi(%{"TERM_PROGRAM" => "iTerm.app", "TERM_PROGRAM_VERSION" => "3.6.2"}) ==
+             :no
+
     assert Terminal.bidi(%{"VTE_VERSION" => "7600"}) == :yes
     assert Terminal.bidi(%{"KONSOLE_VERSION" => "230800"}) == :yes
     assert Terminal.bidi(%{"TERM_PROGRAM" => "ghostty"}) == :no
