@@ -348,10 +348,11 @@ going direct: `just smoke` and `just tui-smoke` run them.)
    the end: keep your peer connection and wait for the status.
 5. **Tear down when the status leaves the call** (`call` becomes `null`).
    The server doesn't relay lifecycle signals to the peer.
-6. **Can't start? `end_call` with a reason.** No mic, mic denied, or no
-   audio support: send `end_call` with a `reason`
-   (`microphone_denied`, `microphone_not_found`, `audio_unavailable`,
-   `audio_failed`), not `media_state` `failed`. Only the peer is requeued,
+6. **Can't start, or can't go on? `end_call` with a reason.** No mic, mic
+   denied, no audio support, or your audio engine stopped mid-call (not an
+   ICE failure, which a restart can fix: one that can't come back): send
+   `end_call` with a `reason` (`microphone_denied`, `microphone_not_found`,
+   `audio_unavailable`, `audio_failed`), not `media_state` `failed`. Only the peer is requeued,
    and you get the reason back as your `error` and `error_message`.
 7. **Leaving on purpose? Say so.** When the person closes the page or quits
    the app during a call, send `signal` `peer_disconnected` (and wait for its

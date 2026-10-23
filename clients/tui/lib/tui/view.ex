@@ -460,7 +460,6 @@ defmodule Tui.View do
   defp call_line(%{call: nil, last_call_error: error}) when is_binary(error), do: [error]
   defp call_line(%{call: nil}), do: ["starting audio…"]
   defp call_line(%{call: %{connection: :disconnected}}), do: ["reconnecting…"]
-  defp call_line(%{call: %{connection: :failed}}), do: ["failed"]
   defp call_line(%{call: %{connection: :connecting}}), do: ["connecting…"]
 
   defp call_line(%{call: %{stats: %{} = s}}) do

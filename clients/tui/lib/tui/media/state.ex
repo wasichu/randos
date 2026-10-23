@@ -41,7 +41,7 @@ defmodule Tui.Media.State do
           optional(:muted) => boolean(),
           seq: pos_integer(),
           phase: :starting | :active,
-          connection: :connecting | :connected | :disconnected | :failed,
+          connection: :connecting | :connected | :disconnected,
           stats: map() | nil,
           generation: non_neg_integer()
         }
@@ -268,8 +268,14 @@ defmodule Tui.Media.State do
     do: {state, [{:push, "signal", %{type: type, payload: payload}}]}
 
   def event(%{call: %{}} = state, "call_state", %{"state" => helper_state} = payload)
-      when helper_state in ["connected", "disconnected", "failed"],
+      when helper_state in ["connected", "disconnected"],
       do: report_media(state, String.to_existing_atom(helper_state), payload["reason"])
+
+  # The helper's `failed` means its call session stopped (an error it
+  # can't come back from), not an ICE failure an ICE restart could fix:
+  # end the call with a reason, as when it can't start (obligation 6).
+  def event(%{call: %{}} = state, "call_state", %{"state" => "failed"}),
+    do: give_up(state, "audio_failed")
 
   def event(%{call: %{}} = state, "call_stats", stats), do: {put_call(state, stats: stats), []}
 
@@ -358,8 +364,6 @@ defmodule Tui.Media.State do
   defp stop_call(state),
     do: {%{state | call: nil}, [{:request, :call_stop}]}
 
-  # Each change of the helper's connection goes to the server, which decides
-  # what it means for the call. A failed session has stopped on its own.
   @doc """
   Back in the same call after a dropped connection: the last media state
   again, unchanged (obligation 9: a report sent as the socket dropped may
@@ -372,6 +376,8 @@ defmodule Tui.Media.State do
 
   def resumed(state), do: {state, []}
 
+  # Each change of the helper's connection goes to the server, which decides
+  # what it means for the call.
   defp report_media(%{call: %{connection: same}} = state, same, _reason), do: {state, []}
 
   defp report_media(state, connection, reason) do

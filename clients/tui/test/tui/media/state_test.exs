@@ -172,12 +172,9 @@ defmodule Tui.Media.StateTest do
                {state, [{:push, "signal", %{type: "media_state", payload: %{state: :connected}}}]}
     end
 
-    test "a failed session is reported with its reason; the server ends the call" do
-      assert {%{call: %{connection: :failed}},
-              [
-                {:push, "signal",
-                 %{type: "media_state", payload: %{state: :failed, reason: "ice timeout"}}}
-              ]} =
+    test "a session that stopped mid-call ends it with a reason (no restart can help)" do
+      assert {%{call: nil, last_call_error: "audio_failed"},
+              [{:request, :call_stop}, {:push, "end_call", %{reason: "audio_failed"}}]} =
                State.event(in_call(), "call_state", %{
                  "state" => "failed",
                  "reason" => "ice timeout"

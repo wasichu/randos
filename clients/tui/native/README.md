@@ -68,7 +68,7 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 | `loopback_failed` | `error`; the loopback stopped on its own |
 | `stream_error` | `error`; a device stream reported a problem |
 | `call_signal` | `type`, `payload`: a signal for the peer in the channel's shape; push it as the channel's `signal` event unchanged |
-| `call_state` | `state`: `connected`, `disconnected` (may recover), or `failed` (the call stopped; `reason`) |
+| `call_state` | `state`: `connected`, `disconnected` (may recover), or `failed` (the call session stopped with an error and can't come back; `reason`. The TUI ends the call with `audio_failed`) |
 | `call_stats` | once a second: `packets_sent`, `packets_received`, `concealed` (frames of loss concealment: all but the last of a gap, at most 5 per gap), `recovered` (lost frames rebuilt from the next packet's in-band FEC, which the encoder includes, planning for 10% loss), `dropped`, `skipped_candidates`, `send_errors` (cumulative), `local_candidates` (kinds offered so far: `host`, then `srflx` and/or `relay` as they arrive), `path` (this second: `direct`, or `relay` through a TURN server, ours or the peer's; `null` if nothing was sent; inferred from what was sent, as str0m doesn't expose the chosen pair), `input_peak_dbfs`, `output_peak_dbfs` (last second), `capture_ring_ms`, `playback_ring_ms` |
 | `call_levels` | every 50 ms: `you` (as sent) and `peer` (as played), 12 bars each, 0..1, lowest frequencies first: the website visualizer's numbers (`src/spectrum.rs` does what its `AnalyserNode` does), drawn as the TUI's audio meters |
 
