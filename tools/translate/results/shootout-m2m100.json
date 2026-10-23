@@ -23,24 +23,24 @@
       "fil"
     ],
     "strings": 151,
-    "at": "20261023T123653Z",
+    "at": "20261023T133038Z",
     "seconds": 724.0,
     "scored": {
       "metricx": {
-        "at": "20261023T125824Z",
-        "seconds": 67.7
+        "at": "20261023T133531Z",
+        "seconds": 69.6
       },
       "comet_kiwi": {
-        "at": "20261023T125854Z",
-        "seconds": 69.0
+        "at": "20261023T133552Z",
+        "seconds": 70.9
       },
       "judge": {
-        "at": "20261023T131044Z",
-        "seconds": 5822.5
+        "at": "20261023T133708Z",
+        "seconds": 5831.6
       },
       "judge_qwen": {
-        "at": "20261023T131117Z",
-        "seconds": 169.4
+        "at": "20261023T133800Z",
+        "seconds": 173.9
       }
     },
     "appended": [
@@ -63,6 +63,10 @@
       {
         "at": "20261023T123653Z",
         "seconds": 29.5
+      },
+      {
+        "at": "20261023T133038Z",
+        "seconds": 13.9
       }
     ]
   },
@@ -76,18 +80,18 @@
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 62.1
+      "mean_chrf": 62.2
     },
     "zh": {
       "strings": 151,
-      "all_checks_pass": 105,
+      "all_checks_pass": 107,
       "failed": {
         "placeholders": 13,
         "glossary": 14,
-        "length": 18,
+        "length": 16,
         "script": 8
       },
-      "mean_chrf": 49.4
+      "mean_chrf": 49.5
     },
     "hi": {
       "strings": 151,
@@ -98,7 +102,7 @@
         "length": 0,
         "script": 5
       },
-      "mean_chrf": 49.9
+      "mean_chrf": 50.1
     },
     "ar": {
       "strings": 151,
@@ -109,7 +113,7 @@
         "length": 1,
         "script": 4
       },
-      "mean_chrf": 49.8
+      "mean_chrf": 49.6
     },
     "pt": {
       "strings": 151,
@@ -142,7 +146,7 @@
         "length": 0,
         "script": 4
       },
-      "mean_chrf": 53.5
+      "mean_chrf": 53.6
     },
     "ja": {
       "strings": 151,
@@ -153,7 +157,7 @@
         "length": 3,
         "script": 9
       },
-      "mean_chrf": 45.4
+      "mean_chrf": 45.9
     },
     "fr": {
       "strings": 151,
@@ -164,7 +168,7 @@
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 59.5
+      "mean_chrf": 59.6
     },
     "de": {
       "strings": 151,
@@ -175,7 +179,7 @@
         "length": 1,
         "script": 0
       },
-      "mean_chrf": 62.8
+      "mean_chrf": 62.6
     },
     "ko": {
       "strings": 151,
@@ -186,7 +190,7 @@
         "length": 3,
         "script": 6
       },
-      "mean_chrf": 48.9
+      "mean_chrf": 49.5
     },
     "it": {
       "strings": 151,
@@ -197,7 +201,7 @@
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 59.6
+      "mean_chrf": 59.5
     },
     "tr": {
       "strings": 151,
@@ -208,7 +212,7 @@
         "length": 0,
         "script": 1
       },
-      "mean_chrf": 51.6
+      "mean_chrf": 51.8
     },
     "id": {
       "strings": 151,
@@ -233,7 +237,7 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 53.2
+      "mean_chrf": 53.1
     },
     "ur": {
       "strings": 151,
@@ -247,7 +251,7 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 37.3
+      "mean_chrf": 37.6
     },
     "sw": {
       "strings": 151,
@@ -275,7 +279,7 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 48.6
+      "mean_chrf": 48.4
     },
     "fil": {
       "strings": 151,
@@ -289,7 +293,7 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 47.4
+      "mean_chrf": 47.5
     }
   },
   "entries": [
@@ -3110,49 +3114,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "es",
-      "text": "Solicitar micrófono",
-      "back_translation": "Apply for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 43.6,
-        "metricx": {
-          "score": 0.89
-        },
-        "comet_kiwi": {
-          "score": 0.8016
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -3779,49 +3740,6 @@
           "score": 6,
           "context": "\nWhere it appears: A connection state label.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "es",
-      "text": "Solicitar micrófono",
-      "back_translation": "Apply for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 43.6,
-        "metricx": {
-          "score": 0.89
-        },
-        "comet_kiwi": {
-          "score": 0.8016
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -8547,49 +8465,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "zh",
-      "text": "要求麦克风",
-      "back_translation": "Request for a microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": false,
-          "detail": "length ratio 0.24"
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 1.1
-        },
-        "comet_kiwi": {
-          "score": 0.6952
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -9200,49 +9075,6 @@
         },
         "comet_kiwi": {
           "score": 0.727
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "zh",
-      "text": "要求麦克风",
-      "back_translation": "Request for a microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": false,
-          "detail": "length ratio 0.24"
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 1.1
-        },
-        "comet_kiwi": {
-          "score": 0.6952
         },
         "judge": {
           "score": null,
@@ -14026,51 +13858,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "hi",
-      "text": "माइक्रोफोन की मांग",
-      "back_translation": "Requests for microphones",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 1.21
-        },
-        "comet_kiwi": {
-          "score": 0.7828
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Incorrect word choice; 'मांग' is not natural for 'requesting' in this context.",
-          "score": 4,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -14693,51 +14480,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "hi",
-      "text": "माइक्रोफोन की मांग",
-      "back_translation": "Requests for microphones",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 1.21
-        },
-        "comet_kiwi": {
-          "score": 0.7828
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Unnatural phrasing; 'मांग' is too formal and literal for casual tone",
-          "score": 5,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
         }
       }
     },
@@ -19465,49 +19207,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "ar",
-      "text": "طلب الميكروفون",
-      "back_translation": "Request the microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 60.8,
-        "metricx": {
-          "score": 0.77
-        },
-        "comet_kiwi": {
-          "score": 0.7565
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -20118,49 +19817,6 @@
         },
         "comet_kiwi": {
           "score": 0.7514
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "ar",
-      "text": "طلب الميكروفون",
-      "back_translation": "Request the microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 60.8,
-        "metricx": {
-          "score": 0.77
-        },
-        "comet_kiwi": {
-          "score": 0.7565
         },
         "judge": {
           "score": null,
@@ -24934,49 +24590,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "pt",
-      "text": "Solicitar um microfone",
-      "back_translation": "Ask for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.5,
-        "metricx": {
-          "score": 1.62
-        },
-        "comet_kiwi": {
-          "score": 0.6766
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -25587,49 +25200,6 @@
         },
         "comet_kiwi": {
           "score": 0.7102
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "pt",
-      "text": "Solicitar um microfone",
-      "back_translation": "Ask for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.5,
-        "metricx": {
-          "score": 1.62
-        },
-        "comet_kiwi": {
-          "score": 0.6766
         },
         "judge": {
           "score": null,
@@ -26391,8 +25961,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slightly stiff; \"Como\" feels formal for the tone\"}'",
+          "score": 7,
+          "reason": "Slight awkwardness; 'How' feels too formal for tone",
           "context": "",
           "by": "qwen"
         }
@@ -30351,53 +29921,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "bn",
-      "text": "মাইক্রোফোন অনুরোধ",
-      "back_translation": "Request for microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 62.4,
-        "metricx": {
-          "score": 1.04
-        },
-        "comet_kiwi": {
-          "score": 0.7662
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Correct meaning, but slightly formal for the tone.",
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; 'অনুরোধ' feels formal, 'মাইক্রোফোন চাওয়া' would sound more natural and calm.",
-          "score": 6,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -31016,49 +30539,6 @@
         },
         "comet_kiwi": {
           "score": 0.729
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "bn",
-      "text": "মাইক্রোফোন অনুরোধ",
-      "back_translation": "Request for microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 62.4,
-        "metricx": {
-          "score": 1.04
-        },
-        "comet_kiwi": {
-          "score": 0.7662
         },
         "judge": {
           "score": null,
@@ -35810,53 +35290,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "ru",
-      "text": "Заказать микрофон",
-      "back_translation": "Order the microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.7,
-        "metricx": {
-          "score": 0.52
-        },
-        "comet_kiwi": {
-          "score": 0.7641
-        },
-        "judge": {
-          "score": 4,
-          "reason": "Wrong meaning, 'заказать' means 'order', not 'request'",
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Incorrect verb 'заказать' (order) doesn't fit context",
-          "score": 3,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -36471,53 +35904,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "ru",
-      "text": "Заказать микрофон",
-      "back_translation": "Order the microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.7,
-        "metricx": {
-          "score": 0.52
-        },
-        "comet_kiwi": {
-          "score": 0.7641
-        },
-        "judge": {
-          "score": 4,
-          "reason": "Wrong meaning, awkward phrasing, not natural",
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Incorrect verb 'заказать' (order) instead of 'запрашивает' (requesting)",
-          "score": 3,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
         }
       }
     },
@@ -41247,51 +40633,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "ja",
-      "text": "マイクを求める",
-      "back_translation": "I ask for Mike.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 4.5,
-        "metricx": {
-          "score": 3.67
-        },
-        "comet_kiwi": {
-          "score": 0.8019
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Incorrect verb choice; '求める' is too formal and literal",
-          "score": 3,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -41912,51 +41253,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "ja",
-      "text": "マイクを求める",
-      "back_translation": "I ask for Mike.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 4.5,
-        "metricx": {
-          "score": 3.67
-        },
-        "comet_kiwi": {
-          "score": 0.8019
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Incorrect verb choice; '求める' is too formal and literal",
-          "score": 4,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
         }
       }
     },
@@ -46660,49 +45956,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "fr",
-      "text": "Demander un microphone",
-      "back_translation": "Ask for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.5,
-        "metricx": {
-          "score": 1.63
-        },
-        "comet_kiwi": {
-          "score": 0.8088
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -47339,49 +46592,6 @@
           "score": 10,
           "context": "\nWhere it appears: A connection state label.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "fr",
-      "text": "Demander un microphone",
-      "back_translation": "Ask for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.5,
-        "metricx": {
-          "score": 1.63
-        },
-        "comet_kiwi": {
-          "score": 0.8088
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -52097,51 +51307,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "de",
-      "text": "Mikrofone verlangen",
-      "back_translation": "Requests for microphones",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 1.85
-        },
-        "comet_kiwi": {
-          "score": 0.7481
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Incorrect verb form; should be 'Mikrofonanfrage' or similar",
-          "score": 3,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -52764,49 +51929,6 @@
           "score": 8,
           "context": "\nWhere it appears: A connection state label.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "de",
-      "text": "Mikrofone verlangen",
-      "back_translation": "Requests for microphones",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 1.85
-        },
-        "comet_kiwi": {
-          "score": 0.7481
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -57500,53 +56622,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "ko",
-      "text": "마이크 요청",
-      "back_translation": "Mike requested.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 28.6,
-        "metricx": {
-          "score": 0.7
-        },
-        "comet_kiwi": {
-          "score": 0.829
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural to say '마이크 사용 요청 중'",
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; '마이크 사용 요청' would sound more natural and informal.",
-          "score": 6,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -58157,53 +57232,6 @@
       }
     },
     {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "ko",
-      "text": "마이크 요청",
-      "back_translation": "Mike requested.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 28.6,
-        "metricx": {
-          "score": 0.7
-        },
-        "comet_kiwi": {
-          "score": 0.829
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Natural but slightly stiff; '요청' is formal",
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; '마이크 요청 중' would sound more natural and informal",
-          "score": 6,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "connection state\u0004starting",
       "msgid": "starting",
       "msgctxt": "connection state",
@@ -58287,7 +57315,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"당신을 기다리고 있습니다\" feels too formal for the tone\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"당신을 기다리고 있습니다\" feels too formal for the tone.\"}'",
           "context": "\nWhere it appears: A connection state label.\n",
           "by": "qwen"
         }
@@ -62923,53 +61951,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "it",
-      "text": "Richiesta di microfono",
-      "back_translation": "Request for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.7,
-        "metricx": {
-          "score": 0.1
-        },
-        "comet_kiwi": {
-          "score": 0.8049
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; 'Richiesta' feels formal, not calm and informal like the tone.",
-          "score": 6,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -63596,53 +62577,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "it",
-      "text": "Richiesta di microfono",
-      "back_translation": "Request for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.7,
-        "metricx": {
-          "score": 0.1
-        },
-        "comet_kiwi": {
-          "score": 0.8049
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the friendly tone.",
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Natural and calm, minor formality in 'richiesta'",
-          "score": 8,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
         }
       }
     },
@@ -68358,53 +67292,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "tr",
-      "text": "Mikrofon isteği",
-      "back_translation": "Request for microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 62.4,
-        "metricx": {
-          "score": 0.85
-        },
-        "comet_kiwi": {
-          "score": 0.8047
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural to say 'mikrofon izni isteği'",
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; 'mikrofon isteği' sounds more formal and technical than needed.",
-          "score": 6,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -69019,53 +67906,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "tr",
-      "text": "Mikrofon isteği",
-      "back_translation": "Request for microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 62.4,
-        "metricx": {
-          "score": 0.85
-        },
-        "comet_kiwi": {
-          "score": 0.8047
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as 'Mikrofon isteği yapılıyor'",
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; 'Mikrofon isteği' sounds more formal and less natural than needed.",
-          "score": 6,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
         }
       }
     },
@@ -73785,49 +72625,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "locale": "id",
-      "text": "Meminta Mikrofon",
-      "back_translation": "Ask for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.5,
-        "metricx": {
-          "score": 0.68
-        },
-        "comet_kiwi": {
-          "score": 0.7672
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -74434,49 +73231,6 @@
         },
         "comet_kiwi": {
           "score": 0.7253
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "locale": "id",
-      "text": "Meminta Mikrofon",
-      "back_translation": "Ask for a microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.5,
-        "metricx": {
-          "score": 0.68
-        },
-        "comet_kiwi": {
-          "score": 0.7672
         },
         "judge": {
           "score": null,
@@ -88079,7 +86833,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" lacks natural flow for context\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" feels incomplete without context\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -90598,62 +89352,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "yêu cầu microphone",
-      "back_translation": "Request for a microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 0.93
-        },
-        "comet_kiwi": {
-          "score": 0.5178
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -91454,62 +90152,6 @@
         },
         "comet_kiwi": {
           "score": 0.6725
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "context": "",
-      "locale": "vi",
-      "text": "yêu cầu microphone",
-      "back_translation": "Request for a microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.0,
-        "metricx": {
-          "score": 0.93
-        },
-        "comet_kiwi": {
-          "score": 0.5178
         },
         "judge": {
           "score": null,
@@ -98578,62 +97220,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ur",
-      "text": "مائیکروسافٹ کی درخواست",
-      "back_translation": "Request by Microsoft",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 29.5,
-        "metricx": {
-          "score": 8.81
-        },
-        "comet_kiwi": {
-          "score": 0.472
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -99416,62 +98002,6 @@
         },
         "comet_kiwi": {
           "score": 0.753
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "context": "",
-      "locale": "ur",
-      "text": "مائیکروسافٹ کی درخواست",
-      "back_translation": "Request by Microsoft",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 29.5,
-        "metricx": {
-          "score": 8.81
-        },
-        "comet_kiwi": {
-          "score": 0.472
         },
         "judge": {
           "score": null,
@@ -106498,64 +105028,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "context": "",
-      "locale": "sw",
-      "text": "Maombi ya Mikrofoni",
-      "back_translation": "Applications for microphones",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.2,
-        "metricx": {
-          "score": 1.75
-        },
-        "comet_kiwi": {
-          "score": 0.8011
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; 'maombi' feels too formal for the calm, friendly tone",
-          "score": 6,
-          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -107350,64 +105822,6 @@
         "judge_qwen": {
           "reason": "Incorrect phrasing; 'Hakuna kuanza' is not natural or accurate for 'not started'",
           "score": 4,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "context": "",
-      "locale": "sw",
-      "text": "Maombi ya Mikrofoni",
-      "back_translation": "Applications for microphones",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 45.2,
-        "metricx": {
-          "score": 1.75
-        },
-        "comet_kiwi": {
-          "score": 0.8011
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "reason": "Slightly stiff; 'maombi' feels too formal for casual tone",
-          "score": 6,
           "context": "\nWhere it appears: A connection state label.\n",
           "by": "qwen"
         }
@@ -114476,62 +112890,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fa",
-      "text": "درخواست میکروفون",
-      "back_translation": "Request for microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.7,
-        "metricx": {
-          "score": 0.3
-        },
-        "comet_kiwi": {
-          "score": 0.8164
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -115332,66 +113690,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "context": "",
-      "locale": "fa",
-      "text": "درخواست میکروفون",
-      "back_translation": "Request for microphone.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 61.7,
-        "metricx": {
-          "score": 0.3
-        },
-        "comet_kiwi": {
-          "score": 0.8164
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Natural but slightly formal; 'requesting' could be more casual.",
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "reason": "Natural and accurate, slightly formal tone",
-          "score": 8,
-          "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
         }
       }
     },
@@ -122422,62 +120720,6 @@
       }
     },
     {
-      "key": "requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fil",
-      "text": "Ipinagagamit ng microphone",
-      "back_translation": "The Microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.6,
-        "metricx": {
-          "score": 3.78
-        },
-        "comet_kiwi": {
-          "score": 0.4756
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "button\u0004Continue",
       "msgid": "Continue",
       "msgctxt": "button",
@@ -123250,62 +121492,6 @@
         },
         "comet_kiwi": {
           "score": 0.5627
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "connection state\u0004requesting microphone",
-      "msgid": "requesting microphone",
-      "msgctxt": "connection state",
-      "context": "",
-      "locale": "fil",
-      "text": "Ipinagagamit ng microphone",
-      "back_translation": "The Microphone",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.6,
-        "metricx": {
-          "score": 3.78
-        },
-        "comet_kiwi": {
-          "score": 0.4756
         },
         "judge": {
           "score": null,
@@ -138698,6 +136884,2330 @@
         },
         "comet_kiwi": {
           "score": 0.3584
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "Solicitar acceso al micrófono",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.17
+        },
+        "comet_kiwi": {
+          "score": 0.8391
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'solicitando acceso' would sound more natural and informal",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "es",
+      "text": "Solicitar acceso al micrófono",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.17
+        },
+        "comet_kiwi": {
+          "score": 0.8391
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'solicitar' feels too formal for the tone",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "请求麦克风接入",
+      "back_translation": "Request for microphone access",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.2,
+        "metricx": {
+          "score": 0.77
+        },
+        "comet_kiwi": {
+          "score": 0.7278
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "zh",
+      "text": "请求麦克风接入",
+      "back_translation": "Request for microphone access",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.2,
+        "metricx": {
+          "score": 0.77
+        },
+        "comet_kiwi": {
+          "score": 0.7278
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "माइक्रोफोन एक्सेस के लिए अनुरोध",
+      "back_translation": "Request for microphone access",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.2,
+        "metricx": {
+          "score": 1.13
+        },
+        "comet_kiwi": {
+          "score": 0.8321
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Awkward phrasing, slightly formal",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'अनुरोध' feels formal, could be more natural like 'माइक्रोफोन एक्सेस के लिए मांग'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "hi",
+      "text": "माइक्रोफोन एक्सेस के लिए अनुरोध",
+      "back_translation": "Request for microphone access",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.2,
+        "metricx": {
+          "score": 1.13
+        },
+        "comet_kiwi": {
+          "score": 0.8321
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, 'access' could be more natural",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, minor stiffness in phrasing",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "طلب الوصول إلى الميكروفون",
+      "back_translation": "Request access to the microphone.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.7,
+        "metricx": {
+          "score": 1.52
+        },
+        "comet_kiwi": {
+          "score": 0.8069
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, could be more casual",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Accurate and natural, slightly formal tone",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "ar",
+      "text": "طلب الوصول إلى الميكروفون",
+      "back_translation": "Request access to the microphone.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.7,
+        "metricx": {
+          "score": 1.52
+        },
+        "comet_kiwi": {
+          "score": 0.8069
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, but meaning clear",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Accurate and natural, slightly formal tone",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "pt",
+      "text": "Pedir acesso ao microfone",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 2.28
+        },
+        "comet_kiwi": {
+          "score": 0.8293
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "pt",
+      "text": "Pedir acesso ao microfone",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 2.28
+        },
+        "comet_kiwi": {
+          "score": 0.8293
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "bn",
+      "text": "মাইক্রোফোন অ্যাক্সেস",
+      "back_translation": "Microphone access",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.1,
+        "metricx": {
+          "score": 2.0
+        },
+        "comet_kiwi": {
+          "score": 0.5904
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "bn",
+      "text": "মাইক্রোফোন অ্যাক্সেস",
+      "back_translation": "Microphone access",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.1,
+        "metricx": {
+          "score": 2.0
+        },
+        "comet_kiwi": {
+          "score": 0.5904
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "Заявление о доступе к микрофону",
+      "back_translation": "Application for access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 49.8,
+        "metricx": {
+          "score": 3.16
+        },
+        "comet_kiwi": {
+          "score": 0.8261
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "ru",
+      "text": "Заявление о доступе к микрофону",
+      "back_translation": "Application for access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 49.8,
+        "metricx": {
+          "score": 3.16
+        },
+        "comet_kiwi": {
+          "score": 0.8261
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ja",
+      "text": "マイクロフォン接続を求める",
+      "back_translation": "Request a microphone connection.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 37.7,
+        "metricx": {
+          "score": 1.48
+        },
+        "comet_kiwi": {
+          "score": 0.8242
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "ja",
+      "text": "マイクロフォン接続を求める",
+      "back_translation": "Request a microphone connection.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 37.7,
+        "metricx": {
+          "score": 1.48
+        },
+        "comet_kiwi": {
+          "score": 0.8242
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, more natural to say 'マイクの使用許可を求める'",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 4,
+          "reason": "Incorrect phrasing; sounds technical, not calm and informal",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "Demander l’accès au microphone",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.43
+        },
+        "comet_kiwi": {
+          "score": 0.8363
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "fr",
+      "text": "Demander l’accès au microphone",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.43
+        },
+        "comet_kiwi": {
+          "score": 0.8363
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "Befehle den Zugang zum Mikrofon",
+      "back_translation": "Order access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.9,
+        "metricx": {
+          "score": 1.17
+        },
+        "comet_kiwi": {
+          "score": 0.6594
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "de",
+      "text": "Befehle den Zugang zum Mikrofon",
+      "back_translation": "Order access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.9,
+        "metricx": {
+          "score": 1.17
+        },
+        "comet_kiwi": {
+          "score": 0.6594
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ko",
+      "text": "마이크로폰 액세스 요청",
+      "back_translation": "Request for microphone access.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 72.6,
+        "metricx": {
+          "score": 0.52
+        },
+        "comet_kiwi": {
+          "score": 0.8308
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "ko",
+      "text": "마이크로폰 액세스 요청",
+      "back_translation": "Request for microphone access.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 72.6,
+        "metricx": {
+          "score": 0.52
+        },
+        "comet_kiwi": {
+          "score": 0.8308
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "Chiedere accesso al microfono",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 0.38
+        },
+        "comet_kiwi": {
+          "score": 0.824
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, more natural to say 'richiesta accesso microfono'",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'chiedere' is too formal for the tone",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "it",
+      "text": "Chiedere accesso al microfono",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 0.38
+        },
+        "comet_kiwi": {
+          "score": 0.824
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, more natural as 'Chiedi accesso al microfono'",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'chiedere' is imperative, but context needs neutral description",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "Mikrofon erişimi isteyin",
+      "back_translation": "Ask for microphone access.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 76.6,
+        "metricx": {
+          "score": 2.06
+        },
+        "comet_kiwi": {
+          "score": 0.8271
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "tr",
+      "text": "Mikrofon erişimi isteyin",
+      "back_translation": "Ask for microphone access.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 76.6,
+        "metricx": {
+          "score": 2.06
+        },
+        "comet_kiwi": {
+          "score": 0.8271
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "Meminta akses mikrofon",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.18
+        },
+        "comet_kiwi": {
+          "score": 0.8506
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "id",
+      "text": "Meminta akses mikrofon",
+      "back_translation": "Request access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.18
+        },
+        "comet_kiwi": {
+          "score": 0.8506
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "Yêu cầu truy cập microphone",
+      "back_translation": "Require access to the microphone.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.0,
+        "metricx": {
+          "score": 3.8
+        },
+        "comet_kiwi": {
+          "score": 0.6542
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "vi",
+      "text": "Yêu cầu truy cập microphone",
+      "back_translation": "Require access to the microphone.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.0,
+        "metricx": {
+          "score": 3.8
+        },
+        "comet_kiwi": {
+          "score": 0.6542
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ur",
+      "text": "مائیکرو فون تک رسائی کے لئے درخواست",
+      "back_translation": "Request for access to microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.4,
+        "metricx": {
+          "score": 1.69
+        },
+        "comet_kiwi": {
+          "score": 0.8311
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "ur",
+      "text": "مائیکرو فون تک رسائی کے لئے درخواست",
+      "back_translation": "Request for access to microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.4,
+        "metricx": {
+          "score": 1.69
+        },
+        "comet_kiwi": {
+          "score": 0.8311
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "sw",
+      "text": "kuomba mikrofoni ya kufikia",
+      "back_translation": "Request for a microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.2,
+        "metricx": {
+          "score": 5.09
+        },
+        "comet_kiwi": {
+          "score": 0.607
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "sw",
+      "text": "kuomba mikrofoni ya kufikia",
+      "back_translation": "Request for a microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.2,
+        "metricx": {
+          "score": 5.09
+        },
+        "comet_kiwi": {
+          "score": 0.607
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fa",
+      "text": "درخواست دسترسی به میکروفون",
+      "back_translation": "Request access to the microphone.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.7,
+        "metricx": {
+          "score": 0.61
+        },
+        "comet_kiwi": {
+          "score": 0.8649
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, but correct and clear.",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; could be more natural and calm",
+          "context": "\nWhere it appears: Status beside your microphone while the browser asks your permission to use it.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "fa",
+      "text": "درخواست دسترسی به میکروفون",
+      "back_translation": "Request access to the microphone.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 47.7,
+        "metricx": {
+          "score": 0.61
+        },
+        "comet_kiwi": {
+          "score": 0.8649
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Accurate, natural, and matches the calm tone.",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and accurate, slightly formal tone",
+          "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fil",
+      "text": "Pag-aalok ng access sa microphone",
+      "back_translation": "Access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.8,
+        "metricx": {
+          "score": 3.03
+        },
+        "comet_kiwi": {
+          "score": 0.6922
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "connection state\u0004asking for microphone access",
+      "msgid": "asking for microphone access",
+      "msgctxt": "connection state",
+      "context": "",
+      "locale": "fil",
+      "text": "Pag-aalok ng access sa microphone",
+      "back_translation": "Access to the microphone",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.8,
+        "metricx": {
+          "score": 3.03
+        },
+        "comet_kiwi": {
+          "score": 0.6922
         },
         "judge": {
           "score": null,

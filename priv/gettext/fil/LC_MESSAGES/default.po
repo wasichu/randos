@@ -347,12 +347,6 @@ msgstr "Pag-play ng audio mula sa malayo (%{summary})"
 msgid "remote audio received (%{summary})"
 msgstr "natanggap ang audio mula sa malayo (%{summary})"
 
-#. Status beside your microphone while the browser asks your permission to use it.
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "requesting microphone"
-msgstr "Humihiling ng mikropono"
-
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -441,12 +435,6 @@ msgstr "Hindi ibinigay ang mikropono"
 msgctxt "connection state"
 msgid "not started"
 msgstr "hindi nagsimula"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgctxt "connection state"
-msgid "requesting microphone"
-msgstr "Humihiling ng mikropono"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -840,3 +828,16 @@ msgstr "Bigo ang matibay na koneksyon"
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
 msgstr "hindi inaasahang tugon"
+
+#. Status beside your microphone while the browser asks your permission to use it.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "asking for microphone access"
+msgstr "paghingi ng pahintulot para gamitin ang mikropono"
+
+#. The call's state while the browser asks your permission to use the microphone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "connection state"
+msgid "asking for microphone access"
+msgstr "paghingi ng pahintulot para sa paggamit ng mikropono"

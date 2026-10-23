@@ -347,12 +347,6 @@ msgstr "দূরবর্তী অডিও প্লেব্যাক (%{sum
 msgid "remote audio received (%{summary})"
 msgstr "রিমোট অডিও গ্রহণ করা হয়েছে (%{summary})"
 
-#. Status beside your microphone while the browser asks your permission to use it.
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "requesting microphone"
-msgstr "মাইক্রোফোন ব্যবহারের অনুমতি চাই"
-
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -441,12 +435,6 @@ msgstr "মাইক্রোফোন অস্বীকার করা হয
 msgctxt "connection state"
 msgid "not started"
 msgstr "শুরু হয়নি"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgctxt "connection state"
-msgid "requesting microphone"
-msgstr "মাইক্রোফোন ব্যবহারের জন্য অনুরোধ"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -840,3 +828,16 @@ msgstr "নিরাপদ সংযোগ ব্যর্থ হয়েছে
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
 msgstr "অপ্রত্যাশিত উত্তর"
+
+#. Status beside your microphone while the browser asks your permission to use it.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "asking for microphone access"
+msgstr "মাইক্রোফোন ব্যবহারের অনুমতি চাওয়া"
+
+#. The call's state while the browser asks your permission to use the microphone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "connection state"
+msgid "asking for microphone access"
+msgstr "মাইক্রোফোন ব্যবহারের অনুমতি চাওয়া"

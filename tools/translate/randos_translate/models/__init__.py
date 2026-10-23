@@ -85,6 +85,17 @@ def brand_case(text: str) -> str:
     return _BRAND.sub(lambda m: m.group(0).lower(), text)
 
 
+# The name written in Arabic letters ("راندو", "الراندوس"): back to the
+# name, which the glossary keeps in Latin letters.
+_ARABIC_BRAND = re.compile(r"(?:ال)?راندو(س)?")
+
+
+def arabic_brand(text: str) -> str:
+    """randos/rando transliterated into Arabic script, written back as the
+    name (models do it although the glossary says not to)."""
+    return _ARABIC_BRAND.sub(lambda m: "randos" if m.group(1) else "rando", text)
+
+
 def ellipsis(source: str, text: str) -> str:
     """The source's "…" stays one character: models often write "...",
     which the checks can't tell from a typo and the .po shouldn't mix."""
@@ -108,9 +119,9 @@ def placeholders(source: str, text: str) -> str:
 
 def tidy(source: str, text: str) -> str:
     """What every machine translation goes through before the checks:
-    `brand_case`, `ellipsis`, `placeholders`, and NFC (one form for every
+    `arabic_brand`, `brand_case`, `ellipsis`, `placeholders`, and NFC (one form for every
     letter, so the checks and the .po see the same text)."""
-    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(text))))
+    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(arabic_brand(text)))))
 
 
 # The MLX instruction models: name -> (repo, prompt style). Sizes chosen to

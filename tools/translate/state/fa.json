@@ -40,12 +40,12 @@
     "msgstr": "درباره ما"
   },
   "About randos": {
-    "model": "madlad-400",
-    "msgstr": "در مورد randos"
+    "model": "translategemma-4b",
+    "msgstr": "درباره randos"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "madlad-400",
-    "msgstr": "قبل از جستجو برای rando تأیید ۱۸+ را بپذیرید."
+    "model": "hy-mt2",
+    "msgstr": "قبل از جستجوی یک rando، ابتدا تأییدیه سنی ۱۸+ را بپذیرید."
   },
   "Attempting to reconnect": {
     "model": "hy-mt2",
@@ -160,8 +160,8 @@
     "msgstr": "پیدا کردن یک سازگار rando."
   },
   "Finding a rando": {
-    "model": "madlad-400",
-    "msgstr": "پیدا کردن یک rando"
+    "model": "hy-mt2",
+    "msgstr": "یافتن یک rando"
   },
   "Finished": {
     "model": "opus-mt",
@@ -220,8 +220,8 @@
     "msgstr": "در حال جستجو"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
-    "model": "madlad-400",
-    "msgstr": "در جستجوی rando که %{hearing_languages} صحبت می‌کند و می‌خواهد %{speaking_language} را بشنود."
+    "model": "hy-mt2",
+    "msgstr": "دنبال یک rando می‌گردم که به %{hearing_languages} صحبت کند و بخواهد %{speaking_language} را بشنود."
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-4b",
@@ -304,8 +304,8 @@
     "msgstr": "منبع (AGPL-3.0)"
   },
   "Starting call with rando.": {
-    "model": "madlad-400",
-    "msgstr": "شروع تماس با rando."
+    "model": "hy-mt2",
+    "msgstr": "تماس را با rando آغاز می‌کنم."
   },
   "Status": {
     "model": "madlad-400",
@@ -364,8 +364,8 @@
     "msgstr": "ترجمه‌های این وب‌سایت توسط ماشین انجام شده و هنوز توسط انسان‌ها بررسی نشده‌اند. اگر متن در زبان شما به درستی نمایش داده نمی‌شود، لطفاً در اصلاح آن کمک کنید: متن مورد نظر را پیدا کرده، نحوه نوشتار صحیح آن را بنویسید و ما بقیه کارها را انجام خواهیم داد."
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "hy-mt2",
-    "msgstr": "هیچ حساب، پروفایل، تماس، دنبال‌کننده، فید، رکورد، امتیاز یا نمودار اجتماعی دائمی وجود ندارد. randos بیشتر شبیه به زیرساخت‌های گفت‌وگویی است تا رسانه‌های اجتماعی."
+    "model": "translategemma-4b",
+    "msgstr": "در randos، هیچ حساب کاربری، پروفایل، لیست مخاطبین، دنبال‌کنندگان، جریان‌های خبری، رکوردهای عملکرد، یا نمودار اجتماعی دائمی وجود ندارد. randos بیشتر شبیه به یک زیرساخت برای گفتگو است تا یک رسانه اجتماعی."
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-12b",
@@ -428,8 +428,8 @@
     "msgstr": "شما موافقت کردید که ادامه دهید، در انتظار rando خود…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "madlad-400",
-    "msgstr": "شما زبانی را که می خواهید صحبت کنید و زبانی را که می خواهید بشنوید را انتخاب می کنید. randos شما را برای یک مکالمه کوتاه با کسی که با شما سازگار است جفت می کند، و سپس از سر راه شما دور می شود."
+    "model": "translategemma-4b",
+    "msgstr": "شما زبان مورد نظر برای صحبت و زبان مورد نظر برای شنیدن را انتخاب می‌کنید. برنامه \"randos\" شما را با فردی سازگار برای یک مکالمه کوتاه همراه می‌کند و سپس از این فرآیند خارج می‌شود."
   },
   "You have matched. Audio starts when the call opens.": {
     "model": "translategemma-27b",
@@ -440,12 +440,16 @@
     "msgstr": "شما به زبان‌های زیر گوش خواهید داد: %{languages}"
   },
   "Your rando": {
-    "model": "madlad-400",
-    "msgstr": "شما rando"
+    "model": "hy-mt2",
+    "msgstr": "randoی شما"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
-    "model": "madlad-400",
-    "msgstr": "اتصال rando شما قطع شد؛ در حال انتظار چند ثانیه برای بازگشت آنها."
+    "model": "hy-mt2",
+    "msgstr": "اتصال randoی شما قطع شد؛ چند ثانیه صبر کنید تا دوباره وصل شوند."
+  },
+  "asking for microphone access": {
+    "model": "hy-mt2",
+    "msgstr": "درخواست دسترسی به میکروفون"
   },
   "button\u0004Continue": {
     "model": "madlad-400",
@@ -456,8 +460,8 @@
     "msgstr": "پایان"
   },
   "button\u0004Find a rando": {
-    "model": "madlad-400",
-    "msgstr": "پیدا کردن یک rando"
+    "model": "hy-mt2",
+    "msgstr": "یک rando پیدا کنید"
   },
   "button\u0004Mute": {
     "model": "hy-mt2",
@@ -482,6 +486,10 @@
   "connection state\u0004answering": {
     "model": "translategemma-4b",
     "msgstr": "پاسخ دادن"
+  },
+  "connection state\u0004asking for microphone access": {
+    "model": "hy-mt2",
+    "msgstr": "درخواست دسترسی به میکروفون"
   },
   "connection state\u0004calling": {
     "model": "madlad-400",
@@ -560,8 +568,8 @@
     "msgstr": "حریم خصوصی"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "opus-mt",
-    "msgstr": "randos مکانی برای گفتگوی ناشناس و فقط به زبان صوتی است."
+    "model": "translategemma-12b",
+    "msgstr": "randos یک پلتفرم است که امکان برقراری مکالمات زبانی را به صورت ناشناس و فقط از طریق صدا فراهم می‌کند."
   },
   "randos is free software (AGPL-3.0) and built in public.": {
     "model": "translategemma-12b",

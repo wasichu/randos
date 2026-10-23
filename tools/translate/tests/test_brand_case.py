@@ -43,3 +43,10 @@ def test_a_look_alike_percent_sign_is_written_back():
     assert placeholders("%{minutes} min", "％{minutes}分") == "%{minutes}分"
     # Not a name the source has: left for the placeholder check to fail.
     assert placeholders("%{minutes} min", "٪{دقائق} دقيقة") == "٪{دقائق} دقيقة"
+
+
+def test_the_name_in_arabic_letters_is_written_back():
+    from randos_translate.models import tidy
+
+    assert tidy("Your rando", "راندو الخاص بك") == "rando الخاص بك"
+    assert tidy("About randos", "نبذة عن الراندوس") == "نبذة عن randos"

@@ -32,12 +32,12 @@ msgstr "نبذة عنا"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
-msgstr ""
+msgstr "نبذة عن randos"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Accept the 18+ acknowledgment before looking for a rando."
-msgstr "اقبل الاعتراف 18+ قبل أن تبحث عن rando."
+msgstr "قبل البحث عن rando، يجب عليك الموافقة على شروط الـ18+."
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -100,7 +100,7 @@ msgstr "افتراضيًا، مؤقت"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Finding a compatible rando."
-msgstr "العثور على متوافق rando"
+msgstr "إيجاد rando مناسب."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -214,7 +214,7 @@ msgstr "الواجهة مُصمَّمة لتكون هادئة عن قصد. وا�
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
-msgstr "لا توجد حسابات أو ملفات تعريف أو جهات اتصال أو متابعون أو تدفقات أخبار أو سجلات مستمرة أو درجات أو رسم بياني اجتماعي دائم. يُعد تطبيق randos أقرب إلى بنية تحتية للمحادثات منه إلى وسيلة للتواصل الاجتماعي."
+msgstr "لا توجد حسابات مستخدمين، أو ملفات شخصية، أو جهات اتصال، أو متابعين، أو خلاصات [أخبار/تحديثات]، أو سلاسل [من التفاعلات المتتالية]، أو نتائج [أو تقييمات]، أو شبكة علاقات اجتماعية دائمة. يمكن وصف \"randos\" بأنه أقرب إلى بنية تحتية للحوار والتواصل، منه إلى منصة للتواصل الاجتماعي."
 
 #. Your status when the call's time has run out and both people choose whether to go on.
 #: lib/randos_web/components/home_components.ex
@@ -266,7 +266,7 @@ msgstr "تمّ إيجاد تطابق. سيبدأ تشغيل الصوت عند ب
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando"
-msgstr ""
+msgstr "rando الخاص بك"
 
 #: lib/randos_web/components/core_components.ex
 #, elixir-autogen, elixir-format
@@ -282,12 +282,12 @@ msgstr "كروسستالك"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is a place for anonymous, audio-only language conversation."
-msgstr "randos هو مكان لمحادثة لغوية مجهولة الهوية وصوتية فقط."
+msgstr "\"randos\" هو مكان للتواصل اللغوي الصوتي فقط، دون الكشف عن الهوية."
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is free software (AGPL-3.0) and built in public."
-msgstr "randos هي برمجيات حرة (AGPL-3.0) وبنيت في القطاع العام."
+msgstr "برنامج \"randos\" هو برنامج مفتوح المصدر (مرخص بموجب ترخيص AGPL-3.0) وتم تطويره بشكل علني."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -347,12 +347,6 @@ msgstr "تشغيل الصوت عن بُعد (%{summary})"
 msgid "remote audio received (%{summary})"
 msgstr "تم استقبال الصوت عن بُعد (%{summary})"
 
-#. Status beside your microphone while the browser asks your permission to use it.
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "requesting microphone"
-msgstr "طلب ميكروفون"
-
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -371,7 +365,7 @@ msgstr "نهاية"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Find a rando"
-msgstr "العثور على rando"
+msgstr "ابحث عن rando"
 
 #. Button: turn your own microphone off.
 #: lib/randos_web/components/home_components.ex
@@ -385,7 +379,7 @@ msgstr "صامت"
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Next rando"
-msgstr "التالي rando"
+msgstr "rando التالي"
 
 #. Button: turn your own microphone back on.
 #: lib/randos_web/components/home_components.ex
@@ -445,12 +439,6 @@ msgstr "لم يبدأ بعد"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
-msgid "requesting microphone"
-msgstr "طلب ميكروفون"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgctxt "connection state"
 msgid "starting"
 msgstr "البدء"
 
@@ -458,7 +446,7 @@ msgstr "البدء"
 #, elixir-autogen, elixir-format
 msgctxt "connection state"
 msgid "waiting for your rando"
-msgstr "في انتظارك rando"
+msgstr "في انتظار rando الخاص بك"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -468,7 +456,7 @@ msgstr "أنا سعيد أن أسمع"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
-msgstr ""
+msgstr "أبحث عن rando يتحدث %{hearing_languages} ويرغب في سماع %{speaking_language}."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -676,7 +664,7 @@ msgstr "عملية الالتزام التي يقوم بها هذا الخادم
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
-msgstr "ما يراه كل جزء من الـ randos وما يسجله ويحتفظ به، مع الإعدادات الخاصة بكل طلب:"
+msgstr "ما تراه وتسجله وتحفظه كل جزء من أجزاء \"randos\"، بالإضافة إلى الإعدادات التي تكمن وراء كل نتيجة أو معلومة يقدمها:"
 
 #. Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/live/about_live.ex
@@ -687,7 +675,7 @@ msgstr "الخصوصية"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando's connection dropped; waiting a few seconds for them to come back."
-msgstr "اتصالك rando انقطع؛ ينتظر بضع ثوانٍ حتى يعودوا."
+msgstr "انقطع الاتصال بrando الخاص بك؛ يُرجى الانتظار بضع ثوانٍ حتى يعودوا."
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -777,7 +765,7 @@ msgstr "إعادة توصيل الصوت…"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You agreed to continue, waiting on your rando…"
-msgstr "لقد وافقت على الاستمرار، في انتظار rando…"
+msgstr "لقد وافقت على الاستمرار، في انتظار rando الخاص بك…"
 
 #. A call's typical length, at the longest a call can run; the "+" already says "or more", so don't add words for it (min = minutes).
 #: lib/randos_web/live/status_live.ex
@@ -844,3 +832,16 @@ msgstr "فشل الاتصال الآمن"
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
 msgstr "رد غير متوقع"
+
+#. Status beside your microphone while the browser asks your permission to use it.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "asking for microphone access"
+msgstr "طلب الوصول إلى الميكروفون"
+
+#. The call's state while the browser asks your permission to use the microphone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "connection state"
+msgid "asking for microphone access"
+msgstr "طلب الوصول إلى الميكروفون"

@@ -347,12 +347,6 @@ msgstr "원격 오디오 재생 (%{summary})"
 msgid "remote audio received (%{summary})"
 msgstr "원격 오디오 수신 (%{summary})"
 
-#. Status beside your microphone while the browser asks your permission to use it.
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "requesting microphone"
-msgstr "마이크 요청 중"
-
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -441,12 +435,6 @@ msgstr "마이크 사용 거부됨"
 msgctxt "connection state"
 msgid "not started"
 msgstr "아직 시작되지 않음"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgctxt "connection state"
-msgid "requesting microphone"
-msgstr "마이크 요청 중"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -839,3 +827,16 @@ msgstr "보안 연결 실패"
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
 msgstr "예상치 못한 답변"
+
+#. Status beside your microphone while the browser asks your permission to use it.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "asking for microphone access"
+msgstr "마이크 액세스 요청"
+
+#. The call's state while the browser asks your permission to use the microphone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "connection state"
+msgid "asking for microphone access"
+msgstr "마이크 액세스 요청"

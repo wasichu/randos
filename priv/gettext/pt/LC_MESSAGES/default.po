@@ -347,12 +347,6 @@ msgstr "reprodução remota de áudio (%{summary})"
 msgid "remote audio received (%{summary})"
 msgstr "Áudio recebido remotamente (%{summary})."
 
-#. Status beside your microphone while the browser asks your permission to use it.
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "requesting microphone"
-msgstr "solicitando o microfone"
-
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -441,12 +435,6 @@ msgstr "Acesso ao microfone negado"
 msgctxt "connection state"
 msgid "not started"
 msgstr "não iniciado"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgctxt "connection state"
-msgid "requesting microphone"
-msgstr "solicitando microfone"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -840,3 +828,16 @@ msgstr "conexão segura falhou"
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
 msgstr "Resposta inesperada"
+
+#. Status beside your microphone while the browser asks your permission to use it.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "asking for microphone access"
+msgstr "pedindo acesso ao microfone"
+
+#. The call's state while the browser asks your permission to use the microphone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "connection state"
+msgid "asking for microphone access"
+msgstr "pedindo acesso ao microfone"

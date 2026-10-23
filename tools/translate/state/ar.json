@@ -39,9 +39,13 @@
     "model": "hy-mt2",
     "msgstr": "نبذة عنا"
   },
+  "About randos": {
+    "model": "hy-mt2",
+    "msgstr": "نبذة عن randos"
+  },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "opus-mt",
-    "msgstr": "اقبل الاعتراف 18+ قبل أن تبحث عن rando."
+    "model": "hy-mt2",
+    "msgstr": "قبل البحث عن rando، يجب عليك الموافقة على شروط الـ18+."
   },
   "Attempting to reconnect": {
     "model": "hy-mt2",
@@ -152,11 +156,11 @@
     "msgstr": "ابحث عن عبارة، باللغة الإنجليزية أو %{language}"
   },
   "Finding a compatible rando.": {
-    "model": "m2m100",
-    "msgstr": "العثور على متوافق rando"
+    "model": "hy-mt2",
+    "msgstr": "إيجاد rando مناسب."
   },
   "Finding a rando": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "العثور على rando"
   },
   "Finished": {
@@ -214,6 +218,10 @@
   "Looking": {
     "model": "madlad-400",
     "msgstr": "أبحث"
+  },
+  "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
+    "model": "hy-mt2",
+    "msgstr": "أبحث عن rando يتحدث %{hearing_languages} ويرغب في سماع %{speaking_language}."
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-27b",
@@ -296,7 +304,7 @@
     "msgstr": "المصدر (AGPL-3.0)"
   },
   "Starting call with rando.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "بدء المكالمة مع rando."
   },
   "Status": {
@@ -356,8 +364,8 @@
     "msgstr": "تمت ترجمة محتويات هذا الموقع آليًا ولم يتم مراجعتها من قبل متخصصين لغويين بعد. إذا لاحظت أي أخطاء أو عبارات غير دقيقة في لغتك، فيرجى مساعدتنا في تصحيحها: حدد النص المعني، واكتب الصيغة الصحيحة التي تراه مناسبة، وسنتولى نحن بقية العمل."
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "hy-mt2",
-    "msgstr": "لا توجد حسابات أو ملفات تعريف أو جهات اتصال أو متابعون أو تدفقات أخبار أو سجلات مستمرة أو درجات أو رسم بياني اجتماعي دائم. يُعد تطبيق randos أقرب إلى بنية تحتية للمحادثات منه إلى وسيلة للتواصل الاجتماعي."
+    "model": "translategemma-27b",
+    "msgstr": "لا توجد حسابات مستخدمين، أو ملفات شخصية، أو جهات اتصال، أو متابعين، أو خلاصات [أخبار/تحديثات]، أو سلاسل [من التفاعلات المتتالية]، أو نتائج [أو تقييمات]، أو شبكة علاقات اجتماعية دائمة. يمكن وصف \"randos\" بأنه أقرب إلى بنية تحتية للحوار والتواصل، منه إلى منصة للتواصل الاجتماعي."
   },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-12b",
@@ -404,8 +412,8 @@
     "msgstr": "نحن نحسب المكالمات وليس الأشخاص: لا عناوين، ولا أرقام هويات، ولا أي معلومات عن أي شخص؛ يتم الاحتفاظ فقط بهذه الإحصائيات الإجمالية."
   },
   "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
-    "model": "hy-mt2",
-    "msgstr": "ما يراه كل جزء من الـ randos وما يسجله ويحتفظ به، مع الإعدادات الخاصة بكل طلب:"
+    "model": "translategemma-27b",
+    "msgstr": "ما تراه وتسجله وتحفظه كل جزء من أجزاء \"randos\"، بالإضافة إلى الإعدادات التي تكمن وراء كل نتيجة أو معلومة يقدمها:"
   },
   "Whether calls can connect right now, and how today is going.": {
     "model": "translategemma-12b",
@@ -416,8 +424,8 @@
     "msgstr": "أنت"
   },
   "You agreed to continue, waiting on your rando…": {
-    "model": "madlad-400",
-    "msgstr": "لقد وافقت على الاستمرار، في انتظار rando…"
+    "model": "hy-mt2",
+    "msgstr": "لقد وافقت على الاستمرار، في انتظار rando الخاص بك…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
     "model": "translategemma-4b",
@@ -431,9 +439,17 @@
     "model": "translategemma-4b",
     "msgstr": "ستسمعون بلغات: %{languages}"
   },
+  "Your rando": {
+    "model": "hy-mt2",
+    "msgstr": "rando الخاص بك"
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
+    "model": "hy-mt2",
+    "msgstr": "انقطع الاتصال بrando الخاص بك؛ يُرجى الانتظار بضع ثوانٍ حتى يعودوا."
+  },
+  "asking for microphone access": {
     "model": "madlad-400",
-    "msgstr": "اتصالك rando انقطع؛ ينتظر بضع ثوانٍ حتى يعودوا."
+    "msgstr": "طلب الوصول إلى الميكروفون"
   },
   "button\u0004Continue": {
     "model": "hy-mt2",
@@ -444,16 +460,16 @@
     "msgstr": "نهاية"
   },
   "button\u0004Find a rando": {
-    "model": "m2m100",
-    "msgstr": "العثور على rando"
+    "model": "hy-mt2",
+    "msgstr": "ابحث عن rando"
   },
   "button\u0004Mute": {
     "model": "madlad-400",
     "msgstr": "صامت"
   },
   "button\u0004Next rando": {
-    "model": "madlad-400",
-    "msgstr": "التالي rando"
+    "model": "hy-mt2",
+    "msgstr": "rando التالي"
   },
   "button\u0004Unmute": {
     "model": "hy-mt2",
@@ -470,6 +486,10 @@
   "connection state\u0004answering": {
     "model": "translategemma-4b",
     "msgstr": "الرد"
+  },
+  "connection state\u0004asking for microphone access": {
+    "model": "madlad-400",
+    "msgstr": "طلب الوصول إلى الميكروفون"
   },
   "connection state\u0004calling": {
     "model": "madlad-400",
@@ -508,8 +528,8 @@
     "msgstr": "البدء"
   },
   "connection state\u0004waiting for your rando": {
-    "model": "madlad-400",
-    "msgstr": "في انتظارك rando"
+    "model": "hy-mt2",
+    "msgstr": "في انتظار rando الخاص بك"
   },
   "couldn't connect": {
     "model": "m2m100",
@@ -548,12 +568,12 @@
     "msgstr": "الخصوصية"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "madlad-400",
-    "msgstr": "randos هو مكان لمحادثة لغوية مجهولة الهوية وصوتية فقط."
+    "model": "translategemma-4b",
+    "msgstr": "\"randos\" هو مكان للتواصل اللغوي الصوتي فقط، دون الكشف عن الهوية."
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "madlad-400",
-    "msgstr": "randos هي برمجيات حرة (AGPL-3.0) وبنيت في القطاع العام."
+    "model": "translategemma-12b",
+    "msgstr": "برنامج \"randos\" هو برنامج مفتوح المصدر (مرخص بموجب ترخيص AGPL-3.0) وتم تطويره بشكل علني."
   },
   "refused": {
     "model": "translategemma-4b",

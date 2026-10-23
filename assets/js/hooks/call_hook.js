@@ -289,7 +289,7 @@ export const WebRTCAudio = {
 
     if (this.microphoneEl) {
       if (state === WebRTCClientState.REQUESTING_MICROPHONE) {
-        this.microphoneEl.textContent = label(this.labels, "requesting_microphone", "requesting microphone")
+        this.microphoneEl.textContent = label(this.labels, "requesting_microphone", "asking for microphone access")
       } else if (state === WebRTCClientState.MICROPHONE_DENIED) {
         this.microphoneEl.textContent = label(this.labels, "microphone_unavailable", "microphone unavailable")
       }

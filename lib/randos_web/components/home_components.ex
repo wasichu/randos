@@ -677,7 +677,13 @@ defmodule RandosWeb.HomeComponents do
       "Status beside your microphone while the browser asks your permission to use it."
     )
 
-    requesting_microphone = gettext("requesting microphone")
+    requesting_microphone = gettext("asking for microphone access")
+
+    gettext_comment(
+      "The call's state while the browser asks your permission to use the microphone."
+    )
+
+    requesting_state = pgettext("connection state", "asking for microphone access")
 
     JSON.encode!(%{
       mute: pgettext("button", "Mute"),
@@ -692,7 +698,7 @@ defmodule RandosWeb.HomeComponents do
         gettext("remote audio needs a tap (%{summary})", summary: "%{summary}"),
       # One per WebRTCClientState (assets/js/randos/webrtc_client.js).
       state_not_started: pgettext("connection state", "not started"),
-      state_requesting_microphone: pgettext("connection state", "requesting microphone"),
+      state_requesting_microphone: requesting_state,
       state_microphone_denied: pgettext("connection state", "microphone denied"),
       state_creating_peer_connection: pgettext("connection state", "starting"),
       state_waiting_for_offer: pgettext("connection state", "waiting for your rando"),

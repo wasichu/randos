@@ -347,12 +347,6 @@ msgstr "chơi âm thanh từ xa (%{summary})"
 msgid "remote audio received (%{summary})"
 msgstr "Âm thanh nhận được từ xa (%{summary})."
 
-#. Status beside your microphone while the browser asks your permission to use it.
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "requesting microphone"
-msgstr "yêu cầu sử dụng micro"
-
 #. Button: when the call's time is up, vote to keep talking a few more minutes.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -441,12 +435,6 @@ msgstr "Không cho phép sử dụng micro"
 msgctxt "connection state"
 msgid "not started"
 msgstr "chưa bắt đầu"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgctxt "connection state"
-msgid "requesting microphone"
-msgstr "yêu cầu micro"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -839,3 +827,16 @@ msgstr "kết nối bảo mật thất bại"
 #, elixir-autogen, elixir-format
 msgid "unexpected reply"
 msgstr "phản hồi bất ngờ"
+
+#. Status beside your microphone while the browser asks your permission to use it.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "asking for microphone access"
+msgstr "xin quyền truy cập micro"
+
+#. The call's state while the browser asks your permission to use the microphone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "connection state"
+msgid "asking for microphone access"
+msgstr "yêu cầu quyền truy cập micrô"
