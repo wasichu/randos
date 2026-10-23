@@ -30,22 +30,21 @@ defmodule RandosWeb.RelayHealthTest do
       assert_receive {:fake_turn, :released}
     end
 
-    test "says why, briefly, and never with an address" do
+    test "says why with a code, never with an address" do
       %{port: port} = FakeTurn.start_udp("secret")
-      assert Turn.check(server(:udp, port, "wrong")) == {:error, "credentials refused"}
+      assert Turn.check(server(:udp, port, "wrong")) == {:error, :credentials_refused}
 
       # Nothing listening: no answer (two short tries).
       {:ok, closed} = :gen_udp.open(0, ip: {127, 0, 0, 1})
       {:ok, unused} = :inet.port(closed)
       :gen_udp.close(closed)
-      assert {:error, reason} = Turn.check(server(:udp, unused, "secret"), timeout: 100)
-      refute reason =~ "127.0.0.1"
+      assert Turn.check(server(:udp, unused, "secret"), timeout: 100) == {:error, :no_answer}
 
       # A TLS server we don't trust.
       %{port: tls_port} = FakeTurn.start_tls("secret")
 
-      assert {:error, "TLS failed" <> _} =
-               Turn.check(server(:tls, tls_port, "secret"), timeout: 2_000)
+      assert Turn.check(server(:tls, tls_port, "secret"), timeout: 5_000) ==
+               {:error, :tls_failed}
     end
 
     test "finds one UDP and one TLS server in an ICE server list" do

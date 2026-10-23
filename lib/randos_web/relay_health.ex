@@ -11,8 +11,9 @@ defmodule RandosWeb.RelayHealth do
   while finds an old result: `refresh_if_stale/1` starts a check without
   waiting for it, and the result is announced on `topic/0`.
 
-  Results say only ok or a short reason ("no answer", "credentials
-  refused"): never an address, a credential, or the secret. Without a TURN
+  Results say only ok or a reason code (`t:RandosWeb.RelayHealth.Turn.reason/0`:
+  `:no_answer`, `:credentials_refused`…): never an address, a credential,
+  or the secret. Without a TURN
   server (development, tests) the relay is `:not_configured` and nothing is
   ever sent.
   """

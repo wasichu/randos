@@ -16,7 +16,10 @@ defmodule Randos.MixProject do
       consolidate_protocols: Mix.env() != :dev,
       # Translation files name the file a string is in, not the line, so
       # moving code doesn't churn every .po file (or fail precommit's check).
-      gettext: [write_reference_line_numbers: false]
+      # fuzzy_threshold 1.0: a reworded string gets no guessed translation
+      # (Gettext would show a merge's guess as it is); it shows the English
+      # until the translation shootout fills it (tools/translate).
+      gettext: [write_reference_line_numbers: false, fuzzy_threshold: 1.0]
     ]
   end
 

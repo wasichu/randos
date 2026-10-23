@@ -528,11 +528,6 @@ msgstr "कनेक्शन टूट गया"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
-msgid "Continued past 10 minutes"
-msgstr "10 मिनट से अधिक समय तक जारी रहा"
-
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
 msgid "Couldn't connect"
 msgstr "कनेक्ट नहीं हो सका"
 
@@ -635,12 +630,6 @@ msgstr "कार्यरत"
 #, elixir-autogen, elixir-format
 msgid "Counted across %{answered} of %{total} servers."
 msgstr "%{total} सर्वरों में से %{answered} सर्वरों पर गिनती की गई।"
-
-#. A call's typical length: 30 minutes or more (min = minutes).
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
-msgid "30+ min"
-msgstr "30 मिनट या उससे अधिक"
 
 #. A call's typical length: less than one minute (min = minutes).
 #: lib/randos_web/live/status_live.ex
@@ -785,3 +774,69 @@ msgstr "ऑडियो को फिर से कनेक्ट करना�
 #, elixir-autogen, elixir-format
 msgid "You agreed to continue, waiting on your rando…"
 msgstr "आपने जारी रखने के लिए सहमति दी है, अपने rando की प्रतीक्षा में…"
+
+#. A call's typical length: this many minutes or more (min = minutes).
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "%{minutes}+ min"
+msgstr ""
+
+#. A count on the status page: calls that were continued past their first minutes.
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "Continued past %{minutes} minutes"
+msgstr ""
+
+#. Why the relay check failed: the relay server closed the connection.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "connection closed"
+msgstr ""
+
+#. Why the relay check failed: no connection to the relay server.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "couldn't connect"
+msgstr ""
+
+#. Why the relay check failed: the relay server's name didn't resolve (DNS).
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "couldn't find the server"
+msgstr ""
+
+#. Why the relay check failed: the relay server refused our credentials.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "credentials refused"
+msgstr ""
+
+#. Why the relay check failed: the relay server didn't answer.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "no answer"
+msgstr ""
+
+#. Why the relay check failed: the relay server didn't ask for credentials.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "no credentials asked for"
+msgstr ""
+
+#. Why the relay check failed: the relay server refused the request.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "refused"
+msgstr ""
+
+#. Why the relay check failed: the secure (TLS) connection failed.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "secure connection failed"
+msgstr ""
+
+#. Why the relay check failed: the relay server's reply made no sense.
+#: lib/randos_web/relay_reasons.ex
+#, elixir-autogen, elixir-format
+msgid "unexpected reply"
+msgstr ""

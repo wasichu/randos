@@ -169,7 +169,9 @@ is stale (the reply doesn't wait for it; ask again later).
     "calls_started": 12,
     "calls_connected": 9,
     "calls_continued": 2,
+    "continued_after_minutes": 10,
     "median_minutes": 8 | null,
+    "longest_minutes": 30,
     "endings": {"finished": 8, "not_connected": 2, "connection_lost": 1, "canceled": 1},
     "language_pairs": [{"languages": ["en", "es"], "calls": 5}],
     "other_pairs_calls": 3,
@@ -180,11 +182,19 @@ is stale (the reply doesn't wait for it; ask again later).
 ```
 
 - `transports` is empty until the first check (and when no relay is
-  configured); a failed one has a short `reason`.
+  configured); a failed one has a `reason` code for the client to put into
+  words: `no_answer`, `couldnt_connect`, `couldnt_resolve`,
+  `connection_closed`, `unexpected_reply`, `no_challenge`,
+  `credentials_refused`, `refused`, `tls_failed` (servers before 2026-10-23
+  sent English phrases; show an unknown one as "not working").
+- `calls_continued`: calls that ran past their first
+  `continued_after_minutes` (both numbers come from the server, so a
+  client never copies its call length).
 - `since`: counting started then (the server starts fresh when it restarts);
   `date` is the UTC day counted.
 - `median_minutes`: the typical length of a connected call, in whole
-  minutes (`0`: under a minute; `30`: 30 or more); `null` until enough calls
+  minutes (`0`: under a minute; `longest_minutes`, the longest a call can
+  run: that or more); `null` until enough calls
   connected.
 - `language_pairs`: the two speaking languages of a call, unordered (codes
   from the join reply's `languages`; the same code twice is a call in one

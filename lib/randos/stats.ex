@@ -66,6 +66,10 @@ defmodule Randos.Stats do
   @doc "The fewest calls a language pair needs to be shown (fewer count as \"other\")."
   def min_published, do: @min_published
 
+  @doc "The last whole-minute length bucket (30): it counts that many minutes or more."
+  @spec last_bucket() :: pos_integer()
+  def last_bucket, do: @last_bucket
+
   @doc "The PubSub topic the stats announce changes on (`{:stats_updated, published}`)."
   def topic, do: @topic
 

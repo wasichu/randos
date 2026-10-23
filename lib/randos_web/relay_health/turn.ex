@@ -6,10 +6,14 @@ defmodule RandosWeb.RelayHealth.Turn do
   lifetime 0 to release the allocation at once. Over UDP (`turn:`) or TLS
   (`turns:`, TURN over TLS on TCP: the same messages, back to back).
 
-  `check/2` returns `:ok` or `{:error, reason}`, where `reason` is a short
-  phrase safe to show anyone: it never carries an address, a credential, or
-  the server's own words.
+  `check/2` returns `:ok` or `{:error, reason}`, where `reason` is a code
+  (`t:reason/0`) safe to show anyone, which the status page and the TUI put
+  into words: it never carries an address, a credential, or the server's
+  own words. The detail behind two of them (the TLS alert, the STUN error
+  number) goes to the log.
   """
+
+  require Logger
 
   @magic 0x2112A442
 
@@ -33,6 +37,24 @@ defmodule RandosWeb.RelayHealth.Turn do
   @udp_protocol 17
   @timeout 4_000
 
+  @typedoc "Why a check failed."
+  @type reason ::
+          :no_answer
+          | :couldnt_connect
+          | :couldnt_resolve
+          | :connection_closed
+          | :unexpected_reply
+          | :no_challenge
+          | :credentials_refused
+          | :refused
+          | :tls_failed
+
+  @doc "Every `t:reason/0`, for the clients that put them into words."
+  @spec reasons() :: [reason()]
+  def reasons,
+    do: ~w(no_answer couldnt_connect couldnt_resolve connection_closed unexpected_reply
+           no_challenge credentials_refused refused tls_failed)a
+
   @type server :: %{
           transport: :udp | :tls,
           host: String.t(),
@@ -46,7 +68,7 @@ defmodule RandosWeb.RelayHealth.Turn do
   default #{@timeout}), `:ssl` (extra or overriding `:ssl` options; tests
   trust their own certificate).
   """
-  @spec check(server(), keyword()) :: :ok | {:error, String.t()}
+  @spec check(server(), keyword()) :: :ok | {:error, reason()}
   def check(server, opts \\ []) do
     timeout = Keyword.get(opts, :timeout, @timeout)
 
@@ -114,9 +136,9 @@ defmodule RandosWeb.RelayHealth.Turn do
       :ok
     else
       {:ok, @allocate_error, attrs} -> {:error, refused(attrs)}
-      {:ok, _type, _attrs} -> {:error, "unexpected reply"}
+      {:ok, _type, _attrs} -> {:error, :unexpected_reply}
       {:error, reason} -> {:error, reason}
-      _no_challenge -> {:error, "no authentication challenge"}
+      _no_challenge -> {:error, :no_challenge}
     end
   end
 
@@ -126,7 +148,7 @@ defmodule RandosWeb.RelayHealth.Turn do
     case signed(conn, @refresh, [{@lifetime, <<0::32>>} | auth], key, timeout) do
       {:ok, @refresh_ok, _attrs} -> :ok
       {:ok, @refresh_error, _attrs} -> :ok
-      {:ok, _type, _attrs} -> {:error, "unexpected reply"}
+      {:ok, _type, _attrs} -> {:error, :unexpected_reply}
       {:error, reason} -> {:error, reason}
     end
   end
@@ -137,9 +159,12 @@ defmodule RandosWeb.RelayHealth.Turn do
 
   defp refused(attrs) do
     case error_code(attrs) do
-      401 -> "credentials refused"
-      code when is_integer(code) -> "error #{code}"
-      nil -> "refused"
+      401 ->
+        :credentials_refused
+
+      code ->
+        Logger.info("relay check refused: error #{inspect(code)}")
+        :refused
     end
   end
 
@@ -226,17 +251,22 @@ defmodule RandosWeb.RelayHealth.Turn do
 
     case :ssl.connect(String.to_charlist(host), port, ssl, timeout) do
       {:ok, socket} -> {:ok, {:tls, socket}}
-      {:error, {:tls_alert, {alert, _}}} -> {:error, "TLS failed (#{alert})"}
-      {:error, :timeout} -> {:error, "no answer"}
-      {:error, _reason} -> {:error, "couldn't connect"}
+      {:error, {:tls_alert, {alert, _}}} -> tls_failed(alert)
+      {:error, :timeout} -> {:error, :no_answer}
+      {:error, _reason} -> {:error, :couldnt_connect}
     end
   end
 
   defp resolve(host) do
     case :inet.getaddr(String.to_charlist(host), :inet) do
       {:ok, ip} -> {:ok, ip}
-      {:error, _reason} -> {:error, "couldn't resolve the server"}
+      {:error, _reason} -> {:error, :couldnt_resolve}
     end
+  end
+
+  defp tls_failed(alert) do
+    Logger.info("relay check: TLS failed (#{alert})")
+    {:error, :tls_failed}
   end
 
   defp close({:udp, socket, _ip, _port}), do: :gen_udp.close(socket)
@@ -244,7 +274,7 @@ defmodule RandosWeb.RelayHealth.Turn do
 
   # UDP: one retransmission (a lost packet isn't a broken relay).
   defp exchange({:udp, socket, ip, port}, packet, tid, timeout) do
-    Enum.reduce_while(1..2, {:error, "no answer"}, fn _attempt, acc ->
+    Enum.reduce_while(1..2, {:error, :no_answer}, fn _attempt, acc ->
       :ok = :gen_udp.send(socket, ip, port, packet)
 
       case receive_udp(socket, tid, timeout) do
@@ -262,9 +292,9 @@ defmodule RandosWeb.RelayHealth.Turn do
          {:ok, type, ^tid, attrs} <- decode(header <> body) do
       {:ok, type, attrs}
     else
-      {:error, :timeout} -> {:error, "no answer"}
-      {:error, _closed} -> {:error, "connection closed"}
-      _mismatch -> {:error, "unexpected reply"}
+      {:error, :timeout} -> {:error, :no_answer}
+      {:error, _closed} -> {:error, :connection_closed}
+      _mismatch -> {:error, :unexpected_reply}
     end
   end
 

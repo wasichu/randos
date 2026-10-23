@@ -92,7 +92,9 @@ defmodule RandosWeb.StatusLive do
             if transport["ok"], do: "text-teal-700", else: "text-red-700 dark:text-red-400"
           }>
             <% gettext_comment("A relay server's state on the status page: it is working (up).") %>
-            {if transport["ok"], do: gettext("working"), else: transport["reason"]}
+            {if transport["ok"],
+              do: gettext("working"),
+              else: RandosWeb.RelayReasons.message(transport["reason"])}
           </span>
         </li>
       </ul>
@@ -147,9 +149,14 @@ defmodule RandosWeb.StatusLive do
           label={gettext("Connected")}
           value={@usage["calls_connected"]}
         />
+        <% gettext_comment(
+          "A count on the status page: calls that were continued past their first minutes."
+        ) %>
         <.count
           id="usage-continued"
-          label={gettext("Continued past 10 minutes")}
+          label={
+            gettext("Continued past %{minutes} minutes", minutes: @usage["continued_after_minutes"])
+          }
           value={@usage["calls_continued"]}
         />
         <% gettext_comment("A figure on the status page: the typical length of a call today.") %>
@@ -158,7 +165,7 @@ defmodule RandosWeb.StatusLive do
           label={gettext("Typical length")}
           value={
             if @usage["median_minutes"],
-              do: median_text(@usage["median_minutes"]),
+              do: median_text(@usage["median_minutes"], @usage["longest_minutes"]),
               else: "–"
           }
         />
@@ -285,19 +292,19 @@ defmodule RandosWeb.StatusLive do
     end
   end
 
-  # The median is a whole-minute bucket: 0 means under a minute, 30 the
-  # catch-all for the longest calls.
-  defp median_text(0) do
+  # The median is a whole-minute bucket: 0 means under a minute, the
+  # snapshot's longest_minutes the catch-all for the longest calls.
+  defp median_text(0, _longest) do
     gettext_comment("A call's typical length: less than one minute (min = minutes).")
     gettext("under 1 min")
   end
 
-  defp median_text(30) do
-    gettext_comment("A call's typical length: 30 minutes or more (min = minutes).")
-    gettext("30+ min")
+  defp median_text(longest, longest) do
+    gettext_comment("A call's typical length: this many minutes or more (min = minutes).")
+    gettext("%{minutes}+ min", minutes: longest)
   end
 
-  defp median_text(minutes) do
+  defp median_text(minutes, _longest) do
     gettext_comment("A call's typical length in minutes (min = minutes).")
     gettext("%{minutes} min", minutes: minutes)
   end

@@ -45,9 +45,21 @@ defmodule Tui.View.StatusScreen do
     do: "No relay is configured on this server, so calls here go directly."
 
   defp transport(%{"transport" => name, "ok" => ok} = transport) do
-    result = if ok, do: "working", else: transport["reason"] || "not working"
+    result = if ok, do: "working", else: relay_reason(transport["reason"])
     "· #{transport_name(name)}: #{result}"
   end
+
+  # The server's reason codes (participant_channel.md, `status`).
+  defp relay_reason("no_answer"), do: "no answer"
+  defp relay_reason("couldnt_connect"), do: "couldn't connect"
+  defp relay_reason("couldnt_resolve"), do: "couldn't find the server"
+  defp relay_reason("connection_closed"), do: "connection closed"
+  defp relay_reason("unexpected_reply"), do: "unexpected reply"
+  defp relay_reason("no_challenge"), do: "no credentials asked for"
+  defp relay_reason("credentials_refused"), do: "credentials refused"
+  defp relay_reason("tls_failed"), do: "secure connection failed"
+  defp relay_reason("refused"), do: "refused"
+  defp relay_reason(_other), do: "not working"
 
   defp transport_name("udp"), do: "Over UDP (most calls)"
   defp transport_name("tls"), do: "Over TLS (networks that block UDP)"
@@ -64,8 +76,8 @@ defmodule Tui.View.StatusScreen do
     [
       "Today (counting since #{clock(usage["since"])} UTC on #{usage["date"]}):",
       "Calls started: #{usage["calls_started"]}    Connected: #{usage["calls_connected"]}" <>
-        "    Continued past 10 minutes: #{usage["calls_continued"]}",
-      "Typical length: #{typical_length(usage["median_minutes"])}",
+        "    #{continued(usage["continued_after_minutes"])}: #{usage["calls_continued"]}",
+      "Typical length: #{typical_length(usage["median_minutes"], usage["longest_minutes"])}",
       "How calls ended: finished #{endings["finished"] || 0}, " <>
         "couldn't connect #{endings["not_connected"] || 0}, " <>
         "connection lost #{endings["connection_lost"] || 0}, canceled #{endings["canceled"] || 0}"
@@ -75,10 +87,15 @@ defmodule Tui.View.StatusScreen do
     |> Enum.join("\n")
   end
 
-  defp typical_length(nil), do: "not enough calls yet"
-  defp typical_length(0), do: "under 1 min"
-  defp typical_length(30), do: "30 min or more"
-  defp typical_length(minutes), do: "#{minutes} min"
+  # The numbers come with the counts, so a server's call length is never ours
+  # to copy (older servers sent neither).
+  defp continued(nil), do: "Continued"
+  defp continued(minutes), do: "Continued past #{minutes} minutes"
+
+  defp typical_length(nil, _longest), do: "not enough calls yet"
+  defp typical_length(0, _longest), do: "under 1 min"
+  defp typical_length(longest, longest), do: "#{longest} min or more"
+  defp typical_length(minutes, _longest), do: "#{minutes} min"
 
   defp languages(model, usage) do
     pairs = usage["language_pairs"] || []

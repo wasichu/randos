@@ -21,7 +21,7 @@ defmodule RandosWeb.StatusTest do
       configured: true,
       checking: false,
       checked_at: ~U[2026-10-21 14:05:07Z],
-      results: %{udp: %{ok: true, reason: nil}, tls: %{ok: false, reason: "no answer"}}
+      results: %{udp: %{ok: true, reason: nil}, tls: %{ok: false, reason: :no_answer}}
     }
 
     snapshot = Status.build(relay, @stats)
@@ -33,7 +33,7 @@ defmodule RandosWeb.StatusTest do
                "checked_at" => "2026-10-21T14:05:07Z",
                "transports" => [
                  %{"transport" => "udp", "ok" => true, "reason" => nil},
-                 %{"transport" => "tls", "ok" => false, "reason" => "no answer"}
+                 %{"transport" => "tls", "ok" => false, "reason" => "no_answer"}
                ]
              },
              "usage" => %{
@@ -42,7 +42,9 @@ defmodule RandosWeb.StatusTest do
                "calls_started" => 6,
                "calls_connected" => 5,
                "calls_continued" => 1,
+               "continued_after_minutes" => 10,
                "median_minutes" => 9,
+               "longest_minutes" => 30,
                "endings" => %{
                  "finished" => 4,
                  "not_connected" => 1,
@@ -67,7 +69,7 @@ defmodule RandosWeb.StatusTest do
 
     state = fn relay -> Status.build(relay, @stats)["relay"]["state"] end
     ok = %{ok: true, reason: nil}
-    down = %{ok: false, reason: "no answer"}
+    down = %{ok: false, reason: :no_answer}
     base = %{configured: true, checking: false, checked_at: ~U[2026-10-21 14:05:07Z]}
 
     assert state.(%{base | configured: false} |> Map.put(:results, %{})) == "not_configured"

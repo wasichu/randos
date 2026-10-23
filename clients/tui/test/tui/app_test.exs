@@ -69,7 +69,7 @@ defmodule Tui.AppTest do
           "checked_at" => "2026-10-21T14:05:00Z",
           "transports" => [
             %{"transport" => "udp", "ok" => true, "reason" => nil},
-            %{"transport" => "tls", "ok" => false, "reason" => "no answer"}
+            %{"transport" => "tls", "ok" => false, "reason" => "no_answer"}
           ]
         },
         "usage" => %{
@@ -78,7 +78,9 @@ defmodule Tui.AppTest do
           "calls_started" => 12,
           "calls_connected" => 9,
           "calls_continued" => 2,
+          "continued_after_minutes" => 10,
           "median_minutes" => 8,
+          "longest_minutes" => 30,
           "endings" => %{
             "finished" => 8,
             "not_connected" => 2,

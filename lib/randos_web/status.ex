@@ -25,8 +25,10 @@ defmodule RandosWeb.Status do
           "since" => "2026-10-21T09:12:00Z",
           "calls_started" => 12,
           "calls_connected" => 9,
-          "calls_continued" => 2,
-          "median_minutes" => 8 | nil,   # whole minutes; 30 means 30 or more
+          "calls_continued" => 2,        # calls that ran past their first continued_after_minutes
+          "continued_after_minutes" => 10,
+          "median_minutes" => 8 | nil,   # whole minutes; longest_minutes means that or more
+          "longest_minutes" => 30,
           "endings" => %{"finished" => 8, "not_connected" => 2, "connection_lost" => 1, "canceled" => 1},
           "language_pairs" => [%{"languages" => ["en", "es"], "calls" => 5}],
           "other_pairs_calls" => 3,
@@ -36,6 +38,7 @@ defmodule RandosWeb.Status do
       }
   """
 
+  alias Randos.Calls.Lifecycle
   alias Randos.Stats
   alias RandosWeb.RelayHealth
 
@@ -68,7 +71,11 @@ defmodule RandosWeb.Status do
   defp relay(status) do
     transports =
       for transport <- [:udp, :tls], result = status.results[transport], result != nil do
-        %{"transport" => Atom.to_string(transport), "ok" => result.ok, "reason" => result.reason}
+        %{
+          "transport" => Atom.to_string(transport),
+          "ok" => result.ok,
+          "reason" => result.reason && Atom.to_string(result.reason)
+        }
       end
 
     %{
@@ -97,7 +104,9 @@ defmodule RandosWeb.Status do
       "calls_started" => stats.started,
       "calls_connected" => stats.connected,
       "calls_continued" => stats.extended,
+      "continued_after_minutes" => div(Lifecycle.call_duration_seconds(), 60),
       "median_minutes" => stats.median_minutes,
+      "longest_minutes" => Stats.last_bucket(),
       "endings" => Map.new(@endings, &{Atom.to_string(&1), Map.get(stats.endings, &1, 0)}),
       "language_pairs" =>
         Enum.map(stats.pairs, fn {{a, b}, calls} -> %{"languages" => [a, b], "calls" => calls} end),
