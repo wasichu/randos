@@ -413,8 +413,17 @@ defmodule Tui.View do
   # they are; the words are translated (`pgettext("key", …)`).
   defp keys(hints), do: Enum.map_join(hints, "  ", fn {key, action} -> "#{key} #{action}" end)
 
-  # The hints packed into rows of `width`, at most two (the rest are cut).
+  # The hints packed into rows of `width`, at most two: when they need more,
+  # hints go from the end, but never how to quit.
   defp help_lines(hints, width) do
+    rows = pack(hints, width)
+
+    if length(rows) <= 2 or length(hints) <= 1,
+      do: Enum.map(rows, &Width.fit(&1, width)),
+      else: help_lines(drop_last_but_quit(hints), width)
+  end
+
+  defp pack(hints, width) do
     hints
     |> Enum.map(fn {key, action} -> "#{key} #{action}" end)
     |> Enum.reduce([], fn
@@ -426,8 +435,11 @@ defmodule Tui.View do
         if Width.of(joined) <= width, do: [joined | done], else: [" " <> hint, line | done]
     end)
     |> Enum.reverse()
-    |> Enum.take(2)
-    |> Enum.map(&Width.fit(&1, width))
+  end
+
+  defp drop_last_but_quit(hints) do
+    index = hints |> Enum.reverse() |> Enum.find_index(&(elem(&1, 0) != "q"))
+    Elixir.List.delete_at(hints, length(hints) - 1 - index)
   end
 
   defp quit, do: {"q", pgettext("key", "quit")}
