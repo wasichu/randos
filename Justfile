@@ -244,8 +244,10 @@ screenshots:
 
 # The translation shootout's checks and fill rule (tools/translate; offline,
 # no models). Running models: tools/translate/README.md
+# (in its own environment, .venv-test: syncing the shared .venv would
+# remove a running model's packages)
 translate-test:
-    cd tools/translate && uv run --group dev pytest -q
+    cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev pytest -q
 
 # The voice-anonymization benchmark (tools/voice-eval): can ECAPA-TDNN still
 # identify a speaker after each processor, and can Whisper understand them?

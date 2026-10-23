@@ -17,14 +17,17 @@ just translate-test                  # the checks and the fill rule (offline, no
 cd tools/translate
 uv run --group models python -m randos_translate.cli run --model opus-mt --locales es --limit 12
 uv run --group models python -m randos_translate.cli score --scorer metricx results/shootout-*.json
+export UV_PROJECT_ENVIRONMENT=.venv-test                          # no model needed from here on
 uv run python -m randos_translate.cli review                     # picks each string's translation
 uv run python -m randos_translate.cli fill --best --locale all --redo
 ```
 
 `uv run --group X` re-syncs the one shared `.venv` to that group, removing
 the others' packages: never run it while a model of another group is
-running (add `--group X` to keep a running group's packages, e.g.
-`uv run --group models --group dev pytest`).
+running. What needs no model (`review`, `fill`, `tidy`, the tests) runs
+in its own environment instead, `.venv-test`
+(`UV_PROJECT_ENVIRONMENT=.venv-test uv run …`; `just translate-test` does
+this), so it's safe at any time.
 
 Each kind of model has its own dependency group, and one `uv run` uses one
 group (mlx-lm needs transformers 5, the rest stay on 4.x, so `pyproject.toml`
