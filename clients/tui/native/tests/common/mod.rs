@@ -14,9 +14,9 @@ use std::path::PathBuf;
 use std::process::{Child, ChildStdin, Command, Stdio};
 use std::sync::mpsc::{self, Receiver};
 use std::thread;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
-use serde_json::Value;
+use serde_json::{Value, json};
 
 /// One helper process. A reader thread decodes its stdout frames into a
 /// channel, so a test can watch several helpers at once.
@@ -94,6 +94,133 @@ impl Helper {
     pub fn close(mut self) -> i32 {
         drop(self.stdin.take());
         self.child.wait().unwrap().code().unwrap()
+    }
+}
+
+/// One side of a `Call`: its helper, the events it has sent, and those
+/// that arrived while the test waited on one of its replies (relayed on
+/// the next pass, like any other).
+pub struct Side {
+    pub helper: Helper,
+    pub seen: Vec<Value>,
+    inbox: Vec<Value>,
+}
+
+impl Side {
+    /// Packets received, from its latest `call_stats`.
+    pub fn received(&self) -> u64 {
+        self.seen
+            .iter()
+            .rev()
+            .find(|e| e["event"] == "call_stats")
+            .and_then(|e| e["packets_received"].as_u64())
+            .unwrap_or(0)
+    }
+
+    /// Sends a request, keeping events that arrive first for the next pass.
+    pub fn request(&mut self, request: Value) -> Value {
+        self.helper.request(request, &mut self.inbox)
+    }
+}
+
+/// Two helpers in a call, the test playing the server between them.
+pub struct Call {
+    pub offerer: Side,
+    pub answerer: Side,
+    next_id: u64,
+}
+
+impl Call {
+    /// Starts both helpers' calls (`relay_only` with a relay in
+    /// `ice_servers`); `run` connects them.
+    pub fn start(ice_servers: &Value, relay_only: bool) -> Self {
+        let side = |role: &str| {
+            let mut side = Side {
+                helper: Helper::spawn(),
+                seen: Vec::new(),
+                inbox: Vec::new(),
+            };
+            let reply = side.request(json!({
+                "id": 1, "cmd": "call_start", "role": role, "ice_servers": ice_servers,
+                "in": "sine", "out": "null", "bind_ip": "127.0.0.1", "relay_only": relay_only
+            }));
+            assert_eq!(reply["ok"]["input"], "sine 440 Hz", "{role}: {reply}");
+            side
+        };
+        Self {
+            offerer: side("offerer"),
+            answerer: side("answerer"),
+            next_id: 100,
+        }
+    }
+
+    /// Relays each helper's `call_signal` events to the other for `duration`.
+    pub fn run(&mut self, duration: Duration) {
+        self.run_until(duration, |_| false);
+    }
+
+    /// `run` until `done` holds or `limit` passes; whether it held.
+    pub fn run_until(&mut self, limit: Duration, done: impl Fn(&Self) -> bool) -> bool {
+        let until = Instant::now() + limit;
+        while Instant::now() < until {
+            relay(&mut self.offerer, &mut self.answerer, &mut self.next_id);
+            relay(&mut self.answerer, &mut self.offerer, &mut self.next_id);
+            if done(self) {
+                return true;
+            }
+            thread::sleep(Duration::from_millis(10));
+        }
+        false
+    }
+
+    /// Runs until both sides hear the other (10 s at most: CI is slow).
+    pub fn connect(&mut self) {
+        let connected = self.run_until(Duration::from_secs(10), |call| {
+            call.received().0 > 50 && call.received().1 > 50
+        });
+        assert!(connected, "never connected: {:?}", self.received());
+    }
+
+    /// Packets each side has received, from its latest `call_stats`.
+    pub fn received(&self) -> (u64, u64) {
+        (self.offerer.received(), self.answerer.received())
+    }
+
+    /// Asks the offerer for an ICE restart (what the TUI does when the
+    /// server's `ice_generation` grows).
+    pub fn restart(&mut self) {
+        self.next_id += 1;
+        let reply = self
+            .offerer
+            .request(json!({"id": self.next_id, "cmd": "call_restart"}));
+        assert_eq!(reply["ok"], true, "call_restart: {reply}");
+    }
+
+    pub fn stop(mut self) {
+        for side in [&mut self.offerer, &mut self.answerer] {
+            let reply = side.request(json!({"id": 999, "cmd": "call_stop"}));
+            assert_eq!(reply["ok"], true);
+        }
+        assert_eq!(self.offerer.helper.close(), 0);
+        assert_eq!(self.answerer.helper.close(), 0);
+    }
+}
+
+/// Relays `from`'s `call_signal` events to `to`. Events `to` sends while we
+/// wait for its reply are its own, so they wait in its inbox.
+fn relay(from: &mut Side, to: &mut Side, next_id: &mut u64) {
+    let mut events = std::mem::take(&mut from.inbox);
+    events.extend(from.helper.events());
+    for event in events {
+        if event["event"] == "call_signal" {
+            *next_id += 1;
+            let reply = to.request(json!({
+                "id": *next_id, "cmd": "call_signal",
+                "type": event["type"], "payload": event["payload"]
+            }));
+            assert_eq!(reply["ok"], true, "relaying {event}: {reply}");
+        }
+        from.seen.push(event);
     }
 }
 
