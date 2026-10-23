@@ -8,10 +8,15 @@ defmodule RandosDev.TranslationReview do
   it; the logic lives in `tools/translate/randos_translate/review.py`.
   """
 
-  @default_path "tools/translate/results/review.json"
+  @results "tools/translate/results"
 
-  @doc "The review file's default path (relative to the project root)."
-  def default_path, do: Path.expand(@default_path, File.cwd!())
+  @doc """
+  A catalog's review file (relative to the project root): the website's
+  strings (`"site"`) or the terminal client's (`"tui"`, `--catalog tui`).
+  """
+  def default_path(catalog \\ "site")
+  def default_path("tui"), do: Path.expand("#{@results}/tui/review.json", File.cwd!())
+  def default_path(_site), do: Path.expand("#{@results}/review.json", File.cwd!())
 
   @doc "Reads and decodes a review file."
   @spec load(Path.t()) :: {:ok, map()} | {:error, String.t()}

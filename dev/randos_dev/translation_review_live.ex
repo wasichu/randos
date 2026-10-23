@@ -16,8 +16,10 @@ defmodule RandosDev.TranslationReviewLive do
   alias RandosDev.TranslationReview
 
   @impl true
-  def mount(_params, session, socket) do
-    path = session["path"] || TranslationReview.default_path()
+  def mount(params, session, socket) do
+    # (Mounted outside the router, as tests do, there are no params.)
+    catalog = if is_map(params) and params["catalog"] == "tui", do: "tui", else: "site"
+    path = session["path"] || TranslationReview.default_path(catalog)
 
     socket =
       case TranslationReview.load(path) do
@@ -33,7 +35,7 @@ defmodule RandosDev.TranslationReviewLive do
           assign(socket, review: nil, error: error, review_locale: nil)
       end
 
-    {:ok, assign(socket, page_title: "Translation review", filter: "all")}
+    {:ok, assign(socket, page_title: "Translation review", filter: "all", catalog: catalog)}
   end
 
   @impl true
@@ -55,11 +57,12 @@ defmodule RandosDev.TranslationReviewLive do
     <Layouts.app flash={@flash}>
       <div class="mx-auto max-w-3xl space-y-3 px-4 py-10 sm:px-8">
         <h1 class="text-3xl font-semibold">Translation review</h1>
+        <.catalogs catalog={@catalog} />
         <p id="review-missing" class="text-stone-600">{@error}</p>
         <p class="text-stone-600">
           Run the shootout, then
           <code class="rounded bg-stone-100 px-1.5 py-0.5 text-sm">
-            cd tools/translate && uv run python -m randos_translate.cli review
+            cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli --catalog {@catalog} review
           </code>
         </p>
       </div>
@@ -86,6 +89,7 @@ defmodule RandosDev.TranslationReviewLive do
         <div id="translation-review" class="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-8">
           <header class="space-y-2">
             <h1 class="text-3xl font-semibold tracking-normal">Translation review</h1>
+            <.catalogs catalog={@catalog} />
             <p class="max-w-3xl text-stone-600">
               Every model's translation side by side, the strings where they disagree most first.
               Scores and ranks per evaluator; a warning where the evaluators disagree on the best
@@ -319,4 +323,26 @@ defmodule RandosDev.TranslationReviewLive do
     do: :erlang.float_to_binary(score, decimals: 1)
 
   defp format_score(_scorer, score), do: to_string(score)
+
+  attr :catalog, :string, required: true
+
+  # The website's strings or the terminal client's (`--catalog`).
+  defp catalogs(assigns) do
+    ~H"""
+    <nav id="review-catalogs" class="flex gap-4 text-sm" aria-label="Which strings">
+      <.link
+        :for={{catalog, label, href} <- [{"site", "Website", ~p"/dev/translations"}, {"tui", "Terminal client", ~p"/dev/translations?catalog=tui"}]}
+        id={"review-catalog-#{catalog}"}
+        navigate={href}
+        aria-current={if catalog == @catalog, do: "page"}
+        class={[
+          "font-medium",
+          if(catalog == @catalog, do: "text-teal-800 underline", else: "text-stone-500 hover:text-teal-800")
+        ]}
+      >
+        {label}
+      </.link>
+    </nav>
+    """
+  end
 end

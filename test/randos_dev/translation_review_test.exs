@@ -152,6 +152,20 @@ defmodule RandosDev.TranslationReviewTest do
     assert has_element?(view, "#review-no-winner")
   end
 
+  test "switches between the website's strings and the terminal client's", %{
+    conn: conn,
+    path: path
+  } do
+    {:ok, view, _html} = open(conn, path)
+    assert has_element?(view, "#review-catalog-site[aria-current=page]")
+    assert has_element?(view, "#review-catalog-tui[href='/dev/translations?catalog=tui']")
+
+    assert RandosDev.TranslationReview.default_path("tui") =~
+             "tools/translate/results/tui/review.json"
+
+    assert RandosDev.TranslationReview.default_path() =~ "tools/translate/results/review.json"
+  end
+
   test "says how to make a review when there isn't one", %{conn: conn} do
     {:ok, view, _html} = open(conn, "/nonexistent/review.json")
     assert has_element?(view, "#review-missing", "no review yet")
