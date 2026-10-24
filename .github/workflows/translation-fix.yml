@@ -40,7 +40,7 @@ jobs:
 
       - uses: jdx/mise-action@v5
         with:
-          install_args: erlang elixir uv
+          install_args: erlang elixir uv just
 
       - name: Read and check the fix
         id: check
@@ -73,6 +73,9 @@ jobs:
         run: |
           mix local.hex --force --if-missing
           mix deps.get
+          # ex_ratatui's library (the dev dashboard's) through curl, before
+          # anything compiles: its own download fails (just tui-nifs).
+          just tui-nifs
           mix randos.translation_fix "$OUT/fix.json"
           mix compile --warnings-as-errors
 
