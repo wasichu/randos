@@ -214,7 +214,7 @@ def fill_best(locale: str, redo: bool, results: Path | None = None) -> dict[str,
     "best", `review.pick`), recording which model wrote each one."""
     data = json.loads(((results or RESULTS) / "review.json").read_text())
     rows = [r for r in data["locales"][locale]["strings"] if r["best"]]
-    translations = {r["key"]: r["translations"][r["best"]]["text"] for r in rows}
+    translations = {r["key"]: r["best_text"] for r in rows}
     return po.fill(locale, translations, {r["key"]: r["best"] for r in rows}, redo=redo)
 
 

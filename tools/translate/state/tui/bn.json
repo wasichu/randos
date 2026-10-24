@@ -1,0 +1,562 @@
+{
+  "%{connected} · you %{you} dBFS · peer %{peer} dBFS": {
+    "model": "translategemma-12b",
+    "msgstr": "%{connected} · আপনার সাউন্ড লেভেল: %{you} dBFS · অন্য পক্ষের সাউন্ড লেভেল: %{peer} dBFS"
+  },
+  "%{device} (default)": {
+    "model": "translategemma-12b",
+    "msgstr": "%{device} (ডিফল্ট)।"
+  },
+  "%{first} or %{last}": {
+    "model": "madlad-400",
+    "msgstr": "%{first} অথবা %{last}"
+  },
+  "%{language} both ways": {
+    "model": "hy-mt2",
+    "msgstr": "%{language} উভয় দিকেই"
+  },
+  "%{minutes} min": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes} মিনিট"
+  },
+  "%{minutes} min or more": {
+    "model": "madlad-400",
+    "msgstr": "%{minutes} মিনিট অথবা বেশি"
+  },
+  "%{request} refused: %{reason}": {
+    "model": "hy-mt2",
+    "msgstr": "%{request} প্রত্যাখ্যান করা হয়েছে: %{reason}"
+  },
+  "%{sent} sent / %{received} received": {
+    "model": "hy-mt2",
+    "msgstr": "%{sent}টি পাঠানো হয়েছে / %{received}টি গ্রহণ করা হয়েছে"
+  },
+  "%{time} remaining": {
+    "model": "madlad-400",
+    "msgstr": "%{time} অবশিষ্ট"
+  },
+  "%{time} to decide": {
+    "model": "madlad-400",
+    "msgstr": "%{time} সিদ্ধান্ত নিতে"
+  },
+  "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
+    "model": "hy-mt2",
+    "msgstr": "কোনো ভাষা-দম্পতি যখন কমপক্ষে %{count}টি কল পায়, তখনই তা দেখানো হয়; কম সংখ্যক কল থাকলে সেগুলোকে “অন্য” হিসেবে গণ্য করা হয়।"
+  },
+  "About these numbers": {
+    "model": "madlad-400",
+    "msgstr": "এই সংখ্যাগুলো সম্পর্কে"
+  },
+  "Asking the server…": {
+    "model": "hy-mt2",
+    "msgstr": "সার্ভারকে জিজ্ঞাসা করছি…"
+  },
+  "Audio on.": {
+    "model": "hy-mt2",
+    "msgstr": "অডিও চালু।"
+  },
+  "Calls started: %{started}": {
+    "model": "hy-mt2",
+    "msgstr": "কল শুরু হয়েছে: %{started}"
+  },
+  "Checking the relay…": {
+    "model": "hy-mt2",
+    "msgstr": "রিলেটি চেক করছি…"
+  },
+  "Connected: %{connected}": {
+    "model": "madlad-400",
+    "msgstr": "সংযুক্ত: %{connected}"
+  },
+  "Connecting to the server…": {
+    "model": "hy-mt2",
+    "msgstr": "সার্ভারের সাথে সংযোগ স্থাপন করা হচ্ছে…"
+  },
+  "Connection:": {
+    "model": "madlad-400",
+    "msgstr": "সংযোগ:"
+  },
+  "Continue for another %{minutes} minutes?": {
+    "model": "madlad-400",
+    "msgstr": "আরো %{minutes} মিনিট চালিয়ে যেতে চান?"
+  },
+  "Continue?": {
+    "model": "translategemma-12b",
+    "msgstr": "চালিয়ে যাবেন?"
+  },
+  "Continued": {
+    "model": "translategemma-4b",
+    "msgstr": "চলমান"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "madlad-400",
+    "msgstr": "গত %{minutes} মিনিট ধরে চলছে"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "translategemma-12b",
+    "msgstr": "মোট %{total} সার্ভারের মধ্যে %{answered} সংখ্যক সার্ভারে এই তথ্য পাওয়া গেছে।"
+  },
+  "Devices": {
+    "model": "hy-mt2",
+    "msgstr": "ডিভাইসসমূহ"
+  },
+  "Error: %{message}": {
+    "model": "madlad-400",
+    "msgstr": "ত্রুটি: %{message}"
+  },
+  "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
+    "model": "hy-mt2",
+    "msgstr": "কলগুলো কীভাবে শেষ হয়েছে: সম্পন্ন হয়েছে %{finished}, সংযোগ স্থাপন করা যায়নি %{not_connected}, সংযোগ হারিয়ে গেছে %{lost}, বাতিল করা হয়েছে %{canceled}"
+  },
+  "I will speak:": {
+    "model": "translategemma-4b",
+    "msgstr": "আমি কথা বলবো:"
+  },
+  "I'm 18+ and OK with anonymous, unmoderated calls": {
+    "model": "m2m100",
+    "msgstr": "আমি 18+ এবং অ্যানোনাম, অমড্রেট কল সঙ্গে OK"
+  },
+  "I'm happy to hear:": {
+    "model": "translategemma-12b",
+    "msgstr": "আমি এটা শুনে খুশি হলাম:"
+  },
+  "Languages spoken:": {
+    "model": "madlad-400",
+    "msgstr": "যেসব ভাষায় কথা বলা হয়:"
+  },
+  "Languages spoken: no calls yet": {
+    "model": "madlad-400",
+    "msgstr": "যেসব ভাষায় কথা বলা হয়: এখনো কোন কল আসেনি"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "hy-mt2",
+    "msgstr": "সর্বশেষ পরীক্ষা করা হয়েছে %{time} UTC-এ।"
+  },
+  "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
+    "model": "madlad-400",
+    "msgstr": "একজন rando খুঁজছি যে %{hearing} কথা বলে এবং %{speaking} শুনতে চায়…"
+  },
+  "Matched! Starting the call…": {
+    "model": "hy-mt2",
+    "msgstr": "মেলে গেছে! কল শুরু হচ্ছে…"
+  },
+  "Mic test failed: %{error}": {
+    "model": "madlad-400",
+    "msgstr": "মাইক পরীক্ষা ব্যর্থ: %{error}"
+  },
+  "Mic:": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক:"
+  },
+  "Mic: %{bars}%{peak}   (t to stop)": {
+    "model": "translategemma-4b",
+    "msgstr": "মাইক্রোফোন:%{bars}%{peak} (বন্ধ করতে 't' চাপুন)"
+  },
+  "Mic: opening…": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক: চালু হচ্ছে…"
+  },
+  "No relay is configured on this server, so calls here go directly.": {
+    "model": "madlad-400",
+    "msgstr": "এই সার্ভারে কোনো রিলে কনফিগার করা নেই, তাই এখানে সরাসরি কল করা হবে।"
+  },
+  "Now:": {
+    "model": "madlad-400",
+    "msgstr": "এখন:"
+  },
+  "Other languages: %{calls}": {
+    "model": "m2m100",
+    "msgstr": "অন্যান্য ভাষা: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-12b",
+    "msgstr": "টিএলএস-এর মাধ্যমে (যে নেটওয়ার্কগুলো ইউডিপি ব্লক করে)।"
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-12b",
+    "msgstr": "ইউডিপি (UDP) এর মাধ্যমে (বেশিরভাগ কল)।"
+  },
+  "Press Enter to find a rando.": {
+    "model": "madlad-400",
+    "msgstr": "rando খুঁজতে এন্টার চাপুন।"
+  },
+  "Reconnecting audio…": {
+    "model": "translategemma-4b",
+    "msgstr": "অডিও সংযোগ পুনরুদ্ধার করা হচ্ছে…"
+  },
+  "Server status": {
+    "model": "m2m100",
+    "msgstr": "সার্ভার অবস্থা"
+  },
+  "Speaker:": {
+    "model": "madlad-400",
+    "msgstr": "স্পিকার:"
+  },
+  "Text only (no audio helper).": {
+    "model": "m2m100",
+    "msgstr": "শুধুমাত্র টেক্সট (অডিও সহায়তা নেই)"
+  },
+  "The relay is partly working.": {
+    "model": "translategemma-12b",
+    "msgstr": "রিলেটি আংশিকভাবে কাজ করছে।"
+  },
+  "The relay is working.": {
+    "model": "m2m100",
+    "msgstr": "রেলি কাজ করছে।"
+  },
+  "The relay isn't working.": {
+    "model": "madlad-400",
+    "msgstr": "রিলে কাজ করছে না।"
+  },
+  "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
+    "model": "translategemma-4b",
+    "msgstr": "এই ক্লায়েন্টটি অডিও ছাড়াই চলছে (কোন মিডিয়া হেল্পার নেই): যদি অন্য প্রান্ত থেকে অডিও পাওয়া যায় (যেমন একটি ব্রাউজার), তাহলে কলটি শেষ হয়ে যাবে এবং আপনি আবার নিষ্ক্রিয় অবস্থায় ফিরে যাবেন। দুটি টার্মিনাল ক্লায়েন্ট একসাথে একটি কল করতে পারে, যাতে টাইমার এবং এক্সটেনশন ভোট পরীক্ষা করা যায়।"
+  },
+  "This server has no status page (it's older than the status request).": {
+    "model": "madlad-400",
+    "msgstr": "এই সার্ভারের কোনো স্ট্যাটাস পৃষ্ঠা নেই (এটি স্ট্যাটাস অনুরোধের চেয়ে পুরনো)।"
+  },
+  "Time is up.": {
+    "model": "translategemma-12b",
+    "msgstr": "সময় শেষ।"
+  },
+  "Time is up. You agreed to continue, waiting on your rando…": {
+    "model": "madlad-400",
+    "msgstr": "সময় শেষ হয়ে গেছে। আপনি অগ্রসর হতে সম্মত হয়েছেন, আপনার rando-এর অপেক্ষায়…"
+  },
+  "Today (counting since %{time} UTC on %{date}):": {
+    "model": "hy-mt2",
+    "msgstr": "আজ ( %{date} তারিখের %{time} UTC থেকে গণনা করলে):"
+  },
+  "Typical length: %{length}": {
+    "model": "translategemma-4b",
+    "msgstr": "সাধারণ দৈর্ঘ্য: %{length}"
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone.": {
+    "model": "hy-mt2",
+    "msgstr": "আমরা কলগুলো গণনা করি, মানুষদের নয়: কোনো ঠিকানা নেই, কোনো আইডি নেই, কারও সম্পর্কে কিছুই নেই।"
+  },
+  "You": {
+    "model": "madlad-400",
+    "msgstr": "তুমি"
+  },
+  "You're in a call.": {
+    "model": "translategemma-4b",
+    "msgstr": "আপনি একটি ফোন কলে আছেন।"
+  },
+  "Your rando": {
+    "model": "madlad-400",
+    "msgstr": "আপনার rando"
+  },
+  "any of the languages you picked (%{count})": {
+    "model": "m2m100",
+    "msgstr": "যে কোনও ভাষা আপনি পছন্দ করেন (%{count})"
+  },
+  "connected": {
+    "model": "m2m100",
+    "msgstr": "সংযুক্ত"
+  },
+  "connected directly": {
+    "model": "m2m100",
+    "msgstr": "সরাসরি সংযুক্ত"
+  },
+  "connected to %{server}": {
+    "model": "madlad-400",
+    "msgstr": "%{server} এর সাথে সংযুক্ত"
+  },
+  "connected to the server": {
+    "model": "hy-mt2",
+    "msgstr": "সার্ভারের সাথে সংযুক্ত"
+  },
+  "connected via relay": {
+    "model": "hy-mt2",
+    "msgstr": "রিলের মাধ্যমে সংযুক্ত"
+  },
+  "connecting to %{server}…": {
+    "model": "hy-mt2",
+    "msgstr": "%{server}-এর সাথে সংযোগ স্থাপন করছি…"
+  },
+  "connecting to the server…": {
+    "model": "hy-mt2",
+    "msgstr": "সার্ভারের সাথে সংযোগ স্থাপন করা হচ্ছে…"
+  },
+  "connecting…": {
+    "model": "hy-mt2",
+    "msgstr": "সংযোগ স্থাপন করা হচ্ছে…"
+  },
+  "connection closed": {
+    "model": "m2m100",
+    "msgstr": "সংযোগ বন্ধ"
+  },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "সংযোগ স্থাপন করা যায়নি"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "সার্ভার পাওয়া যায়নি"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "পরিচয় অস্বীকার করা হয়েছে"
+  },
+  "disconnected; reconnecting": {
+    "model": "translategemma-4b",
+    "msgstr": "সংযোগ বিচ্ছিন্ন; পুনরায় সংযোগ স্থাপন"
+  },
+  "error: %{message}": {
+    "model": "madlad-400",
+    "msgstr": "ত্রুটি: %{message}"
+  },
+  "in a call": {
+    "model": "hy-mt2",
+    "msgstr": "একটি কলের সময়"
+  },
+  "key\u0004about these numbers": {
+    "model": "madlad-400",
+    "msgstr": "এই সংখ্যাগুলো সম্পর্কে"
+  },
+  "key\u0004back": {
+    "model": "madlad-400",
+    "msgstr": "পিছনে"
+  },
+  "key\u0004cancel": {
+    "model": "m2m100",
+    "msgstr": "বাতিল"
+  },
+  "key\u0004change": {
+    "model": "hy-mt2",
+    "msgstr": "পরিবর্তন করুন"
+  },
+  "key\u0004check": {
+    "model": "translategemma-4b",
+    "msgstr": "পরীক্ষা করুন"
+  },
+  "key\u0004close": {
+    "model": "m2m100",
+    "msgstr": "বন্ধ"
+  },
+  "key\u0004continue": {
+    "model": "madlad-400",
+    "msgstr": "চালিয়ে যাও"
+  },
+  "key\u0004end": {
+    "model": "m2m100",
+    "msgstr": "শেষ"
+  },
+  "key\u0004end call": {
+    "model": "translategemma-4b",
+    "msgstr": "কলটি শেষ করুন"
+  },
+  "key\u0004find": {
+    "model": "m2m100",
+    "msgstr": "খুঁজুন"
+  },
+  "key\u0004language": {
+    "model": "m2m100",
+    "msgstr": "ভাষা"
+  },
+  "key\u0004mic": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক"
+  },
+  "key\u0004mic test": {
+    "model": "hy-mt2",
+    "msgstr": "মাইক টেস্ট"
+  },
+  "key\u0004move": {
+    "model": "madlad-400",
+    "msgstr": "সরাও"
+  },
+  "key\u0004mute": {
+    "model": "hy-mt2",
+    "msgstr": "নীরব"
+  },
+  "key\u0004next rando": {
+    "model": "m2m100",
+    "msgstr": "পরবর্তী rando"
+  },
+  "key\u0004quit": {
+    "model": "m2m100",
+    "msgstr": "ছেড়ে"
+  },
+  "key\u0004refresh": {
+    "model": "hy-mt2",
+    "msgstr": "রিফ্রেশ করুন"
+  },
+  "key\u0004speaker": {
+    "model": "madlad-400",
+    "msgstr": "স্পিকার"
+  },
+  "key\u0004status": {
+    "model": "hy-mt2",
+    "msgstr": "অবস্থা"
+  },
+  "key\u0004unmute": {
+    "model": "madlad-400",
+    "msgstr": "নীরবতা অপসারণ করো"
+  },
+  "log\u0004idle": {
+    "model": "madlad-400",
+    "msgstr": "নিষ্ক্রিয়"
+  },
+  "log\u0004in call": {
+    "model": "madlad-400",
+    "msgstr": "কলের মধ্যে"
+  },
+  "log\u0004looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "একটি rando অনুসন্ধান করা হচ্ছে"
+  },
+  "log\u0004matched; connecting": {
+    "model": "hy-mt2",
+    "msgstr": "মেলে; সংযুক্ত হচ্ছে"
+  },
+  "log\u0004time is up: continue? (y/n)": {
+    "model": "madlad-400",
+    "msgstr": "সময় শেষ: চালিয়ে যেতে চান? (হ্যাঁ/না)"
+  },
+  "looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "একটি rando অনুসন্ধান করা হচ্ছে"
+  },
+  "matched, preparing the call": {
+    "model": "madlad-400",
+    "msgstr": "মিলছে, কল প্রস্তুত করা হচ্ছে"
+  },
+  "muted": {
+    "model": "hy-mt2",
+    "msgstr": "নীরব"
+  },
+  "no answer": {
+    "model": "translategemma-4b",
+    "msgstr": "কোনো উত্তর নেই"
+  },
+  "no call": {
+    "model": "madlad-400",
+    "msgstr": "কোন কল নেই"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "কোনো পরিচয়পত্র চাওয়া হয়নি"
+  },
+  "not enough calls yet": {
+    "model": "madlad-400",
+    "msgstr": "এখনো যথেষ্ট কল পাওয়া যায়নি"
+  },
+  "not looking": {
+    "model": "hy-mt2",
+    "msgstr": "দেখছি না"
+  },
+  "not working": {
+    "model": "madlad-400",
+    "msgstr": "কাজ করছে না"
+  },
+  "panel title\u0004Connecting": {
+    "model": "translategemma-4b",
+    "msgstr": "সংযোগ স্থাপন"
+  },
+  "panel title\u0004Find a rando": {
+    "model": "madlad-400",
+    "msgstr": "একটি rando খুঁজুন"
+  },
+  "panel title\u0004In call": {
+    "model": "hy-mt2",
+    "msgstr": "কলের সময়"
+  },
+  "panel title\u0004Looking": {
+    "model": "hy-mt2",
+    "msgstr": "দেখছি"
+  },
+  "panel title\u0004Matched": {
+    "model": "madlad-400",
+    "msgstr": "মিলছে"
+  },
+  "panel title\u0004Time is up": {
+    "model": "madlad-400",
+    "msgstr": "সময় শেষ"
+  },
+  "peak %{level} dBFS": {
+    "model": "madlad-400",
+    "msgstr": "পিক %{level} dBFS"
+  },
+  "peer offered audio; this client has none, so the call ended (Enter to look again)": {
+    "model": "translategemma-4b",
+    "msgstr": "সহকর্মীর কাছ থেকে অডিও পাওয়া গেছে; কিন্তু এই ক্লায়েন্টের কাছে কোনো অডিও নেই, তাই কলটি শেষ হয়ে গেল (পুনরায় দেখার জন্য প্রবেশ করুন)"
+  },
+  "pick at least one language to hear (space toggles one)": {
+    "model": "translategemma-4b",
+    "msgstr": "কমপক্ষে একটি ভাষা নির্বাচন করুন, যা আপনি শুনতে চান (স্পেস বাটনটি একটি ভাষা পরিবর্তন করবে)।"
+  },
+  "rando reconnecting…": {
+    "model": "madlad-400",
+    "msgstr": "rando পুনরায় সংযোগ করা হচ্ছে…"
+  },
+  "reconnected as a new participant": {
+    "model": "madlad-400",
+    "msgstr": "নতুন অংশগ্রহণকারী হিসেবে পুনরায় সংযুক্ত হয়েছে"
+  },
+  "reconnected; back in the call": {
+    "model": "madlad-400",
+    "msgstr": "পুনরায় সংযুক্ত; কলের মধ্যে ফিরে এসেছেন"
+  },
+  "reconnecting…": {
+    "model": "translategemma-12b",
+    "msgstr": "পুনরায় সংযোগ স্থাপন…"
+  },
+  "refused": {
+    "model": "madlad-400",
+    "msgstr": "প্রত্যাখ্যাত"
+  },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "নিরাপদ সংযোগ ব্যর্থ হয়েছে"
+  },
+  "starting audio…": {
+    "model": "translategemma-4b",
+    "msgstr": "অডিও শুরু হচ্ছে…"
+  },
+  "system default": {
+    "model": "madlad-400",
+    "msgstr": "সিস্টেম ডিফল্ট"
+  },
+  "text only": {
+    "model": "madlad-400",
+    "msgstr": "শুধুমাত্র টেক্সট"
+  },
+  "text only (no audio)": {
+    "model": "madlad-400",
+    "msgstr": "শুধুমাত্র টেক্সট (অডিও নেই)"
+  },
+  "the audio helper isn't running (is it built? %{command})": {
+    "model": "hy-mt2",
+    "msgstr": "অডিও হেল্পারটি চলছে না (এটা কি তৈরি হয়েছে? %{command})"
+  },
+  "the audio helper restarted": {
+    "model": "madlad-400",
+    "msgstr": "অডিও সহায়ক পুনরায় আরম্ভ করা হয়েছে"
+  },
+  "time is up: continue?": {
+    "model": "translategemma-12b",
+    "msgstr": "সময় শেষ: আপনি কি চালিয়ে যেতে চান?"
+  },
+  "under 1 min": {
+    "model": "madlad-400",
+    "msgstr": "১ মিনিটের কম"
+  },
+  "unexpected reply": {
+    "model": "madlad-400",
+    "msgstr": "অপ্রত্যাশিত উত্তর"
+  },
+  "waiting on your rando": {
+    "model": "madlad-400",
+    "msgstr": "আপনার জন্য অপেক্ষা করছে rando"
+  },
+  "working": {
+    "model": "m2m100",
+    "msgstr": "কাজ"
+  },
+  "your rando's connection dropped; waiting for them to come back": {
+    "model": "madlad-400",
+    "msgstr": "আপনার rando'র সংযোগ বিচ্ছিন্ন হয়েছে; তাদের ফিরে আসার জন্য অপেক্ষা করা হচ্ছে"
+  }
+}

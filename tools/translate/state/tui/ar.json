@@ -1,0 +1,562 @@
+{
+  "%{connected} · you %{you} dBFS · peer %{peer} dBFS": {
+    "model": "hy-mt2",
+    "msgstr": "%{connected} · أنت %{you} dBFS · الطرف الآخر %{peer} dBFS"
+  },
+  "%{device} (default)": {
+    "model": "translategemma-12b",
+    "msgstr": "%{device} (افتراضي)"
+  },
+  "%{first} or %{last}": {
+    "model": "hy-mt2",
+    "msgstr": "%{first} أو %{last}"
+  },
+  "%{language} both ways": {
+    "model": "m2m100",
+    "msgstr": "%{language} كلا الطريقين"
+  },
+  "%{minutes} min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} دقيقة"
+  },
+  "%{minutes} min or more": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} دقيقة أو أكثر"
+  },
+  "%{request} refused: %{reason}": {
+    "model": "hy-mt2",
+    "msgstr": "تم رفض %{request}: %{reason}"
+  },
+  "%{sent} sent / %{received} received": {
+    "model": "hy-mt2",
+    "msgstr": "تم إرسال %{sent} / تم استلام %{received}"
+  },
+  "%{time} remaining": {
+    "model": "translategemma-12b",
+    "msgstr": "الوقت المتبقي: %{time}"
+  },
+  "%{time} to decide": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} لاتخاذ القرار"
+  },
+  "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
+    "model": "madlad-400",
+    "msgstr": "يظهر زوج اللغة عندما يكون لديه على الأقل %{count} استدعاءات؛ الأصغر منها يحسب كـ \"آخر\"."
+  },
+  "About these numbers": {
+    "model": "hy-mt2",
+    "msgstr": "حول هذه الأرقام"
+  },
+  "Asking the server…": {
+    "model": "hy-mt2",
+    "msgstr": "أسأل الخادم…"
+  },
+  "Audio on.": {
+    "model": "madlad-400",
+    "msgstr": "تشغيل الصوت"
+  },
+  "Calls started: %{started}": {
+    "model": "translategemma-12b",
+    "msgstr": "تم بدء المكالمات: %{started}"
+  },
+  "Checking the relay…": {
+    "model": "madlad-400",
+    "msgstr": "أتحقق من المرحّل…"
+  },
+  "Connected: %{connected}": {
+    "model": "hy-mt2",
+    "msgstr": "متصل: %{connected}"
+  },
+  "Connecting to the server…": {
+    "model": "madlad-400",
+    "msgstr": "الاتصال بالخادم…"
+  },
+  "Connection:": {
+    "model": "translategemma-12b",
+    "msgstr": "اتصال:"
+  },
+  "Continue for another %{minutes} minutes?": {
+    "model": "hy-mt2",
+    "msgstr": "هل تريد الاستمرار لمدة %{minutes} دقيقة أخرى؟"
+  },
+  "Continue?": {
+    "model": "hy-mt2",
+    "msgstr": "هل تريد الاستمرار؟"
+  },
+  "Continued": {
+    "model": "madlad-400",
+    "msgstr": "مستمر"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "استمرار بعد مرور %{minutes} دقيقة"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "hy-mt2",
+    "msgstr": "تم العد في %{answered} من أصل %{total} خادم."
+  },
+  "Devices": {
+    "model": "hy-mt2",
+    "msgstr": "أجهزة"
+  },
+  "Error: %{message}": {
+    "model": "madlad-400",
+    "msgstr": "خطأ: %{message}"
+  },
+  "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
+    "model": "hy-mt2",
+    "msgstr": "كيف انتهت المكالمات: انتهت بنجاح %{finished}، لم يتسن الاتصال %{not_connected}، فقد الاتصال %{lost}، تم إلغاؤها %{canceled}"
+  },
+  "I will speak:": {
+    "model": "madlad-400",
+    "msgstr": "سأتكلم:"
+  },
+  "I'm 18+ and OK with anonymous, unmoderated calls": {
+    "model": "madlad-400",
+    "msgstr": "أنا فوق 18 سنة و موافق على المكالمات المجهولة و غير المراقبة"
+  },
+  "I'm happy to hear:": {
+    "model": "translategemma-12b",
+    "msgstr": "يسعدني أن أسمع:"
+  },
+  "Languages spoken:": {
+    "model": "translategemma-4b",
+    "msgstr": "اللغات المستخدمة:"
+  },
+  "Languages spoken: no calls yet": {
+    "model": "madlad-400",
+    "msgstr": "اللغات التي يتكلمها: لا توجد مكالمات حتى الآن"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "translategemma-12b",
+    "msgstr": "تم التحقق منه آخر مرة في الساعة %{time} بتوقيت جرينتش."
+  },
+  "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
+    "model": "hy-mt2",
+    "msgstr": "أبحث عن rando يتحدث لغة %{hearing} ويرغب في سماع لغة %{speaking}…"
+  },
+  "Matched! Starting the call…": {
+    "model": "translategemma-12b",
+    "msgstr": "تم التوفيق! بدء المكالمة…"
+  },
+  "Mic test failed: %{error}": {
+    "model": "hy-mt2",
+    "msgstr": "فشل اختبار الميكروفون: %{error}"
+  },
+  "Mic:": {
+    "model": "translategemma-4b",
+    "msgstr": "ميكروفون:"
+  },
+  "Mic: %{bars}%{peak}   (t to stop)": {
+    "model": "translategemma-4b",
+    "msgstr": "الميكروفون: %{bars}%{peak} (اضغط \"ت\" لإيقاف)"
+  },
+  "Mic: opening…": {
+    "model": "translategemma-12b",
+    "msgstr": "الميكروفون: قيد التشغيل…"
+  },
+  "No relay is configured on this server, so calls here go directly.": {
+    "model": "translategemma-4b",
+    "msgstr": "لا يوجد أي نظام توجيه مُكوّن على هذا الخادم، لذا فإن المكالمات الواردة إلى هنا تصل مباشرة."
+  },
+  "Now:": {
+    "model": "madlad-400",
+    "msgstr": "الآن:"
+  },
+  "Other languages: %{calls}": {
+    "model": "hy-mt2",
+    "msgstr": "لغات أخرى: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-12b",
+    "msgstr": "عبر بروتوكول TLS (الشبكات التي تحظر استخدام بروتوكول UDP)."
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-12b",
+    "msgstr": "عبر بروتوكول UDP (معظم المكالمات)."
+  },
+  "Press Enter to find a rando.": {
+    "model": "madlad-400",
+    "msgstr": "اضغط على Enter للعثور على rando."
+  },
+  "Reconnecting audio…": {
+    "model": "madlad-400",
+    "msgstr": "إعادة توصيل الصوت…"
+  },
+  "Server status": {
+    "model": "hy-mt2",
+    "msgstr": "حالة الخادم"
+  },
+  "Speaker:": {
+    "model": "m2m100",
+    "msgstr": "المتحدث :"
+  },
+  "Text only (no audio helper).": {
+    "model": "translategemma-12b",
+    "msgstr": "نص فقط (لا يوجد مساعد صوتي)."
+  },
+  "The relay is partly working.": {
+    "model": "hy-mt2",
+    "msgstr": "الريليه يعمل جزئيًا."
+  },
+  "The relay is working.": {
+    "model": "hy-mt2",
+    "msgstr": "الريليه يعمل بشكل جيد."
+  },
+  "The relay isn't working.": {
+    "model": "madlad-400",
+    "msgstr": "المرحّل لا يعمل"
+  },
+  "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
+    "model": "translategemma-12b",
+    "msgstr": "هذا المستخدم يعمل بدون صوت (لا يوجد مساعد وسائط): إذا قدم الطرف الآخر صوتًا (من خلال متصفح)، تنتهي المكالمة وتعود إلى حالة الانتظار. يمكن لعميلين متصلين عبر الطرفية البقاء في المكالمة لتجربة المؤقتات والتصويت على الخيارات الإضافية."
+  },
+  "This server has no status page (it's older than the status request).": {
+    "model": "m2m100",
+    "msgstr": "هذا الخادم لا يحتوي على صفحة حالة (أقدم من طلب الحالة)."
+  },
+  "Time is up.": {
+    "model": "hy-mt2",
+    "msgstr": "لقد انتهى الوقت."
+  },
+  "Time is up. You agreed to continue, waiting on your rando…": {
+    "model": "hy-mt2",
+    "msgstr": "لقد انتهى الوقت. لقد وافقت على الاستمرار في الانتظار حتى يأتي rando الخاص بك…"
+  },
+  "Today (counting since %{time} UTC on %{date}):": {
+    "model": "translategemma-12b",
+    "msgstr": "اليوم (حسابًا من الساعة %{time} بتوقيت غرينتش في تاريخ %{date}):"
+  },
+  "Typical length: %{length}": {
+    "model": "m2m100",
+    "msgstr": "الطول النموذجي: %{length}"
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone.": {
+    "model": "hy-mt2",
+    "msgstr": "نحن نحسب المكالمات، وليس الأشخاص: لا عناوين، ولا أرقام هويات، ولا أي معلومات عن أي شخص."
+  },
+  "You": {
+    "model": "hy-mt2",
+    "msgstr": "أنت"
+  },
+  "You're in a call.": {
+    "model": "translategemma-4b",
+    "msgstr": "أنت في مكالمة هاتفية."
+  },
+  "Your rando": {
+    "model": "hy-mt2",
+    "msgstr": "rando الخاص بك"
+  },
+  "any of the languages you picked (%{count})": {
+    "model": "translategemma-12b",
+    "msgstr": "أي من اللغات التي اخترتها (عدد: %{count})."
+  },
+  "connected": {
+    "model": "hy-mt2",
+    "msgstr": "متصل"
+  },
+  "connected directly": {
+    "model": "hy-mt2",
+    "msgstr": "متصل مباشرةً"
+  },
+  "connected to %{server}": {
+    "model": "hy-mt2",
+    "msgstr": "متصل بـ %{server}"
+  },
+  "connected to the server": {
+    "model": "translategemma-4b",
+    "msgstr": "متصل بالخادم"
+  },
+  "connected via relay": {
+    "model": "hy-mt2",
+    "msgstr": "متصل عبر جهاز الربط"
+  },
+  "connecting to %{server}…": {
+    "model": "translategemma-4b",
+    "msgstr": "الاتصال بـ %{server}…"
+  },
+  "connecting to the server…": {
+    "model": "madlad-400",
+    "msgstr": "الاتصال بالخادم…"
+  },
+  "connecting…": {
+    "model": "translategemma-12b",
+    "msgstr": "تواصل…"
+  },
+  "connection closed": {
+    "model": "translategemma-4b",
+    "msgstr": "تم إغلاق الاتصال"
+  },
+  "couldn't connect": {
+    "model": "m2m100",
+    "msgstr": "لا أستطيع الاتصال"
+  },
+  "couldn't find the server": {
+    "model": "hy-mt2",
+    "msgstr": "لم أتمكن من العثور على الخادم"
+  },
+  "credentials refused": {
+    "model": "translategemma-4b",
+    "msgstr": "رفضت الشهادات"
+  },
+  "disconnected; reconnecting": {
+    "model": "madlad-400",
+    "msgstr": "قطع الاتصال؛ إعادة الاتصال"
+  },
+  "error: %{message}": {
+    "model": "madlad-400",
+    "msgstr": "خطأ: %{message}"
+  },
+  "in a call": {
+    "model": "hy-mt2",
+    "msgstr": "خلال مكالمة"
+  },
+  "key\u0004about these numbers": {
+    "model": "hy-mt2",
+    "msgstr": "حول هذه الأرقام"
+  },
+  "key\u0004back": {
+    "model": "m2m100",
+    "msgstr": "العودة"
+  },
+  "key\u0004cancel": {
+    "model": "hy-mt2",
+    "msgstr": "إلغاء"
+  },
+  "key\u0004change": {
+    "model": "hy-mt2",
+    "msgstr": "تغيير"
+  },
+  "key\u0004check": {
+    "model": "m2m100",
+    "msgstr": "التحقق"
+  },
+  "key\u0004close": {
+    "model": "hy-mt2",
+    "msgstr": "أغلق"
+  },
+  "key\u0004continue": {
+    "model": "hy-mt2",
+    "msgstr": "استمر"
+  },
+  "key\u0004end": {
+    "model": "madlad-400",
+    "msgstr": "النهاية"
+  },
+  "key\u0004end call": {
+    "model": "madlad-400",
+    "msgstr": "إنهاء المكالمة"
+  },
+  "key\u0004find": {
+    "model": "translategemma-4b",
+    "msgstr": "اكتشف"
+  },
+  "key\u0004language": {
+    "model": "m2m100",
+    "msgstr": "لغة"
+  },
+  "key\u0004mic": {
+    "model": "hy-mt2",
+    "msgstr": "ميكروفون"
+  },
+  "key\u0004mic test": {
+    "model": "hy-mt2",
+    "msgstr": "اختبار الميكروفون"
+  },
+  "key\u0004move": {
+    "model": "hy-mt2",
+    "msgstr": "تحرك"
+  },
+  "key\u0004mute": {
+    "model": "hy-mt2",
+    "msgstr": "صامت"
+  },
+  "key\u0004next rando": {
+    "model": "madlad-400",
+    "msgstr": "التالي rando"
+  },
+  "key\u0004quit": {
+    "model": "madlad-400",
+    "msgstr": "الخروج"
+  },
+  "key\u0004refresh": {
+    "model": "translategemma-4b",
+    "msgstr": "تجديد"
+  },
+  "key\u0004speaker": {
+    "model": "hy-mt2",
+    "msgstr": "متحدث"
+  },
+  "key\u0004status": {
+    "model": "m2m100",
+    "msgstr": "الوضع"
+  },
+  "key\u0004unmute": {
+    "model": "translategemma-4b",
+    "msgstr": "إلغاء الصمت"
+  },
+  "log\u0004idle": {
+    "model": "madlad-400",
+    "msgstr": "خامل"
+  },
+  "log\u0004in call": {
+    "model": "hy-mt2",
+    "msgstr": "أثناء المكالمة"
+  },
+  "log\u0004looking for a rando": {
+    "model": "hy-mt2",
+    "msgstr": "أبحث عن rando"
+  },
+  "log\u0004matched; connecting": {
+    "model": "translategemma-4b",
+    "msgstr": "متطابق؛ مرتبط"
+  },
+  "log\u0004time is up: continue? (y/n)": {
+    "model": "translategemma-4b",
+    "msgstr": "الوقت قد انتهى: هل نواصل؟ (نعم/لا)"
+  },
+  "looking for a rando": {
+    "model": "hy-mt2",
+    "msgstr": "أبحث عن rando"
+  },
+  "matched, preparing the call": {
+    "model": "hy-mt2",
+    "msgstr": "تم التطابق، يتم الاستعداد لإجراء المكالمة"
+  },
+  "muted": {
+    "model": "madlad-400",
+    "msgstr": "مطفأ"
+  },
+  "no answer": {
+    "model": "madlad-400",
+    "msgstr": "لا يوجد رد"
+  },
+  "no call": {
+    "model": "m2m100",
+    "msgstr": "لا مكالمة"
+  },
+  "no credentials asked for": {
+    "model": "m2m100",
+    "msgstr": "لا توجد شهادات مطلوبة"
+  },
+  "not enough calls yet": {
+    "model": "opus-mt",
+    "msgstr": "عدد المكالمات غير كافية حتى الآن"
+  },
+  "not looking": {
+    "model": "madlad-400",
+    "msgstr": "لا أبحث"
+  },
+  "not working": {
+    "model": "hy-mt2",
+    "msgstr": "لا يعمل"
+  },
+  "panel title\u0004Connecting": {
+    "model": "madlad-400",
+    "msgstr": "اتصال"
+  },
+  "panel title\u0004Find a rando": {
+    "model": "hy-mt2",
+    "msgstr": "ابحث عن rando"
+  },
+  "panel title\u0004In call": {
+    "model": "translategemma-4b",
+    "msgstr": "في مكالمة هاتفية"
+  },
+  "panel title\u0004Looking": {
+    "model": "madlad-400",
+    "msgstr": "أبحث"
+  },
+  "panel title\u0004Matched": {
+    "model": "opus-mt",
+    "msgstr": "مُطابقة"
+  },
+  "panel title\u0004Time is up": {
+    "model": "madlad-400",
+    "msgstr": "لقد انتهى الوقت"
+  },
+  "peak %{level} dBFS": {
+    "model": "m2m100",
+    "msgstr": "قمة %{level} dBFS"
+  },
+  "peer offered audio; this client has none, so the call ended (Enter to look again)": {
+    "model": "translategemma-12b",
+    "msgstr": "قدم الطرف الآخر مقطعًا صوتيًا؛ ولكن هذا العميل لم يقدم أي شيء، لذلك انتهت المكالمة. (اضغط هنا لإعادة المحاولة)."
+  },
+  "pick at least one language to hear (space toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "اختر لغة واحدة على الأقل للاستماع (يؤدي الفراغ إلى تبديل اللغة)"
+  },
+  "rando reconnecting…": {
+    "model": "hy-mt2",
+    "msgstr": "rando يعيد الاتصال…"
+  },
+  "reconnected as a new participant": {
+    "model": "madlad-400",
+    "msgstr": "أعيد توصيله كمشترك جديد"
+  },
+  "reconnected; back in the call": {
+    "model": "madlad-400",
+    "msgstr": "إعادة الاتصال؛ العودة إلى المكالمة"
+  },
+  "reconnecting…": {
+    "model": "m2m100",
+    "msgstr": "إعادة الاتصال…"
+  },
+  "refused": {
+    "model": "m2m100",
+    "msgstr": "رفضت"
+  },
+  "secure connection failed": {
+    "model": "madlad-400",
+    "msgstr": "فشل الاتصال الآمن"
+  },
+  "starting audio…": {
+    "model": "translategemma-12b",
+    "msgstr": "بدء تشغيل الصوت…"
+  },
+  "system default": {
+    "model": "translategemma-4b",
+    "msgstr": "الإعدادات الافتراضية للنظام"
+  },
+  "text only": {
+    "model": "hy-mt2",
+    "msgstr": "نص فقط"
+  },
+  "text only (no audio)": {
+    "model": "translategemma-12b",
+    "msgstr": "نص فقط (بدون صوت)."
+  },
+  "the audio helper isn't running (is it built? %{command})": {
+    "model": "translategemma-4b",
+    "msgstr": "لم يتم تشغيل برنامج المساعدة الصوتية (هل تم تثبيته؟ %{command})"
+  },
+  "the audio helper restarted": {
+    "model": "madlad-400",
+    "msgstr": "أعيد تشغيل مساعد الصوت"
+  },
+  "time is up: continue?": {
+    "model": "hy-mt2",
+    "msgstr": "انتهى الوقت: هل تريد الاستمرار؟"
+  },
+  "under 1 min": {
+    "model": "translategemma-4b",
+    "msgstr": "أقل من دقيقة"
+  },
+  "unexpected reply": {
+    "model": "hy-mt2",
+    "msgstr": "رد غير متوقع"
+  },
+  "waiting on your rando": {
+    "model": "madlad-400",
+    "msgstr": "في انتظارك rando"
+  },
+  "working": {
+    "model": "madlad-400",
+    "msgstr": "عاملة"
+  },
+  "your rando's connection dropped; waiting for them to come back": {
+    "model": "madlad-400",
+    "msgstr": "انقطع الاتصال مع rando؛ في انتظار عودتهم"
+  }
+}

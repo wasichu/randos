@@ -144,6 +144,15 @@ def shape(source: str, text: str) -> tuple[bool, str]:
     return (not leftover, "" if not leftover else f"leftover tokens {leftover}")
 
 
+def without_final_stop(source: str, text: str) -> str:
+    """`text` without a final full stop `source` doesn't end with (what
+    `shape` rejects): for `review.pick`'s fallback, since Japanese and
+    Korean end a clause with one where English leaves it bare."""
+    if source.rstrip().endswith(_ANY_END):
+        return text
+    return text.rstrip().rstrip("".join(_SENTENCE_END)).rstrip()
+
+
 def unchanged(source: str, text: str) -> tuple[bool, str]:
     """Not the English left as it was. Only for a source of three words or
     more: a short label can rightly stay the same ("Status" in German)."""

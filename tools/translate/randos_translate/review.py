@@ -13,7 +13,9 @@ and works out:
   It needs at least two scorers with scores;
 - **best**: the translation that ships (`pick`): among those passing every
   check, the best mean rank over MetricX and COMET-Kiwi, the judge breaking
-  ties; `fill --best` writes these, string by string;
+  ties; `fill --best` writes these, string by string. When nothing
+  passes only because of a final full stop the English lacks, the best of
+  those with it removed (`_without_final_stops`);
 - per locale, the **winner**: only a summary now, the model picked for the
   most strings.
 
@@ -226,6 +228,22 @@ def to_judge(entries: dict[str, dict], settled, judge: str) -> list[str]:
     return []
 
 
+def _without_final_stops(entries: dict[str, dict]) -> dict[str, dict]:
+    """`pick`'s fallback when no translation of a string passes: each one
+    with a final full stop the English lacks removed and checked again
+    (`checks.without_final_stop`), so only those whose one fault was that
+    stop can pass. Every model ended these Japanese and Korean clauses with
+    "。" or "다."; English leaves a status line bare. The judges never saw
+    them (they see only passing ones), so MetricX and COMET-Kiwi decide."""
+    out = {}
+    for model, e in entries.items():
+        text = checks.without_final_stop(e["msgid"], e["text"])
+        if text != e["text"]:
+            current = checks.run_all(e["locale"], e["msgid"], text, button=e["msgctxt"] == "button")
+            out[model] = e | {"text": text, "checks": current}
+    return out
+
+
 def latest_entries(runs: list[dict], keys: set[str] | None = None) -> dict[tuple[str, str], dict[str, dict]]:
     """(locale, key) -> model -> entry, the latest run winning; with `keys`,
     only those strings (the template's current ones)."""
@@ -248,7 +266,12 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
     for (locale, _key), entries in table.items():
         scorer_ranks = ranks(entries)
         first = next(iter(entries.values()))
-        chosen = pick(entries)
+        chosen, shipped = pick(entries), entries
+        if chosen is None:
+            shipped = _without_final_stops(entries)
+            chosen = pick(shipped)
+            if chosen:
+                chosen["why"] += ", with the final full stop the English lacks removed (none passed with it)"
         row = {
             "key": first["key"],
             "msgid": first["msgid"],
@@ -257,6 +280,8 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
             "conflict": conflict(scorer_ranks),
             "best": chosen and chosen["model"],
             "best_why": chosen and chosen["why"],
+            # What ships: the pick's text, or its fallback's (no final stop).
+            "best_text": chosen and shipped[chosen["model"]]["text"],
             "translations": {
                 model: {
                     "text": e["text"],

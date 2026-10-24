@@ -1,0 +1,562 @@
+{
+  "%{connected} · you %{you} dBFS · peer %{peer} dBFS": {
+    "model": "hy-mt2",
+    "msgstr": "%{connected} · вы %{you} dBFS · собеседник %{peer} dBFS"
+  },
+  "%{device} (default)": {
+    "model": "madlad-400",
+    "msgstr": "%{device} (по умолчанию)"
+  },
+  "%{first} or %{last}": {
+    "model": "opus-mt",
+    "msgstr": "%{first} или %{last}"
+  },
+  "%{language} both ways": {
+    "model": "opus-mt",
+    "msgstr": "%{language} в обоих направлениях"
+  },
+  "%{minutes} min": {
+    "model": "hy-mt2",
+    "msgstr": "%{minutes} минут"
+  },
+  "%{minutes} min or more": {
+    "model": "m2m100",
+    "msgstr": "%{minutes} минуты или более"
+  },
+  "%{request} refused: %{reason}": {
+    "model": "madlad-400",
+    "msgstr": "%{request} отклонено: %{reason}"
+  },
+  "%{sent} sent / %{received} received": {
+    "model": "madlad-400",
+    "msgstr": "%{sent} отправлено / %{received} получено"
+  },
+  "%{time} remaining": {
+    "model": "madlad-400",
+    "msgstr": "Осталось %{time}"
+  },
+  "%{time} to decide": {
+    "model": "madlad-400",
+    "msgstr": "%{time} для принятия решения"
+  },
+  "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
+    "model": "hy-mt2",
+    "msgstr": "Пара языков отображается тогда, когда у неё есть по меньшей мере %{count} запросов; пары с меньшим количеством запросов считаются «другими»."
+  },
+  "About these numbers": {
+    "model": "m2m100",
+    "msgstr": "О этих цифрах"
+  },
+  "Asking the server…": {
+    "model": "translategemma-12b",
+    "msgstr": "Запрос отправлен серверу…"
+  },
+  "Audio on.": {
+    "model": "madlad-400",
+    "msgstr": "Включите звук."
+  },
+  "Calls started: %{started}": {
+    "model": "m2m100",
+    "msgstr": "Начались звонки: %{started}"
+  },
+  "Checking the relay…": {
+    "model": "opus-mt",
+    "msgstr": "Проверяю реле…"
+  },
+  "Connected: %{connected}": {
+    "model": "madlad-400",
+    "msgstr": "Подключено: %{connected}"
+  },
+  "Connecting to the server…": {
+    "model": "translategemma-4b",
+    "msgstr": "Подключение к серверу…"
+  },
+  "Connection:": {
+    "model": "opus-mt",
+    "msgstr": "Подключение:"
+  },
+  "Continue for another %{minutes} minutes?": {
+    "model": "m2m100",
+    "msgstr": "Продолжайте еще одну %{minutes} минуту?"
+  },
+  "Continue?": {
+    "model": "hy-mt2",
+    "msgstr": "Продолжить?"
+  },
+  "Continued": {
+    "model": "hy-mt2",
+    "msgstr": "Продолжение"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "hy-mt2",
+    "msgstr": "Продолжение после %{minutes} минут"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "translategemma-12b",
+    "msgstr": "Подсчитано на основе данных с %{answered} из %{total} серверов."
+  },
+  "Devices": {
+    "model": "opus-mt",
+    "msgstr": "Устройства"
+  },
+  "Error: %{message}": {
+    "model": "opus-mt",
+    "msgstr": "Ошибка: %{message}"
+  },
+  "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
+    "model": "hy-mt2",
+    "msgstr": "Как заканчивались звонки: завершены — %{finished}, невозможно было подключиться — %{not_connected}, потеряно соединение — %{lost}, отменены — %{canceled}"
+  },
+  "I will speak:": {
+    "model": "m2m100",
+    "msgstr": "Я буду говорить:"
+  },
+  "I'm 18+ and OK with anonymous, unmoderated calls": {
+    "model": "madlad-400",
+    "msgstr": "Мне 18+ и ОК с анонимными, немодерированными звонками"
+  },
+  "I'm happy to hear:": {
+    "model": "madlad-400",
+    "msgstr": "Я рад услышать:"
+  },
+  "Languages spoken:": {
+    "model": "madlad-400",
+    "msgstr": "Владение языками:"
+  },
+  "Languages spoken: no calls yet": {
+    "model": "madlad-400",
+    "msgstr": "Язык общения: пока нет звонков"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "hy-mt2",
+    "msgstr": "Последняя проверка произведена в %{time} UTC."
+  },
+  "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
+    "model": "opus-mt",
+    "msgstr": "Ищу rando, который говорит %{hearing} и хочет услышать %{speaking}…"
+  },
+  "Matched! Starting the call…": {
+    "model": "translategemma-4b",
+    "msgstr": "Совпало! Начинаем разговор…"
+  },
+  "Mic test failed: %{error}": {
+    "model": "madlad-400",
+    "msgstr": "Проверка микрофона не удалась: %{error}"
+  },
+  "Mic:": {
+    "model": "translategemma-4b",
+    "msgstr": "Микрофон:"
+  },
+  "Mic: %{bars}%{peak}   (t to stop)": {
+    "model": "translategemma-12b",
+    "msgstr": "Микрофон: уровень сигнала: %{bars}, пиковое значение: %{peak}. (Нажмите \"t\", чтобы остановить)."
+  },
+  "Mic: opening…": {
+    "model": "translategemma-4b",
+    "msgstr": "Микрофон: включение…"
+  },
+  "No relay is configured on this server, so calls here go directly.": {
+    "model": "madlad-400",
+    "msgstr": "На этом сервере не настроен ретранслятор, поэтому вызовы на него поступают напрямую."
+  },
+  "Now:": {
+    "model": "hy-mt2",
+    "msgstr": "Сейчас:"
+  },
+  "Other languages: %{calls}": {
+    "model": "opus-mt",
+    "msgstr": "Другие языки: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-12b",
+    "msgstr": "Через TLS (в сетях, блокирующих протокол UDP)."
+  },
+  "Over UDP (most calls)": {
+    "model": "hy-mt2",
+    "msgstr": "Через UDP (большинство вызовов)"
+  },
+  "Press Enter to find a rando.": {
+    "model": "m2m100",
+    "msgstr": "Нажмите Enter, чтобы найти rando."
+  },
+  "Reconnecting audio…": {
+    "model": "opus-mt",
+    "msgstr": "Переподключение звука…"
+  },
+  "Server status": {
+    "model": "hy-mt2",
+    "msgstr": "Статус сервера"
+  },
+  "Speaker:": {
+    "model": "translategemma-4b",
+    "msgstr": "Выступающий:"
+  },
+  "Text only (no audio helper).": {
+    "model": "opus-mt",
+    "msgstr": "Только текст (без аудиопомощника)."
+  },
+  "The relay is partly working.": {
+    "model": "madlad-400",
+    "msgstr": "Реле частично работает."
+  },
+  "The relay is working.": {
+    "model": "hy-mt2",
+    "msgstr": "Ретранслятор работает."
+  },
+  "The relay isn't working.": {
+    "model": "m2m100",
+    "msgstr": "Релей не работает."
+  },
+  "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
+    "model": "hy-mt2",
+    "msgstr": "Этот клиент работает без аудио (отсутствует медиа-вспомогательный модуль): если собеседник предлагает аудио (браузер), звонок прерывается, и вы возвращаетесь в режим ожидания. Два терминальных клиента могут оставаться в процессе звонка для тестирования таймеров и голосования по расширениям."
+  },
+  "This server has no status page (it's older than the status request).": {
+    "model": "translategemma-12b",
+    "msgstr": "У этого сервера нет страницы с информацией о текущем состоянии (он был создан до появления функции запроса статуса)."
+  },
+  "Time is up.": {
+    "model": "hy-mt2",
+    "msgstr": "Время истекло."
+  },
+  "Time is up. You agreed to continue, waiting on your rando…": {
+    "model": "madlad-400",
+    "msgstr": "Время вышло. Вы согласились продолжить, ожидая вашего rando…"
+  },
+  "Today (counting since %{time} UTC on %{date}):": {
+    "model": "madlad-400",
+    "msgstr": "Сегодня (считая с %{time} UTC на %{date}):"
+  },
+  "Typical length: %{length}": {
+    "model": "opus-mt",
+    "msgstr": "Типичная длина: %{length}"
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone.": {
+    "model": "translategemma-12b",
+    "msgstr": "Мы считаем количество звонков, а не людей: мы не собираем адреса, идентификационные данные и никакой другой информации о пользователях."
+  },
+  "You": {
+    "model": "madlad-400",
+    "msgstr": "Ты"
+  },
+  "You're in a call.": {
+    "model": "translategemma-4b",
+    "msgstr": "Вы находитесь в телефонном разговоре."
+  },
+  "Your rando": {
+    "model": "opus-mt",
+    "msgstr": "Твой rando"
+  },
+  "any of the languages you picked (%{count})": {
+    "model": "opus-mt",
+    "msgstr": "любой из языков, которые вы выбрали (%{count})"
+  },
+  "connected": {
+    "model": "madlad-400",
+    "msgstr": "подключено"
+  },
+  "connected directly": {
+    "model": "m2m100",
+    "msgstr": "напрямую связаны"
+  },
+  "connected to %{server}": {
+    "model": "m2m100",
+    "msgstr": "Подключен к %{server}"
+  },
+  "connected to the server": {
+    "model": "translategemma-4b",
+    "msgstr": "подключен к серверу"
+  },
+  "connected via relay": {
+    "model": "madlad-400",
+    "msgstr": "подключено через реле"
+  },
+  "connecting to %{server}…": {
+    "model": "hy-mt2",
+    "msgstr": "Подключение к %{server}…"
+  },
+  "connecting to the server…": {
+    "model": "translategemma-4b",
+    "msgstr": "Подключение к серверу…"
+  },
+  "connecting…": {
+    "model": "hy-mt2",
+    "msgstr": "Подключение…"
+  },
+  "connection closed": {
+    "model": "hy-mt2",
+    "msgstr": "соединение прервано"
+  },
+  "couldn't connect": {
+    "model": "madlad-400",
+    "msgstr": "не удалось подключиться"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "не удалось найти сервер"
+  },
+  "credentials refused": {
+    "model": "hy-mt2",
+    "msgstr": "условия аутентификации отклонены"
+  },
+  "disconnected; reconnecting": {
+    "model": "hy-mt2",
+    "msgstr": "отключено; восстанавливаю соединение"
+  },
+  "error: %{message}": {
+    "model": "translategemma-12b",
+    "msgstr": "Ошибка: %{message}"
+  },
+  "in a call": {
+    "model": "translategemma-4b",
+    "msgstr": "в телефонном разговоре"
+  },
+  "key\u0004about these numbers": {
+    "model": "madlad-400",
+    "msgstr": "об этих цифрах"
+  },
+  "key\u0004back": {
+    "model": "madlad-400",
+    "msgstr": "назад"
+  },
+  "key\u0004cancel": {
+    "model": "m2m100",
+    "msgstr": "Отменить"
+  },
+  "key\u0004change": {
+    "model": "hy-mt2",
+    "msgstr": "изменить"
+  },
+  "key\u0004check": {
+    "model": "hy-mt2",
+    "msgstr": "проверить"
+  },
+  "key\u0004close": {
+    "model": "m2m100",
+    "msgstr": "Закрыть"
+  },
+  "key\u0004continue": {
+    "model": "m2m100",
+    "msgstr": "Продолжить"
+  },
+  "key\u0004end": {
+    "model": "madlad-400",
+    "msgstr": "конец"
+  },
+  "key\u0004end call": {
+    "model": "hy-mt2",
+    "msgstr": "завершить звонок"
+  },
+  "key\u0004find": {
+    "model": "madlad-400",
+    "msgstr": "найти"
+  },
+  "key\u0004language": {
+    "model": "opus-mt",
+    "msgstr": "язык"
+  },
+  "key\u0004mic": {
+    "model": "opus-mt",
+    "msgstr": "Микрофон"
+  },
+  "key\u0004mic test": {
+    "model": "hy-mt2",
+    "msgstr": "Тест микрофона"
+  },
+  "key\u0004move": {
+    "model": "opus-mt",
+    "msgstr": "Перейти"
+  },
+  "key\u0004mute": {
+    "model": "translategemma-4b",
+    "msgstr": "выключить звук"
+  },
+  "key\u0004next rando": {
+    "model": "hy-mt2",
+    "msgstr": "следующий rando"
+  },
+  "key\u0004quit": {
+    "model": "madlad-400",
+    "msgstr": "Выйти"
+  },
+  "key\u0004refresh": {
+    "model": "opus-mt",
+    "msgstr": "Обновить"
+  },
+  "key\u0004speaker": {
+    "model": "madlad-400",
+    "msgstr": "спикер"
+  },
+  "key\u0004status": {
+    "model": "m2m100",
+    "msgstr": "Статус"
+  },
+  "key\u0004unmute": {
+    "model": "translategemma-4b",
+    "msgstr": "включить звук"
+  },
+  "log\u0004idle": {
+    "model": "hy-mt2",
+    "msgstr": "неактивно"
+  },
+  "log\u0004in call": {
+    "model": "translategemma-4b",
+    "msgstr": "во время разговора"
+  },
+  "log\u0004looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "ищу rando"
+  },
+  "log\u0004matched; connecting": {
+    "model": "hy-mt2",
+    "msgstr": "соответствует; соединяет"
+  },
+  "log\u0004time is up: continue? (y/n)": {
+    "model": "translategemma-4b",
+    "msgstr": "Время истекло: продолжить? (да/нет)"
+  },
+  "looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "ищу rando"
+  },
+  "matched, preparing the call": {
+    "model": "hy-mt2",
+    "msgstr": "соотнесено, готовится звонок"
+  },
+  "muted": {
+    "model": "madlad-400",
+    "msgstr": "выключен"
+  },
+  "no answer": {
+    "model": "hy-mt2",
+    "msgstr": "ответа нет"
+  },
+  "no call": {
+    "model": "madlad-400",
+    "msgstr": "нет звонка"
+  },
+  "no credentials asked for": {
+    "model": "m2m100",
+    "msgstr": "Никаких подтверждений не требуется"
+  },
+  "not enough calls yet": {
+    "model": "madlad-400",
+    "msgstr": "пока недостаточно звонков"
+  },
+  "not looking": {
+    "model": "hy-mt2",
+    "msgstr": "не смотрю"
+  },
+  "not working": {
+    "model": "madlad-400",
+    "msgstr": "не работает"
+  },
+  "panel title\u0004Connecting": {
+    "model": "madlad-400",
+    "msgstr": "Подключение"
+  },
+  "panel title\u0004Find a rando": {
+    "model": "opus-mt",
+    "msgstr": "Найти rando"
+  },
+  "panel title\u0004In call": {
+    "model": "translategemma-4b",
+    "msgstr": "Во время телефонного разговора"
+  },
+  "panel title\u0004Looking": {
+    "model": "hy-mt2",
+    "msgstr": "Поиск"
+  },
+  "panel title\u0004Matched": {
+    "model": "hy-mt2",
+    "msgstr": "Соответствует"
+  },
+  "panel title\u0004Time is up": {
+    "model": "translategemma-4b",
+    "msgstr": "Время истекло"
+  },
+  "peak %{level} dBFS": {
+    "model": "hy-mt2",
+    "msgstr": "максимум %{level} дБФС"
+  },
+  "peer offered audio; this client has none, so the call ended (Enter to look again)": {
+    "model": "hy-mt2",
+    "msgstr": "Собеседник предложил аудиосвязь; у этого клиента её нет, поэтому звонок был прерван (нажмите Enter, чтобы попробовать снова)."
+  },
+  "pick at least one language to hear (space toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Выберите хотя бы один язык для прослушивания (пробел переключает выбор)."
+  },
+  "rando reconnecting…": {
+    "model": "hy-mt2",
+    "msgstr": "rando восстанавливает соединение…"
+  },
+  "reconnected as a new participant": {
+    "model": "madlad-400",
+    "msgstr": "повторное подключение в качестве нового участника"
+  },
+  "reconnected; back in the call": {
+    "model": "hy-mt2",
+    "msgstr": "снова соединились; вернулись к разговору"
+  },
+  "reconnecting…": {
+    "model": "translategemma-12b",
+    "msgstr": "Возобновление соединения…"
+  },
+  "refused": {
+    "model": "madlad-400",
+    "msgstr": "отказано"
+  },
+  "secure connection failed": {
+    "model": "opus-mt",
+    "msgstr": "Неисправность защищенного соединения"
+  },
+  "starting audio…": {
+    "model": "translategemma-12b",
+    "msgstr": "Начинаю воспроизведение аудио…"
+  },
+  "system default": {
+    "model": "opus-mt",
+    "msgstr": "система по умолчанию"
+  },
+  "text only": {
+    "model": "madlad-400",
+    "msgstr": "только текст"
+  },
+  "text only (no audio)": {
+    "model": "hy-mt2",
+    "msgstr": "только текст (без аудио)"
+  },
+  "the audio helper isn't running (is it built? %{command})": {
+    "model": "m2m100",
+    "msgstr": "аудиопомощник не работает (построен ли он? %{command})"
+  },
+  "the audio helper restarted": {
+    "model": "m2m100",
+    "msgstr": "Аудиопомощник перезапускается"
+  },
+  "time is up: continue?": {
+    "model": "translategemma-4b",
+    "msgstr": "Время истекло: продолжать?"
+  },
+  "under 1 min": {
+    "model": "m2m100",
+    "msgstr": "менее 1 минуты"
+  },
+  "unexpected reply": {
+    "model": "m2m100",
+    "msgstr": "Неожиданный ответ"
+  },
+  "waiting on your rando": {
+    "model": "madlad-400",
+    "msgstr": "жду твоего rando"
+  },
+  "working": {
+    "model": "translategemma-4b",
+    "msgstr": "работает"
+  },
+  "your rando's connection dropped; waiting for them to come back": {
+    "model": "madlad-400",
+    "msgstr": "ваше соединение с rando прервано; ожидание их возвращения"
+  }
+}

@@ -1,0 +1,562 @@
+{
+  "%{connected} · you %{you} dBFS · peer %{peer} dBFS": {
+    "model": "translategemma-12b",
+    "msgstr": "%{connected} · Votre niveau : %{you} dBFS · Niveau de l'interlocuteur : %{peer} dBFS"
+  },
+  "%{device} (default)": {
+    "model": "opus-mt",
+    "msgstr": "%{device} (par défaut)"
+  },
+  "%{first} or %{last}": {
+    "model": "opus-mt",
+    "msgstr": "%{first} ou %{last}"
+  },
+  "%{language} both ways": {
+    "model": "opus-mt",
+    "msgstr": "%{language} dans les deux sens"
+  },
+  "%{minutes} min": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes} min"
+  },
+  "%{minutes} min or more": {
+    "model": "opus-mt",
+    "msgstr": "%{minutes} min ou plus"
+  },
+  "%{request} refused: %{reason}": {
+    "model": "opus-mt",
+    "msgstr": "%{request} refusé: %{reason}"
+  },
+  "%{sent} sent / %{received} received": {
+    "model": "opus-mt",
+    "msgstr": "%{sent} envoyé / %{received} reçu"
+  },
+  "%{time} remaining": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} de temps restant"
+  },
+  "%{time} to decide": {
+    "model": "m2m100",
+    "msgstr": "%{time} Pour décider"
+  },
+  "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
+    "model": "hy-mt2",
+    "msgstr": "Une paire de langues est affichée dès qu’elle compte au moins %{count} occurrences ; celles qui en comptent moins sont classées dans la catégorie « autres »."
+  },
+  "About these numbers": {
+    "model": "opus-mt",
+    "msgstr": "A propos de ces chiffres"
+  },
+  "Asking the server…": {
+    "model": "madlad-400",
+    "msgstr": "Demande au serveur…"
+  },
+  "Audio on.": {
+    "model": "madlad-400",
+    "msgstr": "Le son est allumé."
+  },
+  "Calls started: %{started}": {
+    "model": "m2m100",
+    "msgstr": "Les appels ont commencé : %{started}"
+  },
+  "Checking the relay…": {
+    "model": "hy-mt2",
+    "msgstr": "Vérification du relais…"
+  },
+  "Connected: %{connected}": {
+    "model": "opus-mt",
+    "msgstr": "Connecté : %{connected}"
+  },
+  "Connecting to the server…": {
+    "model": "translategemma-4b",
+    "msgstr": "Connexion au serveur…"
+  },
+  "Connection:": {
+    "model": "madlad-400",
+    "msgstr": "Connexion:"
+  },
+  "Continue for another %{minutes} minutes?": {
+    "model": "translategemma-4b",
+    "msgstr": "Continuer pendant encore %{minutes} minutes ?"
+  },
+  "Continue?": {
+    "model": "hy-mt2",
+    "msgstr": "Continuer ?"
+  },
+  "Continued": {
+    "model": "madlad-400",
+    "msgstr": "Continued"
+  },
+  "Continued past %{minutes} minutes": {
+    "model": "translategemma-4b",
+    "msgstr": "Continué au-delà de %{minutes} minutes"
+  },
+  "Counted across %{answered} of %{total} servers.": {
+    "model": "translategemma-12b",
+    "msgstr": "Calculé sur un échantillon représentant %{answered} des %{total} serveurs."
+  },
+  "Devices": {
+    "model": "hy-mt2",
+    "msgstr": "Appareils"
+  },
+  "Error: %{message}": {
+    "model": "madlad-400",
+    "msgstr": "Erreur: %{message}"
+  },
+  "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
+    "model": "madlad-400",
+    "msgstr": "Comment les appels se sont terminés: terminé %{finished}, impossible de se connecter %{not_connected}, connexion perdue %{lost}, annulé %{canceled}"
+  },
+  "I will speak:": {
+    "model": "translategemma-4b",
+    "msgstr": "Je vais parler :"
+  },
+  "I'm 18+ and OK with anonymous, unmoderated calls": {
+    "model": "madlad-400",
+    "msgstr": "J'ai 18 ans et accepte les appels anonymes et non modérés"
+  },
+  "I'm happy to hear:": {
+    "model": "madlad-400",
+    "msgstr": "Je suis heureux d'entendre:"
+  },
+  "Languages spoken:": {
+    "model": "madlad-400",
+    "msgstr": "Les langues parlées:"
+  },
+  "Languages spoken: no calls yet": {
+    "model": "hy-mt2",
+    "msgstr": "Langues parlées : pas d’appels pour le moment"
+  },
+  "Last checked at %{time} UTC.": {
+    "model": "translategemma-12b",
+    "msgstr": "Dernière vérification effectuée à %{time} UTC."
+  },
+  "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
+    "model": "hy-mt2",
+    "msgstr": "Je cherche un rando qui parle %{hearing} et qui veut entendre %{speaking}…"
+  },
+  "Matched! Starting the call…": {
+    "model": "translategemma-12b",
+    "msgstr": "Connexion établie ! L'appel est en cours…"
+  },
+  "Mic test failed: %{error}": {
+    "model": "hy-mt2",
+    "msgstr": "Test du micro échoué : %{error}"
+  },
+  "Mic:": {
+    "model": "translategemma-4b",
+    "msgstr": "Microphone :"
+  },
+  "Mic: %{bars}%{peak}   (t to stop)": {
+    "model": "translategemma-12b",
+    "msgstr": "Micro : %{bars} %{peak} (appuyez sur \"t\" pour arrêter)."
+  },
+  "Mic: opening…": {
+    "model": "translategemma-12b",
+    "msgstr": "Micro : ouverture…"
+  },
+  "No relay is configured on this server, so calls here go directly.": {
+    "model": "hy-mt2",
+    "msgstr": "Aucun relais n’est configuré sur ce serveur, donc les appels y vont directement."
+  },
+  "Now:": {
+    "model": "m2m100",
+    "msgstr": "Et maintenant :"
+  },
+  "Other languages: %{calls}": {
+    "model": "opus-mt",
+    "msgstr": "Autres langues: %{calls}"
+  },
+  "Over TLS (networks that block UDP)": {
+    "model": "translategemma-4b",
+    "msgstr": "Via TLS (réseaux qui bloquent le protocole UDP)"
+  },
+  "Over UDP (most calls)": {
+    "model": "translategemma-4b",
+    "msgstr": "Via UDP (la majorité des appels)"
+  },
+  "Press Enter to find a rando.": {
+    "model": "opus-mt",
+    "msgstr": "Appuyez sur Entrée pour trouver un rando."
+  },
+  "Reconnecting audio…": {
+    "model": "opus-mt",
+    "msgstr": "Reconnecter l'audio…"
+  },
+  "Server status": {
+    "model": "m2m100",
+    "msgstr": "Status du serveur"
+  },
+  "Speaker:": {
+    "model": "madlad-400",
+    "msgstr": "Speaker:"
+  },
+  "Text only (no audio helper).": {
+    "model": "translategemma-12b",
+    "msgstr": "Texte uniquement (pas d'aide audio)."
+  },
+  "The relay is partly working.": {
+    "model": "opus-mt",
+    "msgstr": "Le relais fonctionne en partie."
+  },
+  "The relay is working.": {
+    "model": "hy-mt2",
+    "msgstr": "Le relais fonctionne."
+  },
+  "The relay isn't working.": {
+    "model": "madlad-400",
+    "msgstr": "Le relais ne fonctionne pas."
+  },
+  "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
+    "model": "translategemma-4b",
+    "msgstr": "Ce client fonctionne sans audio (aucun assistant multimédia) : si l'autre participant propose de transmettre de l'audio (un navigateur), l'appel se termine et vous retournez à l'état d'attente. Deux clients peuvent rester en appel pour tester les mécanismes de temporisation et de vote d'extension."
+  },
+  "This server has no status page (it's older than the status request).": {
+    "model": "opus-mt",
+    "msgstr": "Ce serveur n'a pas de page d'état (il est plus ancien que la requête d'état)."
+  },
+  "Time is up.": {
+    "model": "madlad-400",
+    "msgstr": "Le temps est écoulé."
+  },
+  "Time is up. You agreed to continue, waiting on your rando…": {
+    "model": "hy-mt2",
+    "msgstr": "Le temps est écoulé. Vous avez accepté de continuer, en attendant votre rando…"
+  },
+  "Today (counting since %{time} UTC on %{date}):": {
+    "model": "translategemma-4b",
+    "msgstr": "Aujourd'hui (en comptant à partir de %{time} UTC le %{date}) :"
+  },
+  "Typical length: %{length}": {
+    "model": "opus-mt",
+    "msgstr": "Longueur typique: %{length}"
+  },
+  "We count calls, not people: no addresses, no ids, nothing about anyone.": {
+    "model": "translategemma-12b",
+    "msgstr": "Nous comptabilisons les appels, pas les personnes : nous ne collectons aucune adresse, aucun identifiant, et aucune information sur qui que ce soit."
+  },
+  "You": {
+    "model": "opus-mt",
+    "msgstr": "Toi"
+  },
+  "You're in a call.": {
+    "model": "opus-mt",
+    "msgstr": "Vous êtes en appel."
+  },
+  "Your rando": {
+    "model": "opus-mt",
+    "msgstr": "Votre rando"
+  },
+  "any of the languages you picked (%{count})": {
+    "model": "translategemma-12b",
+    "msgstr": "n'importe laquelle des langues que vous avez sélectionnées (%{count})."
+  },
+  "connected": {
+    "model": "opus-mt",
+    "msgstr": "connecté"
+  },
+  "connected directly": {
+    "model": "m2m100",
+    "msgstr": "Connexion directe"
+  },
+  "connected to %{server}": {
+    "model": "translategemma-12b",
+    "msgstr": "connecté à %{server}"
+  },
+  "connected to the server": {
+    "model": "opus-mt",
+    "msgstr": "connecté au serveur"
+  },
+  "connected via relay": {
+    "model": "opus-mt",
+    "msgstr": "connecté par relais"
+  },
+  "connecting to %{server}…": {
+    "model": "hy-mt2",
+    "msgstr": "Se connecter à %{server}…"
+  },
+  "connecting to the server…": {
+    "model": "translategemma-4b",
+    "msgstr": "Connexion au serveur…"
+  },
+  "connecting…": {
+    "model": "translategemma-12b",
+    "msgstr": "connexion en cours…"
+  },
+  "connection closed": {
+    "model": "opus-mt",
+    "msgstr": "connexion fermée"
+  },
+  "couldn't connect": {
+    "model": "opus-mt",
+    "msgstr": "Impossible de se connecter"
+  },
+  "couldn't find the server": {
+    "model": "madlad-400",
+    "msgstr": "Impossible de trouver le serveur"
+  },
+  "credentials refused": {
+    "model": "madlad-400",
+    "msgstr": "Pouvoirs refusés"
+  },
+  "disconnected; reconnecting": {
+    "model": "translategemma-4b",
+    "msgstr": "déconnecté ; rétablissement de la connexion"
+  },
+  "error: %{message}": {
+    "model": "opus-mt",
+    "msgstr": "erreur: %{message}"
+  },
+  "in a call": {
+    "model": "opus-mt",
+    "msgstr": "lors d'un appel"
+  },
+  "key\u0004about these numbers": {
+    "model": "hy-mt2",
+    "msgstr": "à propos de ces chiffres"
+  },
+  "key\u0004back": {
+    "model": "m2m100",
+    "msgstr": "Retour"
+  },
+  "key\u0004cancel": {
+    "model": "opus-mt",
+    "msgstr": "annuler"
+  },
+  "key\u0004change": {
+    "model": "hy-mt2",
+    "msgstr": "changer"
+  },
+  "key\u0004check": {
+    "model": "m2m100",
+    "msgstr": "Vérifier"
+  },
+  "key\u0004close": {
+    "model": "hy-mt2",
+    "msgstr": "fermer"
+  },
+  "key\u0004continue": {
+    "model": "hy-mt2",
+    "msgstr": "continuer"
+  },
+  "key\u0004end": {
+    "model": "madlad-400",
+    "msgstr": "fin"
+  },
+  "key\u0004end call": {
+    "model": "madlad-400",
+    "msgstr": "Fin de l'appel"
+  },
+  "key\u0004find": {
+    "model": "translategemma-12b",
+    "msgstr": "trouver"
+  },
+  "key\u0004language": {
+    "model": "translategemma-12b",
+    "msgstr": "langue"
+  },
+  "key\u0004mic": {
+    "model": "translategemma-4b",
+    "msgstr": "microphone"
+  },
+  "key\u0004mic test": {
+    "model": "hy-mt2",
+    "msgstr": "Test du micro"
+  },
+  "key\u0004move": {
+    "model": "hy-mt2",
+    "msgstr": "déplacer"
+  },
+  "key\u0004mute": {
+    "model": "madlad-400",
+    "msgstr": "muet"
+  },
+  "key\u0004next rando": {
+    "model": "hy-mt2",
+    "msgstr": "prochain rando"
+  },
+  "key\u0004quit": {
+    "model": "m2m100",
+    "msgstr": "Arrêter"
+  },
+  "key\u0004refresh": {
+    "model": "hy-mt2",
+    "msgstr": "réactualiser"
+  },
+  "key\u0004speaker": {
+    "model": "opus-mt",
+    "msgstr": "Haut-parleur"
+  },
+  "key\u0004status": {
+    "model": "m2m100",
+    "msgstr": "Le statut"
+  },
+  "key\u0004unmute": {
+    "model": "madlad-400",
+    "msgstr": "désactiver le son"
+  },
+  "log\u0004idle": {
+    "model": "opus-mt",
+    "msgstr": "inactif"
+  },
+  "log\u0004in call": {
+    "model": "hy-mt2",
+    "msgstr": "en cours d’appel"
+  },
+  "log\u0004looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "A la recherche d'un rando"
+  },
+  "log\u0004matched; connecting": {
+    "model": "translategemma-4b",
+    "msgstr": "correspondant; reliant"
+  },
+  "log\u0004time is up: continue? (y/n)": {
+    "model": "madlad-400",
+    "msgstr": "Le temps est écoulé: continuer? (oui/non)"
+  },
+  "looking for a rando": {
+    "model": "hy-mt2",
+    "msgstr": "À la recherche d’un rando"
+  },
+  "matched, preparing the call": {
+    "model": "translategemma-4b",
+    "msgstr": "correspondant, en préparation de l'appel"
+  },
+  "muted": {
+    "model": "madlad-400",
+    "msgstr": "muted"
+  },
+  "no answer": {
+    "model": "opus-mt",
+    "msgstr": "Pas de réponse"
+  },
+  "no call": {
+    "model": "m2m100",
+    "msgstr": "Aucun appel"
+  },
+  "no credentials asked for": {
+    "model": "madlad-400",
+    "msgstr": "Aucune information d'identification demandée"
+  },
+  "not enough calls yet": {
+    "model": "hy-mt2",
+    "msgstr": "Pas assez d’appels pour l’instant"
+  },
+  "not looking": {
+    "model": "m2m100",
+    "msgstr": "Ne pas regarder"
+  },
+  "not working": {
+    "model": "opus-mt",
+    "msgstr": "ne fonctionne pas"
+  },
+  "panel title\u0004Connecting": {
+    "model": "opus-mt",
+    "msgstr": "Connexion"
+  },
+  "panel title\u0004Find a rando": {
+    "model": "opus-mt",
+    "msgstr": "Trouver un rando"
+  },
+  "panel title\u0004In call": {
+    "model": "m2m100",
+    "msgstr": "En appel"
+  },
+  "panel title\u0004Looking": {
+    "model": "translategemma-4b",
+    "msgstr": "Recherche"
+  },
+  "panel title\u0004Matched": {
+    "model": "translategemma-4b",
+    "msgstr": "Correspondant"
+  },
+  "panel title\u0004Time is up": {
+    "model": "madlad-400",
+    "msgstr": "Le temps est écoulé"
+  },
+  "peak %{level} dBFS": {
+    "model": "m2m100",
+    "msgstr": "le plus haut %{level} dBFS"
+  },
+  "peer offered audio; this client has none, so the call ended (Enter to look again)": {
+    "model": "translategemma-4b",
+    "msgstr": "L'interlocuteur a proposé un enregistrement audio ; ce client n'en a pas, donc l'appel s'est terminé (Appuyez pour réessayer)"
+  },
+  "pick at least one language to hear (space toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Sélectionnez au moins une langue à écouter (la touche espace permet de sélectionner une langue)."
+  },
+  "rando reconnecting…": {
+    "model": "madlad-400",
+    "msgstr": "rando En cours de connexion…"
+  },
+  "reconnected as a new participant": {
+    "model": "hy-mt2",
+    "msgstr": "reconnecté en tant que nouveau participant"
+  },
+  "reconnected; back in the call": {
+    "model": "translategemma-4b",
+    "msgstr": "reconnecté; de retour dans la conversation"
+  },
+  "reconnecting…": {
+    "model": "madlad-400",
+    "msgstr": "En cours de reconnexion…"
+  },
+  "refused": {
+    "model": "opus-mt",
+    "msgstr": "refusé"
+  },
+  "secure connection failed": {
+    "model": "opus-mt",
+    "msgstr": "la connexion sécurisée a échoué"
+  },
+  "starting audio…": {
+    "model": "hy-mt2",
+    "msgstr": "Démarrage de l’audio…"
+  },
+  "system default": {
+    "model": "translategemma-4b",
+    "msgstr": "paramètres par défaut du système"
+  },
+  "text only": {
+    "model": "opus-mt",
+    "msgstr": "texte seulement"
+  },
+  "text only (no audio)": {
+    "model": "m2m100",
+    "msgstr": "Texte uniquement (pas d’audio)"
+  },
+  "the audio helper isn't running (is it built? %{command})": {
+    "model": "madlad-400",
+    "msgstr": "l'assistant audio n'est pas en cours d'exécution (est-il compilé? %{command})"
+  },
+  "the audio helper restarted": {
+    "model": "madlad-400",
+    "msgstr": "L'assistant audio a redémarré"
+  },
+  "time is up: continue?": {
+    "model": "madlad-400",
+    "msgstr": "Le temps est écoulé: continuer?"
+  },
+  "under 1 min": {
+    "model": "translategemma-4b",
+    "msgstr": "moins d'une minute"
+  },
+  "unexpected reply": {
+    "model": "opus-mt",
+    "msgstr": "réponse inattendue"
+  },
+  "waiting on your rando": {
+    "model": "opus-mt",
+    "msgstr": "en attendant votre rando"
+  },
+  "working": {
+    "model": "madlad-400",
+    "msgstr": "travaillant"
+  },
+  "your rando's connection dropped; waiting for them to come back": {
+    "model": "madlad-400",
+    "msgstr": "La connexion de votre rando est tombée; en attente de leur retour"
+  }
+}

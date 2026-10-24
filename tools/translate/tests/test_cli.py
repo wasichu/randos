@@ -134,7 +134,8 @@ def test_a_stopped_score_resumes_with_the_locales_left(tmp_path, monkeypatch):
 
 def test_fill_best_fills_each_strings_pick_with_its_model(tmp_path, monkeypatch):
     def row(key, best, translations):
-        return {"key": key, "best": best, "translations": {m: {"text": t} for m, t in translations.items()}}
+        text = best and translations[best]
+        return {"key": key, "best": best, "best_text": text, "translations": {m: {"text": t} for m, t in translations.items()}}
 
     review_json = {
         "locales": {

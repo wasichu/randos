@@ -48,6 +48,13 @@ def test_script_matches_the_locale():
     assert not checks.script("hi", "GitHub view पर", "View on GitHub")[0]
 
 
+def test_a_final_full_stop_the_source_lacks_can_be_dropped():
+    assert checks.without_final_stop("waiting for them", "待っています。") == "待っています"
+    assert checks.without_final_stop("I'm 18+", "동의합니다.") == "동의합니다"
+    # The source ends a sentence too: the stop stays.
+    assert checks.without_final_stop("You left.", "Saliste.") == "Saliste."
+
+
 def test_one_translation_shaped_like_the_source():
     assert checks.shape("Time is up", "Die Zeit ist um")[0]
     assert not checks.shape("Time is up", "Die Zeit ist um.\noder\nEs ist vorbei.")[0]

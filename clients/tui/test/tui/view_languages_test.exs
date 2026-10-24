@@ -91,6 +91,8 @@ defmodule Tui.ViewLanguagesTest do
     ExRatatui.get_buffer_content(terminal)
   end
 
+  defp squeeze(text), do: String.replace(text, " ", "")
+
   for language <- Tui.Language.available(), size <- [{80, 24}, {60, 20}, {40, 20}] do
     @language language
     @size size
@@ -102,7 +104,9 @@ defmodule Tui.ViewLanguagesTest do
           text = render(@size, model)
           refute text =~ "%{", "#{name}: a placeholder left unfilled"
           help = text |> String.split("\n") |> Enum.take(-2) |> Enum.join(" ")
-          assert help =~ quit, "#{name}: the help line lost #{inspect(quit)}:\n#{text}"
+          # Spaces aside: the buffer shows a wide character's second cell as one.
+          assert squeeze(help) =~ squeeze(quit),
+                 "#{name}: the help line lost #{inspect(quit)}:\n#{text}"
         end
       end)
     end
