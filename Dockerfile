@@ -47,16 +47,10 @@ COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
 # Tailwind's installer downloads with Erlang's :httpc, which refuses
-# GitHub's release responses (over 10 KB of headers since 2026-10-24,
-# header_too_long), so curl fetches the binary into the path the installer
-# checks first; `tailwind.install --if-missing` then finds it. (esbuild
-# comes from the npm registry, which :httpc still reads.)
-RUN version="$(mix run --no-start --no-compile -e 'IO.write(Tailwind.configured_version())')" \
-  && arch="$(uname -m | sed 's/x86_64/x64/; s/aarch64/arm64/')" \
-  && mkdir -p _build \
-  && curl -fsSL -o "_build/tailwind-linux-${arch}-${version}" \
-    "https://github.com/tailwindlabs/tailwindcss/releases/download/v${version}/tailwindcss-linux-${arch}" \
-  && chmod +x "_build/tailwind-linux-${arch}-${version}"
+# GitHub's release responses (header_too_long): bin/prefetch.sh fetches the
+# binary with curl to where `tailwind.install --if-missing` looks first.
+COPY bin/prefetch.sh bin/
+RUN bin/prefetch.sh tailwind
 
 RUN mix assets.setup
 

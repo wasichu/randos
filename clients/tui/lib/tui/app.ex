@@ -140,11 +140,15 @@ defmodule Tui.App do
   def handle_event(%Event.Key{code: "c", kind: "press", modifiers: ["ctrl"]}, state),
     do: {:stop, state}
 
-  # The join prompt takes every key (a link is typed there), q included.
-  def handle_event(%Event.Key{code: code, kind: "press"}, %{model: %{join_prompt: text}} = state)
+  # The join prompt takes every key (a link is typed there), q included;
+  # tab ticks 18+ there, which is saved like the form's.
+  def handle_event(
+        %Event.Key{code: code, kind: "press"},
+        %{model: %{connection: :connected, join_prompt: text}} = state
+      )
       when is_binary(text) do
     {model, commands} = Model.key(state.model, code)
-    {:noreply, apply_model(state, model, commands)}
+    {:noreply, state |> apply_model(model, commands) |> persist()}
   end
 
   def handle_event(%Event.Paste{content: text}, state) do
@@ -298,8 +302,9 @@ defmodule Tui.App do
       Connection.set_locale(state.connection, model.language)
     end
 
-    # The screen shows only the latest notice; the full history goes to the
-    # log file (`tmp/tui.log`), for debugging a call afterwards.
+    # The screen shows the latest of this client's own messages
+    # (`Model.message`); the full history goes to the log file
+    # (`tmp/tui.log`), for debugging a call afterwards.
     with [line | _] when model.log != state.model.log <- model.log do
       Logger.info("tui: " <> line)
     end

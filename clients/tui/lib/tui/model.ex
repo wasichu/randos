@@ -6,7 +6,10 @@ defmodule Tui.Model do
   `docs/architecture/participant_channel.md` in the server repo). This model
   only keeps the latest server `state`, the language form for `find`, and a
   short event log. Every function returns `{model, commands}`, where commands
-  are channel pushes for the caller to send: `{:push, event, payload}`.
+  are for the caller to carry out: channel pushes, `{:push, event, payload}`,
+  and copying a link, `{:copy, text}` (`Tui.Clipboard`). `message` is what
+  this client says about what was just done (a copy, a refusal), shown
+  until the next key or status change.
 
   `audio?` says whether this client can carry call audio (its media helper
   is running). `find` sends it, so the server only pairs compatible
@@ -62,7 +65,8 @@ defmodule Tui.Model do
           language: String.t(),
           invitation: map() | nil,
           join_prompt: String.t() | nil,
-          notice: String.t() | nil
+          notice: String.t() | nil,
+          message: String.t() | nil
         }
 
   # `info?`: the "About these numbers" pop-up is open (i).
@@ -91,7 +95,8 @@ defmodule Tui.Model do
             language: "en",
             invitation: nil,
             join_prompt: nil,
-            notice: nil
+            notice: nil,
+            message: nil
 
   @statuses %{
     "idle" => :idle,
@@ -184,8 +189,10 @@ defmodule Tui.Model do
   end
 
   @spec disconnected(t()) :: {t(), [command()]}
+  # The join prompt closes: it takes every key, and nothing can be joined.
   def disconnected(model) do
-    {log(%{model | connection: :connecting}, gettext("disconnected; reconnecting")), []}
+    model = %{model | connection: :connecting, join_prompt: nil}
+    {log(model, gettext("disconnected; reconnecting")), []}
   end
 
   @doc "A server push on the participant channel."
@@ -225,7 +232,7 @@ defmodule Tui.Model do
   def reply(model, "status", _reply), do: {model, []}
 
   def reply(model, event, {:error, %{"reason" => reason}}),
-    do: {log(model, gettext("%{request} refused: %{reason}", request: event, reason: reason)), []}
+    do: {say(model, gettext("%{request} refused: %{reason}", request: event, reason: reason)), []}
 
   def reply(model, _event, _reply), do: {model, []}
 
@@ -247,13 +254,18 @@ defmodule Tui.Model do
 
   ## Keys
 
-  @doc "A key press (ex_ratatui key code string) in the current status."
+  @doc """
+  A key press (ex_ratatui key code string) in the current status. The
+  last `message` goes with it (a new one may come of it).
+  """
   @spec key(t(), String.t()) :: {t(), [command()]}
-  def key(%{connection: :connecting} = model, _key), do: {model, []}
+  def key(model, key), do: press(%{model | message: nil}, key)
+
+  defp press(%{connection: :connecting} = model, _key), do: {model, []}
 
   # The join prompt takes every key: a link is typed (or pasted, `paste/2`);
   # tab ticks the 18+ box, which the prompt shows (no link has a tab in it).
-  def key(%{join_prompt: text} = model, key) when is_binary(text) do
+  defp press(%{join_prompt: text} = model, key) when is_binary(text) do
     case key do
       "esc" ->
         {%{model | join_prompt: nil}, []}
@@ -274,27 +286,28 @@ defmodule Tui.Model do
 
   # The status screen: i opens or closes "About these numbers" (esc closes it
   # first); s or esc goes back, r asks again now.
-  def key(%{status: :idle, status_page: %{info?: true} = page} = model, k) when k in ["i", "esc"],
-    do: {%{model | status_page: %{page | info?: false}}, []}
+  defp press(%{status: :idle, status_page: %{info?: true} = page} = model, k)
+       when k in ["i", "esc"],
+       do: {%{model | status_page: %{page | info?: false}}, []}
 
-  def key(%{status: :idle, status_page: %{} = page} = model, "i"),
+  defp press(%{status: :idle, status_page: %{} = page} = model, "i"),
     do: {%{model | status_page: Map.put(page, :info?, true)}, []}
 
-  def key(%{status: :idle, status_page: %{}} = model, k) when k in ["s", "esc"],
+  defp press(%{status: :idle, status_page: %{}} = model, k) when k in ["s", "esc"],
     do: {%{model | status_page: nil}, []}
 
-  def key(%{status: :idle, status_page: %{}} = model, "r"), do: ask_status(model)
-  def key(%{status: :idle, status_page: %{}} = model, _key), do: {model, []}
+  defp press(%{status: :idle, status_page: %{}} = model, "r"), do: ask_status(model)
+  defp press(%{status: :idle, status_page: %{}} = model, _key), do: {model, []}
 
-  def key(%{status: :idle} = model, "s"), do: ask_status(model)
+  defp press(%{status: :idle} = model, "s"), do: ask_status(model)
 
-  def key(%{status: :idle} = model, "l"),
+  defp press(%{status: :idle} = model, "l"),
     do: {%{model | language: Tui.Language.next(model.language)}, []}
 
-  def key(%{status: :idle} = model, "v"), do: invite(model)
-  def key(%{status: :idle} = model, "j"), do: {%{model | join_prompt: ""}, []}
+  defp press(%{status: :idle} = model, "v"), do: invite(model)
+  defp press(%{status: :idle} = model, "j"), do: {%{model | join_prompt: ""}, []}
 
-  def key(%{status: :idle} = model, key) do
+  defp press(%{status: :idle} = model, key) do
     case key do
       k when k in ["tab", "down"] -> {%{model | focus: next_focus(model.focus)}, []}
       "up" -> {%{model | focus: prev_focus(model.focus)}, []}
@@ -306,48 +319,48 @@ defmodule Tui.Model do
     end
   end
 
-  def key(%{status: :looking} = model, k) when k in ["c", "esc"],
+  defp press(%{status: :looking} = model, k) when k in ["c", "esc"],
     do: {model, [{:push, "cancel_search", %{}}]}
 
-  def key(%{status: :inviting} = model, k) when k in ["c", "esc"],
+  defp press(%{status: :inviting} = model, k) when k in ["c", "esc"],
     do: {model, [{:push, "cancel_invitation", %{}}]}
 
-  def key(%{status: :inviting, invitation: %{"url" => url}} = model, "y"),
+  defp press(%{status: :inviting, invitation: %{"url" => url}} = model, "y"),
     do: {model, [{:copy, url}]}
 
   # No next in an invitation call (the server ignores it anyway).
-  def key(%{status: s, call: %{"kind" => "invitation"}} = model, "n")
-      when s in [:connecting, :in_call],
-      do: {model, []}
+  defp press(%{status: s, call: %{"kind" => "invitation"}} = model, "n")
+       when s in [:connecting, :in_call],
+       do: {model, []}
 
-  def key(%{status: s} = model, "e") when s in [:connecting, :in_call],
+  defp press(%{status: s} = model, "e") when s in [:connecting, :in_call],
     do: {model, [{:push, "end_call", %{}}]}
 
-  def key(%{status: s} = model, "n") when s in [:connecting, :in_call],
+  defp press(%{status: s} = model, "n") when s in [:connecting, :in_call],
     do: {model, [{:push, "next", %{}}]}
 
-  def key(%{status: :extension_pending} = model, "y"),
+  defp press(%{status: :extension_pending} = model, "y"),
     do: {model, [{:push, "vote", %{vote: "continue"}}]}
 
-  def key(%{status: :extension_pending} = model, k) when k in ["n", "e"],
+  defp press(%{status: :extension_pending} = model, k) when k in ["n", "e"],
     do: {model, [{:push, "vote", %{vote: "end"}}]}
 
-  def key(model, _key), do: {model, []}
+  defp press(model, _key), do: {model, []}
 
   @doc "How a copy (`y`, `Tui.Clipboard.copy/1`) went, in the log."
   @spec copied(t(), Tui.Clipboard.result()) :: t()
-  def copied(model, {:ok, :system}), do: log(model, gettext("link copied"))
+  def copied(model, {:ok, :system}), do: say(model, gettext("link copied"))
 
   def copied(model, {:ok, :terminal}) do
     gettext_comment(
       "The link went to the terminal's clipboard; some terminals ignore that, and no program can tell."
     )
 
-    log(model, gettext("link sent to your terminal's clipboard (if it allows that)"))
+    say(model, gettext("link sent to your terminal's clipboard (if it allows that)"))
   end
 
   def copied(model, {:error, _reason}),
-    do: log(model, gettext("couldn't copy the link: select it with the mouse"))
+    do: say(model, gettext("couldn't copy the link: select it with the mouse"))
 
   @doc """
   Pasted text (a bracketed paste, one event): into the join prompt, which
@@ -355,10 +368,10 @@ defmodule Tui.Model do
   """
   @spec paste(t(), String.t()) :: {t(), [command()]}
   def paste(%{join_prompt: text} = model, pasted) when is_binary(text),
-    do: {%{model | join_prompt: text <> one_line(pasted)}, []}
+    do: {%{model | join_prompt: text <> one_line(pasted), message: nil}, []}
 
   def paste(%{connection: :connected, status: :idle, status_page: nil} = model, pasted),
-    do: {%{model | join_prompt: one_line(pasted)}, []}
+    do: {%{model | join_prompt: one_line(pasted), message: nil}, []}
 
   def paste(model, _pasted), do: {model, []}
 
@@ -415,6 +428,10 @@ defmodule Tui.Model do
 
   ## Helpers
 
+  # The last thing this client said goes with a change of status.
+  defp kept_message(%{status: status, message: message}, status), do: message
+  defp kept_message(_model, _status), do: nil
+
   defp put_state(model, state) do
     # Unknown statuses (a newer server) keep the current one rather than crash.
     status = Map.get(@statuses, state["status"], model.status)
@@ -429,7 +446,8 @@ defmodule Tui.Model do
         call: state["call"],
         invitation: state["invitation"],
         # News, not an error (an invitation call ended): the server's words.
-        notice: state["notice_message"]
+        notice: state["notice_message"],
+        message: kept_message(model, status)
     }
 
     cond do
@@ -441,17 +459,29 @@ defmodule Tui.Model do
   end
 
   # The log's line when the status changes.
-  defp status_line(:idle), do: pgettext("log", "idle")
+  # Key names (space, tab, y) are placeholders: the help line shows them as
+  # they are, and translators turned "tab" into a browser tab.
+  defp pick_a_language do
+    gettext_comment("%{key} is the name of a key (space), shown as it is.")
+    gettext("pick at least one language to hear (%{key} toggles one)", key: "space")
+  end
+
+  defp status_line(:idle), do: gettext("not looking for a rando")
+
   defp status_line(:looking), do: pgettext("log", "looking for a rando")
   defp status_line(:inviting), do: pgettext("log", "invitation link ready to share")
   defp status_line(:connecting), do: pgettext("log", "matched; connecting")
   defp status_line(:in_call), do: pgettext("log", "in call")
-  defp status_line(:extension_pending), do: pgettext("log", "time is up: continue? (y/n)")
+
+  defp status_line(:extension_pending) do
+    gettext_comment("%{yes} and %{no} are the keys to press (y, n), shown as they are.")
+    pgettext("log", "time is up: continue? (%{yes}/%{no})", yes: "y", no: "n")
+  end
 
   # Without audio the server pairs us only with other text-only clients,
   # never with a browser user who would sit through a silent call.
   defp find(%{hears: []} = model),
-    do: {log(model, gettext("pick at least one language to hear (space toggles one)")), []}
+    do: {say(model, pick_a_language()), []}
 
   defp find(model), do: {model, [{:push, "find", find_payload(model)}]}
 
@@ -465,13 +495,16 @@ defmodule Tui.Model do
 
     cond do
       token == "" ->
-        {log(model, gettext("paste the whole link you were sent")), []}
+        {say(model, gettext("paste the whole link you were sent")), []}
 
       # The prompt stays open with the link in it (the owner's call); tab
       # ticks the box from there.
       not model.adult_acknowledged? ->
-        gettext_comment("The joiner hasn't ticked the 18+ box on the form yet.")
-        {log(model, gettext("tick the 18+ box on the form first")), []}
+        gettext_comment(
+          "The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is."
+        )
+
+        {say(model, gettext("tick the 18+ box first (%{key})", key: "tab")), []}
 
       true ->
         payload = %{
@@ -552,4 +585,8 @@ defmodule Tui.Model do
   defp prev_focus(:ack), do: :hears
 
   defp log(model, line), do: %{model | log: Enum.take([line | model.log], @max_log)}
+
+  # Feedback on what this person just did: shown (`message`, until the next
+  # key or status change) and logged.
+  defp say(model, line), do: %{log(model, line) | message: line}
 end

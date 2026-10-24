@@ -56,11 +56,16 @@ defmodule RandosWeb.HomeLive do
          {:ok, participant, fresh, ice_servers} <- ParticipantShell.resume(ticket) do
       Phoenix.PubSub.subscribe(Randos.PubSub, participant.topic)
 
-      preferences = %{
-        "speaking_language" => participant.preferences.speaks,
-        "hearing_languages" => participant.preferences.hears,
-        "adult_acknowledgment" => "true"
-      }
+      # An invitation's joiner never chose languages (the call's record has
+      # the creator's), so the form starts from the defaults instead.
+      preferences =
+        if participant.call_kind == :invitation and participant.webrtc_role == :answerer,
+          do: Map.put(default_preferences(socket), "adult_acknowledgment", "true"),
+          else: %{
+            "speaking_language" => participant.preferences.speaks,
+            "hearing_languages" => participant.preferences.hears,
+            "adult_acknowledgment" => "true"
+          }
 
       {:ok,
        socket
@@ -199,7 +204,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:notice, ParticipantErrors.notice(participant.notice))
     # On /join: the link can't be used from here (any more), so no form.
     |> assign(:link_failed, participant.error in [:invitation_invalid, :audio_mismatch])
-    |> assign(:invitation, ParticipantShell.client_state(participant).invitation)
+    |> assign(:invitation, ParticipantShell.client_invitation(participant.invitation))
     |> assign(:call_kind, participant.call_kind)
     |> assign(call_assigns(participant.call, participant.id))
   end

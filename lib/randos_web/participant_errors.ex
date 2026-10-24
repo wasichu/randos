@@ -15,7 +15,7 @@ defmodule RandosWeb.ParticipantErrors do
 
   def notice(:call_ended) do
     gettext_comment(
-      "Shown on the form after an invitation call the other person (or time) ended."
+      "Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost)."
     )
 
     gettext("Your call ended.")

@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ min"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} restant"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "%{time} restant"
@@ -88,7 +92,7 @@
     "msgstr": "Choisissez vos langues."
   },
   "Connected": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Connecté"
   },
   "Connecting": {
@@ -323,6 +327,10 @@
     "model": "translategemma-12b",
     "msgstr": "Envoyez-leur ce lien comme vous le souhaitez. Il sera valide une seule fois, pendant les %{minutes} prochaines minutes."
   },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Envoyez-leur ce lien comme vous le souhaitez. Il fonctionne une seule fois."
+  },
   "Share a link.": {
     "model": "hy-mt2",
     "msgstr": "Partagez un lien."
@@ -504,7 +512,7 @@
     "msgstr": "Vous entendrez %{languages}"
   },
   "Your call ended.": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Votre appel est terminé."
   },
   "Your link expired before anyone used it.": {
@@ -536,7 +544,7 @@
     "msgstr": "Copier"
   },
   "button\u0004End": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Fin"
   },
   "button\u0004Find a rando": {

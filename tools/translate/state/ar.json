@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ دقيقة على الأقل"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} متبقية"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "الوقت المتبقي: %{time}"
@@ -259,10 +263,6 @@
     "model": "translategemma-12b",
     "msgstr": "لم يتم استقبال أي مكالمات حتى الآن."
   },
-  "No relay is configured": {
-    "model": "madlad-400",
-    "msgstr": "لم يتم تشكيل أي ترحيل"
-  },
   "Not translated yet": {
     "model": "m2m100",
     "msgstr": "غير مترجم حتى الآن"
@@ -308,7 +308,7 @@
     "msgstr": "جاهز"
   },
   "Reconnecting audio…": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "إعادة توصيل الصوت…"
   },
   "Running this commit plus changes not yet committed": {
@@ -322,6 +322,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "hy-mt2",
     "msgstr": "أرسل لهم هذا الرابط بأي طريقة تريد. يعمل مرة واحدة، لمدة %{minutes} دقيقة قادمة."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "أرسل لهم هذا الرابط بأي طريقة تريد. إنه يعمل مرة واحدة فقط."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -340,7 +344,7 @@
     "msgstr": "حدث خطأ ما!"
   },
   "Source (AGPL-3.0)": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "المصدر (AGPL-3.0)"
   },
   "Starting call with rando.": {
@@ -517,7 +521,7 @@
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
-    "msgstr": "انقطع الاتصال بrando الخاص بك؛ يُرجى الانتظار بضع ثوانٍ حتى يعودوا."
+    "msgstr": "انقطع الاتصال بـrando الخاص بك؛ يُرجى الانتظار بضع ثوانٍ حتى يعودوا."
   },
   "asking for microphone access": {
     "model": "madlad-400",
@@ -626,10 +630,6 @@
   "couldn't find the server": {
     "model": "m2m100",
     "msgstr": "لا أستطيع العثور على الخادم"
-  },
-  "credentials refused": {
-    "model": "madlad-400",
-    "msgstr": "وثائق التفويض المرفوضة"
   },
   "crosstalk": {
     "model": "m2m100",

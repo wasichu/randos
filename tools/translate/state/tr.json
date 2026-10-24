@@ -15,6 +15,10 @@
     "model": "opus-mt",
     "msgstr": "%{minutes}+ min"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "Kalan süre: %{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Kalan süre: %{time}"
@@ -100,7 +104,7 @@
     "msgstr": "Bağlantı kayboldu"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Bağlantı:"
   },
   "Continued past %{minutes} minutes": {
@@ -304,7 +308,7 @@
     "msgstr": "Gizlilik"
   },
   "Ready": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Hazır"
   },
   "Reconnecting audio…": {
@@ -323,6 +327,10 @@
     "model": "hy-mt2",
     "msgstr": "Bu linki onlara istediğiniz şekilde gönderin. Bir kez çalışır ve sonraki %{minutes} dakika boyunca geçerlidir."
   },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Bu bağlantıyı istediğiniz gibi onlara iletebilirsiniz. Ancak bu bağlantı sadece bir kez kullanılabilir."
+  },
   "Share a link.": {
     "model": "madlad-400",
     "msgstr": "Bir bağlantı paylaş."
@@ -336,7 +344,7 @@
     "msgstr": "Birisi sizi bir çağrıya davet etti"
   },
   "Something went wrong!": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Bir şeyler ters gitti!"
   },
   "Source (AGPL-3.0)": {
@@ -584,7 +592,7 @@
     "msgstr": "Çağrı"
   },
   "connection state\u0004connected": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "bağlı"
   },
   "connection state\u0004connecting": {
@@ -624,7 +632,7 @@
     "msgstr": "Bağlantı kurulamadı"
   },
   "couldn't find the server": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Sunucu bulunamadı"
   },
   "credentials refused": {

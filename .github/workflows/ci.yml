@@ -49,7 +49,7 @@ jobs:
             _build
             clients/tui/deps
             clients/tui/_build
-          key: mix-${{ runner.os }}-${{ hashFiles('mise.toml', 'mix.lock', 'clients/tui/mix.lock') }}
+          key: mix-${{ runner.os }}-${{ hashFiles('mise.toml', 'mix.lock', 'clients/tui/mix.lock', 'config/config.exs') }}
           restore-keys: mix-${{ runner.os }}-
 
       - name: Fetch deps
@@ -57,7 +57,7 @@ jobs:
           mix local.hex --force --if-missing
           mix deps.get
           (cd clients/tui && mix deps.get)
-          just tui-nifs
+          just prefetch
 
       - run: just precommit
 
@@ -89,16 +89,16 @@ jobs:
             _build
             clients/tui/deps
             clients/tui/_build
-          key: mix-smoke-${{ hashFiles('mise.toml', 'mix.lock', 'clients/tui/mix.lock') }}
+          key: mix-smoke-${{ hashFiles('mise.toml', 'mix.lock', 'clients/tui/mix.lock', 'config/config.exs') }}
           restore-keys: mix-smoke-
 
       - name: Setup (deps and assets)
         run: |
           mix local.hex --force --if-missing
-          # Both projects' deps, ex_ratatui's library (just tui-nifs), then compile.
+          # Both projects' deps, the prebuilt NIFs and Tailwind (just prefetch), then compile.
           mix deps.get
           (cd clients/tui && mix deps.get)
-          just tui-nifs
+          just prefetch
           mix setup
           cargo build --quiet -p randos_media
 

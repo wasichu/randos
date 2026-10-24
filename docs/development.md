@@ -86,7 +86,14 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 | `just turn-check` | The helper against the real coturn, over UDP and TLS (owner only: needs the TURN secret). Run after changing the relay path. |
 
 CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
-plus both smoke tests.
+plus both smoke tests. The tests never play sound and never reach the
+internet; the smoke tests start their own throwaway server on :4010.
+
+`just setup` runs `just prefetch` (`bin/prefetch.sh`) between fetching
+dependencies and compiling: it fetches with curl the prebuilt files a
+build would otherwise download from GitHub releases with Erlang's :httpc,
+which GitHub's large response headers now break (ex_ratatui's and
+lazy_html's NIFs, the Tailwind binary). CI and the Dockerfile run it too.
 
 ### Translation fixes
 
@@ -120,8 +127,7 @@ workflow (`dependency-check.yml`) runs `cargo deny check advisories` and
   scores). For `tools/voice-eval`, the benchmark on a few clips against
   `results/benchmark.json` (it has no reduced mode yet). A difference
   doesn't block merging by itself: it means the next run may pick
-  differently, which is worth knowing first. The tests never play sound and never reach the
-internet; the smoke tests start their own throwaway server on :4010.
+  differently, which is worth knowing first.
 
 ## More tools
 
@@ -150,9 +156,8 @@ internet; the smoke tests start their own throwaway server on :4010.
   request through `.github/workflows/translation-fix.yml`:
   `tools/translate`'s `randos_translate.issue_fix` reads and checks it
   (issue text never reaches a shell), and `mix randos.translation_fix`
-  writes the one entry with Expo, so the diff is one line. Pull requests
-  the workflow opens don't trigger CI; it checks the fix itself, and CI
-  runs on main after merging.
+  writes the one entry with Expo, so the diff is one line (CI for it:
+  "Translation fixes" above).
 - `just screenshots`: regenerates the README's screenshots
   (`docs/assets/`) from a real call on a throwaway server, with fake audio
   (needs Chrome and `brew install vhs`).

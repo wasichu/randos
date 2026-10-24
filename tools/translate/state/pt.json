@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ min"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} restante"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Tempo restante: %{time}"
@@ -323,8 +327,12 @@
     "model": "hy-mt2",
     "msgstr": "Envie a eles este link da maneira que preferir. Ele funciona uma vez, pelos próximos %{minutes} minutos."
   },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Envie a eles este link da maneira que preferir. Ele funciona apenas uma vez."
+  },
   "Share a link.": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "Compartilhe um link."
   },
   "Short anonymous conversations for language practice.": {
@@ -456,7 +464,7 @@
     "msgstr": "Visualizar no GitHub"
   },
   "Waiting": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Esperando"
   },
   "Waiting for your rando to open the link…": {
@@ -504,8 +512,8 @@
     "msgstr": "Você ouvirá %{languages}"
   },
   "Your call ended.": {
-    "model": "translategemma-4b",
-    "msgstr": "Sua ligação terminou."
+    "model": "m2m100",
+    "msgstr": "Sua chamada terminou."
   },
   "Your link expired before anyone used it.": {
     "model": "translategemma-4b",
@@ -592,7 +600,7 @@
     "msgstr": "conectando"
   },
   "connection state\u0004ended": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "terminado"
   },
   "connection state\u0004failed": {

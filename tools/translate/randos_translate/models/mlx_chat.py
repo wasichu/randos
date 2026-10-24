@@ -37,7 +37,6 @@ _HY_TERMS = "Reference the following translations:\nrando translates to rando\nr
 class MLXChat:
     """One MLX chat model; `style` picks the prompt (hy-mt2 or translategemma)."""
 
-    takes_context = True
     BATCH = 32
 
     def __init__(self, name: str, repo: str, style: str) -> None:

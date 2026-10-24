@@ -17,9 +17,10 @@ mix tui --check               # is the audio helper there and working?
 Keys are shown at the bottom of the screen; `q` quits. On the idle screen,
 `s` shows the server's status (the same as the website's `/status` page:
 whether the relay works, and today's call counts); `s` or Esc goes back.
-`v` invites someone you know: a one-time link to send them, `y` copies it
-(the system's clipboard command, else the terminal's, OSC 52), `c`
-withdraws it. `j` joins through a link (or paste one on the idle screen):
+`t` shows a mic level meter (the mic test). `v` invites someone you know:
+a one-time link to send them, `y` copies it (the system's clipboard
+command, else the terminal's, OSC 52; over SSH always the terminal's),
+`c` or Esc withdraws it. `j` joins through a link (or paste one on the idle screen):
 the prompt takes every key, Tab ticks the 18+ box, Enter joins, Esc
 closes it.
 `RANDOS_FAKE_AUDIO=1` swaps the mic for a test tone and the speaker for
@@ -36,7 +37,8 @@ The TUI speaks your language too: it starts in your system's
 (`LC_ALL`, `LC_MESSAGES`, `LANG`), else English, and `l` on the start
 screen moves to the next one. Its text is translated by machine, as the
 website's is (`tools/translate`, `--catalog tui`); the server's own
-messages (errors) come in the same language. The command line's own help
+words (errors, the status screen) come in the same language, and switch
+with it. The command line's own help
 (`--help`, `--check`) stays in English.
 
 Your choices are kept for next time in a small settings file on your own
@@ -80,6 +82,9 @@ and is written against that document only.
   audio state (mic test, call audio, devices), pure
 - `Tui.CLI` — the `randos` command (`mix tui` and `bin/randos`)
 - `Tui.Clipboard` — copies an invitation link (`y`)
+- `Tui.Gettext`, `Tui.Language` — the interface's translations and which
+  language; `Tui.Width` — terminal cell widths; `Tui.Terminal`,
+  `Tui.Bidi` — right-to-left text, reordered where the terminal doesn't
 
 Tests: `mix test` (unit, app under ex_ratatui's test mode, connection against
 `Slipstream.SocketTest`); `just tui-smoke` from the repo root for two real

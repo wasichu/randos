@@ -64,3 +64,18 @@ def test_the_name_in_urdu_hindi_and_bengali_letters_is_written_back():
     assert tidy("random", "रैंडम") == "रैंडम"
     assert tidy("your rando's", "র্যান্ডোর") == "র্যান্ডোর"
 
+
+def test_the_name_is_only_rewritten_as_a_whole_word_and_where_the_english_has_it():
+    from randos_translate.models import tidy
+
+    # Arabic attaches prepositions: kept, joined by a tatweel (و doesn't join).
+    assert tidy("with your rando", "بالراندو الخاص بك") == "بـrando الخاص بك"
+    assert tidy("and the randos", "والراندوس") == "وrandos"
+    assert tidy("for your rando", "لراندو") == "لـrando"
+    # What an earlier rule left glued is joined too.
+    assert tidy("with your rando", "انقطع الاتصال بrando الخاص بك") == "انقطع الاتصال بـrando الخاص بك"
+    # Inside another word, or where the English has no rando: left alone.
+    assert tidy("with your rando", "ग्रैंडो") == "ग्रैंडो"
+    assert tidy("Marlon Brando", "مارلون براندو") == "مارلون براندو"
+    assert tidy("randos", "رینڈوس") == "randos"
+

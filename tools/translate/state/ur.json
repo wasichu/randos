@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ منٹ"
   },
+  "%{time} left": {
+    "model": "m2m100",
+    "msgstr": "%{time} باقی رہیں"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "%{time} باقی ہے"
@@ -100,7 +104,7 @@
     "msgstr": "کنکشن کھو گیا"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "اتصال:"
   },
   "Continued past %{minutes} minutes": {
@@ -183,10 +187,6 @@
     "model": "madlad-400",
     "msgstr": "ترجمے کو درست کرنے میں مدد کریں"
   },
-  "How calls ended": {
-    "model": "madlad-400",
-    "msgstr": "کال کیسے ختم ہوئی"
-  },
   "How languages are counted": {
     "model": "hy-mt2",
     "msgstr": "زبانوں کی گنتی کیسے کی جاتی ہے؟"
@@ -194,10 +194,6 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "translategemma-27b",
     "msgstr": "میں 18 سال یا اس سے بڑا ہوں اور مجھے معلوم ہے کہ یہاں ہونے والی گفتگو مکمل طور پر غیر شناخت شدہ اور کسی کی نگرانی کے بغیر ہوگی۔"
-  },
-  "I will speak in": {
-    "model": "m2m100",
-    "msgstr": "میں بات کروں گا"
   },
   "I'm happy to hear": {
     "model": "madlad-400",
@@ -218,10 +214,6 @@
   "Invite": {
     "model": "hy-mt2",
     "msgstr": "دعوت دیں"
-  },
-  "Inviting": {
-    "model": "opus-mt",
-    "msgstr": "دعوت نامہ"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-27b",
@@ -304,7 +296,7 @@
     "msgstr": "پرائیویٹی"
   },
   "Ready": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "تیار"
   },
   "Reconnecting audio…": {
@@ -322,6 +314,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "hy-mt2",
     "msgstr": "آپ انہیں یہ لنک جس طرح چاہیں بھیج سکتے ہیں۔ یہ ایک بار کام کرتا ہے، اور آئندہ %{minutes} منٹوں تک کام کرتا رہے گا۔"
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "آپ جس طرح چاہیں ان تک یہ لنک بھیج دیں۔ یہ صرف ایک بار کام کرتا ہے۔"
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -386,10 +382,6 @@
   "The call ended because no microphone was found.": {
     "model": "translategemma-27b",
     "msgstr": "کال منقطع ہو گیا کیونکہ کوئی مائکروفون دستیاب نہیں تھا۔"
-  },
-  "The commit this server runs": {
-    "model": "translategemma-4b",
-    "msgstr": "یہ سرور کس پر کام کر رہا ہے؟"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "hy-mt2",
@@ -587,10 +579,6 @@
     "model": "translategemma-4b",
     "msgstr": "اتصال برقرار"
   },
-  "connection state\u0004connecting": {
-    "model": "m2m100",
-    "msgstr": "کنکشن"
-  },
   "connection state\u0004ended": {
     "model": "m2m100",
     "msgstr": "ختم ہو گیا"
@@ -692,7 +680,7 @@
     "msgstr": "1 منٹ سے کم"
   },
   "unexpected reply": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "غیر متوقع جواب"
   },
   "waiting for microphone": {

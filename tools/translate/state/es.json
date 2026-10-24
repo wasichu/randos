@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ min"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "Tiempo restante: %{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "Tiempo restante: %{time}"
@@ -100,7 +104,7 @@
     "msgstr": "Se perdió la conexión"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "Conexión:"
   },
   "Continued past %{minutes} minutes": {
@@ -308,7 +312,7 @@
     "msgstr": "Listo/a"
   },
   "Reconnecting audio…": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Reconectando el audio…"
   },
   "Running this commit plus changes not yet committed": {
@@ -322,6 +326,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "translategemma-12b",
     "msgstr": "Envíenles este enlace de la manera que prefieran. Funciona una vez, durante los próximos %{minutes} minutos."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Envíenles este enlace de la manera que prefieran. Solo funciona una vez."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -352,7 +360,7 @@
     "msgstr": "Estado"
   },
   "Stop looking": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Deja de buscar"
   },
   "Suggest a fix": {
@@ -504,7 +512,7 @@
     "msgstr": "Escucharás %{languages}"
   },
   "Your call ended.": {
-    "model": "hy-mt2",
+    "model": "translategemma-4b",
     "msgstr": "Su llamada ha finalizado."
   },
   "Your link expired before anyone used it.": {
@@ -664,7 +672,7 @@
     "msgstr": "randos es software libre (AGPL-3.0) y fue desarrollado de forma pública."
   },
   "refused": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "rechazado"
   },
   "remote audio needs a tap (%{summary})": {

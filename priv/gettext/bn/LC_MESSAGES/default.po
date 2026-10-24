@@ -863,11 +863,6 @@ msgstr "আমন্ত্রণ লিঙ্ক"
 msgid "Inviting"
 msgstr "আমন্ত্রণ জানানো"
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Send them this link however you like. It works once, for the next %{minutes} minutes."
-msgstr "আপনি এই লিঙ্কটি যেকোনো উপায়ে তাদের কাছে পাঠাতে পারেন। এটি একবার ব্যবহার করা যাবে এবং পরবর্তী %{minutes} মিনিটের জন্য কার্যকর থাকবে।"
-
 #. Heading of the page an invitation link opens.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -958,8 +953,19 @@ msgstr "অপেক্ষা"
 msgid "Your link expired before anyone used it."
 msgstr "আপনার দেওয়া লিঙ্কের মেয়াদ শেষ হয়ে গেছে, তাই কেউ এটি ব্যবহার করতে পারেনি।"
 
-#. Shown on the form after an invitation call the other person (or time) ended.
+#. Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost).
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Your call ended."
 msgstr "আপনার কলটি শেষ হয়ে গেছে।"
+
+#. How long an invitation link keeps working, as m:ss (it counts down).
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "%{time} left"
+msgstr ""
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Send them this link however you like. It works once."
+msgstr "আপনি যেভাবে ইচ্ছা তাদের কাছে এই লিঙ্কটি পাঠান। এটি একবারই কাজ করবে।"

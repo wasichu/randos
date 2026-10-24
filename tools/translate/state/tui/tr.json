@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · Sizin gönderdiğiniz: %{you} dBFS · Karşı tarafın gönderdiği: %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (varsayılan)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} veya %{last}"
   },
   "%{language} both ways": {
@@ -20,7 +20,7 @@
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} dakika veya daha fazla"
   },
   "%{request} refused: %{reason}": {
@@ -76,7 +76,7 @@
     "msgstr": "Sunucu ile bağlantı kurmak…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Bağlantı:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -104,7 +104,7 @@
     "msgstr": "Aygıtlar"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Hata: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -128,7 +128,7 @@
     "msgstr": "Bir bağlantı üzerinden katılın"
   },
   "Languages spoken:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Konuşulan diller:"
   },
   "Languages spoken: no calls yet": {
@@ -200,11 +200,11 @@
     "msgstr": "Onlara istediğiniz şekilde gönderin. Bir kez işe yarar."
   },
   "Server status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Sunucu durumu"
   },
   "Speaker:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Konuşmacı:"
   },
   "Text only (no audio helper).": {
@@ -232,7 +232,7 @@
     "msgstr": "Bu sunucunun durum sayfası yoktur (durum isteğinden daha eskidir)."
   },
   "Time is up.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Zaman doldu."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -244,7 +244,7 @@
     "msgstr": "Bugün (%{date} tarihindeki %{time} UTC’sinden itibaren):"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Tipik uzunluk: %{length}"
   },
   "Waiting for your rando to open the link…": {
@@ -256,7 +256,7 @@
     "msgstr": "Aramaları sayıyoruz, insanları değil. Adres yok, kimlik yok, kimse hakkında hiçbir şey yok."
   },
   "You": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Sen"
   },
   "You're in a call.": {
@@ -272,11 +272,11 @@
     "msgstr": "Seçtiğiniz dillerden herhangi biri (%{count})."
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "bağlı"
   },
   "connected directly": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "doğrudan bağlı"
   },
   "connected to %{server}": {
@@ -336,7 +336,7 @@
     "msgstr": "bir telefon görüşmesinde"
   },
   "key\u000418+": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -400,7 +400,7 @@
     "msgstr": "Bir bağlantıya katıl"
   },
   "key\u0004language": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "dil"
   },
   "key\u0004mic": {
@@ -453,7 +453,7 @@
   },
   "log\u0004idle": {
     "model": "translategemma-4b",
-    "msgstr": "boş, kullanılmıyor, beklemede"
+    "msgstr": "hareketsiz, boş"
   },
   "log\u0004in call": {
     "model": "translategemma-4b",
@@ -470,6 +470,10 @@
   "log\u0004matched; connecting": {
     "model": "translategemma-4b",
     "msgstr": "uyumlu; bağlantılı"
+  },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "translategemma-12b",
+    "msgstr": "Süre doldu: Devam etmek ister misiniz? (%{yes}/%{no})"
   },
   "log\u0004time is up: continue? (y/n)": {
     "model": "madlad-400",
@@ -512,7 +516,7 @@
     "msgstr": "bir rando arıyor değilim"
   },
   "not working": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "çalışmıyor"
   },
   "panel title\u0004Connecting": {
@@ -532,7 +536,7 @@
     "msgstr": "davetiye"
   },
   "panel title\u0004Looking": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Bakıyorum"
   },
   "panel title\u0004Matched": {
@@ -554,6 +558,10 @@
   "peer offered audio; this client has none, so the call ended (Enter to look again)": {
     "model": "translategemma-12b",
     "msgstr": "Rakip taraf sesli iletişim imkanı sunarken, bu müşterinin böyle bir özelliği bulunmadığı için görüşme sona erdi. (Tekrar denemek için \"Enter\" tuşuna basın)."
+  },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Lütfen en az bir dil seçin, böylece sesini duyabilirsiniz. (%{key} seçeneği bir dili etkinleştirir/devre dışı bırakır.)"
   },
   "pick at least one language to hear (space toggles one)": {
     "model": "hy-mt2",
@@ -588,7 +596,7 @@
     "msgstr": "Ses kaydı başlıyor…"
   },
   "system default": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "sistem varsayılanı"
   },
   "text only": {
@@ -606,6 +614,14 @@
   "the audio helper restarted": {
     "model": "madlad-400",
     "msgstr": "ses yardımcı programı yeniden başlatıldı"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-12b",
+    "msgstr": "Öncelikle \"18+\" kutusunu işaretleyin (%{key})."
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "hy-mt2",
+    "msgstr": "Önce 18+ kutusunu işaretleyin (tab)."
   },
   "tick the 18+ box on the form first": {
     "model": "opus-mt",

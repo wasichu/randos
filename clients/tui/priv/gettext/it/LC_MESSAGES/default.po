@@ -466,11 +466,6 @@ msgstr "picco di %{level} dBFS"
 msgid "peer offered audio; this client has none, so the call ended (Enter to look again)"
 msgstr "L'altra parte ha offerto un file audio; questo cliente non ne ha, quindi la chiamata è terminata (Premere per riprovare)"
 
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "pick at least one language to hear (space toggles one)"
-msgstr "Scegli almeno una lingua da ascoltare (la barra spaziatrice ne attiva una)"
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
@@ -693,12 +688,6 @@ msgstr "disattivare il silenzio"
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
-msgid "idle"
-msgstr "inattivo"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
 msgid "in call"
 msgstr "in chiamata"
 
@@ -713,12 +702,6 @@ msgstr "Alla ricerca di un rando"
 msgctxt "log"
 msgid "matched; connecting"
 msgstr "Abbinati; collegati"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "time is up: continue? (y/n)"
-msgstr "Il tempo è scaduto: continuare? (sì/no)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -757,6 +740,7 @@ msgid "Time is up"
 msgstr "Il tempo è scaduto"
 
 #. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/model.ex
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "not looking for a rando"
@@ -793,12 +777,6 @@ msgstr "In attesa che il tuo rando apra il link…"
 #, elixir-autogen, elixir-format
 msgid "paste the whole link you were sent"
 msgstr "incolla l'intero collegamento che ti è stato inviato"
-
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "spuntare prima la casella 18+ sul modulo"
 
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
@@ -859,14 +837,34 @@ msgstr "Il link è stato copiato"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "il link è stato inviato all'area di appunti del vostro terminale (se questa funzionalità è supportata)."
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "18+"
-msgstr "18 anni o più"
+msgstr "18+"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "copy the link"
 msgstr "copia il link"
+
+#. %{key} is the name of a key (space), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to hear (%{key} toggles one)"
+msgstr "Selezionate almeno una lingua per l'ascolto. (%{key} permette di attivare/disattivare una lingua)."
+
+#. The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (%{key})"
+msgstr "Selezionare innanzitutto la casella \"18+\" (%{key})."
+
+#. %{yes} and %{no} are the keys to press (y, n), shown as they are.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "time is up: continue? (%{yes}/%{no})"
+msgstr "il tempo è scaduto: continuare? (%{yes}/%{no})"

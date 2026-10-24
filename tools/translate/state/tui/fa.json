@@ -8,7 +8,7 @@
     "msgstr": "%{device} (پیش‌فرض)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} یا %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} هر دو راه"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} دقیقه"
   },
   "%{minutes} min or more": {
@@ -100,11 +100,11 @@
     "msgstr": "بر روی %{answered} از مجموع %{total} سرور شمارش شد."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "دستگاه‌ها"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطا: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -292,7 +292,7 @@
     "msgstr": "اتصال از طریق رله"
   },
   "connecting to %{server}…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "در حال اتصال به %{server}…"
   },
   "connecting to the server…": {
@@ -324,11 +324,11 @@
     "msgstr": "اعتبارسنجی رد شد"
   },
   "disconnected; reconnecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "قطع شده؛ در حال اتصال مجدد"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطا: %{message}"
   },
   "in a call": {
@@ -344,7 +344,7 @@
     "msgstr": "درباره این اعداد"
   },
   "key\u0004back": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "بازگشت"
   },
   "key\u0004cancel": {
@@ -356,7 +356,7 @@
     "msgstr": "پیوند را لغو کنید"
   },
   "key\u0004change": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "تغییر"
   },
   "key\u0004check": {
@@ -432,7 +432,7 @@
     "msgstr": "به‌روزرسانی"
   },
   "key\u0004speaker": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "بلندگو"
   },
   "key\u0004status": {
@@ -470,6 +470,10 @@
   "log\u0004matched; connecting": {
     "model": "hy-mt2",
     "msgstr": "مطابقت یافت؛ متصل شدند"
+  },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "translategemma-12b",
+    "msgstr": "زمان به پایان رسیده است: آیا می‌خواهید ادامه دهید؟ (%{yes}/%{no})"
   },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-12b",
@@ -555,6 +559,10 @@
     "model": "translategemma-4b",
     "msgstr": "طرف مقابل، فایل صوتی را ارائه کرد؛ اما این مشتری هیچ فایل صوتی ندارد، بنابراین تماس به پایان رسید (برای مشاهده مجدد، دکمه را فشار دهید)"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "madlad-400",
+    "msgstr": "حداقل یک زبان برای شنیدن انتخاب کنید (%{key} یک زبان را تغییر می‌دهد)"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "حداقل یک زبان را انتخاب کنید تا صدای آن را بشنوید (با فشردن کلید Space می‌توانید یک زبان را انتخاب کنید)."
@@ -607,6 +615,14 @@
     "model": "madlad-400",
     "msgstr": "کمک‌کنندۀ صوتی دوباره آغاز شد"
   },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-12b",
+    "msgstr": "ابتدا کادر مربوط به \"بالای ۱۸ سال\" را علامت بزنید ([%{key}])."
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-4b",
+    "msgstr": "ابتدا، علامت \"18+\" را انتخاب کنید."
+  },
   "tick the 18+ box on the form first": {
     "model": "opus-mt",
     "msgstr": "جعبه 18+ را در فرم اول تیک بزنید"
@@ -616,7 +632,7 @@
     "msgstr": "زمان به پایان رسید: آیا باید ادامه داد؟"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "کمتر از ۱ دقیقه"
   },
   "unexpected reply": {

@@ -107,3 +107,12 @@ def test_no_number_the_english_doesnt_have():
     # Localized digits are the same number; a spelled-out one counts.
     assert checks.numbers("I am 18 or older", "من ۱۸ سال یا بیشتر دارم")[0]
     assert checks.numbers("Pick at least one language to hear", "聞くための言語を1つ以上選んでください")[0]
+
+
+def test_a_printf_placeholder_the_source_lacks_fails():
+    assert not checks.placeholders("check", "Error sa pagbasa ng talaksang '%s': %s")[0]
+    assert checks.placeholders("Done", "Hecho")[0]
+
+
+def test_an_exclamation_mark_the_source_lacks_can_be_dropped_too():
+    assert checks.without_final_stop("Hello", "Hola!") == "Hola"

@@ -46,6 +46,11 @@ one-time link to send them (it works for 15 minutes); whoever opens it
 joins a call with you, the same ten minutes and the same vote, and you
 both go back to the form afterwards, never to a stranger.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/web-invite-dark.png">
+  <img alt="Inviting someone on the website: a one-time link to copy and send, with how long it keeps working and a way to cancel it" src="docs/assets/web-invite-light.png">
+</picture>
+
 That's all there is. Nothing about the call is kept. The site speaks
 all 20 languages, with a switcher in the header. Its translations are
 machine-made, so
@@ -84,6 +89,9 @@ desktop distributions have).
   <tr>
     <td><img alt="The terminal client's start screen: choose the language you'll speak and the one you want to hear" src="docs/assets/tui-idle.png"></td>
     <td><img alt="A call in the terminal: your voice and your rando's as two bar meters, connected directly, 9:54 remaining" src="docs/assets/tui-call.png"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img alt="Inviting someone from the terminal: the one-time link on a line of its own, with the time it has left; y copies it" src="docs/assets/tui-invite.png"></td>
   </tr>
 </table>
 

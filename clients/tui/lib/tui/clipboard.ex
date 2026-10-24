@@ -3,11 +3,12 @@ defmodule Tui.Clipboard do
   Copies text (an invitation link, `y`) to the clipboard. The TUI runs on
   the person's own machine, so the system's own command does it where
   there is one: `pbcopy` on macOS, `wl-copy` under Wayland, `xclip` or
-  `xsel` under X. Otherwise the terminal is asked to (OSC 52, written to
-  `/dev/tty`): Ghostty, iTerm2, kitty, WezTerm, Windows Terminal and tmux
-  (with `set-clipboard on`) take it; others ignore it, which no program
-  can tell. The result says which way it went, so the screen can say what
-  happened.
+  `xsel` under X, its exit status saying whether it worked. Otherwise, and
+  always over SSH (the system's command would fill the far machine's
+  clipboard), the terminal is asked to (OSC 52, written to `/dev/tty`):
+  Ghostty, iTerm2, kitty, WezTerm, Windows Terminal and tmux take it;
+  others ignore it, which no program can tell. The result says which way
+  it went, so the screen can say what happened.
   """
 
   @type result :: {:ok, :system | :terminal} | {:error, term()}
@@ -23,6 +24,10 @@ defmodule Tui.Clipboard do
 
   @doc false
   def command(env) do
+    if env["SSH_TTY"] || env["SSH_CONNECTION"], do: nil, else: local_command(env)
+  end
+
+  defp local_command(env) do
     candidates = [
       {:darwin, "pbcopy", [], nil},
       {:unix, "wl-copy", [], "WAYLAND_DISPLAY"},
@@ -44,15 +49,26 @@ defmodule Tui.Clipboard do
   defp os?(:darwin), do: :os.type() == {:unix, :darwin}
   defp os?(:unix), do: match?({:unix, os} when os != :darwin, :os.type())
 
-  # The text on its stdin; closing the port ends it, and the command copies
-  # what it read.
+  # The text from a file on its stdin (sh only redirects; the text never
+  # reaches a command line), so its exit status says whether it worked.
   defp through(exe, args, text) do
-    port = Port.open({:spawn_executable, exe}, [:binary, args: args])
-    true = Port.command(port, text)
-    Port.close(port)
-    {:ok, :system}
-  rescue
-    error -> {:error, error}
+    path = Path.join(System.tmp_dir!(), "randos-clip-#{System.unique_integer([:positive])}")
+
+    try do
+      File.write!(path, text)
+
+      case System.cmd("sh", ["-c", ~S|"$0" "$@" < "$RANDOS_CLIP"|, exe | args],
+             env: [{"RANDOS_CLIP", path}],
+             stderr_to_stdout: true
+           ) do
+        {_out, 0} -> {:ok, :system}
+        {out, status} -> {:error, {status, String.trim(out)}}
+      end
+    rescue
+      error -> {:error, error}
+    after
+      File.rm(path)
+    end
   end
 
   defp terminal(text) do

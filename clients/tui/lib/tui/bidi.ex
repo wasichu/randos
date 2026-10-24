@@ -47,15 +47,38 @@ defmodule Tui.Bidi do
     end
   end
 
-  @doc "`text` broken into lines of at most `width` cells, by words (a word too long for one is cut)."
+  @doc """
+  `text` broken into lines of at most `width` cells, by words; a word too
+  long for a line (a link) is broken across lines, never cut.
+  """
   @spec wrap(String.t(), pos_integer()) :: [String.t()]
   def wrap(text, width) do
     text
     |> String.split("\n")
     |> Enum.flat_map(fn
-      "" -> [""]
-      paragraph -> paragraph |> String.split(" ") |> pack(width)
+      "" ->
+        [""]
+
+      paragraph ->
+        paragraph |> String.split(" ") |> Enum.flat_map(&pieces(&1, width)) |> pack(width)
     end)
+  end
+
+  # A word wider than a line, in pieces that each fit.
+  defp pieces(word, width) do
+    if Width.of(word) <= width do
+      [word]
+    else
+      word
+      |> String.graphemes()
+      |> Enum.chunk_while("", &fill_piece(&1, &2, width), fn acc -> {:cont, acc, ""} end)
+    end
+  end
+
+  defp fill_piece(grapheme, acc, width) do
+    if Width.of(acc <> grapheme) <= width,
+      do: {:cont, acc <> grapheme},
+      else: {:cont, acc, grapheme}
   end
 
   defp pack(words, width) do

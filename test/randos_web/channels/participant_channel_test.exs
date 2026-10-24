@@ -76,6 +76,21 @@ defmodule RandosWeb.ParticipantChannelTest do
     assert_push "state", %{status: :idle, error: :adult_terms_required}
   end
 
+  test "set_locale switches the server's words at once, the current state's included" do
+    spanish =
+      Gettext.with_locale(RandosWeb.Gettext, "es", fn ->
+        RandosWeb.ParticipantErrors.message(:adult_terms_required)
+      end)
+
+    {_state, socket} = join_participant()
+    find(socket, "fr", "de", false)
+    assert_push "state", %{error_message: english}
+    refute english == spanish
+    ref = push(socket, "set_locale", %{"locale" => "es"})
+    assert_reply ref, :ok
+    assert_push "state", %{error_message: ^spanish}
+  end
+
   test "the locale join param picks the language of the server's words; an unknown one is English" do
     spanish =
       Gettext.with_locale(RandosWeb.Gettext, "es", fn ->
@@ -477,12 +492,11 @@ defmodule RandosWeb.ParticipantChannelTest do
       close(creator)
       assert_receive {:DOWN, ^ref, :process, _pid, _reason}
 
+      # The matchmaker has handled the creator's DOWN once it answers.
+      _sync = Matchmaker.snapshot()
       {_state, joiner} = join_participant()
-
-      eventually(fn ->
-        accept(joiner, token)
-        assert_push "state", %{error: :invitation_invalid}
-      end)
+      accept(joiner, token)
+      assert_push "state", %{error: :invitation_invalid}
     end
 
     test "accepting needs the 18+ acknowledgment; malformed payloads are refused" do
@@ -513,6 +527,32 @@ defmodule RandosWeb.ParticipantChannelTest do
         })
 
       assert_reply ref, :error, %{reason: "rate_limited"}
+    end
+
+    test "only the one who didn't end the call is told it ended" do
+      {_state, creator} = join_participant()
+      {_url, token} = invite(creator)
+      {_state, joiner} = join_participant()
+      accept(joiner, token)
+      assert_push "state", %{status: :connecting}
+      assert_push "state", %{status: :connecting}
+      ref = push(joiner, "end_call", %{})
+      assert_reply ref, :ok
+      assert_push "state", %{status: :idle, notice: nil}
+      assert_push "state", %{status: :idle, notice: :call_ended, notice_message: message}
+      assert is_binary(message)
+    end
+
+    test "a token longer than any link's is malformed" do
+      {_state, socket} = join_participant()
+
+      ref =
+        push(socket, "accept_invitation", %{
+          "token" => String.duplicate("a", 65),
+          "adult_acknowledged" => true
+        })
+
+      assert_reply ref, :error, %{reason: "invalid_message"}
     end
   end
 end

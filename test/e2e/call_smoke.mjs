@@ -117,11 +117,17 @@ try {
     await Promise.all([audioFlows(g, "the creator"), audioFlows(h, "the joiner")])
     assert(!(await g.eval(`!!document.querySelector("#next-rando-button")`)), "an invitation call offered Next")
     assert(await h.eval(`location.pathname === "/"`), "the joiner's page stayed on /join")
+    const [gStreams, hStreams] = [await g.streamCount(), await h.streamCount()]
     await h.click("#end-call-button")
     await Promise.all([
       g.waitFor(`!!document.querySelector("#idle-panel")`, "the creator idle after the call"),
       h.waitFor(`!!document.querySelector("#idle-panel")`, "the joiner idle after the call"),
     ])
+    // Obligation 5: both leave the call (both go idle here, not one
+    // requeued), so both release the mic; the one who didn't end it is told.
+    await eventually(async () => (await g.liveMicTracks(gStreams)) === 0, "the creator's mic released")
+    await eventually(async () => (await h.liveMicTracks(hStreams)) === 0, "the joiner's mic released")
+    assert(await g.eval(`!!document.querySelector("#call-notice")`), "the creator wasn't told the call ended")
     // Used: the same link now says so.
     const i = await browser.newPage("I")
     await i.join(`${BASE_URL}/join#${token}`)

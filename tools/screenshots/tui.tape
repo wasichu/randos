@@ -10,7 +10,8 @@ Set Theme "Catppuccin Mocha"
 Set TypingSpeed 0
 
 Hide
-Type "cd clients/tui && clear && RANDOS_FAKE_AUDIO=1 mix tui --url ws://localhost:4010/participant/websocket"
+# Fresh settings in English (not the developer's own file and language).
+Type "cd clients/tui && rm -f tmp/screenshots-settings.json && clear && LC_ALL=en_US.UTF-8 RANDOS_TUI_SETTINGS=tmp/screenshots-settings.json RANDOS_FAKE_AUDIO=1 mix tui --url ws://localhost:4010/participant/websocket"
 Enter
 Sleep 5s
 # Also happy to hear Spanish (the peer speaks it), then confirm "I'm an
@@ -33,6 +34,13 @@ Screenshot docs/assets/tui-call.png
 Sleep 500ms
 
 Type "e"
+Sleep 1s
+# Inviting someone (the link's host is PHX_HOST's).
+Type "v"
+Sleep 2s
+Screenshot docs/assets/tui-invite.png
+Sleep 500ms
+Type "c"
 Sleep 1s
 Type "q"
 Sleep 1s

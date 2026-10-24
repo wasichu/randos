@@ -238,8 +238,10 @@ defmodule Randos.Matchmaking.Matchmaker do
     {:reply, :ok, drop_invitation(state, Map.get(state.inviters, pid))}
   end
 
+  # Leaving withdraws an invitation too (its DOWN would, a moment later).
   def handle_call({:leave, pid}, _from, state) do
-    {:reply, :ok, remove_waiting(state, pid)}
+    state = state |> remove_waiting(pid) |> drop_invitation(Map.get(state.inviters, pid))
+    {:reply, :ok, state}
   end
 
   def handle_call(:snapshot, _from, state) do
@@ -355,10 +357,12 @@ defmodule Randos.Matchmaking.Matchmaker do
   defp joiner(creator, attrs) do
     hears = creator.hears_languages
 
-    entry_from_attrs(
-      Map.merge(attrs, %{speaks_language: hd(hears), hears_languages: [creator.speaks_language]})
-    )
-    |> Map.put(:speaks_any, if(match?([_, _ | _], hears), do: hears))
+    entry =
+      entry_from_attrs(
+        Map.merge(attrs, %{speaks_language: hd(hears), hears_languages: [creator.speaks_language]})
+      )
+
+    %{entry | speaks_any: if(match?([_, _ | _], hears), do: hears)}
   end
 
   defp start_invitation_call(hash, creator, joiner, state) do

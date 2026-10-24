@@ -466,11 +466,6 @@ msgstr "피크 %{level} dBFS"
 msgid "peer offered audio; this client has none, so the call ended (Enter to look again)"
 msgstr "상대방이 오디오 파일을 제공했지만, 이 고객은 파일이 없으므로 통화가 종료되었습니다 (다시 확인하려면 Enter 키를 누르세요)"
 
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "pick at least one language to hear (space toggles one)"
-msgstr "(최소 한 가지 이상의 언어를 선택하세요. 스페이스 바를 누르면 해당 언어가 선택됩니다.)"
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
@@ -693,12 +688,6 @@ msgstr "음소거 해제"
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
-msgid "idle"
-msgstr "비활성 상태"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
 msgid "in call"
 msgstr "통화 중"
 
@@ -713,12 +702,6 @@ msgstr "rando 검색 결과"
 msgctxt "log"
 msgid "matched; connecting"
 msgstr "일치됨; 연결됨"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "time is up: continue? (y/n)"
-msgstr "시간이 끝났습니다: 계속하시겠습니까? (예/아니오)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -757,6 +740,7 @@ msgid "Time is up"
 msgstr "시간이 다 됐어"
 
 #. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/model.ex
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "not looking for a rando"
@@ -793,12 +777,6 @@ msgstr "링크를 열기 위해 rando을 기다리는 중…"
 #, elixir-autogen, elixir-format
 msgid "paste the whole link you were sent"
 msgstr "발송받은 전체 링크를 복사하여 붙여넣어 주세요"
-
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "먼저, 양식에 18세 이상 여부 확인란을 선택하세요"
 
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
@@ -859,6 +837,7 @@ msgstr "링크 복사됨"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "링크가 터미널의 클립보드에 전송됩니다 (단, 터미널이 해당 기능을 지원하는 경우에만 해당)."
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
@@ -870,3 +849,22 @@ msgstr "18세 이상"
 msgctxt "key"
 msgid "copy the link"
 msgstr "링크를 복사"
+
+#. %{key} is the name of a key (space), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to hear (%{key} toggles one)"
+msgstr "최소 하나의 언어를 선택하여 들어보세요. (%{key}를 클릭하면 해당 언어가 선택/해제됩니다.)"
+
+#. The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (%{key})"
+msgstr "먼저 18세 이상 여부 확인란에 체크하세요 (%{key})"
+
+#. %{yes} and %{no} are the keys to press (y, n), shown as they are.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "time is up: continue? (%{yes}/%{no})"
+msgstr "시간이 만료되었습니다. 계속 진행하시겠습니까? (%{yes}/%{no})"

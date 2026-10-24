@@ -466,11 +466,6 @@ msgstr "kiwango cha %{level} dBFS"
 msgid "peer offered audio; this client has none, so the call ended (Enter to look again)"
 msgstr "Mwendeshaji alitoa sauti; mteja huyu hakuna sauti, kwa hivyo simu ilimalizika (Bonyeza ili kuangalia tena)."
 
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "pick at least one language to hear (space toggles one)"
-msgstr "Chagua angalau lugha moja ili kuisikiliza (bonyeza kitufe ili kuchagua lugha)."
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
@@ -633,7 +628,7 @@ msgstr "lugha"
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "mic"
-msgstr "ndogo"
+msgstr ""
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -693,12 +688,6 @@ msgstr "kuzima"
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
-msgid "idle"
-msgstr "kachwa"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
 msgid "in call"
 msgstr "katika simu"
 
@@ -713,12 +702,6 @@ msgstr "kutafuta rando"
 msgctxt "log"
 msgid "matched; connecting"
 msgstr "sawa; kuunganisha"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "time is up: continue? (y/n)"
-msgstr "Wakati umekwisha: unaendelea? (ndiyo/hapana)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -757,6 +740,7 @@ msgid "Time is up"
 msgstr "Muda umeisha"
 
 #. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/model.ex
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "not looking for a rando"
@@ -793,12 +777,6 @@ msgstr "Kusubiri yako rando kufungua kiungo…"
 #, elixir-autogen, elixir-format
 msgid "paste the whole link you were sent"
 msgstr "piga kiungo kamili ambacho ulipokea"
-
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "kwanza, acha alama kwenye خانة \"18+\" kwenye fomu"
 
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
@@ -859,14 +837,34 @@ msgstr "kiungo kunakiliwa"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "Kiungo hicho kilitumwa kwenye clipboard ya terminal yako (ikiwa terminal yako inaruhusu hilo)."
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "18+"
-msgstr "18 na zaidi"
+msgstr "18+"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "copy the link"
 msgstr "Kopi ya Link"
+
+#. %{key} is the name of a key (space), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to hear (%{key} toggles one)"
+msgstr "Chagua angalau lugha moja ili uisikie (%{key} inawezesha kuchagua lugha moja)."
+
+#. The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (%{key})"
+msgstr "weka alama kwenye kisanduku cha 18+ kwanza (%{key})"
+
+#. %{yes} and %{no} are the keys to press (y, n), shown as they are.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "time is up: continue? (%{yes}/%{no})"
+msgstr "Wakati umekwisha: Je, unaendelea? (%{yes}/%{no})"

@@ -17,25 +17,25 @@
       "fa",
       "fil"
     ],
-    "strings": 173,
-    "at": "20261024T114611Z",
+    "strings": 174,
+    "at": "20261024T153259Z",
     "seconds": 603.6,
     "scored": {
       "metricx": {
-        "at": "20261024T124322Z",
-        "seconds": 64.2
+        "at": "20261024T153311Z",
+        "seconds": 65.6
       },
       "comet_kiwi": {
-        "at": "20261024T124434Z",
-        "seconds": 75.0
+        "at": "20261024T153332Z",
+        "seconds": 76.4
       },
       "judge": {
-        "at": "20261024T125106Z",
-        "seconds": 4258.7
+        "at": "20261024T153449Z",
+        "seconds": 4260.0
       },
       "judge_qwen": {
-        "at": "20261024T125321Z",
-        "seconds": 144.1
+        "at": "20261024T153523Z",
+        "seconds": 145.0
       }
     },
     "appended": [
@@ -66,13 +66,17 @@
       {
         "at": "20261024T114611Z",
         "seconds": 81.2
+      },
+      {
+        "at": "20261024T153259Z",
+        "seconds": 34.5
       }
     ]
   },
   "summary": {
     "es": {
-      "strings": 173,
-      "all_checks_pass": 172,
+      "strings": 174,
+      "all_checks_pass": 173,
       "failed": {
         "placeholders": 0,
         "glossary": 0,
@@ -82,21 +86,21 @@
       "mean_chrf": 77.6
     },
     "ar": {
-      "strings": 173,
-      "all_checks_pass": 109,
+      "strings": 174,
+      "all_checks_pass": 110,
       "failed": {
         "placeholders": 18,
         "glossary": 17,
         "length": 23,
         "script": 26
       },
-      "mean_chrf": 34.9
+      "mean_chrf": 34.6
     },
     "zh": {
-      "strings": 173,
-      "all_checks_pass": 151,
+      "strings": 174,
+      "all_checks_pass": 153,
       "failed": {
-        "placeholders": 3,
+        "placeholders": 2,
         "glossary": 1,
         "length": 13,
         "script": 6
@@ -104,8 +108,8 @@
       "mean_chrf": 55.3
     },
     "hi": {
-      "strings": 173,
-      "all_checks_pass": 158,
+      "strings": 174,
+      "all_checks_pass": 159,
       "failed": {
         "placeholders": 6,
         "glossary": 5,
@@ -115,8 +119,8 @@
       "mean_chrf": 59.7
     },
     "ru": {
-      "strings": 173,
-      "all_checks_pass": 158,
+      "strings": 174,
+      "all_checks_pass": 159,
       "failed": {
         "placeholders": 2,
         "glossary": 0,
@@ -126,65 +130,65 @@
       "mean_chrf": 59.4
     },
     "fr": {
-      "strings": 173,
-      "all_checks_pass": 172,
+      "strings": 174,
+      "all_checks_pass": 173,
       "failed": {
         "placeholders": 1,
         "glossary": 0,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 72.2
+      "mean_chrf": 72.3
     },
     "de": {
-      "strings": 173,
-      "all_checks_pass": 169,
+      "strings": 174,
+      "all_checks_pass": 170,
       "failed": {
         "placeholders": 0,
         "glossary": 0,
         "length": 1,
         "script": 0
       },
-      "mean_chrf": 68.5
+      "mean_chrf": 68.6
     },
     "it": {
-      "strings": 173,
-      "all_checks_pass": 170,
+      "strings": 174,
+      "all_checks_pass": 171,
       "failed": {
         "placeholders": 0,
         "glossary": 0,
         "length": 2,
         "script": 0
       },
-      "mean_chrf": 72.5
+      "mean_chrf": 72.6
     },
     "id": {
-      "strings": 173,
-      "all_checks_pass": 163,
+      "strings": 174,
+      "all_checks_pass": 165,
       "failed": {
-        "placeholders": 7,
+        "placeholders": 6,
         "glossary": 3,
         "length": 0,
         "script": 0
       },
-      "mean_chrf": 69.4
+      "mean_chrf": 69.6
     },
     "tr": {
-      "strings": 173,
-      "all_checks_pass": 167,
+      "strings": 174,
+      "all_checks_pass": 168,
       "failed": {
         "placeholders": 3,
         "glossary": 3,
         "length": 2,
         "script": 2
       },
-      "mean_chrf": 60.4
+      "mean_chrf": 60.3
     },
     "vi": {
-      "strings": 173,
+      "strings": 174,
       "all_checks_pass": 113,
       "failed": {
-        "placeholders": 15,
+        "placeholders": 16,
         "glossary": 7,
         "length": 42,
         "script": 2,
@@ -192,13 +196,13 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 26.4
+      "mean_chrf": 26.1
     },
     "ur": {
-      "strings": 173,
+      "strings": 174,
       "all_checks_pass": 161,
       "failed": {
-        "placeholders": 9,
+        "placeholders": 10,
         "glossary": 4,
         "length": 0,
         "script": 2,
@@ -206,13 +210,13 @@
         "unchanged": 0,
         "letter_forms": 0
       },
-      "mean_chrf": 33.4
+      "mean_chrf": 33.2
     },
     "fa": {
-      "strings": 173,
-      "all_checks_pass": 146,
+      "strings": 174,
+      "all_checks_pass": 148,
       "failed": {
-        "placeholders": 10,
+        "placeholders": 9,
         "glossary": 8,
         "length": 0,
         "script": 1,
@@ -220,11 +224,11 @@
         "unchanged": 0,
         "letter_forms": 1
       },
-      "mean_chrf": 33.0
+      "mean_chrf": 33.2
     },
     "fil": {
-      "strings": 173,
-      "all_checks_pass": 173,
+      "strings": 174,
+      "all_checks_pass": 174,
       "failed": {
         "placeholders": 0,
         "glossary": 0,
@@ -104157,66 +104161,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "es",
-      "text": "Envíales este enlace como quieras. Funciona una vez, durante los próximos %{minutes} minutos.",
-      "back_translation": "Send them this link as you like. It works once, for the next %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 87.3,
-        "metricx": {
-          "score": 2.98
-        },
-        "comet_kiwi": {
-          "score": 0.8162
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -105515,66 +105459,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ar",
-      "text": "أرسل لهم هذا الرابط كما تريد. إنه يعمل مرة واحدة، للـ [10] دقيقة.",
-      "back_translation": "Send them this link as you like. It works once, for 10 minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "leftover tokens ['[10]']"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": false,
-          "detail": "numbers not in the source: ['10']"
-        }
-      },
-      "scores": {
-        "chrf": 61.3,
-        "metricx": {
-          "score": 1.3
-        },
-        "comet_kiwi": {
-          "score": 0.67
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -106839,66 +106723,6 @@
           "reason": "Slightly stiff; '正在邀请' would sound more natural and informal",
           "context": "\nWhere it appears: Your status: you made an invitation link and wait for someone to open it.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "zh",
-      "text": "随你怎么说 下一分钟有效",
-      "back_translation": "Whatever you say. The next minute works.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.5,
-        "metricx": {
-          "score": 5.44
-        },
-        "comet_kiwi": {
-          "score": 0.3776
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -108189,66 +108013,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "hi",
-      "text": "अगले %{minutes} मिनट के लिए उन्हें यह लिंक भेजें.",
-      "back_translation": "Send them this link for the next %{minutes} minute.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 59.2,
-        "metricx": {
-          "score": 7.12
-        },
-        "comet_kiwi": {
-          "score": 0.4995
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -109521,66 +109285,6 @@
         },
         "comet_kiwi": {
           "score": 0.7864
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ru",
-      "text": "Отправьте им эту ссылку, как хотите. Она работает один раз, на следующие %{minutes} минут.",
-      "back_translation": "Send them this link as you wish. It works once, for the next %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 79.1,
-        "metricx": {
-          "score": 3.5
-        },
-        "comet_kiwi": {
-          "score": 0.7987
         },
         "judge": {
           "score": null,
@@ -110881,66 +110585,6 @@
           "reason": "Missing the verb 'Inviter', too brief, not natural for status",
           "context": "\nWhere it appears: Your status: you made an invitation link and wait for someone to open it.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fr",
-      "text": "Envoyez-leur ce lien comme vous voulez. Il fonctionne une fois, pour les prochaines %{minutes} minutes.",
-      "back_translation": "Send them this link as you like. It works once, for the next %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 87.3,
-        "metricx": {
-          "score": 3.42
-        },
-        "comet_kiwi": {
-          "score": 0.8184
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -112251,66 +111895,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "de",
-      "text": "Senden Sie ihnen diesen Link, wie Sie möchten. Er funktioniert einmal, für die nächsten %{minutes} Minuten.",
-      "back_translation": "Send them this link as you like. It works once, for the next %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 87.3,
-        "metricx": {
-          "score": 2.72
-        },
-        "comet_kiwi": {
-          "score": 0.8286
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -113593,70 +113177,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "it",
-      "text": "Invia loro questo link come preferisci. Funziona una volta, per i prossimi %{minutes} minuti.",
-      "back_translation": "Send them this link as you prefer. It works once, for the next %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 78.9,
-        "metricx": {
-          "score": 3.62
-        },
-        "comet_kiwi": {
-          "score": 0.8513
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Natural, clear, and matches the friendly tone.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm tone; accurate and idiomatic Italian.",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -114957,66 +114477,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "id",
-      "text": "Kirim mereka tautan ini sesuka kalian.",
-      "back_translation": "Send them these links as you please.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 20.7,
-        "metricx": {
-          "score": 5.09
-        },
-        "comet_kiwi": {
-          "score": 0.452
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -116303,66 +115763,6 @@
           "reason": "Too brief, lacks context; should be 'Davet ediliyor' for accuracy and tone",
           "context": "\nWhere it appears: Your status: you made an invitation link and wait for someone to open it.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "tr",
-      "text": "Onlara bu bağlantıyı istediğiniz gibi gönderin. Bir kez çalışır, sonraki %{minutes} dakika boyunca.",
-      "back_translation": "Send them this connection as you please, once it works, for the next %{minutes} minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 62.9,
-        "metricx": {
-          "score": 6.88
-        },
-        "comet_kiwi": {
-          "score": 0.7821
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -117657,66 +117057,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "Gửi cho họ liên kết này bạn thích. nó hoạt động một lần, cho %{minutes} tiếp theo.",
-      "back_translation": "Send them this link you like. it works once, for the next %{minutes}.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 72.6,
-        "metricx": {
-          "score": 6.75
-        },
-        "comet_kiwi": {
-          "score": 0.6271
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -118733,14 +118073,16 @@
         "judge": {
           "score": 10,
           "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: Shown on the form after an invitation call the other person (or time) ended.\n",
-          "by": "mistral"
+          "context": "\nWhere it appears: Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost).\n",
+          "by": "mistral",
+          "text": "Cuộc gọi kết thúc."
         },
         "judge_qwen": {
           "score": 8,
           "reason": "Clear meaning, natural, slightly formal tone",
-          "context": "\nWhere it appears: Shown on the form after an invitation call the other person (or time) ended.\n",
-          "by": "qwen"
+          "context": "\nWhere it appears: Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost).\n",
+          "by": "qwen",
+          "text": "Cuộc gọi kết thúc."
         }
       }
     },
@@ -118985,66 +118327,6 @@
           "reason": "Feels formal and stiff; 'Inviting' should be casual and natural",
           "context": "\nWhere it appears: Your status: you made an invitation link and wait for someone to open it.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ur",
-      "text": "آپ چاہیں تو ان کو یہ لنک بھیجیں۔ یہ ایک بار کام کرتا ہے ، اگلے %{minutes} منٹ کے لئے۔",
-      "back_translation": "If you would like to send these links, it works a time for the next 30 minutes.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.3,
-        "metricx": {
-          "score": 4.66
-        },
-        "comet_kiwi": {
-          "score": 0.8067
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -120080,9 +119362,10 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and matches the tone perfectly.",
-          "context": "\nWhere it appears: Shown on the form after an invitation call the other person (or time) ended.\n",
-          "by": "qwen"
+          "reason": "Natural, calm, and matches the tone and context perfectly.",
+          "context": "\nWhere it appears: Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost).\n",
+          "by": "qwen",
+          "text": "آپ کی کال ختم ہوگئی۔"
         }
       }
     },
@@ -120327,66 +119610,6 @@
           "reason": "Slightly stiff; 'در حال دعوت کردن' would sound more natural and informal.",
           "context": "\nWhere it appears: Your status: you made an invitation link and wait for someone to open it.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fa",
-      "text": "این پیوند را هر طور که بخواهی برای ایشان بفرست. این یک بار و برای دقایق آینده کار می کند.",
-      "back_translation": "Give them this charge, that they may go according to their ways: they have done it now, and not for ever.",
-      "checks": {
-        "placeholders": {
-          "ok": false,
-          "detail": "expected ['%{minutes}'], got []"
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 22.0,
-        "metricx": {
-          "score": 1.63
-        },
-        "comet_kiwi": {
-          "score": 0.8065
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -121679,66 +120902,6 @@
       }
     },
     {
-      "key": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgid": "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fil",
-      "text": "Ipadala sa kanila ang link na ito kahit anong gusto mo. Minsan, sa loob ng susunod na %{minutes} minuto.",
-      "back_translation": "Send them this link whatever you want, once for the next %{minutes} minute.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 66.0,
-        "metricx": {
-          "score": 5.59
-        },
-        "comet_kiwi": {
-          "score": 0.6486
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Someone invited you to a call",
       "msgid": "Someone invited you to a call",
       "msgctxt": null,
@@ -122759,10 +121922,1697 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'pagtawag mo' feels awkward for 'call'",
+          "context": "\nWhere it appears: Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost).\n",
+          "by": "qwen",
+          "text": "Natapos ang pagtawag mo."
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "%{time} izquierda",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 4.81
+        },
+        "comet_kiwi": {
+          "score": 0.5054
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "Envíales este enlace como quieras. Funciona una vez.",
+      "back_translation": "Send them this link as you wish. It works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 64.1,
+        "metricx": {
+          "score": 1.3
+        },
+        "comet_kiwi": {
+          "score": 0.8406
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "[الوضع",
+      "back_translation": "[Status",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{time}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 3.3,
+        "metricx": {
+          "score": 7.84
+        },
+        "comet_kiwi": {
+          "score": 0.4016
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "أرسل لهم هذا الرابط كما تريد. يعمل مرة واحدة.",
+      "back_translation": "Send them this link as you like.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.3,
+        "metricx": {
+          "score": 0.68
+        },
+        "comet_kiwi": {
+          "score": 0.8257
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "%{time} 离开",
+      "back_translation": "%{time} Leave",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.2,
+        "metricx": {
+          "score": 2.27
+        },
+        "comet_kiwi": {
+          "score": 0.6221
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "随你怎么说都行 曾经有效过",
+      "back_translation": "Whatever you say. It used to work.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 23.2,
+        "metricx": {
+          "score": 4.06
+        },
+        "comet_kiwi": {
+          "score": 0.3872
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "%{time} बाएं",
+      "back_translation": "%{time} Left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.6,
+        "metricx": {
+          "score": 1.41
+        },
+        "comet_kiwi": {
+          "score": 0.5765
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "लेकिन आप की तरह उन्हें यह लिंक भेजें. यह एक बार काम करता है.",
+      "back_translation": "But like you send them this link. It works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 64.1,
+        "metricx": {
+          "score": 2.83
+        },
+        "comet_kiwi": {
+          "score": 0.7061
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "%{time} налево",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 2.33
+        },
+        "comet_kiwi": {
+          "score": 0.4646
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "Отправь им эту ссылку, как хочешь.",
+      "back_translation": "Send them that link as you wish.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 30.3,
+        "metricx": {
+          "score": 5.53
+        },
+        "comet_kiwi": {
+          "score": 0.5615
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "%{time} gauche",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 3.05
+        },
+        "comet_kiwi": {
+          "score": 0.4391
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "Envoyez-leur ce lien comme vous voulez. Il fonctionne une fois.",
+      "back_translation": "Send them this link as you like. It works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 78.3,
+        "metricx": {
+          "score": 1.53
+        },
+        "comet_kiwi": {
+          "score": 0.8518
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "%{time} links",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 2.95
+        },
+        "comet_kiwi": {
+          "score": 0.3717
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "Senden Sie ihnen diesen Link, wie Sie wollen. Es funktioniert einmal.",
+      "back_translation": "Send them this link as you want. It works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 63.3,
+        "metricx": {
+          "score": 0.75
+        },
+        "comet_kiwi": {
+          "score": 0.8315
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "%{time} sinistra",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 4.53
+        },
+        "comet_kiwi": {
+          "score": 0.4114
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "Invia loro questo link come preferisci. Funziona una volta.",
+      "back_translation": "Send them this link as you like. It works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 78.3,
+        "metricx": {
+          "score": 1.06
+        },
+        "comet_kiwi": {
+          "score": 0.8674
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "%{time} kiri",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 8.19
+        },
+        "comet_kiwi": {
+          "score": 0.4467
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "Kirim mereka tautan ini sesuka kalian.",
+      "back_translation": "Send them these links as you please.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 30.5,
+        "metricx": {
+          "score": 4.28
+        },
+        "comet_kiwi": {
+          "score": 0.5922
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "%{time} sol",
+      "back_translation": "%{time} Left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.6,
+        "metricx": {
+          "score": 5.91
+        },
+        "comet_kiwi": {
+          "score": 0.4401
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "Onlara bu bağlantıyı istediğiniz gibi gönderin. Bir kez çalışır.",
+      "back_translation": "Send them this connection as you wish, it only works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 46.4,
+        "metricx": {
+          "score": 2.34
+        },
+        "comet_kiwi": {
+          "score": 0.8568
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "nhóm",
+      "back_translation": "group",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{time}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 0.0,
+        "metricx": {
+          "score": 8.81
+        },
+        "comet_kiwi": {
+          "score": 0.4073
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "Gửi cho họ liên kết này như bạn thích.",
+      "back_translation": "Send them this link as you like.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.3,
+        "metricx": {
+          "score": 5.53
+        },
+        "comet_kiwi": {
+          "score": 0.5986
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ur",
+      "text": "(بائیں)",
+      "back_translation": "On the right hand and on the left,",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{time}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 16.2,
+        "metricx": {
+          "score": 3.81
+        },
+        "comet_kiwi": {
+          "score": 0.3926
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ur",
+      "text": "ان کو اس لنک کو بھیجیں جیسا کہ آپ چاہتے ہیں. یہ ایک بار کام کرتا ہے.",
+      "back_translation": "Let's send it down as you want. It works once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 35.0,
+        "metricx": {
+          "score": 2.48
+        },
+        "comet_kiwi": {
+          "score": 0.837
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fa",
+      "text": "%{time} چپ",
+      "back_translation": "%{time} Silence",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.0,
+        "metricx": {
+          "score": 1.95
+        },
+        "comet_kiwi": {
+          "score": 0.4802
+        },
+        "judge": {
           "score": 7,
-          "reason": "Slight awkwardness; 'pagtawag mo' feels less natural than 'tawag mo'",
-          "context": "\nWhere it appears: Shown on the form after an invitation call the other person (or time) ended.\n",
-          "by": "qwen"
+          "reason": "Natural but slightly stiff; 'چپ' is correct but could be smoother",
+          "context": "\nWhere it appears: How long an invitation link keeps working, as m:ss (it counts down).\n",
+          "by": "mistral",
+          "text": "%{time} چپ"
+        },
+        "judge_qwen": {
+          "score": 1,
+          "reason": "Invalid translation; 'چپ' means 'left' as in direction, not time remaining.",
+          "context": "\nWhere it appears: How long an invitation link keeps working, as m:ss (it counts down).\n",
+          "by": "qwen",
+          "text": "%{time} چپ"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fa",
+      "text": "ایشان را بفرست تا هر چه دلت می خواهد بکنند. این یک بار کار می کند.",
+      "back_translation": "Thou shalt send them, and they shall do whatsoever is in thy heart: this they shall do once.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 28.7,
+        "metricx": {
+          "score": 4.75
+        },
+        "comet_kiwi": {
+          "score": 0.673
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "%{time} left",
+      "msgid": "%{time} left",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fil",
+      "text": "%{time} kaliwa",
+      "back_translation": "%{time} left",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 3.44
+        },
+        "comet_kiwi": {
+          "score": 0.5655
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Send them this link however you like. It works once.",
+      "msgid": "Send them this link however you like. It works once.",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fil",
+      "text": "Padalhan mo sila ng link na gusto mo.",
+      "back_translation": "Send them a link that you want.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 24.6,
+        "metricx": {
+          "score": 4.84
+        },
+        "comet_kiwi": {
+          "score": 0.5653
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     }

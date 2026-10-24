@@ -3,8 +3,8 @@
 // normal ten-minute segments. Nobody real is involved: the browsers have fake
 // mics, and the TUI plays a test tone into a null speaker (RANDOS_FAKE_AUDIO).
 //
-//   1. The website, idle and in a call, in light and dark: two headless
-//      Chrome pages call each other.
+//   1. The website, idle, inviting someone, and in a call, in light and
+//      dark: two headless Chrome pages call each other.
 //   2. The TUI, idle and in a call: a Chrome page waits as the peer, and VHS
 //      (tui.tape) drives the TUI against it.
 //
@@ -61,6 +61,13 @@ try {
   const b = await sized(await browser.newPage("B"))
   await Promise.all([a.open(), b.open()])
   await bothThemes(a, "web-home")
+
+  // Inviting: the link to share (its host is PHX_HOST's, randos.slowinput.org).
+  await a.invite("en", ["es"])
+  await sleep(400)
+  await bothThemes(a, "web-invite")
+  await a.click("#cancel-invitation-button")
+  await a.waitFor(`!!document.querySelector("#conversation-form")`, "the form again")
 
   await a.findRando("en", "es")
   await b.findRando("es", "en")

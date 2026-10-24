@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ минут"
   },
+  "%{time} left": {
+    "model": "madlad-400",
+    "msgstr": "%{time} осталось"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "Осталось %{time}"
@@ -304,7 +308,7 @@
     "msgstr": "Конфиденциальность"
   },
   "Ready": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Готов"
   },
   "Reconnecting audio…": {
@@ -322,6 +326,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "translategemma-4b",
     "msgstr": "Вы можете отправить им эту ссылку любым удобным способом. Она будет работать один раз, в течение следующих %{minutes} минут."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-4b",
+    "msgstr": "Вы можете отправить им эту ссылку любым удобным способом. Она работает только один раз."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -368,7 +376,7 @@
     "msgstr": "К этому звонку нельзя присоединиться отсюда: у одного из вас есть аудио, а у другого нет."
   },
   "That link doesn't work any more.": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Эта ссылка больше не работает."
   },
   "The call ended because audio isn't available here.": {
@@ -504,8 +512,8 @@
     "msgstr": "Ты услышишь %{languages}"
   },
   "Your call ended.": {
-    "model": "m2m100",
-    "msgstr": "Ваш звонок закончился."
+    "model": "hy-mt2",
+    "msgstr": "Ваш разговор завершился."
   },
   "Your link expired before anyone used it.": {
     "model": "madlad-400",
@@ -548,7 +556,7 @@
     "msgstr": "Пригласить кого-то"
   },
   "button\u0004Join the call": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Присоединяйтесь к звонку"
   },
   "button\u0004Mute": {

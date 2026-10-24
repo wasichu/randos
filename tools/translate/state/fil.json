@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -14,6 +14,10 @@
   "%{minutes}+ min": {
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ minuto"
+  },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} na lang ang natitira"
   },
   "%{time} remaining": {
     "model": "hy-mt2",
@@ -86,10 +90,6 @@
   "Choose your languages.": {
     "model": "opus-mt",
     "msgstr": "Piliin ang inyong mga wika."
-  },
-  "Connected": {
-    "model": "madlad-400",
-    "msgstr": "Nakakonekta"
   },
   "Connecting": {
     "model": "madlad-400",
@@ -212,7 +212,7 @@
     "msgstr": "Sinasadyang minimal"
   },
   "Invitation link": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Link ng imbitasyon"
   },
   "Invite": {
@@ -244,7 +244,7 @@
     "msgstr": "Huling tiningnan noong %{time} UTC."
   },
   "Looking": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Naghahanap"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
@@ -304,7 +304,7 @@
     "msgstr": "Pribasiya"
   },
   "Ready": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Handa"
   },
   "Reconnecting audio…": {
@@ -323,8 +323,12 @@
     "model": "hy-mt2",
     "msgstr": "Ipadala mo sa kanila ang link na ito sa anumang paraan na gusto mo. Gagana ito nang isang beses, sa loob ng susunod na %{minutes} minuto."
   },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Ipadala ninyo sa kanila ang link na ito sa anumang paraan na gusto ninyo. Gumagana ito nang isang beses lamang."
+  },
   "Share a link.": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Ibahagi ang isang link."
   },
   "Short anonymous conversations for language practice.": {
@@ -452,7 +456,7 @@
     "msgstr": "Karaniwang haba"
   },
   "View on GitHub": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Tingnan sa GitHub"
   },
   "Waiting": {
@@ -596,7 +600,7 @@
     "msgstr": "tapos na"
   },
   "connection state\u0004failed": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "nabigo"
   },
   "connection state\u0004microphone denied": {
