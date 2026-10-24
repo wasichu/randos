@@ -57,6 +57,7 @@ jobs:
           mix local.hex --force --if-missing
           mix deps.get
           (cd clients/tui && mix deps.get)
+          just tui-nifs
 
       - run: just precommit
 
@@ -96,6 +97,7 @@ jobs:
           mix local.hex --force --if-missing
           mix setup
           (cd clients/tui && mix deps.get)
+          just tui-nifs
           cargo build --quiet -p randos_media
 
       - name: Browser smoke (two headless Chromes, fake mics)

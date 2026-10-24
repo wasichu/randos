@@ -208,6 +208,29 @@ voice-wasm-check:
       exit 1
     fi
 
+# ex_ratatui's precompiled NIF, fetched with curl into rustler_precompiled's
+# cache (its own default, or RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH), where
+# compiling finds it. rustler_precompiled downloads with :httpc, which
+# refuses responses with over 10 KB of headers, and GitHub's release
+# downloads now send more (2026-10-24: 10,860 bytes), so a clean compile
+# fails with header_too_long. The file is still checked against the
+# checksum ex_ratatui ships when it's used. Needs the TUI's deps fetched.
+# Fetch the TUI's precompiled terminal library (after mix deps.get)
+tui-nifs:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    dep=clients/tui/deps/ex_ratatui
+    version="$(sed -n 's/^ *@version "\(.*\)"$/\1/p' "$dep/mix.exs" | head -1)"
+    case "$(uname -s)" in Darwin) os=apple-darwin ;; Linux) os=unknown-linux-gnu ;; *) echo "tui-nifs: unknown OS" >&2; exit 1 ;; esac
+    target="$(uname -m | sed 's/arm64/aarch64/')-${os}"
+    cache="${RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH:-$(erl -noshell -eval 'io:format("~s", [filename:basedir(user_cache, "rustler_precompiled/precompiled_nifs")]), halt().')}"
+    mkdir -p "$cache"
+    files="$(sed -n "s/^ *\"\(libex_ratatui-v${version}-nif-[0-9.]*-${target}\.so\.tar\.gz\)\".*/\1/p" "$dep"/checksum-*.exs)"
+    [ -n "$files" ] || { echo "tui-nifs: no ex_ratatui ${version} NIF for ${target} in its checksum file" >&2; exit 1; }
+    for file in $files; do
+      [ -s "$cache/$file" ] || curl -fsSL -o "$cache/$file" "https://github.com/mcass19/ex_ratatui/releases/download/v${version}/${file}"
+    done
+
 # The TUI as an installable archive (Phase 4.4): ERTS, the app, bin/randos,
 # and the media helper, in dist/randos-VERSION-OS-ARCH.tar.gz (+ .sha256).
 # Unpacks anywhere; checked by running the unpacked copy. CI builds the same
@@ -216,7 +239,9 @@ tui-release:
     #!/usr/bin/env bash
     set -euo pipefail
     cargo build --release -p randos_media
-    (cd clients/tui && MIX_ENV=prod mix deps.get --only prod >/dev/null && MIX_ENV=prod mix release randos_tui --overwrite --quiet)
+    (cd clients/tui && MIX_ENV=prod mix deps.get --only prod >/dev/null)
+    just tui-nifs
+    (cd clients/tui && MIX_ENV=prod mix release randos_tui --overwrite --quiet)
     version="$(sed -n 's/^ *version: "\(.*\)",$/\1/p' clients/tui/mix.exs | head -1)"
     os="$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/darwin/macos/')"
     arch="$(uname -m | sed 's/aarch64/arm64/')"
