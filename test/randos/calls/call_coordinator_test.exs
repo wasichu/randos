@@ -717,9 +717,11 @@ defmodule Randos.Calls.CallCoordinatorTest do
     test "the relay dead, both still here: restarts until the budget, then connection_failed" do
       {call_pid, pids, _} = recovering_call()
       :ok = report(call_pid, "b", "disconnected")
-      assert_receive {:call_updated, %{ice_generation: 1}}, 200
-      assert_receive {:call_updated, %{ice_generation: 2}}, 200
-      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 400
+      # What happens, not how fast (a slow CI runner once took over 200 ms
+      # between restarts): the budget's timing has its own test, above.
+      assert_receive {:call_updated, %{ice_generation: 1}}
+      assert_receive {:call_updated, %{ice_generation: 2}}
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
       stop_all(pids)
     end
 
