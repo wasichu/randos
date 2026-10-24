@@ -269,6 +269,34 @@ export class Page {
   // Choose languages, accept the terms, and press "Find a rando".
   // Speak `speaks`; hear exactly `hears` (a code or a list of codes).
   async findRando(speaks, hears) {
+    await this.chooseLanguages(speaks, hears)
+    await this.waitFor(`!document.querySelector("#find-rando-button").disabled`, "find button enabled")
+    await this.click("#find-rando-button")
+  }
+
+  // The same choices, then "Invite someone": returns the link to share.
+  async invite(speaks, hears) {
+    await this.chooseLanguages(speaks, hears)
+    await this.waitFor(`!document.querySelector("#invite-button").disabled`, "invite button enabled")
+    await this.click("#invite-button")
+    await this.waitFor(`!!document.querySelector("#invitation-url")`, "the invitation link")
+    return this.eval(`document.querySelector("#invitation-url").value`)
+  }
+
+  // Open an invitation link and join its call.
+  async join(link) {
+    await this.open(link)
+    await this.waitFor(`!!document.querySelector("#join-form")`, "the join form")
+    await this.eval(`(() => {
+      const ack = document.getElementById("conversation_adult_acknowledgment");
+      ack.checked = true;
+      ack.dispatchEvent(new Event("change", {bubbles: true}));
+    })()`)
+    await this.waitFor(`!document.querySelector("#join-call-button").disabled`, "join button enabled")
+    await this.click("#join-call-button")
+  }
+
+  async chooseLanguages(speaks, hears) {
     const heard = [hears].flat()
     // The speaking language first, and wait until the server has it (its
     // re-render could otherwise land after the boxes are set), then the
@@ -294,8 +322,6 @@ export class Page {
       `document.querySelectorAll("#hearing-languages input[checked]").length === ${heard.length} &&
        document.querySelectorAll(${JSON.stringify(exactly)}).length === ${heard.length}`,
       "hearing languages set")
-    await this.waitFor(`!document.querySelector("#find-rando-button").disabled`, "find button enabled")
-    await this.click("#find-rando-button")
   }
 
   webrtcStateIs(state) {

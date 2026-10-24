@@ -9,7 +9,7 @@
 // (see cdp.mjs; CHROME_BIN picks the browser).
 
 import {watch} from "./failures.mjs"
-import {Browser, BASE_URL, appeared, eventually, inboundAudio, launchBehind, sleep} from "./cdp.mjs"
+import {Browser, BASE_URL, appeared, audioFlows, eventually, inboundAudio, launchBehind, sleep} from "./cdp.mjs"
 import {startDropProxy} from "./drop_proxy.mjs"
 
 // The server's connect timeout; just smoke shortens it (RANDOS_CONNECT_TIMEOUT_MS).
@@ -101,6 +101,31 @@ try {
     await e.waitFor(`!!document.querySelector("#idle-panel")`, "idle after ending")
     assert(await e.eval(`window.__sameDocument === true`), "ending the call reloaded the page")
     await eventually(async () => (await e.liveMicTracks(streams)) === 0, "the mic tracks stopped after ending the call")
+  })
+
+  await scenario("an invitation link: the other opens it, audio flows both ways, both end idle", async () => {
+    const g = await browser.newPage("G")
+    const h = await browser.newPage("H")
+    await Promise.all([g.open(), h.open()])
+    const link = await g.invite("it", "tr")
+    const [, token] = link.split("#")
+    assert(link.endsWith(`/join#${token}`) && token.length >= 22, `odd link: ${link}`)
+    // The link's own host is the server's canonical one; here, the test server.
+    await h.join(`${BASE_URL}/join#${token}`)
+    await Promise.all([g.webrtcStateIs("connected"), h.webrtcStateIs("connected")])
+    await Promise.all([g.inCall(), h.inCall()])
+    await Promise.all([audioFlows(g, "the creator"), audioFlows(h, "the joiner")])
+    assert(!(await g.eval(`!!document.querySelector("#next-rando-button")`)), "an invitation call offered Next")
+    assert(await h.eval(`location.pathname === "/"`), "the joiner's page stayed on /join")
+    await h.click("#end-call-button")
+    await Promise.all([
+      g.waitFor(`!!document.querySelector("#idle-panel")`, "the creator idle after the call"),
+      h.waitFor(`!!document.querySelector("#idle-panel")`, "the joiner idle after the call"),
+    ])
+    // Used: the same link now says so.
+    const i = await browser.newPage("I")
+    await i.join(`${BASE_URL}/join#${token}`)
+    await i.waitFor(`!!document.querySelector("#matchmaking-error")`, "a used link refused")
   })
 
   await scenario("peer hanging up during the mic prompt releases the microphone", async () => {
