@@ -11,6 +11,11 @@ A string with a context (its translator comment) gets it too: Hy-MT2
 through its card's background-information prompt, TranslateGemma as a line
 inside its templated prompt, just before the text (its card documents no
 context field). Strings without one keep the plain prompt.
+
+Prompts go to mlx-lm's `batch_generate` together (`BATCH` at a time), as the
+judges' do: one string at a time left the GPU idle between short replies.
+Greedy either way; a batch pads its prompts, so a reply can differ from the
+unbatched one in rare near-ties.
 """
 
 from __future__ import annotations
@@ -33,13 +38,14 @@ class MLXChat:
     """One MLX chat model; `style` picks the prompt (hy-mt2 or translategemma)."""
 
     takes_context = True
+    BATCH = 32
 
     def __init__(self, name: str, repo: str, style: str) -> None:
-        from mlx_lm import generate, load
+        from mlx_lm import batch_generate, load
 
         self.name, self.repo, self._style = name, repo, style
         self.locales = HY_MT2_LOCALES if style == "hy-mt2" else LOCALES
-        self._generate = generate
+        self._batch_generate = batch_generate
         self._model, self._tokenizer = load(repo)
         # TranslateGemma's tokenizer lists only <eos> as an end, but its turns
         # end with <end_of_turn>: without it every answer runs to max_tokens.
@@ -51,18 +57,21 @@ class MLXChat:
         rendered = self._tokenizer.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
         return with_context(rendered, context) if self._style == "translategemma" else rendered
 
-    def _one(self, text: str, source: str, target: str, context: str = "") -> str:
-        prompt = self._prompt(text, source, target, context)
-        out = self._generate(self._model, self._tokenizer, prompt=prompt, max_tokens=256, verbose=False)
+    def _batch(self, prompts: list[str]) -> list[str]:
+        out = []
+        for i in range(0, len(prompts), self.BATCH):
+            # The chat template already starts with BOS: no second one.
+            tokens = [self._tokenizer.encode(p, add_special_tokens=False) for p in prompts[i : i + self.BATCH]]
+            out += self._batch_generate(self._model, self._tokenizer, tokens, max_tokens=256).texts
         # A turn marker that slipped through is not part of the translation.
-        return out.split("<end_of_turn>")[0].strip()
+        return [text.split("<end_of_turn>")[0].strip() for text in out]
 
     def translate(self, texts: list[str], target: str, contexts: list[str] | None = None) -> list[str]:
         contexts = contexts or [""] * len(texts)
-        return [self._one(t, "en", target, c) for t, c in zip(texts, contexts)]
+        return self._batch([self._prompt(t, "en", target, c) for t, c in zip(texts, contexts)])
 
     def back_translate(self, texts: list[str], source: str) -> list[str]:
-        return [self._one(t, source, "en") for t in texts]
+        return self._batch([self._prompt(t, source, "en") for t in texts])
 
 
 def prompt_messages(style: str, text: str, source: str, target: str, context: str = "") -> list[dict]:

@@ -32,7 +32,12 @@ context, have a string whose context changed, tops each of those up
 (`run --append`, one model at a time), scores what's pending (a scorer's
 model loads only when something is), and fills every language with
 `fill --best --redo`. A few changed strings take minutes per model, most
-of it loading; the first run of a catalog takes hours.
+of it loading; the first run of a catalog takes hours. The MLX models
+translate (and back-translate) in batches, as the judges judge.
+TranslateGemma 27B is retired (`models.RETIRED`): 7% of the site's picks
+for a third of the shootout's time, so `plan` no longer asks it; its
+translations already made still compete. Back-translation stays: its
+chrF breaks 13-16% of the picks' ties (measured 2026-10-24).
 
 Two catalogs: the website's strings (`--catalog site`, the default:
 `priv/gettext`, `results/`, `state/`) and the terminal client's
