@@ -53,11 +53,13 @@ def stale(earlier: dict | None, sources: list[po.Source], locale: str, takes_con
 def plan() -> list[tuple[str, str, list[str], Path, int]]:
     """Each shootout run with strings to top up (`run --append`): its
     model's uv group, the model, its locales, the run, how many strings.
-    No model is loaded."""
+    Retired models (`models.RETIRED`) aren't asked. No model is loaded."""
     sources, todo = po.sources(), []
     for path in shootout_runs():
         data = json.loads(path.read_text())
         model, locales = data["run"]["model"], data["run"]["locales"]
+        if model in contestants.RETIRED:
+            continue
         count = sum(len(stale(data, sources, loc, contestants.takes_context(model))) for loc in locales)
         if count:
             todo.append((contestants.uv_group(model), model, locales, path, count))

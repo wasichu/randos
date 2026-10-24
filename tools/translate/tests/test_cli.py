@@ -200,6 +200,10 @@ def test_plan_lists_only_the_runs_the_template_outgrew(tmp_path, monkeypatch):
         ("models", "opus-mt", 1),
     ]
 
+    # A retired model is never asked again (its translations still compete).
+    monkeypatch.setattr(cli.contestants, "RETIRED", {"hy-mt2"})
+    assert [name for _group, name, _locales, _path, _count in cli.plan()] == ["opus-mt"]
+
 
 def test_score_loads_its_model_only_when_something_needs_it(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "RESULTS", tmp_path)

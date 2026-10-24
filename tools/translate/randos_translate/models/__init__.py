@@ -134,6 +134,13 @@ MLX = {
 }
 
 
+# Contestants no longer run for new strings (`cli plan` skips them): their
+# translations already made still compete. TranslateGemma 27B: 7% of the
+# site's picks for a third of the shootout's time (the owner, 2026-10-24;
+# its picks' replacements rated 0.5 lower by the judges on average).
+RETIRED = {"translategemma-27b"}
+
+
 def takes_context(name: str) -> bool:
     """Whether the model reads a string's context (`MLXChat.takes_context`),
     known without loading it."""
