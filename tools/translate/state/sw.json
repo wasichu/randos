@@ -35,6 +35,10 @@
     "model": "translategemma-27b",
     "msgstr": "Jozi ya lugha huonekana mara baada ya kuwa na angalau %{min} matumizi; yale yaliyopungua hayo huhesabiwa chini ya “vingine”."
   },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "translategemma-4b",
+    "msgstr": "Simu ya sauti moja kwa moja, kama vile nyingine kwenye randos, na mtu ambaye alituma kiungo kwako."
+  },
   "About": {
     "model": "madlad-400",
     "msgstr": "Kuhusu"
@@ -80,7 +84,7 @@
     "msgstr": "Chagua lugha ambazo zinaungwa mkono kwa ajili ya mazungumzo."
   },
   "Choose your languages.": {
-    "model": "translategemma-12b",
+    "model": "translategemma-27b",
     "msgstr": "Chagua lugha zako."
   },
   "Connected": {
@@ -96,7 +100,7 @@
     "msgstr": "Uhusiano umepotea"
   },
   "Connection:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Muunganisho:"
   },
   "Continued past %{minutes} minutes": {
@@ -108,12 +112,16 @@
     "msgstr": "Kuendelea kwa dakika 10 iliyopita"
   },
   "Conversation is active.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Mazungumzo yanaendelea."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "madlad-400",
     "msgstr": "Mazungumzo ni ya faragha na hayahifadhiwi. Seva inaratibu simu, lakini haihifadhi rekodi au kujenga historia kuhusu mtu uliyezungumza naye."
+  },
+  "Copied": {
+    "model": "translategemma-4b",
+    "msgstr": "Kopishiwa"
   },
   "Couldn't connect": {
     "model": "madlad-400",
@@ -167,6 +175,10 @@
     "model": "madlad-400",
     "msgstr": "Imekwisha"
   },
+  "For your rando to open it.": {
+    "model": "madlad-400",
+    "msgstr": "Kwa rando yako kufungua."
+  },
   "Help fix a translation": {
     "model": "translategemma-4b",
     "msgstr": "Msaada wa kurekebisha tafsiri"
@@ -199,9 +211,25 @@
     "model": "translategemma-4b",
     "msgstr": "Kwa nia ya kuwa hafifu"
   },
+  "Invitation link": {
+    "model": "madlad-400",
+    "msgstr": "Kiungo cha mwaliko"
+  },
+  "Invite": {
+    "model": "madlad-400",
+    "msgstr": "Kukaribisha"
+  },
+  "Inviting": {
+    "model": "madlad-400",
+    "msgstr": "Kukaribisha"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-27b",
     "msgstr": "Imeundwa kwa ajili ya %{crosstalk}, mazungumzo ya lugha mbalimbali, mazoezi ya kusikiliza, na mazungumzo ya kawaida bila kulazimisha watu kufuata mifumo au vitambulisho vingine."
+  },
+  "Join": {
+    "model": "m2m100",
+    "msgstr": "Kuunganisha"
   },
   "Language": {
     "model": "madlad-400",
@@ -264,7 +292,7 @@
     "msgstr": "Chagua lugha zote ambazo unaweza kusikiliza kwa urahisi."
   },
   "Pick the language you'd like to check.": {
-    "model": "translategemma-12b",
+    "model": "translategemma-27b",
     "msgstr": "Chagua lugha unayotaka kuangalia."
   },
   "Preparing the call": {
@@ -291,16 +319,28 @@
     "model": "translategemma-27b",
     "msgstr": "Uunganisho salama wa sauti unaanza."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "translategemma-4b",
+    "msgstr": "Toa hii, au toa kwa njia ambayo unaipenda. Ina kazi kwa mara moja, kwa dakika %{minutes} zijazo."
+  },
+  "Share a link.": {
+    "model": "translategemma-12b",
+    "msgstr": "Shiriki kiungo."
+  },
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-4b",
     "msgstr": "Mazungumzo fupi na bila majina kwa madhumuni ya mazoezi ya lugha."
+  },
+  "Someone invited you to a call": {
+    "model": "madlad-400",
+    "msgstr": "Mtu amekukaribisha kwenye simu"
   },
   "Something went wrong!": {
     "model": "madlad-400",
     "msgstr": "Kuna kitu kilikwenda vibaya!"
   },
   "Source (AGPL-3.0)": {
-    "model": "madlad-400",
+    "model": "translategemma-27b",
     "msgstr": "Chanzo (AGPL-3.0)"
   },
   "Starting call with rando.": {
@@ -322,6 +362,14 @@
   "Switch theme": {
     "model": "translategemma-4b",
     "msgstr": "Badilisha mtindo"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "translategemma-12b",
+    "msgstr": "Simu hiyo hawezi kuunganishwa kutoka hapa: mmoja wenu anaweza kusikia sauti, lakini mwingine hana."
+  },
+  "That link doesn't work any more.": {
+    "model": "translategemma-12b",
+    "msgstr": "Kiungo hicho hakifanyi kazi tena."
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-12b",
@@ -367,9 +415,17 @@
     "model": "translategemma-27b",
     "msgstr": "Hakuna akaunti, wasifu, orodha ya marafiki, wafuasi, habari za matukio, alama, au muundo wa uhusiano wa kijamii unaodumu. randos ni zaidi kama miundombinu ya mawasiliano ya kawaida kuliko mitandao ya kijamii."
   },
+  "This link is incomplete.": {
+    "model": "translategemma-4b",
+    "msgstr": "Kiungo hiki haujamilika."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-12b",
     "msgstr": "Tafsiri za tovuti hii zimetengenezwa kwa kutumia programu. Ikiwa kuna kitu ambacho hakielezeki vizuri, tafuta sehemu hiyo hapa chini na ubofye \"Pendekeza marekebisho\": hii itafungua ombi kwenye GitHub ambapo kila kitu kimeandikwa isipokuwa marekebisho yako (unahitaji akaunti ya GitHub). Ombi la marekebisho litafunguliwa kiotomatiki, na litatumika baada ya kukaguliwa."
+  },
+  "Tick the 18+ box.": {
+    "model": "madlad-400",
+    "msgstr": "Weka alama kwenye kisanduku cha 18+."
   },
   "Time is up": {
     "model": "translategemma-4b",
@@ -398,6 +454,14 @@
   "View on GitHub": {
     "model": "translategemma-4b",
     "msgstr": "Angalia kwenye GitHub"
+  },
+  "Waiting": {
+    "model": "m2m100",
+    "msgstr": "kusubiri"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "Kusubiri yako rando kufungua kiungo…"
   },
   "We can't find the internet": {
     "model": "m2m100",
@@ -439,6 +503,14 @@
     "model": "translategemma-12b",
     "msgstr": "Utasikia lugha za: %{languages}"
   },
+  "Your call ended.": {
+    "model": "translategemma-12b",
+    "msgstr": "Simu yako imekwisha."
+  },
+  "Your link expired before anyone used it.": {
+    "model": "translategemma-12b",
+    "msgstr": "Kiungo chako kilikuwa kimemalizwa kabla ya mtu yeyote kulitumia."
+  },
   "Your rando": {
     "model": "madlad-400",
     "msgstr": "yako rando"
@@ -451,9 +523,17 @@
     "model": "translategemma-4b",
     "msgstr": "amaomba upatikanaji wa microphone"
   },
+  "button\u0004Cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "Futa kiungo"
+  },
   "button\u0004Continue": {
     "model": "m2m100",
     "msgstr": "kuendelea"
+  },
+  "button\u0004Copy": {
+    "model": "madlad-400",
+    "msgstr": "Nakala"
   },
   "button\u0004End": {
     "model": "m2m100",
@@ -462,6 +542,14 @@
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "Kupata rando"
+  },
+  "button\u0004Invite someone": {
+    "model": "madlad-400",
+    "msgstr": "Kukaribisha mtu"
+  },
+  "button\u0004Join the call": {
+    "model": "m2m100",
+    "msgstr": "Kuingia kwenye simu"
   },
   "button\u0004Mute": {
     "model": "madlad-400",
@@ -564,7 +652,7 @@
     "msgstr": "hakuna taarifa za uthibitisho zilitolewa"
   },
   "privacy": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "faragha"
   },
   "randos is a place for anonymous, audio-only language conversation.": {

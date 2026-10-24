@@ -35,6 +35,10 @@
     "model": "translategemma-4b",
     "msgstr": "يتم عرض كل زوج لغوي مرة واحدة بعد استيفاء شرط وجود ما لا يقل عن %{min} مكالمة. أما المكالمات الأقل من ذلك، فسيتم تصنيفها تحت فئة \"أخرى\"."
   },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "opus-mt",
+    "msgstr": "مكالمة صوتية من واحد إلى واحد، مثل أي اتصال آخر على randos، مع الشخص الذي أرسل لك الرابط."
+  },
   "About": {
     "model": "hy-mt2",
     "msgstr": "نبذة عنا"
@@ -108,12 +112,16 @@
     "msgstr": "استمر لأكثر من 10 دقائق"
   },
   "Conversation is active.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "المحادثة نشطة."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "hy-mt2",
     "msgstr": "المحادثات خاصة ولا يتم تخزينها. يقوم الخادم بتنسيق المكالمات، لكنه لا يحتفظ بالتسجيلات ولا يُنشئ سجلاً للأشخاص الذين تحدثت معهم."
+  },
+  "Copied": {
+    "model": "madlad-400",
+    "msgstr": "نُسخ"
   },
   "Couldn't connect": {
     "model": "m2m100",
@@ -148,11 +156,11 @@
     "msgstr": "تمر جميع المكالمات عبر نظام إعادة التوجيه الخاص بنا، وبالتالي لا يتمكن أي من الطرفين من رؤية عنوان الطرف الآخر. ونحن نختبر هذا النظام بشكل دوري، كل بضع دقائق، عن طريق إنشاء اتصال حقيقي باستخدام نظام إعادة التوجيه."
   },
   "Find a phrase": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ابحث عن عبارة"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ابحث عن عبارة، باللغة الإنجليزية أو %{language}"
   },
   "Finding a compatible rando.": {
@@ -166,6 +174,10 @@
   "Finished": {
     "model": "translategemma-4b",
     "msgstr": "انتهى"
+  },
+  "For your rando to open it.": {
+    "model": "hy-mt2",
+    "msgstr": "حتى يفتحه rando الخاص بك."
   },
   "Help fix a translation": {
     "model": "hy-mt2",
@@ -199,9 +211,25 @@
     "model": "madlad-400",
     "msgstr": "الحد الأدنى المتعمد"
   },
+  "Invitation link": {
+    "model": "hy-mt2",
+    "msgstr": "رابط الدعوة"
+  },
+  "Invite": {
+    "model": "hy-mt2",
+    "msgstr": "دعوة"
+  },
+  "Inviting": {
+    "model": "hy-mt2",
+    "msgstr": "أرسل دعوة"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-27b",
     "msgstr": "يهدف إلى استخدامه في %{crosstalk}، وتبادل اللغات، والتدريب على الاستماع، وإجراء محادثات عادية غير رسمية، دون إجبار المشاركين على الالتزام بقواعد أو تصنيفات صارمة."
+  },
+  "Join": {
+    "model": "hy-mt2",
+    "msgstr": "انضم"
   },
   "Language": {
     "model": "m2m100",
@@ -244,7 +272,7 @@
     "msgstr": "لا يوجد شيء يطابق."
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "لغات أخرى: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -272,7 +300,7 @@
     "msgstr": "إعداد المكالمة"
   },
   "Privacy": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "الخصوصية"
   },
   "Ready": {
@@ -291,12 +319,24 @@
     "model": "translategemma-4b",
     "msgstr": "بدء الاتصال الصوتي الآمن."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "hy-mt2",
+    "msgstr": "أرسل لهم هذا الرابط بأي طريقة تريد. يعمل مرة واحدة، لمدة %{minutes} دقيقة قادمة."
+  },
+  "Share a link.": {
+    "model": "hy-mt2",
+    "msgstr": "شارك رابطًا."
+  },
   "Short anonymous conversations for language practice.": {
     "model": "madlad-400",
     "msgstr": "محادثات قصيرة مجهولة الهوية للممارسة اللغوية."
   },
+  "Someone invited you to a call": {
+    "model": "m2m100",
+    "msgstr": "لقد دعاك شخص ما إلى مكالمة"
+  },
   "Something went wrong!": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "حدث خطأ ما!"
   },
   "Source (AGPL-3.0)": {
@@ -322,6 +362,14 @@
   "Switch theme": {
     "model": "translategemma-4b",
     "msgstr": "تغيير المظهر"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "madlad-400",
+    "msgstr": "تلك المكالمة لا يمكن الانضمام إليها من هنا: أحدكم لديه صوت والآخر لا."
+  },
+  "That link doesn't work any more.": {
+    "model": "translategemma-12b",
+    "msgstr": "هذا الرابط لم يعد يعمل."
   },
   "The call ended because audio isn't available here.": {
     "model": "hy-mt2",
@@ -367,9 +415,17 @@
     "model": "translategemma-27b",
     "msgstr": "لا توجد حسابات مستخدمين، أو ملفات شخصية، أو جهات اتصال، أو متابعين، أو خلاصات [أخبار/تحديثات]، أو سلاسل [من التفاعلات المتتالية]، أو نتائج [أو تقييمات]، أو شبكة علاقات اجتماعية دائمة. يمكن وصف \"randos\" بأنه أقرب إلى بنية تحتية للحوار والتواصل، منه إلى منصة للتواصل الاجتماعي."
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "هذا الرابط غير كامل."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-12b",
     "msgstr": "تمت ترجمة محتوى هذا الموقع بواسطة نظام آلي. إذا لاحظت أي أخطاء، يمكنك العثور عليها أدناه والضغط على \"اقتراح تصحيح\": سيؤدي ذلك إلى فتح مسألة على منصة GitHub مع ملء جميع الحقول باستثناء التصحيح الذي تقترحه (ستحتاج إلى حساب على GitHub). سيتم فتح طلب تعديل تلقائيًا يتضمن التصحيح الذي اقترحته، وسيتم نشره بمجرد مراجعته."
+  },
+  "Tick the 18+ box.": {
+    "model": "translategemma-4b",
+    "msgstr": "ضع علامة اختيار على مربع \"18+\""
   },
   "Time is up": {
     "model": "madlad-400",
@@ -380,7 +436,7 @@
     "msgstr": "لقد انتهى الوقت. هل تريد الاستمرار لمدة %{minutes} دقيقة أخرى؟"
   },
   "Today": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "اليوم"
   },
   "Toggle dark mode": {
@@ -398,6 +454,14 @@
   "View on GitHub": {
     "model": "translategemma-4b",
     "msgstr": "عرض على GitHub"
+  },
+  "Waiting": {
+    "model": "hy-mt2",
+    "msgstr": "في انتظار"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "في انتظار rando لفتح الرابط…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -439,6 +503,14 @@
     "model": "translategemma-4b",
     "msgstr": "ستسمعون بلغات: %{languages}"
   },
+  "Your call ended.": {
+    "model": "m2m100",
+    "msgstr": "انتهيت مكالمتك"
+  },
+  "Your link expired before anyone used it.": {
+    "model": "translategemma-12b",
+    "msgstr": "لقد انتهت صلاحية الرابط قبل أن يتمكن أي شخص من استخدامه."
+  },
   "Your rando": {
     "model": "hy-mt2",
     "msgstr": "rando الخاص بك"
@@ -451,9 +523,17 @@
     "model": "madlad-400",
     "msgstr": "طلب الوصول إلى الميكروفون"
   },
+  "button\u0004Cancel the link": {
+    "model": "m2m100",
+    "msgstr": "إلغاء الرابط"
+  },
   "button\u0004Continue": {
     "model": "hy-mt2",
     "msgstr": "استمر"
+  },
+  "button\u0004Copy": {
+    "model": "hy-mt2",
+    "msgstr": "نسخ"
   },
   "button\u0004End": {
     "model": "m2m100",
@@ -462,6 +542,14 @@
   "button\u0004Find a rando": {
     "model": "hy-mt2",
     "msgstr": "ابحث عن rando"
+  },
+  "button\u0004Invite someone": {
+    "model": "hy-mt2",
+    "msgstr": "دعوة شخص ما"
+  },
+  "button\u0004Join the call": {
+    "model": "madlad-400",
+    "msgstr": "انضم إلى النداء"
   },
   "button\u0004Mute": {
     "model": "madlad-400",
@@ -508,7 +596,7 @@
     "msgstr": "انتهى"
   },
   "connection state\u0004failed": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "فشل"
   },
   "connection state\u0004microphone denied": {
@@ -564,7 +652,7 @@
     "msgstr": "لا توجد شهادات مطلوبة"
   },
   "privacy": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "الخصوصية"
   },
   "randos is a place for anonymous, audio-only language conversation.": {

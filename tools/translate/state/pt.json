@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "translategemma-27b",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
@@ -12,7 +12,7 @@
     "msgstr": "%{minutes} min"
   },
   "%{minutes}+ min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes}+ min"
   },
   "%{time} remaining": {
@@ -28,12 +28,16 @@
     "msgstr": "Uma conversa tem a duração de %{call} minutos. Quando o tempo acabar, ela pode ser estendida por mais %{extension} minutos, desde que ambas as partes concordem, com um limite máximo total de %{max} minutos. Você pode encerrar a conversa a qualquer momento."
   },
   "A doorway, not a platform": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Uma porta, não uma plataforma"
   },
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "translategemma-12b",
     "msgstr": "Um par de idiomas é exibido somente quando possui pelo menos %{min} chamadas; os pares com menos chamadas são agrupados em \"outros\"."
+  },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "hy-mt2",
+    "msgstr": "Uma chamada de áudio um-a-um, como qualquer outra no randos, com a pessoa que lhe enviou o link."
   },
   "About": {
     "model": "m2m100",
@@ -60,7 +64,7 @@
     "msgstr": "Chamadas iniciadas"
   },
   "Cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Cancelar"
   },
   "Canceled": {
@@ -72,11 +76,11 @@
     "msgstr": "Mudar"
   },
   "Checking the relay…": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "Verificando o relé…"
   },
   "Choose supported conversation languages.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-27b",
     "msgstr": "Selecione os idiomas de conversação suportados."
   },
   "Choose your languages.": {
@@ -84,7 +88,7 @@
     "msgstr": "Selecione os idiomas desejados."
   },
   "Connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Conectado"
   },
   "Connecting": {
@@ -108,12 +112,16 @@
     "msgstr": "Continuou por mais de 10 minutos"
   },
   "Conversation is active.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-27b",
     "msgstr": "A conversa está em andamento."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "translategemma-27b",
     "msgstr": "As conversas são privadas e não são armazenadas. O servidor apenas gerencia a chamada, mas não grava as conversas nem cria um histórico de com quem você se comunicou."
+  },
+  "Copied": {
+    "model": "hy-mt2",
+    "msgstr": "Copiado"
   },
   "Couldn't connect": {
     "model": "hy-mt2",
@@ -167,6 +175,10 @@
     "model": "hy-mt2",
     "msgstr": "Concluído"
   },
+  "For your rando to open it.": {
+    "model": "hy-mt2",
+    "msgstr": "Para que o seu rando o abra."
+  },
   "Help fix a translation": {
     "model": "hy-mt2",
     "msgstr": "Ajude a corrigir uma tradução"
@@ -199,9 +211,25 @@
     "model": "hy-mt2",
     "msgstr": "Intencionalmente mínimo"
   },
+  "Invitation link": {
+    "model": "hy-mt2",
+    "msgstr": "Link de convite"
+  },
+  "Invite": {
+    "model": "hy-mt2",
+    "msgstr": "Convidar"
+  },
+  "Inviting": {
+    "model": "hy-mt2",
+    "msgstr": "Convidando"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-4b",
     "msgstr": "O objetivo é proporcionar um ambiente para %{crosstalk}, troca de idiomas, prática de escuta e conversas informais, sem impor padrões ou rótulos rígidos às pessoas."
+  },
+  "Join": {
+    "model": "translategemma-4b",
+    "msgstr": "Junte-se"
   },
   "Language": {
     "model": "m2m100",
@@ -236,7 +264,7 @@
     "msgstr": "Nenhum relay está configurado"
   },
   "Not translated yet": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Ainda não traduzido"
   },
   "Nothing matches.": {
@@ -244,7 +272,7 @@
     "msgstr": "Nada corresponde."
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Outras línguas: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -256,7 +284,7 @@
     "msgstr": "Via UDP (a maioria das chamadas)."
   },
   "Pick at least one language to hear": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Escolha pelo menos um idioma para ouvir"
   },
   "Pick every language you're comfortable listening to.": {
@@ -268,11 +296,11 @@
     "msgstr": "Selecione o idioma que deseja verificar."
   },
   "Preparing the call": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Preparando a chamada"
   },
   "Privacy": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Privacidade"
   },
   "Ready": {
@@ -291,9 +319,21 @@
     "model": "hy-mt2",
     "msgstr": "Conexão de áudio segura está sendo iniciada."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "hy-mt2",
+    "msgstr": "Envie a eles este link da maneira que preferir. Ele funciona uma vez, pelos próximos %{minutes} minutos."
+  },
+  "Share a link.": {
+    "model": "m2m100",
+    "msgstr": "Compartilhe um link."
+  },
   "Short anonymous conversations for language practice.": {
     "model": "madlad-400",
     "msgstr": "Conversas curtas e anônimas para prática de idiomas."
+  },
+  "Someone invited you to a call": {
+    "model": "madlad-400",
+    "msgstr": "Alguém convidou você para uma chamada"
   },
   "Something went wrong!": {
     "model": "hy-mt2",
@@ -323,6 +363,14 @@
     "model": "hy-mt2",
     "msgstr": "Alterar tema"
   },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "translategemma-4b",
+    "msgstr": "Não é possível participar dessa chamada a partir daqui: um de vocês tem áudio e o outro não."
+  },
+  "That link doesn't work any more.": {
+    "model": "madlad-400",
+    "msgstr": "Esse link não funciona mais."
+  },
   "The call ended because audio isn't available here.": {
     "model": "hy-mt2",
     "msgstr": "A chamada foi encerrada porque o áudio não está disponível aqui."
@@ -340,7 +388,7 @@
     "msgstr": "A chamada terminou porque não foi encontrado nenhum microfone."
   },
   "The commit this server runs": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "O commit que este servidor executa"
   },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
@@ -367,9 +415,17 @@
     "model": "translategemma-27b",
     "msgstr": "Não há contas, perfis, contatos, seguidores, feeds, sequências de interações, pontuações ou um grafo social permanente. randos se assemelha mais a uma infraestrutura de comunicação do que a uma rede social."
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "Este link está incompleto."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-4b",
     "msgstr": "As traduções deste site foram feitas por meio de um sistema automático. Se alguma parte parecer incorreta, localize-a abaixo e clique em \"Sugerir uma correção\": isso abrirá um problema no GitHub, preenchendo todos os campos, exceto a sua correção (você precisará de uma conta no GitHub). Uma solicitação de pull com a sua correção será aberta automaticamente, e ficará ativa assim que for revisada."
+  },
+  "Tick the 18+ box.": {
+    "model": "translategemma-4b",
+    "msgstr": "Marque a caixa \"18+\""
   },
   "Time is up": {
     "model": "madlad-400",
@@ -384,20 +440,28 @@
     "msgstr": "Hoje"
   },
   "Toggle dark mode": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Alternar modo escuro"
   },
   "Translations": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Traduções"
   },
   "Typical length": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Duração típica"
   },
   "View on GitHub": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Visualizar no GitHub"
+  },
+  "Waiting": {
+    "model": "madlad-400",
+    "msgstr": "Esperando"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "hy-mt2",
+    "msgstr": "Aguardando que seu rando abra o link…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -439,6 +503,14 @@
     "model": "hy-mt2",
     "msgstr": "Você ouvirá %{languages}"
   },
+  "Your call ended.": {
+    "model": "translategemma-4b",
+    "msgstr": "Sua ligação terminou."
+  },
+  "Your link expired before anyone used it.": {
+    "model": "translategemma-4b",
+    "msgstr": "O seu link expirou antes de alguém o utilizar."
+  },
   "Your rando": {
     "model": "madlad-400",
     "msgstr": "O seu rando"
@@ -451,9 +523,17 @@
     "model": "madlad-400",
     "msgstr": "pedindo acesso ao microfone"
   },
+  "button\u0004Cancel the link": {
+    "model": "m2m100",
+    "msgstr": "Cancelar o link"
+  },
   "button\u0004Continue": {
     "model": "hy-mt2",
     "msgstr": "Continuar"
+  },
+  "button\u0004Copy": {
+    "model": "hy-mt2",
+    "msgstr": "Copiar"
   },
   "button\u0004End": {
     "model": "hy-mt2",
@@ -463,12 +543,20 @@
     "model": "madlad-400",
     "msgstr": "Encontrar um rando"
   },
+  "button\u0004Invite someone": {
+    "model": "m2m100",
+    "msgstr": "Convite alguém"
+  },
+  "button\u0004Join the call": {
+    "model": "hy-mt2",
+    "msgstr": "Participe da chamada"
+  },
   "button\u0004Mute": {
     "model": "hy-mt2",
     "msgstr": "Silenciar"
   },
   "button\u0004Next rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Próximo rando"
   },
   "button\u0004Unmute": {
@@ -476,7 +564,7 @@
     "msgstr": "Desmutar"
   },
   "close": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "fechar"
   },
   "connection closed": {
@@ -508,7 +596,7 @@
     "msgstr": "terminado"
   },
   "connection state\u0004failed": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "falhou"
   },
   "connection state\u0004microphone denied": {
@@ -516,7 +604,7 @@
     "msgstr": "Acesso ao microfone negado"
   },
   "connection state\u0004not started": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "não iniciado"
   },
   "connection state\u0004requesting microphone": {

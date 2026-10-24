@@ -31,6 +31,10 @@
     "model": "madlad-400",
     "msgstr": "%{sent} gönderildi / %{received} alındı"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "Kalan süre: %{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "Kalan süre: %{time}"
@@ -119,6 +123,10 @@
     "model": "opus-mt",
     "msgstr": "Bunu duyduğuma sevindim:"
   },
+  "Join through a link": {
+    "model": "hy-mt2",
+    "msgstr": "Bir bağlantı üzerinden katılın"
+  },
   "Languages spoken:": {
     "model": "hy-mt2",
     "msgstr": "Konuşulan diller:"
@@ -175,6 +183,10 @@
     "model": "m2m100",
     "msgstr": "UDP üzerinden (en çok arama)"
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-12b",
+    "msgstr": "Size gönderilen bağlantıyı buraya yapıştırın:"
+  },
   "Press Enter to find a rando.": {
     "model": "opus-mt",
     "msgstr": "Bir rando bulmak için Enter tuşuna basın."
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "translategemma-4b",
     "msgstr": "Ses bağlantısını yeniden kurma…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Onlara istediğiniz şekilde gönderin. Bir kez işe yarar."
   },
   "Server status": {
     "model": "hy-mt2",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "hy-mt2",
     "msgstr": "Tipik uzunluk: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "Bağlantıyı açmak için rando'ınızı bekliyorum…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "madlad-400",
@@ -291,6 +311,10 @@
     "model": "translategemma-4b",
     "msgstr": "bağlantı kuramadım"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "madlad-400",
+    "msgstr": "bağlantı kopyalanamadı: fare ile seçin"
+  },
   "couldn't find the server": {
     "model": "hy-mt2",
     "msgstr": "sunucuyu bulamadım"
@@ -311,6 +335,10 @@
     "model": "translategemma-4b",
     "msgstr": "bir telefon görüşmesinde"
   },
+  "key\u000418+": {
+    "model": "hy-mt2",
+    "msgstr": "18+"
+  },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
     "msgstr": "bu rakamlar hakkında"
@@ -322,6 +350,10 @@
   "key\u0004cancel": {
     "model": "madlad-400",
     "msgstr": "iptal"
+  },
+  "key\u0004cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "bağlantıyı iptal et"
   },
   "key\u0004change": {
     "model": "opus-mt",
@@ -339,6 +371,10 @@
     "model": "m2m100",
     "msgstr": "devamı"
   },
+  "key\u0004copy the link": {
+    "model": "hy-mt2",
+    "msgstr": "Bağlantıyı kopyala"
+  },
   "key\u0004end": {
     "model": "opus-mt",
     "msgstr": "sonlandır"
@@ -350,6 +386,18 @@
   "key\u0004find": {
     "model": "translategemma-12b",
     "msgstr": "bulun"
+  },
+  "key\u0004invite": {
+    "model": "madlad-400",
+    "msgstr": "davet et"
+  },
+  "key\u0004join": {
+    "model": "madlad-400",
+    "msgstr": "katıl"
+  },
+  "key\u0004join a link": {
+    "model": "madlad-400",
+    "msgstr": "Bir bağlantıya katıl"
   },
   "key\u0004language": {
     "model": "opus-mt",
@@ -395,6 +443,14 @@
     "model": "translategemma-4b",
     "msgstr": "sesi aç"
   },
+  "link copied": {
+    "model": "hy-mt2",
+    "msgstr": "Bağlantı kopyalandı"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "madlad-400",
+    "msgstr": "bağlantı terminalinizin ara belleğine gönderildi (eğer buna izin veriyorsa)"
+  },
   "log\u0004idle": {
     "model": "translategemma-4b",
     "msgstr": "boş, kullanılmıyor, beklemede"
@@ -402,6 +458,10 @@
   "log\u0004in call": {
     "model": "translategemma-4b",
     "msgstr": "telefon görüşmesi sırasında"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "opus-mt",
+    "msgstr": "Paylaşmaya hazır davetiye linki"
   },
   "log\u0004looking for a rando": {
     "model": "madlad-400",
@@ -467,6 +527,10 @@
     "model": "m2m100",
     "msgstr": "Çağrıda"
   },
+  "panel title\u0004Invitation": {
+    "model": "m2m100",
+    "msgstr": "davetiye"
+  },
   "panel title\u0004Looking": {
     "model": "hy-mt2",
     "msgstr": "Bakıyorum"
@@ -478,6 +542,10 @@
   "panel title\u0004Time is up": {
     "model": "translategemma-4b",
     "msgstr": "Zaman doldu"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "size gönderilen bağlantının tamamını yapıştır"
   },
   "peak %{level} dBFS": {
     "model": "translategemma-4b",
@@ -539,6 +607,10 @@
     "model": "madlad-400",
     "msgstr": "ses yardımcı programı yeniden başlatıldı"
   },
+  "tick the 18+ box on the form first": {
+    "model": "opus-mt",
+    "msgstr": "Önce formdaki 18+ kutusunu işaretle"
+  },
   "time is up: continue?": {
     "model": "opus-mt",
     "msgstr": "Süre doldu: Devam mı?"
@@ -550,6 +622,10 @@
   "unexpected reply": {
     "model": "opus-mt",
     "msgstr": "Beklenmedik cevap"
+  },
+  "waiting for someone to open your link": {
+    "model": "m2m100",
+    "msgstr": "Birinin bağlantınızı açmasını bekleyin"
   },
   "waiting on your rando": {
     "model": "m2m100",

@@ -31,6 +31,10 @@
     "model": "madlad-400",
     "msgstr": "%{sent} 전송 / %{received} 수신"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "남은 시간: %{time}"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "남은 시간: %{time}"
@@ -119,6 +123,10 @@
     "model": "hy-mt2",
     "msgstr": "그 소식을 듣고 기쁩니다."
   },
+  "Join through a link": {
+    "model": "madlad-400",
+    "msgstr": "링크를 통해 참여하기"
+  },
   "Languages spoken:": {
     "model": "madlad-400",
     "msgstr": "구사하는 언어:"
@@ -175,6 +183,10 @@
     "model": "translategemma-4b",
     "msgstr": "UDP를 통해 (대부분의 통화)"
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-12b",
+    "msgstr": "받으신 링크를 여기에 붙여넣으세요."
+  },
   "Press Enter to find a rando.": {
     "model": "madlad-400",
     "msgstr": "Enter 키를 눌러 rando을 찾습니다."
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "hy-mt2",
     "msgstr": "오디오 재연결 중…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "원하는 방법으로 그들에게 보내세요. 한 번만 작동합니다."
   },
   "Server status": {
     "model": "hy-mt2",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "translategemma-12b",
     "msgstr": "일반적인 길이: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "링크를 열기 위해 rando을 기다리는 중…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "hy-mt2",
@@ -287,6 +307,10 @@
     "model": "m2m100",
     "msgstr": "연결할 수 없음"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "madlad-400",
+    "msgstr": "링크를 복사할 수 없습니다: 마우스로 선택"
+  },
   "couldn't find the server": {
     "model": "madlad-400",
     "msgstr": "서버를 찾을 수 없음"
@@ -307,6 +331,10 @@
     "model": "hy-mt2",
     "msgstr": "전화 통화 중에"
   },
+  "key\u000418+": {
+    "model": "translategemma-4b",
+    "msgstr": "18세 이상"
+  },
   "key\u0004about these numbers": {
     "model": "madlad-400",
     "msgstr": "이 숫자들에 대해"
@@ -318,6 +346,10 @@
   "key\u0004cancel": {
     "model": "m2m100",
     "msgstr": "취소"
+  },
+  "key\u0004cancel the link": {
+    "model": "m2m100",
+    "msgstr": "링크 취소"
   },
   "key\u0004change": {
     "model": "madlad-400",
@@ -335,6 +367,10 @@
     "model": "madlad-400",
     "msgstr": "계속"
   },
+  "key\u0004copy the link": {
+    "model": "m2m100",
+    "msgstr": "링크를 복사"
+  },
   "key\u0004end": {
     "model": "translategemma-4b",
     "msgstr": "끝"
@@ -346,6 +382,18 @@
   "key\u0004find": {
     "model": "translategemma-4b",
     "msgstr": "찾아보기"
+  },
+  "key\u0004invite": {
+    "model": "hy-mt2",
+    "msgstr": "초대하기"
+  },
+  "key\u0004join": {
+    "model": "hy-mt2",
+    "msgstr": "참여하기"
+  },
+  "key\u0004join a link": {
+    "model": "hy-mt2",
+    "msgstr": "링크에 참여하기"
   },
   "key\u0004language": {
     "model": "hy-mt2",
@@ -391,6 +439,14 @@
     "model": "hy-mt2",
     "msgstr": "음소거 해제"
   },
+  "link copied": {
+    "model": "madlad-400",
+    "msgstr": "링크 복사됨"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "translategemma-12b",
+    "msgstr": "링크가 터미널의 클립보드에 전송됩니다 (단, 터미널이 해당 기능을 지원하는 경우에만 해당)."
+  },
   "log\u0004idle": {
     "model": "hy-mt2",
     "msgstr": "비활성 상태"
@@ -398,6 +454,10 @@
   "log\u0004in call": {
     "model": "hy-mt2",
     "msgstr": "통화 중"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "madlad-400",
+    "msgstr": "공유할 준비가 된 초대장 링크"
   },
   "log\u0004looking for a rando": {
     "model": "madlad-400",
@@ -463,6 +523,10 @@
     "model": "hy-mt2",
     "msgstr": "통화 중"
   },
+  "panel title\u0004Invitation": {
+    "model": "translategemma-4b",
+    "msgstr": "초대"
+  },
   "panel title\u0004Looking": {
     "model": "madlad-400",
     "msgstr": "찾는 중"
@@ -474,6 +538,10 @@
   "panel title\u0004Time is up": {
     "model": "madlad-400",
     "msgstr": "시간이 다 됐어"
+  },
+  "paste the whole link you were sent": {
+    "model": "translategemma-4b",
+    "msgstr": "발송받은 전체 링크를 복사하여 붙여넣어 주세요"
   },
   "peak %{level} dBFS": {
     "model": "madlad-400",
@@ -535,6 +603,10 @@
     "model": "madlad-400",
     "msgstr": "오디오 도우미 재시작됨"
   },
+  "tick the 18+ box on the form first": {
+    "model": "translategemma-4b",
+    "msgstr": "먼저, 양식에 18세 이상 여부 확인란을 선택하세요"
+  },
   "time is up: continue?": {
     "model": "madlad-400",
     "msgstr": "시간이 다 되었습니다. 계속하시겠습니까?"
@@ -546,6 +618,10 @@
   "unexpected reply": {
     "model": "translategemma-4b",
     "msgstr": "예상치 못한 답변"
+  },
+  "waiting for someone to open your link": {
+    "model": "madlad-400",
+    "msgstr": "누군가가 당신의 링크를 열기를 기다리고"
   },
   "waiting on your rando": {
     "model": "m2m100",

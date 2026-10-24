@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} অথবা %{last}"
   },
   "%{language} both ways": {
@@ -8,7 +8,7 @@
     "msgstr": "%{language} উভয় দিকেই"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} মিনিট"
   },
   "%{minutes}+ min": {
@@ -34,6 +34,10 @@
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "translategemma-12b",
     "msgstr": "একটি ভাষা জুটির তথ্য তখনই প্রদর্শিত হবে যখন সেই ভাষায় অন্তত %{min} সংখ্যক কথোপকথন (কল) সম্পন্ন হবে; অন্যথায়, ছোট আকারের ভাষা জুটির তথ্য \"অন্যান্য\" বিভাগে গণনা করা হবে।"
+  },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "madlad-400",
+    "msgstr": "যে ব্যক্তি আপনাকে লিঙ্কটি পাঠিয়েছেন, তার সাথে randos-এ অন্য যে কোনো ব্যক্তির মত এক-থেকে-এক অডিও কল।"
   },
   "About": {
     "model": "translategemma-4b",
@@ -115,6 +119,10 @@
     "model": "hy-mt2",
     "msgstr": "কথোপকথনগুলো ব্যক্তিগত থাকে এবং সংরক্ষিত হয় না। সার্ভারটি কলগুলো সমন্বয় করে, কিন্তু এটি কোনো রেকর্ডিং সংরক্ষণ করে না অথবা আপনি কার সাথে কথা বলেছেন সে সম্পর্কে কোনো ইতিহাস তৈরি করে না।"
   },
+  "Copied": {
+    "model": "madlad-400",
+    "msgstr": "অনুলিপি করা হয়েছে"
+  },
   "Couldn't connect": {
     "model": "madlad-400",
     "msgstr": "সংযোগ স্থাপন করা যায়নি"
@@ -132,7 +140,7 @@
     "msgstr": "%{date} তারিখে %{time} UTC থেকে গণনা করা হচ্ছে: আজ এখন পর্যন্ত কলগুলো।"
   },
   "Current call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "বর্তমান কল"
   },
   "Done": {
@@ -167,6 +175,10 @@
     "model": "madlad-400",
     "msgstr": "সম্পন্ন"
   },
+  "For your rando to open it.": {
+    "model": "madlad-400",
+    "msgstr": "তোমার rando এর জন্য এটা খুলতে হবে।"
+  },
   "Help fix a translation": {
     "model": "madlad-400",
     "msgstr": "অনুবাদ সংশোধন করতে সাহায্য করো"
@@ -199,9 +211,25 @@
     "model": "madlad-400",
     "msgstr": "ইচ্ছাকৃতভাবে ন্যূনতম"
   },
+  "Invitation link": {
+    "model": "hy-mt2",
+    "msgstr": "আমন্ত্রণ লিঙ্ক"
+  },
+  "Invite": {
+    "model": "madlad-400",
+    "msgstr": "আমন্ত্রণ জানানো হচ্ছে"
+  },
+  "Inviting": {
+    "model": "hy-mt2",
+    "msgstr": "আমন্ত্রণ জানানো"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-4b",
     "msgstr": "এটি %{crosstalk}, ভাষা বিনিময়ের অনুশীলন, শোনার অনুশীলন এবং স্বাভাবিক, অনানুষ্ঠানিক কথোপকথনের জন্য বিশেষভাবে তৈরি করা হয়েছে, যেখানে মানুষকে কঠোর নিয়ম বা লেবেল চাপিয়ে দেওয়া হয় না।"
+  },
+  "Join": {
+    "model": "hy-mt2",
+    "msgstr": "যোগ দিন"
   },
   "Language": {
     "model": "hy-mt2",
@@ -244,7 +272,7 @@
     "msgstr": "কোনো কিছুই মেলানো যাচ্ছে না।"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "অন্যান্য ভাষা: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -291,12 +319,24 @@
     "model": "m2m100",
     "msgstr": "নিরাপদ অডিও সংযোগ শুরু হয়েছে।"
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "translategemma-12b",
+    "msgstr": "আপনি এই লিঙ্কটি যেকোনো উপায়ে তাদের কাছে পাঠাতে পারেন। এটি একবার ব্যবহার করা যাবে এবং পরবর্তী %{minutes} মিনিটের জন্য কার্যকর থাকবে।"
+  },
+  "Share a link.": {
+    "model": "hy-mt2",
+    "msgstr": "একটি লিঙ্ক শেয়ার করুন।"
+  },
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-27b",
     "msgstr": "ভাষা অনুশীলনের জন্য সংক্ষিপ্ত, পরিচয়বিহীন কথোপকথন।"
   },
+  "Someone invited you to a call": {
+    "model": "madlad-400",
+    "msgstr": "কেউ একজন আপনাকে একটি কল- এ আমন্ত্রণ জানিয়েছেName"
+  },
   "Something went wrong!": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "কিছু ভুল হয়েছে!"
   },
   "Source (AGPL-3.0)": {
@@ -322,6 +362,14 @@
   "Switch theme": {
     "model": "hy-mt2",
     "msgstr": "থিম পরিবর্তন করুন"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "hy-mt2",
+    "msgstr": "এখান থেকে সেই কলে যোগ দেওয়া যাবে না: আপনাদের মধ্যে একজনের কাছে অডিও আছে আর অন্যজনের কাছে নেই।"
+  },
+  "That link doesn't work any more.": {
+    "model": "hy-mt2",
+    "msgstr": "সেই লিঙ্কটি আর কাজ করে না।"
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-12b",
@@ -367,9 +415,17 @@
     "model": "translategemma-27b",
     "msgstr": "এখানে কোনো অ্যাকাউন্ট, প্রোফাইল, পরিচিতি, অনুসারী, ফিড, ধারাবাহিকতা, স্কোর অথবা স্থায়ী সামাজিক নেটওয়ার্ক নেই। randos, সামাজিক মাধ্যম-এর চেয়ে বরং একটি কথোপকথনমূলক পরিকাঠামোর কাছাকাছি।"
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "এই লিঙ্কটি অসম্পূর্ণ।"
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-27b",
     "msgstr": "এই সাইটের অনুবাদগুলো স্বয়ংক্রিয়ভাবে তৈরি করা হয়েছে। যদি কোনো কিছু ভুল বা অস্পষ্ট মনে হয়, তাহলে নিচে সেটি খুঁজে বের করে “Suggest a fix” (“সংশোধনের প্রস্তাব দিন”) অপশনটিতে ক্লিক করুন: এটি গিটহাব-এ একটি নতুন ইস্যু খুলবে, যেখানে প্রায় সবকিছু আগে থেকেই লেখা থাকবে, শুধু আপনার প্রস্তাবিত সংশোধনটি যোগ করতে হবে (এর জন্য আপনার একটি গিটহাব অ্যাকাউন্ট থাকতে হবে)। আপনার প্রস্তাবিত সংশোধনসহ একটি পুল রিকোয়েস্ট স্বয়ংক্রিয়ভাবে তৈরি হবে এবং পর্যালোচনার পর সেটি কার্যকর করা হবে।"
+  },
+  "Tick the 18+ box.": {
+    "model": "hy-mt2",
+    "msgstr": "১৮+ বক্সটি চিহ্নিত করুন।"
   },
   "Time is up": {
     "model": "madlad-400",
@@ -380,7 +436,7 @@
     "msgstr": "সময় শেষ। আপনি কি আরও %{minutes} মিনিটের জন্য সময় বাড়াতে চান?"
   },
   "Today": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "আজ"
   },
   "Toggle dark mode": {
@@ -399,12 +455,20 @@
     "model": "translategemma-4b",
     "msgstr": "গিটহাব-এ দেখুন"
   },
+  "Waiting": {
+    "model": "m2m100",
+    "msgstr": "অপেক্ষা"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "লিঙ্কটি খুলতে আপনার rando-এর অপেক্ষায়…"
+  },
   "We can't find the internet": {
     "model": "madlad-400",
     "msgstr": "আমরা ইন্টারনেট খুঁজে পাচ্ছি না"
   },
   "We couldn't start that call. Please try again.": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "আমরা সেই কলটি শুরু করতে পারিনি। অনুগ্রহ করে আবার চেষ্টা করুন।"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone; only these totals are kept.": {
@@ -439,6 +503,14 @@
     "model": "madlad-400",
     "msgstr": "আপনি শুনতে পাবেন %{languages}"
   },
+  "Your call ended.": {
+    "model": "translategemma-12b",
+    "msgstr": "আপনার কলটি শেষ হয়ে গেছে।"
+  },
+  "Your link expired before anyone used it.": {
+    "model": "translategemma-12b",
+    "msgstr": "আপনার দেওয়া লিঙ্কের মেয়াদ শেষ হয়ে গেছে, তাই কেউ এটি ব্যবহার করতে পারেনি।"
+  },
   "Your rando": {
     "model": "madlad-400",
     "msgstr": "আপনার rando"
@@ -451,9 +523,17 @@
     "model": "hy-mt2",
     "msgstr": "মাইক্রোফোন ব্যবহারের অনুমতি চাওয়া"
   },
+  "button\u0004Cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "লিঙ্কটি বাতিল করুন"
+  },
   "button\u0004Continue": {
     "model": "m2m100",
     "msgstr": "চলুন"
+  },
+  "button\u0004Copy": {
+    "model": "madlad-400",
+    "msgstr": "কপি করো"
   },
   "button\u0004End": {
     "model": "hy-mt2",
@@ -462,6 +542,14 @@
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "একটি rando খুঁজুন"
+  },
+  "button\u0004Invite someone": {
+    "model": "hy-mt2",
+    "msgstr": "কাউকে আমন্ত্রণ জানান"
+  },
+  "button\u0004Join the call": {
+    "model": "hy-mt2",
+    "msgstr": "কলে যোগ দিন"
   },
   "button\u0004Mute": {
     "model": "madlad-400",
@@ -476,7 +564,7 @@
     "msgstr": "মিউট অফ করুন"
   },
   "close": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "বন্ধ"
   },
   "connection closed": {
@@ -496,7 +584,7 @@
     "msgstr": "কল করা হচ্ছে"
   },
   "connection state\u0004connected": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "সংযুক্ত"
   },
   "connection state\u0004connecting": {
@@ -564,7 +652,7 @@
     "msgstr": "কোনো পরিচয়পত্র চাওয়া হয়নি"
   },
   "privacy": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "গোপনীয়তা"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
@@ -600,7 +688,7 @@
     "msgstr": "নিরাপদ সংযোগ ব্যর্থ হয়েছে"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "১ মিনিটের কম"
   },
   "unexpected reply": {

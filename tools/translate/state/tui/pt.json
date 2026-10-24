@@ -31,6 +31,10 @@
     "model": "madlad-400",
     "msgstr": "%{sent} enviado / %{received} recebido"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} restante"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "Tempo restante: %{time}"
@@ -119,6 +123,10 @@
     "model": "hy-mt2",
     "msgstr": "Fico feliz em ouvir isso:"
   },
+  "Join through a link": {
+    "model": "m2m100",
+    "msgstr": "Junte-se através de um link"
+  },
   "Languages spoken:": {
     "model": "translategemma-12b",
     "msgstr": "Idiomas falados:"
@@ -175,6 +183,10 @@
     "model": "translategemma-12b",
     "msgstr": "Através do protocolo UDP (na maioria das chamadas)."
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-4b",
+    "msgstr": "Cole o link que recebeu:"
+  },
   "Press Enter to find a rando.": {
     "model": "madlad-400",
     "msgstr": "Pressione Enter para encontrar um rando."
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "hy-mt2",
     "msgstr": "Reconectando áudio…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Envie para eles da maneira que preferir. Funciona uma única vez."
   },
   "Server status": {
     "model": "hy-mt2",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "m2m100",
     "msgstr": "Duração típica: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "hy-mt2",
+    "msgstr": "Aguardando que seu rando abra o link…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "translategemma-12b",
@@ -291,6 +311,10 @@
     "model": "translategemma-4b",
     "msgstr": "não consegui conectar"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "madlad-400",
+    "msgstr": "não foi possível copiar o link: selecione-o com o mouse"
+  },
   "couldn't find the server": {
     "model": "translategemma-4b",
     "msgstr": "não consegui encontrar o servidor"
@@ -311,6 +335,10 @@
     "model": "hy-mt2",
     "msgstr": "em uma chamada"
   },
+  "key\u000418+": {
+    "model": "hy-mt2",
+    "msgstr": "18+"
+  },
   "key\u0004about these numbers": {
     "model": "m2m100",
     "msgstr": "Sobre esses números"
@@ -322,6 +350,10 @@
   "key\u0004cancel": {
     "model": "hy-mt2",
     "msgstr": "cancelar"
+  },
+  "key\u0004cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "desativar o link"
   },
   "key\u0004change": {
     "model": "hy-mt2",
@@ -339,6 +371,10 @@
     "model": "hy-mt2",
     "msgstr": "continuar"
   },
+  "key\u0004copy the link": {
+    "model": "translategemma-4b",
+    "msgstr": "copiar o link"
+  },
   "key\u0004end": {
     "model": "hy-mt2",
     "msgstr": "fim"
@@ -350,6 +386,18 @@
   "key\u0004find": {
     "model": "translategemma-12b",
     "msgstr": "encontrar"
+  },
+  "key\u0004invite": {
+    "model": "hy-mt2",
+    "msgstr": "convidar"
+  },
+  "key\u0004join": {
+    "model": "hy-mt2",
+    "msgstr": "juntar-se"
+  },
+  "key\u0004join a link": {
+    "model": "hy-mt2",
+    "msgstr": "acessar um link"
   },
   "key\u0004language": {
     "model": "madlad-400",
@@ -395,6 +443,14 @@
     "model": "translategemma-4b",
     "msgstr": "desativar o silêncio"
   },
+  "link copied": {
+    "model": "m2m100",
+    "msgstr": "Link copiado"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "m2m100",
+    "msgstr": "Link enviado para o clipboard do seu terminal (se isso permite)"
+  },
   "log\u0004idle": {
     "model": "hy-mt2",
     "msgstr": "inativo"
@@ -402,6 +458,10 @@
   "log\u0004in call": {
     "model": "madlad-400",
     "msgstr": "em chamada de voz"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "m2m100",
+    "msgstr": "Link de convite pronto para compartilhar"
   },
   "log\u0004looking for a rando": {
     "model": "m2m100",
@@ -467,6 +527,10 @@
     "model": "hy-mt2",
     "msgstr": "Em chamada"
   },
+  "panel title\u0004Invitation": {
+    "model": "hy-mt2",
+    "msgstr": "Convite"
+  },
   "panel title\u0004Looking": {
     "model": "translategemma-4b",
     "msgstr": "Observando"
@@ -478,6 +542,10 @@
   "panel title\u0004Time is up": {
     "model": "madlad-400",
     "msgstr": "O tempo está acabando"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "cole o link completo que lhe foi enviado"
   },
   "peak %{level} dBFS": {
     "model": "hy-mt2",
@@ -539,6 +607,10 @@
     "model": "hy-mt2",
     "msgstr": "o assistente de áudio foi reiniciado"
   },
+  "tick the 18+ box on the form first": {
+    "model": "madlad-400",
+    "msgstr": "marque a caixa 18+ no formulário primeiro"
+  },
   "time is up: continue?": {
     "model": "madlad-400",
     "msgstr": "O tempo acabou: continuar?"
@@ -550,6 +622,10 @@
   "unexpected reply": {
     "model": "m2m100",
     "msgstr": "Resposta inesperada"
+  },
+  "waiting for someone to open your link": {
+    "model": "translategemma-4b",
+    "msgstr": "aguardando que alguém clique no seu link"
   },
   "waiting on your rando": {
     "model": "hy-mt2",

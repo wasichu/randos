@@ -8,11 +8,11 @@
     "msgstr": "%{language} دونوں طریقوں سے"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} منٹ"
   },
   "%{minutes}+ min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes}+ منٹ"
   },
   "%{time} remaining": {
@@ -34,6 +34,10 @@
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "translategemma-12b",
     "msgstr": "ایک زبان جوڑی تب ہی ظاہر کی جاتی ہے جب اس میں کم از کم %{min} مرتبہ استعمال کا ریکارڈ ہو؛ اس سے کم استعمال والی زبانوں کو \"دیگر\" کے زمرے میں شامل کیا جاتا ہے۔"
+  },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "madlad-400",
+    "msgstr": "ایک سے ایک آڈیو کال، randos پر کسی اور کی طرح، اس شخص کے ساتھ جس نے آپ کو لنک بھیجا ہے۔"
   },
   "About": {
     "model": "hy-mt2",
@@ -111,6 +115,10 @@
     "model": "madlad-400",
     "msgstr": "گفتگو نجی ہے اور محفوظ نہیں کی جاتی۔ سرور کال کو منسق کرتا ہے، لیکن یہ ریکارڈز نہیں رکھتا یا اس کے بارے میں تاریخ نہیں بناتا کہ آپ نے کس سے بات کی ہے۔"
   },
+  "Copied": {
+    "model": "madlad-400",
+    "msgstr": "کاپی کی گئی"
+  },
   "Couldn't connect": {
     "model": "opus-mt",
     "msgstr": "رابطہ نہیں کر سکا"
@@ -184,7 +192,7 @@
     "msgstr": "میں بات کروں گا"
   },
   "I'm happy to hear": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "میں سن کر خوش ہوں"
   },
   "In call": {
@@ -195,12 +203,28 @@
     "model": "madlad-400",
     "msgstr": "ارادی طور پر کم سے کم"
   },
+  "Invitation link": {
+    "model": "m2m100",
+    "msgstr": "دعوت لنک"
+  },
+  "Invite": {
+    "model": "hy-mt2",
+    "msgstr": "دعوت دیں"
+  },
+  "Inviting": {
+    "model": "opus-mt",
+    "msgstr": "دعوت نامہ"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-27b",
     "msgstr": "اس کا مقصد %{crosstalk}، لسانی تبادلہ، سننے کی مشق، اور عام، غیر رسمی گفتگو کو فروغ دینا ہے، جس میں لوگوں پر سختی سے کوئی خاص انداز یا شناخت مسلط نہ کی جائے۔"
   },
+  "Join": {
+    "model": "madlad-400",
+    "msgstr": "شامل ہوں"
+  },
   "Language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "زبان"
   },
   "Languages spoken": {
@@ -240,7 +264,7 @@
     "msgstr": "کوئی مماثلت نہیں."
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "دیگر زبانیں: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -287,9 +311,21 @@
     "model": "translategemma-12b",
     "msgstr": "آڈیو کنکشن اب محفوظ طریقے سے شروع ہو رہا ہے۔"
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "hy-mt2",
+    "msgstr": "آپ انہیں یہ لنک جس طرح چاہیں بھیج سکتے ہیں۔ یہ ایک بار کام کرتا ہے، اور آئندہ %{minutes} منٹوں تک کام کرتا رہے گا۔"
+  },
+  "Share a link.": {
+    "model": "hy-mt2",
+    "msgstr": "ایک لنک شیئر کریں۔"
+  },
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-27b",
     "msgstr": "زبان کی مشق کے لیے مختصر، نام ظاہر نہ کرنے والی گفتگو۔"
+  },
+  "Someone invited you to a call": {
+    "model": "m2m100",
+    "msgstr": "کسی نے آپ کو ایک کال کے لئے مدعو کیا"
   },
   "Something went wrong!": {
     "model": "hy-mt2",
@@ -318,6 +354,14 @@
   "Switch theme": {
     "model": "opus-mt",
     "msgstr": "تھیم سوئچ کریں"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "madlad-400",
+    "msgstr": "یہ کال یہاں سے شامل نہیں کی جاسکتی: آپ میں سے ایک کے پاس آڈیو ہے اور دوسرے کے پاس نہیں."
+  },
+  "That link doesn't work any more.": {
+    "model": "opus-mt",
+    "msgstr": "یہ لنک اب کام نہیں کرتا."
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-27b",
@@ -363,9 +407,17 @@
     "model": "madlad-400",
     "msgstr": "یہاں کوئی اکاونٹ، پروفائل، رابطہ، پیروکار، فیڈز، سٹریک، اسکور، یا مستقل سوشل گراف نہیں ہے۔ randos سوشل میڈیا سے زیادہ گفتگو کے بنیادی ڈھانچے کے قریب ہے۔"
   },
+  "This link is incomplete.": {
+    "model": "translategemma-12b",
+    "msgstr": "یہ لنک مکمل نہیں ہے۔"
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-27b",
     "msgstr": "اس سائٹ پر موجود تراجم خودکار طریقے سے بنائے گئے ہیں۔ اگر آپ کو کوئی عبارت عجیب یا غلط لگے تو، اسے نیچے تلاش کریں اور “اصلاح تجویز کریں” پر کلک کریں: یہ گِٹ ہب (GitHub) پر ایک نیا مسئلہ کھولے گا جس میں تمام معلومات پہلے سے بھری ہوں گی، سوائے آپ کی تجویز کردہ اصلاح کے (اس کے لیے آپ کے پاس گِٹ ہب اکاؤنٹ ہونا ضروری ہے)۔ آپ کی تجویز کردہ اصلاح کے ساتھ ایک نیا “پُل ریکویسٹ” (Pull Request) خود بخود کھل جائے گا، اور جائزہ لینے کے بعد اسے فوری طور پر نافذ کر دیا جائے گا۔"
+  },
+  "Tick the 18+ box.": {
+    "model": "madlad-400",
+    "msgstr": "18+ بکس پر ٹیک کریں."
   },
   "Time is up": {
     "model": "madlad-400",
@@ -376,7 +428,7 @@
     "msgstr": "وقت ختم ہو گیا ہے۔ کیا آپ مزید %{minutes} منٹ تک جاری رکھیں گے؟"
   },
   "Today": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "آج"
   },
   "Toggle dark mode": {
@@ -394,6 +446,14 @@
   "View on GitHub": {
     "model": "hy-mt2",
     "msgstr": "گیٹ ہب پر دیکھیں"
+  },
+  "Waiting": {
+    "model": "translategemma-4b",
+    "msgstr": "در انتظار"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "opus-mt",
+    "msgstr": "rando آپ کے لنک کو کھولنے کے لئے انتظار کر رہے ہیں …"
   },
   "We can't find the internet": {
     "model": "opus-mt",
@@ -435,6 +495,14 @@
     "model": "madlad-400",
     "msgstr": "آپ سنیں گے %{languages}"
   },
+  "Your call ended.": {
+    "model": "opus-mt",
+    "msgstr": "آپ کی کال ختم ہوگئی۔"
+  },
+  "Your link expired before anyone used it.": {
+    "model": "translategemma-4b",
+    "msgstr": "آپ کا لنک پہلے سے ہی ختم ہو چکا تھا، اس کا استعمال کسی نے نہیں کیا۔"
+  },
   "Your rando": {
     "model": "madlad-400",
     "msgstr": "آپ کا rando"
@@ -447,9 +515,17 @@
     "model": "hy-mt2",
     "msgstr": "مائکروفون تک رسائی کی درخواست"
   },
+  "button\u0004Cancel the link": {
+    "model": "m2m100",
+    "msgstr": "لنک منسوخ کریں"
+  },
   "button\u0004Continue": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "جاری رکھیں"
+  },
+  "button\u0004Copy": {
+    "model": "opus-mt",
+    "msgstr": "کاپی کریں"
   },
   "button\u0004End": {
     "model": "madlad-400",
@@ -458,6 +534,14 @@
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "rando تلاش کریں"
+  },
+  "button\u0004Invite someone": {
+    "model": "hy-mt2",
+    "msgstr": "کسی کو مدعو کریں"
+  },
+  "button\u0004Join the call": {
+    "model": "madlad-400",
+    "msgstr": "کال میں شامل ہوں"
   },
   "button\u0004Mute": {
     "model": "madlad-400",
@@ -504,7 +588,7 @@
     "msgstr": "ختم ہو گیا"
   },
   "connection state\u0004failed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "ناکام"
   },
   "connection state\u0004microphone denied": {
@@ -596,7 +680,7 @@
     "msgstr": "محفوظ کنکشن ناکام ہوا"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "1 منٹ سے کم"
   },
   "unexpected reply": {

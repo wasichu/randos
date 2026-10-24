@@ -31,6 +31,10 @@
     "model": "opus-mt",
     "msgstr": "%{sent} terkirim / %{received} diterima"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "Sisa waktu %{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "Waktu tersisa: %{time}"
@@ -119,6 +123,10 @@
     "model": "hy-mt2",
     "msgstr": "Saya senang mendengarnya:"
   },
+  "Join through a link": {
+    "model": "translategemma-4b",
+    "msgstr": "Bergabunglah melalui tautan"
+  },
   "Languages spoken:": {
     "model": "opus-mt",
     "msgstr": "Bahasa yang digunakan:"
@@ -175,6 +183,10 @@
     "model": "hy-mt2",
     "msgstr": "Melalui UDP (sebagian besar panggilan)"
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-12b",
+    "msgstr": "Tempelkan tautan yang Anda terima:"
+  },
   "Press Enter to find a rando.": {
     "model": "m2m100",
     "msgstr": "Tekan Enter untuk menemukan rando."
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "madlad-400",
     "msgstr": "Menyambungkan audio kembali…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Kirimkan saja ke mereka dengan cara yang kamu suka. Cara ini hanya berfungsi sekali."
   },
   "Server status": {
     "model": "hy-mt2",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "translategemma-4b",
     "msgstr": "Panjang yang umum: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "hy-mt2",
+    "msgstr": "Menunggu rando Anda membuka tautan tersebut…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "translategemma-12b",
@@ -291,6 +311,10 @@
     "model": "m2m100",
     "msgstr": "Tidak bisa terhubung"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "madlad-400",
+    "msgstr": "tidak dapat menyalin tautan: pilih dengan tetikus"
+  },
   "couldn't find the server": {
     "model": "m2m100",
     "msgstr": "Tidak dapat menemukan server"
@@ -311,6 +335,10 @@
     "model": "translategemma-4b",
     "msgstr": "dalam sebuah panggilan"
   },
+  "key\u000418+": {
+    "model": "translategemma-12b",
+    "msgstr": "18+ (Berlaku untuk usia 18 tahun ke atas)"
+  },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
     "msgstr": "tentang angka-angka ini"
@@ -322,6 +350,10 @@
   "key\u0004cancel": {
     "model": "hy-mt2",
     "msgstr": "batalkan"
+  },
+  "key\u0004cancel the link": {
+    "model": "opus-mt",
+    "msgstr": "batalkan tautan"
   },
   "key\u0004change": {
     "model": "hy-mt2",
@@ -339,6 +371,10 @@
     "model": "opus-mt",
     "msgstr": "Lanjutkan"
   },
+  "key\u0004copy the link": {
+    "model": "hy-mt2",
+    "msgstr": "salin tautannya"
+  },
   "key\u0004end": {
     "model": "madlad-400",
     "msgstr": "akhir"
@@ -350,6 +386,18 @@
   "key\u0004find": {
     "model": "hy-mt2",
     "msgstr": "temukan"
+  },
+  "key\u0004invite": {
+    "model": "translategemma-4b",
+    "msgstr": "mengundang"
+  },
+  "key\u0004join": {
+    "model": "hy-mt2",
+    "msgstr": "bergabung"
+  },
+  "key\u0004join a link": {
+    "model": "hy-mt2",
+    "msgstr": "ikuti tautan tersebut"
   },
   "key\u0004language": {
     "model": "hy-mt2",
@@ -395,6 +443,14 @@
     "model": "translategemma-4b",
     "msgstr": "aktifkan"
   },
+  "link copied": {
+    "model": "translategemma-4b",
+    "msgstr": "tautan telah disalin"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "translategemma-4b",
+    "msgstr": "tautan dikirim ke clipboard terminal Anda (jika terminal Anda mengizinkan fitur tersebut)"
+  },
   "log\u0004idle": {
     "model": "translategemma-4b",
     "msgstr": "tidak digunakan"
@@ -402,6 +458,10 @@
   "log\u0004in call": {
     "model": "hy-mt2",
     "msgstr": "sedang menelepon"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "madlad-400",
+    "msgstr": "tautan undangan siap untuk dibagikan"
   },
   "log\u0004looking for a rando": {
     "model": "hy-mt2",
@@ -467,6 +527,10 @@
     "model": "opus-mt",
     "msgstr": "Dalam panggilan"
   },
+  "panel title\u0004Invitation": {
+    "model": "hy-mt2",
+    "msgstr": "Undangan"
+  },
   "panel title\u0004Looking": {
     "model": "hy-mt2",
     "msgstr": "Mencari"
@@ -478,6 +542,10 @@
   "panel title\u0004Time is up": {
     "model": "translategemma-4b",
     "msgstr": "Waktu telah habis"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "tempel seluruh tautan yang dikirimkan"
   },
   "peak %{level} dBFS": {
     "model": "translategemma-4b",
@@ -539,6 +607,10 @@
     "model": "m2m100",
     "msgstr": "Audio Helper diluncurkan kembali"
   },
+  "tick the 18+ box on the form first": {
+    "model": "opus-mt",
+    "msgstr": "centang kotak 18+ pada formulir terlebih dahulu"
+  },
   "time is up: continue?": {
     "model": "opus-mt",
     "msgstr": "Waktu habis: lanjutkan?"
@@ -550,6 +622,10 @@
   "unexpected reply": {
     "model": "madlad-400",
     "msgstr": "jawaban tak terduga"
+  },
+  "waiting for someone to open your link": {
+    "model": "hy-mt2",
+    "msgstr": "menunggu seseorang untuk membuka tautan Anda"
   },
   "waiting on your rando": {
     "model": "madlad-400",

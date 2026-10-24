@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -8,11 +8,11 @@
     "msgstr": "%{language} parehong paraan"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} minuto"
   },
   "%{minutes}+ min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes}+ minuto"
   },
   "%{time} remaining": {
@@ -34,6 +34,10 @@
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "translategemma-27b",
     "msgstr": "Ipinapakita ang isang pares ng wika kapag mayroon na itong hindi bababa sa %{min} na bilang ng mga paggamit; ang mga may mas kaunting bilang ay isinasama sa kategoryang “iba pa”."
+  },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "translategemma-4b",
+    "msgstr": "Isang tawag sa telepono, isa-sa-isa, tulad ng ibang tawag sa randos, sa taong nagpadala sa iyo ng link."
   },
   "About": {
     "model": "madlad-400",
@@ -92,11 +96,11 @@
     "msgstr": "Pag-uugnay"
   },
   "Connection lost": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Nawala ang koneksyon"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Koneksyon:"
   },
   "Continued past %{minutes} minutes": {
@@ -115,6 +119,10 @@
     "model": "hy-mt2",
     "msgstr": "Ang mga pag-uusap ay pribado at hindi iniimbak. Ang server ang namamahala sa tawag, ngunit hindi ito nag-iimbak ng mga rekord o lumilikha ng talaan kung sino ang kinakausap mo."
   },
+  "Copied": {
+    "model": "madlad-400",
+    "msgstr": "Kopyado"
+  },
   "Couldn't connect": {
     "model": "opus-mt",
     "msgstr": "Hindi makakonekta"
@@ -132,7 +140,7 @@
     "msgstr": "Bilang simula ng %{time} UTC noong %{date}: ang kabuuang bilang ng mga tawag ngayong araw hanggang ngayon."
   },
   "Current call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Kasalukuyang tawag"
   },
   "Done": {
@@ -148,7 +156,7 @@
     "msgstr": "Bawat tawag ay dumadaan sa aming relay, kaya hindi nakikita ng alin mang tao ang address ng isa’t isa. Sinusubok namin ito tuwing ilang minuto sa pamamagitan ng paggawa ng tunay na koneksyon sa relay."
   },
   "Find a phrase": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Hanapin ang isang parirala"
   },
   "Find a phrase, in English or %{language}": {
@@ -167,6 +175,10 @@
     "model": "madlad-400",
     "msgstr": "Natapos na"
   },
+  "For your rando to open it.": {
+    "model": "opus-mt",
+    "msgstr": "Para buksan ito ng iyong rando."
+  },
   "Help fix a translation": {
     "model": "opus-mt",
     "msgstr": "Tumulong sa pagsasaayos ng isang salin"
@@ -176,7 +188,7 @@
     "msgstr": "Paano nagwakas ang mga tawag"
   },
   "How languages are counted": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Paano binibilang ang mga wika"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
@@ -199,12 +211,28 @@
     "model": "madlad-400",
     "msgstr": "Sinasadyang minimal"
   },
+  "Invitation link": {
+    "model": "madlad-400",
+    "msgstr": "Link ng imbitasyon"
+  },
+  "Invite": {
+    "model": "hy-mt2",
+    "msgstr": "Imbitahan"
+  },
+  "Inviting": {
+    "model": "hy-mt2",
+    "msgstr": "Nag-iimbita"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "hy-mt2",
     "msgstr": "Ito ay nakalaan para sa %{crosstalk}, pagpapalitan ng wika, pagsasanay sa pakikinig, at karaniwang impormal na pag-uusap, nang hindi pinipilit ang mga tao sa mga mahigpit na pamamaraan o kategorya."
   },
+  "Join": {
+    "model": "hy-mt2",
+    "msgstr": "Sumali"
+  },
   "Language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Wika"
   },
   "Languages spoken": {
@@ -224,7 +252,7 @@
     "msgstr": "Naghahanap ng rando na nakakapagsalita ng %{hearing_languages} at gustong makarinig ng %{speaking_language}."
   },
   "No accounts. No profiles. No video. No pressure.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Walang mga account. Walang mga profile. Walang video. Walang presyon."
   },
   "No calls yet.": {
@@ -244,7 +272,7 @@
     "msgstr": "Walang magkatugma."
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "Iba pang wika: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -291,16 +319,28 @@
     "model": "hy-mt2",
     "msgstr": "Nagsisimula na ang ligtas na koneksyon sa audio."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "hy-mt2",
+    "msgstr": "Ipadala mo sa kanila ang link na ito sa anumang paraan na gusto mo. Gagana ito nang isang beses, sa loob ng susunod na %{minutes} minuto."
+  },
+  "Share a link.": {
+    "model": "madlad-400",
+    "msgstr": "Ibahagi ang isang link."
+  },
   "Short anonymous conversations for language practice.": {
     "model": "hy-mt2",
     "msgstr": "Mga maikling pag-uusap na hindi nagpapakilala para sa pagsasanay sa wika."
+  },
+  "Someone invited you to a call": {
+    "model": "madlad-400",
+    "msgstr": "Inimbitahan ka ng isang tao sa isang tawag"
   },
   "Something went wrong!": {
     "model": "hy-mt2",
     "msgstr": "May nangyaring mali!"
   },
   "Source (AGPL-3.0)": {
-    "model": "opus-mt",
+    "model": "translategemma-27b",
     "msgstr": "Pinagmulan (AGPL-3.0)"
   },
   "Starting call with rando.": {
@@ -322,6 +362,14 @@
   "Switch theme": {
     "model": "madlad-400",
     "msgstr": "Baguhin ang tema"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "hy-mt2",
+    "msgstr": "Hindi maaaring sumali sa tawag na iyon mula rito: ang isa sa inyo ay may audio habang ang isa naman ay wala."
+  },
+  "That link doesn't work any more.": {
+    "model": "hy-mt2",
+    "msgstr": "Hindi na gumagana ang link na iyon."
   },
   "The call ended because audio isn't available here.": {
     "model": "madlad-400",
@@ -367,9 +415,17 @@
     "model": "hy-mt2",
     "msgstr": "Walang mga account, profile, contact, follower, feed, streak, score, o permanenteng social graph. Ang randos ay mas malapit sa imprastraktura para sa pag-uusap kaysa sa social media."
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "Hindi kumpleto ang link na ito."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "hy-mt2",
     "msgstr": "Ang mga pagsasalin sa site na ito ay ginawa ng makina. Kung may mali sa pagbabasa, hanapin ito sa ibaba at pindutin ang “Suggest a fix”: magbubukas ito ng isyu sa GitHub kung saan nakalagay na ang lahat ng impormasyon maliban sa iyong solusyon (kailangan mo ng account sa GitHub). Ang pull request na may iyong solusyon ay awtomatikong magbubukas, at ito ay magiging aktibo kapag na-review na."
+  },
+  "Tick the 18+ box.": {
+    "model": "translategemma-4b",
+    "msgstr": "Lagyan ng check ang kahon na 18+"
   },
   "Time is up": {
     "model": "opus-mt",
@@ -380,7 +436,7 @@
     "msgstr": "Tapos na ang oras. Gusto mo bang ipagpatuloy pa ito ng %{minutes} minuto?"
   },
   "Today": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Ngayon"
   },
   "Toggle dark mode": {
@@ -398,6 +454,14 @@
   "View on GitHub": {
     "model": "madlad-400",
     "msgstr": "Tingnan sa GitHub"
+  },
+  "Waiting": {
+    "model": "opus-mt",
+    "msgstr": "Paghihintay"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "hy-mt2",
+    "msgstr": "Hinihintay kong buksan ng iyong rando ang link…"
   },
   "We can't find the internet": {
     "model": "opus-mt",
@@ -420,7 +484,7 @@
     "msgstr": "Kung makakakonekta ba ang mga tawag ngayon, at kumusta naman ang araw na ito."
   },
   "You": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Ikaw"
   },
   "You agreed to continue, waiting on your rando…": {
@@ -439,8 +503,16 @@
     "model": "hy-mt2",
     "msgstr": "Maririnig mo ang %{languages}"
   },
-  "Your rando": {
+  "Your call ended.": {
     "model": "opus-mt",
+    "msgstr": "Natapos ang pagtawag mo."
+  },
+  "Your link expired before anyone used it.": {
+    "model": "hy-mt2",
+    "msgstr": "Nag-expire ang iyong link bago pa ito magamit ng sinuman."
+  },
+  "Your rando": {
+    "model": "hy-mt2",
     "msgstr": "Ang iyong rando"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
@@ -451,9 +523,17 @@
     "model": "hy-mt2",
     "msgstr": "paghingi ng pahintulot para gamitin ang mikropono"
   },
+  "button\u0004Cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "Tanggalin ang link"
+  },
   "button\u0004Continue": {
     "model": "hy-mt2",
     "msgstr": "Ipagpatuloy"
+  },
+  "button\u0004Copy": {
+    "model": "hy-mt2",
+    "msgstr": "Kopyahin"
   },
   "button\u0004End": {
     "model": "translategemma-4b",
@@ -462,6 +542,14 @@
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "Maghanap ng rando"
+  },
+  "button\u0004Invite someone": {
+    "model": "madlad-400",
+    "msgstr": "Mag-imbita ng isang tao"
+  },
+  "button\u0004Join the call": {
+    "model": "hy-mt2",
+    "msgstr": "Sumali sa tawag"
   },
   "button\u0004Mute": {
     "model": "translategemma-4b",
@@ -544,7 +632,7 @@
     "msgstr": "Tinanggihan ang mga kredensiyal"
   },
   "crosstalk": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "crosstalk"
   },
   "microphone ready": {
@@ -556,7 +644,7 @@
     "msgstr": "Walang mikropono"
   },
   "no answer": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "walang sagot"
   },
   "no credentials asked for": {
@@ -564,7 +652,7 @@
     "msgstr": "Walang mga credentials na kailangan"
   },
   "privacy": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "pagkapribado"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
@@ -616,7 +704,7 @@
     "msgstr": "naghihintay ng audio mula sa malayo"
   },
   "working": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "nagtatrabaho"
   }
 }

@@ -60,7 +60,7 @@
     "msgstr": "開始された通話"
   },
   "Cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "キャンセル"
   },
   "Canceled": {
@@ -115,6 +115,10 @@
     "model": "translategemma-27b",
     "msgstr": "会話はプライベートなものであり、記録として保存されることはありません。サーバーは通話を円滑に進める役割を果たしますが、通話内容を録音したり、誰と通話したかの履歴を作成したりすることはありません。"
   },
+  "Copied": {
+    "model": "hy-mt2",
+    "msgstr": "コピーされました"
+  },
   "Couldn't connect": {
     "model": "m2m100",
     "msgstr": "接続できない"
@@ -167,6 +171,10 @@
     "model": "m2m100",
     "msgstr": "終了"
   },
+  "For your rando to open it.": {
+    "model": "madlad-400",
+    "msgstr": "あなたのrandoが開くために。"
+  },
   "Help fix a translation": {
     "model": "translategemma-4b",
     "msgstr": "翻訳の修正をお手伝いします"
@@ -199,9 +207,25 @@
     "model": "hy-mt2",
     "msgstr": "意図的にミニマルに"
   },
+  "Invitation link": {
+    "model": "hy-mt2",
+    "msgstr": "招待リンク"
+  },
+  "Invite": {
+    "model": "hy-mt2",
+    "msgstr": "招待する"
+  },
+  "Inviting": {
+    "model": "hy-mt2",
+    "msgstr": "招待中です"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "hy-mt2",
     "msgstr": "これは、人々を厳格な形式や枠組みに縛り付けることなく、%{crosstalk}、言語交換、リスニング練習、そして普段の気軽な会話のためのものです。"
+  },
+  "Join": {
+    "model": "hy-mt2",
+    "msgstr": "参加してください"
   },
   "Language": {
     "model": "hy-mt2",
@@ -272,7 +296,7 @@
     "msgstr": "通話の準備をしています"
   },
   "Privacy": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "プライバシー"
   },
   "Ready": {
@@ -291,16 +315,28 @@
     "model": "translategemma-27b",
     "msgstr": "安全な音声接続を開始します。"
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "madlad-400",
+    "msgstr": "このリンクを好きなように送信してください。これは一度のみ有効で、次の %{minutes} 分間有効です。"
+  },
+  "Share a link.": {
+    "model": "hy-mt2",
+    "msgstr": "リンクを共有しましょう。"
+  },
   "Short anonymous conversations for language practice.": {
     "model": "hy-mt2",
     "msgstr": "言語練習のための短い匿名の会話。"
+  },
+  "Someone invited you to a call": {
+    "model": "m2m100",
+    "msgstr": "誰かがあなたを呼びかけた"
   },
   "Something went wrong!": {
     "model": "translategemma-4b",
     "msgstr": "何らかの問題が発生しました！"
   },
   "Source (AGPL-3.0)": {
-    "model": "translategemma-12b",
+    "model": "translategemma-27b",
     "msgstr": "ソースコード (AGPL-3.0)"
   },
   "Starting call with rando.": {
@@ -322,6 +358,14 @@
   "Switch theme": {
     "model": "hy-mt2",
     "msgstr": "テーマを変更する"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "hy-mt2",
+    "msgstr": "こちらからはその通話に参加できません。一方の人は音声がついているのに、もう一方はついていません。"
+  },
+  "That link doesn't work any more.": {
+    "model": "translategemma-4b",
+    "msgstr": "そのリンクはもう機能しません。"
   },
   "The call ended because audio isn't available here.": {
     "model": "hy-mt2",
@@ -367,9 +411,17 @@
     "model": "translategemma-12b",
     "msgstr": "randosには、アカウント、プロフィール、連絡先、フォロワー、フィード、連続ログイン日数、スコア、といった要素や、固定されたソーシャルグラフといったものは存在しません。randosは、ソーシャルメディアというよりも、コミュニケーションのための基盤に近いと言えるでしょう。"
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "このリンクは不完全です。"
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "hy-mt2",
     "msgstr": "このサイトの翻訳はコンピュータによって行われています。何か間違っている部分があれば、下にその部分を見つけて「修正を提案する」を押してください。そうすると、すべての情報が入力された状態でGitHub上にイシューが作成されますが、修正案はご自身で入力する必要があります（GitHubアカウントが必要です）。ご自身の修正案を含むプルリクエストが自動的に作成され、レビューが終了すると公開されます。"
+  },
+  "Tick the 18+ box.": {
+    "model": "translategemma-4b",
+    "msgstr": "18歳以上であることを確認するチェックボックスにチェックを入れてください。"
   },
   "Time is up": {
     "model": "madlad-400",
@@ -380,7 +432,7 @@
     "msgstr": "時間切れです。 もう %{minutes} 分続けますか？"
   },
   "Today": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "今日"
   },
   "Toggle dark mode": {
@@ -388,16 +440,24 @@
     "msgstr": "ダークモードを切り替える"
   },
   "Translations": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "翻訳"
   },
   "Typical length": {
-    "model": "translategemma-12b",
+    "model": "translategemma-27b",
     "msgstr": "平均通話時間"
   },
   "View on GitHub": {
     "model": "translategemma-27b",
     "msgstr": "GitHubで見る"
+  },
+  "Waiting": {
+    "model": "hy-mt2",
+    "msgstr": "待機中です"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "あなたの rando がリンクを開くのを待っています…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -439,6 +499,14 @@
     "model": "hy-mt2",
     "msgstr": "%{languages}の言語が聞こえます"
   },
+  "Your call ended.": {
+    "model": "madlad-400",
+    "msgstr": "通話は終了しました。"
+  },
+  "Your link expired before anyone used it.": {
+    "model": "hy-mt2",
+    "msgstr": "そのリンクは、誰かが使う前に期限切れになってしまいました。"
+  },
   "Your rando": {
     "model": "hy-mt2",
     "msgstr": "あなたのrando"
@@ -451,9 +519,17 @@
     "model": "hy-mt2",
     "msgstr": "マイクの使用許可を求めています"
   },
+  "button\u0004Cancel the link": {
+    "model": "m2m100",
+    "msgstr": "リンクをキャンセル"
+  },
   "button\u0004Continue": {
     "model": "m2m100",
     "msgstr": "続く"
+  },
+  "button\u0004Copy": {
+    "model": "hy-mt2",
+    "msgstr": "コピー"
   },
   "button\u0004End": {
     "model": "hy-mt2",
@@ -462,6 +538,14 @@
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "rando を見つける"
+  },
+  "button\u0004Invite someone": {
+    "model": "hy-mt2",
+    "msgstr": "誰かを招待する"
+  },
+  "button\u0004Join the call": {
+    "model": "hy-mt2",
+    "msgstr": "通話に参加してください"
   },
   "button\u0004Mute": {
     "model": "translategemma-12b",
@@ -500,7 +584,7 @@
     "msgstr": "接続中"
   },
   "connection state\u0004connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "接続中"
   },
   "connection state\u0004ended": {

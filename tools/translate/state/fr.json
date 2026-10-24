@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "translategemma-27b",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
@@ -8,15 +8,15 @@
     "msgstr": "%{language} Les deux façons"
   },
   "%{minutes} min": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} min"
   },
   "%{minutes}+ min": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{minutes}+ min"
   },
   "%{time} remaining": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{time} restant"
   },
   "30+ min": {
@@ -35,8 +35,12 @@
     "model": "translategemma-27b",
     "msgstr": "Une combinaison linguistique apparaît dès qu’elle compte au moins %{min} occurrences ; les combinaisons moins fréquentes sont regroupées sous la rubrique « autres »."
   },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "m2m100",
+    "msgstr": "Un appel audio un à un, comme tout autre sur randos, avec la personne qui vous a envoyé le lien."
+  },
   "About": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "À propos"
   },
   "About randos": {
@@ -60,11 +64,11 @@
     "msgstr": "Les appels ont commencé"
   },
   "Cancel": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Annuler"
   },
   "Canceled": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Annulé"
   },
   "Change": {
@@ -76,15 +80,15 @@
     "msgstr": "Vérification du relais…"
   },
   "Choose supported conversation languages.": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "Sélectionnez les langues de conversation prises en charge."
   },
   "Choose your languages.": {
-    "model": "opus-mt",
+    "model": "translategemma-27b",
     "msgstr": "Choisissez vos langues."
   },
   "Connected": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Connecté"
   },
   "Connecting": {
@@ -92,7 +96,7 @@
     "msgstr": "En cours de connexion"
   },
   "Connection lost": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Connexion perdue"
   },
   "Connection:": {
@@ -108,12 +112,16 @@
     "msgstr": "Poursuite au-delà de 10 minutes"
   },
   "Conversation is active.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-27b",
     "msgstr": "La conversation est animée."
   },
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "hy-mt2",
     "msgstr": "Les conversations sont privées et ne sont pas stockées. Le serveur coordonne l’appel, mais il ne conserve pas d’enregistrements ni ne crée d’historique des personnes avec qui vous avez parlé."
+  },
+  "Copied": {
+    "model": "hy-mt2",
+    "msgstr": "Copié"
   },
   "Couldn't connect": {
     "model": "opus-mt",
@@ -160,12 +168,16 @@
     "msgstr": "Trouver un rando compatible."
   },
   "Finding a rando": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Trouver un rando"
   },
   "Finished": {
     "model": "hy-mt2",
     "msgstr": "Terminé"
+  },
+  "For your rando to open it.": {
+    "model": "opus-mt",
+    "msgstr": "Pour que votre rando l'ouvre."
   },
   "Help fix a translation": {
     "model": "hy-mt2",
@@ -176,7 +188,7 @@
     "msgstr": "Comment les appels se sont terminés"
   },
   "How languages are counted": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Comment les langues sont comptées"
   },
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
@@ -199,16 +211,32 @@
     "model": "hy-mt2",
     "msgstr": "Intentionnellement minimal"
   },
+  "Invitation link": {
+    "model": "translategemma-4b",
+    "msgstr": "Lien d'invitation"
+  },
+  "Invite": {
+    "model": "hy-mt2",
+    "msgstr": "Invitez"
+  },
+  "Inviting": {
+    "model": "madlad-400",
+    "msgstr": "Inviting"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "hy-mt2",
     "msgstr": "Il est destiné à %{crosstalk}, aux échanges linguistiques, à la pratique de l’écoute, ainsi qu’aux conversations informelles ordinaires, sans forcer les gens à suivre des modèles ou des catégories rigides."
   },
-  "Language": {
+  "Join": {
     "model": "opus-mt",
+    "msgstr": "Joignez-vous"
+  },
+  "Language": {
+    "model": "hy-mt2",
     "msgstr": "Langue"
   },
   "Languages spoken": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Langues parlées"
   },
   "Last checked at %{time} UTC.": {
@@ -236,15 +264,15 @@
     "msgstr": "Aucun relais n'est configuré"
   },
   "Not translated yet": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Pas encore traduit"
   },
   "Nothing matches.": {
-    "model": "madlad-400",
+    "model": "translategemma-27b",
     "msgstr": "Rien ne correspond."
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Autres langues: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -256,7 +284,7 @@
     "msgstr": "Via UDP (la plupart des appels)."
   },
   "Pick at least one language to hear": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Choisissez au moins une langue à écouter"
   },
   "Pick every language you're comfortable listening to.": {
@@ -291,12 +319,24 @@
     "model": "translategemma-12b",
     "msgstr": "La connexion audio sécurisée est en cours de démarrage."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "translategemma-12b",
+    "msgstr": "Envoyez-leur ce lien comme vous le souhaitez. Il sera valide une seule fois, pendant les %{minutes} prochaines minutes."
+  },
+  "Share a link.": {
+    "model": "hy-mt2",
+    "msgstr": "Partagez un lien."
+  },
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-12b",
     "msgstr": "De courtes conversations anonymes pour pratiquer une langue."
   },
+  "Someone invited you to a call": {
+    "model": "m2m100",
+    "msgstr": "Quelqu'un t'a invité à un appel"
+  },
   "Something went wrong!": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Quelque chose ne s'est pas passé comme prévu !"
   },
   "Source (AGPL-3.0)": {
@@ -320,8 +360,16 @@
     "msgstr": "Suggérer un correctif"
   },
   "Switch theme": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Changer de thème"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "hy-mt2",
+    "msgstr": "Il n’est pas possible de se joindre à cet appel depuis ici : l’un d’entre vous a le son et l’autre non."
+  },
+  "That link doesn't work any more.": {
+    "model": "opus-mt",
+    "msgstr": "Ce lien ne fonctionne plus."
   },
   "The call ended because audio isn't available here.": {
     "model": "translategemma-12b",
@@ -352,7 +400,7 @@
     "msgstr": "Le relais fonctionne en partie"
   },
   "The relay is working": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Le relais fonctionne"
   },
   "The relay isn't working": {
@@ -367,9 +415,17 @@
     "model": "madlad-400",
     "msgstr": "Il n’y a pas de comptes, de profils, de contacts, d’abonnés, de flux, de séries, de scores ou de graphiques sociaux permanents. randos est plus proche d’une infrastructure conversationnelle que des médias sociaux."
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "Ce lien est incomplet."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-12b",
     "msgstr": "Les traductions de ce site ont été réalisées par une machine. Si vous constatez une erreur, vous la trouverez ci-dessous et vous pourrez cliquer sur \"Suggérer une correction\" : cela ouvrira une demande sur GitHub avec tous les champs remplis, à l'exception de votre correction (vous aurez besoin d'un compte GitHub). Une demande de modification avec votre correction sera automatiquement soumise, et elle sera publiée une fois qu'elle aura été examinée."
+  },
+  "Tick the 18+ box.": {
+    "model": "translategemma-4b",
+    "msgstr": "Cochez la case \"18 ans et plus\"."
   },
   "Time is up": {
     "model": "madlad-400",
@@ -392,12 +448,20 @@
     "msgstr": "Les traductions"
   },
   "Typical length": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Longueur typique"
   },
   "View on GitHub": {
     "model": "translategemma-4b",
     "msgstr": "Consulter sur GitHub"
+  },
+  "Waiting": {
+    "model": "hy-mt2",
+    "msgstr": "En attente"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "En attendant que votre rando ouvre le lien…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -424,7 +488,7 @@
     "msgstr": "Toi"
   },
   "You agreed to continue, waiting on your rando…": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Vous avez accepté de continuer, en attendant votre rando…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
@@ -439,6 +503,14 @@
     "model": "opus-mt",
     "msgstr": "Vous entendrez %{languages}"
   },
+  "Your call ended.": {
+    "model": "hy-mt2",
+    "msgstr": "Votre appel est terminé."
+  },
+  "Your link expired before anyone used it.": {
+    "model": "madlad-400",
+    "msgstr": "Votre lien a expiré avant que personne ne l'ait utilisé."
+  },
   "Your rando": {
     "model": "opus-mt",
     "msgstr": "Votre rando"
@@ -451,17 +523,33 @@
     "model": "madlad-400",
     "msgstr": "Demande d'accès au microphone"
   },
+  "button\u0004Cancel the link": {
+    "model": "m2m100",
+    "msgstr": "Annuler le lien"
+  },
   "button\u0004Continue": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Continuer"
+  },
+  "button\u0004Copy": {
+    "model": "opus-mt",
+    "msgstr": "Copier"
   },
   "button\u0004End": {
     "model": "opus-mt",
     "msgstr": "Fin"
   },
   "button\u0004Find a rando": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Trouver un rando"
+  },
+  "button\u0004Invite someone": {
+    "model": "hy-mt2",
+    "msgstr": "Invitez quelqu’un"
+  },
+  "button\u0004Join the call": {
+    "model": "translategemma-4b",
+    "msgstr": "Participez à l'appel"
   },
   "button\u0004Mute": {
     "model": "hy-mt2",
@@ -476,7 +564,7 @@
     "msgstr": "Désactiver le son"
   },
   "close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "fermer"
   },
   "connection closed": {
@@ -496,7 +584,7 @@
     "msgstr": "appelant"
   },
   "connection state\u0004connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté"
   },
   "connection state\u0004connecting": {
@@ -544,7 +632,7 @@
     "msgstr": "les identifiants ont été refusés"
   },
   "crosstalk": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "crosstalk"
   },
   "microphone ready": {

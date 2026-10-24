@@ -31,6 +31,10 @@
     "model": "translategemma-12b",
     "msgstr": "Đã gửi: %{sent} / Đã nhận: %{received}"
   },
+  "%{time} left": {
+    "model": "translategemma-4b",
+    "msgstr": "Còn lại %{time}"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} còn lại"
@@ -119,6 +123,10 @@
     "model": "hy-mt2",
     "msgstr": "Tôi rất vui khi nghe thấy điều đó:"
   },
+  "Join through a link": {
+    "model": "translategemma-4b",
+    "msgstr": "Tham gia thông qua liên kết"
+  },
   "Languages spoken:": {
     "model": "translategemma-12b",
     "msgstr": "Các ngôn ngữ được sử dụng:"
@@ -175,6 +183,10 @@
     "model": "translategemma-12b",
     "msgstr": "Qua giao thức UDP (đa số các cuộc gọi)."
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-4b",
+    "msgstr": "Vui lòng dán liên kết mà bạn đã nhận được:"
+  },
   "Press Enter to find a rando.": {
     "model": "hy-mt2",
     "msgstr": "Nhấn Enter để tìm một rando."
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "hy-mt2",
     "msgstr": "Đang kết nối lại âm thanh…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Gửi nó cho họ theo cách bạn muốn. Nó chỉ hoạt động một lần thôi."
   },
   "Server status": {
     "model": "hy-mt2",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "hy-mt2",
     "msgstr": "Độ dài trung bình: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "Đang chờ rando của bạn mở liên kết…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "hy-mt2",
@@ -291,6 +311,10 @@
     "model": "m2m100",
     "msgstr": "Không thể kết nối"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "m2m100",
+    "msgstr": "không thể sao chép liên kết: chọn nó bằng chuột"
+  },
   "couldn't find the server": {
     "model": "m2m100",
     "msgstr": "Không thể tìm được máy chủ"
@@ -311,6 +335,10 @@
     "model": "madlad-400",
     "msgstr": "trong cuộc gọi"
   },
+  "key\u000418+": {
+    "model": "translategemma-12b",
+    "msgstr": "18+ (Dành cho người từ 18 tuổi trở lên)"
+  },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
     "msgstr": "về những con số này"
@@ -322,6 +350,10 @@
   "key\u0004cancel": {
     "model": "hy-mt2",
     "msgstr": "hủy bỏ"
+  },
+  "key\u0004cancel the link": {
+    "model": "m2m100",
+    "msgstr": "Hủy liên kết"
   },
   "key\u0004change": {
     "model": "hy-mt2",
@@ -339,6 +371,10 @@
     "model": "hy-mt2",
     "msgstr": "tiếp tục"
   },
+  "key\u0004copy the link": {
+    "model": "hy-mt2",
+    "msgstr": "sao chép liên kết"
+  },
   "key\u0004end": {
     "model": "hy-mt2",
     "msgstr": "kết thúc"
@@ -350,6 +386,18 @@
   "key\u0004find": {
     "model": "madlad-400",
     "msgstr": "tìm"
+  },
+  "key\u0004invite": {
+    "model": "hy-mt2",
+    "msgstr": "mời"
+  },
+  "key\u0004join": {
+    "model": "m2m100",
+    "msgstr": "Tham gia"
+  },
+  "key\u0004join a link": {
+    "model": "hy-mt2",
+    "msgstr": "tham gia một liên kết"
   },
   "key\u0004language": {
     "model": "hy-mt2",
@@ -395,6 +443,14 @@
     "model": "hy-mt2",
     "msgstr": "bật âm thanh lại"
   },
+  "link copied": {
+    "model": "hy-mt2",
+    "msgstr": "Liên kết đã được sao chép"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "m2m100",
+    "msgstr": "liên kết gửi đến clipboard của terminal của bạn (nếu nó cho phép)"
+  },
   "log\u0004idle": {
     "model": "hy-mt2",
     "msgstr": "không hoạt động"
@@ -402,6 +458,10 @@
   "log\u0004in call": {
     "model": "madlad-400",
     "msgstr": "trong cuộc gọi"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "translategemma-4b",
+    "msgstr": "Liên kết mời đã sẵn sàng để chia sẻ"
   },
   "log\u0004looking for a rando": {
     "model": "hy-mt2",
@@ -467,6 +527,10 @@
     "model": "madlad-400",
     "msgstr": "Trong cuộc gọi"
   },
+  "panel title\u0004Invitation": {
+    "model": "m2m100",
+    "msgstr": "Lời mời"
+  },
   "panel title\u0004Looking": {
     "model": "m2m100",
     "msgstr": "nhìn"
@@ -478,6 +542,10 @@
   "panel title\u0004Time is up": {
     "model": "translategemma-4b",
     "msgstr": "Thời gian đã hết"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "dán toàn bộ liên kết đã gửi cho bạn"
   },
   "peak %{level} dBFS": {
     "model": "hy-mt2",
@@ -539,6 +607,10 @@
     "model": "translategemma-4b",
     "msgstr": "phần mềm hỗ trợ âm thanh đã được khởi động lại"
   },
+  "tick the 18+ box on the form first": {
+    "model": "translategemma-4b",
+    "msgstr": "Trước tiên, hãy đánh dấu vào ô \"18+\" trên mẫu biểu"
+  },
   "time is up: continue?": {
     "model": "madlad-400",
     "msgstr": "thời gian đã hết: tiếp tục không?"
@@ -550,6 +622,10 @@
   "unexpected reply": {
     "model": "hy-mt2",
     "msgstr": "phản hồi bất ngờ"
+  },
+  "waiting for someone to open your link": {
+    "model": "hy-mt2",
+    "msgstr": "đang chờ ai đó mở liên kết của bạn"
   },
   "waiting on your rando": {
     "model": "m2m100",

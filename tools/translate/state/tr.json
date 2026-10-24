@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first} veya %{last}"
   },
   "%{language} both ways": {
@@ -8,7 +8,7 @@
     "msgstr": "%{language} Her iki yoldan"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} dakika"
   },
   "%{minutes}+ min": {
@@ -16,7 +16,7 @@
     "msgstr": "%{minutes}+ min"
   },
   "%{time} remaining": {
-    "model": "translategemma-12b",
+    "model": "translategemma-27b",
     "msgstr": "Kalan süre: %{time}"
   },
   "30+ min": {
@@ -34,6 +34,10 @@
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "hy-mt2",
     "msgstr": "Bir dil çifti, en az %{min} çağrı aldığında listelenir; daha az çağrı alanlar “diğer” kategorisinde sayılır."
+  },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "hy-mt2",
+    "msgstr": "Bağlantıyı size gönderen kişiyle, randos’taki diğer aramalar gibi bire bir sesli arama."
   },
   "About": {
     "model": "hy-mt2",
@@ -64,11 +68,11 @@
     "msgstr": "İptal et"
   },
   "Canceled": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "İptal edildi"
   },
   "Change": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Değiştir"
   },
   "Checking the relay…": {
@@ -96,7 +100,7 @@
     "msgstr": "Bağlantı kayboldu"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Bağlantı:"
   },
   "Continued past %{minutes} minutes": {
@@ -114,6 +118,10 @@
   "Conversations are private and are not stored. The server coordinates the call, but it does not keep recordings or build a history around who you spoke with.": {
     "model": "translategemma-12b",
     "msgstr": "Görüşmeler özeldir ve kaydedilmez. Sunucu, görüşmeyi düzenler ancak kayıt tutmaz veya kiminle konuştuğunuza dair bir geçmiş oluşturmaz."
+  },
+  "Copied": {
+    "model": "hy-mt2",
+    "msgstr": "Kopyalandı"
   },
   "Couldn't connect": {
     "model": "opus-mt",
@@ -167,6 +175,10 @@
     "model": "opus-mt",
     "msgstr": "Tamamlandı"
   },
+  "For your rando to open it.": {
+    "model": "hy-mt2",
+    "msgstr": "rando’nuzun onu açabilmesi için."
+  },
   "Help fix a translation": {
     "model": "opus-mt",
     "msgstr": "Çeviriyi düzeltmeye yardım et"
@@ -199,16 +211,32 @@
     "model": "opus-mt",
     "msgstr": "Kasıtlı olarak minimal"
   },
+  "Invitation link": {
+    "model": "translategemma-4b",
+    "msgstr": "Davet bağlantısı"
+  },
+  "Invite": {
+    "model": "m2m100",
+    "msgstr": "Davetiye"
+  },
+  "Inviting": {
+    "model": "translategemma-4b",
+    "msgstr": "Davet gönderme"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-12b",
     "msgstr": "Bu platform, %{crosstalk}, dil öğrenimi, dinleme alıştırmaları ve insanların katı kalıplara veya etiketlere zorlanmadan rahat bir şekilde sohbet edebileceği bir ortam sağlamak amacıyla tasarlanmıştır."
   },
+  "Join": {
+    "model": "m2m100",
+    "msgstr": "katılın"
+  },
   "Language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Dil"
   },
   "Languages spoken": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Konuşulan diller"
   },
   "Last checked at %{time} UTC.": {
@@ -272,7 +300,7 @@
     "msgstr": "Çağrı Hazırlama"
   },
   "Privacy": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Gizlilik"
   },
   "Ready": {
@@ -291,16 +319,28 @@
     "model": "opus-mt",
     "msgstr": "Güvenli ses bağlantısı başlıyor."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "hy-mt2",
+    "msgstr": "Bu linki onlara istediğiniz şekilde gönderin. Bir kez çalışır ve sonraki %{minutes} dakika boyunca geçerlidir."
+  },
+  "Share a link.": {
+    "model": "madlad-400",
+    "msgstr": "Bir bağlantı paylaş."
+  },
   "Short anonymous conversations for language practice.": {
     "model": "hy-mt2",
     "msgstr": "Dil pratiği için kısa, anonim sohbetler."
   },
+  "Someone invited you to a call": {
+    "model": "m2m100",
+    "msgstr": "Birisi sizi bir çağrıya davet etti"
+  },
   "Something went wrong!": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Bir şeyler ters gitti!"
   },
   "Source (AGPL-3.0)": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Kaynak (AGPL-3.0)"
   },
   "Starting call with rando.": {
@@ -322,6 +362,14 @@
   "Switch theme": {
     "model": "translategemma-4b",
     "msgstr": "Tema değiştir"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "translategemma-12b",
+    "msgstr": "Bu aramaya buradan katılamıyorsunuz: Sizin grubunuzdaki kişilerden birinin sesi duyulurken, diğerinin sesi duyulmuyor."
+  },
+  "That link doesn't work any more.": {
+    "model": "madlad-400",
+    "msgstr": "O bağlantı artık çalışmıyor."
   },
   "The call ended because audio isn't available here.": {
     "model": "hy-mt2",
@@ -367,9 +415,17 @@
     "model": "translategemma-12b",
     "msgstr": "\"randos\" platformunda hesaplar, profiller, kişiler, takipçiler, gönderi akışları, sıralamalar, puanlar veya kalıcı bir sosyal ağ bulunmamaktadır. \"randos\", sosyal medya platformlarından ziyade, daha çok bir iletişim altyapısıdır."
   },
+  "This link is incomplete.": {
+    "model": "hy-mt2",
+    "msgstr": "Bu bağlantı eksik."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "translategemma-27b",
     "msgstr": "Bu sitenin çevirileri otomatik olarak yapılmıştır. Eğer bir çeviride bir yanlışlık fark ederseniz, lütfen aşağıda belirtin ve “Düzeltme Öner” butonuna tıklayın: Bu, GitHub üzerinde, düzeltmenizin dışında her şeyin hazır olduğu bir sorun (issue) açacaktır (GitHub’a kayıtlı bir hesabınızın olması gerekir). Düzeltmenizi içeren bir “pull request” otomatik olarak açılır ve inceleme sonrasında yayınlanır."
+  },
+  "Tick the 18+ box.": {
+    "model": "madlad-400",
+    "msgstr": "18+ kutusunu işaretle."
   },
   "Time is up": {
     "model": "translategemma-4b",
@@ -380,7 +436,7 @@
     "msgstr": "Süre doldu. Başka %{minutes} dakika daha devam etmek ister misiniz?"
   },
   "Today": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Bugün"
   },
   "Toggle dark mode": {
@@ -392,12 +448,20 @@
     "msgstr": "Çeviri"
   },
   "Typical length": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Tipik uzunluk"
   },
   "View on GitHub": {
     "model": "translategemma-4b",
     "msgstr": "GitHub'da görüntüle"
+  },
+  "Waiting": {
+    "model": "m2m100",
+    "msgstr": "bekleyen"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "Bağlantıyı açmak için rando'ınızı bekliyorum…"
   },
   "We can't find the internet": {
     "model": "opus-mt",
@@ -439,6 +503,14 @@
     "model": "translategemma-12b",
     "msgstr": "Aşağıdaki dillerde içerik dinleyebilirsiniz: %{languages}"
   },
+  "Your call ended.": {
+    "model": "translategemma-4b",
+    "msgstr": "Aramaınız sona erdi."
+  },
+  "Your link expired before anyone used it.": {
+    "model": "translategemma-12b",
+    "msgstr": "Bağlantınız, henüz kimse tarafından kullanılmadan sona ermiştir."
+  },
   "Your rando": {
     "model": "hy-mt2",
     "msgstr": "Sizin rando'nuz"
@@ -451,9 +523,17 @@
     "model": "madlad-400",
     "msgstr": "mikrofon erişimi istenir"
   },
+  "button\u0004Cancel the link": {
+    "model": "madlad-400",
+    "msgstr": "Bağlantıyı iptal et"
+  },
   "button\u0004Continue": {
     "model": "m2m100",
     "msgstr": "devamı"
+  },
+  "button\u0004Copy": {
+    "model": "hy-mt2",
+    "msgstr": "Kopyala"
   },
   "button\u0004End": {
     "model": "hy-mt2",
@@ -462,6 +542,14 @@
   "button\u0004Find a rando": {
     "model": "opus-mt",
     "msgstr": "Bir rando bul"
+  },
+  "button\u0004Invite someone": {
+    "model": "hy-mt2",
+    "msgstr": "Birini davet edin"
+  },
+  "button\u0004Join the call": {
+    "model": "m2m100",
+    "msgstr": "Çağrıya katılın"
   },
   "button\u0004Mute": {
     "model": "madlad-400",
@@ -476,7 +564,7 @@
     "msgstr": "Ses açın"
   },
   "close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "kapat"
   },
   "connection closed": {
@@ -500,7 +588,7 @@
     "msgstr": "bağlı"
   },
   "connection state\u0004connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "bağlanıyor"
   },
   "connection state\u0004ended": {
@@ -508,7 +596,7 @@
     "msgstr": "sona erdi"
   },
   "connection state\u0004failed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "başarısız"
   },
   "connection state\u0004microphone denied": {
@@ -564,7 +652,7 @@
     "msgstr": "kimlik bilgileri istenmedi"
   },
   "privacy": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "gizlilik"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
@@ -600,7 +688,7 @@
     "msgstr": "güvenli bağlantı başarısız"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "1 dakikadan az"
   },
   "unexpected reply": {

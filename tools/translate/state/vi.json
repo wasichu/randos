@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "%{first} hoặc %{last}"
   },
   "%{language} both ways": {
@@ -8,7 +8,7 @@
     "msgstr": "%{language} Cả hai cách"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} phút"
   },
   "%{minutes}+ min": {
@@ -34,6 +34,10 @@
   "A language pair shows once it has at least %{min} calls; smaller ones are counted under “other”.": {
     "model": "translategemma-27b",
     "msgstr": "Một cặp ngôn ngữ chỉ được hiển thị khi có ít nhất %{min} lượt yêu cầu; các cặp ngôn ngữ có số lượng yêu cầu nhỏ hơn sẽ được tính vào mục “khác”."
+  },
+  "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
+    "model": "translategemma-4b",
+    "msgstr": "Một cuộc gọi thoại trực tiếp, tương tự như các cuộc gọi khác trên randos, với người đã gửi cho bạn liên kết."
   },
   "About": {
     "model": "hy-mt2",
@@ -68,7 +72,7 @@
     "msgstr": "Đã hủy"
   },
   "Change": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Thay đổi"
   },
   "Checking the relay…": {
@@ -115,6 +119,10 @@
     "model": "hy-mt2",
     "msgstr": "Các cuộc trò chuyện được giữ bí mật và không được lưu trữ. Máy chủ đảm nhiệm việc điều phối cuộc gọi, nhưng nó không lưu lại bất kỳ bản ghi nào hay tạo ra lịch sử về những người bạn đã nói chuyện."
   },
+  "Copied": {
+    "model": "hy-mt2",
+    "msgstr": "Đã sao chép"
+  },
   "Couldn't connect": {
     "model": "madlad-400",
     "msgstr": "Không thể kết nối"
@@ -132,7 +140,7 @@
     "msgstr": "Kể từ %{time} giờ UTC ngày %{date}: số lượng cuộc gọi trong hôm nay tính đến thời điểm hiện tại."
   },
   "Current call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Cuộc gọi hiện tại"
   },
   "Done": {
@@ -148,11 +156,11 @@
     "msgstr": "Mỗi cuộc gọi đều được định tuyến qua hệ thống của chúng tôi, do đó không bên nào có thể thấy địa chỉ của bên còn lại. Chúng tôi kiểm tra hệ thống này bằng cách thiết lập một kết nối thực tế mỗi vài phút."
   },
   "Find a phrase": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Tìm một cụm từ"
   },
   "Find a phrase, in English or %{language}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Tìm một cụm từ, bằng tiếng Anh hoặc %{language}"
   },
   "Finding a compatible rando.": {
@@ -166,6 +174,10 @@
   "Finished": {
     "model": "translategemma-4b",
     "msgstr": "Hoàn thành"
+  },
+  "For your rando to open it.": {
+    "model": "hy-mt2",
+    "msgstr": "Để người rando của bạn mở nó."
   },
   "Help fix a translation": {
     "model": "hy-mt2",
@@ -199,9 +211,25 @@
     "model": "hy-mt2",
     "msgstr": "Cố tình giữ ở mức tối thiểu"
   },
+  "Invitation link": {
+    "model": "hy-mt2",
+    "msgstr": "Liên kết mời tham dự"
+  },
+  "Invite": {
+    "model": "m2m100",
+    "msgstr": "mời"
+  },
+  "Inviting": {
+    "model": "hy-mt2",
+    "msgstr": "Gửi lời mời"
+  },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
     "model": "translategemma-27b",
     "msgstr": "Dự kiến, nó sẽ được sử dụng cho %{crosstalk}, giao lưu ngôn ngữ, luyện nghe và các cuộc trò chuyện thông thường, thoải mái mà không cần phải áp đặt bất kỳ khuôn mẫu hay quy tắc cứng nhắc nào lên người tham gia."
+  },
+  "Join": {
+    "model": "madlad-400",
+    "msgstr": "Tham gia"
   },
   "Language": {
     "model": "hy-mt2",
@@ -228,7 +256,7 @@
     "msgstr": "Không có tài khoản. Không có hồ sơ cá nhân. Không có video. Không áp lực."
   },
   "No calls yet.": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Chưa có cuộc gọi nào."
   },
   "No relay is configured": {
@@ -280,7 +308,7 @@
     "msgstr": "Sẵn sàng"
   },
   "Reconnecting audio…": {
-    "model": "hy-mt2",
+    "model": "translategemma-27b",
     "msgstr": "Đang kết nối lại âm thanh…"
   },
   "Running this commit plus changes not yet committed": {
@@ -291,16 +319,28 @@
     "model": "m2m100",
     "msgstr": "Kết nối âm thanh an toàn bắt đầu."
   },
+  "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
+    "model": "translategemma-4b",
+    "msgstr": "Bạn có thể gửi liên kết này cho họ theo bất kỳ cách nào bạn muốn. Liên kết này chỉ hoạt động một lần, trong khoảng %{minutes} phút tiếp theo."
+  },
+  "Share a link.": {
+    "model": "madlad-400",
+    "msgstr": "Chia sẻ liên kết."
+  },
   "Short anonymous conversations for language practice.": {
-    "model": "translategemma-12b",
+    "model": "translategemma-27b",
     "msgstr": "Những cuộc trò chuyện ngắn, ẩn danh để luyện tập ngôn ngữ."
+  },
+  "Someone invited you to a call": {
+    "model": "opus-mt",
+    "msgstr": "Có người mời bạn đến một cuộc gọi"
   },
   "Something went wrong!": {
     "model": "madlad-400",
     "msgstr": "Có chuyện gì đó không ổn!"
   },
   "Source (AGPL-3.0)": {
-    "model": "madlad-400",
+    "model": "translategemma-27b",
     "msgstr": "Nguồn (AGPL-3.0)"
   },
   "Starting call with rando.": {
@@ -322,6 +362,14 @@
   "Switch theme": {
     "model": "hy-mt2",
     "msgstr": "Thay đổi chủ đề"
+  },
+  "That call can't be joined from here: one of you has audio and the other doesn't.": {
+    "model": "hy-mt2",
+    "msgstr": "Không thể tham gia cuộc gọi đó từ đây: một người trong số các bạn có kết nối âm thanh còn người kia thì không."
+  },
+  "That link doesn't work any more.": {
+    "model": "madlad-400",
+    "msgstr": "Liên kết đó không còn hoạt động nữa."
   },
   "The call ended because audio isn't available here.": {
     "model": "hy-mt2",
@@ -367,9 +415,17 @@
     "model": "translategemma-27b",
     "msgstr": "Không có tài khoản, hồ sơ người dùng, danh bạ, người theo dõi, nguồn cấp dữ liệu, chuỗi thành tích, điểm số hay mạng lưới quan hệ xã hội cố định. randos gần giống với một nền tảng hỗ trợ giao tiếp hơn là một mạng xã hội."
   },
+  "This link is incomplete.": {
+    "model": "madlad-400",
+    "msgstr": "Liên kết này chưa hoàn chỉnh."
+  },
   "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed.": {
     "model": "hy-mt2",
     "msgstr": "Các bản dịch trên trang này được thực hiện bởi máy tính. Nếu có điều gì bị dịch sai, hãy tìm nó ở phía dưới và nhấn “Đề xuất sửa chữa”: điều này sẽ mở một ticket trên GitHub với mọi thông tin đã được điền sẵn, cùng với đề xuất sửa chữa của bạn (bạn cần có tài khoản GitHub). Yêu cầu pull request với đề xuất sửa chữa của bạn sẽ được tạo tự động, và nó sẽ được công bố sau khi được xem xét."
+  },
+  "Tick the 18+ box.": {
+    "model": "translategemma-12b",
+    "msgstr": "Đánh dấu vào ô \"Dành cho người từ 18 tuổi trở lên\"."
   },
   "Time is up": {
     "model": "translategemma-4b",
@@ -380,7 +436,7 @@
     "msgstr": "Thời gian đã hết. Bạn có muốn tiếp tục thêm %{minutes} phút nữa không?"
   },
   "Today": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Hôm nay"
   },
   "Toggle dark mode": {
@@ -396,8 +452,16 @@
     "msgstr": "Chiều dài điển hình"
   },
   "View on GitHub": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Xem trên GitHub"
+  },
+  "Waiting": {
+    "model": "madlad-400",
+    "msgstr": "Đang chờ"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "Đang chờ rando của bạn mở liên kết…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -439,6 +503,14 @@
     "model": "translategemma-4b",
     "msgstr": "Bạn sẽ nghe các ngôn ngữ: %{languages}"
   },
+  "Your call ended.": {
+    "model": "hy-mt2",
+    "msgstr": "Cuộc gọi của bạn đã kết thúc."
+  },
+  "Your link expired before anyone used it.": {
+    "model": "hy-mt2",
+    "msgstr": "Liên kết của bạn đã hết hạn trước khi ai đó sử dụng nó."
+  },
   "Your rando": {
     "model": "madlad-400",
     "msgstr": "rando của bạn"
@@ -451,17 +523,33 @@
     "model": "translategemma-4b",
     "msgstr": "xin quyền truy cập micro"
   },
+  "button\u0004Cancel the link": {
+    "model": "m2m100",
+    "msgstr": "Hủy liên kết"
+  },
   "button\u0004Continue": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Tiếp tục"
   },
+  "button\u0004Copy": {
+    "model": "m2m100",
+    "msgstr": "Bản sao"
+  },
   "button\u0004End": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Kết thúc"
   },
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "Tìm một rando"
+  },
+  "button\u0004Invite someone": {
+    "model": "translategemma-4b",
+    "msgstr": "Mời một người"
+  },
+  "button\u0004Join the call": {
+    "model": "hy-mt2",
+    "msgstr": "Tham gia cuộc gọi"
   },
   "button\u0004Mute": {
     "model": "hy-mt2",

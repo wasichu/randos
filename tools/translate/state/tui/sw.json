@@ -31,6 +31,10 @@
     "model": "madlad-400",
     "msgstr": "%{sent} kutumwa / %{received} kupokea"
   },
+  "%{time} left": {
+    "model": "translategemma-4b",
+    "msgstr": "%{time} imebaki"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} iliyobaki"
@@ -119,6 +123,10 @@
     "model": "translategemma-12b",
     "msgstr": "Ninafurahi kusikia:"
   },
+  "Join through a link": {
+    "model": "translategemma-4b",
+    "msgstr": "Jiunge kupitia kiungo"
+  },
   "Languages spoken:": {
     "model": "madlad-400",
     "msgstr": "Lugha zinazozungumzwa:"
@@ -175,6 +183,10 @@
     "model": "translategemma-12b",
     "msgstr": "Kupitia UDP (katika simu nyingi)."
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-4b",
+    "msgstr": "Ingiza kiungo ambacho umepokea:"
+  },
   "Press Enter to find a rando.": {
     "model": "m2m100",
     "msgstr": "Kuingia kwa ajili ya kutafuta rando."
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "madlad-400",
     "msgstr": "Kuunganisha tena sauti…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Tuma hiyo kwao kwa njia yoyote unayopenda. Inafanya kazi mara moja."
   },
   "Server status": {
     "model": "translategemma-4b",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "translategemma-4b",
     "msgstr": "Urefu wa kawaida: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "Kusubiri yako rando kufungua kiungo…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "translategemma-12b",
@@ -291,6 +311,10 @@
     "model": "translategemma-4b",
     "msgstr": "sikuweza kuungana"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "madlad-400",
+    "msgstr": "haikuweza nakala ya kiungo: kuchagua kwa panya"
+  },
   "couldn't find the server": {
     "model": "madlad-400",
     "msgstr": "haikuweza kupata server"
@@ -311,6 +335,10 @@
     "model": "translategemma-4b",
     "msgstr": "katika simu"
   },
+  "key\u000418+": {
+    "model": "madlad-400",
+    "msgstr": "18 na zaidi"
+  },
   "key\u0004about these numbers": {
     "model": "madlad-400",
     "msgstr": "kuhusu namba hizi"
@@ -322,6 +350,10 @@
   "key\u0004cancel": {
     "model": "madlad-400",
     "msgstr": "kufuta"
+  },
+  "key\u0004cancel the link": {
+    "model": "madlad-400",
+    "msgstr": "kufuta kiungo"
   },
   "key\u0004change": {
     "model": "translategemma-4b",
@@ -339,6 +371,10 @@
     "model": "translategemma-12b",
     "msgstr": "endelea"
   },
+  "key\u0004copy the link": {
+    "model": "m2m100",
+    "msgstr": "Kopi ya Link"
+  },
   "key\u0004end": {
     "model": "madlad-400",
     "msgstr": "mwisho"
@@ -350,6 +386,18 @@
   "key\u0004find": {
     "model": "m2m100",
     "msgstr": "kutafuta"
+  },
+  "key\u0004invite": {
+    "model": "translategemma-4b",
+    "msgstr": "kuomba"
+  },
+  "key\u0004join": {
+    "model": "madlad-400",
+    "msgstr": "kuungana"
+  },
+  "key\u0004join a link": {
+    "model": "madlad-400",
+    "msgstr": "kujiunga na kiungo"
   },
   "key\u0004language": {
     "model": "translategemma-12b",
@@ -395,6 +443,14 @@
     "model": "madlad-400",
     "msgstr": "kuzima"
   },
+  "link copied": {
+    "model": "madlad-400",
+    "msgstr": "kiungo kunakiliwa"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "translategemma-12b",
+    "msgstr": "Kiungo hicho kilitumwa kwenye clipboard ya terminal yako (ikiwa terminal yako inaruhusu hilo)."
+  },
   "log\u0004idle": {
     "model": "translategemma-4b",
     "msgstr": "kachwa"
@@ -402,6 +458,10 @@
   "log\u0004in call": {
     "model": "translategemma-4b",
     "msgstr": "katika simu"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "madlad-400",
+    "msgstr": "mwaliko kiungo tayari kushiriki"
   },
   "log\u0004looking for a rando": {
     "model": "madlad-400",
@@ -467,6 +527,10 @@
     "model": "translategemma-4b",
     "msgstr": "Katika simu"
   },
+  "panel title\u0004Invitation": {
+    "model": "m2m100",
+    "msgstr": "Maombi ya"
+  },
   "panel title\u0004Looking": {
     "model": "m2m100",
     "msgstr": "kuangalia"
@@ -478,6 +542,10 @@
   "panel title\u0004Time is up": {
     "model": "translategemma-4b",
     "msgstr": "Muda umeisha"
+  },
+  "paste the whole link you were sent": {
+    "model": "translategemma-4b",
+    "msgstr": "piga kiungo kamili ambacho ulipokea"
   },
   "peak %{level} dBFS": {
     "model": "translategemma-4b",
@@ -539,6 +607,10 @@
     "model": "m2m100",
     "msgstr": "Msaada wa sauti imeanza tena"
   },
+  "tick the 18+ box on the form first": {
+    "model": "translategemma-4b",
+    "msgstr": "kwanza, acha alama kwenye خانة \"18+\" kwenye fomu"
+  },
   "time is up: continue?": {
     "model": "translategemma-12b",
     "msgstr": "Wakati umekwisha: je, unaendelea?"
@@ -550,6 +622,10 @@
   "unexpected reply": {
     "model": "madlad-400",
     "msgstr": "jibu isiyotarajiwa"
+  },
+  "waiting for someone to open your link": {
+    "model": "madlad-400",
+    "msgstr": "kusubiri kwa mtu kufungua kiungo yako"
   },
   "waiting on your rando": {
     "model": "madlad-400",

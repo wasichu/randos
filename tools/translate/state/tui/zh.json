@@ -31,6 +31,10 @@
     "model": "translategemma-12b",
     "msgstr": "已发送：%{sent} 个数据包 / 已接收：%{received} 个数据包"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "剩余时间：%{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "剩余时间：%{time}"
@@ -119,6 +123,10 @@
     "model": "translategemma-12b",
     "msgstr": "我很高兴听到："
   },
+  "Join through a link": {
+    "model": "hy-mt2",
+    "msgstr": "通过链接加入"
+  },
   "Languages spoken:": {
     "model": "opus-mt",
     "msgstr": "所讲语言:"
@@ -175,6 +183,10 @@
     "model": "translategemma-12b",
     "msgstr": "通过 UDP 协议 (大部分通话)。"
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-12b",
+    "msgstr": "请粘贴您收到的链接："
+  },
   "Press Enter to find a rando.": {
     "model": "opus-mt",
     "msgstr": "按 Enter 键查找 rando。"
@@ -182,6 +194,10 @@
   "Reconnecting audio…": {
     "model": "m2m100",
     "msgstr": "重新连接音频…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "translategemma-4b",
+    "msgstr": "您可以按照您喜欢的方式发送给他们。 只要发送一次即可。"
   },
   "Server status": {
     "model": "hy-mt2",
@@ -230,6 +246,10 @@
   "Typical length: %{length}": {
     "model": "translategemma-12b",
     "msgstr": "典型长度：%{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "opus-mt",
+    "msgstr": "正在等待您的 rando 打开链接…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "translategemma-12b",
@@ -291,6 +311,10 @@
     "model": "hy-mt2",
     "msgstr": "无法连接"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "m2m100",
+    "msgstr": "无法复制链接:用鼠标选择"
+  },
   "couldn't find the server": {
     "model": "madlad-400",
     "msgstr": "找不到服务器"
@@ -311,6 +335,10 @@
     "model": "hy-mt2",
     "msgstr": "在通话中"
   },
+  "key\u000418+": {
+    "model": "madlad-400",
+    "msgstr": "18岁以上"
+  },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
     "msgstr": "关于这些数字"
@@ -322,6 +350,10 @@
   "key\u0004cancel": {
     "model": "m2m100",
     "msgstr": "取消"
+  },
+  "key\u0004cancel the link": {
+    "model": "m2m100",
+    "msgstr": "取消链接"
   },
   "key\u0004change": {
     "model": "m2m100",
@@ -339,6 +371,10 @@
     "model": "hy-mt2",
     "msgstr": "继续"
   },
+  "key\u0004copy the link": {
+    "model": "madlad-400",
+    "msgstr": "复制链接"
+  },
   "key\u0004end": {
     "model": "hy-mt2",
     "msgstr": "结束"
@@ -350,6 +386,18 @@
   "key\u0004find": {
     "model": "opus-mt",
     "msgstr": "查找"
+  },
+  "key\u0004invite": {
+    "model": "m2m100",
+    "msgstr": "邀请"
+  },
+  "key\u0004join": {
+    "model": "m2m100",
+    "msgstr": "加入"
+  },
+  "key\u0004join a link": {
+    "model": "hy-mt2",
+    "msgstr": "加入链接"
   },
   "key\u0004language": {
     "model": "m2m100",
@@ -395,6 +443,14 @@
     "model": "hy-mt2",
     "msgstr": "取消静音"
   },
+  "link copied": {
+    "model": "hy-mt2",
+    "msgstr": "链接已复制"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "translategemma-12b",
+    "msgstr": "链接已发送至您的终端的剪贴板（如果您的终端支持此功能）。"
+  },
   "log\u0004idle": {
     "model": "madlad-400",
     "msgstr": "闲置"
@@ -402,6 +458,10 @@
   "log\u0004in call": {
     "model": "hy-mt2",
     "msgstr": "正在通话中"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "translategemma-4b",
+    "msgstr": "邀请链接已准备好分享"
   },
   "log\u0004looking for a rando": {
     "model": "madlad-400",
@@ -463,6 +523,10 @@
     "model": "hy-mt2",
     "msgstr": "正在通话中"
   },
+  "panel title\u0004Invitation": {
+    "model": "opus-mt",
+    "msgstr": "邀请"
+  },
   "panel title\u0004Looking": {
     "model": "hy-mt2",
     "msgstr": "正在查看"
@@ -474,6 +538,10 @@
   "panel title\u0004Time is up": {
     "model": "madlad-400",
     "msgstr": "时间到了"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "粘贴您收到的整个链接"
   },
   "peak %{level} dBFS": {
     "model": "hy-mt2",
@@ -535,6 +603,10 @@
     "model": "hy-mt2",
     "msgstr": "音频辅助工具已重新启动"
   },
+  "tick the 18+ box on the form first": {
+    "model": "madlad-400",
+    "msgstr": "首先勾选表格上的18+框"
+  },
   "time is up: continue?": {
     "model": "madlad-400",
     "msgstr": "时间到了:继续?"
@@ -546,6 +618,10 @@
   "unexpected reply": {
     "model": "translategemma-4b",
     "msgstr": "出乎意料的回应"
+  },
+  "waiting for someone to open your link": {
+    "model": "opus-mt",
+    "msgstr": "等待有人打开你的链接"
   },
   "waiting on your rando": {
     "model": "opus-mt",

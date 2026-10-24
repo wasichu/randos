@@ -31,6 +31,10 @@
     "model": "translategemma-4b",
     "msgstr": "送信: %{sent} / 受信: %{received}"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "残り時間: %{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "残り時間: %{time}"
@@ -115,6 +119,10 @@
     "model": "translategemma-12b",
     "msgstr": "お話を聞いて、嬉しく思います。"
   },
+  "Join through a link": {
+    "model": "translategemma-4b",
+    "msgstr": "リンクからご参加ください"
+  },
   "Languages spoken:": {
     "model": "m2m100",
     "msgstr": "話されている言語:"
@@ -171,6 +179,10 @@
     "model": "translategemma-12b",
     "msgstr": "UDPプロトコル経由（ほとんどの接続）。"
   },
+  "Paste the link you were sent:": {
+    "model": "hy-mt2",
+    "msgstr": "送られてきたリンクを貼り付けてください："
+  },
   "Press Enter to find a rando.": {
     "model": "hy-mt2",
     "msgstr": "Enterキーを押してrandoを探してください。"
@@ -178,6 +190,10 @@
   "Reconnecting audio…": {
     "model": "translategemma-4b",
     "msgstr": "オーディオの再接続…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "translategemma-4b",
+    "msgstr": "どのように送っても構いません。一度だけ有効です。"
   },
   "Server status": {
     "model": "hy-mt2",
@@ -226,6 +242,10 @@
   "Typical length: %{length}": {
     "model": "translategemma-12b",
     "msgstr": "一般的な長さ：%{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "あなたの rando がリンクを開くのを待っています…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "hy-mt2",
@@ -287,6 +307,10 @@
     "model": "m2m100",
     "msgstr": "接続できない"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "hy-mt2",
+    "msgstr": "リンクをコピーできません：マウスで選択してください"
+  },
   "couldn't find the server": {
     "model": "madlad-400",
     "msgstr": "サーバが見つかりませんでした"
@@ -307,6 +331,10 @@
     "model": "hy-mt2",
     "msgstr": "通話中に"
   },
+  "key\u000418+": {
+    "model": "hy-mt2",
+    "msgstr": "18+"
+  },
   "key\u0004about these numbers": {
     "model": "m2m100",
     "msgstr": "これらの数字について"
@@ -318,6 +346,10 @@
   "key\u0004cancel": {
     "model": "m2m100",
     "msgstr": "キャンセル"
+  },
+  "key\u0004cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "リンクを無効化する"
   },
   "key\u0004change": {
     "model": "madlad-400",
@@ -335,6 +367,10 @@
     "model": "translategemma-4b",
     "msgstr": "続き"
   },
+  "key\u0004copy the link": {
+    "model": "translategemma-4b",
+    "msgstr": "リンクをコピー"
+  },
   "key\u0004end": {
     "model": "hy-mt2",
     "msgstr": "終了"
@@ -346,6 +382,18 @@
   "key\u0004find": {
     "model": "madlad-400",
     "msgstr": "見つける"
+  },
+  "key\u0004invite": {
+    "model": "m2m100",
+    "msgstr": "招待"
+  },
+  "key\u0004join": {
+    "model": "translategemma-4b",
+    "msgstr": "参加する"
+  },
+  "key\u0004join a link": {
+    "model": "hy-mt2",
+    "msgstr": "リンクに参加する"
   },
   "key\u0004language": {
     "model": "m2m100",
@@ -391,6 +439,14 @@
     "model": "hy-mt2",
     "msgstr": "ミュート解除"
   },
+  "link copied": {
+    "model": "madlad-400",
+    "msgstr": "リンクをコピーしました"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "hy-mt2",
+    "msgstr": "端末のクリップボードにリンクが送信されました（クリップボード機能が利用可能な場合）。"
+  },
   "log\u0004idle": {
     "model": "translategemma-4b",
     "msgstr": "未使用"
@@ -398,6 +454,10 @@
   "log\u0004in call": {
     "model": "hy-mt2",
     "msgstr": "通話中"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "hy-mt2",
+    "msgstr": "共有可能な招待リンクが準備できました"
   },
   "log\u0004looking for a rando": {
     "model": "madlad-400",
@@ -463,6 +523,10 @@
     "model": "hy-mt2",
     "msgstr": "通話中"
   },
+  "panel title\u0004Invitation": {
+    "model": "translategemma-4b",
+    "msgstr": "招待"
+  },
   "panel title\u0004Looking": {
     "model": "hy-mt2",
     "msgstr": "見ている"
@@ -474,6 +538,10 @@
   "panel title\u0004Time is up": {
     "model": "madlad-400",
     "msgstr": "時間切れだ"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "送られてきたリンクを全部貼り付けて"
   },
   "peak %{level} dBFS": {
     "model": "hy-mt2",
@@ -535,6 +603,10 @@
     "model": "hy-mt2",
     "msgstr": "オーディオヘルパーが再起動しました"
   },
+  "tick the 18+ box on the form first": {
+    "model": "madlad-400",
+    "msgstr": "18歳以上のボックスにチェックを入れ"
+  },
   "time is up: continue?": {
     "model": "hy-mt2",
     "msgstr": "時間切れです。続けますか？"
@@ -546,6 +618,10 @@
   "unexpected reply": {
     "model": "m2m100",
     "msgstr": "予期せぬ回答"
+  },
+  "waiting for someone to open your link": {
+    "model": "hy-mt2",
+    "msgstr": "リンクを開いてくれる人を待っています"
   },
   "waiting on your rando": {
     "model": "hy-mt2",

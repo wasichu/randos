@@ -119,6 +119,10 @@
     "model": "translategemma-12b",
     "msgstr": "আমি এটা শুনে খুশি হলাম:"
   },
+  "Join through a link": {
+    "model": "hy-mt2",
+    "msgstr": "লিঙ্কের মাধ্যমে যোগ দিন"
+  },
   "Languages spoken:": {
     "model": "madlad-400",
     "msgstr": "যেসব ভাষায় কথা বলা হয়:"
@@ -175,6 +179,10 @@
     "model": "translategemma-12b",
     "msgstr": "ইউডিপি (UDP) এর মাধ্যমে (বেশিরভাগ কল)।"
   },
+  "Paste the link you were sent:": {
+    "model": "translategemma-12b",
+    "msgstr": "যে লিঙ্কটি আপনাকে পাঠানো হয়েছে, সেটি এখানে পেস্ট করুন:"
+  },
   "Press Enter to find a rando.": {
     "model": "madlad-400",
     "msgstr": "rando খুঁজতে এন্টার চাপুন।"
@@ -182,6 +190,10 @@
   "Reconnecting audio…": {
     "model": "translategemma-4b",
     "msgstr": "অডিও সংযোগ পুনরুদ্ধার করা হচ্ছে…"
+  },
+  "Send it to them however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "আপনি এটিকে যে কোনো উপায়ে তাদের কাছে পাঠাতে পারেন। এটি একবার কাজ করবে।"
   },
   "Server status": {
     "model": "m2m100",
@@ -230,6 +242,10 @@
   "Typical length: %{length}": {
     "model": "translategemma-4b",
     "msgstr": "সাধারণ দৈর্ঘ্য: %{length}"
+  },
+  "Waiting for your rando to open the link…": {
+    "model": "madlad-400",
+    "msgstr": "লিঙ্কটি খুলতে আপনার rando-এর অপেক্ষায়…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "hy-mt2",
@@ -291,6 +307,10 @@
     "model": "madlad-400",
     "msgstr": "সংযোগ স্থাপন করা যায়নি"
   },
+  "couldn't copy the link: select it with the mouse": {
+    "model": "madlad-400",
+    "msgstr": "লিঙ্ক অনুলিপি করা যায়নি: মাউসের সাহায্যে এটি নির্বাচন করুন"
+  },
   "couldn't find the server": {
     "model": "madlad-400",
     "msgstr": "সার্ভার পাওয়া যায়নি"
@@ -311,6 +331,10 @@
     "model": "hy-mt2",
     "msgstr": "একটি কলের সময়"
   },
+  "key\u000418+": {
+    "model": "hy-mt2",
+    "msgstr": "১৮+"
+  },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
     "msgstr": "এই সংখ্যাগুলো সম্পর্কে"
@@ -322,6 +346,10 @@
   "key\u0004cancel": {
     "model": "m2m100",
     "msgstr": "বাতিল"
+  },
+  "key\u0004cancel the link": {
+    "model": "translategemma-4b",
+    "msgstr": "লিঙ্কটি বাতিল করুন"
   },
   "key\u0004change": {
     "model": "hy-mt2",
@@ -339,6 +367,10 @@
     "model": "madlad-400",
     "msgstr": "চালিয়ে যাও"
   },
+  "key\u0004copy the link": {
+    "model": "madlad-400",
+    "msgstr": "লিঙ্কটি অনুলিপি করুন"
+  },
   "key\u0004end": {
     "model": "m2m100",
     "msgstr": "শেষ"
@@ -350,6 +382,18 @@
   "key\u0004find": {
     "model": "m2m100",
     "msgstr": "খুঁজুন"
+  },
+  "key\u0004invite": {
+    "model": "madlad-400",
+    "msgstr": "আমন্ত্রণ জানাও"
+  },
+  "key\u0004join": {
+    "model": "hy-mt2",
+    "msgstr": "যোগ দিন"
+  },
+  "key\u0004join a link": {
+    "model": "m2m100",
+    "msgstr": "একটি লিঙ্ক যোগ করুন"
   },
   "key\u0004language": {
     "model": "m2m100",
@@ -395,6 +439,14 @@
     "model": "madlad-400",
     "msgstr": "নীরবতা অপসারণ করো"
   },
+  "link copied": {
+    "model": "madlad-400",
+    "msgstr": "লিঙ্ক অনুলিপি করা হয়েছে"
+  },
+  "link sent to your terminal's clipboard (if it allows that)": {
+    "model": "translategemma-4b",
+    "msgstr": "লিঙ্কটি আপনার টার্মিনালের ক্লিপবোর্ডে পাঠানো হয়েছে (যদি আপনার টার্মিনাল এটি সমর্থন করে)।"
+  },
   "log\u0004idle": {
     "model": "hy-mt2",
     "msgstr": "নিষ্ক্রিয়"
@@ -402,6 +454,10 @@
   "log\u0004in call": {
     "model": "madlad-400",
     "msgstr": "কলের মধ্যে"
+  },
+  "log\u0004invitation link ready to share": {
+    "model": "madlad-400",
+    "msgstr": "আমন্ত্রণ লিঙ্ক শেয়ার করার জন্য প্রস্তুত"
   },
   "log\u0004looking for a rando": {
     "model": "madlad-400",
@@ -467,6 +523,10 @@
     "model": "hy-mt2",
     "msgstr": "কলের সময়"
   },
+  "panel title\u0004Invitation": {
+    "model": "hy-mt2",
+    "msgstr": "আমন্ত্রণ"
+  },
   "panel title\u0004Looking": {
     "model": "hy-mt2",
     "msgstr": "দেখছি"
@@ -478,6 +538,10 @@
   "panel title\u0004Time is up": {
     "model": "madlad-400",
     "msgstr": "সময় শেষ"
+  },
+  "paste the whole link you were sent": {
+    "model": "madlad-400",
+    "msgstr": "যে লিঙ্কটি আপনাকে পাঠানো হয়েছে, তার পুরোটাই পেস্ট করুন"
   },
   "peak %{level} dBFS": {
     "model": "madlad-400",
@@ -539,6 +603,10 @@
     "model": "madlad-400",
     "msgstr": "অডিও সহায়ক পুনরায় আরম্ভ করা হয়েছে"
   },
+  "tick the 18+ box on the form first": {
+    "model": "madlad-400",
+    "msgstr": "প্রথমে ফর্মে ১৮+ বক্সে টিক দিন"
+  },
   "time is up: continue?": {
     "model": "translategemma-12b",
     "msgstr": "সময় শেষ: আপনি কি চালিয়ে যেতে চান?"
@@ -550,6 +618,10 @@
   "unexpected reply": {
     "model": "madlad-400",
     "msgstr": "অপ্রত্যাশিত উত্তর"
+  },
+  "waiting for someone to open your link": {
+    "model": "madlad-400",
+    "msgstr": "কেউ আপনার লিঙ্কটি খুলতে অপেক্ষা করছে"
   },
   "waiting on your rando": {
     "model": "madlad-400",
