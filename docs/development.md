@@ -86,7 +86,29 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 | `just turn-check` | The helper against the real coturn, over UDP and TLS (owner only: needs the TURN secret). Run after changing the relay path. |
 
 CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
-plus both smoke tests. The tests never play sound and never reach the
+plus both smoke tests.
+
+### Dependency updates
+
+Dependabot (`.github/dependabot.yml`) opens grouped PRs: weekly for Mix,
+Cargo and GitHub Actions, monthly for the two Python harnesses; a Monday
+workflow (`dependency-check.yml`) runs `cargo deny check advisories` and
+`mix hex.audit`. The rule for merging:
+
+- **No `gpu-check` label, CI green: merge.** The `-tooling` groups of the
+  Python harnesses (pytest, Ruff, setuptools) count as this too, though
+  they carry the label.
+- **`gpu-check` (a harness's `-models` group): compare before merging**,
+  in a git worktree on the PR's branch (its own `.venv`; never the main
+  tree's, and never while a model runs). For `tools/translate`: run each
+  model the PR touches on a few strings (`cli run --model <m> --locales
+  es --limit 5`) and diff the texts against the stored shootout entries
+  (greedy decoding should match exactly), and rescore a copy of a stored
+  run with MetricX and COMET-Kiwi (within about 0.01 of the stored
+  scores). For `tools/voice-eval`, the benchmark on a few clips against
+  `results/benchmark.json` (it has no reduced mode yet). A difference
+  doesn't block merging by itself: it means the next run may pick
+  differently, which is worth knowing first. The tests never play sound and never reach the
 internet; the smoke tests start their own throwaway server on :4010.
 
 ## More tools
