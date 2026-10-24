@@ -19,7 +19,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - id: metadata
-        uses: dependabot/fetch-metadata@v3
+        # Pinned (v3.1.0): this job can write to pull requests, so a moved tag
+        # mustn't change what runs here; Dependabot's actions updates keep it current.
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
       - if: steps.metadata.outputs.update-type == 'version-update:semver-major'
         env:
           GH_TOKEN: ${{ github.token }}

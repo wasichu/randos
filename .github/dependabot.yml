@@ -38,16 +38,18 @@ updates:
     groups:
       actions: {patterns: ["*"], update-types: ["minor", "patch"]}
       actions-major: {patterns: ["*"], update-types: ["major"]}
-  # The Python harnesses, monthly, labelled gpu-check: a model library's
-  # update (torch, transformers, ...) needs the GPU comparison before
-  # merging. Their tooling (pytest, ruff, setuptools) comes in groups of its
-  # own: CI is enough for those.
+  # The Python harnesses, monthly, labelled gpu-check (labels are per
+  # directory): their -models groups (torch, transformers, ...) need the GPU
+  # comparison before merging; their -tooling groups (pytest, ruff,
+  # setuptools) need only CI, though they carry the label. Majors of either
+  # come in -major PRs of their own.
   - package-ecosystem: uv
     directory: /tools/translate
     schedule: {interval: monthly}
     labels: ["dependencies", "gpu-check"]
     groups:
-      translate-tooling: {patterns: ["pytest", "ruff", "setuptools"]}
+      translate-tooling: {patterns: ["pytest", "ruff", "setuptools"], update-types: ["minor", "patch"]}
+      translate-tooling-major: {patterns: ["pytest", "ruff", "setuptools"], update-types: ["major"]}
       translate-models:
         patterns: ["*"]
         exclude-patterns: ["pytest", "ruff", "setuptools"]
@@ -61,7 +63,8 @@ updates:
     schedule: {interval: monthly}
     labels: ["dependencies", "gpu-check"]
     groups:
-      voice-eval-tooling: {patterns: ["pytest", "ruff", "setuptools"]}
+      voice-eval-tooling: {patterns: ["pytest", "ruff", "setuptools"], update-types: ["minor", "patch"]}
+      voice-eval-tooling-major: {patterns: ["pytest", "ruff", "setuptools"], update-types: ["major"]}
       voice-eval-models:
         patterns: ["*"]
         exclude-patterns: ["pytest", "ruff", "setuptools"]

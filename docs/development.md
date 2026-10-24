@@ -103,14 +103,13 @@ Cargo and GitHub Actions, monthly for the two Python harnesses; a Monday
 workflow (`dependency-check.yml`) runs `cargo deny check advisories` and
 `mix hex.audit`. The rule for merging:
 
-- **No `gpu-check` or `major` label, CI green: merge.** The `-tooling`
-  groups of the Python harnesses (pytest, Ruff, setuptools) count as this
-  too, though they carry `gpu-check`.
+- **CI green, and no `major` or `gpu-check` label: merge.** A Python
+  harness's `-tooling` PR (pytest, Ruff, setuptools) counts as this,
+  though it carries `gpu-check` (labels are per directory).
 - **`major`** (a dependency up a major version; these come in PRs of their
   own, `<group>-major`, labelled by `dependabot-labels.yml`): read the
   changelog for breaking changes first. Majors are worth taking, not
-  ignoring; they just get that care. With `gpu-check` as well, the
-  comparison below too.
+  ignoring; they just get that care.
 - **`gpu-check` (a harness's `-models` group): compare before merging**,
   in a git worktree on the PR's branch (its own `.venv`; never the main
   tree's, and never while a model runs). For `tools/translate`: run each

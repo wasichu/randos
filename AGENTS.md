@@ -43,10 +43,11 @@ are product requirements, not suggestions. Don't add features that violate them.
     Dependabot (`.github/dependabot.yml`) opens grouped update PRs (weekly;
     the Python harnesses monthly), and `dependency-check.yml` runs
     `cargo deny check advisories` and `mix hex.audit` every Monday, so an
-    advisory surfaces without a push. Merge a Dependabot PR on green CI
-    unless it's labelled `major` (read the changelog for breaking changes)
-    or `gpu-check` (a Python harness's model libraries: the comparison in
-    `docs/development.md`, "Dependency updates", first).
+    advisory surfaces without a push. Merge a Dependabot PR on green CI,
+    except: `major` (read the changelog for breaking changes first), and a
+    `gpu-check` harness's `-models` PR (the comparison in
+    `docs/development.md`, "Dependency updates", first); a `-tooling` PR
+    needs only CI though it carries `gpu-check`.
   - `just smoke` — the browser end-to-end checks: `call_smoke.mjs` (two
     headless Chromes with fake mics place a real WebRTC call, extend it, drop
     and resume a socket, check mic teardown), `relay_only_smoke.mjs`,
