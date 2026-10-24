@@ -66,6 +66,12 @@ defmodule Randos.StatsTest do
     refute inspect(snapshot) =~ ~s("x")
   end
 
+  test "an invitation call (no languages) counts as started, in no language pair" do
+    %{stats: stats} = start_stats(~U[2026-10-21 09:12:33Z])
+    for _ <- 1..3, do: call(stats, nil, :completed, connected_s: 600)
+    assert %{started: 3, pairs: [], other_pairs: 0} = Stats.snapshot(stats)
+  end
+
   test "the median waits for 3 connected calls" do
     %{stats: stats} = start_stats(~U[2026-10-21 09:00:00Z])
     call(stats, ["en", "es"], :completed, connected_s: 100)

@@ -27,6 +27,12 @@ defmodule Randos.Matchmaking.MatchmakerTest do
     }
   end
 
+  defp start_named(name, opts \\ []) do
+    call_starter = fn _match, _call_options -> {:ok, self()} end
+    start_supervised!({Matchmaker, [name: name, call_starter: call_starter] ++ opts}, id: name)
+    name
+  end
+
   defp waiting_pid do
     spawn(fn ->
       receive do
@@ -579,6 +585,66 @@ defmodule Randos.Matchmaking.MatchmakerTest do
                  matchmaker,
                  token,
                  joiner(waiting_pid(), accepted_adult_terms: false)
+               )
+    end
+
+    test "leaving withdraws an invitation", %{matchmaker: matchmaker} do
+      creator = waiting_pid()
+      {:invited, token, _} = invite(matchmaker, creator)
+      :ok = Matchmaker.leave(matchmaker, creator)
+
+      assert {:error, :invitation_invalid} =
+               Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+    end
+
+    test "an invitation needs supported languages, like the queue" do
+      assert {:error, :unsupported_language} =
+               Matchmaker.invite(
+                 :"matchmaker_#{System.unique_integer([:positive])}" |> start_named(),
+                 participant(pid: waiting_pid(), speaks_language: "xx", hears_languages: ["de"])
+               )
+    end
+
+    test "a link that couldn't start its call stays valid" do
+      name = :"matchmaker_fail_#{System.unique_integer([:positive])}"
+      call_starter = fn _match, _call_options -> {:error, :supervisor_down} end
+      start_supervised!({Matchmaker, name: name, call_starter: call_starter}, id: name)
+      {:invited, token, _} = invite(name, waiting_pid())
+      assert {:error, :call_start_failed} = Matchmaker.accept(name, token, joiner(waiting_pid()))
+      assert map_size(:sys.get_state(name).invitations) == 1
+    end
+
+    test "a used or cancelled link's expiry never fires; its creator can invite again" do
+      name =
+        start_named(:"matchmaker_expiry2_#{System.unique_integer([:positive])}",
+          invitation_ms: 50
+        )
+
+      {:invited, token, _} = invite(name, self())
+      assert {:matched, _} = Matchmaker.accept(name, token, joiner(waiting_pid()))
+      refute_receive :invitation_expired, 150
+      assert {:invited, _token, _} = invite(name, self())
+      :ok = Matchmaker.cancel_invitation(name, self())
+      refute_receive :invitation_expired, 150
+    end
+
+    test "an invitation call keeps no one apart: the two can be matched at once after it" do
+      name = start_named(:"matchmaker_rematch_#{System.unique_integer([:positive])}")
+      a = waiting_pid()
+      b = waiting_pid()
+      {:invited, token, _} = invite(name, a, ["de"], id: "a")
+      assert {:matched, _} = Matchmaker.accept(name, token, joiner(b, id: "b"))
+
+      :queued =
+        Matchmaker.join(
+          name,
+          participant(id: "a", pid: a, speaks_language: "en", hears_languages: ["de"])
+        )
+
+      assert {:matched, _} =
+               Matchmaker.join(
+                 name,
+                 participant(id: "b", pid: b, speaks_language: "de", hears_languages: ["en"])
                )
     end
 

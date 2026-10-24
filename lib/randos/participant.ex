@@ -318,7 +318,9 @@ defmodule Randos.Participant do
     do: {p, [{:push_resume_ticket, ticket}]}
 
   def handle(%{call_pid: pid} = p, {:resumed_elsewhere, pid}) when is_pid(pid),
-    do: {%{p | call_pid: nil, call: nil, webrtc_role: nil, status: :idle}, [:detach]}
+    do:
+      {%{p | call_pid: nil, call: nil, webrtc_role: nil, call_kind: nil, status: :idle},
+       [:detach]}
 
   # Anything else doesn't apply in the current status.
   def handle(p, _event), do: {p, []}

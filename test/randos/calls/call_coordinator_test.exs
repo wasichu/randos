@@ -41,6 +41,9 @@ defmodule Randos.Calls.CallCoordinatorTest do
     {match, [pid_a, pid_b]}
   end
 
+  # Short default timers, for the tests about them; a test about what
+  # happens in order (hang up, relay, telemetry) gives itself a long call,
+  # since a slow CI runner can outlast 20 ms (2026-10-24, twice).
   defp start_call(match, opts \\ []) do
     start_supervised!(
       {CallCoordinator,
@@ -137,7 +140,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "ends when either participant declines extension" do
     {match, pids} = match()
-    call_pid = start_call(match, call_duration_ms: 5)
+    call_pid = start_call(match, call_duration_ms: 5, extension_response_timeout_ms: 1_000)
 
     assert_receive {:call_updated, %{status: :active}}
     assert_receive {:call_updated, %{status: :active}}
@@ -167,7 +170,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "hangup ends the call for both participants" do
     {match, pids} = match()
-    call_pid = start_call(match)
+    call_pid = start_call(match, call_duration_ms: 60_000)
 
     assert_receive {:call_updated, %{status: :active}}
     assert_receive {:call_updated, %{status: :active}}
@@ -181,7 +184,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "duplicate hangup after call process exits is safe" do
     {match, pids} = match()
-    call_pid = start_call(match)
+    call_pid = start_call(match, call_duration_ms: 60_000)
 
     assert_receive {:call_updated, %{status: :active}}
     assert_receive {:call_updated, %{status: :active}}
@@ -197,7 +200,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "relays future WebRTC signaling messages only to the peer" do
     {match, pids} = match()
-    call_pid = start_call(match)
+    call_pid = start_call(match, call_duration_ms: 60_000)
 
     assert_receive {:call_updated, %{status: :active}}
     assert_receive {:call_updated, %{status: :active}}
@@ -220,7 +223,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "a relay-only call never relays a direct address to the peer" do
     {match, pids} = match()
-    call_pid = start_call(match, ice_transport_policy: "relay")
+    call_pid = start_call(match, ice_transport_policy: "relay", call_duration_ms: 60_000)
 
     assert_receive {:call_updated, %{status: :active, ice_transport_policy: "relay"}}
     assert_receive {:call_updated, %{status: :active}}
@@ -248,7 +251,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "lifecycle signals are acted on, never relayed: failed ends the call" do
     {match, pids} = match()
-    call_pid = start_call(match)
+    call_pid = start_call(match, call_duration_ms: 60_000)
 
     assert_receive {:call_updated, %{status: :active}}
     assert_receive {:call_updated, %{status: :active}}
@@ -270,7 +273,10 @@ defmodule Randos.Calls.CallCoordinatorTest do
       call_pid =
         start_call(
           match,
-          Keyword.merge([connect_timeout_ms: 300, recovery_budget_ms: 100], opts)
+          Keyword.merge(
+            [connect_timeout_ms: 300, recovery_budget_ms: 100, call_duration_ms: 60_000],
+            opts
+          )
         )
 
       assert_receive {:call_updated, %{status: :connecting}}
@@ -408,7 +414,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
       assert_receive {:call_updated, %{status: :active, away: ["a"]}}
       refute_received {:call_updated, %{status: :ended}}
 
-      assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}, 500
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
       assert_receive {:call_updated, %{status: :ended, ended_reason: :disconnected}}
       send(pid_b, :stop)
     end
@@ -552,7 +558,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "extension vote after ended call is safe" do
     {match, pids} = match()
-    call_pid = start_call(match, call_duration_ms: 5)
+    call_pid = start_call(match, call_duration_ms: 5, extension_response_timeout_ms: 1_000)
 
     assert_receive {:call_updated, %{status: :active}}
     assert_receive {:call_updated, %{status: :active}}
@@ -606,7 +612,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
     on_exit(fn -> :telemetry.detach("#{inspect(ref)}") end)
 
     {match, _pids} = match()
-    call_pid = start_call(match)
+    call_pid = start_call(match, call_duration_ms: 60_000)
     # The two speaking languages, sorted (for Randos.Stats' aggregate counts).
     assert_receive {^ref, [:randos, :call, :start], _, %{call_id: call_id, languages: languages}}
 
@@ -639,7 +645,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
     on_exit(fn -> :telemetry.detach("#{inspect(ref)}") end)
 
     {match, pids} = match()
-    call_pid = start_call(%{match | kind: :invitation})
+    call_pid = start_call(%{match | kind: :invitation}, call_duration_ms: 60_000)
     assert_receive {^ref, %{kind: :invitation, languages: nil}}
     :ok = CallCoordinator.hang_up(call_pid, "a")
     stop_all(pids)
@@ -648,7 +654,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
   describe "recovery: one budget, whatever goes wrong (and what the clients can do)" do
     # A long, connected call with audio; short timings. `capable`: which
     # clients can restart ICE (obligation 10).
-    defp recovering_call(capable \\ {true, true}) do
+    defp recovering_call(capable \\ {true, true}, opts \\ []) do
       {match, [pid_a, pid_b]} = match(true)
       {cap_a, cap_b} = capable
 
@@ -659,12 +665,18 @@ defmodule Randos.Calls.CallCoordinatorTest do
       }
 
       call_pid =
-        start_call(match,
-          call_duration_ms: 60_000,
-          connect_timeout_ms: 300,
-          recovery_budget_ms: 400,
-          ice_restart_delay_ms: 50,
-          ice_restart_retry_ms: 100
+        start_call(
+          match,
+          Keyword.merge(
+            [
+              call_duration_ms: 60_000,
+              connect_timeout_ms: 300,
+              recovery_budget_ms: 400,
+              ice_restart_delay_ms: 50,
+              ice_restart_retry_ms: 100
+            ],
+            opts
+          )
         )
 
       assert_receive {:call_updated, %{status: :connecting}}
@@ -706,7 +718,7 @@ defmodule Randos.Calls.CallCoordinatorTest do
       refute_receive {:call_updated, %{ice_generation: 1}}, 150
 
       new_pid = come_back(call_pid, "a", ticket)
-      assert_receive {:call_updated, %{away: [], ice_generation: 1, recovering: true}}, 100
+      assert_receive {:call_updated, %{away: [], ice_generation: 1, recovering: true}}
 
       :ok = report(call_pid, "b", "connected")
       assert_receive {:call_updated, %{recovering: false}}
@@ -748,9 +760,14 @@ defmodule Randos.Calls.CallCoordinatorTest do
     end
 
     test "failed, with restart: restart at once (no delay), and recover" do
-      {call_pid, pids, _} = recovering_call()
+      # A long restart delay: "at once" is well before it, however slow the runner.
+      {call_pid, pids, _} =
+        recovering_call({true, true}, ice_restart_delay_ms: 2_000, recovery_budget_ms: 5_000)
+
+      started = System.monotonic_time(:millisecond)
       :ok = report(call_pid, "a", "failed")
-      assert_receive {:call_updated, %{ice_generation: 1, recovering: true}}, 30
+      assert_receive {:call_updated, %{ice_generation: 1, recovering: true}}
+      assert System.monotonic_time(:millisecond) - started < 1_000
       :ok = report(call_pid, "a", "connected")
       assert_receive {:call_updated, %{recovering: false}}
       refute_receive {:call_updated, %{status: :ended}}, 500
@@ -758,9 +775,12 @@ defmodule Randos.Calls.CallCoordinatorTest do
     end
 
     test "failed, without restart: nothing can fix it, so the call ends at once" do
-      {call_pid, pids, _} = recovering_call({false, true})
+      # A long budget: "at once" is well before it, however slow the runner.
+      {call_pid, pids, _} = recovering_call({false, true}, recovery_budget_ms: 5_000)
+      started = System.monotonic_time(:millisecond)
       :ok = report(call_pid, "a", "failed")
-      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}, 100
+      assert_receive {:call_updated, %{status: :ended, ended_reason: :connection_failed}}
+      assert System.monotonic_time(:millisecond) - started < 1_000
       stop_all(pids)
     end
 

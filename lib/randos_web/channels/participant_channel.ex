@@ -145,6 +145,16 @@ defmodule RandosWeb.ParticipantChannel do
     {:reply, {:ok, Status.snapshot()}, socket}
   end
 
+  # The interface language changed (the TUI's `l`): the server's words in
+  # it from now on, the current state's included.
+  def handle_in("set_locale", %{"locale" => code}, socket) when is_binary(code) do
+    if RandosWeb.Locale.supported?(code),
+      do: Gettext.put_locale(RandosWeb.Gettext, code),
+      else: Gettext.put_locale(RandosWeb.Gettext, "en")
+
+    {:reply, :ok, push_state_if_changed(socket)}
+  end
+
   def handle_in(_event, _payload, socket) do
     {:reply, {:error, %{reason: "invalid_message"}}, socket}
   end
@@ -228,9 +238,6 @@ defmodule RandosWeb.ParticipantChannel do
 
   defp with_ice_servers(state, _servers), do: state
 
-  # The languages the person is happy to hear: `hears`, a list of codes, or
-  # (clients before it, like the v0.2.0 TUI) a single `listens`. The
-  # matchmaker checks they're supported and that there's at least one.
   # Clients that don't say they carry audio are matched only with each other.
   defp client_capabilities(payload, ack) do
     %{
@@ -241,6 +248,9 @@ defmodule RandosWeb.ParticipantChannel do
     }
   end
 
+  # The languages the person is happy to hear: `hears`, a list of codes, or
+  # (clients before it, like the v0.2.0 TUI) a single `listens`. The
+  # matchmaker checks they're supported and that there's at least one.
   defp hears(%{"hears" => hears}) when is_list(hears) and length(hears) <= 32 do
     if Enum.all?(hears, &is_binary/1), do: {:ok, hears}, else: :invalid
   end

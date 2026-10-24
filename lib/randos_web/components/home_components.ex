@@ -272,10 +272,22 @@ defmodule RandosWeb.HomeComponents do
           {gettext("Waiting for your rando to open the link…")}
         </h2>
         <p class="mt-3 leading-7 text-stone-600">
-          {gettext(
-            "Send them this link however you like. It works once, for the next %{minutes} minutes.",
-            minutes: div(Lifecycle.invitation_seconds(), 60)
-          )}
+          {gettext("Send them this link however you like. It works once.")}
+          <%!-- How long it keeps working, counting down (the call timer's hook). --%>
+          <span
+            id="invitation-countdown"
+            phx-hook="CallCountdown"
+            phx-update="ignore"
+            data-deadline-unix-ms={@invitation.expires_at_unix_ms}
+            data-labels={JSON.encode!(%{remaining: link_time_left_label()})}
+            class="ms-1 font-medium tabular-nums text-teal-700"
+          >
+            <span data-countdown-value>
+              {gettext("%{time} left",
+                time: "#{div(Lifecycle.invitation_seconds(), 60)}:00"
+              )}
+            </span>
+          </span>
         </p>
       </div>
       <div class="flex flex-col gap-2 sm:flex-row">
@@ -941,6 +953,11 @@ defmodule RandosWeb.HomeComponents do
       state_failed: pgettext("connection state", "failed"),
       state_closed: pgettext("connection state", "ended")
     })
+  end
+
+  defp link_time_left_label do
+    gettext_comment("How long an invitation link keeps working, as m:ss (it counts down).")
+    gettext("%{time} left", time: "%{time}")
   end
 
   defp countdown_labels,

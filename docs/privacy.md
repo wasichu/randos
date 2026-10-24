@@ -74,8 +74,11 @@ something can't be checked from the outside, this says so.
   link is used, cancelled or expires (15 minutes at most), the server
   keeps, in the matchmaker's memory only: the token's hash (never the
   token), the creator's anonymous id for that visit, and the creator's
-  languages; nothing is written anywhere or logged but "invitation made"
-  and "invitation used". The status page counts invitation calls among
+  languages. The creator's own connection holds the link itself, to show
+  it to them, and forgets it with the invitation. Nothing is written
+  anywhere; the log has only "invitation made", "invitation used" and
+  "inviter went away" (no ids that outlive the call), and the token is
+  filtered from request logs like the resume ticket. The status page counts invitation calls among
   calls started, and in no language pair (the joiner picks no language).
   ([`Matchmaker.invite/2`](../lib/randos/matchmaking/matchmaker.ex),
   [`invitations.md`](architecture/invitations.md).)

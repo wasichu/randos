@@ -1,4 +1,4 @@
-# Invitation links (design, 2026-10-22; decided; building since 2026-10-24)
+# Invitation links (design 2026-10-22; built 2026-10-23 and 24; done)
 
 Proposed by the owner: **anonymous, one-time invitation links**, after
 Lichess's anonymous challenges. Two people who already found each other
@@ -54,11 +54,11 @@ ride on whatever that becomes.
   call records no rematch pair when it ends.
 - `Matchmaker.cancel_invitation(pid)`, and the monitor: the creator's
   process going away (tab closed, reload) cancels it.
-- The expiry: `Lifecycle.invitation_seconds/0` (15 minutes proposed), the
+- The expiry: `Lifecycle.invitation_seconds/0` (15 minutes, decision 4), the
   timing constants' one home.
 
 **The call is an ordinary call** with one mark: `Match` gets
-`kind: :random | :invitation`, carried on `Call`. The coordinator doesn't
+`kind: :random | :invitation`, which the `Call` carries in its `match`. The coordinator doesn't
 care; two places do:
 
 - **After the call, both go idle**, never into the random queue
@@ -91,11 +91,11 @@ bare token) and takes the part after `#`.
 
 **Protocol** (`participant_channel.md`; a mini-pass trigger: both clients
 and the obligation tests):
-- `invite {speaks, adult_acknowledged, audio, ice_restart}` → state
+- `invite {speaks, hears, adult_acknowledged, audio, ice_restart}` → state
   `inviting`, with `invitation: {"url", "expires_at_unix_ms"}`;
 - `cancel_invitation {}` → `idle`;
-- `accept_invitation {token, speaks, adult_acknowledged, audio,
-  ice_restart}` → a call, or `error: "invitation_invalid"` /
+- `accept_invitation {token, adult_acknowledged, audio, ice_restart}`
+  (no languages, decision 8) → a call, or `error: "invitation_invalid"` /
   `"audio_mismatch"`. One reason for unknown, used, expired and cancelled
   alike: the joiner can't act differently on them, and it tells a
   guesser nothing;
@@ -111,11 +111,12 @@ clients show) and `peer_speaks_any` lists them all ("German or
 Japanese").
 
 **Privacy** (`docs/privacy.md`): the server holds an invitation's token
-hash, the creator's anonymous participant id and their speaking
-language, in memory, until it's used, cancelled or expires (15 minutes at
-most); nothing is written anywhere. The token never reaches the server
-in a URL. The status page counts invitation calls among calls started;
-whether they also count toward language pairs is a decision below.
+hash, the creator's anonymous participant id and their languages
+(speaking and hearing: the joiner is taken to speak the latter), in
+memory, until it's used, cancelled or expires (15 minutes at most);
+nothing is written anywhere. The token never reaches the server in a URL.
+The status page counts invitation calls among calls started, and in no
+language pair (decision 6).
 
 ## Tests
 
@@ -154,7 +155,7 @@ whether they also count toward language pairs is a decision below.
 
 All seven were the proposals.
 
-**Before building (the owner, 2026-10-24), after an advisor check:**
+**Before building (the owner, 2026-10-23), after an advisor check:**
 
 8. **The joiner picks no language.** The join screen is the 18+
    click-through and "Join the call"; the joiner is taken to speak the

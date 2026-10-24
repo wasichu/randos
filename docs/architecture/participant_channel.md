@@ -31,7 +31,8 @@ Join topic `"participant"` with `{}`, or `{"locale": "es"}`: your
 interface language, a code from the site's interface languages, so the
 words the server sends (`error_message`, the `status` reply's) are in it
 (anything else, or none, is English; only the code, never more of the
-environment's locale). The reply carries the initial
+environment's locale). Changing it later (the TUI's `l`) is the
+`set_locale` event, which takes effect at once. The reply carries the initial
 [state](#state) and the supported conversation languages (use these codes in
 `find`; don't hardcode the list):
 
@@ -110,7 +111,8 @@ show up as [`state`](#state) pushes, not in the reply. The one exception is
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
 | `invite` | `{"speaks": "en", "hears": ["de"], "adult_acknowledged": true, "audio": false}` | `idle` | Make an invitation link instead of joining the queue → `inviting`, with the link in `invitation` (see [Invitations](#invitations)). The same checks as `find` (`adult_terms_required`, `unsupported_language`), and the same rate limit (they share it). |
 | `cancel_invitation` | `{}` | `inviting` | Withdraw the link (it stops working) → `idle`. |
-| `accept_invitation` | `{"token": "…", "adult_acknowledged": true, "audio": false}` | `idle` | Join the call an invitation link offers: a call, or state shows `error: "invitation_invalid"` (unknown, used, expired or withdrawn: one reason for all) or `"audio_mismatch"` (the link's creator and you disagree on `audio`; the link stays valid for someone who agrees). Without the acknowledgment, `adult_terms_required`. Shares `find`'s rate limit. |
+| `set_locale` | `{"locale": "es"}` | always | Switch the language of the server's words (`error_message`, `notice_message`, the `status` reply) from now on; the current state is pushed again in it if that changes anything. Anything not an interface language means English. Older servers reply `invalid_message`: harmless, the next join sends the `locale` anyway. |
+| `accept_invitation` | `{"token": "…", "adult_acknowledged": true, "audio": false}` | `idle` | Join the call an invitation link offers: a call, or state shows `error: "invitation_invalid"` (unknown, used, expired or withdrawn: one reason for all) or `"audio_mismatch"` (the link's creator and you disagree on `audio`; the link stays valid for someone who agrees), or `"call_start_failed"` (the link stays valid). Without the acknowledgment, `adult_terms_required`. A `token` over 64 bytes replies `invalid_message`. Shares `find`'s rate limit. |
 | `end_call` | `{}`, or `{"reason": …}` | in a call | Hang up and go `idle`. The peer goes back to `looking` (to `idle` in an invitation call). A client that can't carry the call sends a `reason`: `microphone_denied`, `microphone_not_found`, `audio_unavailable`, or `audio_failed` (anything else replies `invalid_message`); it comes back as this participant's `error`. |
 | `next` | `{}` | in a call | Hang up and go straight back to `looking`. Ignored in an invitation call (there's no next; don't offer it). |
 | `vote` | `{"vote": "continue" \| "end"}` | `extension_pending` | Vote on extending. Both `continue` → another segment; any `end` → call ends (voter goes `idle`). A counted `continue` shows as `call.agreed_to_continue`; repeating it changes nothing. |
@@ -329,9 +331,9 @@ e.g. `"in_call"`.
   says the same thing. `invitation_expired` is the creator's, when their
   link expired unused.
 - `notice` / `notice_message`: news, not an error (show it calmly, not as
-  one): `call_ended` after an invitation call that the other person or
-  the time limit ended, since there the client goes back to `idle` rather
-  than `looking`. The next `find`, `invite` or `accept_invitation` clears
+  one): `call_ended` after an invitation call that ended any way you
+  didn't choose (the other person, the time limit, a lost connection),
+  since there the client goes back to `idle` rather than `looking`. The next `find`, `invite` or `accept_invitation` clears
   it.
 - `peer_reconnecting`: `true` while the rando's connection to the server
   is down and the call is waiting for them to come back (show it; don't
