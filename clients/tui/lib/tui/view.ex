@@ -219,8 +219,12 @@ defmodule Tui.View do
 
   # What this client just said about the last key (`Model.message`: a copy,
   # a refusal), below the panel's own text.
-  defp said(%{message: message}) when is_binary(message), do: "\n\n" <> message
-  defp said(_model), do: ""
+  # The main panel's copy gives way to the join prompt's, drawn over it.
+  defp said(%{join_prompt: prompt}) when is_binary(prompt), do: ""
+  defp said(model), do: prompt_said(model)
+
+  defp prompt_said(%{message: message}) when is_binary(message), do: "\n\n" <> message
+  defp prompt_said(_model), do: ""
 
   # The 18+ box and its sentence: the form's row, and the join prompt's.
   defp adult_line(model) do
@@ -240,7 +244,7 @@ defmodule Tui.View do
 
     content =
       gettext("Paste the link you were sent:") <>
-        "\n\n" <> adult_line(model) <> "\n\n> " <> text <> "▏" <> said(model)
+        "\n\n" <> adult_line(model) <> "\n\n> " <> text <> "▏" <> prompt_said(model)
 
     inner = max(div(area.width * 80, 100) - 2, 10)
     height = min(length(Tui.Bidi.wrap(content, inner)) + 2, area.height)

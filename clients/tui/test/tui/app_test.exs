@@ -167,6 +167,12 @@ defmodule Tui.AppTest do
       refute render_text(arabic, %{media_state: media}, {120, 24}) =~ "Devices"
     end
 
+    test "with the join prompt open, its message is drawn once, in the prompt" do
+      model = %{model("idle") | join_prompt: "", message: "paste the whole link you were sent"}
+      text = render_text(model)
+      assert length(String.split(text, "paste the whole link you were sent")) == 2
+    end
+
     test "the idle screen offers the status screen" do
       assert render_text(model("idle"), %{}, {120, 24}) =~ "s status"
     end
