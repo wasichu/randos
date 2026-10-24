@@ -56,6 +56,7 @@ defmodule Randos.Calls.Lifecycle do
   @extension_response_timeout_seconds 20
   @connect_timeout_seconds 15
   @rematch_window_seconds 90
+  @invitation_seconds 15 * 60
   @recovery_budget_seconds 15
   @offline_slack_seconds 2
   @ice_restart_delay_seconds 2
@@ -90,6 +91,13 @@ defmodule Randos.Calls.Lifecycle do
   """
   @spec rematch_window_seconds() :: pos_integer()
   def rematch_window_seconds, do: @rematch_window_seconds
+
+  @doc """
+  How long an invitation link waits to be used before it stops working
+  (`Randos.Matchmaking.Matchmaker.invite/2`).
+  """
+  @spec invitation_seconds() :: pos_integer()
+  def invitation_seconds, do: @invitation_seconds
 
   @doc """
   How long an active call may stay unhealthy (someone's media down, or

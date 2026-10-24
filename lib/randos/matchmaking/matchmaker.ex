@@ -17,6 +17,17 @@ defmodule Randos.Matchmaking.Matchmaker do
   two are still waiting then (and still compatible), they're matched. A call
   that never connected keeps no one apart (its coordinator exits
   `{:shutdown, :connection_failed}`): the two may be matched again at once.
+
+  It also holds invitations (`invite/2`, `accept/3`): a person waiting to
+  be found by a link's token instead of by language, kept apart from the
+  waiting list so random matching never sees them. Only the token's
+  SHA-256 is kept. Being one process, it serves two people claiming one
+  link one after the other: the first gets the call. An invitation ends
+  when it's used, cancelled, or expires
+  (`Randos.Calls.Lifecycle.invitation_seconds/0`; the creator then gets
+  `:invitation_expired`), or when its creator's process
+  goes away. Its call keeps no one apart afterwards: the two chose each
+  other.
   """
 
   use GenServer
@@ -34,6 +45,10 @@ defmodule Randos.Matchmaking.Matchmaker do
             monitors: %{},
             calls: %{},
             recent: %{},
+            # token hash => %{entry, ref, timer}; creator pid => token hash
+            invitations: %{},
+            inviters: %{},
+            invitation_ms: Lifecycle.invitation_seconds() * 1_000,
             rematch_window_ms: Lifecycle.rematch_window_seconds() * 1_000,
             call_supervisor: Randos.Calls.CallSupervisor,
             call_options: [],
@@ -64,9 +79,22 @@ defmodule Randos.Matchmaking.Matchmaker do
           | {:error,
              :adult_terms_required | :unsupported_language | :already_queued | :call_start_failed}
 
+  @type invite_result ::
+          {:invited, token :: String.t(), expires_at_unix_ms :: integer()}
+          | {:error, :adult_terms_required | :unsupported_language | :already_queued}
+
+  @type accept_result ::
+          {:matched, Match.t()}
+          | {:error,
+             :adult_terms_required
+             | :invitation_invalid
+             | :audio_mismatch
+             | :already_queued
+             | :call_start_failed}
+
   @doc """
-  Options: `:name`, `:call_supervisor`, `:call_options`, `:call_starter`, and
-  `:rematch_window_ms` (tests).
+  Options: `:name`, `:call_supervisor`, `:call_options`, `:call_starter`,
+  `:rematch_window_ms` and `:invitation_ms` (tests).
   """
   def start_link(opts \\ []) do
     {name, opts} = Keyword.pop(opts, :name, __MODULE__)
@@ -101,6 +129,35 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   @doc """
+  Makes an invitation instead of joining the queue: the same attributes
+  and checks as `join/2`, and the creator waits to be found by the token
+  (128 random bits, URL-safe) until `accept/3`, `cancel_invitation/2`,
+  the expiry, or its process going away.
+  """
+  @spec invite(GenServer.server(), join_attrs()) :: invite_result()
+  def invite(server \\ __MODULE__, attrs) when is_map(attrs) do
+    GenServer.call(server, {:invite, attrs})
+  end
+
+  @doc """
+  Joins the call an invitation offers. `attrs` are `join/2`'s without the
+  languages: the joiner is taken to speak the creator's hearing languages
+  (`Entry.speaks_any/1`). Unknown, used, expired, cancelled and one's own
+  invitation are all `:invitation_invalid`; `:audio_mismatch` leaves it
+  valid for someone whose client agrees.
+  """
+  @spec accept(GenServer.server(), String.t(), map()) :: accept_result()
+  def accept(server \\ __MODULE__, token, attrs) when is_binary(token) and is_map(attrs) do
+    GenServer.call(server, {:accept, token, attrs})
+  end
+
+  @doc "Withdraws the invitation `pid` made, if any (the link stops working)."
+  @spec cancel_invitation(GenServer.server(), pid()) :: :ok
+  def cancel_invitation(server \\ __MODULE__, pid) when is_pid(pid) do
+    GenServer.call(server, {:cancel_invitation, pid})
+  end
+
+  @doc """
   Returns a lightweight snapshot for tests and diagnostics: who is waiting
   (oldest first) and the same people grouped by what they asked for.
   """
@@ -121,7 +178,8 @@ defmodule Randos.Matchmaking.Matchmaker do
        call_options: Keyword.get(opts, :call_options, []),
        call_starter: Keyword.get(opts, :call_starter, {CallCoordinator, :start_match}),
        rematch_window_ms:
-         Keyword.get(opts, :rematch_window_ms, Lifecycle.rematch_window_seconds() * 1_000)
+         Keyword.get(opts, :rematch_window_ms, Lifecycle.rematch_window_seconds() * 1_000),
+       invitation_ms: Keyword.get(opts, :invitation_ms, Lifecycle.invitation_seconds() * 1_000)
      }}
   end
 
@@ -145,6 +203,39 @@ defmodule Randos.Matchmaking.Matchmaker do
     )
 
     {:reply, reply, state}
+  end
+
+  def handle_call({:invite, attrs}, _from, state) do
+    entry = entry_from_attrs(attrs)
+
+    case check(attrs, entry, state) do
+      :ok ->
+        token = Base.url_encode64(:crypto.strong_rand_bytes(16), padding: false)
+        hash = hash(token)
+        timer = Process.send_after(self(), {:invitation_over, hash}, state.invitation_ms)
+        invitation = %{entry: entry, ref: Process.monitor(entry.pid), timer: timer}
+        expires_at = System.system_time(:millisecond) + state.invitation_ms
+        Logger.info("matchmaking invitation made")
+
+        {:reply, {:invited, token, expires_at},
+         %{
+           state
+           | invitations: Map.put(state.invitations, hash, invitation),
+             inviters: Map.put(state.inviters, entry.pid, hash)
+         }}
+
+      error ->
+        {:reply, error, state}
+    end
+  end
+
+  def handle_call({:accept, token, attrs}, _from, state) do
+    {reply, state} = do_accept(hash(token), attrs, state)
+    {:reply, reply, state}
+  end
+
+  def handle_call({:cancel_invitation, pid}, _from, state) do
+    {:reply, :ok, drop_invitation(state, Map.get(state.inviters, pid))}
   end
 
   def handle_call({:leave, pid}, _from, state) do
@@ -173,7 +264,22 @@ defmodule Randos.Matchmaking.Matchmaker do
       Map.has_key?(state.calls, ref) ->
         {:noreply, call_ended(state, ref, reason)}
 
+      Map.has_key?(state.inviters, pid) ->
+        Logger.info("matchmaking inviter went away")
+        {:noreply, drop_invitation(state, Map.fetch!(state.inviters, pid))}
+
       true ->
+        {:noreply, state}
+    end
+  end
+
+  def handle_info({:invitation_over, hash}, state) do
+    case Map.get(state.invitations, hash) do
+      %{entry: entry} ->
+        send(entry.pid, :invitation_expired)
+        {:noreply, drop_invitation(state, hash)}
+
+      nil ->
         {:noreply, state}
     end
   end
@@ -194,22 +300,107 @@ defmodule Randos.Matchmaking.Matchmaker do
   defp do_join(attrs, state) do
     participant = entry_from_attrs(attrs)
 
+    case check(attrs, participant, state) do
+      :ok -> join_queue(participant, state)
+      error -> {error, state}
+    end
+  end
+
+  # What joining the queue and making an invitation both need.
+  defp check(attrs, entry, state) do
+    cond do
+      Map.get(attrs, :accepted_adult_terms) != true ->
+        {:error, :adult_terms_required}
+
+      not supported_language?(entry.speaks_language) or
+        entry.hears_languages == [] or
+          not Enum.all?(entry.hears_languages, &supported_language?/1) ->
+        {:error, :unsupported_language}
+
+      busy?(state, entry.pid) ->
+        {:error, :already_queued}
+
+      true ->
+        :ok
+    end
+  end
+
+  # Waiting in the queue, or waiting with an invitation: one at a time.
+  defp busy?(state, pid),
+    do: Map.has_key?(state.participants, pid) or Map.has_key?(state.inviters, pid)
+
+  defp do_accept(hash, attrs, state) do
+    invitation = Map.get(state.invitations, hash)
+    pid = Map.fetch!(attrs, :pid)
+
     cond do
       Map.get(attrs, :accepted_adult_terms) != true ->
         {{:error, :adult_terms_required}, state}
 
-      not supported_language?(participant.speaks_language) or
-        participant.hears_languages == [] or
-          not Enum.all?(participant.hears_languages, &supported_language?/1) ->
-        {{:error, :unsupported_language}, state}
+      invitation == nil or invitation.entry.pid == pid ->
+        {{:error, :invitation_invalid}, state}
 
-      Map.has_key?(state.participants, participant.pid) ->
+      busy?(state, pid) ->
         {{:error, :already_queued}, state}
 
+      invitation.entry.audio? != (Map.get(attrs, :audio?, false) == true) ->
+        {{:error, :audio_mismatch}, state}
+
       true ->
-        join_queue(participant, state)
+        start_invitation_call(hash, invitation.entry, joiner(invitation.entry, attrs), state)
     end
   end
+
+  # The joiner names no language: taken to speak what the creator hears.
+  defp joiner(creator, attrs) do
+    hears = creator.hears_languages
+
+    entry_from_attrs(
+      Map.merge(attrs, %{speaks_language: hd(hears), hears_languages: [creator.speaks_language]})
+    )
+    |> Map.put(:speaks_any, if(match?([_, _ | _], hears), do: hears))
+  end
+
+  defp start_invitation_call(hash, creator, joiner, state) do
+    match = Match.new(creator, joiner, :invitation)
+
+    case start_call(match, state) do
+      {:ok, call_pid} ->
+        Logger.info("matchmaking invitation used", match_id: match.id)
+        state = state |> drop_invitation(hash) |> in_call(match, call_pid)
+        {{:matched, %{match | call_pid: call_pid}}, state}
+
+      {:error, reason} ->
+        # The link stays valid: nobody's fault but ours.
+        Logger.warning("matchmaking call start failed",
+          match_id: match.id,
+          reason: inspect(reason)
+        )
+
+        {{:error, :call_start_failed}, state}
+    end
+  end
+
+  defp drop_invitation(state, nil), do: state
+
+  defp drop_invitation(state, hash) do
+    case Map.pop(state.invitations, hash) do
+      {nil, _invitations} ->
+        state
+
+      {invitation, invitations} ->
+        Process.demonitor(invitation.ref, [:flush])
+        Process.cancel_timer(invitation.timer)
+
+        %{
+          state
+          | invitations: invitations,
+            inviters: Map.delete(state.inviters, invitation.entry.pid)
+        }
+    end
+  end
+
+  defp hash(token), do: :crypto.hash(:sha256, token)
 
   defp join_queue(participant, state) do
     case Enum.find(state.waiting, &matchable?(state, &1, participant)) do
@@ -271,7 +462,10 @@ defmodule Randos.Matchmaking.Matchmaker do
     do: a.pid != b.pid and Entry.compatible?(a, b) and not Map.has_key?(state.recent, pair(a, b))
 
   # The two stay unmatchable while their call runs (they could requeue
-  # before its coordinator's DOWN arrives) and for the window after.
+  # before its coordinator's DOWN arrives) and for the window after. Not
+  # after an invitation's call: they chose each other, and both go idle.
+  defp in_call(state, %Match{kind: :invitation}, _call_pid), do: state
+
   defp in_call(state, match, call_pid) do
     pair = pair(match.participant_a, match.participant_b)
     ref = Process.monitor(call_pid)

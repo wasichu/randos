@@ -436,4 +436,163 @@ defmodule Randos.Matchmaking.MatchmakerTest do
       assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)
     end
   end
+
+  describe "invitations" do
+    defp invite(matchmaker, pid, hears \\ ["de"], extra \\ []) do
+      attrs = participant([pid: pid, speaks_language: "en", hears_languages: hears] ++ extra)
+      Matchmaker.invite(matchmaker, attrs)
+    end
+
+    # What a joiner sends: no languages.
+    defp joiner(pid, extra \\ []) do
+      [pid: pid, speaks_language: "xx", hears_languages: []]
+      |> Keyword.merge(extra)
+      |> participant()
+      |> Map.drop([:speaks_language, :hears_languages])
+    end
+
+    test "the link's token starts an invitation call; the joiner speaks what the creator hears",
+         %{matchmaker: matchmaker} do
+      creator = waiting_pid()
+      assert {:invited, token, expires_at} = invite(matchmaker, creator)
+      assert byte_size(token) >= 22
+      assert expires_at > System.system_time(:millisecond)
+
+      assert {:matched, match} = Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+      assert %Match{kind: :invitation, participant_a: %{pid: ^creator}} = match
+      assert match.participant_b.speaks_language == "de"
+      assert match.participant_b.hears_languages == ["en"]
+      assert match.participant_b.speaks_any == nil
+    end
+
+    test "with several hearing languages, the joiner may speak any of them",
+         %{matchmaker: matchmaker} do
+      {:invited, token, _} = invite(matchmaker, waiting_pid(), ["de", "ja"])
+      {:matched, match} = Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+      assert match.participant_b.speaks_language == "de"
+      assert Randos.Matchmaking.Entry.speaks_any(match.participant_b) == ["de", "ja"]
+    end
+
+    test "a link works once", %{matchmaker: matchmaker} do
+      {:invited, token, _} = invite(matchmaker, waiting_pid())
+      assert {:matched, _} = Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+
+      assert {:error, :invitation_invalid} =
+               Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+    end
+
+    test "unknown, cancelled, and one's own links are all invalid", %{matchmaker: matchmaker} do
+      assert {:error, :invitation_invalid} =
+               Matchmaker.accept(matchmaker, "nope", joiner(waiting_pid()))
+
+      creator = waiting_pid()
+      {:invited, token, _} = invite(matchmaker, creator)
+      assert {:error, :invitation_invalid} = Matchmaker.accept(matchmaker, token, joiner(creator))
+
+      :ok = Matchmaker.cancel_invitation(matchmaker, creator)
+
+      assert {:error, :invitation_invalid} =
+               Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+    end
+
+    test "a link stops working when its creator goes away", %{matchmaker: matchmaker} do
+      creator = waiting_pid()
+      {:invited, token, _} = invite(matchmaker, creator)
+      ref = Process.monitor(creator)
+      send(creator, :stop)
+      assert_receive {:DOWN, ^ref, :process, ^creator, _}
+      _sync = Matchmaker.snapshot(matchmaker)
+
+      assert {:error, :invitation_invalid} =
+               Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+    end
+
+    test "a link expires, and its creator is told" do
+      name = :"matchmaker_expiry_#{System.unique_integer([:positive])}"
+      call_starter = fn _match, _call_options -> {:ok, self()} end
+
+      start_supervised!({Matchmaker, name: name, call_starter: call_starter, invitation_ms: 50},
+        id: name
+      )
+
+      {:invited, token, _} = invite(name, self())
+      assert_receive :invitation_expired
+      assert {:error, :invitation_invalid} = Matchmaker.accept(name, token, joiner(waiting_pid()))
+    end
+
+    test "random matching never sees someone with an invitation", %{matchmaker: matchmaker} do
+      {:invited, _token, _} = invite(matchmaker, waiting_pid(), ["de"])
+      assert %{queued_count: 0} = Matchmaker.snapshot(matchmaker)
+
+      compatible =
+        participant(pid: waiting_pid(), speaks_language: "de", hears_languages: ["en"])
+
+      assert :queued = Matchmaker.join(matchmaker, compatible)
+    end
+
+    test "waiting and inviting exclude each other, both ways", %{matchmaker: matchmaker} do
+      queued = waiting_pid()
+
+      :queued =
+        Matchmaker.join(
+          matchmaker,
+          participant(pid: queued, speaks_language: "en", hears_languages: ["fr"])
+        )
+
+      assert {:error, :already_queued} = invite(matchmaker, queued)
+
+      inviter = waiting_pid()
+      {:invited, token, _} = invite(matchmaker, inviter)
+
+      assert {:error, :already_queued} =
+               Matchmaker.join(
+                 matchmaker,
+                 participant(pid: inviter, speaks_language: "en", hears_languages: ["de"])
+               )
+
+      assert {:error, :already_queued} = invite(matchmaker, inviter)
+      # Someone waiting can't take a link either; it stays valid.
+      assert {:error, :already_queued} = Matchmaker.accept(matchmaker, token, joiner(queued))
+      assert {:matched, _} = Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+    end
+
+    test "clients that disagree on audio can't share a call; the link stays valid",
+         %{matchmaker: matchmaker} do
+      {:invited, token, _} = invite(matchmaker, waiting_pid(), ["de"], audio?: true)
+
+      assert {:error, :audio_mismatch} =
+               Matchmaker.accept(matchmaker, token, joiner(waiting_pid(), audio?: false))
+
+      assert {:matched, _} =
+               Matchmaker.accept(matchmaker, token, joiner(waiting_pid(), audio?: true))
+    end
+
+    test "both sides need the 18+ acknowledgement", %{matchmaker: matchmaker} do
+      assert {:error, :adult_terms_required} =
+               invite(matchmaker, waiting_pid(), ["de"], accepted_adult_terms: false)
+
+      {:invited, token, _} = invite(matchmaker, waiting_pid())
+
+      assert {:error, :adult_terms_required} =
+               Matchmaker.accept(
+                 matchmaker,
+                 token,
+                 joiner(waiting_pid(), accepted_adult_terms: false)
+               )
+    end
+
+    test "many claiming one link at once: exactly one call", %{matchmaker: matchmaker} do
+      {:invited, token, _} = invite(matchmaker, waiting_pid())
+
+      results =
+        1..20
+        |> Task.async_stream(fn _ ->
+          Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
+        end)
+        |> Enum.map(fn {:ok, result} -> result end)
+
+      assert Enum.count(results, &match?({:matched, _}, &1)) == 1
+      assert Enum.count(results, &(&1 == {:error, :invitation_invalid})) == 19
+    end
+  end
 end

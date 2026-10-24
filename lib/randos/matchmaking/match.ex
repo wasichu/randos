@@ -4,7 +4,9 @@ defmodule Randos.Matchmaking.Match do
 
   `participant_a` was waiting first and makes the WebRTC offer;
   `participant_b` answers. `call_pid` is the call's coordinator, set once it
-  has started.
+  has started. `kind` is `:invitation` for two people who came through an
+  invitation link (both go idle after the call, and it has no "Next"),
+  else `:random`.
   """
 
   alias Randos.Matchmaking.Entry
@@ -13,17 +15,23 @@ defmodule Randos.Matchmaking.Match do
           id: String.t(),
           participant_a: Entry.t(),
           participant_b: Entry.t(),
-          call_pid: pid() | nil
+          call_pid: pid() | nil,
+          kind: kind()
         }
 
-  @enforce_keys [:id, :participant_a, :participant_b]
-  defstruct [:id, :participant_a, :participant_b, :call_pid]
+  @type kind :: :random | :invitation
 
-  @doc "Pairs a waiting entry (`a`, the offerer) with a newly joined one (`b`)."
-  @spec new(Entry.t(), Entry.t()) :: t()
-  def new(%Entry{} = a, %Entry{} = b) do
+  @enforce_keys [:id, :participant_a, :participant_b]
+  defstruct [:id, :participant_a, :participant_b, :call_pid, kind: :random]
+
+  @doc """
+  Pairs a waiting entry (`a`, the offerer: an invitation's creator) with a
+  newly joined one (`b`).
+  """
+  @spec new(Entry.t(), Entry.t(), kind()) :: t()
+  def new(%Entry{} = a, %Entry{} = b, kind \\ :random) do
     id = "match-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false)
-    %__MODULE__{id: id, participant_a: a, participant_b: b}
+    %__MODULE__{id: id, participant_a: a, participant_b: b, kind: kind}
   end
 
   @doc "Whether `participant_id` is one of the two people in the match."
