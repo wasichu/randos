@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest==8.4.2", "ruff==0.12.12"]
+dev = ["pytest==8.4.2", "ruff==0.17.1"]
 # Running models (`uv sync --group models`): Opus-MT, M2M100, MADLAD-400 and
 # the MetricX-24 scorer, through transformers on Apple's GPU (MPS).
 models = [
