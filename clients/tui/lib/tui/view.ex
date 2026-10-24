@@ -540,9 +540,11 @@ defmodule Tui.View do
   defp help_lines(hints, width) do
     rows = pack(hints, width)
 
-    if length(rows) <= 2 or length(hints) <= 1,
+    fewer = drop_last_but_quit(hints)
+
+    if length(rows) <= 2 or fewer == hints,
       do: Enum.map(rows, &Width.fit(&1, width)),
-      else: help_lines(drop_last_but_quit(hints), width)
+      else: help_lines(fewer, width)
   end
 
   defp pack(hints, width) do
@@ -559,9 +561,13 @@ defmodule Tui.View do
     |> Enum.reverse()
   end
 
+  # The way out is never dropped: q, or esc where q is a letter (the join
+  # prompt).
   defp drop_last_but_quit(hints) do
-    index = hints |> Enum.reverse() |> Enum.find_index(&(elem(&1, 0) != "q"))
-    Elixir.List.delete_at(hints, length(hints) - 1 - index)
+    case hints |> Enum.reverse() |> Enum.find_index(&(elem(&1, 0) not in ["q", "esc"])) do
+      nil -> hints
+      index -> Elixir.List.delete_at(hints, length(hints) - 1 - index)
+    end
   end
 
   defp quit, do: {"q", pgettext("key", "quit")}
