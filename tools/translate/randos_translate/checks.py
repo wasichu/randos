@@ -186,7 +186,7 @@ def _numbers(text: str) -> set[str]:
 
 # English number words count as their numbers: "at least one" may be 1つ.
 _WORDS = dict(
-    zip("one two three four five six seven eight nine ten eleven twelve".split(), map(str, range(1, 13)), strict=True)
+    zip(["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"], map(str, range(1, 13)), strict=True)
 )
 
 

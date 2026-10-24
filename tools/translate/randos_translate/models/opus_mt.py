@@ -6,6 +6,8 @@ Licenses are per pair (Apache-2.0 or CC-BY-4.0: credit those)."""
 
 from __future__ import annotations
 
+from typing import ClassVar
+
 from . import protect, restore
 
 _IIR = "Helsinki-NLP/opus-mt-tc-bible-big-deu_eng_fra_por_spa-iir"
@@ -46,7 +48,7 @@ TARGET_TOKEN = {"zh": ">>cmn_Hans<< ", "ur": ">>urd<< ", "fa": ">>pes<< "}
 
 class OpusMT:
     name = "opus-mt"
-    locales = list(PAIRS)
+    locales: ClassVar[list[str]] = list(PAIRS)
 
     def __init__(self) -> None:
         import torch

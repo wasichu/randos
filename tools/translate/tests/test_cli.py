@@ -2,13 +2,14 @@
 only the new strings and drops the ones the template no longer has."""
 
 import json
+from typing import ClassVar
 
 from randos_translate import cli, po
 
 
 class Upper:
     name = "upper"
-    locales = ["es"]
+    locales: ClassVar[list[str]] = ["es"]
 
     def __init__(self):
         self.asked = []
@@ -101,8 +102,8 @@ def test_every_output_goes_through_tidy(tmp_path, monkeypatch):
 class Stops:
     """A scorer that is stopped (raises) when it reaches `stop_at`."""
 
-    asked: list[str] = []
-    stop_at: str | None = None
+    asked: ClassVar[list[str]] = []
+    stop_at: ClassVar[str | None] = None
 
     def score(self, locale, entries):
         if locale == Stops.stop_at:

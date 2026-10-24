@@ -3,9 +3,11 @@ check (a lone one too: its rating decides), and of those the finalists (`review.
 given before reused (`scoring.JudgeCache`)."""
 
 import json
+from typing import ClassVar
+
+from test_pick import FAIL, entry
 
 from randos_translate import cli, po, review, scoring
-from test_pick import FAIL, entry
 
 
 def settled(e):
@@ -67,8 +69,8 @@ def test_the_judge_breaks_ties_among_the_judged_while_others_are_unjudged():
 
 
 class FakeJudge:
-    asked: list[tuple[str, str]] = []
-    loaded: list[str] = []
+    asked: ClassVar[list[tuple[str, str]]] = []
+    loaded: ClassVar[list[str]] = []
 
     def __init__(self, judge="mistral"):
         self.judge = judge
@@ -107,7 +109,7 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
     monkeypatch.setattr(cli, "JUDGE_CACHE", tmp_path / "judge-cache.json")
     monkeypatch.setitem(cli.scoring.SCORERS, "judge", FakeJudge)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready"), po.Source("Close %{time}")])
-    monkeypatch.setattr(cli.scoring, "current_contexts", lambda: {})
+    monkeypatch.setattr(cli.scoring, "current_contexts", dict)
     one = write_run(tmp_path / "one.json", "one", {"Ready": ("bad listo", 1.0, 0.9), "Close %{time}": ("Cerrar", 1.0, 0.9)}, "1")
     two = write_run(tmp_path / "two.json", "two", {"Ready": ("Listo", 2.0, 0.8), "Close %{time}": ("Cerrar %{time}", 2.0, 0.8)}, "2")
     three = write_run(tmp_path / "three.json", "three", {"Ready": ("Listo", 2.0, 0.8)}, "3")
@@ -143,7 +145,7 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
 def test_each_locale_has_its_judge_and_each_loads_only_when_needed(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "JUDGE_CACHE", tmp_path / "judge-cache.json")
     monkeypatch.setitem(cli.scoring.SCORERS, "judge", FakeJudge)
-    monkeypatch.setattr(cli.scoring, "current_contexts", lambda: {})
+    monkeypatch.setattr(cli.scoring, "current_contexts", dict)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready")])
     runs = [
         write_run(tmp_path / f"{m}-{loc}.json", m, {"Ready": (text, mx, 0.5)}, f"{m}{loc}", loc)
