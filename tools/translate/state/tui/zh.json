@@ -471,6 +471,10 @@
     "model": "madlad-400",
     "msgstr": "匹配; 连接"
   },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "hy-mt2",
+    "msgstr": "时间到：继续吗？（%{yes}/%{no}）"
+  },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-4b",
     "msgstr": "时间已到：继续吗？ (是/否)"
@@ -551,6 +555,10 @@
     "model": "translategemma-12b",
     "msgstr": "对方提供了音频，但该客户没有，因此通话结束。（按回车键重新查看）"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "请选择至少一种语言来收听。（点击%{key}可以切换语言。）"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "请选择至少一种语言来收听（空格键可切换语言）。"
@@ -602,6 +610,10 @@
   "the audio helper restarted": {
     "model": "hy-mt2",
     "msgstr": "音频辅助工具已重新启动"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "hy-mt2",
+    "msgstr": "请先勾选18+的选项框（ %{key}）。"
   },
   "tick the 18+ box first (tab)": {
     "model": "hy-mt2",

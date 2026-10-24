@@ -466,11 +466,6 @@ msgstr "độ cao âm thanh %{level} dBFS"
 msgid "peer offered audio; this client has none, so the call ended (Enter to look again)"
 msgstr "Đối tác đã gửi tín hiệu âm thanh; người dùng này không có tín hiệu âm thanh nào, vì vậy cuộc gọi đã kết thúc (Nhấn Enter để xem lại)"
 
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "pick at least one language to hear (space toggles one)"
-msgstr "Chọn ít nhất một ngôn ngữ để nghe (dùng dấu cách để chuyển đổi giữa các ngôn ngữ)."
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
@@ -690,13 +685,6 @@ msgctxt "key"
 msgid "unmute"
 msgstr "bật âm thanh lại"
 
-#. A log line, one or two words: you're not looking or in a call any more.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "idle"
-msgstr "không hoạt động"
-
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
@@ -714,12 +702,6 @@ msgstr "đang tìm một rando"
 msgctxt "log"
 msgid "matched; connecting"
 msgstr "phù hợp; liên kết"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "time is up: continue? (y/n)"
-msgstr "Thời gian đã hết: Tiếp tục? (Có/Không)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -758,6 +740,7 @@ msgid "Time is up"
 msgstr "Thời gian đã hết"
 
 #. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/model.ex
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "not looking for a rando"
@@ -859,7 +842,7 @@ msgstr "liên kết gửi đến clipboard của terminal của bạn (nếu nó
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "18+"
-msgstr "18+ (Dành cho người từ 18 tuổi trở lên)"
+msgstr "18+"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -867,8 +850,21 @@ msgctxt "key"
 msgid "copy the link"
 msgstr "sao chép liên kết"
 
-#. The joiner hasn't ticked the 18+ box on the form yet.
+#. %{key} is the name of a key (space), shown as it is.
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
-msgid "tick the 18+ box first (tab)"
-msgstr ""
+msgid "pick at least one language to hear (%{key} toggles one)"
+msgstr "Hãy chọn ít nhất một ngôn ngữ để nghe (%{key} dùng để chuyển đổi giữa các ngôn ngữ)."
+
+#. The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (%{key})"
+msgstr "Trước tiên, hãy đánh dấu vào ô \"18+\" (%{key})"
+
+#. %{yes} and %{no} are the keys to press (y, n), shown as they are.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "time is up: continue? (%{yes}/%{no})"
+msgstr "Thời gian đã hết: Bạn có muốn tiếp tục? (%{yes}/%{no})"

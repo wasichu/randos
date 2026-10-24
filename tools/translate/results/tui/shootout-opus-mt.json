@@ -17,25 +17,25 @@
       "vi",
       "zh"
     ],
-    "strings": 159,
-    "at": "20261024T153955Z",
+    "strings": 158,
+    "at": "20261024T155254Z",
     "seconds": 338.8,
     "scored": {
       "metricx": {
-        "at": "20261024T154007Z",
-        "seconds": 48.0
+        "at": "20261024T155307Z",
+        "seconds": 49.4
       },
       "comet_kiwi": {
-        "at": "20261024T154027Z",
-        "seconds": 49.7
+        "at": "20261024T155331Z",
+        "seconds": 51.5
       },
       "judge": {
-        "at": "20261024T154159Z",
-        "seconds": 338.6
+        "at": "20261024T155426Z",
+        "seconds": 340.7
       },
       "judge_qwen": {
-        "at": "20261024T154231Z",
-        "seconds": 127.0
+        "at": "20261024T155517Z",
+        "seconds": 127.7
       }
     },
     "appended": [
@@ -50,28 +50,32 @@
       {
         "at": "20261024T153955Z",
         "seconds": 34.2
+      },
+      {
+        "at": "20261024T155254Z",
+        "seconds": 38.7
       }
     ]
   },
   "summary": {
     "ar": {
-      "strings": 159,
-      "all_checks_pass": 89,
+      "strings": 158,
+      "all_checks_pass": 87,
       "failed": {
-        "placeholders": 29,
+        "placeholders": 32,
         "glossary": 13,
-        "length": 19,
+        "length": 17,
         "script": 17,
         "shape": 5,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 7
+        "numbers": 8
       },
       "mean_chrf": 28.9
     },
     "de": {
-      "strings": 159,
-      "all_checks_pass": 153,
+      "strings": 158,
+      "all_checks_pass": 152,
       "failed": {
         "placeholders": 0,
         "glossary": 1,
@@ -82,11 +86,11 @@
         "letter_forms": 0,
         "numbers": 1
       },
-      "mean_chrf": 64.7
+      "mean_chrf": 64.9
     },
     "es": {
-      "strings": 159,
-      "all_checks_pass": 151,
+      "strings": 158,
+      "all_checks_pass": 150,
       "failed": {
         "placeholders": 0,
         "glossary": 1,
@@ -97,26 +101,26 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 73.1
+      "mean_chrf": 73.6
     },
     "fa": {
-      "strings": 159,
-      "all_checks_pass": 142,
+      "strings": 158,
+      "all_checks_pass": 140,
       "failed": {
-        "placeholders": 8,
+        "placeholders": 9,
         "glossary": 3,
         "length": 0,
         "script": 2,
-        "shape": 9,
+        "shape": 10,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 2
+        "numbers": 3
       },
-      "mean_chrf": 29.7
+      "mean_chrf": 29.6
     },
     "fil": {
-      "strings": 159,
-      "all_checks_pass": 159,
+      "strings": 158,
+      "all_checks_pass": 158,
       "failed": {
         "placeholders": 0,
         "glossary": 0,
@@ -130,8 +134,8 @@
       "mean_chrf": 62.4
     },
     "fr": {
-      "strings": 159,
-      "all_checks_pass": 157,
+      "strings": 158,
+      "all_checks_pass": 156,
       "failed": {
         "placeholders": 0,
         "glossary": 1,
@@ -142,11 +146,11 @@
         "letter_forms": 0,
         "numbers": 1
       },
-      "mean_chrf": 66.5
+      "mean_chrf": 66.9
     },
     "hi": {
-      "strings": 159,
-      "all_checks_pass": 145,
+      "strings": 158,
+      "all_checks_pass": 144,
       "failed": {
         "placeholders": 6,
         "glossary": 3,
@@ -157,11 +161,11 @@
         "letter_forms": 0,
         "numbers": 4
       },
-      "mean_chrf": 59.4
+      "mean_chrf": 59.7
     },
     "id": {
-      "strings": 159,
-      "all_checks_pass": 150,
+      "strings": 158,
+      "all_checks_pass": 149,
       "failed": {
         "placeholders": 4,
         "glossary": 2,
@@ -172,11 +176,11 @@
         "letter_forms": 0,
         "numbers": 3
       },
-      "mean_chrf": 71.6
+      "mean_chrf": 72.1
     },
     "it": {
-      "strings": 159,
-      "all_checks_pass": 154,
+      "strings": 158,
+      "all_checks_pass": 153,
       "failed": {
         "placeholders": 0,
         "glossary": 1,
@@ -187,11 +191,11 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 72.8
+      "mean_chrf": 73.2
     },
     "ru": {
-      "strings": 159,
-      "all_checks_pass": 142,
+      "strings": 158,
+      "all_checks_pass": 141,
       "failed": {
         "placeholders": 2,
         "glossary": 2,
@@ -202,11 +206,11 @@
         "letter_forms": 0,
         "numbers": 1
       },
-      "mean_chrf": 52.6
+      "mean_chrf": 52.9
     },
     "tr": {
-      "strings": 159,
-      "all_checks_pass": 148,
+      "strings": 158,
+      "all_checks_pass": 147,
       "failed": {
         "placeholders": 4,
         "glossary": 1,
@@ -220,27 +224,27 @@
       "mean_chrf": 62.7
     },
     "ur": {
-      "strings": 159,
-      "all_checks_pass": 142,
+      "strings": 158,
+      "all_checks_pass": 140,
       "failed": {
-        "placeholders": 13,
+        "placeholders": 14,
         "glossary": 2,
         "length": 0,
         "script": 5,
         "shape": 2,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 7
+        "numbers": 8
       },
-      "mean_chrf": 25.7
+      "mean_chrf": 25.5
     },
     "vi": {
-      "strings": 159,
-      "all_checks_pass": 92,
+      "strings": 158,
+      "all_checks_pass": 89,
       "failed": {
-        "placeholders": 28,
+        "placeholders": 31,
         "glossary": 7,
-        "length": 41,
+        "length": 40,
         "script": 1,
         "shape": 2,
         "unchanged": 0,
@@ -250,19 +254,19 @@
       "mean_chrf": 18.7
     },
     "zh": {
-      "strings": 159,
-      "all_checks_pass": 157,
+      "strings": 158,
+      "all_checks_pass": 155,
       "failed": {
         "placeholders": 1,
         "glossary": 1,
         "length": 0,
-        "script": 1,
+        "script": 2,
         "shape": 1,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 46.3
+      "mean_chrf": 46.5
     }
   },
   "entries": [
@@ -5575,66 +5579,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ar",
-      "text": "اختر لغة واحدة على الأقل لتسمع (فراغ إلى مزج a 1)",
-      "back_translation": "Choose at least one language to hear (empty to mix a 1)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 57.2,
-        "metricx": {
-          "score": 11.62
-        },
-        "comet_kiwi": {
-          "score": 0.4737
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -7979,66 +7923,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "ar",
-      "text": "",
-      "back_translation": "Hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey, hey.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": false,
-          "detail": "empty"
-        },
-        "script": {
-          "ok": false,
-          "detail": "no letters"
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 1.5,
-        "metricx": {
-          "score": 1.47
-        },
-        "comet_kiwi": {
-          "score": 0.4156
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -8207,66 +8091,6 @@
         },
         "comet_kiwi": {
           "score": 0.4254
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "ar",
-      "text": "(ذ/ن)",
-      "back_translation": "(m/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": false,
-          "detail": "length ratio 0.19"
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 8.5,
-        "metricx": {
-          "score": 5.72
-        },
-        "comet_kiwi": {
-          "score": 0.4196
         },
         "judge": {
           "score": null,
@@ -14083,66 +13907,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "de",
-      "text": "Wählen Sie mindestens eine Sprache aus, um sie zu hören (Space Toggles one)",
-      "back_translation": "Select at least one language to hear it (Space Toggles one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 71.9,
-        "metricx": {
-          "score": 2.16
-        },
-        "comet_kiwi": {
-          "score": 0.7186
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -16531,72 +16295,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "de",
-      "text": "Leerlauf",
-      "back_translation": "Idle",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 47.9,
-        "metricx": {
-          "score": 0.04
-        },
-        "comet_kiwi": {
-          "score": 0.585
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'Leerlauf' is more technical",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "Leerlauf"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Natural term but slightly technical; 'idle' feels more casual in context",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "Leerlauf"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -16769,66 +16467,6 @@
         },
         "comet_kiwi": {
           "score": 0.6979
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "de",
-      "text": "Zeit ist um: weiter? (y/n)",
-      "back_translation": "Time is up: next? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.8,
-        "metricx": {
-          "score": 1.12
-        },
-        "comet_kiwi": {
-          "score": 0.7113
         },
         "judge": {
           "score": null,
@@ -22639,66 +22277,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "es",
-      "text": "elegir al menos un idioma para escuchar (el espacio conmuta uno)",
-      "back_translation": "choose at least one language to listen (space switches one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 59.2,
-        "metricx": {
-          "score": 3.03
-        },
-        "comet_kiwi": {
-          "score": 0.7919
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -25073,72 +24651,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "es",
-      "text": "inactivo",
-      "back_translation": "inactive",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.4,
-        "metricx": {
-          "score": 1.33
-        },
-        "comet_kiwi": {
-          "score": 0.8315
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'inactivo' is more formal than needed",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "inactivo"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, fits the tone, slightly formal but acceptable",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "inactivo"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -25311,66 +24823,6 @@
         },
         "comet_kiwi": {
           "score": 0.6662
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "es",
-      "text": "tiempo ha terminado: continuar? (y/n)",
-      "back_translation": "time is over: continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 75.7,
-        "metricx": {
-          "score": 1.36
-        },
-        "comet_kiwi": {
-          "score": 0.7931
         },
         "judge": {
           "score": null,
@@ -31111,66 +30563,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fa",
-      "text": "دست کم یک زبان را برای شنیدن انتخاب کنید (فضای نواختن یکی)",
-      "back_translation": "Choose at least one language to listen to (wine playing one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 49.7,
-        "metricx": {
-          "score": 6.12
-        },
-        "comet_kiwi": {
-          "score": 0.61
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -33565,66 +32957,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "fa",
-      "text": "بیهودگی",
-      "back_translation": "Insanity",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 5.2,
-        "metricx": {
-          "score": 3.23
-        },
-        "comet_kiwi": {
-          "score": 0.7448
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -33793,66 +33125,6 @@
         },
         "comet_kiwi": {
           "score": 0.6342
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "fa",
-      "text": "زمان تمام شده است: ادامه دهید؟ (y/n)",
-      "back_translation": "Time expired: Continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 55.9,
-        "metricx": {
-          "score": 0.83
-        },
-        "comet_kiwi": {
-          "score": 0.8401
         },
         "judge": {
           "score": null,
@@ -39585,66 +38857,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fil",
-      "text": "pumili ng kahit isang wika para marinig (space toggles one)",
-      "back_translation": "select at least one language for hearing (space togles ore)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 62.6,
-        "metricx": {
-          "score": 3.67
-        },
-        "comet_kiwi": {
-          "score": 0.7718
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -42017,69 +41229,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "fil",
-      "text": "walang ginagawa",
-      "back_translation": "nothing to do",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 9.3,
-        "metricx": {
-          "score": 0.06
-        },
-        "comet_kiwi": {
-          "score": 0.6184
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Natural but slightly stiff; 'walang ginagawa' feels more passive than 'idle'",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "walang ginagawa"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -42252,66 +41401,6 @@
         },
         "comet_kiwi": {
           "score": 0.6524
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "fil",
-      "text": "Ang panahon ay pataas: magpatuloy? (y/n)",
-      "back_translation": "Time goes up: continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 78.4,
-        "metricx": {
-          "score": 4.81
-        },
-        "comet_kiwi": {
-          "score": 0.6037
         },
         "judge": {
           "score": null,
@@ -48124,66 +47213,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fr",
-      "text": "choisir au moins une langue à entendre (l'espace en marque un)",
-      "back_translation": "choose at least one language to hear (the space marked one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 63.8,
-        "metricx": {
-          "score": 3.31
-        },
-        "comet_kiwi": {
-          "score": 0.7585
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -50570,72 +49599,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "fr",
-      "text": "inactif",
-      "back_translation": "inactive",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.4,
-        "metricx": {
-          "score": 1.07
-        },
-        "comet_kiwi": {
-          "score": 0.811
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'inactif' is formal; 'inactif' is not wrong but 'inactif' is not the most natural choice.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "inactif"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'inactif' sounds more formal/technical than needed.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "inactif"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -50804,66 +49767,6 @@
         },
         "comet_kiwi": {
           "score": 0.4144
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "fr",
-      "text": "le temps est écoulé: continuer? (y/n)",
-      "back_translation": "time is up: continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 100.0,
-        "metricx": {
-          "score": 2.2
-        },
-        "comet_kiwi": {
-          "score": 0.8335
         },
         "judge": {
           "score": null,
@@ -56636,66 +55539,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "hi",
-      "text": "सुनने के लिए कम से कम एक भाषा चुनें (स्पेस टॉगल एक)",
-      "back_translation": "Select at least one language to listen (set up)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 48.8,
-        "metricx": {
-          "score": 2.92
-        },
-        "comet_kiwi": {
-          "score": 0.7444
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -59102,72 +57945,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "hi",
-      "text": "निष्क्रिय",
-      "back_translation": "Idle",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 47.9,
-        "metricx": {
-          "score": 1.06
-        },
-        "comet_kiwi": {
-          "score": 0.8024
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Natural but slightly formal for the tone.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "निष्क्रिय"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Feels slightly stiff; 'बेकार' or 'आराम से' would sound more natural and informal.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "निष्क्रिय"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -59340,66 +58117,6 @@
         },
         "comet_kiwi": {
           "score": 0.7993
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "hi",
-      "text": "समय ऊपर है: जारी रखें? (हाँ/n)",
-      "back_translation": "Time is up: Continue? (Yes/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 60.9,
-        "metricx": {
-          "score": 5.47
-        },
-        "comet_kiwi": {
-          "score": 0.6441
         },
         "judge": {
           "score": null,
@@ -65168,66 +63885,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "id",
-      "text": "pilih paling tidak satu bahasa untuk didengar (space toggles one)",
-      "back_translation": "select at least one language to hear (space toggles one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 90.1,
-        "metricx": {
-          "score": 2.81
-        },
-        "comet_kiwi": {
-          "score": 0.7441
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -67644,72 +66301,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "id",
-      "text": "menganggur",
-      "back_translation": "Unemployed",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 14.4,
-        "metricx": {
-          "score": 0.77
-        },
-        "comet_kiwi": {
-          "score": 0.8032
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'menganggur' implies unemployment, not idle in this context.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "menganggur"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'menganggur' feels too formal and passive for the context.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "menganggur"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -67882,66 +66473,6 @@
         },
         "comet_kiwi": {
           "score": 0.7674
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "id",
-      "text": "waktu habis: lanjutkan? (y/n)",
-      "back_translation": "timeout: continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 69.7,
-        "metricx": {
-          "score": 0.83
-        },
-        "comet_kiwi": {
-          "score": 0.8308
         },
         "judge": {
           "score": null,
@@ -73737,66 +72268,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "it",
-      "text": "scegliere almeno una lingua da ascoltare (lo spazio commuta uno)",
-      "back_translation": "choose at least one language to listen to (space switches one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 59.1,
-        "metricx": {
-          "score": 4.53
-        },
-        "comet_kiwi": {
-          "score": 0.7647
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -76179,72 +74650,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "it",
-      "text": "inattivo",
-      "back_translation": "inactive",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.4,
-        "metricx": {
-          "score": 0.38
-        },
-        "comet_kiwi": {
-          "score": 0.8085
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'inattivo' is more formal than needed",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "inattivo"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, fits the tone, slightly formal but acceptable.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "inattivo"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -76421,66 +74826,6 @@
         },
         "comet_kiwi": {
           "score": 0.7371
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "it",
-      "text": "il tempo è scaduto: continuare? (y/n)",
-      "back_translation": "time is up: continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 100.0,
-        "metricx": {
-          "score": 1.16
-        },
-        "comet_kiwi": {
-          "score": 0.8318
         },
         "judge": {
           "score": null,
@@ -82273,66 +80618,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ru",
-      "text": "выбрать по крайней мере один язык, чтобы услышать (пространство сжимает один)",
-      "back_translation": "Select at least one language to hear (space compresses one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 73.2,
-        "metricx": {
-          "score": 8.5
-        },
-        "comet_kiwi": {
-          "score": 0.6465
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -84729,66 +83014,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "ru",
-      "text": "холостой",
-      "back_translation": "single",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.4,
-        "metricx": {
-          "score": 2.89
-        },
-        "comet_kiwi": {
-          "score": 0.7867
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -84973,66 +83198,6 @@
           "reason": "Formal terms; lacks calm, informal tone",
           "context": "\nWhere it appears: A log label.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "ru",
-      "text": "Время вышло: продолжается? (y/n)",
-      "back_translation": "Time out: continues? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.4,
-        "metricx": {
-          "score": 2.38
-        },
-        "comet_kiwi": {
-          "score": 0.5753
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -90815,66 +88980,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "tr",
-      "text": "Duymak için en az bir dil seçin (uzay birini değiştirir)",
-      "back_translation": "Select at least one language to hear (space changes one)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 73.9,
-        "metricx": {
-          "score": 4.94
-        },
-        "comet_kiwi": {
-          "score": 0.8085
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -93259,66 +91364,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "tr",
-      "text": "boşta",
-      "back_translation": "free",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 6.2,
-        "metricx": {
-          "score": 4.03
-        },
-        "comet_kiwi": {
-          "score": 0.6088
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -93487,66 +91532,6 @@
         },
         "comet_kiwi": {
           "score": 0.7478
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "tr",
-      "text": "Süre doldu: devam mı? (y/n)",
-      "back_translation": "Time's up: continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 79.9,
-        "metricx": {
-          "score": 2.3
-        },
-        "comet_kiwi": {
-          "score": 0.8539
         },
         "judge": {
           "score": null,
@@ -99271,66 +97256,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ur",
-      "text": "سننے کے لئے کم از کم ایک زبان منتخب کریں (خلا ٹوگل ایک)",
-      "back_translation": "Choose at least one language to listen",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 48.5,
-        "metricx": {
-          "score": 3.88
-        },
-        "comet_kiwi": {
-          "score": 0.6248
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -101709,69 +99634,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "ur",
-      "text": "بیکار",
-      "back_translation": "falsehood",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 15.0,
-        "metricx": {
-          "score": 0.36
-        },
-        "comet_kiwi": {
-          "score": 0.8003
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Feels slightly stiff; 'بے کار' lacks casual tone, 'آرام' or 'بے توجہ' would fit better.",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "بیکار"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -101942,66 +99804,6 @@
         },
         "comet_kiwi": {
           "score": 0.6162
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "ur",
-      "text": "وقت گزر گیا ہے: جاری رکھیں؟ (← جوڑ _ لکھو)",
-      "back_translation": "Time's passed: Keep on, please.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 9.3,
-        "metricx": {
-          "score": 7.66
-        },
-        "comet_kiwi": {
-          "score": 0.7107
         },
         "judge": {
           "score": null,
@@ -107686,66 +105488,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "chọn ít nhất một ngôn ngữ để nghe (không chọn ít nhất một ngôn ngữ để nghe (không sẵn sàng)",
-      "back_translation": "select at least one language to listen to (not at least one language to listen to (not available)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 44.3,
-        "metricx": {
-          "score": 16.88
-        },
-        "comet_kiwi": {
-          "score": 0.4624
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -110086,66 +107828,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "vi",
-      "text": "Trung bình",
-      "back_translation": "Average",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 5.4,
-        "metricx": {
-          "score": 4.31
-        },
-        "comet_kiwi": {
-          "score": 0.4521
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -110314,66 +107996,6 @@
         },
         "comet_kiwi": {
           "score": 0.36
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "vi",
-      "text": "thời giờ khởi chạy khởi chạy không sẵn sàng không? chạy bộ khởi chạy bộ khởi chạy bộ khởi chạy bộ bộ thêm thêm phút khởi chạy bộ bộ bộ thêm thêm phút khởi chạy bộ bộ bộ thêm thêm thêm thêm phút thêm thêm thêm phút thêm thêm:",
-      "back_translation": "start-up time is not available? starter starter foot starter adds minutes of foot start for extra minutes of foot start and start the footer for extra minutes add minute add extra minute add::",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": false,
-          "detail": "length ratio 8.30"
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 12.9,
-        "metricx": {
-          "score": 16.62
-        },
-        "comet_kiwi": {
-          "score": 0.2481
         },
         "judge": {
           "score": null,
@@ -116170,66 +113792,6 @@
       }
     },
     {
-      "key": "pick at least one language to hear (space toggles one)",
-      "msgid": "pick at least one language to hear (space toggles one)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "zh",
-      "text": "选择至少一种语言( 空格切换 1)",
-      "back_translation": "Select at least one language (space switch 1)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 50.6,
-        "metricx": {
-          "score": 2.53
-        },
-        "comet_kiwi": {
-          "score": 0.6408
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "rando reconnecting…",
       "msgid": "rando reconnecting…",
       "msgctxt": null,
@@ -118646,72 +116208,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "zh",
-      "text": "闲置",
-      "back_translation": "Inactive",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.4,
-        "metricx": {
-          "score": 0.61
-        },
-        "comet_kiwi": {
-          "score": 0.6937
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, '闲置' is more technical",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "mistral",
-          "text": "闲置"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; '闲置' feels more formal/technical than needed",
-          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
-          "by": "qwen",
-          "text": "闲置"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -118892,66 +116388,6 @@
           "reason": "Natural and accurate, slightly formal tone",
           "context": "\nWhere it appears: A log label.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "log\u0004time is up: continue? (y/n)",
-      "msgid": "time is up: continue? (y/n)",
-      "msgctxt": "log",
-      "context": "",
-      "locale": "zh",
-      "text": "时间到:继续吗? (y/n)",
-      "back_translation": "Time: Continue? (y/n)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 58.3,
-        "metricx": {
-          "score": 1.22
-        },
-        "comet_kiwi": {
-          "score": 0.7591
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -135656,17 +133092,17 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "ar",
-      "text": "علامة الـ 18++ مربع أولاً (tab)",
-      "back_translation": "18++2 First (tab)",
+      "text": "اختيار لغة واحدة على الأقل لسماعها ([[الاطراف] إلى gggggs one)",
+      "back_translation": "Selection of at least one language to be heard ([Parties] to gggggs one)",
       "checks": {
         "placeholders": {
-          "ok": true,
-          "detail": ""
+          "ok": false,
+          "detail": "expected ['%{key}'], got []"
         },
         "glossary": {
           "ok": true,
@@ -135698,12 +133134,12 @@
         }
       },
       "scores": {
-        "chrf": 38.7,
+        "chrf": 52.7,
         "metricx": {
-          "score": 7.41
+          "score": 17.5
         },
         "comet_kiwi": {
-          "score": 0.5274
+          "score": 0.4535
         },
         "judge": {
           "score": null,
@@ -135716,13 +133152,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "علامة الـ 18++ مربع أولاً ([[[نص])",
+      "back_translation": "18++2 first ([[[ [t]) ]",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{key}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 20.9,
+        "metricx": {
+          "score": 8.88
+        },
+        "comet_kiwi": {
+          "score": 0.4893
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "ar",
+      "text": "([0/%{no})",
+      "back_translation": "[0/%{no}",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{no}', '%{yes}'], got ['%{no}']"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": false,
+          "detail": "no letters"
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 13.8,
+        "metricx": {
+          "score": 6.81
+        },
+        "comet_kiwi": {
+          "score": 0.4058
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "de",
-      "text": "das Feld 18+ zuerst ankreuzen (Tab)",
-      "back_translation": "check box 18+ first (Tab)",
+      "text": "Wählen Sie mindestens eine Sprache aus, um sie zu hören (%{key} schaltet eine ein)",
+      "back_translation": "Select at least one language to hear it (%{key} turns on one)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -135758,37 +133314,157 @@
         }
       },
       "scores": {
-        "chrf": 35.0,
+        "chrf": 67.6,
+        "metricx": {
+          "score": 1.68
+        },
+        "comet_kiwi": {
+          "score": 0.8186
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "zuerst das Feld 18+ ankreuzen (%{key})",
+      "back_translation": "First tick box 18+ (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.4,
+        "metricx": {
+          "score": 0.68
+        },
+        "comet_kiwi": {
+          "score": 0.8351
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Natural, correct, and matches the friendly tone.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.\n",
+          "by": "mistral",
+          "text": "zuerst das Feld 18+ ankreuzen (%{key})"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'Feld' is not natural for checkbox; 'an Kreuzen' is awkward.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.\n",
+          "by": "qwen",
+          "text": "zuerst das Feld 18+ ankreuzen (%{key})"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "de",
+      "text": "Zeit ist um: weiter? (%{yes}/%{no})",
+      "back_translation": "Time is: next? (%{yes}/%{no})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.6,
         "metricx": {
           "score": 1.12
         },
         "comet_kiwi": {
-          "score": 0.8233
+          "score": 0.7863
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'Feld' is formal, 'ankreuzen' is correct but 'tick' is more casual.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral",
-          "text": "das Feld 18+ zuerst ankreuzen (Tab)"
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly awkward phrasing; 'Feld' is unclear, 'an Kreuzen' is not natural for 'tick'.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen",
-          "text": "das Feld 18+ zuerst ankreuzen (Tab)"
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "es",
-      "text": "marca primero la casilla 18+ (tab)",
-      "back_translation": "check box 18+ (tab) first",
+      "text": "elegir al menos un idioma para escuchar (%{key} conmuta uno)",
+      "back_translation": "choose at least one language to listen (%{key} switches one)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -135824,12 +133500,12 @@
         }
       },
       "scores": {
-        "chrf": 37.2,
+        "chrf": 60.2,
         "metricx": {
-          "score": 1.89
+          "score": 4.75
         },
         "comet_kiwi": {
-          "score": 0.7805
+          "score": 0.8243
         },
         "judge": {
           "score": null,
@@ -135842,13 +133518,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "marca primero la casilla 18+ (%{key})",
+      "back_translation": "first check box 18+ (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.7,
+        "metricx": {
+          "score": 1.71
+        },
+        "comet_kiwi": {
+          "score": 0.8188
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "es",
+      "text": "tiempo ha terminado: continuar? (%{yes}/%{no})",
+      "back_translation": "time is over: continue? (%{yes}/%{no})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 83.2,
+        "metricx": {
+          "score": 1.04
+        },
+        "comet_kiwi": {
+          "score": 0.8653
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "fa",
-      "text": "ابتدا جعبه 18+ را تیک بزنید (تب)",
-      "back_translation": "At the beginning of Jabba 18+, we made a brick (then)",
+      "text": "اقلاً یک زبان را برای شنیدن انتخاب کنید. (%{key})",
+      "back_translation": "Choose one language to listen to.[10]",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -135884,12 +133680,12 @@
         }
       },
       "scores": {
-        "chrf": 19.5,
+        "chrf": 31.1,
         "metricx": {
-          "score": 1.86
+          "score": 2.91
         },
         "comet_kiwi": {
-          "score": 0.7208
+          "score": 0.6817
         },
         "judge": {
           "score": null,
@@ -135902,13 +133698,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fa",
+      "text": "ابتدا جعبه 18+ را تیک بزنید (0)",
+      "back_translation": "Origin Jabba 18+ म्र्र्र (0)",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{key}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "leftover tokens ['(0)']"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 7.9,
+        "metricx": {
+          "score": 1.75
+        },
+        "comet_kiwi": {
+          "score": 0.7516
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "fa",
+      "text": "زمان به پایان رسیده است: ادامه دهید؟ (%{yes}/%{no})",
+      "back_translation": "The time is come: go on?%{yes}/%{no}",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 48.1,
+        "metricx": {
+          "score": 1.1
+        },
+        "comet_kiwi": {
+          "score": 0.8825
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "fil",
-      "text": "I-crush muna ang 18+ kahon (tab)",
-      "back_translation": "So first take 18+ boxes (tab)",
+      "text": "Pumili ng kahit isang wika para marinig (%{key} togggles one)",
+      "back_translation": "Choose at least one language to hear (Waltz0] togggles ore)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -135944,12 +133860,12 @@
         }
       },
       "scores": {
-        "chrf": 45.6,
+        "chrf": 62.5,
         "metricx": {
-          "score": 8.62
+          "score": 8.12
         },
         "comet_kiwi": {
-          "score": 0.4549
+          "score": 0.7232
         },
         "judge": {
           "score": null,
@@ -135962,13 +133878,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fil",
+      "text": "Tatakin muna ang 18+ kahon (%{key})",
+      "back_translation": "First insert 18+ boxes (Waltz0)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 26.1,
+        "metricx": {
+          "score": 3.64
+        },
+        "comet_kiwi": {
+          "score": 0.6825
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "fil",
+      "text": "Ang panahon ay pataas: magpatuloy? (%{yes}/%{no})",
+      "back_translation": "The time goes up: continue? (uku0]/Waltz1])",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.0,
+        "metricx": {
+          "score": 3.52
+        },
+        "comet_kiwi": {
+          "score": 0.7088
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "fr",
-      "text": "cochez la case 18+ en premier (onglet)",
-      "back_translation": "check box 18+ first (tab)",
+      "text": "choisir au moins une langue à entendre (%{key} en toggles one)",
+      "back_translation": "choose at least one language to hear (%{key} in toggles one)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136004,12 +134040,12 @@
         }
       },
       "scores": {
-        "chrf": 50.5,
+        "chrf": 84.1,
         "metricx": {
-          "score": 1.36
+          "score": 9.94
         },
         "comet_kiwi": {
-          "score": 0.7629
+          "score": 0.5981
         },
         "judge": {
           "score": null,
@@ -136022,13 +134058,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "cochez la case 18+ en premier (%{key})",
+      "back_translation": "check box 18+ first (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 57.1,
+        "metricx": {
+          "score": 1.85
+        },
+        "comet_kiwi": {
+          "score": 0.7984
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "fr",
+      "text": "Le temps est écoulé: continuer? %{yes}/%{no}]",
+      "back_translation": "Time is up: continue? %{yes}/%{no}]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 81.5,
+        "metricx": {
+          "score": 2.14
+        },
+        "comet_kiwi": {
+          "score": 0.863
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "18+ बक्सा को पहले चेक करें (टैब)",
-      "back_translation": "Check before 18+ box (tab)",
+      "text": "सुनने के लिए कम से कम एक भाषा चुनें (%{key}) टॉगल करता है)",
+      "back_translation": "Select at least one language to listen (%{key})",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136064,12 +134220,12 @@
         }
       },
       "scores": {
-        "chrf": 38.5,
+        "chrf": 55.9,
         "metricx": {
-          "score": 4.97
+          "score": 3.61
         },
         "comet_kiwi": {
-          "score": 0.8335
+          "score": 0.7578
         },
         "judge": {
           "score": null,
@@ -136082,13 +134238,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "18+ बक्सा को पहले चेक करें (%{key})",
+      "back_translation": "Check before 18+ box (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 46.6,
+        "metricx": {
+          "score": 5.09
+        },
+        "comet_kiwi": {
+          "score": 0.8319
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "hi",
+      "text": "समय ऊपर है: जारी रखें? (%{yes} / [%{no}]]]]",
+      "back_translation": "The time is up: Continue? (%{yes} / [%{no}]]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.1,
+        "metricx": {
+          "score": 4.62
+        },
+        "comet_kiwi": {
+          "score": 0.6716
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "id",
-      "text": "centang kotak 18+ pertama (tab)",
-      "back_translation": "check first 18+ box (tab)",
+      "text": "pilih paling tidak satu bahasa untuk mendengar (%{key} toggles satu)",
+      "back_translation": "select at least one language to hear (%{key} toggles one)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136124,12 +134400,12 @@
         }
       },
       "scores": {
-        "chrf": 44.9,
+        "chrf": 90.3,
         "metricx": {
-          "score": 2.08
+          "score": 7.06
         },
         "comet_kiwi": {
-          "score": 0.7593
+          "score": 0.7265
         },
         "judge": {
           "score": null,
@@ -136142,13 +134418,133 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "centang kotak 18+ pertama (%{key})",
+      "back_translation": "check first 18+ box (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.4,
+        "metricx": {
+          "score": 2.11
+        },
+        "comet_kiwi": {
+          "score": 0.7522
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "id",
+      "text": "waktu habis: lanjutkan? (%{yes}/%{no}))",
+      "back_translation": "timeout: continue? (%{yes}/%{no})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 79.2,
+        "metricx": {
+          "score": 1.06
+        },
+        "comet_kiwi": {
+          "score": 0.8595
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "it",
-      "text": "spuntare prima la casella 18+ (tab)",
-      "back_translation": "check box 18+ first (tab)",
+      "text": "scegliere almeno una lingua da ascoltare (%{key} commuta una)",
+      "back_translation": "choose at least one language to listen to (%{key} toggle one)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136184,12 +134580,12 @@
         }
       },
       "scores": {
-        "chrf": 50.5,
+        "chrf": 68.5,
         "metricx": {
-          "score": 1.84
+          "score": 6.66
         },
         "comet_kiwi": {
-          "score": 0.7976
+          "score": 0.8423
         },
         "judge": {
           "score": null,
@@ -136202,13 +134598,199 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "spuntare prima la casella 18+ (%{key})",
+      "back_translation": "check box 18+ (%{key}) first",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.7,
+        "metricx": {
+          "score": 1.54
+        },
+        "comet_kiwi": {
+          "score": 0.8322
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "it",
+      "text": "il tempo è scaduto: continuare? (%{yes}/%{no})",
+      "back_translation": "time is up: continue? (%{yes}/%{no}",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 97.3,
+        "metricx": {
+          "score": 1.2
+        },
+        "comet_kiwi": {
+          "score": 0.8649
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Natural, correct, and matches the friendly tone.",
+          "context": "\nWhere it appears: %{yes} and %{no} are the keys to press (y, n), shown as they are.\n",
+          "by": "mistral",
+          "text": "il tempo è scaduto: continuare? (%{yes}/%{no})"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm tone, accurate and idiomatic Italian with correct placeholders.",
+          "context": "\nWhere it appears: %{yes} and %{no} are the keys to press (y, n), shown as they are.\n",
+          "by": "qwen",
+          "text": "il tempo è scaduto: continuare? (%{yes}/%{no})"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "ru",
-      "text": "&quot; галстук &quot; , первый флажок &quot; 18+ &quot; (таб.)",
-      "back_translation": "&quot; tie &quot; , first flag &quot; 18+ &quot; (tab.)",
+      "text": "выбрать по крайней мере один язык, чтобы услышать (%{key} сжимает один)",
+      "back_translation": "Select at least one language to hear (%{key} compresses one)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.9,
+        "metricx": {
+          "score": 9.12
+        },
+        "comet_kiwi": {
+          "score": 0.6448
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "&quot; галочкой &quot; , &quot; буквой 18+ &quot; первым &quot; (%{key})",
+      "back_translation": "&quot; ticking &quot; , &quot; letter 18+ &quot; first &quot; (%{key})",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136224,7 +134806,7 @@
         },
         "script": {
           "ok": false,
-          "detail": "only 58% of letters in the ru script"
+          "detail": "only 50% of letters in the ru script"
         },
         "shape": {
           "ok": true,
@@ -136244,12 +134826,12 @@
         }
       },
       "scores": {
-        "chrf": 23.8,
+        "chrf": 35.7,
         "metricx": {
-          "score": 12.69
+          "score": 7.88
         },
         "comet_kiwi": {
-          "score": 0.3926
+          "score": 0.3978
         },
         "judge": {
           "score": null,
@@ -136262,13 +134844,73 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "ru",
+      "text": "Время вышло: продолжается? (%{yes}/%{no})",
+      "back_translation": "Time is up: is it going on? (%{yes}/%{no}",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 60.0,
+        "metricx": {
+          "score": 3.0
+        },
+        "comet_kiwi": {
+          "score": 0.6907
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "tr",
-      "text": "Önce 18+ kutusunu işaretle (tab)",
-      "back_translation": "First mark 18+ box (tab)",
+      "text": "işitmek için en az bir dil seçin (%{key} birini değiştirir)",
+      "back_translation": "Select at least one language to hear (%{key} changes one)",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136304,12 +134946,12 @@
         }
       },
       "scores": {
-        "chrf": 37.4,
+        "chrf": 74.5,
         "metricx": {
-          "score": 3.86
+          "score": 3.69
         },
         "comet_kiwi": {
-          "score": 0.8249
+          "score": 0.8309
         },
         "judge": {
           "score": null,
@@ -136322,17 +134964,137 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "Önce 18+ kutusunu işaretle (%{key})",
+      "back_translation": "First, mark the box 18+ (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 43.9,
+        "metricx": {
+          "score": 3.28
+        },
+        "comet_kiwi": {
+          "score": 0.8458
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "tr",
+      "text": "zaman doldu: devam mı? (%{yes}/%{no})",
+      "back_translation": "Time's up: go on?",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 12.7,
+        "metricx": {
+          "score": 2.03
+        },
+        "comet_kiwi": {
+          "score": 0.8802
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "سب سے پہلے 18+ باکس کو چیک کریں (ٹیب)",
-      "back_translation": "First check the 18th box (c.m.)",
+      "text": "کم از کم ایک زبان کو سننے کے لئے منتخب کریں (0 ٹوگلس)",
+      "back_translation": "Choose to listen to a language",
       "checks": {
         "placeholders": {
-          "ok": true,
-          "detail": ""
+          "ok": false,
+          "detail": "expected ['%{key}'], got []"
         },
         "glossary": {
           "ok": true,
@@ -136359,80 +135121,17 @@
           "detail": ""
         },
         "numbers": {
-          "ok": true,
-          "detail": ""
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
         }
       },
       "scores": {
-        "chrf": 34.7,
+        "chrf": 22.3,
         "metricx": {
-          "score": 1.59
+          "score": 4.59
         },
         "comet_kiwi": {
-          "score": 0.8044
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Clear meaning, natural Urdu, slightly formal tone",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen",
-          "text": "سب سے پہلے 18+ باکس کو چیک کریں (ٹیب)"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "Cũng có thể giải quyết vấn đề trên cùng một lúc",
-      "back_translation": "We can solve the problem at the same time.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 11.4,
-        "metricx": {
-          "score": 12.94
-        },
-        "comet_kiwi": {
-          "score": 0.3473
+          "score": 0.639
         },
         "judge": {
           "score": null,
@@ -136445,13 +135144,13 @@
       }
     },
     {
-      "key": "tick the 18+ box first (tab)",
-      "msgid": "tick the 18+ box first (tab)",
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
       "msgctxt": null,
       "context": "",
-      "locale": "zh",
-      "text": "先勾选 18 + 框 (tab)",
-      "back_translation": "Tick box 18 + (tab)",
+      "locale": "ur",
+      "text": "سب سے پہلے 18+ باکس کو چیک کریں %{key}",
+      "back_translation": "First check out the 18th box.",
       "checks": {
         "placeholders": {
           "ok": true,
@@ -136487,12 +135186,432 @@
         }
       },
       "scores": {
-        "chrf": 27.0,
+        "chrf": 24.4,
         "metricx": {
-          "score": 2.94
+          "score": 1.81
         },
         "comet_kiwi": {
-          "score": 0.7429
+          "score": 0.7817
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "ur",
+      "text": "وقت ختم ہو گیا ہے: جاری رکھیں؟ %{yes} / %{no}",
+      "back_translation": "The time has ended: Keep moving on?",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 13.0,
+        "metricx": {
+          "score": 1.78
+        },
+        "comet_kiwi": {
+          "score": 0.8529
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "chọn ít nhất một ngôn ngữ để nghe (không sẵn sàng để nghe)",
+      "back_translation": "select at least one language to listen to (not ready to hear)",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{key}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 51.8,
+        "metricx": {
+          "score": 11.81
+        },
+        "comet_kiwi": {
+          "score": 0.4914
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "Tổ hợp của chúng ta",
+      "back_translation": "Our combination.",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{key}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 5.6,
+        "metricx": {
+          "score": 21.62
+        },
+        "comet_kiwi": {
+          "score": 0.3138
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "vi",
+      "text": "thời giờ/ thêm/ thêm/ thêm: thêm/ thêm/ thêm: thêm/ thêm/ thêm/ thêm thêm/ thêm thêm thẻ",
+      "back_translation": "time// add/ add: add/ add: add/ add/ add/ add/ add/ add/ add tag",
+      "checks": {
+        "placeholders": {
+          "ok": false,
+          "detail": "expected ['%{no}', '%{yes}'], got []"
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 6.2,
+        "metricx": {
+          "score": 9.0
+        },
+        "comet_kiwi": {
+          "score": 0.2317
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "pick at least one language to hear (%{key} toggles one)",
+      "msgid": "pick at least one language to hear (%{key} toggles one)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "选择至少一种语言( %{key} 切换到一种)",
+      "back_translation": "Select at least one language (%{key} to switch to one)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 58.3,
+        "metricx": {
+          "score": 4.06
+        },
+        "comet_kiwi": {
+          "score": 0.6562
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (%{key})",
+      "msgid": "tick the 18+ box first (%{key})",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "先勾选 18 + 框 (%{key})",
+      "back_translation": "Tick box 18+ (%{key})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 37.3,
+        "metricx": {
+          "score": 2.22
+        },
+        "comet_kiwi": {
+          "score": 0.7554
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004time is up: continue? (%{yes}/%{no})",
+      "msgid": "time is up: continue? (%{yes}/%{no})",
+      "msgctxt": "log",
+      "context": "",
+      "locale": "zh",
+      "text": "(%{yes}/%{no})",
+      "back_translation": "(%{yes}/%{no})",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": false,
+          "detail": "no letters"
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 44.2,
+        "metricx": {
+          "score": 3.48
+        },
+        "comet_kiwi": {
+          "score": 0.4346
         },
         "judge": {
           "score": null,

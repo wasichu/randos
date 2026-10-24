@@ -471,6 +471,10 @@
     "model": "hy-mt2",
     "msgstr": "verknüpft; verbunden"
   },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "translategemma-12b",
+    "msgstr": "Die Zeit ist abgelaufen: Fortfahren? (%{yes}/%{no})"
+  },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-4b",
     "msgstr": "Zeit abgelaufen: Fortsetzen? (Ja/Nein)"
@@ -555,6 +559,10 @@
     "model": "madlad-400",
     "msgstr": "Peer bot Audio an; dieser Client hat keines, daher wurde der Anruf beendet (Eingabetaste, um erneut zu suchen)"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Wählen Sie mindestens eine Sprache aus, um sie anzuhören. (%{key} schaltet eine Sprache ein/aus.)"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "madlad-400",
     "msgstr": "Wählen Sie mindestens eine Sprache aus, die Sie hören möchten (Leertaste wechselt eine Sprache)"
@@ -606,6 +614,10 @@
   "the audio helper restarted": {
     "model": "madlad-400",
     "msgstr": "Der Audio-Helfer wurde neu gestartet"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "opus-mt",
+    "msgstr": "zuerst das Feld 18+ ankreuzen (%{key})"
   },
   "tick the 18+ box first (tab)": {
     "model": "translategemma-12b",

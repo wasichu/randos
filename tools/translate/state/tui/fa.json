@@ -471,6 +471,10 @@
     "model": "hy-mt2",
     "msgstr": "مطابقت یافت؛ متصل شدند"
   },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "translategemma-12b",
+    "msgstr": "زمان به پایان رسیده است: آیا می‌خواهید ادامه دهید؟ (%{yes}/%{no})"
+  },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-12b",
     "msgstr": "زمان به پایان رسیده است: آیا می‌خواهید ادامه دهید؟ (بله/خیر)"
@@ -555,6 +559,10 @@
     "model": "translategemma-4b",
     "msgstr": "طرف مقابل، فایل صوتی را ارائه کرد؛ اما این مشتری هیچ فایل صوتی ندارد، بنابراین تماس به پایان رسید (برای مشاهده مجدد، دکمه را فشار دهید)"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "madlad-400",
+    "msgstr": "حداقل یک زبان برای شنیدن انتخاب کنید (%{key} یک زبان را تغییر می‌دهد)"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "حداقل یک زبان را انتخاب کنید تا صدای آن را بشنوید (با فشردن کلید Space می‌توانید یک زبان را انتخاب کنید)."
@@ -606,6 +614,10 @@
   "the audio helper restarted": {
     "model": "madlad-400",
     "msgstr": "کمک‌کنندۀ صوتی دوباره آغاز شد"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-12b",
+    "msgstr": "ابتدا کادر مربوط به \"بالای ۱۸ سال\" را علامت بزنید ([%{key}])."
   },
   "tick the 18+ box first (tab)": {
     "model": "translategemma-4b",

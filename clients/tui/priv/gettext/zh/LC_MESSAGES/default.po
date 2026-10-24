@@ -466,11 +466,6 @@ msgstr "峰值：%{level} dBFS"
 msgid "peer offered audio; this client has none, so the call ended (Enter to look again)"
 msgstr "对方提供了音频，但该客户没有，因此通话结束。（按回车键重新查看）"
 
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "pick at least one language to hear (space toggles one)"
-msgstr "请选择至少一种语言来收听（空格键可切换语言）。"
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
@@ -690,13 +685,6 @@ msgctxt "key"
 msgid "unmute"
 msgstr "取消静音"
 
-#. A log line, one or two words: you're not looking or in a call any more.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "idle"
-msgstr "闲置"
-
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
@@ -714,12 +702,6 @@ msgstr "寻找一个 rando"
 msgctxt "log"
 msgid "matched; connecting"
 msgstr "匹配; 连接"
-
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgctxt "log"
-msgid "time is up: continue? (y/n)"
-msgstr "时间已到：继续吗？ (是/否)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -758,6 +740,7 @@ msgid "Time is up"
 msgstr "时间到了"
 
 #. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/model.ex
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "not looking for a rando"
@@ -867,8 +850,21 @@ msgctxt "key"
 msgid "copy the link"
 msgstr "复制链接"
 
-#. The joiner hasn't ticked the 18+ box on the form yet.
+#. %{key} is the name of a key (space), shown as it is.
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
-msgid "tick the 18+ box first (tab)"
-msgstr ""
+msgid "pick at least one language to hear (%{key} toggles one)"
+msgstr "请选择至少一种语言来收听。（点击%{key}可以切换语言。）"
+
+#. The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (%{key})"
+msgstr "请先勾选18+的选项框（ %{key}）。"
+
+#. %{yes} and %{no} are the keys to press (y, n), shown as they are.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "time is up: continue? (%{yes}/%{no})"
+msgstr "时间到：继续吗？（%{yes}/%{no}）"

@@ -467,6 +467,10 @@
     "model": "hy-mt2",
     "msgstr": "মেলে; সংযুক্ত হচ্ছে"
   },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "translategemma-12b",
+    "msgstr": "সময় শেষ: আপনি কি চালিয়ে যেতে চান? (%{yes}/%{no})"
+  },
   "log\u0004time is up: continue? (y/n)": {
     "model": "madlad-400",
     "msgstr": "সময় শেষ: চালিয়ে যেতে চান? (হ্যাঁ/না)"
@@ -551,6 +555,10 @@
     "model": "translategemma-4b",
     "msgstr": "সহকর্মীর কাছ থেকে অডিও পাওয়া গেছে; কিন্তু এই ক্লায়েন্টের কাছে কোনো অডিও নেই, তাই কলটি শেষ হয়ে গেল (পুনরায় দেখার জন্য প্রবেশ করুন)"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-4b",
+    "msgstr": "কমপক্ষে একটি ভাষা নির্বাচন করুন, যাতে আপনি সেটি শুনতে পারেন (%{key} একটি ভাষা নির্বাচন করে)।"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-4b",
     "msgstr": "কমপক্ষে একটি ভাষা নির্বাচন করুন, যা আপনি শুনতে চান (স্পেস বাটনটি একটি ভাষা পরিবর্তন করবে)।"
@@ -602,6 +610,10 @@
   "the audio helper restarted": {
     "model": "madlad-400",
     "msgstr": "অডিও সহায়ক পুনরায় আরম্ভ করা হয়েছে"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "m2m100",
+    "msgstr": "প্রথমে 18+ বক্সটি টিক করুন (%{key})"
   },
   "tick the 18+ box first (tab)": {
     "model": "translategemma-4b",

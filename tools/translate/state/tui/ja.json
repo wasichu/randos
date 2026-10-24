@@ -467,6 +467,10 @@
     "model": "madlad-400",
     "msgstr": "組み合わせる; 結びつける"
   },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "hy-mt2",
+    "msgstr": "時間切れです。続行しますか？（%{yes}/%{no}）"
+  },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-12b",
     "msgstr": "時間切れです。続けますか？ (はい/いいえ)"
@@ -551,6 +555,10 @@
     "model": "hy-mt2",
     "msgstr": "相手側から音声が送信されましたが、このクライアントには音声機能がないため、通話は終了しました（もう一度確認するにはEnterキーを押してください）"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "音声を聞くために、少なくとも1つの言語を選択してください。（%{key} をクリックすると、選択が切り替わります。）"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "hy-mt2",
     "msgstr": "聞く言語を1つ以上選んでください（スペースキーで切り替え可能）"
@@ -602,6 +610,10 @@
   "the audio helper restarted": {
     "model": "hy-mt2",
     "msgstr": "オーディオヘルパーが再起動しました"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-12b",
+    "msgstr": "まず、18歳以上であることを示すチェックボックス（%{key}）にチェックを入れてください。"
   },
   "tick the 18+ box first (tab)": {
     "model": "translategemma-12b",
