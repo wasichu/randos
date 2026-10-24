@@ -94,7 +94,7 @@ join reply, which carries the whole current `state`. Message by message
 | `signal` offer / answer / ICE candidate, either way | While `connecting`: the call can't connect. Once `active`: a late candidate, harmless. | By design, the connect timeout ends the call as `connection_failed`, both are requeued, and the rematch window doesn't apply. |
 | a restart `offer` (either way) | The restart can't happen; the media stays down. | The server holds restarts while either person is away and asks again as soon as they're back (a new `ice_generation` in the resume reply and the `state` push); nobody resends an old offer. |
 | `vote` (you → server) | A `continue` isn't counted: the call could end at the vote timeout though you chose to continue. | `call.agreed_to_continue` says whether your `continue` counted; clients show the choice from it, so after a resume an uncounted vote shows the question again. A repeated `continue` is harmless. (A lost `end`: the call goes on, and you choose again.) |
-| `find`, `cancel_search`, `end_call`, `next` | Nothing happens. | You see nothing happen and do it again (without a call there's no resume: a rejoin is a new, `idle` participant). |
+| `find`, `cancel_search`, `invite`, `cancel_invitation`, `accept_invitation`, `end_call`, `next` | Nothing happens. | You see nothing happen and do it again (without a call there's no resume: a rejoin is a new, `idle` participant; an invitation made before the drop stopped working when the old connection went, so `invite` again). |
 | `status` | No reply. | Ask again (the TUI's status screen refreshes on its own). |
 
 ## Client → server events
@@ -108,8 +108,11 @@ show up as [`state`](#state) pushes, not in the reply. The one exception is
 | --- | --- | --- | --- |
 | `find` | `{"speaks": "en", "hears": ["en", "es"], "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone you can talk to **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
-| `end_call` | `{}`, or `{"reason": …}` | in a call | Hang up and go `idle`. The peer goes back to `looking`. A client that can't carry the call sends a `reason`: `microphone_denied`, `microphone_not_found`, `audio_unavailable`, or `audio_failed` (anything else replies `invalid_message`); it comes back as this participant's `error`. |
-| `next` | `{}` | in a call | Hang up and go straight back to `looking`. |
+| `invite` | `{"speaks": "en", "hears": ["de"], "adult_acknowledged": true, "audio": false}` | `idle` | Make an invitation link instead of joining the queue → `inviting`, with the link in `invitation` (see [Invitations](#invitations)). The same checks as `find` (`adult_terms_required`, `unsupported_language`), and the same rate limit (they share it). |
+| `cancel_invitation` | `{}` | `inviting` | Withdraw the link (it stops working) → `idle`. |
+| `accept_invitation` | `{"token": "…", "adult_acknowledged": true, "audio": false}` | `idle` | Join the call an invitation link offers: a call, or state shows `error: "invitation_invalid"` (unknown, used, expired or withdrawn: one reason for all) or `"audio_mismatch"` (the link's creator and you disagree on `audio`; the link stays valid for someone who agrees). Without the acknowledgment, `adult_terms_required`. Shares `find`'s rate limit. |
+| `end_call` | `{}`, or `{"reason": …}` | in a call | Hang up and go `idle`. The peer goes back to `looking` (to `idle` in an invitation call). A client that can't carry the call sends a `reason`: `microphone_denied`, `microphone_not_found`, `audio_unavailable`, or `audio_failed` (anything else replies `invalid_message`); it comes back as this participant's `error`. |
+| `next` | `{}` | in a call | Hang up and go straight back to `looking`. Ignored in an invitation call (there's no next; don't offer it). |
 | `vote` | `{"vote": "continue" \| "end"}` | `extension_pending` | Vote on extending. Both `continue` → another segment; any `end` → call ends (voter goes `idle`). A counted `continue` shows as `call.agreed_to_continue`; repeating it changes nothing. |
 | `signal` | `{"type": <signal type>, "payload": {…}}` | in a call | Relay a WebRTC signal to the peer (see [signals](#webrtc-signaling)). |
 | `status` | `{}` | always | Reply with the public status page's data (see [below](#status-the-public-status-page)). Changes nothing. |
@@ -142,6 +145,36 @@ carry call audio over WebRTC. Browsers always do. A client that sends
 `false`, so a browser user never ends up in a silent call with a text-only
 client. Send `true` only once you can actually answer or offer an audio
 call; a non-boolean value replies `invalid_message`.
+
+### Invitations
+
+Two people who found each other elsewhere get a call of their own: one
+sends `invite`, shares the link it gets, and the other's client sends
+`accept_invitation` with its token. The link is
+`https://<host>/join#<token>`; a client handed the link takes the part
+after `#` (the token never travels in a URL the server sees). Until it's
+used, the creator is `inviting`, with
+
+```json
+"invitation": {"url": "https://randos.slowinput.org/join#…", "expires_at_unix_ms": 1760000000000}
+```
+
+in `state` (`null` otherwise). The link works once, and stops working when
+it expires (`Randos.Calls.Lifecycle.invitation_seconds/0`, 15 minutes),
+when the creator sends `cancel_invitation`, or when the creator goes away
+(their connection drops: a rejoin is a new, `idle` participant, as with
+`looking`). Its own creator can't use it. Someone `inviting` isn't in the
+queue: random matching never pairs them.
+
+`accept_invitation` takes no languages: the joiner is taken to speak what
+the creator wants to hear (the creator's `hears`), so the creator's
+`peer_speaks` is the first of those and `peer_speaks_any` lists them all
+when there are several; the joiner's `peer_speaks` is the creator's
+`speaks`, as in any call.
+
+The call is an ordinary one (the same timing, vote, audio and recovery)
+with `call.kind` `"invitation"`. When it ends, **both go `idle`**, never
+back to `looking`, and `next` does nothing in it.
 
 `ice_restart` (boolean, optional, default `false`) says this client follows
 obligation 10: it restarts ICE when the server asks. Only a call whose two
@@ -220,10 +253,11 @@ e.g. `"in_call"`.
 
 ```json
 {
-  "status": "idle | looking | connecting | in_call | extension_pending",
+  "status": "idle | looking | inviting | connecting | in_call | extension_pending",
   "webrtc_role": "offerer | answerer | null",
-  "error": "adult_terms_required | unsupported_language | call_start_failed | microphone_denied | microphone_not_found | audio_unavailable | audio_failed | null",
+  "error": "adult_terms_required | unsupported_language | call_start_failed | invitation_invalid | audio_mismatch | microphone_denied | microphone_not_found | audio_unavailable | audio_failed | null",
   "error_message": "…the same words the browser shows… | null",
+  "invitation": null | {"url": "https://…/join#…", "expires_at_unix_ms": 1760000000000},
   "call": null | {
     "id": "call-…",
     "status": "connecting | active | extension_pending | ended",
@@ -232,7 +266,9 @@ e.g. `"in_call"`.
     "ice_transport_policy": "relay | all",
     "ice_generation": 0,
     "recovering": false,
+    "kind": "random | invitation",
     "peer_speaks": "es",
+    "peer_speaks_any": ["es"],
     "call_deadline_unix_ms": 1760000000000 | null,
     "extension_deadline_unix_ms": 1760000000000 | null,
     "extension_count": 0,
@@ -258,6 +294,11 @@ e.g. `"in_call"`.
 - `peer_speaks`: the language your rando speaks in this call (a code from
   `languages`). With several hearing languages, it's the only way to know.
   It's a language, never anything that identifies them.
+  `peer_speaks_any`: every language they may speak, the same as
+  `[peer_speaks]` except for an invitation's creator whose `hears` has
+  several ("German or Japanese"; see [Invitations](#invitations)).
+- `kind`: `"invitation"` for a call made through a link (both go `idle`
+  after it; don't offer `next`), else `"random"`.
 - `recovering`: `true` while the call is unhealthy and within its
   recovery budget (obligation 4): show "Reconnecting audio…". If
   `peer_reconnecting` is also `true`, say that instead (it says more).
@@ -287,7 +328,8 @@ e.g. `"in_call"`.
   is down and the call is waiting for them to come back (show it; don't
   end the call yourself). Their audio may well still be flowing.
 - After a call ends, `call` becomes `null` and status becomes `idle` (if you
-  chose to stop) or `looking` (you were requeued automatically).
+  chose to stop, or it was an invitation call) or `looking` (you were
+  requeued automatically).
 - The state never contains the peer, the match, or any participant id.
 
 (There is no separate `ice_servers` push any more: the servers come with

@@ -1,4 +1,4 @@
-# Invitation links (design, 2026-10-22; decided, not built)
+# Invitation links (design, 2026-10-22; decided; building since 2026-10-24)
 
 Proposed by the owner: **anonymous, one-time invitation links**, after
 Lichess's anonymous challenges. Two people who already found each other
@@ -48,6 +48,10 @@ ride on whatever that becomes.
   other); the 18+ acknowledgement and `audio?` agreement still apply (a
   client without audio can't join a browser's call: `:audio_mismatch`,
   and the link stays valid for someone who can).
+- Invitations live in their own map (token hash → entry, monitor, expiry
+  timer), not in `waiting`: the DOWN handler checks both, `snapshot`
+  (the status page's queue counts) leaves them out, and an invitation
+  call records no rematch pair when it ends.
 - `Matchmaker.cancel_invitation(pid)`, and the monitor: the creator's
   process going away (tab closed, reload) cancels it.
 - The expiry: `Lifecycle.invitation_seconds/0` (15 minutes proposed), the
@@ -71,11 +75,16 @@ care; two places do:
 and the browser stay interoperable: a browser can invite a TUI and the
 reverse.
 
-**The link.** `https://randos.slowinput.org/join#<token>`: the token in the
+**The link.** `https://randos.slowinput.org/join#<token>`, built from
+the Endpoint's URL (`PHX_HOST`; in production a Fly secret,
+`randos.slowinput.org`, overriding `fly.toml`'s `randos.fly.dev`, which
+rejects browser sockets), never from the request's host: the token in the
 URL fragment, which browsers never send to the server. So it can't end up
 in a request log, a `Referer`, or a link preview's fetch, and a preview
 bot (Discord, Slack, iMessage) gets a plain page with nothing to claim.
-The `/join` LiveView reads the fragment in a hook and sends it over the
+`/join` is a `live_action` of `HomeLive`, not a LiveView of its own, so
+the joiner lands on the same call screen with nothing duplicated. It reads
+the fragment in a hook and sends it over the
 socket only when the person presses "Join the call"; even then, a page
 that merely loads claims nothing. The TUI accepts the pasted link (or the
 bare token) and takes the part after `#`.
@@ -92,10 +101,14 @@ and the obligation tests):
   guesser nothing;
 - rate-limited with `find`'s token bucket.
 
-**Languages.** The creator's and joiner's speaking languages come from
-their usual settings (the form's, or the TUI's saved ones), so
-`peer_speaks` still says what the rando speaks; hearing languages don't
-matter. The joiner's page asks nothing about languages.
+**Languages.** The creator's languages come from their usual settings
+(the form's, or the TUI's saved ones). The joiner's page asks nothing
+about languages (decision 8): the joiner is taken to speak what the
+creator wants to hear. So the joiner sees `peer_speaks` as usual (the
+creator's speaking language), and the creator sees the creator's own
+hearing language; with several, `peer_speaks` is the first (what older
+clients show) and `peer_speaks_any` lists them all ("German or
+Japanese").
 
 **Privacy** (`docs/privacy.md`): the server holds an invitation's token
 hash, the creator's anonymous participant id and their speaking
@@ -107,7 +120,9 @@ whether they also count toward language pairs is a decision below.
 ## Tests
 
 - Matchmaker: create, accept, invalid after use, after expiry, after
-  cancel, after the creator's process exits; two `accept`s racing (many
+  cancel, after the creator's process exits; the creator accepting their
+  own link (invalid); someone waiting can't invite, someone inviting
+  can't join the queue; two `accept`s racing (many
   processes at once, exactly one call); not in the random list (a random
   joiner with matching languages isn't matched to it); `:already_queued`
   both ways; the audio mismatch leaves the link valid.
@@ -137,4 +152,14 @@ whether they also count toward language pairs is a decision below.
 7. **The button says "Invite someone"**, a quieter secondary button
    beside "Find a rando".
 
-All seven were the proposals; nothing is open.
+All seven were the proposals.
+
+**Before building (the owner, 2026-10-24), after an advisor check:**
+
+8. **The joiner picks no language.** The join screen is the 18+
+   click-through and "Join the call"; the joiner is taken to speak the
+   creator's hearing language (all of them, when several).
+9. **Translations:** the new strings go through `just translate-update`
+   for both catalogs when the wording is final, without asking again.
+
+Nothing is open.
