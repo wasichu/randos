@@ -28,7 +28,7 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 6 | UI translations | Done (2026-10-22): 20 languages (English and 19 machine translations), fixes welcome through "Suggest a fix" |
 | — | Translating the TUI ([`tui_translation.md`](tui_translation.md)) | Done (2026-10-23): the same 19 languages as the site, chosen from the environment or with `l` (saved); right to left in every terminal (reordered by the TUI where the terminal doesn't) |
 | — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Done (2026-10-24): both clients, reviewed by the owner in two rounds of screenshots, in all 20 languages |
-| 5 | Voice anonymization | **Next**, when the owner says; its voice lab starts with a code-quality pass over what landed since the last one (2026-10-23, done): the TUI's translation, invitations, the translation tool's updates, Dependabot. Inventory first, then the owner's decisions |
+| 5 | Voice anonymization | **Next**, when the owner says. The quality passes before it are done (the third, 2026-10-24), and the plan was refreshed the same day ("Plan refresh" under Phase 5): a processor first, gated by the benchmark |
 
 ## How it fits together
 
@@ -392,6 +392,30 @@ independent of pitch, randomized per call; McAdams coefficients (the
 VoicePrivacy DSP baseline); then voice conversion to a fixed target voice
 (the model mini-project). Each future processor needs its own "undo it"
 attacker.
+
+### Plan refresh (2026-10-24)
+
+The plan below, checked against the code after the TUI's translation,
+invitations and three quality passes. The voice code hasn't changed since
+2026-10-21 (only the shared lints), and decisions 1 and 2, the seam in
+both clients, lab v0 and the benchmark all still hold. The seam's latency
+varies between headless runs (≈10 to 20 ms, `measureSeamLatencyMs`);
+real devices are still unmeasured. What changed, and the owner's calls:
+
+| Question | Decision |
+| --- | --- |
+| Next step | **A processor first, not lab v1.** The benchmark already showed pitch shifting hides no one; the owner's ears are the costly judge and hear only what the benchmark passes. So: the benchmark's quick mode (a few clips, its run time measured first; Dependabot's voice-eval PRs wait on it too), then a formant shifter and McAdams (the VoicePrivacy baseline). Lab v1's tools (blind A/B, sweeps, listen-live) only when a finalist needs them |
+| Whether a call is disguised | **Each person chooses for themselves, before the call** (on the form, in both clients), not a setting applied to calls or participants; so invitation calls need no rule of their own |
+| Who picks the processor's settings per call (randomized, as the benchmark asks) | Later, once a processor passes the benchmark: the call's coordinator (a protocol field; the AGENTS.md mini-pass) or each client |
+| The owner listening to lab v0 | Not yet: after the next processor, so the listening is spent on something worth hearing |
+
+Open, for when the opt-in is designed: whether your rando is told your
+voice is disguised; whether the choice is remembered (the browser's
+cookie, the TUI's settings file); its strings in both catalogs (a
+translation run the owner approves first); and `privacy.md`. In the
+helper, a processor runs inside the audio callback, which may not
+allocate: FFT buffers are made up front, and a model would run on its own
+thread.
 
 ### Decisions (2026-10-19)
 
