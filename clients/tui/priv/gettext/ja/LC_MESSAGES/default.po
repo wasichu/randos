@@ -67,7 +67,7 @@ msgstr "残り時間: %{time}"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "%{time} to decide"
-msgstr "%{time}決める"
+msgstr ""
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -435,10 +435,11 @@ msgstr "消音されている"
 msgid "no answer"
 msgstr "返答なし"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
-msgstr "電話はしない"
+msgstr "通話は行われていません"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -449,11 +450,6 @@ msgstr "認証は必要ありません"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "まだ電話が足りない"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "見ていない"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "合う"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "時間切れだ"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "randoを探していない"

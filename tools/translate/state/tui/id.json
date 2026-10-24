@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · Anda: %{you} dBFS · Pihak lain: %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (default)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first} atau %{last}"
   },
   "%{language} both ways": {
@@ -16,15 +16,15 @@
     "msgstr": "%{language} Kedua cara"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} menit"
   },
   "%{minutes} min or more": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} menit atau lebih"
   },
   "%{request} refused: %{reason}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{request} ditolak: %{reason}"
   },
   "%{sent} sent / %{received} received": {
@@ -44,7 +44,7 @@
     "msgstr": "Sebuah pasangan bahasa akan ditampilkan jika memiliki setidaknya %{count} panggilan; yang jumlahnya lebih sedikit dianggap sebagai “lainnya”."
   },
   "About these numbers": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Tentang angka-angka ini"
   },
   "Asking the server…": {
@@ -64,7 +64,7 @@
     "msgstr": "Memeriksa relai…"
   },
   "Connected: %{connected}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Terhubung: %{connected}"
   },
   "Connecting to the server…": {
@@ -72,15 +72,15 @@
     "msgstr": "Menyambung ke server…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Koneksi:"
   },
   "Continue for another %{minutes} minutes?": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Lanjutkan selama %{minutes} menit lagi?"
   },
   "Continue?": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Lanjutkan?"
   },
   "Continued": {
@@ -96,7 +96,7 @@
     "msgstr": "Jumlah ini mencakup %{answered} dari total %{total} server."
   },
   "Devices": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Perangkat"
   },
   "Error: %{message}": {
@@ -144,7 +144,7 @@
     "msgstr": "Uji mikrofon gagal: %{error}"
   },
   "Mic:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Mikrofon:"
   },
   "Mic: %{bars}%{peak}   (t to stop)": {
@@ -160,11 +160,11 @@
     "msgstr": "Tidak ada relay yang dikonfigurasi pada server ini, sehingga panggilan ke sini ditransmisikan secara langsung."
   },
   "Now:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Saat ini:"
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Bahasa lain: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -184,7 +184,7 @@
     "msgstr": "Menyambungkan audio kembali…"
   },
   "Server status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Status server"
   },
   "Speaker:": {
@@ -252,7 +252,7 @@
     "msgstr": "salah satu bahasa yang Anda pilih (%{count})"
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "terhubung"
   },
   "connected directly": {
@@ -260,7 +260,7 @@
     "msgstr": "Terhubung langsung"
   },
   "connected to %{server}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "terhubung ke %{server}"
   },
   "connected to the server": {
@@ -284,7 +284,7 @@
     "msgstr": "sedang terhubung…"
   },
   "connection closed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "koneksi ditutup"
   },
   "couldn't connect": {
@@ -312,7 +312,7 @@
     "msgstr": "dalam sebuah panggilan"
   },
   "key\u0004about these numbers": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "tentang angka-angka ini"
   },
   "key\u0004back": {
@@ -320,7 +320,7 @@
     "msgstr": "Kembali"
   },
   "key\u0004cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "batalkan"
   },
   "key\u0004change": {
@@ -332,7 +332,7 @@
     "msgstr": "Periksa"
   },
   "key\u0004close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "tutup"
   },
   "key\u0004continue": {
@@ -348,11 +348,11 @@
     "msgstr": "akhiri panggilan"
   },
   "key\u0004find": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "temukan"
   },
   "key\u0004language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "bahasa"
   },
   "key\u0004mic": {
@@ -364,7 +364,7 @@
     "msgstr": "uji mikrofon"
   },
   "key\u0004move": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "pindah"
   },
   "key\u0004mute": {
@@ -376,7 +376,7 @@
     "msgstr": "Selanjutnya rando"
   },
   "key\u0004quit": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "berhenti"
   },
   "key\u0004refresh": {
@@ -384,7 +384,7 @@
     "msgstr": "memperbarui"
   },
   "key\u0004speaker": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "pembicara"
   },
   "key\u0004status": {
@@ -436,7 +436,7 @@
     "msgstr": "tidak ada panggilan"
   },
   "no credentials asked for": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "tidak ada kredensial yang diminta"
   },
   "not enough calls yet": {
@@ -444,8 +444,12 @@
     "msgstr": "belum cukup panggilan"
   },
   "not looking": {
-    "model": "m2m100",
-    "msgstr": "Tidak melihat"
+    "model": "madlad-400",
+    "msgstr": "tidak mencari"
+  },
+  "not looking for a rando": {
+    "model": "hy-mt2",
+    "msgstr": "tidak sedang mencari rando"
   },
   "not working": {
     "model": "translategemma-4b",
@@ -464,7 +468,7 @@
     "msgstr": "Dalam panggilan"
   },
   "panel title\u0004Looking": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Mencari"
   },
   "panel title\u0004Matched": {
@@ -504,11 +508,11 @@
     "msgstr": "sedang terhubung kembali…"
   },
   "refused": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "ditolak"
   },
   "secure connection failed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "koneksi aman gagal"
   },
   "starting audio…": {
@@ -540,7 +544,7 @@
     "msgstr": "Waktu habis: lanjutkan?"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "kurang dari 1 menit"
   },
   "unexpected reply": {

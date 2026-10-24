@@ -8,7 +8,7 @@
     "msgstr": "%{device} (impostazione predefinita)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -24,11 +24,11 @@
     "msgstr": "%{minutes} minuti o più"
   },
   "%{request} refused: %{reason}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{request} rifiutato: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{sent} inviato / %{received} ricevuto"
   },
   "%{time} remaining": {
@@ -44,7 +44,7 @@
     "msgstr": "Una coppia di lingue viene visualizzata solo quando ha almeno %{count} richieste; quelle con un numero inferiore vengono considerate “altre”."
   },
   "About these numbers": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "A proposito di questi numeri"
   },
   "Asking the server…": {
@@ -72,15 +72,15 @@
     "msgstr": "Connessione al server in corso…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Connessione:"
   },
   "Continue for another %{minutes} minutes?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Continuare per altri %{minutes} minuti?"
   },
   "Continue?": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Continuare?"
   },
   "Continued": {
@@ -96,11 +96,11 @@
     "msgstr": "Contato attraverso %{answered} di %{total} server."
   },
   "Devices": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Dispositivi"
   },
   "Error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Errore: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -144,7 +144,7 @@
     "msgstr": "Il test del microfono è fallito: %{error}"
   },
   "Mic:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Microfono:"
   },
   "Mic: %{bars}%{peak}   (t to stop)": {
@@ -164,7 +164,7 @@
     "msgstr": "Attualmente:"
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Altre lingue: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -184,15 +184,15 @@
     "msgstr": "Riconnessione audio in corso…"
   },
   "Server status": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Stato del server"
   },
   "Speaker:": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Speaker:"
   },
   "Text only (no audio helper).": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Solo testo (nessun aiuto audio)."
   },
   "The relay is partly working.": {
@@ -228,7 +228,7 @@
     "msgstr": "Oggi (calcolato a partire da %{time} UTC del %{date}):"
   },
   "Typical length: %{length}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Lunghezza tipica: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -240,11 +240,11 @@
     "msgstr": "Tu sei"
   },
   "You're in a call.": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Sei in una chiamata."
   },
   "Your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Il tuo rando"
   },
   "any of the languages you picked (%{count})": {
@@ -252,7 +252,7 @@
     "msgstr": "una qualsiasi delle lingue che avete selezionato (%{count})."
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connesso"
   },
   "connected directly": {
@@ -304,7 +304,7 @@
     "msgstr": "disconnesso; riconnessione"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Errore: %{message}"
   },
   "in a call": {
@@ -332,7 +332,7 @@
     "msgstr": "verificare"
   },
   "key\u0004close": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "chiudi"
   },
   "key\u0004continue": {
@@ -388,7 +388,7 @@
     "msgstr": "parlante"
   },
   "key\u0004status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "stato"
   },
   "key\u0004unmute": {
@@ -396,7 +396,7 @@
     "msgstr": "disattivare il silenzio"
   },
   "log\u0004idle": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "inattivo"
   },
   "log\u0004in call": {
@@ -444,19 +444,23 @@
     "msgstr": "Non ci sono ancora abbastanza chiamate"
   },
   "not looking": {
+    "model": "translategemma-4b",
+    "msgstr": "non sono interessato/a"
+  },
+  "not looking for a rando": {
     "model": "madlad-400",
-    "msgstr": "Non sto cercando"
+    "msgstr": "Non sono alla ricerca di un rando"
   },
   "not working": {
     "model": "madlad-400",
     "msgstr": "Il sito non funziona"
   },
   "panel title\u0004Connecting": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Connessione"
   },
   "panel title\u0004Find a rando": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Trova un rando"
   },
   "panel title\u0004In call": {
@@ -536,7 +540,7 @@
     "msgstr": "Riavvia l'aiutante audio"
   },
   "time is up: continue?": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Il tempo è scaduto: continuare?"
   },
   "under 1 min": {
@@ -548,7 +552,7 @@
     "msgstr": "risposta inattesa"
   },
   "waiting on your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "In attesa del tuo rando"
   },
   "working": {

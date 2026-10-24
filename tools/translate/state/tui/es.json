@@ -8,7 +8,7 @@
     "msgstr": "%{device} (por defecto)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} en ambas direcciones"
   },
   "%{minutes} min": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
@@ -24,11 +24,11 @@
     "msgstr": "%{minutes} minutos o más"
   },
   "%{request} refused: %{reason}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{request} rechazado: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{sent} enviado / %{received} recibido"
   },
   "%{time} remaining": {
@@ -44,7 +44,7 @@
     "msgstr": "Una pareja de idiomas se muestra una vez que ha tenido al menos %{count} consultas; las de menor cantidad se consideran “otros”."
   },
   "About these numbers": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Acerca de estos números"
   },
   "Asking the server…": {
@@ -72,7 +72,7 @@
     "msgstr": "Conectar con el servidor…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Conexión:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -80,7 +80,7 @@
     "msgstr": "¿Desea continuar durante otros %{minutes} minutos?"
   },
   "Continue?": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "¿Continuar?"
   },
   "Continued": {
@@ -96,11 +96,11 @@
     "msgstr": "Contabilizado en el %{answered}% de los %{total} servidores."
   },
   "Devices": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Dispositivos"
   },
   "Error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Error: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -164,7 +164,7 @@
     "msgstr": "Y ahora:"
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Otros idiomas: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -184,11 +184,11 @@
     "msgstr": "Reconectando el audio…"
   },
   "Server status": {
-    "model": "m2m100",
-    "msgstr": "El estado del servidor"
+    "model": "hy-mt2",
+    "msgstr": "Estado del servidor"
   },
   "Speaker:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Orador:"
   },
   "Text only (no audio helper).": {
@@ -200,7 +200,7 @@
     "msgstr": "El relé funciona parcialmente."
   },
   "The relay is working.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "El relé está funcionando."
   },
   "The relay isn't working.": {
@@ -228,7 +228,7 @@
     "msgstr": "Hoy (contando desde las %{time} UTC del %{date}):"
   },
   "Typical length: %{length}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Longitud típica: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -236,7 +236,7 @@
     "msgstr": "Contamos llamadas, no personas: no recopilamos direcciones, ni identificadores, ni información sobre nadie."
   },
   "You": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Tú"
   },
   "You're in a call.": {
@@ -252,11 +252,11 @@
     "msgstr": "cualquiera de los idiomas que escogiste (%{count})"
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "conectado"
   },
   "connected directly": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "conectado directamente"
   },
   "connected to %{server}": {
@@ -264,7 +264,7 @@
     "msgstr": "Conectado con %{server}"
   },
   "connected to the server": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "conectado al servidor"
   },
   "connected via relay": {
@@ -304,7 +304,7 @@
     "msgstr": "desconectado; reconectando"
   },
   "error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "error: %{message}"
   },
   "in a call": {
@@ -396,7 +396,7 @@
     "msgstr": "desactivar el silencio"
   },
   "log\u0004idle": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "inactivo"
   },
   "log\u0004in call": {
@@ -424,7 +424,7 @@
     "msgstr": "Emparejados, preparando la llamada"
   },
   "muted": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "silenciado"
   },
   "no answer": {
@@ -446,6 +446,10 @@
   "not looking": {
     "model": "madlad-400",
     "msgstr": "No estoy buscando"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "No estoy buscando un rando"
   },
   "not working": {
     "model": "opus-mt",
@@ -540,11 +544,11 @@
     "msgstr": "El tiempo se ha agotado: ¿continuar?"
   },
   "under 1 min": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "menos de 1 minuto"
   },
   "unexpected reply": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "respuesta inesperada"
   },
   "waiting on your rando": {

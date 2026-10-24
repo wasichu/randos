@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · Sizin gönderdiğiniz: %{you} dBFS · Karşı tarafın gönderdiği: %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (varsayılan)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first} veya %{last}"
   },
   "%{language} both ways": {
@@ -20,7 +20,7 @@
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} dakika veya daha fazla"
   },
   "%{request} refused: %{reason}": {
@@ -28,7 +28,7 @@
     "msgstr": "%{request} reddedildi: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{sent} gönderildi / %{received} alındı"
   },
   "%{time} remaining": {
@@ -72,7 +72,7 @@
     "msgstr": "Sunucu ile bağlantı kurmak…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Bağlantı:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -100,7 +100,7 @@
     "msgstr": "Aygıtlar"
   },
   "Error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Hata: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -120,7 +120,7 @@
     "msgstr": "Bunu duyduğuma sevindim:"
   },
   "Languages spoken:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Konuşulan diller:"
   },
   "Languages spoken: no calls yet": {
@@ -144,7 +144,7 @@
     "msgstr": "Mikrofon testi başarısız: %{error}"
   },
   "Mic:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Mikrofon:"
   },
   "Mic: %{bars}%{peak}   (t to stop)": {
@@ -160,7 +160,7 @@
     "msgstr": "Bu sunucuda herhangi bir yönlendirici yapılandırılmamıştır, bu yüzden aramalar doğrudan iletilir."
   },
   "Now:": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Şimdi:"
   },
   "Other languages: %{calls}": {
@@ -184,11 +184,11 @@
     "msgstr": "Ses bağlantısını yeniden kurma…"
   },
   "Server status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Sunucu durumu"
   },
   "Speaker:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Konuşmacı:"
   },
   "Text only (no audio helper).": {
@@ -216,7 +216,7 @@
     "msgstr": "Bu sunucunun durum sayfası yoktur (durum isteğinden daha eskidir)."
   },
   "Time is up.": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Zaman doldu."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -228,7 +228,7 @@
     "msgstr": "Bugün (%{date} tarihindeki %{time} UTC’sinden itibaren):"
   },
   "Typical length: %{length}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Tipik uzunluk: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -256,7 +256,7 @@
     "msgstr": "bağlı"
   },
   "connected directly": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "doğrudan bağlı"
   },
   "connected to %{server}": {
@@ -320,7 +320,7 @@
     "msgstr": "geri"
   },
   "key\u0004cancel": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "iptal"
   },
   "key\u0004change": {
@@ -445,7 +445,11 @@
   },
   "not looking": {
     "model": "hy-mt2",
-    "msgstr": "bakmıyorum"
+    "msgstr": "şu an aramıyorum"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "bir rando arıyor değilim"
   },
   "not working": {
     "model": "madlad-400",
@@ -456,7 +460,7 @@
     "msgstr": "Bağlantı kurma"
   },
   "panel title\u0004Find a rando": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Bir rando bul"
   },
   "panel title\u0004In call": {
@@ -464,7 +468,7 @@
     "msgstr": "Çağrıda"
   },
   "panel title\u0004Looking": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Bakıyorum"
   },
   "panel title\u0004Matched": {
@@ -516,7 +520,7 @@
     "msgstr": "Ses kaydı başlıyor…"
   },
   "system default": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "sistem varsayılanı"
   },
   "text only": {

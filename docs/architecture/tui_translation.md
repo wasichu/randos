@@ -1,4 +1,4 @@
-# Translating the TUI (plan, 2026-10-23; not built)
+# Translating the TUI (plan, 2026-10-23; built the same day)
 
 The owner's order (2026-10-23): TUI translation next, then invitations.
 The TUI's text is all English today; the website's is in 20 languages,

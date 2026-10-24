@@ -653,7 +653,12 @@ defmodule Tui.View do
   defp device_lines(_state), do: []
 
   defp status_label(%{connection: :connecting}), do: gettext("connecting to the server…")
-  defp status_label(%{status: :idle}), do: gettext("not looking")
+
+  defp status_label(%{status: :idle}) do
+    gettext_comment("The You panel's \"Now:\" row, before you press Enter to look for one.")
+    gettext("not looking for a rando")
+  end
+
   defp status_label(%{status: :looking}), do: gettext("looking for a rando")
   defp status_label(%{status: :connecting}), do: gettext("matched, preparing the call")
   defp status_label(%{status: :in_call}), do: gettext("in a call")
@@ -687,7 +692,10 @@ defmodule Tui.View do
        when status in @call_statuses,
        do: [gettext("text only (no audio)"), gettext("text only")]
 
-  defp connection_line(_state), do: [gettext("no call")]
+  defp connection_line(_state) do
+    gettext_comment("The You panel's \"Connection:\" row: there is no call going on right now.")
+    [gettext("no call")]
+  end
 
   defp call_line(%{call: nil, last_call_error: error}) when is_binary(error), do: [error]
   defp call_line(%{call: nil}), do: [gettext("starting audio…")]

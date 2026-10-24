@@ -100,7 +100,7 @@
     "msgstr": "أجهزة"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطأ: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -120,7 +120,7 @@
     "msgstr": "يسعدني أن أسمع:"
   },
   "Languages spoken:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "اللغات المستخدمة:"
   },
   "Languages spoken: no calls yet": {
@@ -160,7 +160,7 @@
     "msgstr": "لا يوجد أي نظام توجيه مُكوّن على هذا الخادم، لذا فإن المكالمات الواردة إلى هنا تصل مباشرة."
   },
   "Now:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "الآن:"
   },
   "Other languages: %{calls}": {
@@ -176,7 +176,7 @@
     "msgstr": "عبر بروتوكول UDP (معظم المكالمات)."
   },
   "Press Enter to find a rando.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "اضغط على Enter للعثور على rando."
   },
   "Reconnecting audio…": {
@@ -304,7 +304,7 @@
     "msgstr": "قطع الاتصال؛ إعادة الاتصال"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطأ: %{message}"
   },
   "in a call": {
@@ -344,7 +344,7 @@
     "msgstr": "النهاية"
   },
   "key\u0004end call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "إنهاء المكالمة"
   },
   "key\u0004find": {
@@ -446,6 +446,10 @@
   "not looking": {
     "model": "madlad-400",
     "msgstr": "لا أبحث"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "لا أبحث عن rando"
   },
   "not working": {
     "model": "hy-mt2",

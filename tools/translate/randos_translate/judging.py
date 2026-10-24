@@ -67,9 +67,9 @@ def _rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
         return verdict.get("score") is not None and scoring.judged_context(entry, score) == context(entry)
 
     try:
-        while due := [
-            (loc, entries[m]) for (loc, _key), entries in table.items() for m in review.to_judge(entries, settled, score)
-        ]:
+        # What each string's pick chooses among (copies share their "scores").
+        cands = {k: review.candidates(entries) for k, entries in table.items()}
+        while due := [(loc, c[m]) for (loc, _key), c in cands.items() for m in review.to_judge(c, settled, score)]:
             for locale in sorted({loc for loc, _ in due}):
                 mine = [e for loc, e in due if loc == locale]
                 began = time.monotonic()

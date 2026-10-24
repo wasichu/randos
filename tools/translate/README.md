@@ -201,8 +201,14 @@ vetoing the other's favourite, none stands). The judges' mean breaks ties, or st
 MetricX when COMET-Kiwi has no score; MetricX alone never decides
 (COMET-Kiwi alone does, when MetricX has none; with neither, the
 tie-breaks below decide alone). Further ties go to back-translation chrF, then the shorter
-text, then the text itself, never a model's name. A string that no
-translation passes stays empty, and the site shows the English.
+text, then the text itself, never a model's name. When only one
+translation passes, the judges rate it too, and either rating it ≤ 4
+drops it (with nothing to compare it to, that rating alone decides:
+Chinese once got "rando: page not found" for "not looking for a rando").
+When none passes and some fail only on a final full stop the English
+lacks (Japanese and Korean end a clause with "。"/"다."), those compete
+with it removed, judged the same way (`review.candidates`). A string
+left with no translation stays empty, and the site shows the English.
 
 ## Filling the .po files
 

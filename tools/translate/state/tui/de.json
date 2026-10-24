@@ -8,7 +8,7 @@
     "msgstr": "%{device} (Standardeinstellung)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first} oder %{last}"
   },
   "%{language} both ways": {
@@ -20,7 +20,7 @@
     "msgstr": "%{minutes} Minuten"
   },
   "%{minutes} min or more": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{minutes} min oder mehr"
   },
   "%{request} refused: %{reason}": {
@@ -44,7 +44,7 @@
     "msgstr": "Ein Sprachpaar wird angezeigt, sobald es mindestens %{count} Aufrufe hat; kleinere zählen als „andere“."
   },
   "About these numbers": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Über diese Zahlen"
   },
   "Asking the server…": {
@@ -72,7 +72,7 @@
     "msgstr": "Verbindung zum Server herstellen…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Verbindung:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -96,11 +96,11 @@
     "msgstr": "Berechnet für %{answered} von %{total} Servern."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Geräte"
   },
   "Error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Fehler: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -108,11 +108,11 @@
     "msgstr": "Wie die Anrufe beendet wurden: abgeschlossen %{finished}, keine Verbindung möglich %{not_connected}, Verbindung verloren %{lost}, abgebrochen %{canceled}"
   },
   "I will speak:": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Ich werde sprechen:"
   },
   "I'm 18+ and OK with anonymous, unmoderated calls": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Ich bin 18+ und OK mit anonymen, unmoderierten Anrufen"
   },
   "I'm happy to hear:": {
@@ -164,7 +164,7 @@
     "msgstr": "Und jetzt:"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Andere Sprachen: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -196,11 +196,11 @@
     "msgstr": "Nur Text (keine Audio-Hilfe)."
   },
   "The relay is partly working.": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Das Relais funktioniert teilweise."
   },
   "The relay is working.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Das Relais funktioniert."
   },
   "The relay isn't working.": {
@@ -228,7 +228,7 @@
     "msgstr": "Heute (Zählung seit %{time} UTC am %{date}):"
   },
   "Typical length: %{length}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Typische Länge: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -252,7 +252,7 @@
     "msgstr": "Jede der Sprachen, die Sie gewählt haben (%{count})"
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "verbunden"
   },
   "connected directly": {
@@ -284,7 +284,7 @@
     "msgstr": "Verbinden…"
   },
   "connection closed": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Verbindung geschlossen"
   },
   "couldn't connect": {
@@ -316,7 +316,7 @@
     "msgstr": "über diese Zahlen"
   },
   "key\u0004back": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "zurück"
   },
   "key\u0004cancel": {
@@ -376,7 +376,7 @@
     "msgstr": "Nächster rando"
   },
   "key\u0004quit": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "aufhören"
   },
   "key\u0004refresh": {
@@ -388,7 +388,7 @@
     "msgstr": "Redner/in"
   },
   "key\u0004status": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Status"
   },
   "key\u0004unmute": {
@@ -444,8 +444,12 @@
     "msgstr": "Noch nicht genug Anrufe"
   },
   "not looking": {
-    "model": "hy-mt2",
-    "msgstr": "nicht suchen"
+    "model": "madlad-400",
+    "msgstr": "Ich schaue nicht"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "Nicht auf der Suche nach einem rando"
   },
   "not working": {
     "model": "opus-mt",
@@ -464,7 +468,7 @@
     "msgstr": "Im Telefonat"
   },
   "panel title\u0004Looking": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Suchen"
   },
   "panel title\u0004Matched": {

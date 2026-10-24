@@ -316,13 +316,13 @@ defmodule Tui.AppTest do
       # Narrow (a tmux split): no Devices panel; the lines join Status, lined up.
       narrow = render_text(model("idle"), %{media_state: media}, {80, 24})
       refute narrow =~ "Devices"
-      assert narrow =~ "Now:        not looking"
+      assert narrow =~ "Now:        not looking for a rando"
       assert narrow =~ "Mic:        Mic A (default)"
     end
 
     test "the status panel shows the current state, the connection, and the latest notice" do
       text = render_text(model("idle"))
-      assert text =~ "Now:        not looking"
+      assert text =~ "Now:        not looking for a rando"
       assert text =~ "Connection: no call"
       refute text =~ "Last:"
 

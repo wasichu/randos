@@ -34,12 +34,12 @@
         "seconds": 91.3
       },
       "judge": {
-        "at": "20261023T133728Z",
-        "seconds": 6154.5
+        "at": "20261024T012603Z",
+        "seconds": 6165.3
       },
       "judge_qwen": {
-        "at": "20261023T133800Z",
-        "seconds": 232.7
+        "at": "20261024T012634Z",
+        "seconds": 238.6
       }
     },
     "appended": [
@@ -11562,7 +11562,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Natural and calm, but \"مناسب\" is slightly formal; \"مناسب\" would be more informal.\"}'",
+          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Natural and calm, but \"مناسب\" slightly formal; \"مُناسب\" would be more informal.\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -12725,12 +12725,16 @@
           "score": 0.6897
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Natural, keeps meaning, informal tone",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural, calm tone; slight formality in 'الخاص بك'",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -13398,12 +13402,16 @@
           "score": 0.6099
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff phrasing, 'يرغب في سماع' is formal",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and accurate, slightly formal tone",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -25244,7 +25252,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"выполняет\" feels technical, \"запускает\" would be more natural.\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"выполняет\" feels too formal for casual tone\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -66181,12 +66189,16 @@
           "score": 0.633
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n",
+          "by": "qwen"
         }
       }
     },
@@ -72657,12 +72669,16 @@
           "score": 0.7043
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Correct but slightly stiff; 'минуты' should be pluralized for numbers >1",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slight awkwardness; 'минуты' is plural, but should be 'минут' for correct grammar with numbers",
+          "context": "\nWhere it appears: A call's typical length in minutes (min = minutes).\n",
+          "by": "qwen"
         }
       }
     },
@@ -90969,8 +90985,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" feels incomplete without context\"}'",
+          "score": 7,
+          "reason": "Slightly stiff; 'nói trong' lacks natural flow for context",
           "context": "",
           "by": "qwen"
         }
@@ -106530,7 +106546,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"sazegar\" feels overly formal for tone.\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \"sazegar\" feels overly formal for casual tone.\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -131929,12 +131945,16 @@
           "score": 0.6171
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Unnatural phrasing, 'على الأقل' is unnecessary",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Redundant 'على الأقل' added; '+' already implies 'or more'",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run; the \"+\" already says \"or more\", so don't add words for it (min = minutes).\n",
+          "by": "qwen"
         }
       }
     },

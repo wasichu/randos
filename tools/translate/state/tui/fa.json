@@ -8,7 +8,7 @@
     "msgstr": "%{device} (پیش‌فرض)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} یا %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} هر دو راه"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} دقیقه"
   },
   "%{minutes} min or more": {
@@ -52,8 +52,8 @@
     "msgstr": "از سرور پرسیدم…"
   },
   "Audio on.": {
-    "model": "translategemma-4b",
-    "msgstr": "صدای پخش فعال است."
+    "model": "translategemma-12b",
+    "msgstr": "صدا روشن شد."
   },
   "Calls started: %{started}": {
     "model": "opus-mt",
@@ -96,11 +96,11 @@
     "msgstr": "بر روی %{answered} از مجموع %{total} سرور شمارش شد."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "دستگاه‌ها"
   },
   "Error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "خطا: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -188,8 +188,8 @@
     "msgstr": "وضعیت سرور"
   },
   "Speaker:": {
-    "model": "translategemma-12b",
-    "msgstr": "سخنرانی‌کننده:"
+    "model": "hy-mt2",
+    "msgstr": "سخنران:"
   },
   "Text only (no audio helper).": {
     "model": "translategemma-12b",
@@ -272,7 +272,7 @@
     "msgstr": "اتصال از طریق رله"
   },
   "connecting to %{server}…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "در حال اتصال به %{server}…"
   },
   "connecting to the server…": {
@@ -300,11 +300,11 @@
     "msgstr": "اعتبارسنجی رد شد"
   },
   "disconnected; reconnecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "قطع شده؛ در حال اتصال مجدد"
   },
   "error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "خطا: %{message}"
   },
   "in a call": {
@@ -444,8 +444,12 @@
     "msgstr": "هنوز تماس های کافی ندارم"
   },
   "not looking": {
-    "model": "hy-mt2",
-    "msgstr": "نگاه نمی‌کنم"
+    "model": "opus-mt",
+    "msgstr": "نگاه نمی کند"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "دنبال یک rando نیست"
   },
   "not working": {
     "model": "translategemma-4b",
@@ -456,8 +460,8 @@
     "msgstr": "اتصال برقرار کردن"
   },
   "panel title\u0004Find a rando": {
-    "model": "hy-mt2",
-    "msgstr": "یک rando پیدا کنید"
+    "model": "madlad-400",
+    "msgstr": "پیدا کردن یک rando"
   },
   "panel title\u0004In call": {
     "model": "translategemma-4b",
@@ -540,7 +544,7 @@
     "msgstr": "زمان به پایان رسید: آیا باید ادامه داد؟"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "کمتر از ۱ دقیقه"
   },
   "unexpected reply": {

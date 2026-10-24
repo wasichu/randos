@@ -4,31 +4,31 @@
     "msgstr": "%{connected} · Votre niveau : %{you} dBFS · Niveau de l'interlocuteur : %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{device} (par défaut)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{language} dans les deux sens"
   },
   "%{minutes} min": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{minutes} min ou plus"
   },
   "%{request} refused: %{reason}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{request} refusé: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{sent} envoyé / %{received} reçu"
   },
   "%{time} remaining": {
@@ -44,7 +44,7 @@
     "msgstr": "Une paire de langues est affichée dès qu’elle compte au moins %{count} occurrences ; celles qui en comptent moins sont classées dans la catégorie « autres »."
   },
   "About these numbers": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "A propos de ces chiffres"
   },
   "Asking the server…": {
@@ -64,7 +64,7 @@
     "msgstr": "Vérification du relais…"
   },
   "Connected: %{connected}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Connecté : %{connected}"
   },
   "Connecting to the server…": {
@@ -76,7 +76,7 @@
     "msgstr": "Connexion:"
   },
   "Continue for another %{minutes} minutes?": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Continuer pendant encore %{minutes} minutes ?"
   },
   "Continue?": {
@@ -164,7 +164,7 @@
     "msgstr": "Et maintenant :"
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Autres langues: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -176,7 +176,7 @@
     "msgstr": "Via UDP (la majorité des appels)"
   },
   "Press Enter to find a rando.": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Appuyez sur Entrée pour trouver un rando."
   },
   "Reconnecting audio…": {
@@ -216,7 +216,7 @@
     "msgstr": "Ce serveur n'a pas de page d'état (il est plus ancien que la requête d'état)."
   },
   "Time is up.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Le temps est écoulé."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -228,7 +228,7 @@
     "msgstr": "Aujourd'hui (en comptant à partir de %{time} UTC le %{date}) :"
   },
   "Typical length: %{length}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Longueur typique: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -252,7 +252,7 @@
     "msgstr": "n'importe laquelle des langues que vous avez sélectionnées (%{count})."
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté"
   },
   "connected directly": {
@@ -264,7 +264,7 @@
     "msgstr": "connecté à %{server}"
   },
   "connected to the server": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté au serveur"
   },
   "connected via relay": {
@@ -320,7 +320,7 @@
     "msgstr": "Retour"
   },
   "key\u0004cancel": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "annuler"
   },
   "key\u0004change": {
@@ -368,7 +368,7 @@
     "msgstr": "déplacer"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "muet"
   },
   "key\u0004next rando": {
@@ -396,7 +396,7 @@
     "msgstr": "désactiver le son"
   },
   "log\u0004idle": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "inactif"
   },
   "log\u0004in call": {
@@ -444,23 +444,27 @@
     "msgstr": "Pas assez d’appels pour l’instant"
   },
   "not looking": {
-    "model": "m2m100",
-    "msgstr": "Ne pas regarder"
+    "model": "hy-mt2",
+    "msgstr": "je ne cherche pas"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "Pas à la recherche d'un rando"
   },
   "not working": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "ne fonctionne pas"
   },
   "panel title\u0004Connecting": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "Connexion"
   },
   "panel title\u0004Find a rando": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Trouver un rando"
   },
   "panel title\u0004In call": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "En appel"
   },
   "panel title\u0004Looking": {
@@ -504,7 +508,7 @@
     "msgstr": "En cours de reconnexion…"
   },
   "refused": {
-    "model": "opus-mt",
+    "model": "m2m100",
     "msgstr": "refusé"
   },
   "secure connection failed": {
@@ -544,7 +548,7 @@
     "msgstr": "moins d'une minute"
   },
   "unexpected reply": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "réponse inattendue"
   },
   "waiting on your rando": {

@@ -435,6 +435,7 @@ msgstr "مطفأ"
 msgid "no answer"
 msgstr "لا يوجد رد"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "لا توجد شهادات مطلوبة"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "عدد المكالمات غير كافية حتى الآن"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "لا أبحث"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "مُطابقة"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "لقد انتهى الوقت"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "لا أبحث عن rando"

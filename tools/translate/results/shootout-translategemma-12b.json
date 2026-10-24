@@ -35,12 +35,12 @@
         "seconds": 120.9
       },
       "judge": {
-        "at": "20261023T133647Z",
-        "seconds": 5700.8
+        "at": "20261024T012538Z",
+        "seconds": 5702.8
       },
       "judge_qwen": {
-        "at": "20261023T133754Z",
-        "seconds": 89.4
+        "at": "20261024T012628Z",
+        "seconds": 90.0
       }
     },
     "appended": [
@@ -118734,12 +118734,16 @@
           "score": 0.8439
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff phrasing, 'گوش خواهید داد' is formal",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural, slightly formal tone, minor stiffness in phrasing",
+          "context": "",
+          "by": "qwen"
         }
       }
     },

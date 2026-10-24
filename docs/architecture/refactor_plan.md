@@ -26,8 +26,8 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | 4 | TUI | Done: monitor, text client, call audio (STUN/TURN, echo cancellation, FEC), release builds, Homebrew tap (v0.2.0) |
 | — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
 | 6 | UI translations | Done (2026-10-22): 20 languages (English and 19 machine translations), fixes welcome through "Suggest a fix" |
-| — | Translating the TUI | **Next** (the owner's order, 2026-10-23); see Open items |
-| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | After the TUI's translation; design drafted and decided 2026-10-22, not built |
+| — | Translating the TUI ([`tui_translation.md`](tui_translation.md)) | Done (2026-10-23): the same 19 languages as the site, chosen from the environment or with `l` (saved); right to left in every terminal (reordered by the TUI where the terminal doesn't) |
+| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | **Next** (the owner's order, 2026-10-23; an advisor check on the plan first); design drafted and decided 2026-10-22, not built |
 | 5 | Voice anonymization | After invitations; its voice lab starts with a code-quality pass (inventoried 2026-10-23, decisions with the owner) |
 
 ## How it fits together
@@ -313,8 +313,8 @@ MetricX or COMET-Kiwi runs.
 (home components, About, layout, `ParticipantErrors`); only `errors.pot` has
 ever been extracted, and there are no translations or locale selection.
 Language names are already endonyms (`Randos.ConversationLanguages`), so they
-need no translation. The TUI's own strings aren't in gettext (decide whether
-it gets translated, or stays English).
+need no translation. The TUI's own strings weren't in gettext then (they
+are since 2026-10-23: "Translating the TUI" in Open items).
 
 **Languages.** The 14 non-English practice languages: es, zh, hi, ar, pt,
 bn, ru, ja, fr, de, ko, it, tr, id. Arabic needs right-to-left layout.
@@ -778,11 +778,29 @@ Not scheduled; pick up when relevant.
   call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
   clients in the first cut; counted among calls started but not language
   pairs; the button says "Invite someone". Likely before the voice lab.
-- **Translating the TUI** (next, the owner's call 2026-10-23; left open
-  2026-10-22). Its own strings aren't in gettext. It takes gettext in the
-  TUI, a language setting, and a shootout run for its strings: none of
-  them is one of the site's msgids word for word (checked 2026-10-23), so
-  nothing carries over; the pipeline runs new strings end to end.
+- **Translating the TUI (done 2026-10-23).** Every string in gettext
+  (`Tui.Gettext`), the language from the environment or `l` (saved),
+  right to left checked by eye in Terminal.app (which reorders) and Ghostty
+  (where `Tui.Bidi` does); `tui_translation.md` has the plan and the bidi
+  spike. Its catalog's first shootout ran six models (TranslateGemma 27B
+  skipped to save hours; it won 8% of the site's picks). A string whose
+  every translation fails only on a final full stop the English lacks now
+  ships the best one without it (`review._without_final_stops`; three
+  strings in Japanese and Korean, none on the site). After changing UI
+  strings, `just translate-update [site|tui]` translates only what
+  changed (`cli plan`, `run --append`, the judges' cache). Its first real
+  use (4 minutes) re-translated two TUI status words given context:
+  Chinese had read "no call" as "no need to call", now right. Context
+  wasn't enough for "not looking" (six languages read it as "not
+  watching": the winning models don't read comments), so the English
+  became "not looking for a rando". A translation that was the only one
+  passing its checks shipped unjudged (about 2% of strings; Chinese got
+  "rando: page not found" for that new string): the judges now rate lone
+  ones too and either rating it ≤ 4 drops it (the owner's call). That
+  dropped 7, now English: the site's Korean "Finding a rando" and "Your
+  rando" and an Urdu 18+ line; the TUI's Korean "Your rando", Japanese
+  "%{time} to decide", Urdu "%{minutes} min or more" ("May") and that
+  Chinese line.
 - **Translations still off (2026-10-23).** Arabic leaves "Your rando",
   "About randos" and "Looking for a rando…" empty (English shows): every
   model writes "rando" in Arabic letters or translates it away, and a

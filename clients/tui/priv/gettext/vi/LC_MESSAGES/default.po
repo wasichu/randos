@@ -138,7 +138,7 @@ msgstr "Tiếp tục sau %{minutes} phút"
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
 msgid "Counted across %{answered} of %{total} servers."
-msgstr "Đã kiểm tra trên %{answered} trong tổng số %{total} máy chủ."
+msgstr "Đếm trên %{answered} trong tổng số %{total} máy chủ."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -435,10 +435,11 @@ msgstr "im lặng"
 msgid "no answer"
 msgstr "không có phản hồi"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
-msgstr "không gọi điện"
+msgstr "không có cuộc gọi nào"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -449,11 +450,6 @@ msgstr "không yêu cầu bằng cấp"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "Chưa đủ cuộc gọi"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "Không nhìn"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "Phù hợp"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "Thời gian đã hết"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "không đang tìm rando nào"

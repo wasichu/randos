@@ -15,7 +15,8 @@ and works out:
   check, the best mean rank over MetricX and COMET-Kiwi, the judge breaking
   ties; `fill --best` writes these, string by string. When nothing
   passes only because of a final full stop the English lacks, the best of
-  those with it removed (`_without_final_stops`);
+  those with it removed (`candidates`). A lone candidate either judge
+  rates at the veto line or below ships nothing (the English shows);
 - per locale, the **winner**: only a summary now, the model picked for the
   most strings.
 
@@ -122,13 +123,27 @@ def average_ranks(scores: dict[str, float], higher_is_better: bool) -> dict[str,
     return {model: sum(places[v]) / len(places[v]) for model, v in scores.items()}
 
 
-def pick(entries: dict[str, dict]) -> dict | None:
-    """The translation of one string to ship: among those passing every
-    check, the best mean rank over MetricX and COMET-Kiwi (ranked among the
-    passing ones only); ties go to the judge's rank, then back-translation
-    chrF, then the shorter text, then the text itself (never the model's
-    name). None when nothing passes."""
+def candidates(entries: dict[str, dict]) -> dict[str, dict]:
+    """The translations of one string `pick` chooses among and the judges
+    see (`to_judge`): those passing every check; when none does, those
+    whose one fault was a final full stop the English lacks, with it
+    removed (`_without_final_stops`)."""
     passing = {m: e for m, e in entries.items() if _passes(e)}
+    if passing:
+        return passing
+    return {m: e for m, e in _without_final_stops(entries).items() if _passes(e)}
+
+
+def pick(entries: dict[str, dict]) -> dict | None:
+    """The translation of one string to ship: among the `candidates`, the
+    best mean rank over MetricX and COMET-Kiwi (ranked among them only);
+    ties go to the judge's rank, then back-translation chrF, then the
+    shorter text, then the text itself (never the model's name). None when
+    there is no candidate, or the only one is one a judge rates at the veto
+    line or below (`VETO_AT_MOST`): with nothing to compare it to, that
+    rating alone decides ("rando 无法找到页面", "rando: page not found",
+    for "not looking for a rando")."""
+    passing = candidates(entries)
     if not passing:
         return None
     vetoed = _vetoed(passing)
@@ -140,7 +155,9 @@ def pick(entries: dict[str, dict]) -> dict | None:
         model = next(iter(passing))
         return {"model": model, "why": f"the only one left after the judge's veto of {', '.join(sorted(vetoed))}"}
     if len(passing) == 1:
-        model = next(iter(passing))
+        model, only = next(iter(passing.items()))
+        if any((s := _score(only, judge)) is not None and s <= VETO_AT_MOST for judge in JUDGES):
+            return None
         return {"model": model, "why": "the only translation passing every check"}
 
     def ranked(scorer: str) -> dict[str, float] | None:
@@ -198,8 +215,8 @@ def _judge_ranks(passing: dict[str, dict]) -> dict[str, float]:
 def to_judge(entries: dict[str, dict], settled, judge: str) -> list[str]:
     """The models whose translation of one string the judge must see next
     for `pick` to come out as if it had judged them all (`settled(entry)`:
-    judged already, or tried). Only the ones passing every check; none when
-    one passes or none. With MetricX and COMET-Kiwi for every one, the
+    judged already, or tried). `entries` are the string's `candidates`; a
+    lone one is judged too (a low rating vetoes it). With MetricX and COMET-Kiwi for every one, the
     finalists, best mean rank first, a tied group at a time: it stops at
     the first group holding one rated above the veto (it can't be vetoed),
     unless one rated at or below it came before and nothing yet rates high
@@ -208,7 +225,7 @@ def to_judge(entries: dict[str, dict], settled, judge: str) -> list[str]:
     finds its own finalists, so each can veto as if it judged alone."""
     passing = {m: e for m, e in entries.items() if _passes(e)}
     if len(passing) < 2:
-        return []
+        return [m for m, e in passing.items() if not settled(e)]
     if any(_score(e, s) is None for e in passing.values() for s in QUALITY):
         return sorted(m for m, e in passing.items() if not settled(e))
     primary: dict[str, float] = {m: 0 for m in passing}
@@ -229,7 +246,7 @@ def to_judge(entries: dict[str, dict], settled, judge: str) -> list[str]:
 
 
 def _without_final_stops(entries: dict[str, dict]) -> dict[str, dict]:
-    """`pick`'s fallback when no translation of a string passes: each one
+    """`candidates`' fallback when no translation of a string passes: each one
     with a final full stop the English lacks removed and checked again
     (`checks.without_final_stop`), so only those whose one fault was that
     stop can pass. Every model ended these Japanese and Korean clauses with
@@ -266,12 +283,9 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
     for (locale, _key), entries in table.items():
         scorer_ranks = ranks(entries)
         first = next(iter(entries.values()))
-        chosen, shipped = pick(entries), entries
-        if chosen is None:
-            shipped = _without_final_stops(entries)
-            chosen = pick(shipped)
-            if chosen:
-                chosen["why"] += ", with the final full stop the English lacks removed (none passed with it)"
+        chosen, shipped = pick(entries), candidates(entries)
+        if chosen and shipped[chosen["model"]]["text"] != entries[chosen["model"]]["text"]:
+            chosen["why"] += ", with the final full stop the English lacks removed (none passed with it)"
         row = {
             "key": first["key"],
             "msgid": first["msgid"],

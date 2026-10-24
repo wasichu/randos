@@ -8,7 +8,7 @@
     "msgstr": "%{device} (기본 설정)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} 또는 %{last}"
   },
   "%{language} both ways": {
@@ -64,7 +64,7 @@
     "msgstr": "릴레이 상태 확인 중…"
   },
   "Connected: %{connected}": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "연결 상태: %{connected}"
   },
   "Connecting to the server…": {
@@ -72,7 +72,7 @@
     "msgstr": "서버에 연결 중…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -164,7 +164,7 @@
     "msgstr": "지금:"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "다른 언어: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -228,7 +228,7 @@
     "msgstr": "오늘(UTC 시간 %{time} 기준, %{date}부터 계산):"
   },
   "Typical length: %{length}": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "일반적인 길이: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -243,16 +243,12 @@
     "model": "translategemma-4b",
     "msgstr": "전화 통화 중이시군요."
   },
-  "Your rando": {
-    "model": "madlad-400",
-    "msgstr": "귀하의 rando"
-  },
   "any of the languages you picked (%{count})": {
     "model": "translategemma-4b",
     "msgstr": "선택하신 언어 중 (%{count})개"
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결됨"
   },
   "connected directly": {
@@ -352,7 +348,7 @@
     "msgstr": "찾아보기"
   },
   "key\u0004language": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "언어"
   },
   "key\u0004mic": {
@@ -368,7 +364,7 @@
     "msgstr": "이동하기"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "음소거"
   },
   "key\u0004next rando": {
@@ -380,11 +376,11 @@
     "msgstr": "그만두다"
   },
   "key\u0004refresh": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "새로 고침"
   },
   "key\u0004speaker": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "스피커"
   },
   "key\u0004status": {
@@ -392,7 +388,7 @@
     "msgstr": "상태"
   },
   "key\u0004unmute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "음소거 해제"
   },
   "log\u0004idle": {
@@ -445,14 +441,18 @@
   },
   "not looking": {
     "model": "translategemma-4b",
-    "msgstr": "찾고 있지 않음"
+    "msgstr": "지금은 찾고 있지 않음"
+  },
+  "not looking for a rando": {
+    "model": "m2m100",
+    "msgstr": "하나를 찾지 않는다 rando"
   },
   "not working": {
     "model": "translategemma-4b",
     "msgstr": "작동하지 않음"
   },
   "panel title\u0004Connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결 중"
   },
   "panel title\u0004Find a rando": {

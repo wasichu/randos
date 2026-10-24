@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · आपका स्तर %{you} dBFS · सामने वाले का स्तर %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (डिफ़ॉल्ट)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} या %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} दोनों तरीकों से"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} मिनट"
   },
   "%{minutes} min or more": {
@@ -44,7 +44,7 @@
     "msgstr": " एक भाषा जोड़ी तब दिखाई देती है जब इसमें कम से कम %{count} कॉल हों; छोटे को \"अन्य\" के रूप में गिना जाता है।"
   },
   "About these numbers": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "Asking the server…": {
@@ -64,7 +64,7 @@
     "msgstr": "रिले की जाँच कर रहा हूँ…"
   },
   "Connected: %{connected}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "कनेक्टेड: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,7 +100,7 @@
     "msgstr": "उपकरण"
   },
   "Error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "त्रुटि: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -160,11 +160,11 @@
     "msgstr": "इस सर्वर पर कोई रिले सेट नहीं किया गया है, इसलिए यहाँ कॉल सीधे ही जाती हैं।"
   },
   "Now:": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "अब:"
   },
   "Other languages: %{calls}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "अन्य भाषाएँ: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -200,7 +200,7 @@
     "msgstr": "यह रिले आंशिक रूप से काम कर रहा है।"
   },
   "The relay is working.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "रिले ठीक से काम कर रहा है।"
   },
   "The relay isn't working.": {
@@ -228,7 +228,7 @@
     "msgstr": "आज (%{date} पर %{time} UTC से गिनती):"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "सामान्य लंबाई: %{length}"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -236,7 +236,7 @@
     "msgstr": "हम लोगों की गिनती नहीं करते, केवल कॉल की गिनती करते हैं: कोई पता नहीं, कोई पहचान पत्र नहीं, किसी के बारे में कोई जानकारी नहीं।"
   },
   "You": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "आप"
   },
   "You're in a call.": {
@@ -244,7 +244,7 @@
     "msgstr": "आप किसी कॉल पर हैं।"
   },
   "Your rando": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "आपका rando"
   },
   "any of the languages you picked (%{count})": {
@@ -284,11 +284,11 @@
     "msgstr": "कनेक्ट हो रहा है…"
   },
   "connection closed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "कनेक्शन बन्द"
   },
   "couldn't connect": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "कनेक्ट नहीं हो सका"
   },
   "couldn't find the server": {
@@ -304,7 +304,7 @@
     "msgstr": "डिसकनेक्टेड; रीकनेक्टिंग"
   },
   "error: %{message}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "त्रुटि: %{message}"
   },
   "in a call": {
@@ -312,7 +312,7 @@
     "msgstr": "कॉल में"
   },
   "key\u0004about these numbers": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "key\u0004back": {
@@ -332,11 +332,11 @@
     "msgstr": "जाँच करें"
   },
   "key\u0004close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "बंद करें"
   },
   "key\u0004continue": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "जारी रखें"
   },
   "key\u0004end": {
@@ -352,7 +352,7 @@
     "msgstr": "खोजें"
   },
   "key\u0004language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "भाषा"
   },
   "key\u0004mic": {
@@ -368,7 +368,7 @@
     "msgstr": "खिसकाएँ"
   },
   "key\u0004mute": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "मौन"
   },
   "key\u0004next rando": {
@@ -380,7 +380,7 @@
     "msgstr": "रुकना/बंद करना"
   },
   "key\u0004refresh": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "ताज़ा करें"
   },
   "key\u0004speaker": {
@@ -424,7 +424,7 @@
     "msgstr": "मिलान किया, कॉल की तैयारी"
   },
   "muted": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "मौन"
   },
   "no answer": {
@@ -444,8 +444,12 @@
     "msgstr": "अभी तक पर्याप्त कॉल नहीं"
   },
   "not looking": {
-    "model": "translategemma-4b",
-    "msgstr": "खोज नहीं कर रहा"
+    "model": "madlad-400",
+    "msgstr": "नहीं देख रहा है"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "एक rando के लिए नहीं देख रहे हैं"
   },
   "not working": {
     "model": "translategemma-4b",
@@ -504,11 +508,11 @@
     "msgstr": "पुनः कनेक्ट हो रहा है…"
   },
   "refused": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "अस्वीकृत"
   },
   "secure connection failed": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "सुरक्षित कनेक्शन असफल"
   },
   "starting audio…": {
@@ -520,7 +524,7 @@
     "msgstr": "सिस्टम डिफ़ॉल्ट"
   },
   "text only": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "सिर्फ पाठ"
   },
   "text only (no audio)": {
@@ -540,7 +544,7 @@
     "msgstr": "समय समाप्त: क्या आप जारी रखना चाहेंगे?"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "1 मिनट से कम"
   },
   "unexpected reply": {

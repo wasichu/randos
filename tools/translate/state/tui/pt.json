@@ -8,11 +8,11 @@
     "msgstr": "%{device} (valor predefinido)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{language} em ambos os sentidos"
   },
   "%{minutes} min": {
@@ -44,11 +44,11 @@
     "msgstr": "Um par de idiomas é exibido somente quando possui pelo menos %{count} ocorrências; os casos com menos ocorrências são classificados como \"outros\"."
   },
   "About these numbers": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Sobre esses números"
   },
   "Asking the server…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Perguntando ao servidor…"
   },
   "Audio on.": {
@@ -80,7 +80,7 @@
     "msgstr": "Continuar por mais %{minutes} minutos?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Continuar?"
   },
   "Continued": {
@@ -96,7 +96,7 @@
     "msgstr": "Contado em %{answered} de %{total} servidores."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Dispositivos"
   },
   "Error: %{message}": {
@@ -128,7 +128,7 @@
     "msgstr": "Idiomas falados: ainda não há chamadas"
   },
   "Last checked at %{time} UTC.": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Última verificação em %{time} UTC."
   },
   "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
@@ -144,7 +144,7 @@
     "msgstr": "Teste do microfone falhou: %{error}"
   },
   "Mic:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Microfone:"
   },
   "Mic: %{bars}%{peak}   (t to stop)": {
@@ -164,7 +164,7 @@
     "msgstr": "E agora:"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Outras línguas: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -188,7 +188,7 @@
     "msgstr": "Status do servidor"
   },
   "Speaker:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Orador:"
   },
   "Text only (no audio helper).": {
@@ -200,7 +200,7 @@
     "msgstr": "O relé está funcionando parcialmente."
   },
   "The relay is working.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "O relé está funcionando."
   },
   "The relay isn't working.": {
@@ -256,11 +256,11 @@
     "msgstr": "conectado"
   },
   "connected directly": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "conectado diretamente"
   },
   "connected to %{server}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "conectado a %{server}"
   },
   "connected to the server": {
@@ -308,7 +308,7 @@
     "msgstr": "Erro em: %{message}"
   },
   "in a call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "em uma chamada"
   },
   "key\u0004about these numbers": {
@@ -320,7 +320,7 @@
     "msgstr": "retorno"
   },
   "key\u0004cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "cancelar"
   },
   "key\u0004change": {
@@ -332,7 +332,7 @@
     "msgstr": "verificar"
   },
   "key\u0004close": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "fechar"
   },
   "key\u0004continue": {
@@ -340,7 +340,7 @@
     "msgstr": "continuar"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "fim"
   },
   "key\u0004end call": {
@@ -396,7 +396,7 @@
     "msgstr": "desativar o silêncio"
   },
   "log\u0004idle": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "inativo"
   },
   "log\u0004in call": {
@@ -444,15 +444,19 @@
     "msgstr": "não há chamadas suficientes ainda"
   },
   "not looking": {
-    "model": "m2m100",
-    "msgstr": "Não olhar"
+    "model": "hy-mt2",
+    "msgstr": "não estou procurando"
+  },
+  "not looking for a rando": {
+    "model": "hy-mt2",
+    "msgstr": "não estou procurando um rando"
   },
   "not working": {
     "model": "madlad-400",
     "msgstr": "não está funcionando"
   },
   "panel title\u0004Connecting": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Conectando"
   },
   "panel title\u0004Find a rando": {
@@ -492,7 +496,7 @@
     "msgstr": "rando A reconectar…"
   },
   "reconnected as a new participant": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "reconectado como um novo participante"
   },
   "reconnected; back in the call": {

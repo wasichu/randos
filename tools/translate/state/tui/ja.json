@@ -35,10 +35,6 @@
     "model": "translategemma-12b",
     "msgstr": "残り時間: %{time}"
   },
-  "%{time} to decide": {
-    "model": "madlad-400",
-    "msgstr": "%{time}決める"
-  },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "madlad-400",
     "msgstr": "言語ペアは、少なくとも %{count} 回の呼び出しがある場合に表示され、それ以下の呼び出しは \"other\" としてカウントされます。"
@@ -96,7 +92,7 @@
     "msgstr": "%{total}台のサーバーのうち、%{answered}台で集計しました。"
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "デバイス"
   },
   "Error: %{message}": {
@@ -200,7 +196,7 @@
     "msgstr": "リレーは部分的に動作しています。"
   },
   "The relay is working.": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "リレーは正常に動作しています。"
   },
   "The relay isn't working.": {
@@ -280,7 +276,7 @@
     "msgstr": "サーバーに接続中…"
   },
   "connecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "接続中…"
   },
   "connection closed": {
@@ -384,11 +380,11 @@
     "msgstr": "リフレッシュ"
   },
   "key\u0004speaker": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "スピーカー"
   },
   "key\u0004status": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ステータス"
   },
   "key\u0004unmute": {
@@ -432,8 +428,8 @@
     "msgstr": "返答なし"
   },
   "no call": {
-    "model": "madlad-400",
-    "msgstr": "電話はしない"
+    "model": "translategemma-4b",
+    "msgstr": "通話は行われていません"
   },
   "no credentials asked for": {
     "model": "madlad-400",
@@ -444,8 +440,12 @@
     "msgstr": "まだ電話が足りない"
   },
   "not looking": {
+    "model": "madlad-400",
+    "msgstr": "見てない"
+  },
+  "not looking for a rando": {
     "model": "hy-mt2",
-    "msgstr": "見ていない"
+    "msgstr": "randoを探していない"
   },
   "not working": {
     "model": "m2m100",
@@ -500,7 +500,7 @@
     "msgstr": "再接続; 電話に戻る"
   },
   "reconnecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "再接続中…"
   },
   "refused": {

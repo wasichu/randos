@@ -258,7 +258,7 @@ msgstr "Reconectando el audio…"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Server status"
-msgstr "El estado del servidor"
+msgstr "Estado del servidor"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -435,6 +435,7 @@ msgstr "silenciado"
 msgid "no answer"
 msgstr "sin respuesta"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "No se solicitan credenciales"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "No hay suficientes llamadas todavía"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "No estoy buscando"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "Emparejados"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "El tiempo se ha acabado"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "No estoy buscando un rando"

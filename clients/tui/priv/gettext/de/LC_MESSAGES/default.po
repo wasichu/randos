@@ -435,6 +435,7 @@ msgstr "stummgeschaltet"
 msgid "no answer"
 msgstr "keine Antwort"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "Keine Anmeldeinformationen erforderlich"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "Noch nicht genug Anrufe"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "nicht suchen"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "Passend"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "Die Zeit ist abgelaufen"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "Nicht auf der Suche nach einem rando"

@@ -8,7 +8,7 @@
     "msgstr": "%{device}（默认）"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first}或%{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} 两种方式"
   },
   "%{minutes} min": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{minutes}分钟"
   },
   "%{minutes} min or more": {
@@ -36,7 +36,7 @@
     "msgstr": "剩余时间：%{time}"
   },
   "%{time} to decide": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{time} 决定"
   },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
@@ -72,7 +72,7 @@
     "msgstr": "正在连接服务器…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "连接："
   },
   "Continue for another %{minutes} minutes?": {
@@ -80,7 +80,7 @@
     "msgstr": "继续再等%{minutes}分钟?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "继续？"
   },
   "Continued": {
@@ -216,7 +216,7 @@
     "msgstr": "该服务器没有状态页面（它比状态查询请求出现得还要早）。"
   },
   "Time is up.": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "时间到了"
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -252,11 +252,11 @@
     "msgstr": "您选择的任何一种语言（共%{count}种）。"
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "已连接"
   },
   "connected directly": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "直接连接"
   },
   "connected to %{server}": {
@@ -284,11 +284,11 @@
     "msgstr": "正在连接中…"
   },
   "connection closed": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "连接已关闭"
   },
   "couldn't connect": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "无法连接"
   },
   "couldn't find the server": {
@@ -316,7 +316,7 @@
     "msgstr": "关于这些数字"
   },
   "key\u0004back": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "返回"
   },
   "key\u0004cancel": {
@@ -340,7 +340,7 @@
     "msgstr": "继续"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "结束"
   },
   "key\u0004end call": {
@@ -364,7 +364,7 @@
     "msgstr": "麦克风测试"
   },
   "key\u0004move": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "移动"
   },
   "key\u0004mute": {
@@ -376,11 +376,11 @@
     "msgstr": "下一页 rando"
   },
   "key\u0004quit": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "退出"
   },
   "key\u0004refresh": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "刷新"
   },
   "key\u0004speaker": {
@@ -388,11 +388,11 @@
     "msgstr": "发言者"
   },
   "key\u0004status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "状态"
   },
   "key\u0004unmute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "取消静音"
   },
   "log\u0004idle": {
@@ -408,7 +408,7 @@
     "msgstr": "寻找一个 rando"
   },
   "log\u0004matched; connecting": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "匹配; 连接"
   },
   "log\u0004time is up: continue? (y/n)": {
@@ -432,8 +432,8 @@
     "msgstr": "没有答案"
   },
   "no call": {
-    "model": "hy-mt2",
-    "msgstr": "无需致电"
+    "model": "translategemma-4b",
+    "msgstr": "没有正在进行的通话"
   },
   "no credentials asked for": {
     "model": "translategemma-4b",
@@ -444,8 +444,8 @@
     "msgstr": "还没有接到足够的电话"
   },
   "not looking": {
-    "model": "opus-mt",
-    "msgstr": "没看"
+    "model": "translategemma-4b",
+    "msgstr": "目前不寻求"
   },
   "not working": {
     "model": "opus-mt",
@@ -472,7 +472,7 @@
     "msgstr": "已匹配"
   },
   "panel title\u0004Time is up": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "时间到了"
   },
   "peak %{level} dBFS": {
@@ -492,7 +492,7 @@
     "msgstr": "rando正在重新连接中……"
   },
   "reconnected as a new participant": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "作为新参与者重新连接"
   },
   "reconnected; back in the call": {
@@ -508,7 +508,7 @@
     "msgstr": "拒绝"
   },
   "secure connection failed": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "安全连接失败"
   },
   "starting audio…": {

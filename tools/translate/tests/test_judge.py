@@ -1,5 +1,5 @@
 """The judge sees only what can change a pick: translations passing every
-check, and of those the finalists (`review.to_judge`), with verdicts it has
+check (a lone one too: its rating decides), and of those the finalists (`review.to_judge`), with verdicts it has
 given before reused (`scoring.JudgeCache`)."""
 
 import json
@@ -47,9 +47,9 @@ def test_a_tied_group_is_judged_together():
     assert review.to_judge(entries, settled, "judge") == ["a", "b"]
 
 
-def test_failing_translations_and_lone_ones_are_never_judged():
+def test_failing_translations_are_never_judged():
     entries = {"a": entry("A", metricx=1.0, comet=0.9, checks=FAIL), "b": entry("B", metricx=2.0, comet=0.8)}
-    assert review.to_judge(entries, settled, "judge") == []
+    assert review.to_judge(entries, settled, "judge") == ["b"]
 
 
 def test_without_both_quality_scores_every_passing_one_is_judged():
@@ -114,9 +114,10 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
 
     FakeJudge.asked = []
     cli.score("judge", [one, two, three], redo=False)
-    # "Cerrar" drops the placeholder and "Cerrar %{time}" passes alone: no judging.
-    # "bad listo" leads and rates low, so the next (tied) group is judged: "Listo" twice, judged once.
-    assert FakeJudge.asked == [("es", "bad listo"), ("es", "Listo")]
+    # "Cerrar" drops the placeholder and "Cerrar %{time}" passes alone: judged, since
+    # its rating alone decides. "bad listo" leads and rates low, so the next (tied)
+    # group is judged: "Listo" twice, judged once.
+    assert FakeJudge.asked == [("es", "bad listo"), ("es", "Cerrar %{time}"), ("es", "Listo")]
     scores = {
         (p.stem, e["key"]): e["scores"]["judge"]["score"] for p in (one, two, three) for e in json.loads(p.read_text())["entries"]
     }
@@ -124,7 +125,7 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
         ("one", "Ready"): 3,
         ("one", "Close %{time}"): None,
         ("two", "Ready"): 8,
-        ("two", "Close %{time}"): None,
+        ("two", "Close %{time}"): 8,
         ("three", "Ready"): 8,
     }
 
@@ -136,7 +137,7 @@ def test_the_judge_command_judges_finalists_and_reuses_its_verdicts(tmp_path, mo
     assert FakeJudge.asked == []
 
     cli.score("judge", [one, two, three, four], redo=True)
-    assert FakeJudge.asked == [("es", "bad listo"), ("es", "Listo")]
+    assert FakeJudge.asked == [("es", "bad listo"), ("es", "Cerrar %{time}"), ("es", "Listo")]
 
 
 def test_each_locale_has_its_judge_and_each_loads_only_when_needed(tmp_path, monkeypatch):
@@ -220,3 +221,11 @@ def test_a_judges_tokenizer_options_are_part_of_its_cache_key():
     assert scoring.JudgeCache.key("es", entry_, "", "mistral") != old_key("mistral")
     # Qwen loads as before: its verdicts still do.
     assert scoring.JudgeCache.key("es", entry_, "", "qwen") == old_key("qwen")
+
+
+def test_a_lone_candidate_is_judged_too():
+    # Its rating alone decides whether it ships (`review.pick`).
+    entries = {"a": entry("A", metricx=1.0, comet=0.9), "b": entry("B", checks=FAIL)}
+    assert review.to_judge(entries, settled, "judge") == ["a"]
+    entries["a"]["scores"]["judge"]["score"] = 3
+    assert review.to_judge(entries, settled, "judge") == []

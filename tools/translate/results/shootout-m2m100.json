@@ -35,12 +35,12 @@
         "seconds": 70.9
       },
       "judge": {
-        "at": "20261023T133708Z",
-        "seconds": 5831.6
+        "at": "20261024T012609Z",
+        "seconds": 5840.6
       },
       "judge_qwen": {
-        "at": "20261023T133800Z",
-        "seconds": 173.9
+        "at": "20261024T012634Z",
+        "seconds": 177.4
       }
     },
     "appended": [
@@ -33259,7 +33259,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"в поисках\" feels formal, \"rando\" should be standalone\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"в поисках\" feels formal, \"rando\" should be capitalized\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -42082,12 +42082,16 @@
           "score": 0.7522
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff phrasing, 'チェックされました' is formal",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
           "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"チェックされました\" feels more formal than needed\"}'",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -55734,12 +55738,16 @@
           "score": 0.8961
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, more natural as '인터넷 연결이 안 되네요'",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff; could be more natural and calm",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -57797,12 +57805,16 @@
           "score": 0.8317
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'lost connection' is more common.",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slightly awkward; 'connection lost' sounds more natural as '연결이 끊겼습니다'",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -68037,12 +68049,16 @@
           "score": 0.8688
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and warm, slightly formal tone",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -69109,12 +69125,16 @@
           "score": 0.8713
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Clear, natural, and matches the calm tone.",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and calm, but slightly formal; could be more conversational.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -69152,12 +69172,16 @@
           "score": 0.8226
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'işe yaramıyor' is correct but could be more casual.",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and accurate, slightly formal tone",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -82802,12 +82826,16 @@
           "score": 0.693
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff phrasing, '발음한' unnecessary",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slightly awkward phrasing; '발음한 문장' is unclear and unnatural",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -85812,12 +85840,16 @@
           "score": 0.7665
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'cánh cửa' is poetic, 'nền tảng' is formal",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and accurate, slightly formal tone",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -86832,8 +86864,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"nói trong\" feels incomplete without context\"}'",
+          "score": 7,
+          "reason": "Slightly stiff; 'nói trong' lacks natural flow for context",
           "context": "",
           "by": "qwen"
         }
@@ -97383,7 +97415,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"rando\" should be in English as per guidelines\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"rando\" should be in English as per guidelines.\"}'",
           "context": "\nIt is a button label: it must be short.\n",
           "by": "qwen"
         }

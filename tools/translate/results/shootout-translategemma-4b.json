@@ -39,8 +39,8 @@
         "seconds": 6199.1
       },
       "judge_qwen": {
-        "at": "20261023T133800Z",
-        "seconds": 220.5
+        "at": "20261024T012634Z",
+        "seconds": 222.5
       }
     },
     "appended": [
@@ -45747,7 +45747,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"etkinleştir/devre dışı bırak\" feels technical, not informal.\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"etkinleştir/devre dışı bırak\" feels technical, not informal\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -56830,7 +56830,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"le lingue\" feels formal, could be more natural as \"le lingue che parliamo\" or similar\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"le lingue\" feels formal, could be more natural like \"le lingue che parliamo\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -97085,7 +97085,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slightly stiff; \"các ngôn ngữ:\" feels formal, could be more natural\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slightly stiff; \"các ngôn ngữ\" feels formal, could be more natural as \\\\\"ngôn ngữ\\\\\"\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -112934,8 +112934,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Natural and calm, minor formality in \\'درباره\\'}'",
+          "score": 10,
+          "reason": "Natural, accurate, and matches the calm, informal tone.",
           "context": "\nWhere it appears: Title of the page that explains what randos is (\"about us\"), not \"approximately\".\n",
           "by": "qwen"
         }
@@ -142440,8 +142440,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"許可を求める\" is redundant with \"アクセスを求める\"}'",
+          "score": 5,
+          "reason": "Slightly awkward phrasing; '許可を求める' is redundant and unnatural.",
           "context": "\nWhere it appears: The call's state while the browser asks your permission to use the microphone.\n",
           "by": "qwen"
         }

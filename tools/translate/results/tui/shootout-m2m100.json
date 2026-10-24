@@ -23,26 +23,32 @@
       "fil"
     ],
     "strings": 140,
-    "at": "20261023T153243Z",
+    "at": "20261024T000749Z",
     "seconds": 842.9,
     "scored": {
       "metricx": {
-        "at": "20261023T192709Z",
-        "seconds": 46.8
+        "at": "20261024T001032Z",
+        "seconds": 48.7
       },
       "comet_kiwi": {
-        "at": "20261023T193224Z",
-        "seconds": 46.9
+        "at": "20261024T001049Z",
+        "seconds": 48.8
       },
       "judge": {
-        "at": "20261023T201852Z",
-        "seconds": 349.8
+        "at": "20261024T012726Z",
+        "seconds": 377.0
       },
       "judge_qwen": {
-        "at": "20261023T203407Z",
-        "seconds": 123.8
+        "at": "20261024T012756Z",
+        "seconds": 135.2
       }
-    }
+    },
+    "appended": [
+      {
+        "at": "20261024T000749Z",
+        "seconds": 13.3
+      }
+    ]
   },
   "summary": {
     "es": {
@@ -58,52 +64,52 @@
         "letter_forms": 0,
         "numbers": 7
       },
-      "mean_chrf": 55.8
+      "mean_chrf": 56.2
     },
     "zh": {
       "strings": 140,
-      "all_checks_pass": 113,
+      "all_checks_pass": 112,
       "failed": {
         "placeholders": 16,
-        "glossary": 10,
+        "glossary": 11,
         "length": 0,
         "script": 4,
-        "shape": 10,
+        "shape": 11,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 10
+        "numbers": 11
       },
-      "mean_chrf": 46.0
+      "mean_chrf": 46.1
     },
     "hi": {
-      "strings": 140,
-      "all_checks_pass": 123,
-      "failed": {
-        "placeholders": 12,
-        "glossary": 5,
-        "length": 0,
-        "script": 1,
-        "shape": 2,
-        "unchanged": 0,
-        "letter_forms": 0,
-        "numbers": 8
-      },
-      "mean_chrf": 45.4
-    },
-    "ar": {
       "strings": 140,
       "all_checks_pass": 122,
       "failed": {
         "placeholders": 12,
-        "glossary": 7,
+        "glossary": 6,
+        "length": 0,
+        "script": 1,
+        "shape": 3,
+        "unchanged": 0,
+        "letter_forms": 0,
+        "numbers": 9
+      },
+      "mean_chrf": 45.2
+    },
+    "ar": {
+      "strings": 140,
+      "all_checks_pass": 121,
+      "failed": {
+        "placeholders": 12,
+        "glossary": 8,
         "length": 1,
         "script": 0,
         "shape": 1,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 12
+        "numbers": 13
       },
-      "mean_chrf": 40.4
+      "mean_chrf": 40.3
     },
     "pt": {
       "strings": 140,
@@ -118,7 +124,7 @@
         "letter_forms": 0,
         "numbers": 6
       },
-      "mean_chrf": 54.1
+      "mean_chrf": 54.2
     },
     "bn": {
       "strings": 140,
@@ -133,50 +139,50 @@
         "letter_forms": 0,
         "numbers": 11
       },
-      "mean_chrf": 40.5
+      "mean_chrf": 40.6
     },
     "ru": {
       "strings": 140,
-      "all_checks_pass": 127,
+      "all_checks_pass": 126,
       "failed": {
         "placeholders": 9,
-        "glossary": 4,
+        "glossary": 5,
         "length": 0,
         "script": 2,
         "shape": 2,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 8
+        "numbers": 9
       },
-      "mean_chrf": 47.4
+      "mean_chrf": 47.8
     },
     "ja": {
       "strings": 140,
-      "all_checks_pass": 108,
+      "all_checks_pass": 107,
       "failed": {
         "placeholders": 20,
-        "glossary": 11,
+        "glossary": 12,
         "length": 0,
         "script": 5,
-        "shape": 16,
+        "shape": 17,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 15
+        "numbers": 16
       },
       "mean_chrf": 43.2
     },
     "fr": {
       "strings": 140,
-      "all_checks_pass": 127,
+      "all_checks_pass": 126,
       "failed": {
         "placeholders": 10,
-        "glossary": 4,
+        "glossary": 5,
         "length": 0,
         "script": 0,
         "shape": 1,
         "unchanged": 0,
         "letter_forms": 0,
-        "numbers": 9
+        "numbers": 10
       },
       "mean_chrf": 54.2
     },
@@ -193,7 +199,7 @@
         "letter_forms": 0,
         "numbers": 6
       },
-      "mean_chrf": 58.8
+      "mean_chrf": 59.1
     },
     "ko": {
       "strings": 140,
@@ -208,7 +214,7 @@
         "letter_forms": 0,
         "numbers": 7
       },
-      "mean_chrf": 44.0
+      "mean_chrf": 44.5
     },
     "it": {
       "strings": 140,
@@ -238,7 +244,7 @@
         "letter_forms": 0,
         "numbers": 15
       },
-      "mean_chrf": 50.5
+      "mean_chrf": 50.0
     },
     "id": {
       "strings": 140,
@@ -253,7 +259,7 @@
         "letter_forms": 0,
         "numbers": 4
       },
-      "mean_chrf": 50.8
+      "mean_chrf": 51.2
     },
     "vi": {
       "strings": 140,
@@ -268,7 +274,7 @@
         "letter_forms": 0,
         "numbers": 2
       },
-      "mean_chrf": 51.6
+      "mean_chrf": 52.0
     },
     "ur": {
       "strings": 140,
@@ -302,18 +308,18 @@
     },
     "fa": {
       "strings": 140,
-      "all_checks_pass": 118,
+      "all_checks_pass": 117,
       "failed": {
         "placeholders": 15,
-        "glossary": 7,
+        "glossary": 8,
         "length": 0,
         "script": 2,
-        "shape": 8,
+        "shape": 9,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 11
       },
-      "mean_chrf": 42.4
+      "mean_chrf": 42.3
     },
     "fil": {
       "strings": 140,
@@ -328,7 +334,7 @@
         "letter_forms": 0,
         "numbers": 4
       },
-      "mean_chrf": 44.3
+      "mean_chrf": 44.5
     }
   },
   "entries": [
@@ -3195,8 +3201,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Accurate but slightly stiff; \"estado del servidor\" sounds more formal than needed\"}'",
+          "score": 7,
+          "reason": "Accurate but slightly stiff; 'estado del servidor' is correct but formal",
           "context": "",
           "by": "qwen"
         }
@@ -5385,15 +5391,15 @@
           "score": 0.8117
         },
         "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
+          "score": 7,
+          "reason": "Slightly stiff, 'no call' is more natural",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and calm, but slightly stiff; 'sin llamadas' would be more informal.",
-          "context": "",
+          "reason": "Natural and calm, but slightly less informal than ideal",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -5511,66 +5517,6 @@
         },
         "comet_kiwi": {
           "score": 0.8511
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "es",
-      "text": "No mirar",
-      "back_translation": "Not to look",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.5,
-        "metricx": {
-          "score": 2.72
-        },
-        "comet_kiwi": {
-          "score": 0.7675
         },
         "judge": {
           "score": null,
@@ -13935,12 +13881,16 @@
           "score": 0.6533
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, '电话' is too formal",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slightly stiff; '没有通话' would sound more natural",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
+          "by": "qwen"
         }
       }
     },
@@ -14053,66 +14003,6 @@
         },
         "comet_kiwi": {
           "score": 0.7288
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "zh",
-      "text": "不要看",
-      "back_translation": "Don’t see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 5.2,
-        "metricx": {
-          "score": 0.64
-        },
-        "comet_kiwi": {
-          "score": 0.6105
         },
         "judge": {
           "score": null,
@@ -22470,14 +22360,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
+          "reason": "Natural, clear, and matches the tone.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and informal; perfect for the tone and context.",
-          "context": "",
+          "reason": "Natural, calm, and informal; perfectly matches tone and meaning.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -22603,66 +22493,6 @@
           "reason": "Natural and calm tone, minor stiffness in 'अभी तक'",
           "context": "",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "hi",
-      "text": "न देखो",
-      "back_translation": "Don’t look at",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 32.1,
-        "metricx": {
-          "score": 3.06
-        },
-        "comet_kiwi": {
-          "score": 0.6194
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -23871,8 +23701,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"आपके लिए प्रतीक्षा करें\" feels formal, could be more natural\"}'",
+          "score": 6,
+          "reason": "Slightly stiff; 'आपके लिए प्रतीक्षा करें' feels awkward and formal",
           "context": "",
           "by": "qwen"
         }
@@ -28449,8 +28279,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Natural and calm, but \"الآن :\" has unnecessary space before colon\"}'",
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfect for native Arabic speakers.",
           "context": "\nWhere it appears: A row of the You panel: what you're doing now.\n",
           "by": "qwen"
         }
@@ -31001,15 +30831,15 @@
           "score": 0.8368
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the informal tone.",
-          "context": "",
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'لا مكالمة' is correct but could be more conversational.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and matches the informal tone perfectly.",
-          "context": "",
+          "reason": "Natural, calm, and informal; perfectly matches the tone and meaning.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -31127,66 +30957,6 @@
         },
         "comet_kiwi": {
           "score": 0.7805
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ar",
-      "text": "لا ننظر",
-      "back_translation": "Not to look.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.0,
-        "metricx": {
-          "score": 2.14
-        },
-        "comet_kiwi": {
-          "score": 0.6806
         },
         "judge": {
           "score": null,
@@ -39727,70 +39497,6 @@
       }
     },
     {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "pt",
-      "text": "Não olhar",
-      "back_translation": "Not to look",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.5,
-        "metricx": {
-          "score": 2.12
-        },
-        "comet_kiwi": {
-          "score": 0.7759
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as 'não olhe'",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'não está olhando' would sound more natural and informal.",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "not working",
       "msgid": "not working",
       "msgctxt": null,
@@ -44863,12 +44569,16 @@
           "score": 0.6092
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, 'OK' feels unnatural in Bengali",
+          "context": "\nWhere it appears: The 18+ box on the form; its [x]/[ ] comes before it.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 7,
+          "reason": "Slight awkwardness; 'OK' feels too direct, could be more natural",
+          "context": "\nWhere it appears: The 18+ box on the form; its [x]/[ ] comes before it.\n",
+          "by": "qwen"
         }
       }
     },
@@ -48267,70 +47977,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "bn",
-      "text": "দেখে না",
-      "back_translation": "not to see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 13.0,
-        "metricx": {
-          "score": 2.59
-        },
-        "comet_kiwi": {
-          "score": 0.8201
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, but slightly less informal than ideal.",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -56873,66 +56519,6 @@
       }
     },
     {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ru",
-      "text": "Не смотреть",
-      "back_translation": "Not to watch",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 6.9,
-        "metricx": {
-          "score": 1.55
-        },
-        "comet_kiwi": {
-          "score": 0.7672
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "not working",
       "msgid": "not working",
       "msgctxt": null,
@@ -62223,12 +61809,16 @@
           "score": 0.7522
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Slightly stiff phrasing, 'チェックされました' is formal",
+          "score": 7,
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff; 'チェックされました' is formal. Could be more natural as 'チェックした'.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -65397,66 +64987,6 @@
           "reason": "Slightly stiff; '足りない' feels abrupt. Could be softer.",
           "context": "",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ja",
-      "text": "見ない",
-      "back_translation": "Not to see.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 7.0,
-        "metricx": {
-          "score": 2.23
-        },
-        "comet_kiwi": {
-          "score": 0.8107
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -70073,8 +69603,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Natural and calm, but \"Continuer ?\" feels slightly abrupt; \"Continuer ?\" is acceptable but could be softer.\"}'",
+          "score": 8,
+          "reason": "Natural and calm, minor punctuation formality",
           "context": "",
           "by": "qwen"
         }
@@ -73858,14 +73388,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and matches the informal tone perfectly.",
-          "context": "",
+          "reason": "Natural, calm, and informal; perfectly matches the tone and meaning.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -73987,70 +73517,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fr",
-      "text": "Ne pas regarder",
-      "back_translation": "Not to look",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.5,
-        "metricx": {
-          "score": 1.12
-        },
-        "comet_kiwi": {
-          "score": 0.8302
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as 'Ne regarde pas'",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 7,
-          "reason": "Slightly stiff; 'ne pas regarder' is literal but lacks the casual tone of 'not looking'.",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -82577,66 +82043,6 @@
       }
     },
     {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "de",
-      "text": "nicht betrachten",
-      "back_translation": "Not to look",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.5,
-        "metricx": {
-          "score": 0.7
-        },
-        "comet_kiwi": {
-          "score": 0.6606
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "not working",
       "msgid": "not working",
       "msgctxt": null,
@@ -90981,15 +90387,15 @@
           "score": 0.8424
         },
         "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural as '통화 없음' or '전화 연결 안 됨'.",
-          "context": "",
+          "score": 10,
+          "reason": "Natural, concise, matches tone.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and calm, slight formality in '전화 없음'",
-          "context": "",
+          "reason": "Natural and accurate, slightly formal but acceptable tone",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -91111,70 +90517,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ko",
-      "text": "보지 않는다",
-      "back_translation": "Not to see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 7.1,
-        "metricx": {
-          "score": 2.17
-        },
-        "comet_kiwi": {
-          "score": 0.8428
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Natural but slightly stiff; 'doesn't look' would be more casual.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, slightly formal but acceptable for context",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -92581,8 +91923,8 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"이 숫자들에 대해서\" sounds a bit formal for casual tone\"}'",
+          "score": 7,
+          "reason": "Slight stiffness; '이 숫자들에 대해서' sounds a bit formal for the tone",
           "context": "\nWhere it appears: A key label.\n",
           "by": "qwen"
         }
@@ -99556,14 +98898,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and informal; perfectly matches tone and meaning.",
-          "context": "",
+          "reason": "Natural, calm, and matches the tone and meaning perfectly.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -99677,66 +99019,6 @@
         },
         "comet_kiwi": {
           "score": 0.8505
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "it",
-      "text": "Non guardare",
-      "back_translation": "Not to look",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.5,
-        "metricx": {
-          "score": 2.77
-        },
-        "comet_kiwi": {
-          "score": 0.7716
         },
         "judge": {
           "score": null,
@@ -108096,14 +107378,14 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Natural but slightly stiff; 'hiçbir çağrı' is correct but could be more casual.",
-          "context": "",
+          "reason": "Slightly stiff, 'çağrı' is formal",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Slightly stiff; 'hiçbir çağrı' sounds unnatural for 'no call' in context",
-          "context": "",
+          "reason": "Slightly awkward; 'hiçbir çağrı' sounds incomplete without context",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -108229,66 +107511,6 @@
           "reason": "Natural and calm, minor stiffness in phrasing",
           "context": "",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "tr",
-      "text": "bakmıyor",
-      "back_translation": "not looking",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 100.0,
-        "metricx": {
-          "score": 3.48
-        },
-        "comet_kiwi": {
-          "score": 0.8302
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -116642,14 +115864,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
+          "reason": "Natural, correct, and matches the calm tone.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, slight formality in 'panggilan'",
-          "context": "",
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfectly matches tone and meaning.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -116771,70 +115993,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "id",
-      "text": "Tidak melihat",
-      "back_translation": "Not to see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 7.1,
-        "metricx": {
-          "score": 0.26
-        },
-        "comet_kiwi": {
-          "score": 0.741
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Natural but slightly stiff; 'tidak melihat' is literal, but 'tidak melihat apa-apa' would sound more conversational.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, slightly formal but acceptable for context",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -125355,70 +124513,6 @@
       }
     },
     {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "Không nhìn",
-      "back_translation": "Not to see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 7.1,
-        "metricx": {
-          "score": 0.73
-        },
-        "comet_kiwi": {
-          "score": 0.7668
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal; perfectly matches the tone and meaning.",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "not working",
       "msgid": "not working",
       "msgctxt": null,
@@ -129111,8 +128205,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 4,
+          "reason": "Incorrect word 'مئی' (May) instead of 'منٹ' (minutes); wrong term for time.",
+          "context": "\nWhere it appears: A call's typical length, at the longest a call can run (min = minutes).\n",
+          "by": "qwen"
         }
       }
     },
@@ -133885,68 +132981,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ur",
-      "text": "نظر نہیں آتا",
-      "back_translation": "Not to see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 7.1,
-        "metricx": {
-          "score": 0.97
-        },
-        "comet_kiwi": {
-          "score": 0.6965
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, slightly formal tone, but accurate and fluent.",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -141701,8 +140735,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"hakuna uwezo\" feels unnatural for \"couldn\\'t find\"}'",
+          "score": 6,
+          "reason": "Slightly stiff; 'hakuna uwezo' sounds unnatural for 'couldn't find'",
           "context": "",
           "by": "qwen"
         }
@@ -142246,8 +141280,8 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Natural, calm, and matches the informal tone perfectly.",
-          "context": "",
+          "reason": "Natural, calm, and informal; perfectly matches tone and meaning.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -142361,66 +141395,6 @@
         },
         "comet_kiwi": {
           "score": 0.7571
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "sw",
-      "text": "Hakuna kuangalia",
-      "back_translation": "No to look",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 25.1,
-        "metricx": {
-          "score": 3.7
-        },
-        "comet_kiwi": {
-          "score": 0.7739
         },
         "judge": {
           "score": null,
@@ -147641,12 +146615,16 @@
           "score": 0.8356
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, 'تماس نمی گیرند' is unnatural for 'no calls yet'",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slight awkwardness; 'تماس نمی گیرند' is inaccurate and unnatural.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -150749,15 +149727,15 @@
           "score": 0.7343
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone.",
-          "context": "",
+          "score": 7,
+          "reason": "Natural but slightly formal; 'تماس' is correct but 'بدون' could be more casual.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "mistral"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and calm, but slightly less informal than original",
-          "context": "",
+          "reason": "Natural and accurate, slightly formal tone, but acceptable.",
+          "context": "\nWhere it appears: The You panel's \"Connection:\" row: there is no call going on right now.\n",
           "by": "qwen"
         }
       }
@@ -150877,72 +149855,16 @@
           "score": 0.8786
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, more natural phrasing would be 'تماس های کافی ندارم'",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fa",
-      "text": "نگاه نکنید",
-      "back_translation": "Don’t look at",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 32.1,
-        "metricx": {
-          "score": 1.25
-        },
-        "comet_kiwi": {
-          "score": 0.7716
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural, slightly formal tone, meaning clear",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -159367,66 +158289,6 @@
       }
     },
     {
-      "key": "not looking",
-      "msgid": "not looking",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fil",
-      "text": "Huwag makita",
-      "back_translation": "Don’t see",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 5.2,
-        "metricx": {
-          "score": 2.55
-        },
-        "comet_kiwi": {
-          "score": 0.7059
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "not working",
       "msgid": "not working",
       "msgctxt": null,
@@ -162665,6 +161527,1158 @@
         },
         "comet_kiwi": {
           "score": 0.4947
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "No buscas una rando",
+      "back_translation": "You are not looking for one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 72.3,
+        "metricx": {
+          "score": 6.19
+        },
+        "comet_kiwi": {
+          "score": 0.3841
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "不要寻找一个(0)",
+      "back_translation": "Don’t look for one(0)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "leftover tokens ['(0)']"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 23.5,
+        "metricx": {
+          "score": 7.19
+        },
+        "comet_kiwi": {
+          "score": 0.3525
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "कोई नज़र नहीं आती [१]",
+      "back_translation": "I can’t see [ 1 ]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "leftover tokens ['[१]']"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['1']"
+        }
+      },
+      "scores": {
+        "chrf": 3.8,
+        "metricx": {
+          "score": 10.19
+        },
+        "comet_kiwi": {
+          "score": 0.4421
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "لا تبحث عن [ 0 ]",
+      "back_translation": "Don’t look for [ 0 ]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 22.5,
+        "metricx": {
+          "score": 9.81
+        },
+        "comet_kiwi": {
+          "score": 0.3557
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "pt",
+      "text": "Não procurar um rando",
+      "back_translation": "Don’t look for one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.1,
+        "metricx": {
+          "score": 5.12
+        },
+        "comet_kiwi": {
+          "score": 0.4171
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "bn",
+      "text": "একটি খুঁজে পাওয়া যায় না rando",
+      "back_translation": "No one can be found rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 22.0,
+        "metricx": {
+          "score": 8.19
+        },
+        "comet_kiwi": {
+          "score": 0.5132
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "Не искать [ 0 ]",
+      "back_translation": "Not looking for [ 0 ]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 59.3,
+        "metricx": {
+          "score": 9.31
+        },
+        "comet_kiwi": {
+          "score": 0.3425
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ja",
+      "text": "見つかりません(0)",
+      "back_translation": "Not found ( 0 )",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "leftover tokens ['(0)']"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 8.8,
+        "metricx": {
+          "score": 7.22
+        },
+        "comet_kiwi": {
+          "score": 0.4025
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "Ne cherchez pas [ 0 ]",
+      "back_translation": "Don’t look for [ 0 ]",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": false,
+          "detail": "numbers not in the source: ['0']"
+        }
+      },
+      "scores": {
+        "chrf": 22.5,
+        "metricx": {
+          "score": 8.75
+        },
+        "comet_kiwi": {
+          "score": 0.3662
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "Sie suchen nicht nach einer rando",
+      "back_translation": "You are not looking for one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 72.3,
+        "metricx": {
+          "score": 1.89
+        },
+        "comet_kiwi": {
+          "score": 0.4519
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'Sie suchen' is formal",
+          "context": "\nWhere it appears: The You panel's \"Now:\" row, before you press Enter to look for one.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 5,
+          "reason": "Incorrect pronoun; should be 'Ich suche nicht nach einer Rando'",
+          "context": "\nWhere it appears: The You panel's \"Now:\" row, before you press Enter to look for one.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ko",
+      "text": "하나를 찾지 않는다 rando",
+      "back_translation": "I am not looking for one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 73.9,
+        "metricx": {
+          "score": 10.38
+        },
+        "comet_kiwi": {
+          "score": 0.4481
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, '하나' feels formal",
+          "context": "\nWhere it appears: The You panel's \"Now:\" row, before you press Enter to look for one.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 5,
+          "reason": "Incorrect word order and awkward phrasing; lacks natural flow",
+          "context": "\nWhere it appears: The You panel's \"Now:\" row, before you press Enter to look for one.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "Non cercare una rando",
+      "back_translation": "Don’t look for one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.1,
+        "metricx": {
+          "score": 6.34
+        },
+        "comet_kiwi": {
+          "score": 0.4125
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "İhtiyacım yok rando",
+      "back_translation": "I don’t need it rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 19.0,
+        "metricx": {
+          "score": 9.75
+        },
+        "comet_kiwi": {
+          "score": 0.517
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "Tidak ada yang mencari rando",
+      "back_translation": "No one is looking for rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 58.7,
+        "metricx": {
+          "score": 3.86
+        },
+        "comet_kiwi": {
+          "score": 0.4378
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "Không tìm kiếm một rando",
+      "back_translation": "Not looking for one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 70.5,
+        "metricx": {
+          "score": 3.41
+        },
+        "comet_kiwi": {
+          "score": 0.429
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, but slightly formal; could be more conversational",
+          "context": "\nWhere it appears: The You panel's \"Now:\" row, before you press Enter to look for one.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ur",
+      "text": "ایک نہیں تلاش کر رہے ہیں rando",
+      "back_translation": "They are not trying to do anything.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 18.7,
+        "metricx": {
+          "score": 10.62
+        },
+        "comet_kiwi": {
+          "score": 0.4288
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "sw",
+      "text": "Hakuna haja ya kutafuta rando",
+      "back_translation": "There is no need to be searched rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 20.6,
+        "metricx": {
+          "score": 2.34
+        },
+        "comet_kiwi": {
+          "score": 0.5876
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'hakuna haja' feels formal, not natural for casual tone",
+          "context": "\nWhere it appears: The You panel's \"Now:\" row, before you press Enter to look for one.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fa",
+      "text": "به دنبال یک [] نیست.",
+      "back_translation": "Not seeking one.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": false,
+          "detail": "missing ['rando']"
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 14.5,
+        "metricx": {
+          "score": 8.69
+        },
+        "comet_kiwi": {
+          "score": 0.4108
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "not looking for a rando",
+      "msgid": "not looking for a rando",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fil",
+      "text": "Huwag magkakaroon ng isang rando",
+      "back_translation": "Do not have one rando",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 23.7,
+        "metricx": {
+          "score": 5.47
+        },
+        "comet_kiwi": {
+          "score": 0.4557
         },
         "judge": {
           "score": null,

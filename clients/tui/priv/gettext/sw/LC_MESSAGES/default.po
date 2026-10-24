@@ -435,6 +435,7 @@ msgstr "zisichwa"
 msgid "no answer"
 msgstr "hakuna majibu"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "hakuna hitaji ya vyeti"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "bado hakuna simu za kutosha"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "si kuangalia"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "Mchanganyiko"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "Muda umeisha"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "Hakuna haja ya kutafuta rando"

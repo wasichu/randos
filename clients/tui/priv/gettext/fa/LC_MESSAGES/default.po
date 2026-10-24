@@ -87,7 +87,7 @@ msgstr "از سرور پرسیدم…"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Audio on."
-msgstr "صدای پخش فعال است."
+msgstr "صدا روشن شد."
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -263,7 +263,7 @@ msgstr "وضعیت سرور"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Speaker:"
-msgstr "سخنرانی‌کننده:"
+msgstr "سخنران:"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -435,6 +435,7 @@ msgstr "بی‌صدا"
 msgid "no answer"
 msgstr "بدون پاسخ"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "هیچ اعتبارسنجی مورد نیاز نیست"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "هنوز تماس های کافی ندارم"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "نگاه نمی‌کنم"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -734,7 +730,7 @@ msgstr "اتصال برقرار کردن"
 #, elixir-autogen, elixir-format
 msgctxt "panel title"
 msgid "Find a rando"
-msgstr "یک rando پیدا کنید"
+msgstr "پیدا کردن یک rando"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "مطابقت یافته"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "زمان به پایان رسید"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "دنبال یک rando نیست"

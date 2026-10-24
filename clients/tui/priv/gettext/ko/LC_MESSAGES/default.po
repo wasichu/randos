@@ -333,7 +333,7 @@ msgstr "전화 통화 중이시군요."
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando"
-msgstr "귀하의 rando"
+msgstr ""
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -435,6 +435,7 @@ msgstr "낮은, 흐릿한"
 msgid "no answer"
 msgstr "응답 없음"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "자격 증명이 요구되지 않음"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "아직 충분한 통화가 없습니다"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "찾고 있지 않음"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "매칭"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "시간이 다 됐어"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "하나를 찾지 않는다 rando"

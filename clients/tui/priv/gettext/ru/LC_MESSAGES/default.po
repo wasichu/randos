@@ -212,7 +212,7 @@ msgstr "Микрофон:"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (t to stop)"
-msgstr "Микрофон: уровень сигнала: %{bars}, пиковое значение: %{peak}. (Нажмите \"t\", чтобы остановить)."
+msgstr "Микрофон: %{bars}%{peak} (нажмите \"t\" для остановки)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -435,6 +435,7 @@ msgstr "выключен"
 msgid "no answer"
 msgstr "ответа нет"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
@@ -449,11 +450,6 @@ msgstr "Никаких подтверждений не требуется"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "пока недостаточно звонков"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "не смотрю"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "Соответствует"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "Время истекло"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr "не ищу rando"

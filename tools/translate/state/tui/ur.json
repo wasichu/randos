@@ -16,12 +16,8 @@
     "msgstr": "%{language} دونوں سمتوں میں"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} منٹ"
-  },
-  "%{minutes} min or more": {
-    "model": "m2m100",
-    "msgstr": "%{minutes} مئی یا اس سے زیادہ"
   },
   "%{request} refused: %{reason}": {
     "model": "hy-mt2",
@@ -100,7 +96,7 @@
     "msgstr": "ڈیوائسز"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "غلطی: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -164,7 +160,7 @@
     "msgstr": "اب:"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "دیگر زبانیں: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -304,7 +300,7 @@
     "msgstr": "قطع؛ دوبارہ رابطہ قائم کرنا"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "غلطی: %{message}"
   },
   "in a call": {
@@ -352,7 +348,7 @@
     "msgstr": "تلاش کریں"
   },
   "key\u0004language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "زبان"
   },
   "key\u0004mic": {
@@ -368,7 +364,7 @@
     "msgstr": "حرکت کرو"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خاموش"
   },
   "key\u0004next rando": {
@@ -424,7 +420,7 @@
     "msgstr": "موازنہ کیا جارہا ہے، کال کی تیاری"
   },
   "muted": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خاموش"
   },
   "no answer": {
@@ -432,7 +428,7 @@
     "msgstr": "کوئی جواب نہیں"
   },
   "no call": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "کوئی کال نہیں"
   },
   "no credentials asked for": {
@@ -446,6 +442,10 @@
   "not looking": {
     "model": "madlad-400",
     "msgstr": "نہیں دیکھ رہا"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "rando کے لیے تلاش نہیں کر رہا"
   },
   "not working": {
     "model": "opus-mt",
@@ -540,7 +540,7 @@
     "msgstr": "وقت ختم ہو گیا: جاری رکھیں؟"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "1 منٹ سے کم"
   },
   "unexpected reply": {

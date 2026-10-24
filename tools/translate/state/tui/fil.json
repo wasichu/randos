@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · ikaw %{you} dBFS · katulad %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (default)"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} parehong paraan"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} minuto"
   },
   "%{minutes} min or more": {
@@ -28,7 +28,7 @@
     "msgstr": "%{request} tinanggihan: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "%{sent} ipinadala / %{received} natanggap"
   },
   "%{time} remaining": {
@@ -72,7 +72,7 @@
     "msgstr": "Nagkokonekta sa server…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Koneksyon:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -80,7 +80,7 @@
     "msgstr": "Magpatuloy pa ba sa loob ng %{minutes} minuto?"
   },
   "Continue?": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Magpatuloy?"
   },
   "Continued": {
@@ -144,7 +144,7 @@
     "msgstr": "Nabigo ang pagsubok sa mikropono: %{error}"
   },
   "Mic:": {
-    "model": "translategemma-4b",
+    "model": "translategemma-12b",
     "msgstr": "Mikropon:"
   },
   "Mic: %{bars}%{peak}   (t to stop)": {
@@ -160,7 +160,7 @@
     "msgstr": "Walang naka-configure na relay sa server na ito, kaya ang mga tawag dito ay direktang dumadaloy."
   },
   "Now:": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "Ngayon:"
   },
   "Other languages: %{calls}": {
@@ -236,7 +236,7 @@
     "msgstr": "Binibilang namin ang mga tawag, hindi ang mga tao: walang mga address, walang mga ID, wala ring anumang impormasyon tungkol sa sinuman."
   },
   "You": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Ikaw"
   },
   "You're in a call.": {
@@ -244,7 +244,7 @@
     "msgstr": "Ikaw ay nasa isang tawag."
   },
   "Your rando": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Ang iyong rando"
   },
   "any of the languages you picked (%{count})": {
@@ -252,7 +252,7 @@
     "msgstr": "anumang sa mga wika na pinili mo (%{count})"
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "konektado"
   },
   "connected directly": {
@@ -364,7 +364,7 @@
     "msgstr": "pagsubok sa mikropono"
   },
   "key\u0004move": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ilipat"
   },
   "key\u0004mute": {
@@ -428,11 +428,11 @@
     "msgstr": "hindi naririnig"
   },
   "no answer": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "walang sagot"
   },
   "no call": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "walang tawag"
   },
   "no credentials asked for": {
@@ -445,7 +445,11 @@
   },
   "not looking": {
     "model": "hy-mt2",
-    "msgstr": "hindi tumitingin"
+    "msgstr": "hindi naghahanap"
+  },
+  "not looking for a rando": {
+    "model": "madlad-400",
+    "msgstr": "hindi naghahanap para sa isang rando"
   },
   "not working": {
     "model": "madlad-400",
@@ -524,7 +528,7 @@
     "msgstr": "teksto lamang"
   },
   "text only (no audio)": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "teksto lamang (walang audio)"
   },
   "the audio helper isn't running (is it built? %{command})": {
@@ -552,7 +556,7 @@
     "msgstr": "naghihintay sa iyong rando"
   },
   "working": {
-    "model": "opus-mt",
+    "model": "madlad-400",
     "msgstr": "nagtatrabaho"
   },
   "your rando's connection dropped; waiting for them to come back": {

@@ -34,8 +34,8 @@
         "seconds": 4222.9
       },
       "judge_qwen": {
-        "at": "20261023T131119Z",
-        "seconds": 130.3
+        "at": "20261024T012633Z",
+        "seconds": 130.6
       }
     },
     "appended": [
@@ -69997,8 +69997,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 4,
+          "reason": "Incorrect word order, missing 'acknowledgment', unnatural phrasing",
+          "context": "",
+          "by": "qwen"
         }
       }
     },

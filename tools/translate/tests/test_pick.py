@@ -10,6 +10,9 @@ FAIL = {"placeholders": {"ok": False, "detail": "expected ['%{time}']"}}
 
 def entry(text, *, metricx=None, comet=None, judge=None, chrf=50.0, checks=OK):
     return {
+        "msgid": "x",
+        "msgctxt": None,
+        "locale": "es",
         "text": text,
         "checks": checks,
         "scores": {
@@ -112,3 +115,10 @@ def test_metricx_with_some_finalists_unjudged_doesnt_decide():
     entries = {"a": entry("A", metricx=1.0), "b": entry("B", metricx=2.0, judge=9)}
     picked = review.pick(entries)
     assert picked["model"] == "b" and "the tie-breaks alone" in picked["why"]
+
+
+def test_a_lone_translation_a_judge_rates_low_ships_nothing():
+    lone = {"a": entry("A", checks=FAIL), "b": entry("B", metricx=5.0, comet=0.5, judge=3)}
+    assert review.pick(lone) is None
+    lone["b"]["scores"]["judge"] = {"score": 5}
+    assert review.pick(lone)["model"] == "b"

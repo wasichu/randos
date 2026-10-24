@@ -435,10 +435,11 @@ msgstr "静音"
 msgid "no answer"
 msgstr "没有答案"
 
+#. The You panel's "Connection:" row: there is no call going on right now.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "no call"
-msgstr "无需致电"
+msgstr "没有正在进行的通话"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -449,11 +450,6 @@ msgstr "不要求任何资质或证明"
 #, elixir-autogen, elixir-format
 msgid "not enough calls yet"
 msgstr "还没有接到足够的电话"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "not looking"
-msgstr "没看"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -759,3 +755,9 @@ msgstr "已匹配"
 msgctxt "panel title"
 msgid "Time is up"
 msgstr "时间到了"
+
+#. The You panel's "Now:" row, before you press Enter to look for one.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "not looking for a rando"
+msgstr ""
