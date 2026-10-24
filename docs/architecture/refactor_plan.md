@@ -688,6 +688,32 @@ split). Done before Phases 5 and 6 run in parallel, so the pass and Phase
 
 No behaviour changes.
 
+## Quality pass before the voice lab, third (in progress 2026-10-24)
+
+Over what landed since the second (`a10ac18`..: the TUI's translation,
+invitations, the translation tool's plan/update/batching, CI and build
+fixes, Dependabot). Four read-only reviews (server, TUI, translation
+tool, CI/build/docs), the serious claims checked against the code, the
+advisor's view, then the owner's decisions:
+
+| Decision | Choice |
+| --- | --- |
+| The bugs found | Fix them all |
+| Arabic prefix before the Latin name (ب, و, ل, ك, ف, ال) | "بـrando" (tatweel); "بrando" was live in the Arabic reconnecting message |
+| Veto beyond a lone candidate | English when every judge that rated the pick gave ≤ 4 (14 site, 4 TUI strings; "any judge" would have been 68 and 41) |
+| The TUI's `l` and the server's words | A `set_locale` protocol event |
+| The TUI's own feedback (copy result, prompt checks, refused requests) | A line under the main panel's text |
+| `just deploy` | Refuse a dirty tree and a HEAD without green CI (overrides for emergencies) |
+| README screenshots | Regenerate, with invitation shots |
+| The link's time left | On the website too (the TUI has it) |
+| `dependabot/fetch-metadata` | Pinned to a commit |
+| Wording when an invitation call's connection fails | "Your call ended." for any ending you didn't choose |
+
+T5's proposed length check for key/log hints was dropped after measuring:
+it flagged correct translations ("unmute" → "desactivar el silencio");
+only the printf check (a `%s` the source lacks) stays. The full inventory
+and what was left (with reasons) is recorded with the commits that fix it.
+
 ## Quality pass before the voice lab, second (done 2026-10-23)
 
 Over what landed since the last pass (`966f085`..: recovery and ICE
