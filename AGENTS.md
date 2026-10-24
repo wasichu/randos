@@ -10,7 +10,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 - Versions are pinned in `mise.toml` (Erlang/OTP, Elixir, just, node, OpenTofu). Run `mise install`.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
-  - `just setup` — toolchain + deps + assets
+  - `just setup` — toolchain + deps + assets (with `just prefetch`: the
+    prebuilt NIFs and Tailwind through curl, since GitHub's big release
+    headers break Erlang's :httpc downloads; `bin/prefetch.sh`)
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
     `just dev` and `just dev-turn` first stop a background `just serve` on the port
     (never an interactive IEx server: that's an error)

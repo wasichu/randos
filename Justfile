@@ -12,7 +12,7 @@ setup:
     mise install
     mix deps.get
     cd clients/tui && mix deps.get
-    just tui-nifs
+    just prefetch
     mix setup
 
 # Run the dev server (HTTP :4000, HTTPS :4001 when certs exist)
@@ -211,35 +211,15 @@ voice-wasm-check:
       exit 1
     fi
 
-# ex_ratatui's precompiled NIF, fetched with curl into rustler_precompiled's
-# cache (its own default, or RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH), where
-# compiling finds it. rustler_precompiled downloads with :httpc, which
-# refuses responses with over 10 KB of headers, and GitHub's release
-# downloads now send more (2026-10-24: 10,860 bytes), so a clean compile
-# fails with header_too_long. The file is still checked against the
-# checksum ex_ratatui ships when it's used. Both projects use ex_ratatui
-# (the TUI, and the server's dev dashboard, `just top`): run this after
-# `mix deps.get` and before anything compiles (`just setup` and CI do).
-# Fetch ex_ratatui's precompiled library for the server and the TUI (after deps.get)
-tui-nifs:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    case "$(uname -s)" in Darwin) os=apple-darwin ;; Linux) os=unknown-linux-gnu ;; *) echo "tui-nifs: unknown OS" >&2; exit 1 ;; esac
-    target="$(uname -m | sed 's/arm64/aarch64/')-${os}"
-    cache="${RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH:-$(erl -noshell -eval 'io:format("~s", [filename:basedir(user_cache, "rustler_precompiled/precompiled_nifs")]), halt().')}"
-    mkdir -p "$cache"
-    found=0
-    for dep in deps/ex_ratatui clients/tui/deps/ex_ratatui; do
-      [ -f "$dep/mix.exs" ] || continue
-      found=1
-      version="$(sed -n 's/^ *@version "\(.*\)"$/\1/p' "$dep/mix.exs" | head -1)"
-      files="$(sed -n "s/^ *\"\(libex_ratatui-v${version}-nif-[0-9.]*-${target}\.so\.tar\.gz\)\".*/\1/p" "$dep"/checksum-*.exs)"
-      [ -n "$files" ] || { echo "tui-nifs: no ex_ratatui ${version} NIF for ${target} in its checksum file" >&2; exit 1; }
-      for file in $files; do
-        [ -s "$cache/$file" ] || curl -fsSL -o "$cache/$file" "https://github.com/mcass19/ex_ratatui/releases/download/v${version}/${file}"
-      done
-    done
-    [ "$found" = 1 ] || { echo "tui-nifs: no ex_ratatui in deps/ or clients/tui/deps/ (mix deps.get first)" >&2; exit 1; }
+# What the build would download from GitHub releases with Erlang's :httpc,
+# which refuses their responses (over 10 KB of headers since 2026-10-24:
+# header_too_long), fetched with curl to where each installer looks first:
+# ex_ratatui's NIF (the TUI and the dev dashboard), lazy_html's (tests),
+# and the Tailwind binary. bin/prefetch.sh has the details; the Dockerfile
+# runs its tailwind part. After `mix deps.get`, before anything compiles.
+# Fetch the prebuilt NIFs and Tailwind with curl (after deps.get)
+prefetch:
+    bin/prefetch.sh nifs tailwind
 
 # The TUI as an installable archive (Phase 4.4): ERTS, the app, bin/randos,
 # and the media helper, in dist/randos-VERSION-OS-ARCH.tar.gz (+ .sha256).
@@ -250,7 +230,7 @@ tui-release:
     set -euo pipefail
     cargo build --release -p randos_media
     (cd clients/tui && MIX_ENV=prod mix deps.get --only prod >/dev/null)
-    just tui-nifs
+    bin/prefetch.sh nifs
     (cd clients/tui && MIX_ENV=prod mix release randos_tui --overwrite --quiet)
     version="$(sed -n 's/^ *version: "\(.*\)",$/\1/p' clients/tui/mix.exs | head -1)"
     os="$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/darwin/macos/')"
@@ -432,7 +412,23 @@ deploy:
       echo "or deploy anyway with RANDOS_DEPLOY_UNPUSHED=1 just deploy" >&2
       exit 1
     fi
-    # The footer shows this commit; "-dirty" when deploying uncommitted changes.
+    # Nor uncommitted changes (fly builds from the working tree), nor a
+    # commit whose CI isn't green: RANDOS_DEPLOY_DIRTY=1 and
+    # RANDOS_DEPLOY_UNCHECKED=1 override, for emergencies.
     commit=$(git rev-parse --short HEAD)
-    [ -z "$(git status --porcelain)" ] || commit="$commit-dirty"
+    if [ -n "$(git status --porcelain)" ]; then
+      if [ "${RANDOS_DEPLOY_DIRTY:-}" != "1" ]; then
+        echo "uncommitted changes would go live: commit and push them, or RANDOS_DEPLOY_DIRTY=1" >&2
+        exit 1
+      fi
+      commit="$commit-dirty"
+    fi
+    if [ "${RANDOS_DEPLOY_UNCHECKED:-}" != "1" ]; then
+      ci=$(gh run list --workflow ci.yml --commit "$(git rev-parse HEAD)" --json status,conclusion \
+        --jq '.[0] | "\(.status) \(.conclusion)"' 2>/dev/null || echo "unknown")
+      if [ "$ci" != "completed success" ]; then
+        echo "CI for $commit is \"${ci:-none}\", not green: wait for it, or RANDOS_DEPLOY_UNCHECKED=1" >&2
+        exit 1
+      fi
+    fi
     fly deploy --build-arg RANDOS_COMMIT="$commit"

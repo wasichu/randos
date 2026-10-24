@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `8c0f513` (2026-10-23). Update this line, and
+Verified against the code at `6b6057c` (2026-10-24). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -785,25 +785,16 @@ fix); `cli tidy` keeping pre-tidy scores (typographic changes only);
 both offerer guards for ICE restart (each has its own job). The voice
 processor isn't in the protocol yet: Phase 5's decision.
 
-Not inventoried: `.github/workflows/ci.yml`, `config/`, `infra/`.
+Not inventoried: `config/`, `infra/` (the workflows and Dependabot were
+reviewed in the third quality pass).
 
 ## Open items
 
 Not scheduled; pick up when relevant.
 
-- **Invitation links (proposed by the owner, 2026-10-22).** Anonymous,
-  one-time links, after Lichess's anonymous challenges: create a link,
-  share it elsewhere, the first to open it is in a one-to-one call with
-  you; it dies once used, after 15 minutes, or when you leave. Design in
-  [`invitations.md`](invitations.md): the Matchmaker holds invitations (a
-  waiting entry found by token, so claims are serialized and the call
-  start, monitoring and 18+ check are reused), the token rides in the URL
-  fragment (never in a log or a link preview), and an invitation call is
-  an ordinary call marked `kind: :invitation` (both go idle after it, no
-  "Next"). The owner's decisions (2026-10-22): both go idle after the
-  call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
-  clients in the first cut; counted among calls started but not language
-  pairs; the button says "Invite someone". Likely before the voice lab.
+- **Invitation links (done 2026-10-24).** Built and reviewed by the owner
+  in two rounds of screenshots; [`invitations.md`](invitations.md) has the
+  design and every decision, the quality passes the follow-ups.
 - **Coordinator tests on 20 ms timers (for the voice lab's quality pass).**
   A test needed a timing fix twice on 2026-10-24 (the relay-dead restarts,
   the extension vote: both on a slow macOS runner, both where the timer
