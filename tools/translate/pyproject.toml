@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest==8.4.2", "ruff==0.12.12"]
+dev = ["pytest==9.1.1", "ruff==0.17.1"]
 # Running models (`uv sync --group models`): Opus-MT, M2M100, MADLAD-400 and
 # the MetricX-24 scorer, through transformers on Apple's GPU (MPS).
 models = [
@@ -27,7 +27,7 @@ models = [
 mlx = ["mlx-lm==0.32.2"]
 # The COMET-Kiwi scorer (`--group comet`): Unbabel's package and its own
 # PyTorch Lightning stack, kept apart from the rest.
-comet = ["unbabel-comet==2.2.7", "setuptools==80.9.0"]
+comet = ["unbabel-comet==2.2.7", "setuptools==84.2.1"]
 
 [tool.uv]
 package = false
