@@ -778,6 +778,12 @@ Not scheduled; pick up when relevant.
   call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
   clients in the first cut; counted among calls started but not language
   pairs; the button says "Invite someone". Likely before the voice lab.
+- **Coordinator tests on 20 ms timers (for the voice lab's quality pass).**
+  A test needed a timing fix twice on 2026-10-24 (the relay-dead restarts,
+  the extension vote: both on a slow macOS runner, both where the timer
+  wasn't what was tested). `call_coordinator_test.exs`'s defaults are 20 ms
+  for the segment, the extension and the vote: check which tests assert
+  timing and which only sequence, and give the latter long timers.
 - **TUI help line (idea, the owner 2026-10-24).** It wraps to two rows
   at 80 columns since invitations; fine for now. If it grows, show the
   essentials and a `?` for a screen with every key, a common TUI move.

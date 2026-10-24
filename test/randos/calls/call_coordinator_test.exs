@@ -92,7 +92,9 @@ defmodule Randos.Calls.CallCoordinatorTest do
 
   test "extends only after both participants vote to continue" do
     {match, pids} = match()
-    call_pid = start_call(match, call_duration_ms: 5)
+    # A long vote window: the votes are what's tested (a slow CI runner once
+    # let the default 20 ms close between them).
+    call_pid = start_call(match, call_duration_ms: 5, extension_response_timeout_ms: 1_000)
 
     assert_receive {:call_updated, %{status: :active, call_deadline_unix_ms: first_deadline}}
     assert_receive {:call_updated, %{status: :active, call_deadline_unix_ms: ^first_deadline}}
