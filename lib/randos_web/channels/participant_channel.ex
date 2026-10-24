@@ -69,33 +69,48 @@ defmodule RandosWeb.ParticipantChannel do
   defp put_locale(_params), do: :ok
 
   @impl true
+  # `invite` asks what `find` asks, and shares its rate limit.
   def handle_in(
-        "find",
+        event,
         %{"speaks" => speaks, "adult_acknowledged" => ack} = payload,
         socket
       )
-      when is_binary(speaks) and is_boolean(ack) and
+      when event in ["find", "invite"] and is_binary(speaks) and is_boolean(ack) and
              (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) and
              (not is_map_key(payload, "ice_restart") or
                 is_boolean(:erlang.map_get("ice_restart", payload))) do
     with {:ok, hears} <- hears(payload),
          {:ok, socket} <- take_find_token(socket) do
-      # Clients that don't say they carry audio are matched only with each other.
-      preferences = %{
-        speaks: speaks,
-        hears: hears,
-        adult_acknowledged?: ack,
-        audio?: Map.get(payload, "audio", false),
-        # Can restart ICE when asked (obligation 10); older clients can't.
-        ice_restart?: Map.get(payload, "ice_restart", false)
-      }
-
-      {:reply, :ok, run(socket, {:find, preferences})}
+      preferences = Map.merge(client_capabilities(payload, ack), %{speaks: speaks, hears: hears})
+      {:reply, :ok, run(socket, {if(event == "find", do: :find, else: :invite), preferences})}
     else
       :invalid -> {:reply, {:error, %{reason: "invalid_message"}}, socket}
       {:error, socket} -> {:reply, {:error, %{reason: "rate_limited"}}, socket}
     end
   end
+
+  # No languages: the joiner is taken to speak what the link's creator hears.
+  def handle_in(
+        "accept_invitation",
+        %{"token" => token, "adult_acknowledged" => ack} = payload,
+        socket
+      )
+      when is_binary(token) and byte_size(token) <= 64 and is_boolean(ack) and
+             (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) and
+             (not is_map_key(payload, "ice_restart") or
+                is_boolean(:erlang.map_get("ice_restart", payload))) do
+    case take_find_token(socket) do
+      {:ok, socket} ->
+        event = {:accept_invitation, token, client_capabilities(payload, ack)}
+        {:reply, :ok, run(socket, event)}
+
+      {:error, socket} ->
+        {:reply, {:error, %{reason: "rate_limited"}}, socket}
+    end
+  end
+
+  def handle_in("cancel_invitation", _payload, socket),
+    do: {:reply, :ok, run(socket, :cancel_invitation)}
 
   def handle_in("cancel_search", _payload, socket), do: {:reply, :ok, run(socket, :cancel_search)}
 
@@ -142,6 +157,7 @@ defmodule RandosWeb.ParticipantChannel do
     do: {:noreply, run(socket, event)}
 
   def handle_info({:resumed_elsewhere, _pid} = event, socket), do: {:noreply, run(socket, event)}
+  def handle_info(:invitation_expired, socket), do: {:noreply, run(socket, :invitation_expired)}
 
   def handle_info({:push_resume_ticket, ticket}, socket) do
     push(socket, "resume_ticket", %{ticket: ticket})
@@ -215,6 +231,16 @@ defmodule RandosWeb.ParticipantChannel do
   # The languages the person is happy to hear: `hears`, a list of codes, or
   # (clients before it, like the v0.2.0 TUI) a single `listens`. The
   # matchmaker checks they're supported and that there's at least one.
+  # Clients that don't say they carry audio are matched only with each other.
+  defp client_capabilities(payload, ack) do
+    %{
+      adult_acknowledged?: ack,
+      audio?: Map.get(payload, "audio", false),
+      # Can restart ICE when asked (obligation 10); older clients can't.
+      ice_restart?: Map.get(payload, "ice_restart", false)
+    }
+  end
+
   defp hears(%{"hears" => hears}) when is_list(hears) and length(hears) <= 32 do
     if Enum.all?(hears, &is_binary/1), do: {:ok, hears}, else: :invalid
   end

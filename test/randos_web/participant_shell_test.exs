@@ -52,6 +52,7 @@ defmodule RandosWeb.ParticipantShellTest do
              webrtc_role: :offerer,
              error: nil,
              error_message: nil,
+             invitation: nil,
              call: %{
                id: "call-1",
                status: :active,
@@ -68,6 +69,8 @@ defmodule RandosWeb.ParticipantShellTest do
                media: %{self: nil, peer: nil},
                # The rando's language, a code: never who they are.
                peer_speaks: "en",
+               peer_speaks_any: ["en"],
+               kind: :random,
                peer_reconnecting: false,
                # Whether your own `continue` counted: never the ids who voted.
                agreed_to_continue: false

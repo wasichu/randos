@@ -243,7 +243,8 @@ defmodule Randos.Participant do
   end
 
   def handle(p, {:invite_result, {:invited, token, expires_at}}),
-    do: {%{p | status: :inviting, invitation: %{token: token, expires_at_unix_ms: expires_at}}, []}
+    do:
+      {%{p | status: :inviting, invitation: %{token: token, expires_at_unix_ms: expires_at}}, []}
 
   def handle(p, {:invite_result, {:error, :already_queued}}), do: {p, []}
   def handle(p, {:invite_result, {:error, reason}}), do: {%{p | status: :idle, error: reason}, []}
@@ -258,13 +259,20 @@ defmodule Randos.Participant do
 
   def handle(p, {:call_updated, %Call{} = call}) do
     cond do
-      not Match.member?(call.match, p.id) -> {p, []}
-      call.pid == p.call_pid -> update_call(p, call)
+      not Match.member?(call.match, p.id) ->
+        {p, []}
+
+      call.pid == p.call_pid ->
+        update_call(p, call)
+
       p.status in [:looking, :inviting] and call.status != :ended ->
         update_call(adopt(p, call), call)
 
-      p.status == :idle and call.status != :ended -> {p, [{:hang_up, call.pid}]}
-      true -> {p, []}
+      p.status == :idle and call.status != :ended ->
+        {p, [{:hang_up, call.pid}]}
+
+      true ->
+        {p, []}
     end
   end
 

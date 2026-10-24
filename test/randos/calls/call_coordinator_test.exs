@@ -623,6 +623,26 @@ defmodule Randos.Calls.CallCoordinatorTest do
     assert is_integer(connected) and connected <= duration
   end
 
+  test "an invitation call's start carries no languages: it counts in no language pair" do
+    ref = make_ref()
+    test_pid = self()
+
+    :telemetry.attach(
+      "#{inspect(ref)}",
+      [:randos, :call, :start],
+      fn _event, _measurements, metadata, _ -> send(test_pid, {ref, metadata}) end,
+      nil
+    )
+
+    on_exit(fn -> :telemetry.detach("#{inspect(ref)}") end)
+
+    {match, pids} = match()
+    call_pid = start_call(%{match | kind: :invitation})
+    assert_receive {^ref, %{kind: :invitation, languages: nil}}
+    :ok = CallCoordinator.hang_up(call_pid, "a")
+    stop_all(pids)
+  end
+
   describe "recovery: one budget, whatever goes wrong (and what the clients can do)" do
     # A long, connected call with audio; short timings. `capable`: which
     # clients can restart ICE (obligation 10).

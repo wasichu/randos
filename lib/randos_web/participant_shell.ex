@@ -15,13 +15,18 @@ defmodule RandosWeb.ParticipantShell do
   `client_state/1` is the JSON-safe view of a participant for clients. It
   never includes the match, the peer, or any participant id or pid; the
   call's `media` says how this participant's (`self`) and the peer's
-  connection are doing, as each last reported it.
+  connection are doing, as each last reported it. An invitation's link is
+  built here, from the Endpoint's URL (`PHX_HOST`, the canonical host),
+  never the request's.
   """
+
+  use RandosWeb, :verified_routes
 
   alias Randos.Calls.Call
   alias Randos.Calls.CallCoordinator
   alias Randos.Calls.Lifecycle
   alias Randos.Calls.ResumeTicket
+  alias Randos.Matchmaking.Entry
   alias Randos.Matchmaking.Match
   alias Randos.Matchmaking.Matchmaker
   alias Randos.Participant
@@ -67,9 +72,19 @@ defmodule RandosWeb.ParticipantShell do
       webrtc_role: participant.webrtc_role,
       error: participant.error,
       error_message: RandosWeb.ParticipantErrors.message(participant.error),
+      invitation: client_invitation(participant.invitation),
       call: client_call(participant.call, participant.id)
     }
   end
+
+  defp client_invitation(nil), do: nil
+
+  defp client_invitation(%{token: token, expires_at_unix_ms: expires_at}),
+    do: %{url: invitation_url(token), expires_at_unix_ms: expires_at}
+
+  @doc "The link that offers an invitation: the token in the fragment."
+  @spec invitation_url(String.t()) :: String.t()
+  def invitation_url(token), do: url(~p"/join") <> "#" <> token
 
   defp client_call(nil, _participant_id), do: nil
 
@@ -92,6 +107,11 @@ defmodule RandosWeb.ParticipantShell do
     # The language the rando speaks (with several hearing languages, the
     # client can't know which): a language code, nothing that identifies them.
     |> Map.put(:peer_speaks, peer_speaks(call, participant_id))
+    # All they may speak: more than one only for an invitation's joiner,
+    # taken to speak whatever the creator hears.
+    |> Map.put(:peer_speaks_any, peer_speaks_any(call, participant_id))
+    # "invitation": both go idle after it, and there's no "next".
+    |> Map.put(:kind, call.match.kind)
     # The rando's connection to the server dropped and the call is waiting
     # for them to come back (within Lifecycle.recovery_budget_seconds/0).
     |> Map.put(:peer_reconnecting, peer_reconnecting?(call, participant_id))
@@ -139,6 +159,15 @@ defmodule RandosWeb.ParticipantShell do
     end
   end
 
+  @doc "Every language the participant's rando may speak in this call (`[]` if not in it)."
+  @spec peer_speaks_any(Call.t(), String.t()) :: [String.t()]
+  def peer_speaks_any(%Call{match: match}, participant_id) do
+    case Match.peer(match, participant_id) do
+      {:ok, peer} -> Entry.speaks_any(peer)
+      {:error, _} -> []
+    end
+  end
+
   defp apply_event(participant, event) do
     {participant, effects} = Participant.handle(participant, event)
 
@@ -150,6 +179,20 @@ defmodule RandosWeb.ParticipantShell do
 
   defp run_effect({:join_queue, attrs}, participant) do
     apply_event(participant, {:join_result, Matchmaker.join(Map.put(attrs, :pid, self()))})
+  end
+
+  defp run_effect({:invite, attrs}, participant) do
+    apply_event(participant, {:invite_result, Matchmaker.invite(Map.put(attrs, :pid, self()))})
+  end
+
+  defp run_effect(:cancel_invitation, participant) do
+    Matchmaker.cancel_invitation(self())
+    {participant, []}
+  end
+
+  defp run_effect({:accept_invitation, token, attrs}, participant) do
+    result = Matchmaker.accept(token, Map.put(attrs, :pid, self()))
+    apply_event(participant, {:accept_result, result})
   end
 
   defp run_effect(:leave_queue, participant) do

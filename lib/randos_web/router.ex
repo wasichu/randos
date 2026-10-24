@@ -28,6 +28,8 @@ defmodule RandosWeb.Router do
 
     live_session :default, on_mount: RandosWeb.Locale do
       live "/", HomeLive, :home
+      # An invitation link (the token is in the fragment: never sent here).
+      live "/join", HomeLive, :join
       live "/about", AboutLive, :about
       live "/status", StatusLive, :status
       live "/translations", TranslationsLive, :index

@@ -184,11 +184,17 @@ defmodule Randos.Calls.CallCoordinator do
     Logger.info("call started")
 
     # The two speaking languages (sorted) feed the public, aggregate counts
-    # (Randos.Stats); nothing about who is in the call.
+    # (Randos.Stats); nothing about who is in the call. An invitation call
+    # counts among calls started but no language pair: the joiner never
+    # chose a language.
     :telemetry.execute([:randos, :call, :start], %{system_time: System.system_time()}, %{
       call_id: data.call.id,
+      kind: match.kind,
       languages:
-        Enum.sort([match.participant_a.speaks_language, match.participant_b.speaks_language])
+        if(match.kind == :random,
+          do:
+            Enum.sort([match.participant_a.speaks_language, match.participant_b.speaks_language])
+        )
     })
 
     {:ok, :connecting, data}

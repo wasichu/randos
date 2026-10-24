@@ -47,7 +47,15 @@ defmodule RandosWeb.ParticipantChannelTest do
 
   test "joining gives an idle participant with no call or identifiers" do
     {state, _socket} = join_participant()
-    assert state == %{status: :idle, webrtc_role: nil, error: nil, error_message: nil, call: nil}
+
+    assert state == %{
+             status: :idle,
+             webrtc_role: nil,
+             error: nil,
+             error_message: nil,
+             invitation: nil,
+             call: nil
+           }
   end
 
   test "the join reply lists the supported languages" do
@@ -390,6 +398,119 @@ defmodule RandosWeb.ParticipantChannelTest do
         assert {:ok, %{state: %{status: :idle, call: nil}, resumed: false}, _socket} =
                  join_with(params)
       end
+    end
+  end
+
+  describe "invitations" do
+    defp invite(socket, speaks \\ "en", hears \\ ["de"]) do
+      ref =
+        push(socket, "invite", %{
+          "speaks" => speaks,
+          "hears" => hears,
+          "adult_acknowledged" => true
+        })
+
+      assert_reply ref, :ok
+      assert_push "state", %{status: :inviting, invitation: %{url: url} = invitation}
+      assert invitation.expires_at_unix_ms > System.system_time(:millisecond)
+      [_, token] = String.split(url, "#")
+      {url, token}
+    end
+
+    defp accept(socket, token, ack \\ true) do
+      ref = push(socket, "accept_invitation", %{"token" => token, "adult_acknowledged" => ack})
+      assert_reply ref, :ok
+    end
+
+    test "a link from invite starts an invitation call; both are idle after it" do
+      {_state, creator} = join_participant()
+      {url, token} = invite(creator, "en", ["de", "ja"])
+      assert url == RandosWeb.Endpoint.url() <> "/join#" <> token
+
+      {_state, joiner} = join_participant()
+      accept(joiner, token)
+
+      # The creator hears the joiner may speak any language they hear;
+      # the joiner hears the creator's.
+      assert_push "state", %{
+        status: :connecting,
+        invitation: nil,
+        call: %{kind: :invitation, peer_speaks: "de", peer_speaks_any: ["de", "ja"]}
+      }
+
+      assert_push "state", %{
+        status: :connecting,
+        call: %{kind: :invitation, peer_speaks: "en", peer_speaks_any: ["en"]}
+      }
+
+      ref = push(joiner, "end_call", %{})
+      assert_reply ref, :ok
+      assert_push "state", %{status: :idle, call: nil}
+      assert_push "state", %{status: :idle, call: nil}
+    end
+
+    test "a withdrawn, unknown or used link: invitation_invalid" do
+      {_state, creator} = join_participant()
+      {_url, token} = invite(creator)
+      ref = push(creator, "cancel_invitation", %{})
+      assert_reply ref, :ok
+      assert_push "state", %{status: :idle, invitation: nil}
+
+      {_state, joiner} = join_participant()
+      accept(joiner, token)
+      assert_push "state", %{status: :idle, error: :invitation_invalid, error_message: message}
+      assert message =~ "link"
+
+      # (A second failure changes nothing, so it pushes nothing: a fresh joiner.)
+      {_state, other} = join_participant()
+      accept(other, "not-a-token")
+      assert_push "state", %{status: :idle, error: :invitation_invalid}
+    end
+
+    test "a link stops working when its creator's connection goes" do
+      {_state, creator} = join_participant()
+      {_url, token} = invite(creator)
+      Process.unlink(creator.channel_pid)
+      ref = Process.monitor(creator.channel_pid)
+      close(creator)
+      assert_receive {:DOWN, ^ref, :process, _pid, _reason}
+
+      {_state, joiner} = join_participant()
+
+      eventually(fn ->
+        accept(joiner, token)
+        assert_push "state", %{error: :invitation_invalid}
+      end)
+    end
+
+    test "accepting needs the 18+ acknowledgment; malformed payloads are refused" do
+      {_state, socket} = join_participant()
+      accept(socket, "whatever", false)
+      assert_push "state", %{status: :idle, error: :adult_terms_required}
+
+      ref = push(socket, "accept_invitation", %{"token" => 5, "adult_acknowledged" => true})
+      assert_reply ref, :error, %{reason: "invalid_message"}
+
+      ref = push(socket, "invite", %{"speaks" => "en", "adult_acknowledged" => true})
+      assert_reply ref, :error, %{reason: "invalid_message"}
+    end
+
+    test "invite and accept_invitation share find's rate limit" do
+      {_state, socket} = join_participant()
+
+      for _ <- 1..5 do
+        ref = push(socket, "accept_invitation", %{"token" => "x", "adult_acknowledged" => true})
+        assert_reply ref, :ok
+      end
+
+      ref =
+        push(socket, "invite", %{
+          "speaks" => "en",
+          "hears" => ["de"],
+          "adult_acknowledged" => true
+        })
+
+      assert_reply ref, :error, %{reason: "rate_limited"}
     end
   end
 end

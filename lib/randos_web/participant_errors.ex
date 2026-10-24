@@ -19,6 +19,18 @@ defmodule RandosWeb.ParticipantErrors do
   def message(:call_start_failed),
     do: gettext("We couldn't start that call. Please try again.")
 
+  def message(:invitation_invalid),
+    do: gettext("That link doesn't work any more. Ask for a new one.")
+
+  def message(:invitation_expired),
+    do: gettext("Your link expired before anyone used it. Make a new one when you're ready.")
+
+  def message(:audio_mismatch),
+    do:
+      gettext(
+        "That call can't be joined from here: one of you has audio and the other doesn't. Try the other kind of client."
+      )
+
   def message(:microphone_denied),
     do:
       gettext("The call ended because microphone access was blocked. Allow it, then look again.")

@@ -13,7 +13,9 @@ defmodule Randos.Stats do
       from it);
     * calls per language pair: the two speaking languages, unordered
       (`{"en", "es"}` covers both people's sides; `{"es", "es"}` is the
-      same language both ways).
+      same language both ways). Invitation calls count among calls started
+      but in no pair (their joiner chose no language): the coordinator
+      sends no languages for them.
 
   Nothing else: no IPs, no participant or call ids, nothing per person (call
   ids arrive as telemetry metadata and are never stored). Counts live in

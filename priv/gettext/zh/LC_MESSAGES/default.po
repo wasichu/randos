@@ -840,3 +840,18 @@ msgstr "请求使用麦克风权限"
 msgctxt "connection state"
 msgid "asking for microphone access"
 msgstr "请求麦克风访问权限"
+
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "That call can't be joined from here: one of you has audio and the other doesn't. Try the other kind of client."
+msgstr ""
+
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "That link doesn't work any more. Ask for a new one."
+msgstr ""
+
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "Your link expired before anyone used it. Make a new one when you're ready."
+msgstr ""
