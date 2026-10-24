@@ -428,6 +428,10 @@ defmodule Tui.Model do
 
   ## Helpers
 
+  # The last thing this client said goes with a change of status.
+  defp kept_message(%{status: status, message: message}, status), do: message
+  defp kept_message(_model, _status), do: nil
+
   defp put_state(model, state) do
     # Unknown statuses (a newer server) keep the current one rather than crash.
     status = Map.get(@statuses, state["status"], model.status)
@@ -443,8 +447,7 @@ defmodule Tui.Model do
         invitation: state["invitation"],
         # News, not an error (an invitation call ended): the server's words.
         notice: state["notice_message"],
-        # The last thing this client said goes with a change of status.
-        message: if(status == model.status, do: model.message)
+        message: kept_message(model, status)
     }
 
     cond do
@@ -456,21 +459,29 @@ defmodule Tui.Model do
   end
 
   # The log's line when the status changes.
-  defp status_line(:idle) do
-    gettext_comment("A log line, one or two words: you're not looking or in a call any more.")
-    pgettext("log", "idle")
+  # Key names (space, tab, y) are placeholders: the help line shows them as
+  # they are, and translators turned "tab" into a browser tab.
+  defp pick_a_language do
+    gettext_comment("%{key} is the name of a key (space), shown as it is.")
+    gettext("pick at least one language to hear (%{key} toggles one)", key: "space")
   end
+
+  defp status_line(:idle), do: gettext("not looking for a rando")
 
   defp status_line(:looking), do: pgettext("log", "looking for a rando")
   defp status_line(:inviting), do: pgettext("log", "invitation link ready to share")
   defp status_line(:connecting), do: pgettext("log", "matched; connecting")
   defp status_line(:in_call), do: pgettext("log", "in call")
-  defp status_line(:extension_pending), do: pgettext("log", "time is up: continue? (y/n)")
+
+  defp status_line(:extension_pending) do
+    gettext_comment("%{yes} and %{no} are the keys to press (y, n), shown as they are.")
+    pgettext("log", "time is up: continue? (%{yes}/%{no})", yes: "y", no: "n")
+  end
 
   # Without audio the server pairs us only with other text-only clients,
   # never with a browser user who would sit through a silent call.
   defp find(%{hears: []} = model),
-    do: {say(model, gettext("pick at least one language to hear (space toggles one)")), []}
+    do: {say(model, pick_a_language()), []}
 
   defp find(model), do: {model, [{:push, "find", find_payload(model)}]}
 
@@ -489,8 +500,11 @@ defmodule Tui.Model do
       # The prompt stays open with the link in it (the owner's call); tab
       # ticks the box from there.
       not model.adult_acknowledged? ->
-        gettext_comment("The joiner hasn't ticked the 18+ box on the form yet.")
-        {say(model, gettext("tick the 18+ box first (tab)")), []}
+        gettext_comment(
+          "The joiner hasn't ticked the 18+ box on the form yet. %{key} is the key's name (tab), shown as it is."
+        )
+
+        {say(model, gettext("tick the 18+ box first (%{key})", key: "tab")), []}
 
       true ->
         payload = %{

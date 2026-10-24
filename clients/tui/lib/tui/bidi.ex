@@ -71,14 +71,14 @@ defmodule Tui.Bidi do
     else
       word
       |> String.graphemes()
-      |> Enum.chunk_while(
-        "",
-        fn g, acc ->
-          if Width.of(acc <> g) <= width, do: {:cont, acc <> g}, else: {:cont, acc, g}
-        end,
-        fn acc -> {:cont, acc, ""} end
-      )
+      |> Enum.chunk_while("", &fill_piece(&1, &2, width), fn acc -> {:cont, acc, ""} end)
     end
+  end
+
+  defp fill_piece(grapheme, acc, width) do
+    if Width.of(acc <> grapheme) <= width,
+      do: {:cont, acc <> grapheme},
+      else: {:cont, acc, grapheme}
   end
 
   defp pack(words, width) do
