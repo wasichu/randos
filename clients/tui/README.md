@@ -17,6 +17,11 @@ mix tui --check               # is the audio helper there and working?
 Keys are shown at the bottom of the screen; `q` quits. On the idle screen,
 `s` shows the server's status (the same as the website's `/status` page:
 whether the relay works, and today's call counts); `s` or Esc goes back.
+`v` invites someone you know: a one-time link to send them, `y` copies it
+(the system's clipboard command, else the terminal's, OSC 52), `c`
+withdraws it. `j` joins through a link (or paste one on the idle screen):
+the prompt takes every key, Tab ticks the 18+ box, Enter joins, Esc
+closes it.
 `RANDOS_FAKE_AUDIO=1` swaps the mic for a test tone and the speaker for
 nothing (for screenshots and demos, `just screenshots`; your rando would
 hear a beep). Logs go to
@@ -74,6 +79,7 @@ and is written against that document only.
 - `Tui.Media` — owns the media helper's Port; `Tui.Media.State` — local
   audio state (mic test, call audio, devices), pure
 - `Tui.CLI` — the `randos` command (`mix tui` and `bin/randos`)
+- `Tui.Clipboard` — copies an invitation link (`y`)
 
 Tests: `mix test` (unit, app under ex_ratatui's test mode, connection against
 `Slipstream.SocketTest`); `just tui-smoke` from the repo root for two real

@@ -27,8 +27,8 @@ is in [`2026-10-19-refactor-findings.md`](2026-10-19-refactor-findings.md).
 | — | Relay-only calls, enforced by the server; `docs/privacy.md` | Done (2026-10-21) |
 | 6 | UI translations | Done (2026-10-22): 20 languages (English and 19 machine translations), fixes welcome through "Suggest a fix" |
 | — | Translating the TUI ([`tui_translation.md`](tui_translation.md)) | Done (2026-10-23): the same 19 languages as the site, chosen from the environment or with `l` (saved); right to left in every terminal (reordered by the TUI where the terminal doesn't) |
-| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | **Next** (the owner's order, 2026-10-23; an advisor check on the plan first); design drafted and decided 2026-10-22, not built |
-| 5 | Voice anonymization | After invitations; its voice lab starts with a code-quality pass (inventoried 2026-10-23, decisions with the owner) |
+| — | Invitation links: bring someone you know ([`invitations.md`](invitations.md)) | Done (2026-10-24): both clients, reviewed by the owner in two rounds of screenshots, in all 20 languages |
+| 5 | Voice anonymization | **Next**, when the owner says; its voice lab starts with a code-quality pass (inventoried 2026-10-23, decisions with the owner) |
 
 ## How it fits together
 

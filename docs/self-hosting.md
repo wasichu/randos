@@ -47,7 +47,7 @@ the app itself serves plain HTTP on `PORT`.
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `SECRET_KEY_BASE` | yes | Signs and encrypts cookies. Generate one with `mix phx.gen.secret`. |
-| `PHX_HOST` | yes | The public host name. Browsers' websockets are accepted only from this origin. |
+| `PHX_HOST` | yes | The public host name. Browsers' websockets are accepted only from this origin, and invitation links are built from it (`https://PHX_HOST/join#…`), so it must be the name people reach you by. |
 | `PORT` | | The HTTP port (default `4000`). |
 | `PHX_SERVER` | for releases | `true` starts the web server (`bin/server`, which the Docker image runs, sets it). |
 | `RANDOS_ALLOW_DIRECT_CALLS` | | `true` allows direct calls between the two people, with the relay as the fallback. Unset, calls go through the TURN relay only (see below). |

@@ -54,6 +54,32 @@ sequenceDiagram
     Note over A,B: Obligation 5: tear down when the status leaves the call
 ```
 
+### An invitation call starts differently, then is the same
+
+Two people who already know each other: no queue, no language matching.
+The creator offers (as the one who waited); after the call both go idle.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Creator
+    participant S as Server (Participant core, Matchmaker)
+    participant B as Joiner
+
+    A->>S: invite {speaks, hears, audio}
+    Note over S: Matchmaker keeps the token's hash, apart from the queue
+    S-->>A: state: inviting (invitation: url /join#token, expires_at)
+    Note over A,B: The link travels outside randos (a chat, a message)
+    B->>S: accept_invitation {token, audio} (no languages: taken to speak A's hears)
+    Note over S: One use: the link stops working; a CallCoordinator starts (kind invitation)
+    S-->>A: state: connecting (role offerer)
+    S-->>B: state: connecting (role answerer)
+    Note over A,B: From here, the call above: signals, media, the clock, the vote
+    B->>S: end_call
+    S-->>B: state: idle
+    S-->>A: state: idle, notice call_ended (never requeued; no next in this call)
+```
+
 ## Shared: call health, owned by the server
 
 `CallCoordinator`'s states, with the rules both clients rely on. Clients run

@@ -66,6 +66,19 @@ something can't be checked from the outside, this says so.
   The client keeps it in memory only (never stored; a reload starts
   fresh). The server keeps only a hash of it, in the call's own process,
   gone when the call ends. It identifies no one and is never logged.
+- **Invitation links.** "Invite someone" makes a one-time link: 128
+  random bits in the part after `#`, which browsers never send to a
+  server, so the token can't land in a request log, a `Referer`, or a link
+  preview's fetch. The `/join` page sends it over the socket only when you
+  press "Join the call"; a page that merely loads claims nothing. Until the
+  link is used, cancelled or expires (15 minutes at most), the server
+  keeps, in the matchmaker's memory only: the token's hash (never the
+  token), the creator's anonymous id for that visit, and the creator's
+  languages; nothing is written anywhere or logged but "invitation made"
+  and "invitation used". The status page counts invitation calls among
+  calls started, and in no language pair (the joiner picks no language).
+  ([`Matchmaker.invite/2`](../lib/randos/matchmaking/matchmaker.ex),
+  [`invitations.md`](architecture/invitations.md).)
 - **What it briefly remembers:** after a call, the server remembers for 90
   seconds that the two of you just talked (by the anonymous ids of that
   visit only), so "Next" finds someone new. A call that never connected

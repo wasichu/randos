@@ -41,6 +41,11 @@ you both disappear. No accounts, no profiles, no video, no pressure.
    the call says "Reconnecting audio…" and comes back on its own, within
    fifteen seconds, or ends if it can't.
 
+You can also bring someone you know: "Invite someone" makes a private,
+one-time link to send them (it works for 15 minutes); whoever opens it
+joins a call with you, the same ten minutes and the same vote, and you
+both go back to the form afterwards, never to a stranger.
+
 That's all there is. Nothing about the call is kept. The site speaks
 all 20 languages, with a switcher in the header. Its translations are
 machine-made, so
@@ -86,6 +91,10 @@ desktop distributions have).
   languages (space checks the ones you're happy to hear), Enter to find a
   rando, `m` to mute, `n` for the next rando, `e` to end the call, `q` to
   quit.
+- `v` invites someone you know: it shows a one-time link to send them
+  (`y` copies it, `c` withdraws it). `j` joins through a link you were
+  sent: paste it and press Enter (pasting on the start screen opens the
+  prompt too). Browser and terminal users can invite each other.
 - `t` shows a mic level meter (silent: nothing is played back); `t` again
   hides it and closes the mic. `i` and `o` choose the mic
   and speaker. `s` shows the server's status, as on
