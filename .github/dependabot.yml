@@ -1,47 +1,72 @@
 # Dependency update PRs (GitHub's own Dependabot; nothing outside GitHub
-# sees the code). Grouped, one PR per ecosystem and directory, so updates
-# arrive as a few reviewable PRs that CI checks like any other. Security
-# advisories still come one at a time, as soon as GitHub knows of them
-# (repository settings: Dependabot security updates).
+# sees the code). Grouped, so updates arrive as a few reviewable PRs that CI
+# checks like any other: per ecosystem and directory, minor and patch
+# updates together, and major ones in a PR of their own (the `major` label,
+# dependabot-labels.yml), so a breaking change never rides along with
+# routine ones. Security advisories still come one at a time, as soon as
+# GitHub knows of them (repository settings: Dependabot security updates).
+# How to merge each kind: docs/development.md, "Dependency updates".
 version: 2
 updates:
   - package-ecosystem: mix
     directory: /
     schedule: {interval: weekly, day: monday}
     labels: ["dependencies"]
-    groups: {mix: {patterns: ["*"]}}
+    groups:
+      mix: {patterns: ["*"], update-types: ["minor", "patch"]}
+      mix-major: {patterns: ["*"], update-types: ["major"]}
   - package-ecosystem: mix
     directory: /clients/tui
     schedule: {interval: weekly, day: monday}
     labels: ["dependencies"]
-    groups: {tui-mix: {patterns: ["*"]}}
+    groups:
+      tui-mix: {patterns: ["*"], update-types: ["minor", "patch"]}
+      tui-mix-major: {patterns: ["*"], update-types: ["major"]}
   # The workspace: the TUI's media helper and the voice crate. Vendored
   # crates (vendor/) are patched copies, updated by hand (vendor/README.md).
   - package-ecosystem: cargo
     directory: /
     schedule: {interval: weekly, day: monday}
     labels: ["dependencies"]
-    groups: {cargo: {patterns: ["*"]}}
+    groups:
+      cargo: {patterns: ["*"], update-types: ["minor", "patch"]}
+      cargo-major: {patterns: ["*"], update-types: ["major"]}
   - package-ecosystem: github-actions
     directory: /
     schedule: {interval: weekly, day: monday}
     labels: ["dependencies"]
-    groups: {actions: {patterns: ["*"]}}
+    groups:
+      actions: {patterns: ["*"], update-types: ["minor", "patch"]}
+      actions-major: {patterns: ["*"], update-types: ["major"]}
   # The Python harnesses, monthly, labelled gpu-check: a model library's
-  # update (torch, transformers, ...) needs the GPU comparison before merging
-  # (docs/development.md, "Dependency updates"). Their tooling (pytest,
-  # ruff, setuptools) comes in a group of its own: CI is enough for that one.
+  # update (torch, transformers, ...) needs the GPU comparison before
+  # merging. Their tooling (pytest, ruff, setuptools) comes in groups of its
+  # own: CI is enough for those.
   - package-ecosystem: uv
     directory: /tools/translate
     schedule: {interval: monthly}
     labels: ["dependencies", "gpu-check"]
     groups:
       translate-tooling: {patterns: ["pytest", "ruff", "setuptools"]}
-      translate-models: {patterns: ["*"], exclude-patterns: ["pytest", "ruff", "setuptools"]}
+      translate-models:
+        patterns: ["*"]
+        exclude-patterns: ["pytest", "ruff", "setuptools"]
+        update-types: ["minor", "patch"]
+      translate-models-major:
+        patterns: ["*"]
+        exclude-patterns: ["pytest", "ruff", "setuptools"]
+        update-types: ["major"]
   - package-ecosystem: uv
     directory: /tools/voice-eval
     schedule: {interval: monthly}
     labels: ["dependencies", "gpu-check"]
     groups:
       voice-eval-tooling: {patterns: ["pytest", "ruff", "setuptools"]}
-      voice-eval-models: {patterns: ["*"], exclude-patterns: ["pytest", "ruff", "setuptools"]}
+      voice-eval-models:
+        patterns: ["*"]
+        exclude-patterns: ["pytest", "ruff", "setuptools"]
+        update-types: ["minor", "patch"]
+      voice-eval-models-major:
+        patterns: ["*"]
+        exclude-patterns: ["pytest", "ruff", "setuptools"]
+        update-types: ["major"]

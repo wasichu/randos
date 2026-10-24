@@ -1,0 +1,27 @@
+# A Dependabot PR that takes a dependency up a major version gets the
+# `major` label: read its changelog for breaking changes before merging
+# (docs/development.md, "Dependency updates"). Dependabot's own metadata
+# says which kind of update it is (for a group, the biggest). Runs on
+# pull_request_target, so it can label, but it never checks out or runs
+# the PR's code.
+name: Dependabot labels
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  major:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - id: metadata
+        uses: dependabot/fetch-metadata@v3
+      - if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" --add-label major

@@ -44,9 +44,9 @@ are product requirements, not suggestions. Don't add features that violate them.
     the Python harnesses monthly), and `dependency-check.yml` runs
     `cargo deny check advisories` and `mix hex.audit` every Monday, so an
     advisory surfaces without a push. Merge a Dependabot PR on green CI
-    unless it's labelled `gpu-check` (a Python harness's model libraries):
-    those get the comparison in `docs/development.md` ("Dependency
-    updates") first.
+    unless it's labelled `major` (read the changelog for breaking changes)
+    or `gpu-check` (a Python harness's model libraries: the comparison in
+    `docs/development.md`, "Dependency updates", first).
   - `just smoke` — the browser end-to-end checks: `call_smoke.mjs` (two
     headless Chromes with fake mics place a real WebRTC call, extend it, drop
     and resume a socket, check mic teardown), `relay_only_smoke.mjs`,
