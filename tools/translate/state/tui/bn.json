@@ -8,7 +8,7 @@
     "msgstr": "%{device} (ডিফল্ট)।"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} অথবা %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} উভয় দিকেই"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} মিনিট"
   },
   "%{minutes} min or more": {
@@ -44,7 +44,7 @@
     "msgstr": "কোনো ভাষা-দম্পতি যখন কমপক্ষে %{count}টি কল পায়, তখনই তা দেখানো হয়; কম সংখ্যক কল থাকলে সেগুলোকে “অন্য” হিসেবে গণ্য করা হয়।"
   },
   "About these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "এই সংখ্যাগুলো সম্পর্কে"
   },
   "Asking the server…": {
@@ -100,7 +100,7 @@
     "msgstr": "ডিভাইসসমূহ"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "ত্রুটি: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -168,7 +168,7 @@
     "msgstr": "এখন:"
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "অন্যান্য ভাষা: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -180,12 +180,12 @@
     "msgstr": "ইউডিপি (UDP) এর মাধ্যমে (বেশিরভাগ কল)।"
   },
   "Paste the link you were sent:": {
-    "model": "translategemma-12b",
-    "msgstr": "যে লিঙ্কটি আপনাকে পাঠানো হয়েছে, সেটি এখানে পেস্ট করুন:"
+    "model": "madlad-400",
+    "msgstr": "যে লিঙ্কটি আপনাকে পাঠানো হয়েছিল তা এখানে পেস্ট করুন:"
   },
   "Press Enter to find a rando.": {
-    "model": "madlad-400",
-    "msgstr": "rando খুঁজতে এন্টার চাপুন।"
+    "model": "translategemma-12b",
+    "msgstr": "\"rando\" শব্দটি খুঁজে বের করতে এন্টার বোতাম চাপুন।"
   },
   "Reconnecting audio…": {
     "model": "translategemma-4b",
@@ -244,8 +244,8 @@
     "msgstr": "সাধারণ দৈর্ঘ্য: %{length}"
   },
   "Waiting for your rando to open the link…": {
-    "model": "madlad-400",
-    "msgstr": "লিঙ্কটি খুলতে আপনার rando-এর অপেক্ষায়…"
+    "model": "hy-mt2",
+    "msgstr": "আপনার rando লিঙ্কটি খোলার জন্য অপেক্ষা করছি…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "hy-mt2",
@@ -268,7 +268,7 @@
     "msgstr": "যে কোনও ভাষা আপনি পছন্দ করেন (%{count})"
   },
   "connected": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "সংযুক্ত"
   },
   "connected directly": {
@@ -324,7 +324,7 @@
     "msgstr": "সংযোগ বিচ্ছিন্ন; পুনরায় সংযোগ স্থাপন"
   },
   "error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "ত্রুটি: %{message}"
   },
   "in a call": {
@@ -332,11 +332,11 @@
     "msgstr": "একটি কলের সময়"
   },
   "key\u000418+": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "১৮+"
   },
   "key\u0004about these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "এই সংখ্যাগুলো সম্পর্কে"
   },
   "key\u0004back": {
@@ -388,7 +388,7 @@
     "msgstr": "আমন্ত্রণ জানাও"
   },
   "key\u0004join": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "যোগ দিন"
   },
   "key\u0004join a link": {
@@ -416,7 +416,7 @@
     "msgstr": "নীরব"
   },
   "key\u0004next rando": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "পরবর্তী rando"
   },
   "key\u0004quit": {
@@ -448,7 +448,7 @@
     "msgstr": "লিঙ্কটি আপনার টার্মিনালের ক্লিপবোর্ডে পাঠানো হয়েছে (যদি আপনার টার্মিনাল এটি সমর্থন করে)।"
   },
   "log\u0004idle": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "নিষ্ক্রিয়"
   },
   "log\u0004in call": {
@@ -556,8 +556,8 @@
     "msgstr": "কমপক্ষে একটি ভাষা নির্বাচন করুন, যা আপনি শুনতে চান (স্পেস বাটনটি একটি ভাষা পরিবর্তন করবে)।"
   },
   "rando reconnecting…": {
-    "model": "madlad-400",
-    "msgstr": "rando পুনরায় সংযোগ করা হচ্ছে…"
+    "model": "hy-mt2",
+    "msgstr": "rando পুনরায় সংযোগ স্থাপন করছে…"
   },
   "reconnected as a new participant": {
     "model": "madlad-400",
@@ -612,7 +612,7 @@
     "msgstr": "সময় শেষ: আপনি কি চালিয়ে যেতে চান?"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "১ মিনিটের কম"
   },
   "unexpected reply": {

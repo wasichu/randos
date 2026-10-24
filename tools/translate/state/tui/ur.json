@@ -16,7 +16,7 @@
     "msgstr": "%{language} دونوں سمتوں میں"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} منٹ"
   },
   "%{request} refused: %{reason}": {
@@ -100,7 +100,7 @@
     "msgstr": "ڈیوائسز"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "غلطی: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -136,8 +136,8 @@
     "msgstr": "آخری بار %{time} UTC پر چیک کیا گیا۔"
   },
   "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
-    "model": "madlad-400",
-    "msgstr": "rando کی تلاش کررہا ہے جو %{hearing} بولتا ہے اور %{speaking} سننا چاہتا ہے…"
+    "model": "hy-mt2",
+    "msgstr": "ایسے rando کی تلاش ہے جو %{hearing} بول سکے اور %{speaking} سننا چاہے…"
   },
   "Matched! Starting the call…": {
     "model": "hy-mt2",
@@ -168,7 +168,7 @@
     "msgstr": "اب:"
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "دیگر زبانیں: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -181,11 +181,11 @@
   },
   "Paste the link you were sent:": {
     "model": "translategemma-12b",
-    "msgstr": "براہ کرم وہ لنک یہاں پیسٹ کریں جو آپ کو بھیجا گیا تھا۔"
+    "msgstr": "وہ لنک یہاں پیسٹ کریں جو آپ کو بھیجا گیا تھا:"
   },
   "Press Enter to find a rando.": {
-    "model": "opus-mt",
-    "msgstr": "ایک تلاش کرنے کے لئے اندر دبائیں rando."
+    "model": "hy-mt2",
+    "msgstr": "کسی rando کو تلاش کرنے کے لیے Enter دبائیں۔"
   },
   "Reconnecting audio…": {
     "model": "translategemma-4b",
@@ -232,8 +232,8 @@
     "msgstr": "وقت ختم ہو گیا۔"
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
-    "model": "madlad-400",
-    "msgstr": "وقت ختم ہو گیا۔ آپ جاری رکھنے کے لیے متفق ہو گئے، آپ کے rando کے منتظر…"
+    "model": "hy-mt2",
+    "msgstr": "وقت ختم ہو گیا۔ آپ نے جاری رکھنے پر رضامندی ظاہر کی تھی، اپنے rando کا انتظار کرتے ہوئے…"
   },
   "Today (counting since %{time} UTC on %{date}):": {
     "model": "translategemma-12b",
@@ -244,8 +244,8 @@
     "msgstr": "معمولی لمبائی: %{length}"
   },
   "Waiting for your rando to open the link…": {
-    "model": "opus-mt",
-    "msgstr": "rando آپ کے لنک کو کھولنے کے لئے انتظار کر رہے ہیں …"
+    "model": "hy-mt2",
+    "msgstr": "آپ کے rando کے لنک کھولنے کا انتظار کر رہا ہوں…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "hy-mt2",
@@ -260,7 +260,7 @@
     "msgstr": "آپ کسی کال میں مصروف ہیں۔"
   },
   "Your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "آپ کا rando"
   },
   "any of the languages you picked (%{count})": {
@@ -324,7 +324,7 @@
     "msgstr": "قطع؛ دوبارہ رابطہ قائم کرنا"
   },
   "error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "غلطی: %{message}"
   },
   "in a call": {
@@ -332,7 +332,7 @@
     "msgstr": "کال کے دوران"
   },
   "key\u000418+": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -396,7 +396,7 @@
     "msgstr": "ایک لنک میں شامل ہوں"
   },
   "key\u0004language": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "زبان"
   },
   "key\u0004mic": {
@@ -412,11 +412,11 @@
     "msgstr": "حرکت کرو"
   },
   "key\u0004mute": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "خاموش"
   },
   "key\u0004next rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "اگلا rando"
   },
   "key\u0004quit": {
@@ -480,7 +480,7 @@
     "msgstr": "موازنہ کیا جارہا ہے، کال کی تیاری"
   },
   "muted": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "خاموش"
   },
   "no answer": {
@@ -556,8 +556,8 @@
     "msgstr": "کم از کم ایک زبان کا انتخاب کریں جسے آپ سننا چاہتے ہیں (اسپیس بار کو دبانے سے ایک زبان منتخب ہو جائے گی)।"
   },
   "rando reconnecting…": {
-    "model": "m2m100",
-    "msgstr": "rando دوبارہ منسلک …"
+    "model": "hy-mt2",
+    "msgstr": "rando دوبارہ کنکٹ ہو رہا ہے…"
   },
   "reconnected as a new participant": {
     "model": "opus-mt",
@@ -612,7 +612,7 @@
     "msgstr": "وقت ختم ہو گیا: جاری رکھیں؟"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "1 منٹ سے کم"
   },
   "unexpected reply": {

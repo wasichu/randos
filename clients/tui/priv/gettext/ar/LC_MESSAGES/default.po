@@ -773,10 +773,11 @@ msgstr "%{time} متبقية"
 msgid "Join through a link"
 msgstr "انضم عبر رابط"
 
+#. The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Paste the link you were sent:"
-msgstr "ألصق الرابط الذي تم إرساله إليك:"
+msgstr "الصق الرابط الذي تم إرساله إليك:"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format

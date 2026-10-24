@@ -50,3 +50,17 @@ def test_the_name_in_arabic_letters_is_written_back():
 
     assert tidy("Your rando", "راندو الخاص بك") == "rando الخاص بك"
     assert tidy("About randos", "نبذة عن الراندوس") == "نبذة عن randos"
+
+
+def test_the_name_in_urdu_hindi_and_bengali_letters_is_written_back():
+    from randos_translate.models import tidy
+
+    assert tidy("For your rando to open it.", "تاکہ آپ کا رانڈو اسے کھول سکے۔") == "تاکہ آپ کا rando اسے کھول سکے۔"
+    assert tidy("randos", "رینڈوز") == "randos"
+    assert tidy("For your rando to open it.", "ताकि आपका रैंडो इसे खोल सके।") == "ताकि आपका rando इसे खोल सके।"
+    assert tidy("About randos", "রান্ডোস সম্পর্কে") == "randos সম্পর্কে"
+    assert tidy("Your rando", "আপনার র\u200d্যান্ডো") == "আপনার rando"
+    # A word that goes on is another word, or the name with a grammatical ending.
+    assert tidy("random", "रैंडम") == "रैंडम"
+    assert tidy("your rando's", "র্যান্ডোর") == "র্যান্ডোর"
+

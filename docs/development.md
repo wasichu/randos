@@ -88,6 +88,14 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
 plus both smoke tests.
 
+### Translation fixes
+
+A "Suggest a fix" issue becomes a pull request on its own
+(`translation-fix.yml`). GitHub doesn't run CI on a pull request a
+workflow opened with its own token, so the fix PR shows no checks until
+someone closes and reopens it (that starts CI); then review and merge as
+usual.
+
 ### Dependency updates
 
 Dependabot (`.github/dependabot.yml`) opens grouped PRs: weekly for Mix,

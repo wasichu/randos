@@ -191,7 +191,7 @@ msgstr "آخری بار %{time} UTC پر چیک کیا گیا۔"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "rando کی تلاش کررہا ہے جو %{hearing} بولتا ہے اور %{speaking} سننا چاہتا ہے…"
+msgstr "ایسے rando کی تلاش ہے جو %{hearing} بول سکے اور %{speaking} سننا چاہے…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -248,7 +248,7 @@ msgstr "یو ڈی پی (UDP) کے ذریعے (زیادہ تر کالیں)।"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Press Enter to find a rando."
-msgstr "ایک تلاش کرنے کے لئے اندر دبائیں rando."
+msgstr "کسی rando کو تلاش کرنے کے لیے Enter دبائیں۔"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -303,7 +303,7 @@ msgstr "وقت ختم ہو گیا۔"
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Time is up. You agreed to continue, waiting on your rando…"
-msgstr "وقت ختم ہو گیا۔ آپ جاری رکھنے کے لیے متفق ہو گئے، آپ کے rando کے منتظر…"
+msgstr "وقت ختم ہو گیا۔ آپ نے جاری رکھنے پر رضامندی ظاہر کی تھی، اپنے rando کا انتظار کرتے ہوئے…"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -474,7 +474,7 @@ msgstr "کم از کم ایک زبان کا انتخاب کریں جسے آپ س
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
-msgstr "rando دوبارہ منسلک …"
+msgstr "rando دوبارہ کنکٹ ہو رہا ہے…"
 
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
@@ -773,10 +773,11 @@ msgstr "%{time} باقی رہیں"
 msgid "Join through a link"
 msgstr "ایک لنک کے ذریعے شامل کریں"
 
+#. The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Paste the link you were sent:"
-msgstr "براہ کرم وہ لنک یہاں پیسٹ کریں جو آپ کو بھیجا گیا تھا۔"
+msgstr "وہ لنک یہاں پیسٹ کریں جو آپ کو بھیجا گیا تھا:"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -786,7 +787,7 @@ msgstr "آپ اسے ان تک کسی بھی طریقے سے بھیج سکتے ہ
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
-msgstr "rando آپ کے لنک کو کھولنے کے لئے انتظار کر رہے ہیں …"
+msgstr "آپ کے rando کے لنک کھولنے کا انتظار کر رہا ہوں…"
 
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format

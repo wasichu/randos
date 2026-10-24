@@ -248,7 +248,7 @@ msgstr "ইউডিপি (UDP) এর মাধ্যমে (বেশির�
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Press Enter to find a rando."
-msgstr "rando খুঁজতে এন্টার চাপুন।"
+msgstr "\"rando\" শব্দটি খুঁজে বের করতে এন্টার বোতাম চাপুন।"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -474,7 +474,7 @@ msgstr "কমপক্ষে একটি ভাষা নির্বাচন
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "rando reconnecting…"
-msgstr "rando পুনরায় সংযোগ করা হচ্ছে…"
+msgstr "rando পুনরায় সংযোগ স্থাপন করছে…"
 
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
@@ -773,10 +773,11 @@ msgstr ""
 msgid "Join through a link"
 msgstr "লিঙ্কের মাধ্যমে যোগ দিন"
 
+#. The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Paste the link you were sent:"
-msgstr "যে লিঙ্কটি আপনাকে পাঠানো হয়েছে, সেটি এখানে পেস্ট করুন:"
+msgstr "যে লিঙ্কটি আপনাকে পাঠানো হয়েছিল তা এখানে পেস্ট করুন:"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -786,7 +787,7 @@ msgstr "আপনি এটিকে যে কোনো উপায়ে ত�
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
-msgstr "লিঙ্কটি খুলতে আপনার rando-এর অপেক্ষায়…"
+msgstr "আপনার rando লিঙ্কটি খোলার জন্য অপেক্ষা করছি…"
 
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format

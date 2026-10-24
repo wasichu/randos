@@ -39,8 +39,8 @@
         "seconds": 5900.8
       },
       "judge_qwen": {
-        "at": "20261024T125323Z",
-        "seconds": 199.5
+        "at": "20261024T142403Z",
+        "seconds": 201.7
       }
     },
     "appended": [
@@ -33263,7 +33263,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"в поисках\" feels formal, \"найти rando\" would be more natural\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"в поисках\" feels formal, \"rando\" should be capitalized\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -59883,7 +59883,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"compatibile rando\" feels awkward, \"trovare un rando compatibile\" would sound more natural.\"}'",
+          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"compatibile rando\" feels awkward, \"trovare un rando compatibile\" would flow better.\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -161270,8 +161270,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Natural and calm, but \"kuwasiliana na\" could be smoother\"}'",
+          "score": 8,
+          "reason": "Clear meaning, natural flow, slightly formal tone",
           "context": "\nWhere it appears: Heading of the page an invitation link opens.\n",
           "by": "qwen"
         }

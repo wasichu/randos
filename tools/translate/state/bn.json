@@ -36,20 +36,20 @@
     "msgstr": "একটি ভাষা জুটির তথ্য তখনই প্রদর্শিত হবে যখন সেই ভাষায় অন্তত %{min} সংখ্যক কথোপকথন (কল) সম্পন্ন হবে; অন্যথায়, ছোট আকারের ভাষা জুটির তথ্য \"অন্যান্য\" বিভাগে গণনা করা হবে।"
   },
   "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
-    "model": "madlad-400",
-    "msgstr": "যে ব্যক্তি আপনাকে লিঙ্কটি পাঠিয়েছেন, তার সাথে randos-এ অন্য যে কোনো ব্যক্তির মত এক-থেকে-এক অডিও কল।"
+    "model": "translategemma-12b",
+    "msgstr": "\"randos\"-এর অন্যান্য কলের মতোই, এটি একটি ব্যক্তিগত অডিও কল, যা আপনি সেই ব্যক্তির সাথে করবেন যিনি আপনাকে লিঙ্কটি পাঠিয়েছেন।"
   },
   "About": {
     "model": "translategemma-4b",
     "msgstr": "আমাদের সম্পর্কে"
   },
   "About randos": {
-    "model": "madlad-400",
-    "msgstr": "randos সম্বন্ধে"
+    "model": "hy-mt2",
+    "msgstr": "randos সম্পর্কে"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "madlad-400",
-    "msgstr": "rando অনুসন্ধানের পূর্বে ১৮+ স্বীকৃতি গ্রহণ করুন।"
+    "model": "translategemma-4b",
+    "msgstr": "rando খোঁজার আগে, ১৮+ বয়স সম্পর্কিত সম্মতি গ্রহণ করুন।"
   },
   "Attempting to reconnect": {
     "model": "translategemma-4b",
@@ -176,8 +176,8 @@
     "msgstr": "সম্পন্ন"
   },
   "For your rando to open it.": {
-    "model": "madlad-400",
-    "msgstr": "তোমার rando এর জন্য এটা খুলতে হবে।"
+    "model": "hy-mt2",
+    "msgstr": "আপনার rando যাতে এটি খুলতে পারে।"
   },
   "Help fix a translation": {
     "model": "madlad-400",
@@ -248,8 +248,8 @@
     "msgstr": "খুঁজছি"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
-    "model": "madlad-400",
-    "msgstr": "একজন rando খুঁজছি যে %{hearing_languages} কথা বলে এবং %{speaking_language} শুনতে চায়।"
+    "model": "hy-mt2",
+    "msgstr": "%{hearing_languages} ভাষা বলতে পারে এবং %{speaking_language} ভাষা শুনতে চায় এমন একজন rando খুঁজছি।"
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-12b",
@@ -344,8 +344,8 @@
     "msgstr": "উৎস (AGPL-3.0)।"
   },
   "Starting call with rando.": {
-    "model": "madlad-400",
-    "msgstr": "rando দিয়ে কল শুরু করা হচ্ছে।"
+    "model": "translategemma-12b",
+    "msgstr": "\"rando\"-এর সাথে কথোপকথন শুরু করা হলো।"
   },
   "Status": {
     "model": "translategemma-4b",
@@ -412,8 +412,8 @@
     "msgstr": "এই সাইটের অনুবাদগুলো স্বয়ংক্রিয়ভাবে করা হয়েছে এবং এখনো পর্যন্ত কোনো মানুষ তা যাচাই করেনি। যদি কোনো অনুবাদ আপনার ভাষায় ভুল মনে হয়, তাহলে অনুগ্রহ করে সেটি সংশোধন করুন: ভুল অংশটি খুঁজে বের করুন, এরপর আপনার মতে সেটি কীভাবে লেখা উচিত তা জানান, বাকি কাজ আমরা করে দেব।"
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "translategemma-27b",
-    "msgstr": "এখানে কোনো অ্যাকাউন্ট, প্রোফাইল, পরিচিতি, অনুসারী, ফিড, ধারাবাহিকতা, স্কোর অথবা স্থায়ী সামাজিক নেটওয়ার্ক নেই। randos, সামাজিক মাধ্যম-এর চেয়ে বরং একটি কথোপকথনমূলক পরিকাঠামোর কাছাকাছি।"
+    "model": "hy-mt2",
+    "msgstr": "এখানে কোনো অ্যাকাউন্ট, প্রোফাইল, কন্টাক্ট, ফলোয়ার, ফিড, স্ট্রিক, স্কোর বা স্থায়ী সোশ্যাল গ্রাফ নেই। randos সোশ্যাল মিডিয়ার চেয়ে কথোপকথনমূলক অবকাঠামোর কাছাকাছি।"
   },
   "This link is incomplete.": {
     "model": "hy-mt2",
@@ -460,8 +460,8 @@
     "msgstr": "অপেক্ষা"
   },
   "Waiting for your rando to open the link…": {
-    "model": "madlad-400",
-    "msgstr": "লিঙ্কটি খুলতে আপনার rando-এর অপেক্ষায়…"
+    "model": "hy-mt2",
+    "msgstr": "আপনার rando লিঙ্কটি খোলার জন্য অপেক্ষা করছি…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -476,8 +476,8 @@
     "msgstr": "আমরা কলগুলো গণনা করি, মানুষদের নয়: কোনো ঠিকানা নেই, কোনো আইডি নেই, কারও সম্পর্কে কিছুই নেই; শুধুমাত্র এই মোট সংখ্যাগুলোই সংরক্ষণ করা হয়।"
   },
   "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
-    "model": "madlad-400",
-    "msgstr": "randos এর প্রতিটি অংশ কি দেখে, লগ করে এবং রাখে, প্রতিটি দাবির পিছনে কনফিগারেশন সহ:"
+    "model": "translategemma-4b",
+    "msgstr": "randos-এর প্রতিটি অংশ কী দেখে, কী নথিভুক্ত করে এবং কী সংরক্ষণ করে, এবং প্রতিটি দাবির পেছনের কনফিগারেশন কী - এই বিষয়গুলো:"
   },
   "Whether calls can connect right now, and how today is going.": {
     "model": "hy-mt2",
@@ -492,8 +492,8 @@
     "msgstr": "আপনি অগ্রসর হতে সম্মত হয়েছেন, আপনার rando-এর অপেক্ষায়…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "madlad-400",
-    "msgstr": "আপনি যে ভাষায় কথা বলতে চান এবং যে ভাষায় শুনতে চান সেটা বেছে নিন। randos আপনাকে সংক্ষিপ্ত কথোপকথনের জন্য উপযুক্ত কারো সাথে জুড়ে দেবে, তারপর পথ থেকে সরে যাবে।"
+    "model": "translategemma-4b",
+    "msgstr": "আপনি যে ভাষা কথা বলতে চান এবং যে ভাষা শুনতে চান, সেটি নির্বাচন করুন। \"randos\" আপনাকে একটি সংক্ষিপ্ত কথোপকথনের জন্য উপযুক্ত কারো সাথে যুক্ত করে, এবং তারপর সেখান থেকে সরে যায়।"
   },
   "You have matched. Audio starts when the call opens.": {
     "model": "translategemma-4b",
@@ -556,7 +556,7 @@
     "msgstr": "নিঃশব্দ"
   },
   "button\u0004Next rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "পরবর্তী rando"
   },
   "button\u0004Unmute": {
@@ -656,12 +656,12 @@
     "msgstr": "গোপনীয়তা"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "madlad-400",
-    "msgstr": "randos নামহীন, কেবল অডিও ভাষার কথোপকথনের জন্য একটি স্থান।"
+    "model": "translategemma-12b",
+    "msgstr": "randos একটি এমন প্ল্যাটফর্ম যেখানে ব্যবহারকারীরা বেনামে শুধুমাত্র অডিওর মাধ্যমে বিভিন্ন ভাষায় কথোপকথন করতে পারেন।"
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "hy-mt2",
-    "msgstr": "randos হলো ফ্রি সফটওয়্যার (AGPL-3.0) এবং এটি পাবলিকভাবে তৈরি করা হয়েছে।"
+    "model": "translategemma-4b",
+    "msgstr": "randos একটি বিনামূল্যে সফটওয়্যার (AGPL-3.0), যা সর্বসাধারণের জন্য উন্মুক্তভাবে তৈরি করা হয়েছে।"
   },
   "refused": {
     "model": "madlad-400",

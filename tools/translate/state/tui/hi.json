@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · आपका स्तर %{you} dBFS · सामने वाले का स्तर %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{device} (डिफ़ॉल्ट)"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} या %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} दोनों तरीकों से"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} मिनट"
   },
   "%{minutes} min or more": {
@@ -48,7 +48,7 @@
     "msgstr": " एक भाषा जोड़ी तब दिखाई देती है जब इसमें कम से कम %{count} कॉल हों; छोटे को \"अन्य\" के रूप में गिना जाता है।"
   },
   "About these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "Asking the server…": {
@@ -68,7 +68,7 @@
     "msgstr": "रिले की जाँच कर रहा हूँ…"
   },
   "Connected: %{connected}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "कनेक्टेड: %{connected}"
   },
   "Connecting to the server…": {
@@ -104,7 +104,7 @@
     "msgstr": "उपकरण"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "त्रुटि: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -172,7 +172,7 @@
     "msgstr": "अब:"
   },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "अन्य भाषाएँ: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -236,20 +236,20 @@
     "msgstr": "समय खत्म हो गया है."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
-    "model": "madlad-400",
-    "msgstr": "समय समाप्त. आपने जारी रखने के लिए सहमति दी है, अपने rando की प्रतीक्षा में…"
+    "model": "hy-mt2",
+    "msgstr": "समय समाप्त हो गया। आपने अपने rando का इंतज़ार करते हुए आगे जारी रखने पर सहमति दी थी…"
   },
   "Today (counting since %{time} UTC on %{date}):": {
     "model": "madlad-400",
     "msgstr": "आज (%{date} पर %{time} UTC से गिनती):"
   },
   "Typical length: %{length}": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "सामान्य लंबाई: %{length}"
   },
   "Waiting for your rando to open the link…": {
-    "model": "hy-mt2",
-    "msgstr": "आपके rando द्वारा लिंक खोले जाने का इंतज़ार कर रहा हूँ…"
+    "model": "translategemma-4b",
+    "msgstr": "आपके rando द्वारा लिंक खोलने की प्रतीक्षा कर रहा हूँ…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
     "model": "translategemma-12b",
@@ -264,7 +264,7 @@
     "msgstr": "आप किसी कॉल पर हैं।"
   },
   "Your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "आपका rando"
   },
   "any of the languages you picked (%{count})": {
@@ -328,7 +328,7 @@
     "msgstr": "डिसकनेक्टेड; रीकनेक्टिंग"
   },
   "error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "त्रुटि: %{message}"
   },
   "in a call": {
@@ -340,7 +340,7 @@
     "msgstr": "18 वर्ष या उससे अधिक"
   },
   "key\u0004about these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "key\u0004back": {
@@ -364,11 +364,11 @@
     "msgstr": "जाँच करें"
   },
   "key\u0004close": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "बंद करें"
   },
   "key\u0004continue": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "जारी रखें"
   },
   "key\u0004copy the link": {
@@ -400,7 +400,7 @@
     "msgstr": "एक लिंक में शामिल हों"
   },
   "key\u0004language": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "भाषा"
   },
   "key\u0004mic": {
@@ -420,7 +420,7 @@
     "msgstr": "मौन"
   },
   "key\u0004next rando": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "अगला rando"
   },
   "key\u0004quit": {
@@ -520,15 +520,15 @@
     "msgstr": "कनेक्ट हो रहा है"
   },
   "panel title\u0004Find a rando": {
-    "model": "opus-mt",
-    "msgstr": "ढूंढें rando"
+    "model": "hy-mt2",
+    "msgstr": "किसी rando को ढूँढें"
   },
   "panel title\u0004In call": {
     "model": "opus-mt",
     "msgstr": "कॉल में"
   },
   "panel title\u0004Invitation": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "निमंत्रण"
   },
   "panel title\u0004Looking": {
@@ -560,7 +560,7 @@
     "msgstr": "सुनने हेतु कम से कम एक भाषा चुनें (स्पेस दबाने से एक भाषा चालू/बंद हो जाती है)"
   },
   "rando reconnecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "rando फिर से कनेक्ट हो रहा है…"
   },
   "reconnected as a new participant": {
@@ -616,7 +616,7 @@
     "msgstr": "समय समाप्त: क्या आप जारी रखना चाहेंगे?"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "1 मिनट से कम"
   },
   "unexpected reply": {

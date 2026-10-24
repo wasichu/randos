@@ -225,6 +225,10 @@ defmodule Tui.View do
     box = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
     ack = "\n\n#{box} " <> gettext("I'm 18+ and OK with anonymous, unmoderated calls")
 
+    gettext_comment(
+      "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you."
+    )
+
     [
       {%Popup{
          content: %Paragraph{

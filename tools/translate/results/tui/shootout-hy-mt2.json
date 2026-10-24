@@ -22,24 +22,24 @@
       "fil"
     ],
     "strings": 159,
-    "at": "20261024T120250Z",
+    "at": "20261024T142441Z",
     "seconds": 2484.4,
     "scored": {
       "metricx": {
-        "at": "20261024T122840Z",
-        "seconds": 95.2
+        "at": "20261024T142535Z",
+        "seconds": 102.5
       },
       "comet_kiwi": {
-        "at": "20261024T122925Z",
-        "seconds": 99.6
+        "at": "20261024T142549Z",
+        "seconds": 109.8
       },
       "judge": {
-        "at": "20261024T123601Z",
-        "seconds": 703.9
+        "at": "20261024T142635Z",
+        "seconds": 719.0
       },
       "judge_qwen": {
-        "at": "20261024T123809Z",
-        "seconds": 242.6
+        "at": "20261024T142658Z",
+        "seconds": 249.4
       }
     },
     "appended": [
@@ -54,6 +54,10 @@
       {
         "at": "20261024T120250Z",
         "seconds": 337.3
+      },
+      {
+        "at": "20261024T142441Z",
+        "seconds": 20.6
       }
     ]
   },
@@ -86,7 +90,7 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 59.5
+      "mean_chrf": 59.4
     },
     "hi": {
       "strings": 159,
@@ -251,7 +255,7 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 68.5
+      "mean_chrf": 68.6
     },
     "id": {
       "strings": 159,
@@ -311,7 +315,7 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 60.7
+      "mean_chrf": 60.8
     },
     "fil": {
       "strings": 159,
@@ -19528,7 +19532,7 @@
       "msgctxt": null,
       "context": "%{hearing}: one language, \"A, B or C\", or a count of the languages picked.",
       "locale": "hi",
-      "text": "{hearing} भाषा बोलने वाला एवं {speaking} सुनना चाहने वाला कोई रैंडो ढूँढ रहा हूँ…",
+      "text": "{hearing} भाषा बोलने वाला एवं {speaking} सुनना चाहने वाला कोई rando ढूँढ रहा हूँ…",
       "back_translation": "I’m looking for a random person who speaks {hearing} language and wants to listen to {speaking} language…",
       "checks": {
         "placeholders": {
@@ -20204,7 +20208,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "किसी रैंडो को ढूँढने हेतु Enter दबाएँ।",
+      "text": "किसी rando को ढूँढने हेतु Enter दबाएँ।",
       "back_translation": "Press Enter to find a random one.",
       "checks": {
         "placeholders": {
@@ -20249,12 +20253,16 @@
           "score": 0.8183
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly formal, 'हेतु' is stiff; 'दबाएँ' is correct but could be more casual.",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slightly stiff; 'हेतु' feels formal, and 'किसी' is unnecessary.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -20884,7 +20892,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "समय समाप्त हो गया। आपने अपने रैंडो का इंतज़ार करते हुए आगे जारी रखने पर सहमति दी थी…",
+      "text": "समय समाप्त हो गया। आपने अपने rando का इंतज़ार करते हुए आगे जारी रखने पर सहमति दी थी…",
       "back_translation": "Time is up. You agreed to keep going while waiting for your random match...",
       "checks": {
         "placeholders": {
@@ -20929,12 +20937,16 @@
           "score": 0.8026
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, 'agreed to continue' feels formal",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural, calm tone; minor stiffness in 'आगे जारी रखने पर'",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -21250,7 +21262,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "आपका रैंडो",
+      "text": "आपका rando",
       "back_translation": "Your Rando",
       "checks": {
         "placeholders": {
@@ -21295,12 +21307,16 @@
           "score": 0.798
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Natural but slightly stiff; 'आपका' is formal for 'your'.",
+          "score": 7,
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm, and informal; perfect tone and meaning.",
+          "score": 10,
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -22296,7 +22312,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "एक रैंडो की तलाश में हूँ।",
+      "text": "एक rando की तलाश में हूँ।",
       "back_translation": "I'm looking for a Rando.",
       "checks": {
         "placeholders": {
@@ -22904,7 +22920,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "रैंडो फिर से कनेक्ट हो रहा है…",
+      "text": "rando फिर से कनेक्ट हो रहा है…",
       "back_translation": "Rando is reconnecting…",
       "checks": {
         "placeholders": {
@@ -22949,12 +22965,16 @@
           "score": 0.8152
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Slightly stiff, 'ho raha hai' is natural but 'fir se' could be smoother.",
+          "score": 7,
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm tone; perfect match for original",
+          "score": 10,
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -23832,7 +23852,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "आपके रैंडो का इंतज़ार कर रहा हूँ।",
+      "text": "आपके rando का इंतज़ार कर रहा हूँ।",
       "back_translation": "I'm waiting for your random.",
       "checks": {
         "placeholders": {
@@ -23956,7 +23976,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "hi",
-      "text": "आपके रैंडो का कनेक्शन टूट गया है; उनके वापस आने का इंतज़ार किया जा रहा है।",
+      "text": "आपके rando का कनेक्शन टूट गया है; उनके वापस आने का इंतज़ार किया जा रहा है।",
       "back_translation": "Your random’s connection has been lost; waiting for them to reconnect.",
       "checks": {
         "placeholders": {
@@ -24956,7 +24976,7 @@
       "msgctxt": "key",
       "context": "Key help: end this call and find another person to talk to.",
       "locale": "hi",
-      "text": "अगला रैंडो",
+      "text": "अगला rando",
       "back_translation": "Next random",
       "checks": {
         "placeholders": {
@@ -25001,12 +25021,16 @@
           "score": 0.765
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Clear, natural, and keeps the informal tone.",
+          "score": 10,
+          "context": "\nWhere it appears: Key help: end this call and find another person to talk to.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm, and informal; perfect for native Hindi speakers.",
+          "score": 10,
+          "context": "\nWhere it appears: Key help: end this call and find another person to talk to.\n",
+          "by": "qwen"
         }
       }
     },
@@ -25460,7 +25484,7 @@
       "msgctxt": "log",
       "context": "A log label.",
       "locale": "hi",
-      "text": "एक रैंडो की तलाश में हूँ।",
+      "text": "एक rando की तलाश में हूँ।",
       "back_translation": "I'm looking for a Rando.",
       "checks": {
         "placeholders": {
@@ -25708,7 +25732,7 @@
       "msgctxt": "panel title",
       "context": "A panel title label.",
       "locale": "hi",
-      "text": "किसी रैंडो को ढूँढें",
+      "text": "किसी rando को ढूँढें",
       "back_translation": "Find a random person",
       "checks": {
         "placeholders": {
@@ -25753,12 +25777,16 @@
           "score": 0.7478
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, 'ढूँढें' is formal; 'खोजें' is more casual.",
+          "context": "\nWhere it appears: A panel title label.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and calm tone, minor stiffness in 'किसी rando को'",
+          "context": "\nWhere it appears: A panel title label.\n",
+          "by": "qwen"
         }
       }
     },
@@ -45250,7 +45278,7 @@
       "msgctxt": null,
       "context": "%{hearing}: one language, \"A, B or C\", or a count of the languages picked.",
       "locale": "bn",
-      "text": "{hearing} ভাষা বলতে পারে এবং {speaking} শুনতে চায় এমন একজন রান্ডো খুঁজছি…",
+      "text": "{hearing} ভাষা বলতে পারে এবং {speaking} শুনতে চায় এমন একজন rando খুঁজছি…",
       "back_translation": "I’m looking for a Rando who can {hearing} speak and wants to {speaking} listen…",
       "checks": {
         "placeholders": {
@@ -45938,7 +45966,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "bn",
-      "text": "একজন র্যান্ডো খুঁজতে Enter চাপুন।",
+      "text": "একজন rando খুঁজতে Enter চাপুন।",
       "back_translation": "Press Enter to search for a Rando.",
       "checks": {
         "placeholders": {
@@ -46986,7 +47014,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "bn",
-      "text": "আপনার র্যান্ডো",
+      "text": "আপনার rando",
       "back_translation": "Your Rando",
       "checks": {
         "placeholders": {
@@ -47031,12 +47059,16 @@
           "score": 0.7396
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Natural but slightly stiff; 'আপনার' is formal",
+          "score": 7,
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm, and informal; perfect for native Bengali speakers.",
+          "score": 10,
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -48046,7 +48078,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "bn",
-      "text": "একজন র্যান্ডো খুঁজছি।",
+      "text": "একজন rando খুঁজছি।",
       "back_translation": "I'm looking for a Rando.",
       "checks": {
         "placeholders": {
@@ -48650,7 +48682,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "bn",
-      "text": "র্যান্ডো পুনরায় সংযোগ স্থাপন করছে…",
+      "text": "rando পুনরায় সংযোগ স্থাপন করছে…",
       "back_translation": "Rando is reconnecting...",
       "checks": {
         "placeholders": {
@@ -48695,12 +48727,16 @@
           "score": 0.8336
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, but meaning is clear.",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Natural, calm tone; accurate and idiomatic Bengali",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -50694,7 +50730,7 @@
       "msgctxt": "key",
       "context": "Key help: end this call and find another person to talk to.",
       "locale": "bn",
-      "text": "পরবর্তী রান্ডো",
+      "text": "পরবর্তী rando",
       "back_translation": "Next Rando",
       "checks": {
         "placeholders": {
@@ -50739,12 +50775,16 @@
           "score": 0.7998
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Natural but slightly stiff; 'পরবর্তী' is formal",
+          "score": 7,
+          "context": "\nWhere it appears: Key help: end this call and find another person to talk to.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm, and informal; perfect for native speakers.",
+          "score": 10,
+          "context": "\nWhere it appears: Key help: end this call and find another person to talk to.\n",
+          "by": "qwen"
         }
       }
     },
@@ -51186,7 +51226,7 @@
       "msgctxt": "log",
       "context": "A log label.",
       "locale": "bn",
-      "text": "একজন র্যান্ডো খুঁজছি।",
+      "text": "একজন rando খুঁজছি।",
       "back_translation": "I'm looking for a Rando.",
       "checks": {
         "placeholders": {
@@ -51434,7 +51474,7 @@
       "msgctxt": "panel title",
       "context": "A panel title label.",
       "locale": "bn",
-      "text": "একজন র্যান্ডো খুঁজুন।",
+      "text": "একজন rando খুঁজুন।",
       "back_translation": "Find a Rando.",
       "checks": {
         "placeholders": {
@@ -130696,7 +130736,7 @@
       "msgctxt": null,
       "context": "%{hearing}: one language, \"A, B or C\", or a count of the languages picked.",
       "locale": "ur",
-      "text": "ایسے رانڈو کی تلاش ہے جو %{hearing} بول سکے اور %{speaking} سننا چاہے…",
+      "text": "ایسے rando کی تلاش ہے جو %{hearing} بول سکے اور %{speaking} سننا چاہے…",
       "back_translation": "Looking for a randou who can speak %{hearing} and wants to listen to %{speaking}…",
       "checks": {
         "placeholders": {
@@ -130745,8 +130785,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and calm tone; minor awkwardness with 'بول سکے'",
+          "context": "\nWhere it appears: %{hearing}: one language, \"A, B or C\", or a count of the languages picked.\n",
+          "by": "qwen"
         }
       }
     },
@@ -131372,7 +131414,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "کسی رینڈو کو تلاش کرنے کے لیے Enter دبائیں۔",
+      "text": "کسی rando کو تلاش کرنے کے لیے Enter دبائیں۔",
       "back_translation": "Press Enter to find a random one.",
       "checks": {
         "placeholders": {
@@ -131421,8 +131463,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slight awkwardness; 'کسی rando کو' feels unnatural; 'Enter' should be in English as per guidelines.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -132046,7 +132090,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "وقت ختم ہو گیا۔ آپ نے جاری رکھنے پر رضامندی ظاہر کی تھی، اپنے رانڈو کا انتظار کرتے ہوئے…",
+      "text": "وقت ختم ہو گیا۔ آپ نے جاری رکھنے پر رضامندی ظاہر کی تھی، اپنے rando کا انتظار کرتے ہوئے…",
       "back_translation": "Time’s up. You agreed to continue, waiting for your randō…",
       "checks": {
         "placeholders": {
@@ -132095,8 +132139,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfect tone, natural flow, accurate meaning, and correct register.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -132408,7 +132454,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "آپ کا رانڈو",
+      "text": "آپ کا rando",
       "back_translation": "Your Rando",
       "checks": {
         "placeholders": {
@@ -132457,8 +132503,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm, and informal; perfect for native Urdu speakers.",
+          "score": 10,
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -133434,7 +133482,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "ایک رانڈو کی تلاش میں ہوں۔",
+      "text": "ایک rando کی تلاش میں ہوں۔",
       "back_translation": "I'm looking for a randō.",
       "checks": {
         "placeholders": {
@@ -134036,7 +134084,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "رانڈو دوبارہ کنکٹ ہو رہا ہے…",
+      "text": "rando دوبارہ کنکٹ ہو رہا ہے…",
       "back_translation": "Rando is reconnecting...",
       "checks": {
         "placeholders": {
@@ -134085,8 +134133,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Natural but 'دوبارہ کنکٹ' feels slightly stiff; 'reconnecting' could be smoother.",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -134950,7 +135000,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "اپنے رانڈو کا انتظار کر رہا ہوں۔",
+      "text": "اپنے rando کا انتظار کر رہا ہوں۔",
       "back_translation": "Waiting for my randō.",
       "checks": {
         "placeholders": {
@@ -135070,7 +135120,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "آپ کے رانڈو کا کنکشن ٹوٹ گیا ہے؛ ان کے واپس آنے کا انتظار کیا جا رہا ہے۔",
+      "text": "آپ کے rando کا کنکشن ٹوٹ گیا ہے؛ ان کے واپس آنے کا انتظار کیا جا رہا ہے۔",
       "back_translation": "Your Rando connection has been lost; waiting for them to reconnect.",
       "checks": {
         "placeholders": {
@@ -136054,7 +136104,7 @@
       "msgctxt": "key",
       "context": "Key help: end this call and find another person to talk to.",
       "locale": "ur",
-      "text": "اگلا رانڈو",
+      "text": "اگلا rando",
       "back_translation": "Next Rando",
       "checks": {
         "placeholders": {
@@ -136103,8 +136153,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm, and informal; perfect for native Urdu speakers.",
+          "score": 10,
+          "context": "\nWhere it appears: Key help: end this call and find another person to talk to.\n",
+          "by": "qwen"
         }
       }
     },
@@ -136405,8 +136457,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Natural but slightly stiff; \\'unmute\\' is better as \\'آواز دو\"'",
+          "score": 6,
+          "reason": "Slightly stiff; 'unmute' is better as 'آواز دوبارہ آن کریں'",
           "context": "\nWhere it appears: A key label.\n",
           "by": "qwen"
         }
@@ -136540,7 +136592,7 @@
       "msgctxt": "log",
       "context": "A log label.",
       "locale": "ur",
-      "text": "ایک رانڈو کی تلاش میں ہوں۔",
+      "text": "ایک rando کی تلاش میں ہوں۔",
       "back_translation": "I'm looking for a randō.",
       "checks": {
         "placeholders": {
@@ -136780,7 +136832,7 @@
       "msgctxt": "panel title",
       "context": "A panel title label.",
       "locale": "ur",
-      "text": "کسی رانڈو کو تلاش کریں۔",
+      "text": "کسی rando کو تلاش کریں۔",
       "back_translation": "Find some randos.",
       "checks": {
         "placeholders": {
@@ -155264,7 +155316,7 @@
       "msgctxt": null,
       "context": "The You panel's \"Now:\" row, before you press Enter to look for one.",
       "locale": "hi",
-      "text": "किसी रैंडो की तलाश नहीं कर रहा हूँ।",
+      "text": "किसी rando की तलाश नहीं कर रहा हूँ।",
       "back_translation": "I'm not looking for a random person.",
       "checks": {
         "placeholders": {
@@ -155448,7 +155500,7 @@
       "msgctxt": null,
       "context": "The You panel's \"Now:\" row, before you press Enter to look for one.",
       "locale": "bn",
-      "text": "কোনো র্যান্ডো খুঁজছি না।",
+      "text": "কোনো rando খুঁজছি না।",
       "back_translation": "I'm not looking for any Rando.",
       "checks": {
         "placeholders": {
@@ -156058,7 +156110,7 @@
       "msgctxt": null,
       "context": "The You panel's \"Now:\" row, before you press Enter to look for one.",
       "locale": "ur",
-      "text": "کسی رانڈو کی تلاش نہیں کر رہا۔",
+      "text": "کسی rando کی تلاش نہیں کر رہا۔",
       "back_translation": "I'm not looking for a rando.",
       "checks": {
         "placeholders": {
@@ -156357,66 +156409,6 @@
           "reason": "Natural, calm, and informal; perfect tone and accuracy.",
           "context": "",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "es",
-      "text": "Pega el enlace que te enviaron:",
-      "back_translation": "Take the link they sent you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 39.8,
-        "metricx": {
-          "score": 0.61
-        },
-        "comet_kiwi": {
-          "score": 0.8726
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -157543,66 +157535,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "zh",
-      "text": "粘贴发送给您的链接：",
-      "back_translation": "Paste the link sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 57.1,
-        "metricx": {
-          "score": 0.18
-        },
-        "comet_kiwi": {
-          "score": 0.8406
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -158719,66 +158651,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "hi",
-      "text": "आपको भेजा गया लिंक पेस्ट करें:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 1.19
-        },
-        "comet_kiwi": {
-          "score": 0.8618
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -159881,70 +159753,6 @@
         "judge_qwen": {
           "score": 10,
           "reason": "Natural, calm, and informal; perfect for native Arabic speakers.",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ar",
-      "text": "ألصق الرابط الذي تم إرساله إليك:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 0.45
-        },
-        "comet_kiwi": {
-          "score": 0.8456
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff phrasing, 'ألصق' is more formal than needed.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, accurate, and matches the calm, friendly tone.",
           "context": "",
           "by": "qwen"
         }
@@ -161061,70 +160869,6 @@
         "judge_qwen": {
           "score": 8,
           "reason": "Natural and friendly, slight formality in 'por meio de'",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "pt",
-      "text": "Cole o link que lhe foi enviado:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 1.6
-        },
-        "comet_kiwi": {
-          "score": 0.8621
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly formal, 'lhe' is formal; 'que foi enviado' is passive",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal; perfect tone and accuracy.",
           "context": "",
           "by": "qwen"
         }
@@ -162249,66 +161993,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "bn",
-      "text": "আপনাকে পাঠানো লিঙ্কটি পেস্ট করুন:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 0.75
-        },
-        "comet_kiwi": {
-          "score": 0.8934
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -162374,7 +162058,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "bn",
-      "text": "আপনার র্যান্ডো লিঙ্কটি খোলার জন্য অপেক্ষা করছি…",
+      "text": "আপনার rando লিঙ্কটি খোলার জন্য অপেক্ষা করছি…",
       "back_translation": "Waiting for your Rando link to open...",
       "checks": {
         "placeholders": {
@@ -162419,12 +162103,16 @@
           "score": 0.7984
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "reason": "Slightly stiff, 'waiting for' could be more natural",
+          "score": 7,
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural, calm tone; accurate and fluent Bengali",
+          "score": 10,
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -163407,70 +163095,6 @@
         "judge_qwen": {
           "score": 8,
           "reason": "Natural and calm, minor formality in 'подключитесь'",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ru",
-      "text": "Вставьте ссылку, которую вам прислали:",
-      "back_translation": "Insert the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 36.4,
-        "metricx": {
-          "score": 0.0
-        },
-        "comet_kiwi": {
-          "score": 0.8716
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly formal, 'вставьте' could be more casual",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal tone; accurate and smooth translation.",
           "context": "",
           "by": "qwen"
         }
@@ -164591,70 +164215,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ja",
-      "text": "送られてきたリンクを貼り付けてください：",
-      "back_translation": "Please paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 49.3,
-        "metricx": {
-          "score": 1.55
-        },
-        "comet_kiwi": {
-          "score": 0.8804
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the friendly tone.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal; perfect for native speakers.",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -165767,66 +165327,6 @@
         },
         "comet_kiwi": {
           "score": 0.8531
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fr",
-      "text": "Collez le lien qui vous a été envoyé :",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 1.51
-        },
-        "comet_kiwi": {
-          "score": 0.8707
         },
         "judge": {
           "score": null,
@@ -166959,70 +166459,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "de",
-      "text": "Fügen Sie den Link ein, den Ihnen zugesandt wurde:",
-      "back_translation": "Add the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 35.2,
-        "metricx": {
-          "score": 0.0
-        },
-        "comet_kiwi": {
-          "score": 0.8613
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly formal, 'zugesandt' is stiff",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 7,
-          "reason": "Slight stiffness; 'zugesandt' feels overly formal for the tone.",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -168115,66 +167551,6 @@
         },
         "comet_kiwi": {
           "score": 0.883
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ko",
-      "text": "보내진 링크를 붙여넣으세요:",
-      "back_translation": "Paste the sent link:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.4,
-        "metricx": {
-          "score": 1.74
-        },
-        "comet_kiwi": {
-          "score": 0.8791
         },
         "judge": {
           "score": null,
@@ -169295,70 +168671,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "it",
-      "text": "Incolla il link che ti è stato inviato:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 0.36
-        },
-        "comet_kiwi": {
-          "score": 0.8766
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Perfectly natural, keeps meaning and tone.",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal; perfect tone and accuracy.",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -170461,66 +169773,6 @@
           "reason": "Natural and calm, minor formality in 'katılın'",
           "context": "",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "tr",
-      "text": "Gönderilen bağlantıyı yapıştırın:",
-      "back_translation": "Paste the sent link:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.4,
-        "metricx": {
-          "score": 1.4
-        },
-        "comet_kiwi": {
-          "score": 0.8761
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -171637,66 +170889,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "id",
-      "text": "Tempelkan tautan yang dikirimkan kepada Anda:",
-      "back_translation": "Paste the link sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 57.1,
-        "metricx": {
-          "score": 0.63
-        },
-        "comet_kiwi": {
-          "score": 0.8758
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -172797,66 +171989,6 @@
         },
         "comet_kiwi": {
           "score": 0.8501
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "Dán đường link được gửi cho bạn:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 3.2
-        },
-        "comet_kiwi": {
-          "score": 0.8658
         },
         "judge": {
           "score": null,
@@ -173975,68 +173107,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ur",
-      "text": "وہ لنک پیسٹ کریں جو آپ کو بھیجا گیا تھا:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 0.76
-        },
-        "comet_kiwi": {
-          "score": 0.8678
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'بھیجا گیا تھا' is formal, could be more natural",
-          "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -174104,7 +173174,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "آپ کے رانڈو کے لنک کھولنے کا انتظار کر رہا ہوں…",
+      "text": "آپ کے rando کے لنک کھولنے کا انتظار کر رہا ہوں…",
       "back_translation": "Waiting for you to open your Rando link…",
       "checks": {
         "placeholders": {
@@ -174153,8 +173223,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "reason": "Natural and calm tone, minor awkwardness with 'کے' possessive form",
+          "score": 8,
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -175121,70 +174193,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fa",
-      "text": "لینکی که برای شما ارسال شده را کپی کنید:",
-      "back_translation": "Copy the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 34.9,
-        "metricx": {
-          "score": 0.32
-        },
-        "comet_kiwi": {
-          "score": 0.8831
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, more natural to say 'لینک ارسالی را کپی کنید'",
-          "context": "",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Accurate and natural, minor formality in 'کپی کنید'",
-          "context": "",
-          "by": "qwen"
         }
       }
     },
@@ -176277,66 +175285,6 @@
       }
     },
     {
-      "key": "Paste the link you were sent:",
-      "msgid": "Paste the link you were sent:",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fil",
-      "text": "I-paste ang link na ipinadala sa iyo:",
-      "back_translation": "Paste the link that was sent to you:",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 54.3,
-        "metricx": {
-          "score": 1.16
-        },
-        "comet_kiwi": {
-          "score": 0.8757
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "Send it to them however you like. It works once.",
       "msgid": "Send it to them however you like. It works once.",
       "msgctxt": null,
@@ -177299,6 +176247,1114 @@
         },
         "comet_kiwi": {
           "score": 0.8687
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "es",
+      "text": "Pega el enlace que te enviaron:",
+      "back_translation": "Take the link they sent you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 39.8,
+        "metricx": {
+          "score": 0.64
+        },
+        "comet_kiwi": {
+          "score": 0.8726
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "zh",
+      "text": "粘贴别人发给您的链接：",
+      "back_translation": "Paste the link sent to you by someone else:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 52.2,
+        "metricx": {
+          "score": 0.05
+        },
+        "comet_kiwi": {
+          "score": 0.8319
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "hi",
+      "text": "आपको भेजा गया लिंक पेस्ट करें:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 1.18
+        },
+        "comet_kiwi": {
+          "score": 0.8618
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "ar",
+      "text": "الصق الرابط الذي تم إرساله إليك:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 0.47
+        },
+        "comet_kiwi": {
+          "score": 0.8453
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'تم إرساله' is formal",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfect tone and accuracy.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "pt",
+      "text": "Cole o link que lhe foi enviado:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 1.59
+        },
+        "comet_kiwi": {
+          "score": 0.8621
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Natural, correct, and matches the friendly tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and clear, slightly formal tone, could be more casual",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "bn",
+      "text": "আপনাকে পাঠানো লিঙ্কটি পেস্ট করুন:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 0.73
+        },
+        "comet_kiwi": {
+          "score": 0.8934
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "ru",
+      "text": "Вставьте ссылку, которую вам прислали:",
+      "back_translation": "Insert the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.4,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.8716
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Clear, natural, and matches the tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfect tone and accuracy.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "ja",
+      "text": "送られてきたリンクを貼り付けてください：",
+      "back_translation": "Please paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 49.3,
+        "metricx": {
+          "score": 1.55
+        },
+        "comet_kiwi": {
+          "score": 0.8804
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Natural, correct, and matches the friendly tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfect for native speakers.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "fr",
+      "text": "Collez le lien que l’on vous a envoyé :",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 1.3
+        },
+        "comet_kiwi": {
+          "score": 0.8721
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Natural, correct, and matches the friendly tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, minor formality in 'l’on vous a envoyé'",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "de",
+      "text": "Kopieren Sie den Link, den man Ihnen geschickt hat:",
+      "back_translation": "Copy the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 34.9,
+        "metricx": {
+          "score": 0.11
+        },
+        "comet_kiwi": {
+          "score": 0.8515
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "ko",
+      "text": "보내진 링크를 붙여넣으세요:",
+      "back_translation": "Paste the sent link:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 46.4,
+        "metricx": {
+          "score": 1.73
+        },
+        "comet_kiwi": {
+          "score": 0.8791
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "it",
+      "text": "Incolla il link che ti è stato inviato:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 0.35
+        },
+        "comet_kiwi": {
+          "score": 0.8766
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfect tone and accuracy.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "tr",
+      "text": "Size gönderilen linki yapıştırın:",
+      "back_translation": "Paste the link sent to you here:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 59.3,
+        "metricx": {
+          "score": 2.23
+        },
+        "comet_kiwi": {
+          "score": 0.8813
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "id",
+      "text": "Tempelkan tautan yang dikirimkan ke Anda:",
+      "back_translation": "Paste the link sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 57.1,
+        "metricx": {
+          "score": 0.57
+        },
+        "comet_kiwi": {
+          "score": 0.8763
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "vi",
+      "text": "Hãy dán đường link mà người khác gửi cho bạn:",
+      "back_translation": "Paste the link that someone else sent you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 55.0,
+        "metricx": {
+          "score": 0.88
+        },
+        "comet_kiwi": {
+          "score": 0.8587
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'dán' is formal; 'gửi' is correct but 'nhận' might fit better.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and calm, minor stiffness in 'người khác gửi'",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "ur",
+      "text": "آپ کو بھیجے گئے لنک کو پیسٹ کریں:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 0.91
+        },
+        "comet_kiwi": {
+          "score": 0.8591
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "fa",
+      "text": "لینکی که برای شما فرستاده شده را چسبانید:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 2.7
+        },
+        "comet_kiwi": {
+          "score": 0.8827
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "Paste the link you were sent:",
+      "msgid": "Paste the link you were sent:",
+      "msgctxt": null,
+      "context": "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.",
+      "locale": "fil",
+      "text": "I-paste ang link na ipinadala sa iyo:",
+      "back_translation": "Paste the link that was sent to you:",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.3,
+        "metricx": {
+          "score": 1.14
+        },
+        "comet_kiwi": {
+          "score": 0.8757
         },
         "judge": {
           "score": null,

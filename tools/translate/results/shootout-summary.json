@@ -1,5 +1,5 @@
 {
-  "generated_at": "20261024T125329Z",
+  "generated_at": "20261024T142412Z",
   "runs": {
     "translategemma-27b": {
       "at": "20261023T133522Z",
@@ -69,12 +69,12 @@
           "seconds": 188.1
         },
         "judge": {
-          "at": "20261023T133621Z",
-          "seconds": 5806.1
+          "at": "20261024T142338Z",
+          "seconds": 5807.0
         },
         "judge_qwen": {
-          "at": "20261024T125246Z",
-          "seconds": 76.1
+          "at": "20261024T142403Z",
+          "seconds": 77.5
         }
       }
     },
@@ -153,12 +153,12 @@
           "seconds": 111.6
         },
         "judge": {
-          "at": "20261024T125108Z",
-          "seconds": 6247.0
+          "at": "20261024T142338Z",
+          "seconds": 6269.8
         },
         "judge_qwen": {
-          "at": "20261024T125322Z",
-          "seconds": 267.7
+          "at": "20261024T142403Z",
+          "seconds": 280.4
         }
       }
     },
@@ -230,8 +230,8 @@
           "seconds": 5900.8
         },
         "judge_qwen": {
-          "at": "20261024T125323Z",
-          "seconds": 199.5
+          "at": "20261024T142403Z",
+          "seconds": 201.7
         }
       }
     },
@@ -295,8 +295,8 @@
           "seconds": 5001.4
         },
         "judge_qwen": {
-          "at": "20261024T125324Z",
-          "seconds": 287.1
+          "at": "20261024T142359Z",
+          "seconds": 288.1
         }
       }
     },
@@ -440,12 +440,12 @@
           "seconds": 134.4
         },
         "judge": {
-          "at": "20261024T125108Z",
-          "seconds": 5735.9
+          "at": "20261024T142338Z",
+          "seconds": 5742.2
         },
         "judge_qwen": {
-          "at": "20261024T125317Z",
-          "seconds": 101.3
+          "at": "20261024T142403Z",
+          "seconds": 103.6
         }
       }
     },
@@ -521,12 +521,12 @@
           "seconds": 105.5
         },
         "judge": {
-          "at": "20261024T125106Z",
-          "seconds": 6272.2
+          "at": "20261024T142338Z",
+          "seconds": 6282.2
         },
         "judge_qwen": {
-          "at": "20261024T125321Z",
-          "seconds": 248.7
+          "at": "20261024T142404Z",
+          "seconds": 254.4
         }
       }
     }
@@ -587,7 +587,7 @@
           "all_checks_pass": 58,
           "mean_chrf": 57.0,
           "mean_rank": 3.48,
-          "best_count": 18,
+          "best_count": 19,
           "mean_metricx": 1.734,
           "mean_comet_kiwi": 0.753,
           "mean_judge": 8.031,
@@ -609,30 +609,30 @@
           "all_checks_pass": 125,
           "mean_chrf": 49.4,
           "mean_rank": 3.47,
-          "best_count": 26,
+          "best_count": 25,
           "mean_metricx": 1.644,
           "mean_comet_kiwi": 0.75,
           "mean_judge": 8.4,
-          "mean_judge_qwen": 8.217
+          "mean_judge_qwen": 8.186
         }
       }
     },
     "bn": {
       "winner": {
-        "model": "madlad-400",
-        "why": "picked for 65 of the 173 strings filled"
+        "model": "hy-mt2",
+        "why": "picked for 59 of the 173 strings filled"
       },
       "models": {
         "hy-mt2": {
           "strings": 173,
-          "all_checks_pass": 111,
+          "all_checks_pass": 124,
           "mean_chrf": 66.4,
           "mean_rank": 2.72,
-          "best_count": 54,
+          "best_count": 59,
           "mean_metricx": 1.938,
           "mean_comet_kiwi": 0.835,
-          "mean_judge": 8.343,
-          "mean_judge_qwen": 8.582
+          "mean_judge": 8.25,
+          "mean_judge_qwen": 8.618
         },
         "m2m100": {
           "strings": 173,
@@ -650,7 +650,7 @@
           "all_checks_pass": 168,
           "mean_chrf": 68.3,
           "mean_rank": 3.24,
-          "best_count": 65,
+          "best_count": 54,
           "mean_metricx": 2.295,
           "mean_comet_kiwi": 0.817,
           "mean_judge": 7.737,
@@ -658,21 +658,21 @@
         },
         "translategemma-12b": {
           "strings": 173,
-          "all_checks_pass": 52,
+          "all_checks_pass": 62,
           "mean_chrf": 52.6,
           "mean_rank": 3.17,
-          "best_count": 15,
+          "best_count": 18,
           "mean_metricx": 1.805,
           "mean_comet_kiwi": 0.82,
-          "mean_judge": 8.115,
-          "mean_judge_qwen": 8.692
+          "mean_judge": 8.034,
+          "mean_judge_qwen": 8.586
         },
         "translategemma-27b": {
           "strings": 151,
-          "all_checks_pass": 41,
+          "all_checks_pass": 44,
           "mean_chrf": 46.7,
           "mean_rank": 3.52,
-          "best_count": 12,
+          "best_count": 11,
           "mean_metricx": 1.874,
           "mean_comet_kiwi": 0.806,
           "mean_judge": 7.75,
@@ -680,14 +680,14 @@
         },
         "translategemma-4b": {
           "strings": 173,
-          "all_checks_pass": 105,
+          "all_checks_pass": 117,
           "mean_chrf": 48.4,
           "mean_rank": 3.46,
-          "best_count": 16,
+          "best_count": 20,
           "mean_metricx": 1.947,
           "mean_comet_kiwi": 0.813,
-          "mean_judge": 8.061,
-          "mean_judge_qwen": 8.44
+          "mean_judge": 8.055,
+          "mean_judge_qwen": 8.411
         }
       }
     },
@@ -1118,27 +1118,27 @@
     },
     "hi": {
       "winner": {
-        "model": "madlad-400",
-        "why": "picked for 46 of the 172 strings filled"
+        "model": "hy-mt2",
+        "why": "picked for 55 of the 173 strings filled"
       },
       "models": {
         "hy-mt2": {
           "strings": 173,
-          "all_checks_pass": 108,
+          "all_checks_pass": 123,
           "mean_chrf": 68.7,
           "mean_rank": 3.07,
-          "best_count": 44,
+          "best_count": 55,
           "mean_metricx": 1.932,
           "mean_comet_kiwi": 0.817,
-          "mean_judge": 8.058,
-          "mean_judge_qwen": 8.486
+          "mean_judge": 7.963,
+          "mean_judge_qwen": 8.482
         },
         "m2m100": {
           "strings": 173,
           "all_checks_pass": 154,
           "mean_chrf": 52.6,
           "mean_rank": 4.6,
-          "best_count": 22,
+          "best_count": 19,
           "mean_metricx": 3.142,
           "mean_comet_kiwi": 0.742,
           "mean_judge": 7.629,
@@ -1149,7 +1149,7 @@
           "all_checks_pass": 166,
           "mean_chrf": 70.6,
           "mean_rank": 3.8,
-          "best_count": 46,
+          "best_count": 37,
           "mean_metricx": 2.564,
           "mean_comet_kiwi": 0.791,
           "mean_judge": 7.682,
@@ -1160,7 +1160,7 @@
           "all_checks_pass": 156,
           "mean_chrf": 59.7,
           "mean_rank": 4.73,
-          "best_count": 21,
+          "best_count": 18,
           "mean_metricx": 4.041,
           "mean_comet_kiwi": 0.724,
           "mean_judge": 7.947,
@@ -1168,36 +1168,36 @@
         },
         "translategemma-12b": {
           "strings": 173,
-          "all_checks_pass": 52,
+          "all_checks_pass": 59,
           "mean_chrf": 57.6,
           "mean_rank": 3.63,
-          "best_count": 7,
+          "best_count": 10,
           "mean_metricx": 1.843,
           "mean_comet_kiwi": 0.801,
-          "mean_judge": 8.28,
-          "mean_judge_qwen": 8.48
+          "mean_judge": 8.214,
+          "mean_judge_qwen": 8.5
         },
         "translategemma-27b": {
           "strings": 151,
-          "all_checks_pass": 38,
+          "all_checks_pass": 43,
           "mean_chrf": 48.7,
           "mean_rank": 4.17,
-          "best_count": 8,
+          "best_count": 9,
           "mean_metricx": 2.116,
           "mean_comet_kiwi": 0.757,
-          "mean_judge": 8.308,
-          "mean_judge_qwen": 9.0
+          "mean_judge": 8.214,
+          "mean_judge_qwen": 8.786
         },
         "translategemma-4b": {
           "strings": 173,
-          "all_checks_pass": 115,
+          "all_checks_pass": 129,
           "mean_chrf": 56.5,
           "mean_rank": 3.63,
-          "best_count": 24,
+          "best_count": 25,
           "mean_metricx": 1.907,
           "mean_comet_kiwi": 0.803,
-          "mean_judge": 8.359,
-          "mean_judge_qwen": 8.109
+          "mean_judge": 8.299,
+          "mean_judge_qwen": 8.134
         }
       }
     },
@@ -1693,7 +1693,7 @@
           "mean_metricx": 5.981,
           "mean_comet_kiwi": 0.657,
           "mean_judge": null,
-          "mean_judge_qwen": 6.873
+          "mean_judge_qwen": 6.893
         },
         "madlad-400": {
           "strings": 173,
@@ -1828,27 +1828,27 @@
     },
     "ur": {
       "winner": {
-        "model": "madlad-400",
-        "why": "picked for 53 of the 171 strings filled"
+        "model": "hy-mt2",
+        "why": "picked for 51 of the 173 strings filled"
       },
       "models": {
         "hy-mt2": {
           "strings": 173,
-          "all_checks_pass": 103,
+          "all_checks_pass": 119,
           "mean_chrf": 58.6,
           "mean_rank": 2.76,
-          "best_count": 40,
+          "best_count": 51,
           "mean_metricx": 2.035,
           "mean_comet_kiwi": 0.797,
           "mean_judge": null,
-          "mean_judge_qwen": 8.522
+          "mean_judge_qwen": 8.458
         },
         "m2m100": {
           "strings": 173,
           "all_checks_pass": 162,
           "mean_chrf": 38.9,
           "mean_rank": 4.79,
-          "best_count": 16,
+          "best_count": 15,
           "mean_metricx": 3.675,
           "mean_comet_kiwi": 0.7,
           "mean_judge": null,
@@ -1859,7 +1859,7 @@
           "all_checks_pass": 156,
           "mean_chrf": 66.5,
           "mean_rank": 3.56,
-          "best_count": 53,
+          "best_count": 44,
           "mean_metricx": 2.672,
           "mean_comet_kiwi": 0.757,
           "mean_judge": null,
@@ -1870,7 +1870,7 @@
           "all_checks_pass": 161,
           "mean_chrf": 33.4,
           "mean_rank": 4.48,
-          "best_count": 32,
+          "best_count": 31,
           "mean_metricx": 2.985,
           "mean_comet_kiwi": 0.744,
           "mean_judge": null,
@@ -1878,36 +1878,36 @@
         },
         "translategemma-12b": {
           "strings": 173,
-          "all_checks_pass": 53,
+          "all_checks_pass": 58,
           "mean_chrf": 49.6,
           "mean_rank": 3.53,
           "best_count": 9,
           "mean_metricx": 2.236,
           "mean_comet_kiwi": 0.774,
           "mean_judge": null,
-          "mean_judge_qwen": 8.217
+          "mean_judge_qwen": 8.16
         },
         "translategemma-27b": {
           "strings": 151,
-          "all_checks_pass": 43,
+          "all_checks_pass": 47,
           "mean_chrf": 38.7,
           "mean_rank": 4.59,
-          "best_count": 11,
+          "best_count": 12,
           "mean_metricx": 3.089,
           "mean_comet_kiwi": 0.673,
           "mean_judge": null,
-          "mean_judge_qwen": 9.316
+          "mean_judge_qwen": 9.25
         },
         "translategemma-4b": {
           "strings": 173,
-          "all_checks_pass": 115,
+          "all_checks_pass": 121,
           "mean_chrf": 43.5,
           "mean_rank": 3.98,
-          "best_count": 10,
+          "best_count": 11,
           "mean_metricx": 2.553,
           "mean_comet_kiwi": 0.759,
           "mean_judge": null,
-          "mean_judge_qwen": 7.763
+          "mean_judge_qwen": 7.718
         }
       }
     },

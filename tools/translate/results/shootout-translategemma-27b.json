@@ -35,12 +35,12 @@
         "seconds": 188.1
       },
       "judge": {
-        "at": "20261023T133621Z",
-        "seconds": 5806.1
+        "at": "20261024T142338Z",
+        "seconds": 5807.0
       },
       "judge_qwen": {
-        "at": "20261024T125246Z",
-        "seconds": 76.1
+        "at": "20261024T142403Z",
+        "seconds": 77.5
       }
     },
     "appended": [
@@ -8835,7 +8835,7 @@
       "msgid": "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.",
       "msgctxt": null,
       "locale": "hi",
-      "text": "यहाँ कोई भी खाता, प्रोफ़ाइल, संपर्क, अनुयायी, फ़ीड, लगातार चलने वाली श्रृंखला, अंक, या स्थायी सामाजिक नेटवर्क नहीं है। रैंडोस, सोशल मीडिया की तुलना में, एक संवादात्मक ढाँचे के अधिक करीब है।",
+      "text": "यहाँ कोई भी खाता, प्रोफ़ाइल, संपर्क, अनुयायी, फ़ीड, लगातार चलने वाली श्रृंखला, अंक, या स्थायी सामाजिक नेटवर्क नहीं है। randos, सोशल मीडिया की तुलना में, एक संवादात्मक ढाँचे के अधिक करीब है।",
       "back_translation": "Here, there are no accounts, profiles, contacts, followers, feeds, ongoing series, scores, or permanent social networks. Randos, in comparison to social media, is closer to being an interactive framework.",
       "checks": {
         "placeholders": {
@@ -9101,7 +9101,7 @@
       "msgid": "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.",
       "msgctxt": null,
       "locale": "hi",
-      "text": "आप जिस भाषा में बात करना चाहते हैं और जिस भाषा में सुनना चाहते हैं, वह भाषा स्वयं चुन सकते हैं। रैंडोस आपको एक संक्षिप्त बातचीत के लिए किसी ऐसे व्यक्ति से मिलाता है जो आपकी पसंद के अनुरूप हो, और फिर वह खुद बातचीत में हस्तक्षेप नहीं करता।",
+      "text": "आप जिस भाषा में बात करना चाहते हैं और जिस भाषा में सुनना चाहते हैं, वह भाषा स्वयं चुन सकते हैं। randos आपको एक संक्षिप्त बातचीत के लिए किसी ऐसे व्यक्ति से मिलाता है जो आपकी पसंद के अनुरूप हो, और फिर वह खुद बातचीत में हस्तक्षेप नहीं करता।",
       "back_translation": "You can choose the language in which you want to speak and the language in which you want to listen. Randos connects you with someone for a brief conversation who matches your preferences, and then refrains from interfering in the conversation itself.",
       "checks": {
         "placeholders": {
@@ -9273,7 +9273,7 @@
       "msgid": "randos is a place for anonymous, audio-only language conversation.",
       "msgctxt": null,
       "locale": "hi",
-      "text": "रैंडोस एक ऐसा मंच है जहाँ गुमनाम रूप से, केवल ऑडियो के माध्यम से विभिन्न भाषाएँ बोली जा सकती हैं।",
+      "text": "randos एक ऐसा मंच है जहाँ गुमनाम रूप से, केवल ऑडियो के माध्यम से विभिन्न भाषाएँ बोली जा सकती हैं।",
       "back_translation": "Randos is a platform where various languages can be spoken anonymously, solely through audio.",
       "checks": {
         "placeholders": {
@@ -9316,7 +9316,7 @@
       "msgid": "randos is free software (AGPL-3.0) and built in public.",
       "msgctxt": null,
       "locale": "hi",
-      "text": "रैंडोस एक मुफ्त सॉफ्टवेयर है (एजीपीएल-3.0 लाइसेंस के तहत) और इसे सार्वजनिक रूप से विकसित किया गया है।",
+      "text": "randos एक मुफ्त सॉफ्टवेयर है (एजीपीएल-3.0 लाइसेंस के तहत) और इसे सार्वजनिक रूप से विकसित किया गया है।",
       "back_translation": "Randos is a free and open-source software (under the AGPL-3.0 license) and is developed publicly.",
       "checks": {
         "placeholders": {
@@ -10958,7 +10958,7 @@
       "msgid": "What each part of randos sees, logs, and keeps, with the configuration behind every claim:",
       "msgctxt": null,
       "locale": "hi",
-      "text": "रैंडोस के प्रत्येक भाग द्वारा देखी गई, रिकॉर्ड की गई और संग्रहीत की जाने वाली जानकारी, साथ ही प्रत्येक दावे के पीछे की कॉन्फ़िगरेशन व्यवस्था:।",
+      "text": "randos के प्रत्येक भाग द्वारा देखी गई, रिकॉर्ड की गई और संग्रहीत की जाने वाली जानकारी, साथ ही प्रत्येक दावे के पीछे की कॉन्फ़िगरेशन व्यवस्था:।",
       "back_translation": "The information observed, recorded, and stored by each component of Randos, as well as the configuration setup behind each claim.",
       "checks": {
         "placeholders": {
@@ -10987,12 +10987,16 @@
           "score": 0.7877
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff phrasing, 'configuration व्यवस्था' is unnatural",
+          "context": "",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Awkward phrasing, slightly stiff tone, unclear structure",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -20012,7 +20016,7 @@
       "msgid": "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.",
       "msgctxt": null,
       "locale": "bn",
-      "text": "আপনি যে ভাষায় কথা বলতে চান এবং যে ভাষায় শুনতে চান, তা নিজে নির্বাচন করতে পারেন। র‍্যান্ডোস আপনাকে এমন একজনের সাথে যুক্ত করে, যার সাথে আপনার একটি সংক্ষিপ্ত কথোপকথন হতে পারে, এবং এরপর এটি আপনা থেকে সরে যায়।",
+      "text": "আপনি যে ভাষায় কথা বলতে চান এবং যে ভাষায় শুনতে চান, তা নিজে নির্বাচন করতে পারেন। randos আপনাকে এমন একজনের সাথে যুক্ত করে, যার সাথে আপনার একটি সংক্ষিপ্ত কথোপকথন হতে পারে, এবং এরপর এটি আপনা থেকে সরে যায়।",
       "back_translation": "You can choose the language you want to speak and the language you want to hear. Randos connects you with another person for a brief conversation, after which the connection automatically ends.",
       "checks": {
         "placeholders": {
@@ -20184,7 +20188,7 @@
       "msgid": "randos is a place for anonymous, audio-only language conversation.",
       "msgctxt": null,
       "locale": "bn",
-      "text": "র‍্যান্ডোস এমন একটি প্ল্যাটফর্ম, যেখানে ব্যবহারকারীরা পরিচয় গোপন রেখে শুধুমাত্র অডিওর মাধ্যমে বিভিন্ন ভাষায় একে অপরের সাথে কথোপকথন করতে পারে।",
+      "text": "randos এমন একটি প্ল্যাটফর্ম, যেখানে ব্যবহারকারীরা পরিচয় গোপন রেখে শুধুমাত্র অডিওর মাধ্যমে বিভিন্ন ভাষায় একে অপরের সাথে কথোপকথন করতে পারে।",
       "back_translation": "Randos is a platform where users can converse with each other in various languages solely through audio, while keeping their identities anonymous.",
       "checks": {
         "placeholders": {
@@ -20227,7 +20231,7 @@
       "msgid": "randos is free software (AGPL-3.0) and built in public.",
       "msgctxt": null,
       "locale": "bn",
-      "text": "র‍্যান্ডোস একটি মুক্ত সফটওয়্যার (এজিপিএল-3.0 লাইসেন্সের অধীনে) এবং এটি সকলের অংশগ্রহণে উন্মুক্তভাবে তৈরি করা হয়েছে।",
+      "text": "randos একটি মুক্ত সফটওয়্যার (এজিপিএল-3.0 লাইসেন্সের অধীনে) এবং এটি সকলের অংশগ্রহণে উন্মুক্তভাবে তৈরি করা হয়েছে।",
       "back_translation": "Randos is an open-source software (under the AGPL-3.0 license) and is developed openly with contributions from anyone interested.",
       "checks": {
         "placeholders": {
@@ -67589,7 +67593,7 @@
       "msgctxt": null,
       "context": "Title of the page that explains what randos is (\"about us\"), not \"approximately\".",
       "locale": "bn",
-      "text": "র‍্যান্ডোস সম্পর্কে।",
+      "text": "randos সম্পর্কে।",
       "back_translation": "About Randos.",
       "checks": {
         "placeholders": {
@@ -68789,7 +68793,7 @@
       "msgctxt": "connection state",
       "context": "A connection state label.",
       "locale": "bn",
-      "text": "আপনার র‍্যান্ডো-র জন্য অপেক্ষা করছি।",
+      "text": "আপনার rando-র জন্য অপেক্ষা করছি।",
       "back_translation": "I am waiting for your “Rando.”",
       "checks": {
         "placeholders": {
@@ -95537,7 +95541,7 @@
       "msgctxt": null,
       "context": "Title of the page that explains what randos is (\"about us\"), not \"approximately\".",
       "locale": "ur",
-      "text": "رینڈوس کے بارے میں۔\n(randos ke baare mein.)",
+      "text": "randos کے بارے میں۔\n(randos ke baare mein.)",
       "back_translation": "About Randos.",
       "checks": {
         "placeholders": {
@@ -97909,7 +97913,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "آپ جس زبان میں بات کرنا چاہتے ہیں اور جس زبان میں سننا چاہتے ہیں، وہ خود منتخب کر سکتے ہیں۔ رینڈوس آپ کو ایک ایسے شخص سے ملاता ہے جو آپ کے لیے مناسب ہو، تاکہ آپ دونوں مختصر وقت کے لیے بات چیت کر سکیں، اور پھر یہ آپ کے درمیان کی بات چیت میں کوئی مداخلت نہیں کرتا۔",
+      "text": "آپ جس زبان میں بات کرنا چاہتے ہیں اور جس زبان میں سننا چاہتے ہیں، وہ خود منتخب کر سکتے ہیں۔ randos آپ کو ایک ایسے شخص سے ملاता ہے جو آپ کے لیے مناسب ہو، تاکہ آپ دونوں مختصر وقت کے لیے بات چیت کر سکیں، اور پھر یہ آپ کے درمیان کی بات چیت میں کوئی مداخلت نہیں کرتا۔",
       "back_translation": "You can choose the language in which you want to speak and the language in which you want to listen. Randos connects you with someone suitable for you, allowing both of you to have a brief conversation, after which it refrains from interfering in your conversation.",
       "checks": {
         "placeholders": {
@@ -98189,7 +98193,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "رینڈوس ایک ایسا پلیٹ فارم ہے جہاں آپ نام ظاہر کیے بغیر، صرف آڈیو کے ذریعے مختلف زبانوں میں بات چیت کر سکتے ہیں۔",
+      "text": "randos ایک ایسا پلیٹ فارم ہے جہاں آپ نام ظاہر کیے بغیر، صرف آڈیو کے ذریعے مختلف زبانوں میں بات چیت کر سکتے ہیں۔",
       "back_translation": "Randos is a platform where you can communicate in various languages solely through audio, without revealing your identity.",
       "checks": {
         "placeholders": {
@@ -98234,8 +98238,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Good meaning and tone, minor stiffness in phrasing",
+          "context": "",
+          "by": "qwen"
         }
       }
     },
@@ -98245,7 +98251,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "رینڈوس ایک مفت اور اوپن سورس سافٹ ویئر ہے (اے جی پی ایل-3.0 لائسنس کے تحت)، اور یہ عوام کے سامنے تمام تر عمل کے ساتھ تیار کیا گیا ہے۔",
+      "text": "randos ایک مفت اور اوپن سورس سافٹ ویئر ہے (اے جی پی ایل-3.0 لائسنس کے تحت)، اور یہ عوام کے سامنے تمام تر عمل کے ساتھ تیار کیا گیا ہے۔",
       "back_translation": "Randos is a free and open-source software (under the AGPL-3.0 license), and its development process has been entirely transparent and open to the public.",
       "checks": {
         "placeholders": {
@@ -99759,7 +99765,7 @@
       "msgctxt": "connection state",
       "context": "A connection state label.",
       "locale": "ur",
-      "text": "آپ کے بے ترتیب جواب کا انتظار ہے۔\n\n(A more literal, though less common, translation could be: \"آپ کے رینڈو (rando) کے لیے انتظار کر رہے ہیں۔\" However, the first option is more natural and understandable in Urdu.)",
+      "text": "آپ کے بے ترتیب جواب کا انتظار ہے۔\n\n(A more literal, though less common, translation could be: \"آپ کے rando (rando) کے لیے انتظار کر رہے ہیں۔\" However, the first option is more natural and understandable in Urdu.)",
       "back_translation": "I am waiting for your random response.",
       "checks": {
         "placeholders": {
@@ -101951,7 +101957,7 @@
       "msgctxt": null,
       "context": "",
       "locale": "ur",
-      "text": "رینڈوس کا ہر حصہ جو کچھ دیکھتا ہے، ریکارڈ کرتا ہے، اور محفوظ رکھتا ہے، اور اس کے پیچھے موجود ہر دعوے کی ترتیب (یا کنفیگریشن) :",
+      "text": "randos کا ہر حصہ جو کچھ دیکھتا ہے، ریکارڈ کرتا ہے، اور محفوظ رکھتا ہے، اور اس کے پیچھے موجود ہر دعوے کی ترتیب (یا کنفیگریشن) :",
       "back_translation": "Every component of Randos records what it observes, stores the data, and maintains an organized record (or configuration) of all the underlying claims.",
       "checks": {
         "placeholders": {
@@ -124741,7 +124747,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"binilang batay sa\" feels stiff and unnatural for informal tone.\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"binilang batay sa\" feels stiff and unnatural for casual tone.\"}'",
           "context": "",
           "by": "qwen"
         }

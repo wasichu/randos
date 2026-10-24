@@ -87,13 +87,26 @@ def brand_case(text: str) -> str:
 
 # The name written in Arabic letters ("راندو", "الراندوس"): back to the
 # name, which the glossary keeps in Latin letters.
-_ARABIC_BRAND = re.compile(r"(?:ال)?راندو(س)?")
+# The name as models spell it in other scripts (counted in the stored runs,
+# 2026-10-24), each a whole word: the plural ending (group 1) makes it
+# "randos"; a word that goes on (Bengali's possessive "র্যান্ডোর", Hindi's
+# "रैंडम", random) is left alone. Arabic with its article, Urdu's two
+# spellings, Hindi, and Bengali with or without the zero-width joiner.
+_SCRIPT_BRANDS = [
+    re.compile(r"(?:ال)?راندو(س)?(?![\u0600-\u06FF])"),
+    re.compile(r"(?:رانڈو|رینڈو)(س|ز)?(?![\u0600-\u06FF])"),
+    re.compile(r"रैंडो(स)?(?![\u0900-\u097F])"),
+    re.compile(r"(?:র\u200d?্যান্ডো|রান্ডো)(স)?(?![\u0980-\u09FF])"),
+]
 
 
-def arabic_brand(text: str) -> str:
-    """randos/rando transliterated into Arabic script, written back as the
-    name (models do it although the glossary says not to)."""
-    return _ARABIC_BRAND.sub(lambda m: "randos" if m.group(1) else "rando", text)
+def script_brand(text: str) -> str:
+    """randos/rando transliterated into Arabic, Urdu, Hindi or Bengali
+    script, written back as the name (models do it although the glossary
+    says not to)."""
+    for pattern in _SCRIPT_BRANDS:
+        text = pattern.sub(lambda m: "randos" if m.group(1) else "rando", text)
+    return text
 
 
 def ellipsis(source: str, text: str) -> str:
@@ -119,9 +132,9 @@ def placeholders(source: str, text: str) -> str:
 
 def tidy(source: str, text: str) -> str:
     """What every machine translation goes through before the checks:
-    `arabic_brand`, `brand_case`, `ellipsis`, `placeholders`, and NFC (one form for every
+    `script_brand`, `brand_case`, `ellipsis`, `placeholders`, and NFC (one form for every
     letter, so the checks and the .po see the same text)."""
-    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(arabic_brand(text)))))
+    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(script_brand(text)))))
 
 
 # The MLX instruction models: name -> (repo, prompt style). Sizes chosen to

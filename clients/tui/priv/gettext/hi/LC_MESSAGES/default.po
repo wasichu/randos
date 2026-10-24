@@ -303,7 +303,7 @@ msgstr "समय खत्म हो गया है."
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Time is up. You agreed to continue, waiting on your rando…"
-msgstr "समय समाप्त. आपने जारी रखने के लिए सहमति दी है, अपने rando की प्रतीक्षा में…"
+msgstr "समय समाप्त हो गया। आपने अपने rando का इंतज़ार करते हुए आगे जारी रखने पर सहमति दी थी…"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -730,7 +730,7 @@ msgstr "कनेक्ट हो रहा है"
 #, elixir-autogen, elixir-format
 msgctxt "panel title"
 msgid "Find a rando"
-msgstr "ढूंढें rando"
+msgstr "किसी rando को ढूँढें"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -773,6 +773,7 @@ msgstr "बचे हुए समय: %{time}"
 msgid "Join through a link"
 msgstr "लिंक के माध्यम से जुड़ें"
 
+#. The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Paste the link you were sent:"
@@ -786,7 +787,7 @@ msgstr "इसे आप जैसे चाहें उन्हें भे�
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
-msgstr "आपके rando द्वारा लिंक खोले जाने का इंतज़ार कर रहा हूँ…"
+msgstr "आपके rando द्वारा लिंक खोलने की प्रतीक्षा कर रहा हूँ…"
 
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format

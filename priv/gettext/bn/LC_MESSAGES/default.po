@@ -32,12 +32,12 @@ msgstr "আমাদের সম্পর্কে"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "About randos"
-msgstr "randos সম্বন্ধে"
+msgstr "randos সম্পর্কে"
 
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Accept the 18+ acknowledgment before looking for a rando."
-msgstr "rando অনুসন্ধানের পূর্বে ১৮+ স্বীকৃতি গ্রহণ করুন।"
+msgstr "rando খোঁজার আগে, ১৮+ বয়স সম্পর্কিত সম্মতি গ্রহণ করুন।"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -173,7 +173,7 @@ msgstr "কিছু ভুল হয়েছে!"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Starting call with rando."
-msgstr "rando দিয়ে কল শুরু করা হচ্ছে।"
+msgstr "\"rando\"-এর সাথে কথোপকথন শুরু করা হলো।"
 
 #. A button: stop searching for someone to talk to (not "stop watching").
 #: lib/randos_web/components/home_components.ex
@@ -214,7 +214,7 @@ msgstr "ইন্টারফেসটিকে ইচ্ছাকৃতভা�
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media."
-msgstr "এখানে কোনো অ্যাকাউন্ট, প্রোফাইল, পরিচিতি, অনুসারী, ফিড, ধারাবাহিকতা, স্কোর অথবা স্থায়ী সামাজিক নেটওয়ার্ক নেই। randos, সামাজিক মাধ্যম-এর চেয়ে বরং একটি কথোপকথনমূলক পরিকাঠামোর কাছাকাছি।"
+msgstr "এখানে কোনো অ্যাকাউন্ট, প্রোফাইল, কন্টাক্ট, ফলোয়ার, ফিড, স্ট্রিক, স্কোর বা স্থায়ী সোশ্যাল গ্রাফ নেই। randos সোশ্যাল মিডিয়ার চেয়ে কথোপকথনমূলক অবকাঠামোর কাছাকাছি।"
 
 #. Your status when the call's time has run out and both people choose whether to go on.
 #: lib/randos_web/components/home_components.ex
@@ -256,7 +256,7 @@ msgstr "তুমি"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
-msgstr "আপনি যে ভাষায় কথা বলতে চান এবং যে ভাষায় শুনতে চান সেটা বেছে নিন। randos আপনাকে সংক্ষিপ্ত কথোপকথনের জন্য উপযুক্ত কারো সাথে জুড়ে দেবে, তারপর পথ থেকে সরে যাবে।"
+msgstr "আপনি যে ভাষা কথা বলতে চান এবং যে ভাষা শুনতে চান, সেটি নির্বাচন করুন। \"randos\" আপনাকে একটি সংক্ষিপ্ত কথোপকথনের জন্য উপযুক্ত কারো সাথে যুক্ত করে, এবং তারপর সেখান থেকে সরে যায়।"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -282,12 +282,12 @@ msgstr "ক্রসটক"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is a place for anonymous, audio-only language conversation."
-msgstr "randos নামহীন, কেবল অডিও ভাষার কথোপকথনের জন্য একটি স্থান।"
+msgstr "randos একটি এমন প্ল্যাটফর্ম যেখানে ব্যবহারকারীরা বেনামে শুধুমাত্র অডিওর মাধ্যমে বিভিন্ন ভাষায় কথোপকথন করতে পারেন।"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is free software (AGPL-3.0) and built in public."
-msgstr "randos হলো ফ্রি সফটওয়্যার (AGPL-3.0) এবং এটি পাবলিকভাবে তৈরি করা হয়েছে।"
+msgstr "randos একটি বিনামূল্যে সফটওয়্যার (AGPL-3.0), যা সর্বসাধারণের জন্য উন্মুক্তভাবে তৈরি করা হয়েছে।"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -456,7 +456,7 @@ msgstr "আমি শুনতে খুশি"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
-msgstr "একজন rando খুঁজছি যে %{hearing_languages} কথা বলে এবং %{speaking_language} শুনতে চায়।"
+msgstr "%{hearing_languages} ভাষা বলতে পারে এবং %{speaking_language} ভাষা শুনতে চায় এমন একজন rando খুঁজছি।"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -660,7 +660,7 @@ msgstr "এই সার্ভারটি যে কমান্ড চাল�
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
-msgstr "randos এর প্রতিটি অংশ কি দেখে, লগ করে এবং রাখে, প্রতিটি দাবির পিছনে কনফিগারেশন সহ:"
+msgstr "randos-এর প্রতিটি অংশ কী দেখে, কী নথিভুক্ত করে এবং কী সংরক্ষণ করে, এবং প্রতিটি দাবির পেছনের কনফিগারেশন কী - এই বিষয়গুলো:"
 
 #. Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/live/about_live.ex
@@ -845,7 +845,7 @@ msgstr "মাইক্রোফোন ব্যবহারের অনুম�
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "A one-to-one audio call, like any other on randos, with the person who sent you the link."
-msgstr "যে ব্যক্তি আপনাকে লিঙ্কটি পাঠিয়েছেন, তার সাথে randos-এ অন্য যে কোনো ব্যক্তির মত এক-থেকে-এক অডিও কল।"
+msgstr "\"randos\"-এর অন্যান্য কলের মতোই, এটি একটি ব্যক্তিগত অডিও কল, যা আপনি সেই ব্যক্তির সাথে করবেন যিনি আপনাকে লিঙ্কটি পাঠিয়েছেন।"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -877,7 +877,7 @@ msgstr "কেউ একজন আপনাকে একটি কল- এ আ�
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
-msgstr "লিঙ্কটি খুলতে আপনার rando-এর অপেক্ষায়…"
+msgstr "আপনার rando লিঙ্কটি খোলার জন্য অপেক্ষা করছি…"
 
 #. Button: withdraw the invitation link, so it stops working.
 #: lib/randos_web/components/home_components.ex
@@ -908,7 +908,7 @@ msgstr "কলে যোগ দিন"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "For your rando to open it."
-msgstr "তোমার rando এর জন্য এটা খুলতে হবে।"
+msgstr "আপনার rando যাতে এটি খুলতে পারে।"
 
 #. Your status: making a private link for someone you know.
 #: lib/randos_web/components/home_components.ex

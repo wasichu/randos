@@ -773,10 +773,11 @@ msgstr "남은 시간: %{time}"
 msgid "Join through a link"
 msgstr "링크를 통해 참여하기"
 
+#. The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Paste the link you were sent:"
-msgstr "받으신 링크를 여기에 붙여넣으세요."
+msgstr "받으신 링크를 붙여넣으세요:"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format

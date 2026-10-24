@@ -36,8 +36,8 @@
     "msgstr": "एक भाषा युग्म (language pair) तब प्रदर्शित होता है जब उसमें कम से कम %{min} बार कॉल (calls) हुए हों; इससे कम संख्या वाले युग्मों को “अन्य” श्रेणी में गिना जाता है।"
   },
   "A one-to-one audio call, like any other on randos, with the person who sent you the link.": {
-    "model": "madlad-400",
-    "msgstr": "एक-से-एक ऑडियो कॉल, randos पर किसी अन्य की तरह, उस व्यक्ति के साथ जिन्होंने आपको लिंक भेजा है."
+    "model": "translategemma-12b",
+    "msgstr": "यह एक व्यक्तिगत ऑडियो कॉल है, जो \"randos\" पर किसी अन्य कॉल की तरह ही है, और यह उस व्यक्ति के साथ होगा जिसने आपको लिंक भेजा है।"
   },
   "About": {
     "model": "hy-mt2",
@@ -48,8 +48,8 @@
     "msgstr": "randos के बारे में"
   },
   "Accept the 18+ acknowledgment before looking for a rando.": {
-    "model": "madlad-400",
-    "msgstr": "एक rando के लिए देखने से पहले 18+ स्वीकृति स्वीकारें."
+    "model": "hy-mt2",
+    "msgstr": "किसी rando की तलाश करने से पहले 18+ संबंधी स्वीकृति को स्वीकार करें।"
   },
   "Attempting to reconnect": {
     "model": "m2m100",
@@ -164,16 +164,20 @@
     "msgstr": "एक वाक्यांश खोजें, अंग्रेजी में या %{language}"
   },
   "Finding a compatible rando.": {
-    "model": "madlad-400",
-    "msgstr": "एक संगत rando ढूंढा जा रहा है."
+    "model": "hy-mt2",
+    "msgstr": "एक संगत rando ढूँढना।"
   },
   "Finding a rando": {
-    "model": "opus-mt",
-    "msgstr": "एक rando प्राप्त करें"
+    "model": "hy-mt2",
+    "msgstr": "किसी rando को ढूँढना"
   },
   "Finished": {
     "model": "m2m100",
     "msgstr": "समाप्त"
+  },
+  "For your rando to open it.": {
+    "model": "hy-mt2",
+    "msgstr": "ताकि आपका rando इसे खोल सके।"
   },
   "Help fix a translation": {
     "model": "madlad-400",
@@ -244,8 +248,8 @@
     "msgstr": "देखा जा रहा है"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
-    "model": "madlad-400",
-    "msgstr": "एक rando की तलाश में जो %{hearing_languages} बोलता है और %{speaking_language} सुनना चाहता है."
+    "model": "hy-mt2",
+    "msgstr": "ऐसे rando की तलाश है जो %{hearing_languages} भाषाएँ बोल सके एवं %{speaking_language} सुनना चाहे।"
   },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "hy-mt2",
@@ -408,8 +412,8 @@
     "msgstr": "इस साइट के अनुवाद मशीन द्वारा किए गए हैं, एवं अभी तक इनकी किसी व्यक्ति द्वारा समीक्षा नहीं की गई है। यदि आपकी भाषा में कुछ गलत लगे, तो कृपया इसे सुधारने में मदद करें: उस पाठ को ढूँढें, बताएँ कि वह कैसे होना चाहिए, और बाकी का काम हम कर देंगे।"
   },
   "There are no accounts, profiles, contacts, followers, feeds, streaks, scores, or permanent social graph. randos is closer to conversational infrastructure than social media.": {
-    "model": "m2m100",
-    "msgstr": "कोई खाता, प्रोफ़ाइल, संपर्क, अनुयायियों, फीड, रेखाओं, स्कोर, या स्थायी सामाजिक चार्ट नहीं है. randos सोशल मीडिया की तुलना में बातचीत के लिए बुनियादी ढांचे के करीब है."
+    "model": "hy-mt2",
+    "msgstr": "यहाँ कोई खाते, प्रोफाइल, संपर्क, फॉलोअर्स, फीड, स्ट्रीक्स, स्कोर या स्थायी सोशल ग्राफ नहीं है। ‘randos’ सोशल मीडिया की तुलना में बातचीत हेतु उपयोग में आने वाले ढाँचे के अधिक करीब है।"
   },
   "This link is incomplete.": {
     "model": "hy-mt2",
@@ -456,8 +460,8 @@
     "msgstr": "इंतजार"
   },
   "Waiting for your rando to open the link…": {
-    "model": "hy-mt2",
-    "msgstr": "आपके rando द्वारा लिंक खोले जाने का इंतज़ार कर रहा हूँ…"
+    "model": "translategemma-4b",
+    "msgstr": "आपके rando द्वारा लिंक खोलने की प्रतीक्षा कर रहा हूँ…"
   },
   "We can't find the internet": {
     "model": "madlad-400",
@@ -472,8 +476,8 @@
     "msgstr": "हम लोगों की गिनती नहीं करते, केवल कॉल की गिनती करते हैं: कोई पता नहीं, कोई पहचान पत्र नहीं, किसी के बारे में कोई जानकारी नहीं; केवल इन कुल संख्याओं का रिकॉर्ड रखा जाता है।"
   },
   "What each part of randos sees, logs, and keeps, with the configuration behind every claim:": {
-    "model": "madlad-400",
-    "msgstr": "randos का प्रत्येक भाग क्या देखता है, लॉग करता है, और रखता है, प्रत्येक दावा के पीछे विन्यास के साथ:"
+    "model": "translategemma-27b",
+    "msgstr": "randos के प्रत्येक भाग द्वारा देखी गई, रिकॉर्ड की गई और संग्रहीत की जाने वाली जानकारी, साथ ही प्रत्येक दावे के पीछे की कॉन्फ़िगरेशन व्यवस्था:।"
   },
   "Whether calls can connect right now, and how today is going.": {
     "model": "hy-mt2",
@@ -484,12 +488,12 @@
     "msgstr": "आप"
   },
   "You agreed to continue, waiting on your rando…": {
-    "model": "madlad-400",
-    "msgstr": "आपने जारी रखने के लिए सहमति दी है, अपने rando की प्रतीक्षा में…"
+    "model": "hy-mt2",
+    "msgstr": "आपने बात जारी रखने पर सहमति दी है, अपने rando का इंतज़ार करते हुए…"
   },
   "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way.": {
-    "model": "madlad-400",
-    "msgstr": "आप वह भाषा चुनते हैं जो आप बोलना चाहते हैं और वह भाषा जो आप सुनना चाहते हैं. randos आपको एक छोटी बातचीत के लिए किसी उपयुक्त व्यक्ति के साथ जोड़ता है, फिर रास्ते से बाहर हो जाता है."
+    "model": "hy-mt2",
+    "msgstr": "आप वह भाषा चुनते हैं जिसमें आप बोलना चाहते हैं, एवं वह भाषा जिसमें आप सुनना चाहते हैं। randos आपको किसी ऐसे व्यक्ति से जोड़ता है जो आपके लिए उपयुक्त हो, ताकि आप थोड़ी बातचीत कर सकें, फिर वह वहाँ से चला जाता है।"
   },
   "You have matched. Audio starts when the call opens.": {
     "model": "opus-mt",
@@ -508,12 +512,12 @@
     "msgstr": "आपका लिंक पहले से ही समाप्त हो चुका था, इससे पहले कि कोई भी इसका उपयोग कर सके।"
   },
   "Your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "आपका rando"
   },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
-    "model": "opus-mt",
-    "msgstr": "आपका rando कनेक्शन टूट गया है, वे वापस आने के लिए कुछ सेकंड इंतज़ार कर रहे हैं."
+    "model": "translategemma-12b",
+    "msgstr": "आपके \"rando\" का कनेक्शन टूट गया है; वे वापस जुड़ने के लिए कुछ सेकंड का इंतज़ार कर रहे हैं।"
   },
   "asking for microphone access": {
     "model": "translategemma-4b",
@@ -536,8 +540,8 @@
     "msgstr": "समाप्त"
   },
   "button\u0004Find a rando": {
-    "model": "opus-mt",
-    "msgstr": "ढूंढें rando"
+    "model": "hy-mt2",
+    "msgstr": "किसी rando को ढूँढें"
   },
   "button\u0004Invite someone": {
     "model": "madlad-400",
@@ -552,7 +556,7 @@
     "msgstr": "म्यूट करें"
   },
   "button\u0004Next rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "अगला rando"
   },
   "button\u0004Unmute": {
@@ -652,12 +656,12 @@
     "msgstr": "गोपनीयता"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
-    "model": "m2m100",
-    "msgstr": "randos अनाम, ऑडियो-केवल भाषा वार्तालाप के लिए एक जगह है।"
+    "model": "translategemma-12b",
+    "msgstr": "\"randos\" एक ऐसा मंच है जहाँ गुमनाम रूप से, केवल ऑडियो के माध्यम से भाषा की बातचीत की जा सकती है।"
   },
   "randos is free software (AGPL-3.0) and built in public.": {
-    "model": "m2m100",
-    "msgstr": "randos मुक्त सॉफ्टवेयर (AGPL-3.0) है और सार्वजनिक रूप से बनाया गया है।"
+    "model": "hy-mt2",
+    "msgstr": "randos एक मुफ्त सॉफ्टवेयर (AGPL-3.0) है एवं इसे सार्वजनिक रूप से विकसित किया गया है।"
   },
   "refused": {
     "model": "madlad-400",

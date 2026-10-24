@@ -35,12 +35,12 @@
         "seconds": 60.8
       },
       "judge": {
-        "at": "20261024T123601Z",
-        "seconds": 694.5
+        "at": "20261024T142612Z",
+        "seconds": 697.0
       },
       "judge_qwen": {
-        "at": "20261024T123812Z",
-        "seconds": 256.8
+        "at": "20261024T142659Z",
+        "seconds": 260.4
       }
     },
     "appended": [
@@ -89838,7 +89838,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"동의했으며\" feels awkward; could be smoother\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"동의했으며\" feels awkward; \"rando\" should be capitalized\"}'",
           "context": "",
           "by": "qwen"
         }
@@ -130672,7 +130672,7 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 5, \"reason\": \"Incorrect use of \\'گزشتہ\\' (past), should be \\'سے زائد\\' or \\'پار\\'}'",
+          "error": "unparsed reply: '{\"score\": 5, \"reason\": \"Incorrect use of \\'گزشتہ\\' (past), should be \\'سے زیادہ\\' or \\'پار\\'}'",
           "context": "\nWhere it appears: A count's label: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
           "by": "qwen"
         }
@@ -137051,8 +137051,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Natural but slightly stiff; \\'unmute\\' is better as \\'آواز دو\"'",
+          "score": 6,
+          "reason": "Slightly stiff; 'unmute' is better as 'آواز دوبارہ آن کریں'",
           "context": "\nWhere it appears: A key label.\n",
           "by": "qwen"
         }
@@ -164579,8 +164579,10 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Natural, calm, and informal; perfect for the context and tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
         }
       }
     },
@@ -170463,12 +170465,16 @@
           "score": 0.8964
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, but meaning clear",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 8,
+          "reason": "Natural and clear, slightly formal tone, could be more casual",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
         }
       }
     },
@@ -174006,14 +174012,14 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Natural, correct, and matches the friendly tone.",
-          "context": "",
+          "reason": "Perfectly natural, keeps meaning and tone.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm, and informal tone; accurate and idiomatic.",
-          "context": "",
+          "score": 8,
+          "reason": "Natural and clear, slightly formal tone, could be more casual",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
           "by": "qwen"
         }
       }
@@ -175169,12 +175175,16 @@
           "score": 0.8571
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly formal, 'einfügen' is correct but 'erhalten' is stiff",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slightly stiff; 'erhalten haben' feels formal; 'den Link einfügen' would sound more natural and casual.",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
+          "by": "qwen"
         }
       }
     },
@@ -184743,8 +184753,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"پیوند کاملی\" sounds unnatural\"}'",
+          "score": 6,
+          "reason": "Slightly awkward phrasing, less natural than needed",
           "context": "",
           "by": "qwen"
         }
@@ -185720,8 +185730,8 @@
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and clear, slightly formal tone, could be more casual",
-          "context": "",
+          "reason": "Natural and accurate, slightly formal tone",
+          "context": "\nWhere it appears: The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you.\n",
           "by": "qwen"
         }
       }

@@ -37,7 +37,7 @@ msgstr "randos کے بارے میں"
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Accept the 18+ acknowledgment before looking for a rando."
-msgstr ""
+msgstr "کسی rando کو تلاش کرنے سے پہلے 18+ کی شرط کو قبول کریں۔"
 
 #: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
@@ -100,12 +100,12 @@ msgstr "ڈیفالٹ کے مطابق عارضی"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Finding a compatible rando."
-msgstr "ملتا جلتا rando تلاش کر رہا ہے."
+msgstr "ایک مطابقت رکھنے والا rando تلاش کرنا۔"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Finding a rando"
-msgstr "rando تلاش کررہا ہے"
+msgstr "کسی rando کو تلاش کرنا"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -282,12 +282,12 @@ msgstr "کراس ٹاک"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is a place for anonymous, audio-only language conversation."
-msgstr "randos نام نہاد، صرف آڈیو زبان گفتگو کے لیے جگہ ہے۔"
+msgstr "randos ایک ایسا پلیٹ فارم ہے جہاں آپ نام ظاہر کیے بغیر، صرف آڈیو کے ذریعے مختلف زبانوں میں بات چیت کر سکتے ہیں۔"
 
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "randos is free software (AGPL-3.0) and built in public."
-msgstr "randos مفت سافٹ ویئر (AGPL-3.0) ہے اور عوامی طور پر بنایا گیا ہے."
+msgstr "randos ایک مفت سافٹ ویئر (AGPL-3.0) ہے، جو عوام کے لیے مفت میں تیار کیا گیا ہے۔"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -456,7 +456,7 @@ msgstr "میں سن کر خوش ہوں"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
-msgstr "rando کی تلاش کررہا ہے جو %{hearing_languages} بولتا ہے اور %{speaking_language} سننا چاہتا ہے۔"
+msgstr "ایسے rando کی تلاش ہے جو %{hearing_languages} زبانیں بول سکے اور %{speaking_language} سننا چاہے۔"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -660,7 +660,7 @@ msgstr "یہ سرور کس پر کام کر رہا ہے؟"
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
 msgid "What each part of randos sees, logs, and keeps, with the configuration behind every claim:"
-msgstr "randos کا ہر حصہ دیکھتا ہے، لاگ کرتا ہے، اور رکھتا ہے، ہر دعوی کے پیچھے کی تشکیل کے ساتھ:"
+msgstr "randos کے ہر حصے کی جانب سے کیا دیکھا جاتا ہے، کیا ریکارڈ کیا جاتا ہے اور کیا محفوظ کیا جاتا ہے، اور ہر دعویٰ کے پیچھے موجود ترتیبات:"
 
 #. Link text, inside a sentence: the page on what randos sees, logs and keeps (privacy).
 #: lib/randos_web/live/about_live.ex
@@ -671,7 +671,7 @@ msgstr "رازداری"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Your rando's connection dropped; waiting a few seconds for them to come back."
-msgstr "آپ کا rando کا اتصال ٹوٹا؛ انکے واپس آنے کے لیے چند سیکنڈ کا انتظار کر رہے ہیں."
+msgstr "آپ کے rando کا کنکشن ٹوٹ گیا ہے؛ ان کے دوبارہ کنکٹ ہونے کے لیے چند سیکنڈ کا انتظار کریں۔"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -761,7 +761,7 @@ msgstr "آڈیو کے ساتھ دوبارہ رابطہ قائم کرنا…"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "You agreed to continue, waiting on your rando…"
-msgstr "آپ جاری رکھنے کے لیے متفق ہوئے، آپ کے rando کے منتظر…"
+msgstr "آپ نے بات جاری رکھنے پر رضامندی ظاہر کی، اپنے rando کا انتظار کرتے ہوئے…"
 
 #. A call's typical length, at the longest a call can run; the "+" already says "or more", so don't add words for it (min = minutes).
 #: lib/randos_web/live/status_live.ex
@@ -877,7 +877,7 @@ msgstr "کسی نے آپ کو ایک کال کے لئے مدعو کیا"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
-msgstr "rando آپ کے لنک کو کھولنے کے لئے انتظار کر رہے ہیں …"
+msgstr "آپ کے rando کے لنک کھولنے کا انتظار کر رہا ہوں…"
 
 #. Button: withdraw the invitation link, so it stops working.
 #: lib/randos_web/components/home_components.ex
@@ -908,7 +908,7 @@ msgstr "کال میں شامل ہوں"
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "For your rando to open it."
-msgstr ""
+msgstr "تاکہ آپ کا rando اسے کھول سکے۔"
 
 #. Your status: making a private link for someone you know.
 #: lib/randos_web/components/home_components.ex

@@ -97,8 +97,8 @@ renamed `results/shootout-<model>.json`, and `run --append` extends one):
   mean chrF.
 
 Every contestant's output goes through `models.tidy` first:
-`arabic_brand` writes the name back where a model spelled it in Arabic
-letters ("راندو"), `brand_case` lowercases "randos"/"rando" wherever a model capitalized it
+`script_brand` writes the name back where a model spelled it in Arabic,
+Urdu, Hindi or Bengali letters ("راندو", "رانڈو", "रैंडो", "র্যান্ডো"), `brand_case` lowercases "randos"/"rando" wherever a model capitalized it
 ("Randos est…", "Randoslar"), `ellipsis` turns "..." back into the
 source's "…", `placeholders` writes "٪{minutes}" (a look-alike percent
 sign) back as "%{minutes}", and NFC gives every letter one form. `cli tidy` applies it
