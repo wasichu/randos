@@ -33,6 +33,13 @@ endpoint_config =
     http: [ip: {0, 0, 0, 0}, port: String.to_integer(System.get_env("PORT") || "4000")]
   ] ++
     dev_https ++
+    # Links the server builds (invitations) name this host when PHX_HOST is
+    # set, as in production; `just screenshots` sets it so the README shows
+    # the real address, not the throwaway server's.
+    if(System.get_env("PHX_HOST"),
+      do: [url: [host: System.get_env("PHX_HOST"), port: 443, scheme: "https"]],
+      else: []
+    ) ++
     [
       check_origin: false,
       code_reloader: true,

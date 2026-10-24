@@ -255,7 +255,7 @@ tui-release:
 screenshots:
     cargo build --quiet -p randos_media
     cd clients/tui && mix compile
-    BASE_URL=http://localhost:4010 RANDOS_CALL_SEGMENT_MS=600000 test/e2e/with_test_server.sh tmp/screenshots-server.log node tools/screenshots/screenshots.mjs
+    PHX_HOST=randos.slowinput.org BASE_URL=http://localhost:4010 RANDOS_CALL_SEGMENT_MS=600000 test/e2e/with_test_server.sh tmp/screenshots-server.log node tools/screenshots/screenshots.mjs
 
 # Running models: tools/translate/README.md. In its own environment,
 # .venv-test: syncing the shared .venv would remove a running model's
