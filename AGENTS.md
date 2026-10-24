@@ -40,6 +40,10 @@ are product requirements, not suggestions. Don't add features that violate them.
     hides failures. CI (`.github/workflows/ci.yml`) runs it on macOS and Linux
     with `RANDOS_REQUIRE_NATIVE=1`, plus `just smoke` and `just tui-smoke`;
     inspect runs with `gh run list` / `gh run view --log-failed`.
+    Dependabot (`.github/dependabot.yml`) opens grouped update PRs (weekly;
+    the Python harnesses monthly), and `dependency-check.yml` runs
+    `cargo deny check advisories` and `mix hex.audit` every Monday, so an
+    advisory surfaces without a push.
   - `just smoke` — the browser end-to-end checks: `call_smoke.mjs` (two
     headless Chromes with fake mics place a real WebRTC call, extend it, drop
     and resume a socket, check mic teardown), `relay_only_smoke.mjs`,

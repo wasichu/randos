@@ -1,0 +1,35 @@
+# Dependency update PRs (GitHub's own Dependabot; nothing outside GitHub
+# sees the code). Grouped, one PR per ecosystem and directory, so updates
+# arrive as a few reviewable PRs that CI checks like any other. Security
+# advisories still come one at a time, as soon as GitHub knows of them
+# (repository settings: Dependabot security updates).
+version: 2
+updates:
+  - package-ecosystem: mix
+    directory: /
+    schedule: {interval: weekly, day: monday}
+    groups: {mix: {patterns: ["*"]}}
+  - package-ecosystem: mix
+    directory: /clients/tui
+    schedule: {interval: weekly, day: monday}
+    groups: {tui-mix: {patterns: ["*"]}}
+  # The workspace: the TUI's media helper and the voice crate. Vendored
+  # crates (vendor/) are patched copies, updated by hand (vendor/README.md).
+  - package-ecosystem: cargo
+    directory: /
+    schedule: {interval: weekly, day: monday}
+    groups: {cargo: {patterns: ["*"]}}
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: {interval: weekly, day: monday}
+    groups: {actions: {patterns: ["*"]}}
+  # The Python harnesses: monthly, since a model library's update can change
+  # translations or benchmark numbers (rerun them after merging one).
+  - package-ecosystem: uv
+    directory: /tools/translate
+    schedule: {interval: monthly}
+    groups: {translate: {patterns: ["*"]}}
+  - package-ecosystem: uv
+    directory: /tools/voice-eval
+    schedule: {interval: monthly}
+    groups: {voice-eval: {patterns: ["*"]}}

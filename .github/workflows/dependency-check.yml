@@ -1,0 +1,35 @@
+# Weekly: known advisories against what's locked, even when nobody pushes
+# (CI only checks on a push). cargo deny reads the Rust advisory database
+# (with clients/tui/native/deny.toml's ignores); mix hex.audit lists Hex
+# packages their authors retired. A failed scheduled run emails the
+# repository's owner. Fixes usually arrive as Dependabot PRs
+# (.github/dependabot.yml).
+name: Dependency check
+
+on:
+  schedule:
+    - cron: "41 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  advisories:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: jdx/mise-action@v5
+        with:
+          install_args: erlang elixir rust cargo-deny
+
+      - name: Rust advisories (cargo deny)
+        run: cd clients/tui/native && cargo deny --log-level error check advisories
+
+      - name: Retired Hex packages (server and TUI)
+        run: |
+          mix local.hex --force --if-missing
+          mix deps.get
+          mix hex.audit
+          (cd clients/tui && mix deps.get && mix hex.audit)
