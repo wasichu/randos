@@ -9,25 +9,25 @@ requires-python = "==3.13.*"
 # transformers needs.
 dependencies = [
     "polib==1.2.0",
-    "sacrebleu==2.5.1",
+    "sacrebleu==2.6.0",
 ]
 
 [dependency-groups]
-dev = ["pytest==8.4.2", "ruff==0.12.12"]
+dev = ["pytest==9.1.1", "ruff==0.17.1"]
 # Running models (`uv sync --group models`): Opus-MT, M2M100, MADLAD-400 and
 # the MetricX-24 scorer, through transformers on Apple's GPU (MPS).
 models = [
-    "torch==2.8.0",
+    "torch==2.14.1",
     "transformers==4.56.2",
-    "sentencepiece==0.2.1",
-    "sacremoses==0.1.1",
+    "sentencepiece==0.2.2",
+    "sacremoses==0.2.0",
 ]
 # The MLX models (`--group mlx`): Hy-MT2, TranslateGemma, and the tone
 # judges (Mistral Small 3.2, Qwen3 30B-A3B), through mlx-lm on Apple's GPU.
 mlx = ["mlx-lm==0.32.2"]
 # The COMET-Kiwi scorer (`--group comet`): Unbabel's package and its own
 # PyTorch Lightning stack, kept apart from the rest.
-comet = ["unbabel-comet==2.2.7", "setuptools==80.9.0"]
+comet = ["unbabel-comet==2.2.7", "setuptools==84.2.1"]
 
 [tool.uv]
 package = false
