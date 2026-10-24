@@ -6,6 +6,7 @@ defmodule RandosWeb.HomeLiveTest do
   import Phoenix.LiveViewTest
 
   alias Randos.Calls.CallCoordinator
+  alias Randos.Matchmaking.Matchmaker
 
   test "serves the home page on the initial HTTP request", %{conn: conn} do
     html = conn |> get(~p"/") |> html_response(200)
@@ -481,7 +482,7 @@ defmodule RandosWeb.HomeLiveTest do
       on_exit(fn -> Process.exit(other, :kill) end)
 
       assert {:matched, match} =
-               Randos.Matchmaking.Matchmaker.accept(token, %{
+               Matchmaker.accept(token, %{
                  id: "anon-other",
                  pid: other,
                  topic: "participant:anon-other",

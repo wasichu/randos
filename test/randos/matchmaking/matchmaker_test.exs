@@ -1,6 +1,7 @@
 defmodule Randos.Matchmaking.MatchmakerTest do
   use ExUnit.Case, async: true
 
+  alias Randos.Matchmaking.Entry
   alias Randos.Matchmaking.Match
   alias Randos.Matchmaking.Matchmaker
 
@@ -470,7 +471,7 @@ defmodule Randos.Matchmaking.MatchmakerTest do
       {:invited, token, _} = invite(matchmaker, waiting_pid(), ["de", "ja"])
       {:matched, match} = Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
       assert match.participant_b.speaks_language == "de"
-      assert Randos.Matchmaking.Entry.speaks_any(match.participant_b) == ["de", "ja"]
+      assert Entry.speaks_any(match.participant_b) == ["de", "ja"]
     end
 
     test "a link works once", %{matchmaker: matchmaker} do

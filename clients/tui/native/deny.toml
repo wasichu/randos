@@ -1,6 +1,13 @@
 # cargo deny check: advisories, licenses, duplicate crates, sources.
 [advisories]
 yanked = "deny"
+# RUSTSEC-2026-0387 (2026-10-24): timing side channels in crypto-bigint
+# 0.5.5, reached through str0m's DTLS crypto (p256/p384/ecdsa 0.13). The
+# fix (0.7.6) needs the 0.14 elliptic-curve crates, which no str0m release
+# uses yet (0.24.1). Exposure: one ephemeral DTLS handshake per call,
+# exploitable only by precise timing of it. Ignored by the owner's call
+# until str0m moves; drop this when it does (refactor_plan.md, Open items).
+ignore = [{ id = "RUSTSEC-2026-0387", reason = "fix needs str0m on elliptic-curve 0.14; no release yet" }]
 
 [licenses]
 # Dependencies: permissive only (no GPL/LGPL from others in what we ship).

@@ -778,6 +778,12 @@ Not scheduled; pick up when relevant.
   call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
   clients in the first cut; counted among calls started but not language
   pairs; the button says "Invite someone". Likely before the voice lab.
+- **RUSTSEC-2026-0387 ignored (2026-10-24, the owner's call).**
+  crypto-bigint 0.5.5's timing side channels reach the helper through
+  str0m's DTLS crypto (p256/p384/ecdsa 0.13); the fix needs str0m on the
+  0.14 elliptic-curve crates, and its latest release (0.24.1) isn't.
+  `clients/tui/native/deny.toml` ignores it; drop the ignore and update
+  str0m when a release moves.
 - **Translating the TUI (done 2026-10-23).** Every string in gettext
   (`Tui.Gettext`), the language from the environment or `l` (saved),
   right to left checked by eye in Terminal.app (which reorders) and Ghostty
