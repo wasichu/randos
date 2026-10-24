@@ -15,8 +15,9 @@ from .runs import note_scored, write_atomically
 
 def judge(paths: list[Path], redo: bool, judges: list[str] | None, cache_path: Path) -> dict[str, int]:
     """The tone judges over every run at once, since what a judge must see
-    depends on all the models' translations of a string: only the ones
-    passing every check, of strings still in the template, and of those
+    depends on all the models' translations of a string: its candidates
+    (`review.candidates`: those passing every check, or the stop-stripped
+    fallback; a lone one too), of strings still in the template, and of those
     only the finalists (`review.to_judge`), in rounds until no string needs
     more. Each locale has its judges (`scoring.judges_for`), each filling
     its own score and choosing its own finalists; one is loaded at a time,

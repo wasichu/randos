@@ -294,7 +294,9 @@ translate-test:
 translate-update catalog="site":
     #!/usr/bin/env bash
     set -euo pipefail
-    if pgrep -f "[r]andos_translate.cli" >/dev/null; then
+    # A model loading or running (run, score); not review/fill/plan, which
+    # are model-free and safe beside one, nor an editor with cli.py open.
+    if pgrep -f "[r]andos_translate\.cli .*(run|score)" >/dev/null; then
       echo "error: a translation model is already running (see pgrep -fl randos_translate)" >&2
       exit 1
     fi

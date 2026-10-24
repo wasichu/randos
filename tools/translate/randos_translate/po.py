@@ -107,7 +107,6 @@ def _leading_comments(text: str) -> list[str]:
 
 
 def _state_path(locale: str, state_dir: Path) -> Path:
-    state_dir.mkdir(parents=True, exist_ok=True)
     return state_dir / f"{locale}.json"
 
 
@@ -172,5 +171,6 @@ def fill(
         state[key] = {"msgstr": translations[key], "model": model if isinstance(model, str) else model[key]}
 
     _save(po, path)
+    (state_dir or STATE).mkdir(parents=True, exist_ok=True)
     _state_path(locale, state_dir or STATE).write_text(json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     return counts

@@ -85,8 +85,6 @@ def brand_case(text: str) -> str:
     return _BRAND.sub(lambda m: m.group(0).lower(), text)
 
 
-# The name written in Arabic letters ("راندو", "الراندوس"): back to the
-# name, which the glossary keeps in Latin letters.
 # The name as models spell it in other scripts (counted in the stored runs,
 # 2026-10-24), each a whole word (no letter of its script on either side):
 # the plural ending (group 2) makes it "randos"; a word that goes on
@@ -168,8 +166,9 @@ RETIRED = {"translategemma-27b"}
 
 
 def takes_context(name: str) -> bool:
-    """Whether the model reads a string's context (`MLXChat.takes_context`),
-    known without loading it."""
+    """Whether the model reads a string's context (its translator comment):
+    the MLX chat models do. Known without loading it, so `plan` and `run`
+    agree."""
     return name in MLX
 
 

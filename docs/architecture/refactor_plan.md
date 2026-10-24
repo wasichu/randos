@@ -824,7 +824,7 @@ Not scheduled; pick up when relevant.
   right to left checked by eye in Terminal.app (which reorders) and Ghostty
   (where `Tui.Bidi` does); `tui_translation.md` has the plan and the bidi
   spike. Its catalog's first shootout ran six models (TranslateGemma 27B
-  skipped to save hours; it won 8% of the site's picks). A string whose
+  skipped to save hours; it won 7% of the site's picks). A string whose
   every translation fails only on a final full stop the English lacks now
   ships the best one without it (`review._without_final_stops`; three
   strings in Japanese and Korean, none on the site). After changing UI

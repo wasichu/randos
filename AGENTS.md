@@ -140,7 +140,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 venv and `uv run --group X` re-syncs it, so never run one while another
 group's model is running; what needs no model, the tests, `review`,
 `fill` and `tidy`, runs in `.venv-test` with `UV_PROJECT_ENVIRONMENT=.venv-test`,
-which `just translate-test` and so `just precommit` use, safe during a run). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, rebuilt by `UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli review`).
+which `just translate-test` and so `just precommit` use, safe during a run). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, and `results/tui/review.json` for the TUI's strings, rebuilt by `UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli review`).
   The public `/translations` page (`RandosWeb.TranslationsLive`, from
   `RandosWeb.Translations`) lists every string with a "Suggest a fix" link to
   a GitHub issue form; `.github/workflows/translation-fix.yml` turns such an
