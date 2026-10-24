@@ -16,14 +16,22 @@ defmodule Randos.Participant do
         ▲                                                       :extension_pending┘
         └── call ended + stop_after_call? ── (otherwise back to :looking) ◀──┘
 
+  An invitation (`{:invite, prefs}`) waits as `:inviting` instead of
+  `:looking`, with the link's token in `invitation`, until someone accepts
+  it (then it adopts its call as `:looking` does), it's cancelled
+  (`:cancel_invitation`) or it expires (`:invitation_expired`). The other
+  person joins with `{:accept_invitation, token, prefs}`. After an
+  invitation call (`call.match.kind == :invitation`) both go `:idle`, and
+  `:next` does nothing in one.
+
   ## Which calls are mine
 
   A `{:call_updated, call}` is only considered when the participant is in
   `call.match`. Then:
 
     * it updates the current call when `call.pid` is the current `call_pid`;
-    * it is adopted when the participant is `:looking` (the matchmaker paired
-      us while we waited);
+    * it is adopted when the participant is `:looking` or `:inviting` (the
+      matchmaker paired us while we waited);
     * it is declined (`{:hang_up, pid}`) when the participant is `:idle`
       (they cancelled the search just as they were matched);
     * anything else is stale and ignored.
@@ -35,7 +43,7 @@ defmodule Randos.Participant do
   alias Randos.Matchmaking.Match
   alias Randos.Signaling
 
-  @type status :: :idle | :looking | :connecting | :in_call | :extension_pending
+  @type status :: :idle | :looking | :inviting | :connecting | :in_call | :extension_pending
 
   @typedoc """
   What the person asked for: the language they'll speak, and the languages
@@ -59,17 +67,32 @@ defmodule Randos.Participant do
   and only the peer is requeued.
   """
   @type error ::
-          :adult_terms_required | :unsupported_language | :call_start_failed | end_call_reason()
+          :adult_terms_required
+          | :unsupported_language
+          | :call_start_failed
+          | :invitation_invalid
+          | :invitation_expired
+          | :audio_mismatch
+          | end_call_reason()
 
   @type end_call_reason ::
           :microphone_denied | :microphone_not_found | :audio_unavailable | :audio_failed
 
   @type join_result :: Randos.Matchmaking.Matchmaker.join_result()
 
+  @typedoc "An invitation's link token and when it stops working."
+  @type invitation :: %{token: String.t(), expires_at_unix_ms: integer()}
+
   @type event ::
           {:update_preferences, preferences()}
           | {:find, preferences()}
           | :cancel_search
+          | {:invite, preferences()}
+          | :cancel_invitation
+          | :invitation_expired
+          | {:accept_invitation, String.t(), map()}
+          | {:invite_result, Randos.Matchmaking.Matchmaker.invite_result()}
+          | {:accept_result, Randos.Matchmaking.Matchmaker.accept_result()}
           | :end_call
           | {:end_call, end_call_reason()}
           | :next
@@ -83,11 +106,16 @@ defmodule Randos.Participant do
 
   @typedoc """
   Work for the shell. `{:join_queue, attrs}`'s result must be fed back as
-  `{:join_result, result}`; the shell adds its own `pid` to `attrs`.
+  `{:join_result, result}`, `{:invite, attrs}`'s as `{:invite_result, _}`
+  and `{:accept_invitation, token, attrs}`'s as `{:accept_result, _}`; the
+  shell adds its own `pid` to `attrs`.
   """
   @type effect ::
           {:join_queue, map()}
           | :leave_queue
+          | {:invite, map()}
+          | :cancel_invitation
+          | {:accept_invitation, String.t(), map()}
           | {:hang_up, pid()}
           | {:vote, pid(), :continue | :end}
           | {:relay_signal, pid(), String.t(), map()}
@@ -104,6 +132,8 @@ defmodule Randos.Participant do
           call: Call.t() | nil,
           webrtc_role: :offerer | :answerer | nil,
           stop_after_call?: boolean(),
+          invitation: invitation() | nil,
+          call_kind: Match.kind() | nil,
           error: error() | nil
         }
 
@@ -116,6 +146,8 @@ defmodule Randos.Participant do
     :call,
     :webrtc_role,
     :error,
+    :invitation,
+    :call_kind,
     status: :idle,
     stop_after_call?: false
   ]
@@ -154,6 +186,7 @@ defmodule Randos.Participant do
       topic: entry.topic,
       preferences: preferences,
       call_pid: call.pid,
+      call_kind: call.match.kind,
       webrtc_role: Match.webrtc_role(call.match, entry.id)
     }
 
@@ -180,6 +213,45 @@ defmodule Randos.Participant do
 
   def handle(%{status: :looking} = p, :cancel_search), do: {%{p | status: :idle}, [:leave_queue]}
 
+  # Inviting someone instead, or joining through someone's link.
+
+  def handle(%{status: :idle} = p, {:invite, preferences}) do
+    p = %{p | preferences: preferences, error: nil}
+
+    if preferences.adult_acknowledged? do
+      {p, [{:invite, join_attrs(p)}]}
+    else
+      {%{p | error: :adult_terms_required}, []}
+    end
+  end
+
+  def handle(%{status: :inviting} = p, :cancel_invitation),
+    do: {%{p | status: :idle, invitation: nil}, [:cancel_invitation]}
+
+  def handle(%{status: :inviting} = p, :invitation_expired),
+    do: {%{p | status: :idle, invitation: nil, error: :invitation_expired}, []}
+
+  # The joiner names no languages (the creator's decide), only these.
+  def handle(%{status: :idle} = p, {:accept_invitation, token, preferences}) do
+    p = %{p | preferences: Map.merge(p.preferences, preferences), error: nil}
+
+    if p.preferences.adult_acknowledged? do
+      {p, [{:accept_invitation, token, join_attrs(p)}]}
+    else
+      {%{p | error: :adult_terms_required}, []}
+    end
+  end
+
+  def handle(p, {:invite_result, {:invited, token, expires_at}}),
+    do: {%{p | status: :inviting, invitation: %{token: token, expires_at_unix_ms: expires_at}}, []}
+
+  def handle(p, {:invite_result, {:error, :already_queued}}), do: {p, []}
+  def handle(p, {:invite_result, {:error, reason}}), do: {%{p | status: :idle, error: reason}, []}
+
+  def handle(p, {:accept_result, {:matched, _match} = result}), do: {join_result(p, result), []}
+  def handle(p, {:accept_result, {:error, :already_queued}}), do: {p, []}
+  def handle(p, {:accept_result, {:error, reason}}), do: {%{p | status: :idle, error: reason}, []}
+
   def handle(p, {:join_result, result}), do: {join_result(p, result), []}
 
   # Calls, as reported by their coordinator.
@@ -188,7 +260,9 @@ defmodule Randos.Participant do
     cond do
       not Match.member?(call.match, p.id) -> {p, []}
       call.pid == p.call_pid -> update_call(p, call)
-      p.status == :looking and call.status != :ended -> update_call(adopt(p, call), call)
+      p.status in [:looking, :inviting] and call.status != :ended ->
+        update_call(adopt(p, call), call)
+
       p.status == :idle and call.status != :ended -> {p, [{:hang_up, call.pid}]}
       true -> {p, []}
     end
@@ -204,6 +278,8 @@ defmodule Randos.Participant do
       when status in @in_call and reason in @end_call_reasons do
     {%{p | stop_after_call?: true, error: reason}, [{:hang_up, p.call_pid}]}
   end
+
+  def handle(%{call_kind: :invitation} = p, :next), do: {p, []}
 
   def handle(%{status: status} = p, :next) when status in @in_call do
     {%{p | stop_after_call?: false}, [{:hang_up, p.call_pid}]}
@@ -246,6 +322,8 @@ defmodule Randos.Participant do
       | status: :connecting,
         call_pid: match.call_pid,
         call: nil,
+        call_kind: match.kind,
+        invitation: nil,
         webrtc_role: Match.webrtc_role(match, p.id),
         stop_after_call?: false,
         error: nil
@@ -258,16 +336,18 @@ defmodule Randos.Participant do
     %{
       p
       | call_pid: call.pid,
+        call_kind: call.match.kind,
+        invitation: nil,
         webrtc_role: Match.webrtc_role(call.match, p.id),
         stop_after_call?: false,
         error: nil
     }
   end
 
-  defp update_call(p, %Call{status: :ended}) do
-    p = %{p | call_pid: nil, call: nil, webrtc_role: nil}
+  defp update_call(p, %Call{status: :ended} = call) do
+    p = %{p | call_pid: nil, call: nil, call_kind: nil, webrtc_role: nil}
 
-    if p.stop_after_call? do
+    if p.stop_after_call? or call.match.kind == :invitation do
       {%{p | status: :idle, stop_after_call?: false}, []}
     else
       {%{p | status: :looking}, [{:join_queue, join_attrs(p)}]}

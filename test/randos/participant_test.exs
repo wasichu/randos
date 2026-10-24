@@ -32,7 +32,8 @@ defmodule Randos.ParticipantTest do
       id: "match-1",
       participant_a: a,
       participant_b: b,
-      call_pid: Keyword.get(opts, :call_pid, fake_pid())
+      call_pid: Keyword.get(opts, :call_pid, fake_pid()),
+      kind: Keyword.get(opts, :kind, :random)
     }
   end
 
@@ -272,6 +273,79 @@ defmodule Randos.ParticipantTest do
     test "votes outside extension_pending are ignored" do
       {p, _m} = in_call(:active)
       assert {^p, []} = Participant.handle(p, {:vote, :continue})
+    end
+  end
+
+  describe "invitations" do
+    test "invite asks the shell for a link, then waits as inviting with it" do
+      {p, [{:invite, attrs}]} = Participant.handle(participant(), {:invite, @prefs})
+      assert attrs.speaks_language == "en"
+      assert attrs.hears_languages == ["es"]
+
+      {p, []} = Participant.handle(p, {:invite_result, {:invited, "tok", 123}})
+      assert p.status == :inviting
+      assert p.invitation == %{token: "tok", expires_at_unix_ms: 123}
+    end
+
+    test "invite without the 18+ acknowledgment is an error and asks for nothing" do
+      prefs = %{@prefs | adult_acknowledged?: false}
+
+      assert {%{error: :adult_terms_required, status: :idle}, []} =
+               Participant.handle(participant(), {:invite, prefs})
+    end
+
+    test "cancelling withdraws the link; an expired one says so" do
+      p = participant(status: :inviting, invitation: %{token: "tok", expires_at_unix_ms: 1})
+
+      assert {%{status: :idle, invitation: nil}, [:cancel_invitation]} =
+               Participant.handle(p, :cancel_invitation)
+
+      assert {%{status: :idle, invitation: nil, error: :invitation_expired}, []} =
+               Participant.handle(p, :invitation_expired)
+    end
+
+    test "the creator adopts the call the link started, and is idle after it" do
+      p = participant(status: :inviting, invitation: %{token: "tok", expires_at_unix_ms: 1})
+      m = match(p, kind: :invitation)
+      {p, []} = Participant.handle(p, {:call_updated, call(m, :connecting)})
+      assert %{status: :connecting, invitation: nil, call_kind: :invitation} = p
+
+      {p, []} = Participant.handle(p, {:call_updated, call(m, :active)})
+      # No next in an invitation call.
+      assert {^p, []} = Participant.handle(p, :next)
+
+      # The peer hangs up: idle, not back to looking.
+      assert {%{status: :idle}, []} = Participant.handle(p, {:call_updated, call(m, :ended)})
+    end
+
+    test "the joiner accepts with a token, joins the call, and is idle after it" do
+      prefs = %{adult_acknowledged?: true, audio?: true}
+
+      {p, [{:accept_invitation, "tok", attrs}]} =
+        Participant.handle(participant(), {:accept_invitation, "tok", prefs})
+
+      assert attrs.accepted_adult_terms
+
+      m = match(p, kind: :invitation, as: :participant_b)
+      {p, []} = Participant.handle(p, {:accept_result, {:matched, m}})
+      assert %{status: :connecting, webrtc_role: :answerer, call_kind: :invitation} = p
+      assert {^p, []} = Participant.handle(p, :next)
+
+      {p, []} = Participant.handle(p, {:call_updated, call(m, :active)})
+      assert {%{status: :idle}, []} = Participant.handle(p, {:call_updated, call(m, :ended)})
+    end
+
+    test "a link that doesn't work leaves the joiner idle with the reason" do
+      for reason <- [:invitation_invalid, :audio_mismatch, :adult_terms_required] do
+        assert {%{status: :idle, error: ^reason}, []} =
+                 Participant.handle(participant(), {:accept_result, {:error, reason}})
+      end
+    end
+
+    test "inviting and accepting only apply when idle" do
+      looking = participant(status: :looking)
+      assert {^looking, []} = Participant.handle(looking, {:invite, @prefs})
+      assert {^looking, []} = Participant.handle(looking, {:accept_invitation, "t", %{}})
     end
   end
 
