@@ -4,7 +4,7 @@ defmodule Tui.MixProject do
   def project do
     [
       app: :tui,
-      version: "0.6.2",
+      version: "0.7.0",
       elixir: "~> 1.20",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
