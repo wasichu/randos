@@ -71,12 +71,16 @@ defmodule RandosWeb.HomeComponents do
   attr :call_deadline_unix_ms, :integer, default: nil
   attr :webrtc_role, :atom, default: nil
   attr :preferences, :map, required: true
-  attr :peer_language, :string, default: nil
+  attr :peer_languages, :list, default: []
   attr :peer_reconnecting, :boolean, default: false
   attr :recovering, :boolean, default: false
   attr :agreed_to_continue, :boolean, default: false
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
+  attr :live_action, :atom, default: :home
+  attr :join_link, :atom, default: :unknown
+  attr :invitation, :map, default: nil
+  attr :call_kind, :atom, default: nil
 
   attr :ice_servers, :string, default: nil
   attr :ice_transport_policy, :string, default: nil
@@ -107,12 +111,21 @@ defmodule RandosWeb.HomeComponents do
       </div>
 
       <%= case @ui_state do %>
+        <% :idle when @live_action == :join -> %>
+          <.join_panel
+            form={@form}
+            preferences={@preferences}
+            join_link={@join_link}
+            matchmaking_error={@matchmaking_error}
+          />
         <% :idle -> %>
           <.idle_panel
             form={@form}
             preferences={@preferences}
             matchmaking_error={@matchmaking_error}
           />
+        <% :inviting -> %>
+          <.inviting_panel invitation={@invitation} />
         <% :looking -> %>
           <.searching_panel preferences={@preferences} language_name={&language_name/1} />
         <% :connecting -> %>
@@ -120,7 +133,7 @@ defmodule RandosWeb.HomeComponents do
         <% :in_call -> %>
           <.call_panel
             preferences={@preferences}
-            peer_language={@peer_language}
+            peer_languages={@peer_languages}
             peer_reconnecting={@peer_reconnecting}
             recovering={@recovering}
             webrtc_role={@webrtc_role}
@@ -135,7 +148,7 @@ defmodule RandosWeb.HomeComponents do
         call_status={@call_status}
         call_deadline_unix_ms={@call_deadline_unix_ms}
       />
-      <.call_actions_panel :if={@ui_state == :in_call} />
+      <.call_actions_panel :if={@ui_state == :in_call} call_kind={@call_kind} />
     </div>
     """
   end
@@ -184,6 +197,26 @@ defmodule RandosWeb.HomeComponents do
           {pgettext("button", "Find a rando")}
         </button>
 
+        <%!-- Quieter: bring someone you know instead (an invitation link). --%>
+        <button
+          id="invite-button"
+          type="button"
+          phx-click="invite"
+          disabled={!acknowledged?(@preferences)}
+          class={[
+            "inline-flex w-full items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-sm font-semibold transition duration-200",
+            acknowledged?(@preferences) &&
+              "border-stone-300 text-stone-700 hover:border-stone-950 hover:text-stone-950",
+            !acknowledged?(@preferences) && "cursor-not-allowed border-stone-200 text-stone-400"
+          ]}
+        >
+          <.icon name="hero-link" class="size-4" />
+          <% gettext_comment(
+            "Button: make a private link to share with someone you already know, instead of meeting a stranger."
+          ) %>
+          {pgettext("button", "Invite someone")}
+        </button>
+
         <p
           :if={@matchmaking_error}
           id="matchmaking-error"
@@ -192,6 +225,139 @@ defmodule RandosWeb.HomeComponents do
           {@matchmaking_error}
         </p>
       </.form>
+    </div>
+    """
+  end
+
+  attr :invitation, :map, required: true
+
+  # Waiting for the person invited: the link to share, and how to stop.
+  defp inviting_panel(assigns) do
+    ~H"""
+    <div id="inviting-panel" class="col-span-full space-y-6 p-5 sm:p-7">
+      <div>
+        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
+          <% gettext_comment(
+            "Your status: you made an invitation link and wait for someone to open it."
+          ) %>
+          {gettext("Inviting")}
+        </p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
+          {gettext("Waiting for your rando to open the link…")}
+        </h2>
+        <p class="mt-3 leading-7 text-stone-600">
+          {gettext(
+            "Send them this link however you like. It works once, for the next %{minutes} minutes.",
+            minutes: div(Lifecycle.invitation_seconds(), 60)
+          )}
+        </p>
+      </div>
+      <div class="flex flex-col gap-2 sm:flex-row">
+        <input
+          id="invitation-url"
+          type="text"
+          readonly
+          value={@invitation.url}
+          aria-label={gettext("Invitation link")}
+          class="min-w-0 flex-1 rounded-md border border-stone-300 bg-stone-50 px-3 py-3 font-mono text-sm text-stone-800"
+        />
+        <button
+          id="copy-invitation-button"
+          type="button"
+          phx-hook="CopyLink"
+          phx-update="ignore"
+          data-url={@invitation.url}
+          data-labels={JSON.encode!(%{copy: pgettext("button", "Copy"), copied: gettext("Copied")})}
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-stone-950 px-5 py-3 font-semibold text-white transition hover:bg-teal-800 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300"
+        >
+          <.icon name="hero-clipboard-document" class="size-5" />
+          <span data-copy-label>{pgettext("button", "Copy")}</span>
+        </button>
+      </div>
+      <div class="grid gap-3">
+        <button
+          id="cancel-invitation-button"
+          phx-click="cancel_invitation"
+          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        >
+          <% gettext_comment("Button: withdraw the invitation link, so it stops working.") %>
+          {pgettext("button", "Cancel the link")}
+        </button>
+      </div>
+    </div>
+    """
+  end
+
+  attr :form, :any, required: true
+  attr :preferences, :map, required: true
+  attr :join_link, :atom, required: true
+  attr :matchmaking_error, :string, default: nil
+
+  # Where an invitation link lands. The JoinLink hook reads the token from
+  # the URL fragment and puts it in the form only as it's submitted.
+  defp join_panel(assigns) do
+    ~H"""
+    <div id="join-panel" class="col-span-full p-5 sm:p-7">
+      <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
+        <% gettext_comment("Heading of the page an invitation link opens.") %>
+        {gettext("Someone invited you to a call")}
+      </h2>
+      <p
+        :if={@join_link == :missing}
+        id="join-link-missing"
+        class="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+      >
+        {gettext("This link is incomplete. Ask for the whole link again.")}
+      </p>
+      <.form
+        :if={@join_link != :missing}
+        for={@form}
+        id="join-form"
+        phx-hook="JoinLink"
+        phx-change="update_preferences"
+        phx-submit="accept_invitation"
+        class="mt-5 space-y-5"
+      >
+        <p class="leading-7 text-stone-600">
+          {gettext(
+            "A one-to-one audio call, like any other on randos, with the person who sent you the link."
+          )}
+        </p>
+        <input type="hidden" name="token" value="" />
+        <div class="rounded-md border border-stone-200 bg-stone-50 px-4 py-4">
+          <.input
+            field={@form[:adult_acknowledgment]}
+            type="checkbox"
+            label={
+              gettext(
+                "I am 18 or older and understand that conversations are anonymous and unmoderated."
+              )
+            }
+            class="size-4 rounded border-stone-300 accent-teal-700 focus:ring-teal-600"
+          />
+        </div>
+        <button
+          id="join-call-button"
+          type="submit"
+          disabled={!acknowledged?(@preferences)}
+          class={[
+            "inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition duration-200",
+            acknowledged?(@preferences) &&
+              "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300",
+            !acknowledged?(@preferences) && "cursor-not-allowed bg-stone-200 text-stone-500"
+          ]}
+        >
+          <.icon name="hero-phone" class="size-5" />
+          {pgettext("button", "Join the call")}
+        </button>
+      </.form>
+      <p
+        :if={@matchmaking_error}
+        id="matchmaking-error"
+        class="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+      >
+        {@matchmaking_error}
+      </p>
     </div>
     """
   end
@@ -364,7 +530,7 @@ defmodule RandosWeb.HomeComponents do
   end
 
   attr :preferences, :map, required: true
-  attr :peer_language, :string, default: nil
+  attr :peer_languages, :list, default: []
   attr :peer_reconnecting, :boolean, default: false
   attr :recovering, :boolean, default: false
   attr :webrtc_role, :atom, default: nil
@@ -419,17 +585,24 @@ defmodule RandosWeb.HomeComponents do
         <.waveform
           id="remote-waveform"
           label={gettext("Your rando")}
-          language={@peer_language && @language_name.(@peer_language)}
+          language={@peer_languages != [] && hearing_summary(@peer_languages, @language_name)}
         />
       </div>
     </div>
     """
   end
 
+  attr :call_kind, :atom, default: nil
+
+  # No "Next" in an invitation call: there's no next.
   defp call_actions_panel(assigns) do
     ~H"""
-    <div class="order-3 col-span-full grid gap-2 border-t border-stone-200 px-4 py-3 sm:col-span-2 sm:grid-cols-2 sm:gap-3 sm:border-s sm:px-7">
+    <div class={[
+      "order-3 col-span-full grid gap-2 border-t border-stone-200 px-4 py-3 sm:col-span-2 sm:gap-3 sm:border-s sm:px-7",
+      @call_kind != :invitation && "sm:grid-cols-2"
+    ]}>
       <button
+        :if={@call_kind != :invitation}
         id="next-rando-button"
         phx-click="next_rando"
         class="inline-flex h-12 items-center justify-center rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
@@ -657,6 +830,9 @@ defmodule RandosWeb.HomeComponents do
 
   defp state_description(:extension_pending),
     do: gettext("Both people choose whether to continue.")
+
+  # Inviting is waiting too: it lights up "Looking".
+  defp progress_step_class(:inviting, state), do: progress_step_class(:looking, state)
 
   defp progress_step_class(ui_state, state) do
     if ui_state == state do

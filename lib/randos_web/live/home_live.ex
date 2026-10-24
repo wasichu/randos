@@ -6,6 +6,13 @@ defmodule RandosWeb.HomeLive do
   the participant returns are run here (matchmaker, call coordinator,
   `push_event`). This module owns only web concerns: the form, error copy,
   and rendering.
+
+  `/join` (the `:join` action) is where an invitation link lands: the 18+
+  acknowledgement and "Join the call". The link's token is in the URL
+  fragment, which never reaches the server; the `JoinLink` hook adds it to
+  the form only when it's submitted, so a page that merely loads (a link
+  preview's bot, say) claims nothing. Once in the call, the page moves to
+  `/`, so the used link isn't offered again.
   """
   use RandosWeb, :live_view
 
@@ -25,6 +32,8 @@ defmodule RandosWeb.HomeLive do
       |> assign(:ice_servers, nil)
       |> assign(:voice_processor, RandosWeb.VoiceProcessor.configured())
       |> assign(:call_id, nil)
+      # On /join: whether the link has a token at all (the hook says).
+      |> assign(:join_link, :unknown)
       # Whether this page's JavaScript can restart ICE (obligation 10): a
       # connect param, so it's the code the page actually loaded.
       |> assign(
@@ -78,6 +87,9 @@ defmodule RandosWeb.HomeLive do
   end
 
   @impl true
+  def handle_params(_params, _uri, socket), do: {:noreply, socket}
+
+  @impl true
   def handle_event("update_preferences", %{"conversation" => params}, socket) do
     socket = put_preferences(socket, params)
     {:noreply, run(socket, {:update_preferences, participant_preferences(socket)})}
@@ -89,6 +101,36 @@ defmodule RandosWeb.HomeLive do
   end
 
   def handle_event("cancel_search", _params, socket), do: {:noreply, run(socket, :cancel_search)}
+
+  # The form's choices are already here (update_preferences on every change).
+  def handle_event("invite", _params, socket),
+    do: {:noreply, run(socket, {:invite, participant_preferences(socket)})}
+
+  def handle_event("cancel_invitation", _params, socket),
+    do: {:noreply, run(socket, :cancel_invitation)}
+
+  # The hook says whether the fragment holds a token; never the token itself.
+  def handle_event("join_link", %{"has_token" => has_token}, socket),
+    do:
+      {:noreply, assign(socket, :join_link, if(has_token == true, do: :present, else: :missing))}
+
+  def handle_event("accept_invitation", %{"token" => token} = params, socket)
+      when is_binary(token) and byte_size(token) <= 64 do
+    socket = put_preferences(socket, Map.get(params, "conversation", %{}))
+
+    capabilities = %{
+      adult_acknowledged?: acknowledged?(socket.assigns.preferences),
+      audio?: true,
+      ice_restart?: socket.assigns.ice_restart?
+    }
+
+    socket = run(socket, {:accept_invitation, token, capabilities})
+
+    if socket.assigns.ui_state == :idle,
+      do: {:noreply, socket},
+      else: {:noreply, push_patch(socket, to: ~p"/")}
+  end
+
   # The WebRTC hook sends a reason when it can't carry the call (mic denied…).
   def handle_event("end_call", %{"reason" => reason}, socket) when is_binary(reason) do
     case Participant.cast_end_call_reason(reason) do
@@ -117,6 +159,7 @@ defmodule RandosWeb.HomeLive do
     do: {:noreply, run(socket, event)}
 
   def handle_info({:resumed_elsewhere, _pid} = event, socket), do: {:noreply, run(socket, event)}
+  def handle_info(:invitation_expired, socket), do: {:noreply, run(socket, :invitation_expired)}
 
   @impl true
   def terminate(_reason, _socket) do
@@ -153,6 +196,8 @@ defmodule RandosWeb.HomeLive do
     |> assign(:ui_state, participant.status)
     |> assign(:webrtc_role, participant.webrtc_role)
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
+    |> assign(:invitation, ParticipantShell.client_state(participant).invitation)
+    |> assign(:call_kind, participant.call_kind)
     |> assign(call_assigns(participant.call, participant.id))
   end
 
@@ -165,7 +210,7 @@ defmodule RandosWeb.HomeLive do
       ice_generation: nil,
       ice_restart: false,
       recovering: false,
-      peer_language: nil,
+      peer_languages: [],
       peer_reconnecting: false,
       agreed_to_continue: false
     ]
@@ -180,7 +225,7 @@ defmodule RandosWeb.HomeLive do
       ice_generation: call.ice_generation,
       ice_restart: call.ice_restart?,
       recovering: call.recovering,
-      peer_language: ParticipantShell.peer_speaks(call, participant_id),
+      peer_languages: ParticipantShell.peer_speaks_any(call, participant_id),
       peer_reconnecting: ParticipantShell.peer_reconnecting?(call, participant_id),
       agreed_to_continue: ParticipantShell.agreed_to_continue?(call, participant_id)
     ]
@@ -205,7 +250,11 @@ defmodule RandosWeb.HomeLive do
             ice_restart={@ice_restart}
             voice_processor={@voice_processor}
             preferences={@preferences}
-            peer_language={@peer_language}
+            peer_languages={@peer_languages}
+            live_action={@live_action}
+            join_link={@join_link}
+            invitation={@invitation}
+            call_kind={@call_kind}
             peer_reconnecting={@peer_reconnecting}
             recovering={@recovering}
             agreed_to_continue={@agreed_to_continue}

@@ -407,4 +407,124 @@ defmodule RandosWeb.HomeLiveTest do
   catch
     :exit, _gone -> nil
   end
+
+  describe "invitations" do
+    defp acknowledge(view, speaks \\ "en", hears \\ ["de"]) do
+      view
+      |> form("#conversation-form",
+        conversation: %{
+          speaking_language: speaks,
+          hearing_languages: hears,
+          adult_acknowledgment: "true"
+        }
+      )
+      |> render_change()
+    end
+
+    defp invite(conn, speaks \\ "en", hears \\ ["de"]) do
+      {:ok, view, _html} = live(conn, ~p"/")
+      acknowledge(view, speaks, hears)
+      view |> element("#invite-button") |> render_click()
+      assert has_element?(view, "#inviting-panel")
+
+      [url] =
+        view
+        |> render()
+        |> LazyHTML.from_fragment()
+        |> LazyHTML.query("#invitation-url")
+        |> LazyHTML.attribute("value")
+
+      [_, token] = String.split(url, "#")
+      {view, url, token}
+    end
+
+    defp join(conn, token) do
+      {:ok, view, _html} = live(conn, ~p"/join")
+      render_hook(view, "join_link", %{"has_token" => true})
+
+      view
+      |> form("#join-form", conversation: %{adult_acknowledgment: "true"})
+      |> render_submit(%{"token" => token})
+
+      view
+    end
+
+    test "the invite button waits for the 18+ acknowledgment, like Find", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/")
+      assert has_element?(view, "#invite-button[disabled]")
+      acknowledge(view)
+      refute has_element?(view, "#invite-button[disabled]")
+    end
+
+    test "inviting shows the link to share, which can be withdrawn", %{conn: conn} do
+      {view, url, _token} = invite(conn)
+      assert url =~ ~r"/join#.{22,}$"
+      assert has_element?(view, "#copy-invitation-button[phx-hook='CopyLink'][data-url='#{url}']")
+      assert has_element?(view, "#state-progress-looking.bg-stone-950")
+
+      view |> element("#cancel-invitation-button") |> render_click()
+      assert has_element?(view, "#conversation-form")
+    end
+
+    test "/join asks for the 18+ acknowledgment; loading it claims nothing", %{conn: conn} do
+      {creator, _url, token} = invite(conn)
+
+      {:ok, view, _html} = live(conn, ~p"/join")
+      assert has_element?(view, "#join-form[phx-hook='JoinLink']")
+      assert has_element?(view, "#join-call-button[disabled]")
+      render_hook(view, "join_link", %{"has_token" => true})
+
+      # Still waiting: the page loading (and its hook) took nothing.
+      assert has_element?(creator, "#inviting-panel")
+
+      other = spawn(fn -> Process.sleep(:infinity) end)
+      on_exit(fn -> Process.exit(other, :kill) end)
+
+      assert {:matched, match} =
+               Randos.Matchmaking.Matchmaker.accept(token, %{
+                 id: "anon-other",
+                 pid: other,
+                 topic: "participant:anon-other",
+                 accepted_adult_terms: true,
+                 audio?: true
+               })
+
+      CallCoordinator.hang_up(match.call_pid, "anon-other")
+    end
+
+    test "a link without its token says so", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/join")
+      render_hook(view, "join_link", %{"has_token" => false})
+      assert has_element?(view, "#join-link-missing")
+      refute has_element?(view, "#join-form")
+    end
+
+    test "joining through the link: the call, no Next, and both idle after", %{conn: conn} do
+      {creator, _url, token} = invite(conn, "en", ["de", "ja"])
+      joiner = join(conn, token)
+      assert_patch(joiner, ~p"/")
+      assert has_element?(joiner, "#connecting-panel")
+      assert eventually_has_element?(creator, "#connecting-panel")
+
+      connect_media(creator)
+      connect_media(joiner)
+      assert eventually_has_element?(creator, "#call-panel")
+      assert eventually_has_element?(joiner, "#call-panel")
+      refute has_element?(creator, "#next-rando-button")
+      assert has_element?(creator, "#end-call-button")
+      # The creator hears the joiner may speak any language they hear.
+      assert has_element?(creator, "#remote-waveform-language", "Deutsch (DE) or 日本語 (JA)")
+      assert has_element?(joiner, "#remote-waveform-language", "English (EN)")
+
+      joiner |> element("#end-call-button") |> render_click()
+      assert eventually_has_element?(creator, "#conversation-form")
+      assert has_element?(joiner, "#conversation-form")
+    end
+
+    test "a used or unknown link shows why, and stays on the join page", %{conn: conn} do
+      view = join(conn, "not-a-real-token")
+      assert has_element?(view, "#join-panel")
+      assert has_element?(view, "#matchmaking-error", "doesn't work any more")
+    end
+  end
 end
