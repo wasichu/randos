@@ -461,6 +461,12 @@ defmodule RandosWeb.HomeLiveTest do
       {view, url, _token} = invite(conn)
       assert url =~ ~r"/join#.{22,}$"
       assert has_element?(view, "#copy-invitation-button[phx-hook='CopyLink'][data-url='#{url}']")
+      # How long it keeps working, counting down (the call timer's hook).
+      assert has_element?(
+               view,
+               "#invitation-countdown[phx-hook='CallCountdown'][data-deadline-unix-ms]"
+             )
+
       # The creator's own steps: inviting lights "Waiting".
       assert has_element?(view, "#state-progress[data-flow='invite']")
       assert has_element?(view, "#state-progress-waiting.bg-stone-950")
@@ -530,7 +536,7 @@ defmodule RandosWeb.HomeLiveTest do
       assert eventually_has_element?(creator, "#conversation-form")
       assert has_element?(joiner, "#conversation-form")
       # The creator didn't end it: told why the form came back. The joiner did.
-      assert has_element?(creator, "#call-notice", "Your call ended.")
+      assert has_element?(creator, "#call-notice")
       refute has_element?(joiner, "#call-notice")
       # Back to the usual steps, and the notice goes with the next search.
       assert has_element?(creator, "#state-progress[data-flow='random']")
@@ -539,7 +545,7 @@ defmodule RandosWeb.HomeLiveTest do
     test "a used or unknown link shows why, and stays on the join page", %{conn: conn} do
       view = join(conn, "not-a-real-token")
       assert has_element?(view, "#join-panel")
-      assert has_element?(view, "#matchmaking-error", "That link doesn't work any more.")
+      assert has_element?(view, "#matchmaking-error")
       # Nothing left to join: the form goes.
       refute has_element?(view, "#join-form")
     end

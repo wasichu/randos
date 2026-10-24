@@ -8,11 +8,11 @@
     "msgstr": "%{device} (valor predefinido)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{language} em ambos os sentidos"
   },
   "%{minutes} min": {
@@ -48,11 +48,11 @@
     "msgstr": "Um par de idiomas é exibido somente quando possui pelo menos %{count} ocorrências; os casos com menos ocorrências são classificados como \"outros\"."
   },
   "About these numbers": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Sobre esses números"
   },
   "Asking the server…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Perguntando ao servidor…"
   },
   "Audio on.": {
@@ -84,7 +84,7 @@
     "msgstr": "Continuar por mais %{minutes} minutos?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Continuar?"
   },
   "Continued": {
@@ -100,7 +100,7 @@
     "msgstr": "Contado em %{answered} de %{total} servidores."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Dispositivos"
   },
   "Error: %{message}": {
@@ -136,7 +136,7 @@
     "msgstr": "Idiomas falados: ainda não há chamadas"
   },
   "Last checked at %{time} UTC.": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Última verificação em %{time} UTC."
   },
   "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…": {
@@ -172,7 +172,7 @@
     "msgstr": "E agora:"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Outras línguas: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -204,7 +204,7 @@
     "msgstr": "Status do servidor"
   },
   "Speaker:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Orador:"
   },
   "Text only (no audio helper).": {
@@ -216,7 +216,7 @@
     "msgstr": "O relé está funcionando parcialmente."
   },
   "The relay is working.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "O relé está funcionando."
   },
   "The relay isn't working.": {
@@ -232,7 +232,7 @@
     "msgstr": "Este servidor não possui página de status (é mais antigo que a solicitação de status)."
   },
   "Time is up.": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "O tempo acabou."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -256,7 +256,7 @@
     "msgstr": "Contamos o número de chamadas, não o número de pessoas: não coletamos endereços, identificações, nem informações sobre ninguém."
   },
   "You": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Você"
   },
   "You're in a call.": {
@@ -276,11 +276,11 @@
     "msgstr": "conectado"
   },
   "connected directly": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "conectado diretamente"
   },
   "connected to %{server}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "conectado a %{server}"
   },
   "connected to the server": {
@@ -332,7 +332,7 @@
     "msgstr": "Erro em: %{message}"
   },
   "in a call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "em uma chamada"
   },
   "key\u000418+": {
@@ -348,7 +348,7 @@
     "msgstr": "retorno"
   },
   "key\u0004cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "cancelar"
   },
   "key\u0004cancel the link": {
@@ -364,7 +364,7 @@
     "msgstr": "verificar"
   },
   "key\u0004close": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "fechar"
   },
   "key\u0004continue": {
@@ -376,7 +376,7 @@
     "msgstr": "copiar o link"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "fim"
   },
   "key\u0004end call": {
@@ -452,8 +452,8 @@
     "msgstr": "Link enviado para o clipboard do seu terminal (se isso permite)"
   },
   "log\u0004idle": {
-    "model": "madlad-400",
-    "msgstr": "inativo"
+    "model": "translategemma-4b",
+    "msgstr": "inativo; ocioso"
   },
   "log\u0004in call": {
     "model": "madlad-400",
@@ -470,6 +470,10 @@
   "log\u0004matched; connecting": {
     "model": "translategemma-4b",
     "msgstr": "correspondente; conectando"
+  },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "hy-mt2",
+    "msgstr": "O tempo acabou: continuar? (%{yes}/%{no})"
   },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-4b",
@@ -516,7 +520,7 @@
     "msgstr": "não está funcionando"
   },
   "panel title\u0004Connecting": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Conectando"
   },
   "panel title\u0004Find a rando": {
@@ -528,7 +532,7 @@
     "msgstr": "Em chamada"
   },
   "panel title\u0004Invitation": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Convite"
   },
   "panel title\u0004Looking": {
@@ -555,6 +559,10 @@
     "model": "m2m100",
     "msgstr": "Peer ofereceu áudio; este cliente não tem nenhum, então a chamada terminou (Enter para ver novamente)"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Selecione pelo menos um idioma para ouvir. (%{key} ativa um idioma.)"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "Selecione pelo menos um idioma para ouvir (pressione a barra de espaço para selecionar)."
@@ -564,7 +572,7 @@
     "msgstr": "rando A reconectar…"
   },
   "reconnected as a new participant": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "reconectado como um novo participante"
   },
   "reconnected; back in the call": {
@@ -606,6 +614,14 @@
   "the audio helper restarted": {
     "model": "hy-mt2",
     "msgstr": "o assistente de áudio foi reiniciado"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-4b",
+    "msgstr": "Primeiro, marque a caixa \"18+\" (%{key})"
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-12b",
+    "msgstr": "Marque a caixa \"18+\" primeiro (guia)."
   },
   "tick the 18+ box on the form first": {
     "model": "madlad-400",

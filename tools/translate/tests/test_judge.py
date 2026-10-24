@@ -231,3 +231,25 @@ def test_a_lone_candidate_is_judged_too():
     assert review.to_judge(entries, settled, "judge") == ["a"]
     entries["a"]["scores"]["judge"]["score"] = 3
     assert review.to_judge(entries, settled, "judge") == []
+
+
+def test_a_rating_counts_for_the_text_it_was_given(tmp_path, monkeypatch):
+    monkeypatch.setattr(cli.scoring, "judges_for", lambda locale: ["mistral"])
+    monkeypatch.setattr(cli, "JUDGE_CACHE", tmp_path / "judge-cache.json")
+    monkeypatch.setitem(cli.scoring.SCORERS, "judge", FakeJudge)
+    monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready")])
+    monkeypatch.setattr(cli.scoring, "current_contexts", dict)
+    one = write_run(tmp_path / "one.json", "one", {"Ready": ("Listo", 1.0, 0.9)}, "1")
+    two = write_run(tmp_path / "two.json", "two", {"Ready": ("Preparado", 2.0, 0.8)}, "2")
+    FakeJudge.asked = []
+    cli.score("judge", [one, two], redo=False)
+    [entry] = json.loads(one.read_text())["entries"]
+    assert entry["scores"]["judge"]["text"] == "Listo"
+
+    # The text changes (a tidy step, say): its old rating no longer counts.
+    data = json.loads(one.read_text())
+    data["entries"][0]["text"] = "Listo ya"
+    one.write_text(json.dumps(data))
+    FakeJudge.asked = []
+    cli.score("judge", [one, two], redo=False)
+    assert ("es", "Listo ya") in FakeJudge.asked

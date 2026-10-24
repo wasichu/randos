@@ -10,7 +10,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 
 - Versions are pinned in `mise.toml` (Erlang/OTP, Elixir, just, node, OpenTofu). Run `mise install`.
 - Commands live in the `Justfile`; prefer them over ad-hoc invocations:
-  - `just setup` — toolchain + deps + assets
+  - `just setup` — toolchain + deps + assets (with `just prefetch`: the
+    prebuilt NIFs and Tailwind through curl, since GitHub's big release
+    headers break Erlang's :httpc downloads; `bin/prefetch.sh`)
   - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
     `just dev` and `just dev-turn` first stop a background `just serve` on the port
     (never an interactive IEx server: that's an error)
@@ -97,10 +99,10 @@ are product requirements, not suggestions. Don't add features that violate them.
 | Layer | Module(s) | Owns |
 | --- | --- | --- |
 | Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
-| Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership: one waiting list, oldest first; a match needs each person's speaking language among the other's hearing languages (`Entry.compatible?/2`); recently matched pairs are kept apart for `Lifecycle.rematch_window_seconds/0` |
+| Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership: one waiting list, oldest first; a match needs each person's speaking language among the other's hearing languages (`Entry.compatible?/2`); recently matched pairs are kept apart for `Lifecycle.rematch_window_seconds/0`; and invitations (`invite/2`, `accept/3`): someone waiting to be found by a link's token, kept apart from the queue (only the token's hash) |
 | Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, (a participant whose process goes away is marked away and may resume within `Lifecycle.recovery_budget_seconds/0` with its one-time ticket, `Randos.Calls.ResumeTicket`; `CallCoordinator.resume/4`) media signal relay, and **call health** (the connect timeout, then one recovery budget for media down or a participant away, with ICE restarts inside it) from clients' raw `media_state` reports. Clients follow "Client obligations" in `participant_channel.md` and run no health timers of their own; the one exception is obligation 11's offline limit (`Lifecycle.offline_limit_seconds/0`, sent in the call), since a client that can't reach the server can't ask it |
 | Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation, and the relay-only filter (server never touches media) |
-| Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back. `handle(participant, event) :: {participant, [effect]}` |
+| Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back, or invite → (someone accepts the link) → call → idle. `handle(participant, event) :: {participant, [effect]}` |
 | Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
 | Channel API | `RandosWeb.ParticipantSocket`/`ParticipantChannel` (shared `RandosWeb.ParticipantShell`) | Anonymous JSON API for non-browser clients (the TUI). Protocol: `docs/architecture/participant_channel.md`; keep it in sync with the channel |
 | Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
@@ -125,6 +127,9 @@ are product requirements, not suggestions. Don't add features that violate them.
 - `docs/architecture/call_flow.md`: Mermaid diagrams of the call flow (shared,
   then where the browser and the TUI differ); keep it in step with the code.
 - `docs/architecture/coturn_audit.md`: TURN server findings and proposed hardening.
+- `docs/architecture/invitations.md`: invitation links (design, the owner's
+  decisions, the review rounds); `docs/architecture/tui_translation.md`:
+  translating the TUI (right to left in terminals included).
 - `docs/privacy.md`: what each component sees, logs, and keeps, each claim
   linked to its config or code. Change it with anything it describes;
   `just check-privacy` (in precommit) fails if a coturn setting it promises
@@ -137,7 +142,7 @@ are product requirements, not suggestions. Don't add features that violate them.
 venv and `uv run --group X` re-syncs it, so never run one while another
 group's model is running; what needs no model, the tests, `review`,
 `fill` and `tidy`, runs in `.venv-test` with `UV_PROJECT_ENVIRONMENT=.venv-test`,
-which `just translate-test` and so `just precommit` use, safe during a run). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, rebuilt by `UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli review`).
+which `just translate-test` and so `just precommit` use, safe during a run). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, and `results/tui/review.json` for the TUI's strings, rebuilt by `UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli review`).
   The public `/translations` page (`RandosWeb.TranslationsLive`, from
   `RandosWeb.Translations`) lists every string with a "Suggest a fix" link to
   a GitHub issue form; `.github/workflows/translation-fix.yml` turns such an

@@ -30,9 +30,18 @@ SCRIPTS = {
 LATIN_LOCALES = {"es", "pt", "fr", "de", "it", "tr", "id", "vi", "sw", "fil"}
 
 
+# A printf-style placeholder the source doesn't have: a model that answered
+# with some program's error message ("Error sa pagbasa ng talaksang '%s'"
+# for the key hint "check", 2026-10-24).
+_PRINTF = re.compile(r"%[sd]|%\d\$[sd]")
+
+
 def placeholders(source: str, text: str) -> tuple[bool, str]:
     want, got = sorted(PLACEHOLDER.findall(source)), sorted(PLACEHOLDER.findall(text))
-    return (want == got, "" if want == got else f"expected {want}, got {got}")
+    if want != got:
+        return (False, f"expected {want}, got {got}")
+    stray = [t for t in _PRINTF.findall(text) if t not in source]
+    return (not stray, "" if not stray else f"printf placeholders {stray}")
 
 
 _LATIN = r"A-Za-z\u00C0-\u024F"
@@ -145,7 +154,7 @@ def shape(source: str, text: str) -> tuple[bool, str]:
 
 
 def without_final_stop(source: str, text: str) -> str:
-    """`text` without a final full stop `source` doesn't end with (what
+    """`text` without a final full stop or exclamation mark `source` doesn't end with (what
     `shape` rejects): for `review.pick`'s fallback, since Japanese and
     Korean end a clause with one where English leaves it bare."""
     if source.rstrip().endswith(_ANY_END):

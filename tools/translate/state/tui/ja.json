@@ -96,7 +96,7 @@
     "msgstr": "%{total}台のサーバーのうち、%{answered}台で集計しました。"
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "デバイス"
   },
   "Error: %{message}": {
@@ -296,7 +296,7 @@
     "msgstr": "サーバーに接続中…"
   },
   "connecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "接続中…"
   },
   "connection closed": {
@@ -352,7 +352,7 @@
     "msgstr": "リンクを無効化する"
   },
   "key\u0004change": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "変更"
   },
   "key\u0004check": {
@@ -428,11 +428,11 @@
     "msgstr": "リフレッシュ"
   },
   "key\u0004speaker": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "スピーカー"
   },
   "key\u0004status": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ステータス"
   },
   "key\u0004unmute": {
@@ -449,7 +449,7 @@
   },
   "log\u0004idle": {
     "model": "translategemma-4b",
-    "msgstr": "未使用"
+    "msgstr": "無駄"
   },
   "log\u0004in call": {
     "model": "hy-mt2",
@@ -466,6 +466,10 @@
   "log\u0004matched; connecting": {
     "model": "madlad-400",
     "msgstr": "組み合わせる; 結びつける"
+  },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "hy-mt2",
+    "msgstr": "時間切れです。続行しますか？（%{yes}/%{no}）"
   },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-12b",
@@ -551,6 +555,10 @@
     "model": "hy-mt2",
     "msgstr": "相手側から音声が送信されましたが、このクライアントには音声機能がないため、通話は終了しました（もう一度確認するにはEnterキーを押してください）"
   },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "音声を聞くために、少なくとも1つの言語を選択してください。（%{key} をクリックすると、選択が切り替わります。）"
+  },
   "pick at least one language to hear (space toggles one)": {
     "model": "hy-mt2",
     "msgstr": "聞く言語を1つ以上選んでください（スペースキーで切り替え可能）"
@@ -568,7 +576,7 @@
     "msgstr": "再接続; 電話に戻る"
   },
   "reconnecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "再接続中…"
   },
   "refused": {
@@ -588,7 +596,7 @@
     "msgstr": "システムデフォルト"
   },
   "text only": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "テキストのみ"
   },
   "text only (no audio)": {
@@ -602,6 +610,14 @@
   "the audio helper restarted": {
     "model": "hy-mt2",
     "msgstr": "オーディオヘルパーが再起動しました"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-12b",
+    "msgstr": "まず、18歳以上であることを示すチェックボックス（%{key}）にチェックを入れてください。"
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-12b",
+    "msgstr": "まず、「18歳以上」の欄にチェックを入れてください（タブ）。"
   },
   "tick the 18+ box on the form first": {
     "model": "madlad-400",

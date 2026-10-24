@@ -1,6 +1,6 @@
 {
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -14,6 +14,10 @@
   "%{minutes}+ min": {
     "model": "madlad-400",
     "msgstr": "%{minutes}+ min"
+  },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} rimanenti"
   },
   "%{time} remaining": {
     "model": "translategemma-27b",
@@ -100,7 +104,7 @@
     "msgstr": "Connessione interrotta"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "Connessione:"
   },
   "Continued past %{minutes} minutes": {
@@ -156,7 +160,7 @@
     "msgstr": "Ogni chiamata passa attraverso il nostro relè, quindi nessuna delle due parti vede l’indirizzo dell’altra. Lo verifichiamo ogni pochi minuti creando una connessione relè reale."
   },
   "Find a phrase": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Trova una frase"
   },
   "Find a phrase, in English or %{language}": {
@@ -228,7 +232,7 @@
     "msgstr": "È pensato per %{crosstalk}, lo scambio linguistico, l'esercitazione dell'ascolto e le conversazioni informali, senza imporre schemi rigidi o etichette."
   },
   "Join": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Partecipa"
   },
   "Language": {
@@ -244,7 +248,7 @@
     "msgstr": "Ultimo controllo effettuato alle %{time} UTC."
   },
   "Looking": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Cercando"
   },
   "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.": {
@@ -252,7 +256,7 @@
     "msgstr": "Sto cercando un rando che parli %{hearing_languages} e voglia ascoltare %{speaking_language}."
   },
   "No accounts. No profiles. No video. No pressure.": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Nessun account. Nessun profilo. Nessun video. Nessuna pressione."
   },
   "No calls yet.": {
@@ -296,7 +300,7 @@
     "msgstr": "Selezionate la lingua che desiderate controllare."
   },
   "Preparing the call": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Preparare la chiamata"
   },
   "Privacy": {
@@ -322,6 +326,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "opus-mt",
     "msgstr": "Invia loro questo link come preferisci. Funziona una volta, per i prossimi %{minutes} minuti."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Inviate loro questo link nel modo che preferite. Funziona una sola volta."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -505,7 +513,7 @@
   },
   "Your call ended.": {
     "model": "translategemma-4b",
-    "msgstr": "La tua chiamata è terminata."
+    "msgstr": "La vostra chiamata è terminata."
   },
   "Your link expired before anyone used it.": {
     "model": "hy-mt2",
@@ -664,7 +672,7 @@
     "msgstr": "randos è software libero (AGPL-3.0) e costruito in pubblico."
   },
   "refused": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "rifiutato"
   },
   "remote audio needs a tap (%{summary})": {

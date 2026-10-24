@@ -59,10 +59,6 @@
     "model": "translategemma-12b",
     "msgstr": "Watu wote wawili huamua kama watataka kuendelea."
   },
-  "Calls started": {
-    "model": "m2m100",
-    "msgstr": "Maombi ya kuanza"
-  },
   "Cancel": {
     "model": "m2m100",
     "msgstr": "Kuzuia"
@@ -183,10 +179,6 @@
     "model": "translategemma-4b",
     "msgstr": "Msaada wa kurekebisha tafsiri"
   },
-  "How calls ended": {
-    "model": "translategemma-4b",
-    "msgstr": "Jinsi majadiliano zilimalizia"
-  },
   "How languages are counted": {
     "model": "translategemma-4b",
     "msgstr": "Jinsi lugha zinahesabiwa"
@@ -232,7 +224,7 @@
     "msgstr": "Kuunganisha"
   },
   "Language": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Lugha"
   },
   "Languages spoken": {
@@ -323,6 +315,10 @@
     "model": "translategemma-4b",
     "msgstr": "Toa hii, au toa kwa njia ambayo unaipenda. Ina kazi kwa mara moja, kwa dakika %{minutes} zijazo."
   },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Tuma kiungo hiki kwao kwa njia yoyote unayopenda. Kitu hiki kitafanya kazi mara moja tu."
+  },
   "Share a link.": {
     "model": "translategemma-12b",
     "msgstr": "Shiriki kiungo."
@@ -387,10 +383,6 @@
     "model": "madlad-400",
     "msgstr": "Wito ulimalizika kwa sababu hakuna mikrofoni kupatikana."
   },
-  "The commit this server runs": {
-    "model": "m2m100",
-    "msgstr": "Mchakato wa mtandao huu hufanya kazi"
-  },
   "The interface is quiet on purpose. The goal is low-pressure human presence, not performance or engagement loops.": {
     "model": "translategemma-27b",
     "msgstr": "Muonekano wa mtumiaji umekusudiwa kuwa tulivu kwa makusudi. Lengo ni kuwezesha uwepo wa mtumiaji kwa njia ya asili na utulivu, si kwa lengo la kuonyesha uwezo au kuhamasisha shughuli za kurudia-rudia."
@@ -438,10 +430,6 @@
   "Today": {
     "model": "m2m100",
     "msgstr": "Siku hii"
-  },
-  "Toggle dark mode": {
-    "model": "madlad-400",
-    "msgstr": "Toggle hali ya giza"
   },
   "Translations": {
     "model": "madlad-400",
@@ -505,7 +493,7 @@
   },
   "Your call ended.": {
     "model": "translategemma-12b",
-    "msgstr": "Simu yako imekwisha."
+    "msgstr": "Simu yako imekatika."
   },
   "Your link expired before anyone used it.": {
     "model": "translategemma-12b",

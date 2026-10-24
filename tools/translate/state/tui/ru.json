@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · вы %{you} dBFS · собеседник %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (по умолчанию)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} или %{last}"
   },
   "%{language} both ways": {
@@ -24,11 +24,11 @@
     "msgstr": "%{minutes} минуты или более"
   },
   "%{request} refused: %{reason}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{request} отклонено: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{sent} отправлено / %{received} получено"
   },
   "%{time} left": {
@@ -68,7 +68,7 @@
     "msgstr": "Проверяю реле…"
   },
   "Connected: %{connected}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Подключено: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,11 +100,11 @@
     "msgstr": "Подсчитано на основе данных с %{answered} из %{total} серверов."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Устройства"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Ошибка: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -112,7 +112,7 @@
     "msgstr": "Как заканчивались звонки: завершены — %{finished}, невозможно было подключиться — %{not_connected}, потеряно соединение — %{lost}, отменены — %{canceled}"
   },
   "I will speak:": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Я буду говорить:"
   },
   "I'm 18+ and OK with anonymous, unmoderated calls": {
@@ -172,7 +172,7 @@
     "msgstr": "Сейчас:"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Другие языки: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -244,7 +244,7 @@
     "msgstr": "Сегодня (считая с %{time} UTC на %{date}):"
   },
   "Typical length: %{length}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Типичная длина: %{length}"
   },
   "Waiting for your rando to open the link…": {
@@ -336,7 +336,7 @@
     "msgstr": "в телефонном разговоре"
   },
   "key\u000418+": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -344,7 +344,7 @@
     "msgstr": "об этих цифрах"
   },
   "key\u0004back": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "назад"
   },
   "key\u0004cancel": {
@@ -376,7 +376,7 @@
     "msgstr": "скопируйте ссылку"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "конец"
   },
   "key\u0004end call": {
@@ -384,11 +384,11 @@
     "msgstr": "завершить звонок"
   },
   "key\u0004find": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "найти"
   },
   "key\u0004invite": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "пригласить"
   },
   "key\u0004join": {
@@ -400,7 +400,7 @@
     "msgstr": "Присоединяйтесь к ссылке"
   },
   "key\u0004language": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "язык"
   },
   "key\u0004mic": {
@@ -453,7 +453,7 @@
   },
   "log\u0004idle": {
     "model": "hy-mt2",
-    "msgstr": "неактивно"
+    "msgstr": "в режиме ожидания"
   },
   "log\u0004in call": {
     "model": "translategemma-4b",
@@ -470,6 +470,10 @@
   "log\u0004matched; connecting": {
     "model": "hy-mt2",
     "msgstr": "соответствует; соединяет"
+  },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "hy-mt2",
+    "msgstr": "Время истекло: продолжить? (%{yes}/%{no})"
   },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-4b",
@@ -516,7 +520,7 @@
     "msgstr": "не работает"
   },
   "panel title\u0004Connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Подключение"
   },
   "panel title\u0004Find a rando": {
@@ -528,7 +532,7 @@
     "msgstr": "Во время телефонного разговора"
   },
   "panel title\u0004Invitation": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Приглашение"
   },
   "panel title\u0004Looking": {
@@ -554,6 +558,10 @@
   "peer offered audio; this client has none, so the call ended (Enter to look again)": {
     "model": "hy-mt2",
     "msgstr": "Собеседник предложил аудиосвязь; у этого клиента её нет, поэтому звонок был прерван (нажмите Enter, чтобы попробовать снова)."
+  },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Выберите хотя бы один язык, чтобы его прослушать (%{key} позволяет выбрать один язык)."
   },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
@@ -607,6 +615,14 @@
     "model": "m2m100",
     "msgstr": "Аудиопомощник перезапускается"
   },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-12b",
+    "msgstr": "Сначала поставьте отметку в поле \"18+\" (%{key})."
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-12b",
+    "msgstr": "Сначала поставьте галочку в поле \"18+\" (вкладка)."
+  },
   "tick the 18+ box on the form first": {
     "model": "madlad-400",
     "msgstr": "сначала отметьте 18+ в форме"
@@ -616,7 +632,7 @@
     "msgstr": "Время истекло: продолжать?"
   },
   "under 1 min": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "менее 1 минуты"
   },
   "unexpected reply": {

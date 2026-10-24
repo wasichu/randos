@@ -79,9 +79,11 @@ defmodule RandosWeb.ParticipantShell do
     }
   end
 
-  defp client_invitation(nil), do: nil
+  @doc "An invitation as its client sees it: the link to share and when it stops working."
+  @spec client_invitation(Participant.invitation() | nil) :: map() | nil
+  def client_invitation(nil), do: nil
 
-  defp client_invitation(%{token: token, expires_at_unix_ms: expires_at}),
+  def client_invitation(%{token: token, expires_at_unix_ms: expires_at}),
     do: %{url: invitation_url(token), expires_at_unix_ms: expires_at}
 
   @doc "The link that offers an invitation: the token in the fragment."

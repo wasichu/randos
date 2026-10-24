@@ -15,8 +15,9 @@ from .runs import note_scored, write_atomically
 
 def judge(paths: list[Path], redo: bool, judges: list[str] | None, cache_path: Path) -> dict[str, int]:
     """The tone judges over every run at once, since what a judge must see
-    depends on all the models' translations of a string: only the ones
-    passing every check, of strings still in the template, and of those
+    depends on all the models' translations of a string: its candidates
+    (`review.candidates`: those passing every check, or the stop-stripped
+    fallback; a lone one too), of strings still in the template, and of those
     only the finalists (`review.to_judge`), in rounds until no string needs
     more. Each locale has its judges (`scoring.judges_for`), each filling
     its own score and choosing its own finalists; one is loaded at a time,
@@ -64,7 +65,14 @@ def _rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
         if id(entry["scores"]) in tried:
             return True
         verdict = entry["scores"].get(score) or {}
-        return verdict.get("score") is not None and scoring.judged_context(entry, score) == context(entry)
+        # A rating counts for the text it was given (a stop-stripped
+        # candidate's isn't the stored text's; verdicts from before this
+        # carry no text and count as given for it).
+        return (
+            verdict.get("score") is not None
+            and scoring.judged_context(entry, score) == context(entry)
+            and verdict.get("text", entry["text"]) == entry["text"]
+        )
 
     try:
         # What each string's pick chooses among (copies share their "scores").
@@ -87,7 +95,8 @@ def _rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
                 seconds = time.monotonic() - began
                 touched: dict[Path, int] = {}
                 for e in mine:
-                    e["scores"][score] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
+                    verdict = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
+                    e["scores"][score] = verdict and verdict | {"text": e["text"]}
                     tried.add(id(e["scores"]))
                     touched[owner[id(e["scores"])]] = touched.get(owner[id(e["scores"])], 0) + 1
                 for path, n in touched.items():

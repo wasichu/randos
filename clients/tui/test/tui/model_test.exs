@@ -317,7 +317,10 @@ defmodule Tui.ModelTest do
       assert {_model, [{:push, "cancel_invitation", %{}}]} = Model.key(model, "c")
       # y copies the link; the log says how it went.
       assert {_model, [{:copy, "https://randos.example/join#tok"}]} = Model.key(model, "y")
-      assert %{log: ["link copied" | _]} = Model.copied(model, {:ok, :system})
+
+      assert %{log: ["link copied" | _], message: "link copied"} =
+               Model.copied(model, {:ok, :system})
+
       assert %{log: [terminal | _]} = Model.copied(model, {:ok, :terminal})
       assert terminal =~ "if it allows that"
       assert %{log: [failed | _]} = Model.copied(model, {:error, :enoent})
@@ -383,6 +386,25 @@ defmodule Tui.ModelTest do
       {model, []} = Model.push(joined(), "state", state("in_call", %{"call" => random}))
       assert Model.peer_speaks_any(model) == ["es"]
       assert {_model, [{:push, "next", %{}}]} = Model.key(model, "n")
+    end
+
+    test "what this client says shows until the next key or status change" do
+      model = %{joined() | join_prompt: "", adult_acknowledged?: true}
+      {model, []} = Model.key(model, "enter")
+      assert model.message =~ "paste the whole link"
+      {model, []} = Model.key(model, "x")
+      assert model.message == nil
+
+      {said, []} = Model.reply(joined(), "invite", {:error, %{"reason" => "rate_limited"}})
+      assert said.message =~ "rate_limited"
+      {moved, []} = Model.push(said, "state", state("looking"))
+      assert moved.message == nil
+    end
+
+    test "a disconnect closes the join prompt (it takes every key)" do
+      model = %{joined() | join_prompt: "https://x/join#t"}
+      {model, []} = Model.disconnected(model)
+      assert model.join_prompt == nil
     end
   end
 end

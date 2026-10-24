@@ -167,6 +167,12 @@ defmodule Tui.AppTest do
       refute render_text(arabic, %{media_state: media}, {120, 24}) =~ "Devices"
     end
 
+    test "with the join prompt open, its message is drawn once, in the prompt" do
+      model = %{model("idle") | join_prompt: "", message: "paste the whole link you were sent"}
+      text = render_text(model)
+      assert length(String.split(text, "paste the whole link you were sent")) == 2
+    end
+
     test "the idle screen offers the status screen" do
       assert render_text(model("idle"), %{}, {120, 24}) =~ "s status"
     end
@@ -505,6 +511,62 @@ defmodule Tui.AppTest do
 
       assert_receive {:tui_media, ^app,
                       %{mic_test: %{phase: :failed, error: "the audio helper isn't running" <> _}}}
+    end
+  end
+
+  describe "invitation keys through the app" do
+    defp invitation_app do
+      app =
+        start_supervised!(
+          {App,
+           [
+             name: nil,
+             test_mode: {100, 24},
+             connection: self(),
+             test_pid: self(),
+             media: :app_test_no_media
+           ]}
+        )
+
+      send(
+        app,
+        {:randos, {:joined, %{"state" => server_state("idle"), "languages" => @languages}}}
+      )
+
+      assert_receive {:tui_model, ^app, %Model{status: :idle}}
+      app
+    end
+
+    test "the join prompt takes q and t as letters" do
+      app = invitation_app()
+      keys(app, ["j", "q", "t"])
+      assert_receive {:tui_model, ^app, %Model{join_prompt: "qt"}}
+      assert Process.alive?(app)
+    end
+
+    test "y copies the link and says so on screen" do
+      app = invitation_app()
+      invitation = %{"url" => "https://randos.example/join#tok", "expires_at_unix_ms" => 9}
+
+      send(
+        app,
+        {:randos, {:push, "state", server_state("inviting", %{"invitation" => invitation})}}
+      )
+
+      assert_receive {:tui_model, ^app, %Model{status: :inviting}}
+      keys(app, ["y"])
+      assert_receive {:tui_model, ^app, %Model{message: "link copied"}}
+    end
+
+    test "a disconnect closes the prompt, so q quits again" do
+      app = invitation_app()
+      ref = Process.monitor(app)
+      keys(app, ["j"])
+      assert_receive {:tui_model, ^app, %Model{join_prompt: ""}}
+      send(app, {:randos, :disconnected})
+      assert_receive {:tui_model, ^app, %Model{connection: :connecting, join_prompt: nil}}
+      keys(app, ["q"])
+      assert_receive {:DOWN, ^ref, :process, ^app, _reason}
     end
   end
 

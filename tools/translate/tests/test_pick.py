@@ -75,6 +75,8 @@ def test_no_veto_without_a_judged_alternative_rated_well():
         "a": entry("Lenguaje", metricx=0.30, comet=0.87, judge=4),
         "b": entry("Idioma", metricx=1.69, comet=0.86, judge=None),
     }
+    # (Rated well by the other judge, so not every judge rates it low.)
+    entries["a"]["scores"]["judge_qwen"] = {"score": 8}
     assert review.pick(entries)["model"] == "a"
     # Nor does a middling one (5 or 6).
     entries["b"] = entry("Idioma", metricx=1.69, comet=0.86, judge=6)
@@ -122,3 +124,14 @@ def test_a_lone_translation_a_judge_rates_low_ships_nothing():
     assert review.pick(lone) is None
     lone["b"]["scores"]["judge"] = {"score": 5}
     assert review.pick(lone)["model"] == "b"
+
+
+def test_a_pick_every_judge_rates_low_ships_nothing():
+    weak = {
+        "a": entry("A", metricx=1.0, comet=0.9, judge=3),
+        "b": entry("B", metricx=2.0, comet=0.8, judge=4),
+    }
+    # No rating high enough to veto either, and the best is rated low.
+    assert review.pick(weak) is None
+    weak["a"]["scores"]["judge"] = {"score": 6}
+    assert review.pick(weak)["model"] == "a"

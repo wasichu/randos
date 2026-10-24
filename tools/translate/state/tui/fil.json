@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · ikaw %{you} dBFS · katulad %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (default)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} parehong paraan"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} minuto"
   },
   "%{minutes} min or more": {
@@ -68,7 +68,7 @@
     "msgstr": "Sinusuri ang relay…"
   },
   "Connected: %{connected}": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Nakakonekta: %{connected}"
   },
   "Connecting to the server…": {
@@ -76,7 +76,7 @@
     "msgstr": "Nagkokonekta sa server…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Koneksyon:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -84,7 +84,7 @@
     "msgstr": "Magpatuloy pa ba sa loob ng %{minutes} minuto?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Magpatuloy?"
   },
   "Continued": {
@@ -168,7 +168,7 @@
     "msgstr": "Walang naka-configure na relay sa server na ito, kaya ang mga tawag dito ay direktang dumadaloy."
   },
   "Now:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Ngayon:"
   },
   "Other languages: %{calls}": {
@@ -204,7 +204,7 @@
     "msgstr": "Kalagayan ng server"
   },
   "Speaker:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Tagapagsalita:"
   },
   "Text only (no audio helper).": {
@@ -256,7 +256,7 @@
     "msgstr": "Binibilang namin ang mga tawag, hindi ang mga tao: walang mga address, walang mga ID, wala ring anumang impormasyon tungkol sa sinuman."
   },
   "You": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Ikaw"
   },
   "You're in a call.": {
@@ -264,7 +264,7 @@
     "msgstr": "Ikaw ay nasa isang tawag."
   },
   "Your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Ang iyong rando"
   },
   "any of the languages you picked (%{count})": {
@@ -336,7 +336,7 @@
     "msgstr": "sa isang tawag"
   },
   "key\u000418+": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -352,23 +352,19 @@
     "msgstr": "kanselahin"
   },
   "key\u0004cancel the link": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "kanselahin ang link"
   },
   "key\u0004change": {
     "model": "madlad-400",
     "msgstr": "baguhin"
   },
-  "key\u0004check": {
-    "model": "opus-mt",
-    "msgstr": "Error sa pagbasa ng talaksang '%s': %s"
-  },
   "key\u0004close": {
     "model": "translategemma-4b",
     "msgstr": "isara"
   },
   "key\u0004continue": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "magpatuloy"
   },
   "key\u0004copy the link": {
@@ -392,7 +388,7 @@
     "msgstr": "imbitahan"
   },
   "key\u0004join": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "sumali"
   },
   "key\u0004join a link": {
@@ -412,7 +408,7 @@
     "msgstr": "pagsubok sa mikropono"
   },
   "key\u0004move": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ilipat"
   },
   "key\u0004mute": {
@@ -471,6 +467,10 @@
     "model": "hy-mt2",
     "msgstr": "nakatugma; nagkokonekta"
   },
+  "log\u0004time is up: continue? (%{yes}/%{no})": {
+    "model": "hy-mt2",
+    "msgstr": "Tapos na ang oras: ipagpapatuloy? (%{yes}/%{no})"
+  },
   "log\u0004time is up: continue? (y/n)": {
     "model": "translategemma-4b",
     "msgstr": "Tapos na ang oras: magpatuloy? (oo/hindi)"
@@ -488,7 +488,7 @@
     "msgstr": "hindi naririnig"
   },
   "no answer": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "walang sagot"
   },
   "no call": {
@@ -531,10 +531,6 @@
     "model": "translategemma-4b",
     "msgstr": "Imbitasyon"
   },
-  "panel title\u0004Looking": {
-    "model": "m2m100",
-    "msgstr": "Tingnan ang"
-  },
   "panel title\u0004Matched": {
     "model": "hy-mt2",
     "msgstr": "Nakatugma"
@@ -543,10 +539,6 @@
     "model": "opus-mt",
     "msgstr": "Tapos na ang panahon"
   },
-  "paste the whole link you were sent": {
-    "model": "madlad-400",
-    "msgstr": "i-paste ang buong link ikaw ay ipinadala"
-  },
   "peak %{level} dBFS": {
     "model": "translategemma-4b",
     "msgstr": "pinakamataas na antas na %{level} dBFS"
@@ -554,6 +546,10 @@
   "peer offered audio; this client has none, so the call ended (Enter to look again)": {
     "model": "translategemma-12b",
     "msgstr": "Nag-alok ang kabilang partido ng audio; ang kliyenteng ito ay walang audio, kaya natapos ang tawag. (Pindutin para subukan muli)"
+  },
+  "pick at least one language to hear (%{key} toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "Pumili ng kahit isang wika para marinig (%{key} ay nagpapalit sa isa)"
   },
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
@@ -606,6 +602,14 @@
   "the audio helper restarted": {
     "model": "madlad-400",
     "msgstr": "ang audio helper ay muling nagsimula"
+  },
+  "tick the 18+ box first (%{key})": {
+    "model": "translategemma-4b",
+    "msgstr": "Una, lagyan ng marka ang kahon na \"18+\" (%{key})"
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-4b",
+    "msgstr": "Una, lagyan ng marka ang kahon na \"18+\" (tab)"
   },
   "tick the 18+ box on the form first": {
     "model": "m2m100",

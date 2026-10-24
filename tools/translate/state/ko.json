@@ -15,6 +15,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes}+ 분"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "남은 시간: %{time} (분:초)"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "남은 시간: %{time}"
@@ -191,10 +195,6 @@
     "model": "translategemma-4b",
     "msgstr": "저는 18세 이상이며, 대화가 익명으로 진행되고 관리되지 않는다는 것을 이해합니다."
   },
-  "I will speak in": {
-    "model": "m2m100",
-    "msgstr": "나는 말을 할 것이다"
-  },
   "I'm happy to hear": {
     "model": "madlad-400",
     "msgstr": "듣게 되어 기쁘네요"
@@ -319,6 +319,10 @@
     "model": "hy-mt2",
     "msgstr": "원하는 방법으로 이 링크를 그들에게 보내주세요. 한 번만 작동하며, 앞으로 %{minutes}분 동안 유효합니다."
   },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-4b",
+    "msgstr": "이 링크를 그들에게 원하는 방식으로 보내세요. 이 링크는 한 번만 작동합니다."
+  },
   "Share a link.": {
     "model": "hy-mt2",
     "msgstr": "링크를 공유하세요."
@@ -440,7 +444,7 @@
     "msgstr": "다크 모드 전환"
   },
   "Translations": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "번역"
   },
   "Typical length": {

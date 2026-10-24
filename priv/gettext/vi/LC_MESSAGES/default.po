@@ -862,11 +862,6 @@ msgstr "Liên kết mời tham dự"
 msgid "Inviting"
 msgstr "Gửi lời mời"
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Send them this link however you like. It works once, for the next %{minutes} minutes."
-msgstr "Bạn có thể gửi liên kết này cho họ theo bất kỳ cách nào bạn muốn. Liên kết này chỉ hoạt động một lần, trong khoảng %{minutes} phút tiếp theo."
-
 #. Heading of the page an invitation link opens.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -957,8 +952,19 @@ msgstr "Đang chờ"
 msgid "Your link expired before anyone used it."
 msgstr "Liên kết của bạn đã hết hạn trước khi ai đó sử dụng nó."
 
-#. Shown on the form after an invitation call the other person (or time) ended.
+#. Shown on the form after an invitation call ended in a way you didn't choose (the other person hung up, time ran out, the connection was lost).
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Your call ended."
 msgstr "Cuộc gọi của bạn đã kết thúc."
+
+#. How long an invitation link keeps working, as m:ss (it counts down).
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "%{time} left"
+msgstr "%{time} left"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Send them this link however you like. It works once."
+msgstr "Bạn có thể gửi liên kết này cho họ theo bất kỳ cách nào bạn muốn. Liên kết này chỉ hoạt động một lần."

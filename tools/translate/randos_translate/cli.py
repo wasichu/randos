@@ -63,7 +63,9 @@ def plan() -> list[tuple[str, str, list[str], Path, int]]:
         count = sum(len(stale(data, sources, loc, contestants.takes_context(model))) for loc in locales)
         if count:
             todo.append((contestants.uv_group(model), model, locales, path, count))
-    return todo
+    # Grouped by uv group, mlx first, so the venv re-syncs as little as it
+    # can, and ends on models, as `score --scorer metricx` that follows.
+    return sorted(todo, key=lambda run: (run[0] != "mlx", run[1]))
 
 
 def run(model_name: str, locales: list[str], limit: int | None, append: Path | None = None) -> Path:
@@ -76,7 +78,7 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
     earlier = json.loads(append.read_text()) if append else None
     if earlier and earlier["run"]["model"] != model_name:
         sys.exit(f"{append} is a run of {earlier['run']['model']}, not {model_name}")
-    takes_context = getattr(model, "takes_context", False)
+    takes_context = contestants.takes_context(model_name)
 
     unsupported = [loc for loc in locales if loc not in model.locales]
     if unsupported:
@@ -128,7 +130,6 @@ def run(model_name: str, locales: list[str], limit: int | None, append: Path | N
         }
 
     at = stamp()
-    RESULTS.mkdir(exist_ok=True)
     meta = {"model": model_name, "locales": locales, "strings": len(sources), "at": at, "seconds": seconds}
     if earlier:
         # The first run's time stays (it's the comparable one); top-ups are noted.
@@ -243,7 +244,7 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument(
         "--judge", action="append", choices=sorted(scoring.JUDGES), help="with --scorer judge: only this judge (repeatable)"
     )
-    b = sub.add_parser("tidy", help="apply models.tidy (brand case, ellipsis, placeholders, NFC) to runs made before it")
+    b = sub.add_parser("tidy", help="apply models.tidy (the name in other scripts, brand case, ellipsis, placeholders, NFC) to runs made before it")
     b.add_argument("results", type=Path, nargs="+")
     sub.add_parser("plan", help="list the shootout runs with strings to top up (group, model, locales, run, count)")
     sub.add_parser(

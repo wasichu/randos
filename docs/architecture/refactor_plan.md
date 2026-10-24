@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `8c0f513` (2026-10-23). Update this line, and
+Verified against the code at `6b6057c` (2026-10-24). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -688,7 +688,7 @@ split). Done before Phases 5 and 6 run in parallel, so the pass and Phase
 
 No behaviour changes.
 
-## Quality pass before the voice lab, third (in progress 2026-10-24)
+## Quality pass before the voice lab, third (done 2026-10-24)
 
 Over what landed since the second (`a10ac18`..: the TUI's translation,
 invitations, the translation tool's plan/update/batching, CI and build
@@ -711,8 +711,34 @@ advisor's view, then the owner's decisions:
 
 T5's proposed length check for key/log hints was dropped after measuring:
 it flagged correct translations ("unmute" → "desactivar el silencio");
-only the printf check (a `%s` the source lacks) stays. The full inventory
-and what was left (with reasons) is recorded with the commits that fix it.
+only the printf check (a `%s` the source lacks) stays, inside the
+placeholders check.
+
+Outcome (commits "Quality pass 3, …" and after): every bug fixed, with
+tests: the server's (an invitation withdrawn on leave, the resumed
+joiner's own languages, `token` filtered from logs, the coordinator's
+sequence-only tests on long timers), the TUI's (its feedback was never
+drawn; the join prompt cut its 18+ line and the link; a disconnect left
+the prompt deaf; the help line dropped `l`; the clipboard's exit status
+and SSH), the translation tool's (`script_brand` inside words, judged
+text recorded per candidate, the update guard, test leaks), and the
+build's: `bin/prefetch.sh` (`just prefetch`) is now the one place that
+fetches what Erlang's :httpc can't (both NIFs and Tailwind), for setup,
+CI and the Dockerfile. Found while finishing: the TUI's key names were
+translated ("tab" became a browser tab in six languages, "(y/n)" became
+"(Ja/Nein)"), so key names are now placeholders; "idle" alone became
+"waste" in Japanese, so the log reuses "not looking for a rando"; and
+`just screenshots` read the developer's own TUI settings (now
+`RANDOS_TUI_SETTINGS`, dev only).
+
+Left, with reasons: MLXChat's and the judges' batching (four lines each,
+different post-processing: extract at a third user); `issue_fix`'s
+catalog default (the workflow is site-only); telemetry's `kind` without a
+consumer (harmless); the retired 27B's translations keep competing (as
+decided); two greedy word packers (different separators and cutting); the
+participant core's three similar clauses (clearer apart); Arabic letters
+reordered but not joined on terminals without bidi (shaping is out of
+scope, documented); `view.ex`'s length (split when it next grows).
 
 ## Quality pass before the voice lab, second (done 2026-10-23)
 
@@ -785,25 +811,16 @@ fix); `cli tidy` keeping pre-tidy scores (typographic changes only);
 both offerer guards for ICE restart (each has its own job). The voice
 processor isn't in the protocol yet: Phase 5's decision.
 
-Not inventoried: `.github/workflows/ci.yml`, `config/`, `infra/`.
+Not inventoried: `config/`, `infra/` (the workflows and Dependabot were
+reviewed in the third quality pass).
 
 ## Open items
 
 Not scheduled; pick up when relevant.
 
-- **Invitation links (proposed by the owner, 2026-10-22).** Anonymous,
-  one-time links, after Lichess's anonymous challenges: create a link,
-  share it elsewhere, the first to open it is in a one-to-one call with
-  you; it dies once used, after 15 minutes, or when you leave. Design in
-  [`invitations.md`](invitations.md): the Matchmaker holds invitations (a
-  waiting entry found by token, so claims are serialized and the call
-  start, monitoring and 18+ check are reused), the token rides in the URL
-  fragment (never in a log or a link preview), and an invitation call is
-  an ordinary call marked `kind: :invitation` (both go idle after it, no
-  "Next"). The owner's decisions (2026-10-22): both go idle after the
-  call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
-  clients in the first cut; counted among calls started but not language
-  pairs; the button says "Invite someone". Likely before the voice lab.
+- **Invitation links (done 2026-10-24).** Built and reviewed by the owner
+  in two rounds of screenshots; [`invitations.md`](invitations.md) has the
+  design and every decision, the quality passes the follow-ups.
 - **Coordinator tests on 20 ms timers (for the voice lab's quality pass).**
   A test needed a timing fix twice on 2026-10-24 (the relay-dead restarts,
   the extension vote: both on a slow macOS runner, both where the timer
@@ -824,7 +841,7 @@ Not scheduled; pick up when relevant.
   right to left checked by eye in Terminal.app (which reorders) and Ghostty
   (where `Tui.Bidi` does); `tui_translation.md` has the plan and the bidi
   spike. Its catalog's first shootout ran six models (TranslateGemma 27B
-  skipped to save hours; it won 8% of the site's picks). A string whose
+  skipped to save hours; it won 7% of the site's picks). A string whose
   every translation fails only on a final full stop the English lacks now
   ships the best one without it (`review._without_final_stops`; three
   strings in Japanese and Korean, none on the site). After changing UI

@@ -9,7 +9,9 @@ import Config
 config :tui,
   default_url: "ws://localhost:4000/participant/websocket",
   log_path: "tmp/tui.log",
-  config_path: "tmp/tui-config.json"
+  # RANDOS_TUI_SETTINGS: another file, for scripted runs (`just
+  # screenshots`), which must start fresh and leave yours alone.
+  config_path: System.get_env("RANDOS_TUI_SETTINGS", "tmp/tui-config.json")
 
 if config_env() == :prod do
   config :tui,

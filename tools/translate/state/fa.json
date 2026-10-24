@@ -15,6 +15,10 @@
     "model": "m2m100",
     "msgstr": "%{minutes} + دقیقه"
   },
+  "%{time} left": {
+    "model": "m2m100",
+    "msgstr": "%{time} باقی مانده"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "زمان باقی‌مانده: %{time}"
@@ -72,7 +76,7 @@
     "msgstr": "لغو شد"
   },
   "Change": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "تغییر"
   },
   "Checking the relay…": {
@@ -195,10 +199,6 @@
     "model": "hy-mt2",
     "msgstr": "من ۱۸ ساله یا بالاتر هستم و می‌دانم که گفتگوها ناشناس و بدون نظارت هستند."
   },
-  "I will speak in": {
-    "model": "translategemma-4b",
-    "msgstr": "من صحبت خواهم کرد در"
-  },
   "I'm happy to hear": {
     "model": "m2m100",
     "msgstr": "خوشحالم که شنیدم"
@@ -216,11 +216,11 @@
     "msgstr": "لینک دعوتنامه"
   },
   "Invite": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "دعوت"
   },
   "Inviting": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "دعوت"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
@@ -322,6 +322,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "translategemma-4b",
     "msgstr": "این لینک را به هر روشی که می‌خواهید برای آن‌ها ارسال کنید. این لینک یک بار کار می‌کند و برای مدت%{minutes} دقیقه فعال خواهد بود."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-4b",
+    "msgstr": "این لینک را به هر روشی که می‌خواهید برای آن‌ها ارسال کنید. این لینک فقط یک بار کار می‌کند."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -528,15 +532,15 @@
     "msgstr": "لغو پیوند"
   },
   "button\u0004Continue": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "ادامه"
   },
   "button\u0004Copy": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "کپی"
   },
   "button\u0004End": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "پایان"
   },
   "button\u0004Find a rando": {

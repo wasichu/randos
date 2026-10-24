@@ -32,7 +32,9 @@ context, have a string whose context changed, tops each of those up
 (`run --append`, one model at a time), scores what's pending (a scorer's
 model loads only when something is), and fills every language with
 `fill --best --redo`. A few changed strings take minutes per model, most
-of it loading; the first run of a catalog takes hours. The MLX models
+of it loading; the first run of a catalog takes hours, and is run by hand
+(`run` per model, then `score` and `review`: `plan` only tops up existing
+shootout runs). The MLX models
 translate (and back-translate) in batches, as the judges judge.
 TranslateGemma 27B is retired (`models.RETIRED`): 7% of the site's picks
 for a third of the shootout's time, so `plan` no longer asks it; its
@@ -210,8 +212,8 @@ text, then the text itself, never a model's name. When only one
 translation passes, the judges rate it too, and either rating it ≤ 4
 drops it (with nothing to compare it to, that rating alone decides:
 Chinese once got "rando: page not found" for "not looking for a rando").
-When none passes and some fail only on a final full stop the English
-lacks (Japanese and Korean end a clause with "。"/"다."), those compete
+When none passes and some fail only on a final full stop or exclamation
+mark the English lacks (Japanese and Korean end a clause with "。"/"다."), those compete
 with it removed, judged the same way (`review.candidates`). A string
 left with no translation stays empty, and the site shows the English.
 

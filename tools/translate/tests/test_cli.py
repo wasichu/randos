@@ -61,8 +61,9 @@ def test_append_adds_new_locales_to_the_run(tmp_path, monkeypatch):
 def test_a_changed_comment_retranslates_only_for_a_model_that_takes_context(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "RESULTS", tmp_path)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("About"), po.Source("Cancel")])
-    reader = type("Reads", (Upper,), {"takes_context": True})()
+    reader = Upper()
     monkeypatch.setattr(cli.contestants, "get", lambda name: reader)
+    monkeypatch.setattr(cli.contestants, "takes_context", lambda name: True)
     first = cli.run("upper", ["es"], None)
 
     about = po.Source("About", comment="The page that explains randos")
@@ -80,6 +81,7 @@ def test_a_changed_comment_retranslates_only_for_a_model_that_takes_context(tmp_
     # A seq2seq model can't use the comment: nothing to redo.
     plain = Upper()
     monkeypatch.setattr(cli.contestants, "get", lambda name: plain)
+    monkeypatch.setattr(cli.contestants, "takes_context", lambda name: False)
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("About"), po.Source("Cancel")])
     second = cli.run("upper", ["es"], None)
     monkeypatch.setattr(cli.po, "sources", lambda: [about, po.Source("Cancel")])
@@ -167,6 +169,8 @@ def test_tidy_rewrites_old_runs_and_counts_what_changed(tmp_path):
 
 def test_a_catalog_moves_sources_fill_state_and_runs_together(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "RESULTS_ROOT", tmp_path)
+    # use_catalog sets RESULTS: put it back after, for the other tests.
+    monkeypatch.setattr(cli, "RESULTS", cli.RESULTS)
     cache = cli.JUDGE_CACHE
     try:
         cli.use_catalog("tui")
@@ -183,10 +187,8 @@ def test_a_catalog_moves_sources_fill_state_and_runs_together(tmp_path, monkeypa
 
 def test_plan_lists_only_the_runs_the_template_outgrew(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "RESULTS", tmp_path)
-    # hy-mt2 reads context, opus-mt doesn't, as the real ones.
-    monkeypatch.setattr(
-        cli.contestants, "get", lambda name: type("M", (Upper,), {"takes_context": name == "hy-mt2"})()
-    )
+    # hy-mt2 reads context, opus-mt doesn't, as the real ones (models.takes_context).
+    monkeypatch.setattr(cli.contestants, "get", lambda name: Upper())
     monkeypatch.setattr(cli.po, "sources", lambda: [po.Source("Ready", comment="On a button.")])
     for name in ("opus-mt", "hy-mt2"):
         cli.run(name, ["es"], None).rename(tmp_path / f"shootout-{name}.json")

@@ -15,6 +15,10 @@
     "model": "m2m100",
     "msgstr": "%{minutes} + phút"
   },
+  "%{time} left": {
+    "model": "madlad-400",
+    "msgstr": "%{time} left"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} còn lại"
@@ -100,7 +104,7 @@
     "msgstr": "Kết nối bị mất"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Kết nối:"
   },
   "Continued past %{minutes} minutes": {
@@ -124,7 +128,7 @@
     "msgstr": "Đã sao chép"
   },
   "Couldn't connect": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Không thể kết nối"
   },
   "Counted across %{answered} of %{total} servers.": {
@@ -228,7 +232,7 @@
     "msgstr": "Dự kiến, nó sẽ được sử dụng cho %{crosstalk}, giao lưu ngôn ngữ, luyện nghe và các cuộc trò chuyện thông thường, thoải mái mà không cần phải áp đặt bất kỳ khuôn mẫu hay quy tắc cứng nhắc nào lên người tham gia."
   },
   "Join": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Tham gia"
   },
   "Language": {
@@ -272,7 +276,7 @@
     "msgstr": "Không có gì tương đồng."
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "Các ngôn ngữ khác: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -300,7 +304,7 @@
     "msgstr": "Đang chuẩn bị cuộc gọi"
   },
   "Privacy": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Quyền riêng tư"
   },
   "Ready": {
@@ -322,6 +326,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "translategemma-4b",
     "msgstr": "Bạn có thể gửi liên kết này cho họ theo bất kỳ cách nào bạn muốn. Liên kết này chỉ hoạt động một lần, trong khoảng %{minutes} phút tiếp theo."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-4b",
+    "msgstr": "Bạn có thể gửi liên kết này cho họ theo bất kỳ cách nào bạn muốn. Liên kết này chỉ hoạt động một lần."
   },
   "Share a link.": {
     "model": "madlad-400",
@@ -456,7 +464,7 @@
     "msgstr": "Xem trên GitHub"
   },
   "Waiting": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Đang chờ"
   },
   "Waiting for your rando to open the link…": {

@@ -261,6 +261,15 @@ defmodule RandosDev.TranslationReviewLive do
                   <p :if={t["text"] != ""} dir={@dir} lang={@review_locale} class="text-base">
                     {t["text"]}
                   </p>
+                  <%!-- What ships, when the fallback changed it (a final stop removed). --%>
+                  <p
+                    :if={row["best"] == model and row["best_text"] && row["best_text"] != t["text"]}
+                    dir={@dir}
+                    lang={@review_locale}
+                    class="review-ships-text text-sm text-teal-800"
+                  >
+                    ships as: {row["best_text"]}
+                  </p>
                   <p :if={t["text"] == ""} class="text-base italic text-stone-500">(empty)</p>
                   <p class="text-xs text-stone-500">back: {t["back_translation"]}</p>
                   <ul :if={t["failed"] != []} class="flex flex-wrap gap-1">

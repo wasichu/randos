@@ -350,6 +350,23 @@ defmodule Randos.ParticipantTest do
       end
     end
 
+    test "a new invitation or joining clears the last notice; a seat taken elsewhere clears the call's kind" do
+      p = participant(notice: :call_ended)
+      assert {%{notice: nil}, _} = Participant.handle(p, {:invite, @prefs})
+
+      assert {%{notice: nil}, _} =
+               Participant.handle(
+                 p,
+                 {:accept_invitation, "tok", %{adult_acknowledged?: true, audio?: true}}
+               )
+
+      pid = fake_pid()
+      busy = participant(status: :in_call, call_pid: pid, call_kind: :invitation)
+
+      assert {%{call_kind: nil, status: :idle}, [:detach]} =
+               Participant.handle(busy, {:resumed_elsewhere, pid})
+    end
+
     test "inviting and accepting only apply when idle" do
       looking = participant(status: :looking)
       assert {^looking, []} = Participant.handle(looking, {:invite, @prefs})

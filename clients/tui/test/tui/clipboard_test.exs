@@ -19,4 +19,9 @@ defmodule Tui.ClipboardTest do
         assert Clipboard.command(%{"WAYLAND_DISPLAY" => "", "DISPLAY" => nil}) == nil
     end
   end
+
+  test "over SSH the terminal is asked, never a command on the far machine" do
+    assert Clipboard.command(%{"SSH_TTY" => "/dev/ttys001"}) == nil
+    assert Clipboard.command(%{"SSH_CONNECTION" => "1.2.3.4 5 6.7.8.9 22"}) == nil
+  end
 end

@@ -1,5 +1,5 @@
 # Weekly: known advisories against what's locked, even when nobody pushes
-# (CI only checks on a push). cargo deny reads the Rust advisory database
+# (CI checks only when something is pushed or a PR opens). cargo deny reads the Rust advisory database
 # (with clients/tui/native/deny.toml's ignores); mix hex.audit lists Hex
 # packages their authors retired. A failed scheduled run emails the
 # repository's owner. Fixes usually arrive as Dependabot PRs

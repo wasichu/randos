@@ -14,7 +14,7 @@ and works out:
 - **best**: the translation that ships (`pick`): among those passing every
   check, the best mean rank over MetricX and COMET-Kiwi, the judge breaking
   ties; `fill --best` writes these, string by string. When nothing
-  passes only because of a final full stop the English lacks, the best of
+  passes only because of a final full stop or exclamation mark the English lacks, the best of
   those with it removed (`candidates`). A lone candidate either judge
   rates at the veto line or below ships nothing (the English shows);
 - per locale, the **winner**: only a summary now, the model picked for the
@@ -126,7 +126,7 @@ def average_ranks(scores: dict[str, float], higher_is_better: bool) -> dict[str,
 def candidates(entries: dict[str, dict]) -> dict[str, dict]:
     """The translations of one string `pick` chooses among and the judges
     see (`to_judge`): those passing every check; when none does, those
-    whose one fault was a final full stop the English lacks, with it
+    whose one fault was a final full stop or exclamation mark the English lacks, with it
     removed (`_without_final_stops`)."""
     passing = {m: e for m, e in entries.items() if _passes(e)}
     if passing:
@@ -142,7 +142,8 @@ def pick(entries: dict[str, dict]) -> dict | None:
     there is no candidate, or the only one is one a judge rates at the veto
     line or below (`VETO_AT_MOST`): with nothing to compare it to, that
     rating alone decides ("rando 无法找到页面", "rando: page not found",
-    for "not looking for a rando")."""
+    for "not looking for a rando"). Nor ships a pick that every judge who
+    rated it rated at the line or below."""
     passing = candidates(entries)
     if not passing:
         return None
@@ -179,6 +180,11 @@ def pick(entries: dict[str, dict]) -> dict | None:
         return (primary, tiebreak[m], -chrf, len(passing[m]["text"]), passing[m]["text"])
 
     model = min(passing, key=key)
+    # Every judge that rated the pick rated it at the veto line or below:
+    # nothing ships (the English shows), the owner's rule (2026-10-24).
+    ratings = [s for judge in JUDGES if (s := _score(passing[model], judge)) is not None]
+    if ratings and all(s <= VETO_AT_MOST for s in ratings):
+        return None
     by = " and ".join(SCORERS[s]["label"] for s in deciding) or "the tie-breaks alone"
     veto = f", after the judge's veto of {', '.join(sorted(vetoed))}" if vetoed else ""
     return {"model": model, "why": f"best of {len(passing)} passing translations by {by}{veto}"}
@@ -247,11 +253,11 @@ def to_judge(entries: dict[str, dict], settled, judge: str) -> list[str]:
 
 def _without_final_stops(entries: dict[str, dict]) -> dict[str, dict]:
     """`candidates`' fallback when no translation of a string passes: each one
-    with a final full stop the English lacks removed and checked again
+    with a final full stop or exclamation mark the English lacks removed and checked again
     (`checks.without_final_stop`), so only those whose one fault was that
     stop can pass. Every model ended these Japanese and Korean clauses with
-    "。" or "다."; English leaves a status line bare. The judges never saw
-    them (they see only passing ones), so MetricX and COMET-Kiwi decide."""
+    "。" or "다."; English leaves a status line bare. They're judged like
+    any candidate (`candidates`, which the judges see)."""
     out = {}
     for model, e in entries.items():
         text = checks.without_final_stop(e["msgid"], e["text"])
@@ -285,7 +291,7 @@ def build(runs: list[dict], keys: set[str] | None = None) -> dict:
         first = next(iter(entries.values()))
         chosen, shipped = pick(entries), candidates(entries)
         if chosen and shipped[chosen["model"]]["text"] != entries[chosen["model"]]["text"]:
-            chosen["why"] += ", with the final full stop the English lacks removed (none passed with it)"
+            chosen["why"] += ", with the final full stop or exclamation mark the English lacks removed (none passed with it)"
         row = {
             "key": first["key"],
             "msgid": first["msgid"],

@@ -85,28 +85,39 @@ def brand_case(text: str) -> str:
     return _BRAND.sub(lambda m: m.group(0).lower(), text)
 
 
-# The name written in Arabic letters ("راندو", "الراندوس"): back to the
-# name, which the glossary keeps in Latin letters.
 # The name as models spell it in other scripts (counted in the stored runs,
-# 2026-10-24), each a whole word: the plural ending (group 1) makes it
-# "randos"; a word that goes on (Bengali's possessive "র্যান্ডোর", Hindi's
-# "रैंडम", random) is left alone. Arabic with its article, Urdu's two
+# 2026-10-24), each a whole word (no letter of its script on either side):
+# the plural ending (group 2) makes it "randos"; a word that goes on
+# (Bengali's possessive "র্যান্ডোর", Hindi's "रैंडम", random) or starts
+# earlier ("ग्रैंडो") is left alone. Arabic with its article and the
+# prefixes Arabic attaches (و ف ب ك ل, group 1, kept), Urdu's two
 # spellings, Hindi, and Bengali with or without the zero-width joiner.
 _SCRIPT_BRANDS = [
-    re.compile(r"(?:ال)?راندو(س)?(?![\u0600-\u06FF])"),
-    re.compile(r"(?:رانڈو|رینڈو)(س|ز)?(?![\u0600-\u06FF])"),
-    re.compile(r"रैंडो(स)?(?![\u0900-\u097F])"),
-    re.compile(r"(?:র\u200d?্যান্ডো|রান্ডো)(স)?(?![\u0980-\u09FF])"),
+    re.compile(r"(?<![\u0600-\u06FF])([وفبكل]{0,2})(?:ال)?راندو(س)?(?![\u0600-\u06FF])"),
+    re.compile(r"(?<![\u0600-\u06FF])()(?:رانڈو|رینڈو)(س|ز)?(?![\u0600-\u06FF])"),
+    re.compile(r"(?<![\u0900-\u097F])()रैंडो(स)?(?![\u0900-\u097F])"),
+    re.compile(r"(?<![\u0980-\u09FF])()(?:র\u200d?্যান্ডো|রান্ডো)(স)?(?![\u0980-\u09FF])"),
 ]
+# An Arabic letter that joins the next one, glued to the Latin name
+# ("بrando"): a tatweel joins it visibly ("بـrando"), as Arabic writes a
+# prefix on a Latin word (the owner's choice, 2026-10-24). و and ا don't
+# join forward, so they stay as they are.
+_JOINED_PREFIX = re.compile(r"([بفكلت])(?=randos?(?![A-Za-z]))")
 
 
-def script_brand(text: str) -> str:
+_NAME_IN_SOURCE = re.compile(r"\brandos?\b", re.IGNORECASE)
+
+
+def script_brand(source: str, text: str) -> str:
     """randos/rando transliterated into Arabic, Urdu, Hindi or Bengali
     script, written back as the name (models do it although the glossary
-    says not to)."""
+    says not to), when the English has the name at all: a word that only
+    looks like it ("مارلون براندو", Brando) is left alone."""
+    if not _NAME_IN_SOURCE.search(source):
+        return text
     for pattern in _SCRIPT_BRANDS:
-        text = pattern.sub(lambda m: "randos" if m.group(1) else "rando", text)
-    return text
+        text = pattern.sub(lambda m: m.group(1) + ("randos" if m.group(2) else "rando"), text)
+    return _JOINED_PREFIX.sub(r"\1ـ", text)
 
 
 def ellipsis(source: str, text: str) -> str:
@@ -134,7 +145,7 @@ def tidy(source: str, text: str) -> str:
     """What every machine translation goes through before the checks:
     `script_brand`, `brand_case`, `ellipsis`, `placeholders`, and NFC (one form for every
     letter, so the checks and the .po see the same text)."""
-    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(script_brand(text)))))
+    return unicodedata.normalize("NFC", placeholders(source, ellipsis(source, brand_case(script_brand(source, text)))))
 
 
 # The MLX instruction models: name -> (repo, prompt style). Sizes chosen to
@@ -155,8 +166,9 @@ RETIRED = {"translategemma-27b"}
 
 
 def takes_context(name: str) -> bool:
-    """Whether the model reads a string's context (`MLXChat.takes_context`),
-    known without loading it."""
+    """Whether the model reads a string's context (its translator comment):
+    the MLX chat models do. Known without loading it, so `plan` and `run`
+    agree."""
     return name in MLX
 
 
