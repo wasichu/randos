@@ -53,6 +53,8 @@ defmodule RandosWeb.ParticipantShellTest do
              error: nil,
              error_message: nil,
              invitation: nil,
+             notice: nil,
+             notice_message: nil,
              call: %{
                id: "call-1",
                status: :active,

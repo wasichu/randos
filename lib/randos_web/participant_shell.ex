@@ -73,6 +73,8 @@ defmodule RandosWeb.ParticipantShell do
       error: participant.error,
       error_message: RandosWeb.ParticipantErrors.message(participant.error),
       invitation: client_invitation(participant.invitation),
+      notice: participant.notice,
+      notice_message: RandosWeb.ParticipantErrors.notice(participant.notice),
       call: client_call(participant.call, participant.id)
     }
   end

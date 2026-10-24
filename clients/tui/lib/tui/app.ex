@@ -282,9 +282,16 @@ defmodule Tui.App do
   end
 
   defp apply_model(state, model, commands) do
-    Enum.each(commands, fn {:push, event, payload} ->
-      Connection.push(state.connection, event, payload)
-    end)
+    # A copy (y) happens here, and the model hears how it went.
+    model =
+      Enum.reduce(commands, model, fn
+        {:push, event, payload}, model ->
+          Connection.push(state.connection, event, payload)
+          model
+
+        {:copy, text}, model ->
+          Model.copied(model, Application.get_env(:tui, :clipboard, Tui.Clipboard).copy(text))
+      end)
 
     if model.language != state.model.language do
       Tui.Language.apply(model.language)

@@ -314,8 +314,12 @@ defmodule Randos.ParticipantTest do
       # No next in an invitation call.
       assert {^p, []} = Participant.handle(p, :next)
 
-      # The peer hangs up: idle, not back to looking.
-      assert {%{status: :idle}, []} = Participant.handle(p, {:call_updated, call(m, :ended)})
+      # The peer hangs up: idle, not back to looking, and told why.
+      assert {%{status: :idle, notice: :call_ended} = idle, []} =
+               Participant.handle(p, {:call_updated, call(m, :ended)})
+
+      # The next search clears it.
+      assert {%{notice: nil}, _} = Participant.handle(idle, {:find, @prefs})
     end
 
     test "the joiner accepts with a token, joins the call, and is idle after it" do
@@ -332,7 +336,11 @@ defmodule Randos.ParticipantTest do
       assert {^p, []} = Participant.handle(p, :next)
 
       {p, []} = Participant.handle(p, {:call_updated, call(m, :active)})
-      assert {%{status: :idle}, []} = Participant.handle(p, {:call_updated, call(m, :ended)})
+      # Ending it yourself: idle, with no notice (you know).
+      {p, _} = Participant.handle(p, :end_call)
+
+      assert {%{status: :idle, notice: nil}, []} =
+               Participant.handle(p, {:call_updated, call(m, :ended)})
     end
 
     test "a link that doesn't work leaves the joiner idle with the reason" do

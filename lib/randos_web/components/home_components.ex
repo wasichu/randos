@@ -16,6 +16,7 @@ defmodule RandosWeb.HomeComponents do
   def acknowledged?(_preferences), do: false
 
   attr :ui_state, :atom, required: true
+  attr :flow, :atom, default: :random
 
   def hero_panel(assigns) do
     ~H"""
@@ -37,21 +38,31 @@ defmodule RandosWeb.HomeComponents do
         </p>
       </div>
 
-      <.state_progress ui_state={@ui_state} />
+      <.state_progress ui_state={@ui_state} flow={@flow} />
     </div>
     """
   end
 
   attr :ui_state, :atom, required: true
+  attr :flow, :atom, default: :random
 
+  # One list per way into a call: random matching, or an invitation (the
+  # creator's steps, or the joiner's), so every step shown is true.
   defp state_progress(assigns) do
+    assigns = assign(assigns, :steps, progress_steps(assigns.flow))
+
     ~H"""
     <div
       id="state-progress"
-      class="order-3 grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 sm:grid-cols-5 lg:order-none lg:grid-cols-1"
+      data-flow={@flow}
+      class={[
+        "order-3 grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 lg:order-none lg:grid-cols-1",
+        length(@steps) == 5 && "sm:grid-cols-5",
+        length(@steps) == 4 && "sm:grid-cols-4"
+      ]}
     >
       <div
-        :for={state <- [:idle, :looking, :connecting, :in_call, :extension_pending]}
+        :for={state <- @steps}
         id={"state-progress-#{state}"}
         class={[
           "rounded-md border px-3 py-2 transition-colors duration-200 sm:px-4 sm:py-3",
@@ -77,6 +88,7 @@ defmodule RandosWeb.HomeComponents do
   attr :agreed_to_continue, :boolean, default: false
   attr :form, :any, required: true
   attr :matchmaking_error, :string, default: nil
+  attr :notice, :string, default: nil
   attr :live_action, :atom, default: :home
   attr :join_link, :atom, default: :unknown
   attr :invitation, :map, default: nil
@@ -123,6 +135,7 @@ defmodule RandosWeb.HomeComponents do
             form={@form}
             preferences={@preferences}
             matchmaking_error={@matchmaking_error}
+            notice={@notice}
           />
         <% :inviting -> %>
           <.inviting_panel invitation={@invitation} />
@@ -156,10 +169,21 @@ defmodule RandosWeb.HomeComponents do
   attr :form, :any, required: true
   attr :preferences, :map, required: true
   attr :matchmaking_error, :string, default: nil
+  attr :notice, :string, default: nil
 
   defp idle_panel(assigns) do
     ~H"""
     <div id="idle-panel" class="col-span-full p-5 sm:p-7">
+      <%!-- News, not an error: why the form came back (an invitation call ended). --%>
+      <p
+        :if={@notice}
+        id="call-notice"
+        role="status"
+        class="mb-5 flex items-center gap-2 rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"
+      >
+        <.icon name="hero-phone-x-mark" class="size-5 shrink-0" />
+        {@notice}
+      </p>
       <.form
         for={@form}
         id="conversation-form"
@@ -307,7 +331,7 @@ defmodule RandosWeb.HomeComponents do
         id="join-link-missing"
         class="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
       >
-        {gettext("This link is incomplete. Ask for the whole link again.")}
+        {gettext("This link is incomplete.")}
       </p>
       <.form
         :if={@join_link != :missing}
@@ -802,6 +826,27 @@ defmodule RandosWeb.HomeComponents do
 
   defp language_name(code), do: ConversationLanguages.name(code)
 
+  defp progress_steps(:invite),
+    do: [:inviting, :waiting, :connecting, :in_call, :extension_pending]
+
+  defp progress_steps(:join), do: [:joining, :connecting, :in_call, :extension_pending]
+  defp progress_steps(:random), do: [:idle, :looking, :connecting, :in_call, :extension_pending]
+
+  defp state_label(:inviting) do
+    gettext_comment("Your status: making a private link for someone you know.")
+    gettext("Invite")
+  end
+
+  defp state_label(:waiting) do
+    gettext_comment("Your status: your invitation link waits for the person you sent it to.")
+    gettext("Waiting")
+  end
+
+  defp state_label(:joining) do
+    gettext_comment("Your status: about to join the call an invitation link offers.")
+    gettext("Join")
+  end
+
   defp state_label(:idle) do
     gettext_comment("Your status before a call: ready to look for someone to talk to.")
     gettext("Ready")
@@ -823,6 +868,9 @@ defmodule RandosWeb.HomeComponents do
     gettext("Time is up")
   end
 
+  defp state_description(:inviting), do: gettext("Share a link.")
+  defp state_description(:waiting), do: gettext("For your rando to open it.")
+  defp state_description(:joining), do: gettext("Tick the 18+ box.")
   defp state_description(:idle), do: gettext("Choose your languages.")
   defp state_description(:looking), do: gettext("Finding a compatible rando.")
   defp state_description(:connecting), do: gettext("Starting call with rando.")
@@ -831,16 +879,19 @@ defmodule RandosWeb.HomeComponents do
   defp state_description(:extension_pending),
     do: gettext("Both people choose whether to continue.")
 
-  # Inviting is waiting too: it lights up "Looking".
-  defp progress_step_class(:inviting, state), do: progress_step_class(:looking, state)
-
   defp progress_step_class(ui_state, state) do
-    if ui_state == state do
+    if state in lit_steps(ui_state) do
       "border-stone-950 bg-stone-950 text-white dark:border-stone-100 dark:bg-stone-100 dark:text-stone-950"
     else
       "border-stone-200 bg-white text-stone-500"
     end
   end
+
+  # The steps a status lights up (only one is in any list): inviting is the
+  # creator's "Waiting", and idle on /join the joiner's "Join".
+  defp lit_steps(:inviting), do: [:waiting]
+  defp lit_steps(:idle), do: [:idle, :joining]
+  defp lit_steps(ui_state), do: [ui_state]
 
   # Text the call hook sets itself (assets/js/randos/labels.js), translated
   # here; the hook falls back to English for a missing key.

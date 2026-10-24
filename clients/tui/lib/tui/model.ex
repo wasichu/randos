@@ -34,7 +34,7 @@ defmodule Tui.Model do
   @status_refresh_ms 30_000
 
   @type status :: :connecting | :idle | :looking | :inviting | :in_call | :extension_pending
-  @type command :: {:push, String.t(), map()}
+  @type command :: {:push, String.t(), map()} | {:copy, String.t()}
 
   @typedoc """
   `speaks` is a language code; `hears` the codes the person is happy to
@@ -61,7 +61,8 @@ defmodule Tui.Model do
           status_page: status_page() | nil,
           language: String.t(),
           invitation: map() | nil,
-          join_prompt: String.t() | nil
+          join_prompt: String.t() | nil,
+          notice: String.t() | nil
         }
 
   # `info?`: the "About these numbers" pop-up is open (i).
@@ -89,7 +90,8 @@ defmodule Tui.Model do
             status_page: nil,
             language: "en",
             invitation: nil,
-            join_prompt: nil
+            join_prompt: nil,
+            notice: nil
 
   @statuses %{
     "idle" => :idle,
@@ -249,11 +251,15 @@ defmodule Tui.Model do
   @spec key(t(), String.t()) :: {t(), [command()]}
   def key(%{connection: :connecting} = model, _key), do: {model, []}
 
-  # The join prompt takes every key: a link is typed (or pasted, `paste/2`).
+  # The join prompt takes every key: a link is typed (or pasted, `paste/2`);
+  # tab ticks the 18+ box, which the prompt shows (no link has a tab in it).
   def key(%{join_prompt: text} = model, key) when is_binary(text) do
     case key do
       "esc" ->
         {%{model | join_prompt: nil}, []}
+
+      "tab" ->
+        {%{model | adult_acknowledged?: not model.adult_acknowledged?}, []}
 
       "enter" ->
         accept(model)
@@ -306,6 +312,9 @@ defmodule Tui.Model do
   def key(%{status: :inviting} = model, k) when k in ["c", "esc"],
     do: {model, [{:push, "cancel_invitation", %{}}]}
 
+  def key(%{status: :inviting, invitation: %{"url" => url}} = model, "y"),
+    do: {model, [{:copy, url}]}
+
   # No next in an invitation call (the server ignores it anyway).
   def key(%{status: s, call: %{"kind" => "invitation"}} = model, "n")
       when s in [:connecting, :in_call],
@@ -324,6 +333,21 @@ defmodule Tui.Model do
     do: {model, [{:push, "vote", %{vote: "end"}}]}
 
   def key(model, _key), do: {model, []}
+
+  @doc "How a copy (`y`, `Tui.Clipboard.copy/1`) went, in the log."
+  @spec copied(t(), Tui.Clipboard.result()) :: t()
+  def copied(model, {:ok, :system}), do: log(model, gettext("link copied"))
+
+  def copied(model, {:ok, :terminal}) do
+    gettext_comment(
+      "The link went to the terminal's clipboard; some terminals ignore that, and no program can tell."
+    )
+
+    log(model, gettext("link sent to your terminal's clipboard (if it allows that)"))
+  end
+
+  def copied(model, {:error, _reason}),
+    do: log(model, gettext("couldn't copy the link: select it with the mouse"))
 
   @doc """
   Pasted text (a bracketed paste, one event): into the join prompt, which
@@ -403,11 +427,14 @@ defmodule Tui.Model do
         webrtc_role: state["webrtc_role"],
         error: error,
         call: state["call"],
-        invitation: state["invitation"]
+        invitation: state["invitation"],
+        # News, not an error (an invitation call ended): the server's words.
+        notice: state["notice_message"]
     }
 
     cond do
       error && error != model.error -> log(updated, gettext("error: %{message}", message: error))
+      updated.notice && updated.notice != model.notice -> log(updated, updated.notice)
       status != model.status and model.status != nil -> log(updated, status_line(status))
       true -> updated
     end
@@ -440,9 +467,11 @@ defmodule Tui.Model do
       token == "" ->
         {log(model, gettext("paste the whole link you were sent")), []}
 
+      # The prompt stays open with the link in it (the owner's call); tab
+      # ticks the box from there.
       not model.adult_acknowledged? ->
         gettext_comment("The joiner hasn't ticked the 18+ box on the form yet.")
-        {log(%{model | join_prompt: nil}, gettext("tick the 18+ box on the form first")), []}
+        {log(model, gettext("tick the 18+ box on the form first")), []}
 
       true ->
         payload = %{

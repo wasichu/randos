@@ -204,10 +204,15 @@ defmodule Tui.View do
     error =
       if model.error, do: gettext("Error: %{message}", message: model.error) <> "\n\n", else: ""
 
+    # News, not an error (an invitation call ended): no "Error:".
+    notice = if model.notice, do: model.notice <> "\n\n", else: ""
+
     [
       {form, form_area},
-      {%Paragraph{text: error <> gettext("Press Enter to find a rando.") <> mic_test, wrap: true},
-       text_area}
+      {%Paragraph{
+         text: notice <> error <> gettext("Press Enter to find a rando.") <> mic_test,
+         wrap: true
+       }, text_area}
     ] ++ join_prompt(model, area)
   end
 
@@ -217,10 +222,8 @@ defmodule Tui.View do
 
   # j (or a paste): the invitation link, over the form.
   defp join_prompt(%{join_prompt: text} = model, area) when is_binary(text) do
-    ack =
-      if model.adult_acknowledged?,
-        do: "",
-        else: "\n\n" <> gettext("Tick the 18+ box on the form first.")
+    box = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
+    ack = "\n\n#{box} " <> gettext("I'm 18+ and OK with anonymous, unmoderated calls")
 
     [
       {%Popup{
@@ -230,7 +233,7 @@ defmodule Tui.View do
          },
          block: panel(" #{gettext("Join through a link")} "),
          percent_width: 80,
-         fixed_height: 8
+         fixed_height: 9
        }, area}
     ]
   end
@@ -567,7 +570,11 @@ defmodule Tui.View do
 
   # The prompt takes every key, q too: no quit here.
   defp help(%{join_prompt: text}) when is_binary(text),
-    do: [{"enter", pgettext("key", "join")}, {"esc", pgettext("key", "cancel")}]
+    do: [
+      {"enter", pgettext("key", "join")},
+      {"tab", pgettext("key", "18+")},
+      {"esc", pgettext("key", "cancel")}
+    ]
 
   defp help(%{status: :idle, status_page: %{info?: true}}),
     do: [{"i/esc", pgettext("key", "close")}, quit()]
@@ -610,7 +617,8 @@ defmodule Tui.View do
 
   defp help(%{status: :inviting}) do
     gettext_comment("Key help: withdraw the invitation link, so it stops working.")
-    [{"c", pgettext("key", "cancel the link")}, quit()]
+    cancel = pgettext("key", "cancel the link")
+    [{"y", pgettext("key", "copy the link")}, {"c", cancel}, quit()]
   end
 
   defp help(%{status: s, call: %{"kind" => "invitation"}}) when s in [:connecting, :in_call],

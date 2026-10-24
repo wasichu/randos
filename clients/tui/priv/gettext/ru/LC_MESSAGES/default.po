@@ -785,11 +785,6 @@ msgstr ""
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Tick the 18+ box on the form first."
-msgstr ""
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
 msgstr ""
 
@@ -845,4 +840,32 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgctxt "panel title"
 msgid "Invitation"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "couldn't copy the link: select it with the mouse"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "link copied"
+msgstr ""
+
+#. The link went to the terminal's clipboard; some terminals ignore that, and no program can tell.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "link sent to your terminal's clipboard (if it allows that)"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "18+"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "copy the link"
 msgstr ""

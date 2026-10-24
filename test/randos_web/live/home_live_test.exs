@@ -461,7 +461,9 @@ defmodule RandosWeb.HomeLiveTest do
       {view, url, _token} = invite(conn)
       assert url =~ ~r"/join#.{22,}$"
       assert has_element?(view, "#copy-invitation-button[phx-hook='CopyLink'][data-url='#{url}']")
-      assert has_element?(view, "#state-progress-looking.bg-stone-950")
+      # The creator's own steps: inviting lights "Waiting".
+      assert has_element?(view, "#state-progress[data-flow='invite']")
+      assert has_element?(view, "#state-progress-waiting.bg-stone-950")
 
       view |> element("#cancel-invitation-button") |> render_click()
       assert has_element?(view, "#conversation-form")
@@ -472,6 +474,10 @@ defmodule RandosWeb.HomeLiveTest do
 
       {:ok, view, _html} = live(conn, ~p"/join")
       assert has_element?(view, "#join-form[phx-hook='JoinLink']")
+      # The joiner's steps: no languages to choose.
+      assert has_element?(view, "#state-progress[data-flow='join']")
+      assert has_element?(view, "#state-progress-joining.bg-stone-950")
+      refute has_element?(view, "#state-progress-idle")
       assert has_element?(view, "#join-call-button[disabled]")
       render_hook(view, "join_link", %{"has_token" => true})
 
@@ -517,15 +523,23 @@ defmodule RandosWeb.HomeLiveTest do
       assert has_element?(creator, "#remote-waveform-language", "Deutsch (DE) or 日本語 (JA)")
       assert has_element?(joiner, "#remote-waveform-language", "English (EN)")
 
+      assert has_element?(creator, "#state-progress[data-flow='invite']")
+      assert has_element?(joiner, "#state-progress[data-flow='join']")
+
       joiner |> element("#end-call-button") |> render_click()
       assert eventually_has_element?(creator, "#conversation-form")
       assert has_element?(joiner, "#conversation-form")
+      # The creator didn't end it: told why the form came back. The joiner did.
+      assert has_element?(creator, "#call-notice", "The call ended.")
+      refute has_element?(joiner, "#call-notice")
+      # Back to the usual steps, and the notice goes with the next search.
+      assert has_element?(creator, "#state-progress[data-flow='random']")
     end
 
     test "a used or unknown link shows why, and stays on the join page", %{conn: conn} do
       view = join(conn, "not-a-real-token")
       assert has_element?(view, "#join-panel")
-      assert has_element?(view, "#matchmaking-error", "doesn't work any more")
+      assert has_element?(view, "#matchmaking-error", "That link doesn't work any more.")
     end
   end
 end

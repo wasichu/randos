@@ -6,6 +6,21 @@ defmodule RandosWeb.ParticipantErrors do
   """
   use Gettext, backend: RandosWeb.Gettext
 
+  @doc """
+  The words for a participant's `notice` (`nil` for none): news, not an
+  error, e.g. that an invitation call ended.
+  """
+  @spec notice(:call_ended | nil) :: String.t() | nil
+  def notice(nil), do: nil
+
+  def notice(:call_ended) do
+    gettext_comment(
+      "Shown on the form after an invitation call the other person (or time) ended."
+    )
+
+    gettext("The call ended.")
+  end
+
   @doc "The message for a participant error (`nil` for none)."
   @spec message(Randos.Participant.error() | nil) :: String.t() | nil
   def message(nil), do: nil
@@ -20,16 +35,14 @@ defmodule RandosWeb.ParticipantErrors do
     do: gettext("We couldn't start that call. Please try again.")
 
   def message(:invitation_invalid),
-    do: gettext("That link doesn't work any more. Ask for a new one.")
+    do: gettext("That link doesn't work any more.")
 
   def message(:invitation_expired),
-    do: gettext("Your link expired before anyone used it. Make a new one when you're ready.")
+    do: gettext("Your link expired before anyone used it.")
 
   def message(:audio_mismatch),
     do:
-      gettext(
-        "That call can't be joined from here: one of you has audio and the other doesn't. Try the other kind of client."
-      )
+      gettext("That call can't be joined from here: one of you has audio and the other doesn't.")
 
   def message(:microphone_denied),
     do:

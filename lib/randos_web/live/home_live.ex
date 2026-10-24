@@ -196,6 +196,7 @@ defmodule RandosWeb.HomeLive do
     |> assign(:ui_state, participant.status)
     |> assign(:webrtc_role, participant.webrtc_role)
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
+    |> assign(:notice, ParticipantErrors.notice(participant.notice))
     |> assign(:invitation, ParticipantShell.client_state(participant).invitation)
     |> assign(:call_kind, participant.call_kind)
     |> assign(call_assigns(participant.call, participant.id))
@@ -237,7 +238,10 @@ defmodule RandosWeb.HomeLive do
     <Layouts.app flash={@flash} in_call={@call_status in [:connecting, :active, :extension_pending]}>
       <div class="min-h-[calc(100vh-5rem)] overflow-x-hidden bg-stone-50 text-stone-950">
         <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
-          <.hero_panel ui_state={@ui_state} />
+          <.hero_panel
+            ui_state={@ui_state}
+            flow={progress_flow(@live_action, @ui_state, @call_kind, @webrtc_role)}
+          />
           <.conversation_card
             ui_state={@ui_state}
             call_id={@call_id}
@@ -260,12 +264,21 @@ defmodule RandosWeb.HomeLive do
             agreed_to_continue={@agreed_to_continue}
             form={@form}
             matchmaking_error={@matchmaking_error}
+            notice={@notice}
           />
         </section>
       </div>
     </Layouts.app>
     """
   end
+
+  # Which steps the progress list shows: an invitation has its own, the
+  # creator's (they invited; they offer in the call) and the joiner's.
+  defp progress_flow(:join, :idle, _kind, _role), do: :join
+  defp progress_flow(_action, :inviting, _kind, _role), do: :invite
+  defp progress_flow(_action, _state, :invitation, :offerer), do: :invite
+  defp progress_flow(_action, _state, :invitation, _role), do: :join
+  defp progress_flow(_action, _state, _kind, _role), do: :random
 
   defp default_preferences(socket) do
     speaking_language = browser_locale_language(socket)

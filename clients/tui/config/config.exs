@@ -18,6 +18,8 @@ if config_env() == :prod do
     config_path: {:user_config, "randos/config.json"}
 end
 
+# Tests never touch the real clipboard either (`Tui.Clipboard`): a stand-in
+# that only says it copied.
 if config_env() == :test do
-  config :tui, config_path: nil
+  config :tui, config_path: nil, clipboard: Tui.TestSupport.Clipboard
 end

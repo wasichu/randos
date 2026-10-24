@@ -22,7 +22,9 @@ defmodule Randos.Participant do
   (`:cancel_invitation`) or it expires (`:invitation_expired`). The other
   person joins with `{:accept_invitation, token, prefs}`. After an
   invitation call (`call.match.kind == :invitation`) both go `:idle`, and
-  `:next` does nothing in one.
+  `:next` does nothing in one; whoever didn't end it gets the `notice`
+  `:call_ended`, so the form coming back isn't a surprise (the next find,
+  invite or accept clears it).
 
   ## Which calls are mine
 
@@ -134,6 +136,7 @@ defmodule Randos.Participant do
           stop_after_call?: boolean(),
           invitation: invitation() | nil,
           call_kind: Match.kind() | nil,
+          notice: :call_ended | nil,
           error: error() | nil
         }
 
@@ -148,6 +151,7 @@ defmodule Randos.Participant do
     :error,
     :invitation,
     :call_kind,
+    :notice,
     status: :idle,
     stop_after_call?: false
   ]
@@ -202,7 +206,7 @@ defmodule Randos.Participant do
   def handle(p, {:update_preferences, preferences}), do: {%{p | preferences: preferences}, []}
 
   def handle(%{status: :idle} = p, {:find, preferences}) do
-    p = %{p | preferences: preferences, error: nil}
+    p = %{p | preferences: preferences, error: nil, notice: nil}
 
     if preferences.adult_acknowledged? do
       {p, [{:join_queue, join_attrs(p)}]}
@@ -216,7 +220,7 @@ defmodule Randos.Participant do
   # Inviting someone instead, or joining through someone's link.
 
   def handle(%{status: :idle} = p, {:invite, preferences}) do
-    p = %{p | preferences: preferences, error: nil}
+    p = %{p | preferences: preferences, error: nil, notice: nil}
 
     if preferences.adult_acknowledged? do
       {p, [{:invite, join_attrs(p)}]}
@@ -233,7 +237,7 @@ defmodule Randos.Participant do
 
   # The joiner names no languages (the creator's decide), only these.
   def handle(%{status: :idle} = p, {:accept_invitation, token, preferences}) do
-    p = %{p | preferences: Map.merge(p.preferences, preferences), error: nil}
+    p = %{p | preferences: Map.merge(p.preferences, preferences), error: nil, notice: nil}
 
     if p.preferences.adult_acknowledged? do
       {p, [{:accept_invitation, token, join_attrs(p)}]}
@@ -355,10 +359,15 @@ defmodule Randos.Participant do
   defp update_call(p, %Call{status: :ended} = call) do
     p = %{p | call_pid: nil, call: nil, call_kind: nil, webrtc_role: nil}
 
-    if p.stop_after_call? or call.match.kind == :invitation do
-      {%{p | status: :idle, stop_after_call?: false}, []}
-    else
-      {%{p | status: :looking}, [{:join_queue, join_attrs(p)}]}
+    cond do
+      p.stop_after_call? ->
+        {%{p | status: :idle, stop_after_call?: false}, []}
+
+      call.match.kind == :invitation ->
+        {%{p | status: :idle, notice: :call_ended}, []}
+
+      true ->
+        {%{p | status: :looking}, [{:join_queue, join_attrs(p)}]}
     end
   end
 

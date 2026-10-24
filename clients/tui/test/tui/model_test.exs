@@ -315,6 +315,26 @@ defmodule Tui.ModelTest do
       assert model.invitation == invitation
 
       assert {_model, [{:push, "cancel_invitation", %{}}]} = Model.key(model, "c")
+      # y copies the link; the log says how it went.
+      assert {_model, [{:copy, "https://randos.example/join#tok"}]} = Model.key(model, "y")
+      assert %{log: ["link copied" | _]} = Model.copied(model, {:ok, :system})
+      assert %{log: [terminal | _]} = Model.copied(model, {:ok, :terminal})
+      assert terminal =~ "if it allows that"
+      assert %{log: [failed | _]} = Model.copied(model, {:error, :enoent})
+      assert failed =~ "select it with the mouse"
+    end
+
+    test "after an invitation call the other ended, the server's notice shows (not as an error)" do
+      {model, []} =
+        Model.push(
+          joined(),
+          "state",
+          state("idle", %{"notice" => "call_ended", "notice_message" => "The call ended."})
+        )
+
+      assert model.notice == "The call ended."
+      assert model.error == nil
+      assert ["The call ended." | _] = model.log
     end
 
     test "j opens a prompt that takes every key; enter joins with the part after #" do
@@ -340,13 +360,17 @@ defmodule Tui.ModelTest do
       assert {%{join_prompt: nil}, []} = Model.paste(joined("looking"), "x")
     end
 
-    test "joining needs a token and the 18+ box" do
+    test "joining needs a token and the 18+ box; tab ticks it without leaving the prompt" do
       model = %{joined() | join_prompt: "  "}
       assert {_model, []} = Model.key(model, "enter")
 
       model = %{joined() | join_prompt: "tok", adult_acknowledged?: false}
-      assert {%{join_prompt: nil, log: [line | _]}, []} = Model.key(model, "enter")
+      assert {%{join_prompt: "tok", log: [line | _]} = model, []} = Model.key(model, "enter")
       assert line =~ "18+"
+
+      {model, []} = Model.key(model, "tab")
+      assert model.adult_acknowledged? and model.join_prompt == "tok"
+      assert {_model, [{:push, "accept_invitation", %{token: "tok"}}]} = Model.key(model, "enter")
     end
 
     test "an invitation call has no next; the rando may speak any of several languages" do

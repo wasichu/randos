@@ -174,7 +174,8 @@ when there are several; the joiner's `peer_speaks` is the creator's
 
 The call is an ordinary one (the same timing, vote, audio and recovery)
 with `call.kind` `"invitation"`. When it ends, **both go `idle`**, never
-back to `looking`, and `next` does nothing in it.
+back to `looking` (whoever didn't end it gets the `notice` `call_ended`),
+and `next` does nothing in it.
 
 `ice_restart` (boolean, optional, default `false`) says this client follows
 obligation 10: it restarts ICE when the server asks. Only a call whose two
@@ -255,8 +256,10 @@ e.g. `"in_call"`.
 {
   "status": "idle | looking | inviting | connecting | in_call | extension_pending",
   "webrtc_role": "offerer | answerer | null",
-  "error": "adult_terms_required | unsupported_language | call_start_failed | invitation_invalid | audio_mismatch | microphone_denied | microphone_not_found | audio_unavailable | audio_failed | null",
+  "error": "adult_terms_required | unsupported_language | call_start_failed | invitation_invalid | invitation_expired | audio_mismatch | microphone_denied | microphone_not_found | audio_unavailable | audio_failed | null",
   "error_message": "…the same words the browser shows… | null",
+  "notice": "call_ended | null",
+  "notice_message": "…the same words the browser shows… | null",
   "invitation": null | {"url": "https://…/join#…", "expires_at_unix_ms": 1760000000000},
   "call": null | {
     "id": "call-…",
@@ -323,7 +326,13 @@ e.g. `"in_call"`.
   rando…"), keeping a way to end. Say what was chosen, never "you voted".
   Nothing says whether your rando has chosen yet.
 - `error_message`: show this rather than wording your own, so every client
-  says the same thing.
+  says the same thing. `invitation_expired` is the creator's, when their
+  link expired unused.
+- `notice` / `notice_message`: news, not an error (show it calmly, not as
+  one): `call_ended` after an invitation call that the other person or
+  the time limit ended, since there the client goes back to `idle` rather
+  than `looking`. The next `find`, `invite` or `accept_invitation` clears
+  it.
 - `peer_reconnecting`: `true` while the rando's connection to the server
   is down and the call is waiting for them to come back (show it; don't
   end the call yourself). Their audio may well still be flowing.

@@ -188,3 +188,8 @@ defmodule Tui.TestSupport do
     end
   end
 end
+
+defmodule Tui.TestSupport.Clipboard do
+  @moduledoc "The tests' clipboard (config/config.exs): copies nothing, says it did."
+  def copy(_text), do: {:ok, :system}
+end

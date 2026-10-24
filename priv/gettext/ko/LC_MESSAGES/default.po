@@ -841,21 +841,6 @@ msgctxt "connection state"
 msgid "asking for microphone access"
 msgstr "마이크 액세스 요청"
 
-#: lib/randos_web/participant_errors.ex
-#, elixir-autogen, elixir-format
-msgid "That call can't be joined from here: one of you has audio and the other doesn't. Try the other kind of client."
-msgstr ""
-
-#: lib/randos_web/participant_errors.ex
-#, elixir-autogen, elixir-format
-msgid "That link doesn't work any more. Ask for a new one."
-msgstr ""
-
-#: lib/randos_web/participant_errors.ex
-#, elixir-autogen, elixir-format
-msgid "Your link expired before anyone used it. Make a new one when you're ready."
-msgstr ""
-
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "A one-to-one audio call, like any other on randos, with the person who sent you the link."
@@ -890,11 +875,6 @@ msgstr ""
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
-msgid "This link is incomplete. Ask for the whole link again."
-msgstr ""
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
 msgid "Waiting for your rando to open the link…"
 msgstr ""
 
@@ -922,4 +902,63 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Join the call"
+msgstr ""
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "For your rando to open it."
+msgstr ""
+
+#. Your status: making a private link for someone you know.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Invite"
+msgstr ""
+
+#. Your status: about to join the call an invitation link offers.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Join"
+msgstr ""
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Share a link."
+msgstr ""
+
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "That call can't be joined from here: one of you has audio and the other doesn't."
+msgstr ""
+
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "That link doesn't work any more."
+msgstr ""
+
+#. Shown on the form after an invitation call the other person (or time) ended.
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "The call ended."
+msgstr ""
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "This link is incomplete."
+msgstr ""
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tick the 18+ box."
+msgstr ""
+
+#. Your status: your invitation link waits for the person you sent it to.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Waiting"
+msgstr ""
+
+#: lib/randos_web/participant_errors.ex
+#, elixir-autogen, elixir-format
+msgid "Your link expired before anyone used it."
 msgstr ""
