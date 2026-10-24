@@ -16,7 +16,7 @@
     "msgstr": "%{language} دونوں سمتوں میں"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} منٹ"
   },
   "%{request} refused: %{reason}": {
@@ -72,7 +72,7 @@
     "msgstr": "سرور سے رابطہ قائم کیا جا رہا ہے…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "اتصال:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -100,7 +100,7 @@
     "msgstr": "ڈیوائسز"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "غلطی: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -164,11 +164,11 @@
     "msgstr": "اس سرور پر کوئی ریلے ترتیب دیا گیا نہیں ہے، اس لیے یہاں کالیں براہِ راست جاتی ہیں۔"
   },
   "Now:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "اب:"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "دیگر زبانیں: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -324,7 +324,7 @@
     "msgstr": "قطع؛ دوبارہ رابطہ قائم کرنا"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "غلطی: %{message}"
   },
   "in a call": {
@@ -332,7 +332,7 @@
     "msgstr": "کال کے دوران"
   },
   "key\u000418+": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -396,7 +396,7 @@
     "msgstr": "ایک لنک میں شامل ہوں"
   },
   "key\u0004language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "زبان"
   },
   "key\u0004mic": {
@@ -412,7 +412,7 @@
     "msgstr": "حرکت کرو"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خاموش"
   },
   "key\u0004next rando": {
@@ -448,8 +448,8 @@
     "msgstr": "لنک آپ کے ٹرمینل کے کلپ بورڈ میں بھیج دیا گیا ہے (اگر یہ ایسا کرنے کی اجازت دیتا ہے تو)۔"
   },
   "log\u0004idle": {
-    "model": "opus-mt",
-    "msgstr": "بیکار"
+    "model": "translategemma-4b",
+    "msgstr": "بے کار، غیر فعال"
   },
   "log\u0004in call": {
     "model": "m2m100",
@@ -480,7 +480,7 @@
     "msgstr": "موازنہ کیا جارہا ہے، کال کی تیاری"
   },
   "muted": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خاموش"
   },
   "no answer": {
@@ -603,6 +603,10 @@
     "model": "madlad-400",
     "msgstr": "آڈیو ہیلپر دوبارہ شروع کیا گیا"
   },
+  "tick the 18+ box first (tab)": {
+    "model": "opus-mt",
+    "msgstr": "سب سے پہلے 18+ باکس کو چیک کریں (ٹیب)"
+  },
   "tick the 18+ box on the form first": {
     "model": "opus-mt",
     "msgstr": "پہلے فارم پر 18+ باکس کو ٹک کریں"
@@ -612,11 +616,11 @@
     "msgstr": "وقت ختم ہو گیا: جاری رکھیں؟"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "1 منٹ سے کم"
   },
   "unexpected reply": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "غیر متوقع جواب"
   },
   "waiting for someone to open your link": {

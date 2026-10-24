@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · आपका स्तर %{you} dBFS · सामने वाले का स्तर %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (डिफ़ॉल्ट)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} या %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} दोनों तरीकों से"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} मिनट"
   },
   "%{minutes} min or more": {
@@ -48,7 +48,7 @@
     "msgstr": " एक भाषा जोड़ी तब दिखाई देती है जब इसमें कम से कम %{count} कॉल हों; छोटे को \"अन्य\" के रूप में गिना जाता है।"
   },
   "About these numbers": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "Asking the server…": {
@@ -68,7 +68,7 @@
     "msgstr": "रिले की जाँच कर रहा हूँ…"
   },
   "Connected: %{connected}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "कनेक्टेड: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,11 +100,11 @@
     "msgstr": "%{total} सर्वरों में से %{answered} सर्वरों पर गिनती की गई।"
   },
   "Devices": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "उपकरण"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "त्रुटि: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -172,7 +172,7 @@
     "msgstr": "अब:"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "अन्य भाषाएँ: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -244,7 +244,7 @@
     "msgstr": "आज (%{date} पर %{time} UTC से गिनती):"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "सामान्य लंबाई: %{length}"
   },
   "Waiting for your rando to open the link…": {
@@ -328,7 +328,7 @@
     "msgstr": "डिसकनेक्टेड; रीकनेक्टिंग"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "त्रुटि: %{message}"
   },
   "in a call": {
@@ -336,11 +336,11 @@
     "msgstr": "कॉल में"
   },
   "key\u000418+": {
-    "model": "translategemma-4b",
-    "msgstr": "18 वर्ष या उससे अधिक"
+    "model": "hy-mt2",
+    "msgstr": "18+"
   },
   "key\u0004about these numbers": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "key\u0004back": {
@@ -364,11 +364,11 @@
     "msgstr": "जाँच करें"
   },
   "key\u0004close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "बंद करें"
   },
   "key\u0004continue": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "जारी रखें"
   },
   "key\u0004copy the link": {
@@ -400,7 +400,7 @@
     "msgstr": "एक लिंक में शामिल हों"
   },
   "key\u0004language": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "भाषा"
   },
   "key\u0004mic": {
@@ -528,7 +528,7 @@
     "msgstr": "कॉल में"
   },
   "panel title\u0004Invitation": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "निमंत्रण"
   },
   "panel title\u0004Looking": {
@@ -607,6 +607,10 @@
     "model": "madlad-400",
     "msgstr": "ऑडियो मददगार फिर से प्रारंभ हुआ"
   },
+  "tick the 18+ box first (tab)": {
+    "model": "hy-mt2",
+    "msgstr": "पहले 18+ वाला बॉक्स (टैब) चेक करें।"
+  },
   "tick the 18+ box on the form first": {
     "model": "madlad-400",
     "msgstr": "फॉर्म पर पहले 18+ बॉक्स को चेक करें"
@@ -616,7 +620,7 @@
     "msgstr": "समय समाप्त: क्या आप जारी रखना चाहेंगे?"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "1 मिनट से कम"
   },
   "unexpected reply": {

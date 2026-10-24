@@ -18,24 +18,24 @@
       "zh"
     ],
     "strings": 159,
-    "at": "20261024T121612Z",
+    "at": "20261024T153955Z",
     "seconds": 338.8,
     "scored": {
       "metricx": {
-        "at": "20261024T122856Z",
-        "seconds": 46.6
+        "at": "20261024T154007Z",
+        "seconds": 48.0
       },
       "comet_kiwi": {
-        "at": "20261024T122949Z",
-        "seconds": 48.3
+        "at": "20261024T154027Z",
+        "seconds": 49.7
       },
       "judge": {
-        "at": "20261024T123559Z",
-        "seconds": 328.2
+        "at": "20261024T154159Z",
+        "seconds": 338.6
       },
       "judge_qwen": {
-        "at": "20261024T150956Z",
-        "seconds": 123.3
+        "at": "20261024T154231Z",
+        "seconds": 127.0
       }
     },
     "appended": [
@@ -46,6 +46,10 @@
       {
         "at": "20261024T121612Z",
         "seconds": 64.8
+      },
+      {
+        "at": "20261024T153955Z",
+        "seconds": 34.2
       }
     ]
   },
@@ -63,7 +67,7 @@
         "letter_forms": 0,
         "numbers": 7
       },
-      "mean_chrf": 28.7
+      "mean_chrf": 28.9
     },
     "de": {
       "strings": 159,
@@ -78,7 +82,7 @@
         "letter_forms": 0,
         "numbers": 1
       },
-      "mean_chrf": 64.8
+      "mean_chrf": 64.7
     },
     "es": {
       "strings": 159,
@@ -108,7 +112,7 @@
         "letter_forms": 0,
         "numbers": 2
       },
-      "mean_chrf": 29.8
+      "mean_chrf": 29.7
     },
     "fil": {
       "strings": 159,
@@ -123,7 +127,7 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 62.3
+      "mean_chrf": 62.4
     },
     "fr": {
       "strings": 159,
@@ -153,7 +157,7 @@
         "letter_forms": 0,
         "numbers": 4
       },
-      "mean_chrf": 59.5
+      "mean_chrf": 59.4
     },
     "id": {
       "strings": 159,
@@ -183,22 +187,22 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 72.9
+      "mean_chrf": 72.8
     },
     "ru": {
       "strings": 159,
-      "all_checks_pass": 143,
+      "all_checks_pass": 142,
       "failed": {
         "placeholders": 2,
         "glossary": 2,
         "length": 2,
-        "script": 0,
+        "script": 1,
         "shape": 11,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 1
       },
-      "mean_chrf": 52.8
+      "mean_chrf": 52.6
     },
     "tr": {
       "strings": 159,
@@ -213,7 +217,7 @@
         "letter_forms": 0,
         "numbers": 2
       },
-      "mean_chrf": 62.8
+      "mean_chrf": 62.7
     },
     "ur": {
       "strings": 159,
@@ -243,7 +247,7 @@
         "letter_forms": 0,
         "numbers": 3
       },
-      "mean_chrf": 18.6
+      "mean_chrf": 18.7
     },
     "zh": {
       "strings": 159,
@@ -258,7 +262,7 @@
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 46.5
+      "mean_chrf": 46.3
     }
   },
   "entries": [
@@ -16578,15 +16582,17 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly technical, informal alternative like 'Inaktivität' might fit better.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
+          "reason": "Slightly stiff, 'Leerlauf' is more technical",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "Leerlauf"
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Natural term, but 'Leerlauf' sounds slightly technical; 'ruhend' might be more informal and friendly.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Natural term but slightly technical; 'idle' feels more casual in context",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "Leerlauf"
         }
       }
     },
@@ -25119,14 +25125,16 @@
         "judge": {
           "score": 7,
           "reason": "Slightly stiff, 'inactivo' is more formal than needed",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "inactivo"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and calm, fits the tone, minor formality",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Natural and calm, fits the tone, slightly formal but acceptable",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "inactivo"
         }
       }
     },
@@ -42064,9 +42072,10 @@
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Natural but slightly stiff; 'walang ginagawa' is literal but less conversational than needed.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Natural but slightly stiff; 'walang ginagawa' feels more passive than 'idle'",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "walang ginagawa"
         }
       }
     },
@@ -50612,15 +50621,17 @@
         },
         "judge": {
           "score": 7,
-          "reason": "Slightly stiff, 'inactif' is more formal than needed",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
+          "reason": "Slightly stiff, 'inactif' is formal; 'inactif' is not wrong but 'inactif' is not the most natural choice.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "inactif"
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Slightly stiff; 'inactif' feels more formal than needed for casual tone.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Slightly stiff; 'inactif' sounds more formal/technical than needed.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "inactif"
         }
       }
     },
@@ -59141,16 +59152,18 @@
           "score": 0.8024
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the calm tone.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
+          "score": 7,
+          "reason": "Natural but slightly formal for the tone.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "निष्क्रिय"
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Natural but slightly stiff; 'निष्क्रिय' feels formal, 'आराम से' would be more casual",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Feels slightly stiff; 'बेकार' or 'आराम से' would sound more natural and informal.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "निष्क्रिय"
         }
       }
     },
@@ -67681,12 +67694,18 @@
           "score": 0.8032
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, 'menganggur' implies unemployment, not idle in this context.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "menganggur"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 6,
+          "reason": "Slightly stiff; 'menganggur' feels too formal and passive for the context.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "menganggur"
         }
       }
     },
@@ -76210,16 +76229,18 @@
           "score": 0.8085
         },
         "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the calm tone.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
+          "score": 7,
+          "reason": "Slightly stiff, 'inattivo' is more formal than needed",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "inattivo"
         },
         "judge_qwen": {
           "score": 8,
-          "reason": "Natural and appropriate tone, slightly formal but acceptable for a log label.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Natural and calm, fits the tone, slightly formal but acceptable.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "inattivo"
         }
       }
     },
@@ -101743,9 +101764,10 @@
         },
         "judge_qwen": {
           "score": 6,
-          "reason": "Natural but slightly stiff; 'بیکار' feels more negative than 'idle' in context",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "reason": "Feels slightly stiff; 'بے کار' lacks casual tone, 'آرام' or 'بے توجہ' would fit better.",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "بیکار"
         }
       }
     },
@@ -118676,14 +118698,16 @@
         "judge": {
           "score": 7,
           "reason": "Slightly stiff, '闲置' is more technical",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "mistral",
+          "text": "闲置"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and calm, slightly formal for informal tone",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
+          "score": 6,
+          "reason": "Slightly stiff; '闲置' feels more formal/technical than needed",
+          "context": "\nWhere it appears: A log line, one or two words: you're not looking or in a call any more.\n",
+          "by": "qwen",
+          "text": "闲置"
         }
       }
     },
@@ -120510,66 +120534,6 @@
       }
     },
     {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ar",
-      "text": "علامة الـ 18++ 18+ مربع على الشكل أولاً",
-      "back_translation": "18++18+2 in figure one.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.6,
-        "metricx": {
-          "score": 9.38
-        },
-        "comet_kiwi": {
-          "score": 0.4595
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "waiting for someone to open your link",
       "msgid": "waiting for someone to open your link",
       "msgctxt": null,
@@ -121224,12 +121188,18 @@
           "score": 0.816
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -121662,70 +121632,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "de",
-      "text": "das Feld 18+ auf dem Formular zuerst ankreuzen",
-      "back_translation": "check the box 18+ on the form first",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 63.5,
-        "metricx": {
-          "score": 0.61
-        },
-        "comet_kiwi": {
-          "score": 0.8214
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'Feld' is formal, 'ankreuzen' is correct but neutral",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'Feld' is not natural for checkbox; 'an Kreuzen' is awkward.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen"
         }
       }
     },
@@ -122404,12 +122310,18 @@
           "score": 0.816
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -122846,66 +122758,6 @@
           "reason": "Natural, calm, and informal tone; accurate and idiomatic.",
           "context": "",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "es",
-      "text": "marca la casilla 18+ en el formulario primero",
-      "back_translation": "check box 18+ in the first form",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 37.9,
-        "metricx": {
-          "score": 1.89
-        },
-        "comet_kiwi": {
-          "score": 0.8334
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -123583,15 +123435,17 @@
         },
         "judge": {
           "score": 10,
-          "reason": "Correct, natural, and matches tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Perfect match in meaning, tone, and naturalness for native Spanish speakers.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -124028,70 +123882,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fa",
-      "text": "جعبه 18+ را در فرم اول تیک بزنید",
-      "back_translation": "He beat 18+ in the first [floor].",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 28.3,
-        "metricx": {
-          "score": 1.03
-        },
-        "comet_kiwi": {
-          "score": 0.7934
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff phrasing, 'اول' is unnecessary",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 7,
-          "reason": "Slight awkwardness; 'اول' placement disrupts natural flow.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen"
         }
       }
     },
@@ -125200,66 +124990,6 @@
       }
     },
     {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fil",
-      "text": "I-cleck ang 18+ kahon sa anyong una",
-      "back_translation": "Reck 18+ boxes in first form",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 35.5,
-        "metricx": {
-          "score": 9.38
-        },
-        "comet_kiwi": {
-          "score": 0.4077
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "waiting for someone to open your link",
       "msgid": "waiting for someone to open your link",
       "msgctxt": null,
@@ -125921,9 +125651,10 @@
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Perfect match in meaning, tone, and naturalness for Filipino speakers.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
+          "reason": "Perfect match in meaning, tone, and format.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -126351,70 +126082,6 @@
           "score": 10,
           "reason": "Natural, calm, and informal tone; accurate and idiomatic.",
           "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "fr",
-      "text": "cochez d'abord la case 18+ sur le formulaire",
-      "back_translation": "first check box 18+ on the form",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 48.0,
-        "metricx": {
-          "score": 1.49
-        },
-        "comet_kiwi": {
-          "score": 0.8607
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm tone, accurate and idiomatic French",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
           "by": "qwen"
         }
       }
@@ -127094,12 +126761,18 @@
           "score": 0.8622
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 7,
+          "reason": "Slightly stiff, 'et plus' is formal",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18 ans et plus"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 7,
+          "reason": "Natural but slightly stiff; 'et plus' feels formal for the tone",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18 ans et plus"
         }
       }
     },
@@ -127512,66 +127185,6 @@
         },
         "comet_kiwi": {
           "score": 0.7999
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "hi",
-      "text": "फ़ॉर्म पर पहली बार 18+ बक्सा चेक करें",
-      "back_translation": "Check the first 18+ box on form",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 52.7,
-        "metricx": {
-          "score": 3.25
-        },
-        "comet_kiwi": {
-          "score": 0.8195
         },
         "judge": {
           "score": null,
@@ -128246,12 +127859,18 @@
           "score": 0.816
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfect match in meaning, tone, and format; natural and accurate.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -128676,70 +128295,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "id",
-      "text": "centang kotak 18+ pada formulir terlebih dahulu",
-      "back_translation": "Check box 18+ on form first",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 41.0,
-        "metricx": {
-          "score": 0.4
-        },
-        "comet_kiwi": {
-          "score": 0.8618
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the friendly tone.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, accurate, and matches the calm, informal tone.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen"
         }
       }
     },
@@ -129402,12 +128957,18 @@
           "score": 0.816
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Matches exactly, natural and appropriate for context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -129835,70 +129396,6 @@
           "score": 10,
           "reason": "Natural, calm, and informal; perfect for native Italian speakers.",
           "context": "",
-          "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "it",
-      "text": "spuntare prima la casella 18+ sul modulo",
-      "back_translation": "check box 18+ on the form first",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 59.0,
-        "metricx": {
-          "score": 0.74
-        },
-        "comet_kiwi": {
-          "score": 0.8605
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and clear, slightly formal tone, but acceptable.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
           "by": "qwen"
         }
       }
@@ -130570,12 +130067,18 @@
           "score": 0.816
         },
         "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -130992,66 +130495,6 @@
         },
         "comet_kiwi": {
           "score": 0.8298
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ru",
-      "text": "галстук в графе 18+ на бланке сначала",
-      "back_translation": "tie in box 18+ on the form first",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 57.7,
-        "metricx": {
-          "score": 14.06
-        },
-        "comet_kiwi": {
-          "score": 0.4213
         },
         "judge": {
           "score": null,
@@ -131726,14 +131169,16 @@
         "judge": {
           "score": 10,
           "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Perfect match in meaning, tone, and naturalness for Russian speakers.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
+          "reason": "Perfect match in meaning, tone, and format.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -132158,70 +131603,6 @@
         "judge_qwen": {
           "score": null,
           "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "tr",
-      "text": "Önce formdaki 18+ kutusunu işaretle",
-      "back_translation": "First mark the 18+ box in the form",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 59.4,
-        "metricx": {
-          "score": 2.08
-        },
-        "comet_kiwi": {
-          "score": 0.8664
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Natural, calm tone, accurate and idiomatic Turkish",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen"
         }
       }
     },
@@ -132894,14 +132275,16 @@
         "judge": {
           "score": 10,
           "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
         },
         "judge_qwen": {
           "score": 10,
-          "reason": "Perfect match in meaning, tone, and naturalness for Turkish speakers.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
         }
       }
     },
@@ -133333,68 +132716,6 @@
           "context": "",
           "by": "qwen",
           "text": "آپ بھیجے گئے تمام لنک کو پیسٹ کریں"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "ur",
-      "text": "پہلے فارم پر 18+ باکس کو ٹک کریں",
-      "back_translation": "treasure 18th box on the first farm",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 43.4,
-        "metricx": {
-          "score": 2.38
-        },
-        "comet_kiwi": {
-          "score": 0.7523
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 8,
-          "reason": "Natural and accurate, slightly formal tone, but acceptable.",
-          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
-          "by": "qwen"
         }
       }
     },
@@ -134479,66 +133800,6 @@
         },
         "comet_kiwi": {
           "score": 0.4354
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "vi",
-      "text": "giải tích chúng ta có thể giải tích nó là gì?",
-      "back_translation": "Well, what can we solve?",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 5.2,
-        "metricx": {
-          "score": 19.5
-        },
-        "comet_kiwi": {
-          "score": 0.283
         },
         "judge": {
           "score": null,
@@ -135643,66 +134904,6 @@
       }
     },
     {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "",
-      "locale": "zh",
-      "text": "选中窗体上的 18 + 框",
-      "back_translation": "Select the 18+box on the form",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 65.9,
-        "metricx": {
-          "score": 3.08
-        },
-        "comet_kiwi": {
-          "score": 0.5328
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "waiting for someone to open your link",
       "msgid": "waiting for someone to open your link",
       "msgctxt": null,
@@ -136375,16 +135576,18 @@
           "score": 0.8427
         },
         "judge": {
-          "score": 10,
-          "reason": "Accurate, natural, and matches the informal tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
+          "score": 7,
+          "reason": "Slightly stiff, '18岁以上' is formal",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18岁以上"
         },
         "judge_qwen": {
-          "score": 8,
-          "reason": "Clear meaning, natural, slightly formal tone",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
+          "score": 7,
+          "reason": "Natural but slightly stiff; could be more informal like '18+'",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18岁以上"
         }
       }
     },
@@ -136449,6 +135652,855 @@
           "reason": "Natural, calm, and informal; perfect for the context.",
           "context": "\nWhere it appears: A key label.\n",
           "by": "qwen"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ar",
+      "text": "علامة الـ 18++ مربع أولاً (tab)",
+      "back_translation": "18++2 First (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 38.7,
+        "metricx": {
+          "score": 7.41
+        },
+        "comet_kiwi": {
+          "score": 0.5274
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "de",
+      "text": "das Feld 18+ zuerst ankreuzen (Tab)",
+      "back_translation": "check box 18+ first (Tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 35.0,
+        "metricx": {
+          "score": 1.12
+        },
+        "comet_kiwi": {
+          "score": 0.8233
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'Feld' is formal, 'ankreuzen' is correct but 'tick' is more casual.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "das Feld 18+ zuerst ankreuzen (Tab)"
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly awkward phrasing; 'Feld' is unclear, 'an Kreuzen' is not natural for 'tick'.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "das Feld 18+ zuerst ankreuzen (Tab)"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "es",
+      "text": "marca primero la casilla 18+ (tab)",
+      "back_translation": "check box 18+ (tab) first",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 37.2,
+        "metricx": {
+          "score": 1.89
+        },
+        "comet_kiwi": {
+          "score": 0.7805
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fa",
+      "text": "ابتدا جعبه 18+ را تیک بزنید (تب)",
+      "back_translation": "At the beginning of Jabba 18+, we made a brick (then)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 19.5,
+        "metricx": {
+          "score": 1.86
+        },
+        "comet_kiwi": {
+          "score": 0.7208
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fil",
+      "text": "I-crush muna ang 18+ kahon (tab)",
+      "back_translation": "So first take 18+ boxes (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 45.6,
+        "metricx": {
+          "score": 8.62
+        },
+        "comet_kiwi": {
+          "score": 0.4549
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "fr",
+      "text": "cochez la case 18+ en premier (onglet)",
+      "back_translation": "check box 18+ first (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 50.5,
+        "metricx": {
+          "score": 1.36
+        },
+        "comet_kiwi": {
+          "score": 0.7629
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "hi",
+      "text": "18+ बक्सा को पहले चेक करें (टैब)",
+      "back_translation": "Check before 18+ box (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 38.5,
+        "metricx": {
+          "score": 4.97
+        },
+        "comet_kiwi": {
+          "score": 0.8335
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "id",
+      "text": "centang kotak 18+ pertama (tab)",
+      "back_translation": "check first 18+ box (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 44.9,
+        "metricx": {
+          "score": 2.08
+        },
+        "comet_kiwi": {
+          "score": 0.7593
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "it",
+      "text": "spuntare prima la casella 18+ (tab)",
+      "back_translation": "check box 18+ first (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 50.5,
+        "metricx": {
+          "score": 1.84
+        },
+        "comet_kiwi": {
+          "score": 0.7976
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ru",
+      "text": "&quot; галстук &quot; , первый флажок &quot; 18+ &quot; (таб.)",
+      "back_translation": "&quot; tie &quot; , first flag &quot; 18+ &quot; (tab.)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": false,
+          "detail": "only 58% of letters in the ru script"
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 23.8,
+        "metricx": {
+          "score": 12.69
+        },
+        "comet_kiwi": {
+          "score": 0.3926
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "tr",
+      "text": "Önce 18+ kutusunu işaretle (tab)",
+      "back_translation": "First mark 18+ box (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 37.4,
+        "metricx": {
+          "score": 3.86
+        },
+        "comet_kiwi": {
+          "score": 0.8249
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "ur",
+      "text": "سب سے پہلے 18+ باکس کو چیک کریں (ٹیب)",
+      "back_translation": "First check the 18th box (c.m.)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 34.7,
+        "metricx": {
+          "score": 1.59
+        },
+        "comet_kiwi": {
+          "score": 0.8044
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Clear meaning, natural Urdu, slightly formal tone",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "سب سے پہلے 18+ باکس کو چیک کریں (ٹیب)"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "vi",
+      "text": "Cũng có thể giải quyết vấn đề trên cùng một lúc",
+      "back_translation": "We can solve the problem at the same time.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 11.4,
+        "metricx": {
+          "score": 12.94
+        },
+        "comet_kiwi": {
+          "score": 0.3473
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "",
+      "locale": "zh",
+      "text": "先勾选 18 + 框 (tab)",
+      "back_translation": "Tick box 18 + (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 27.0,
+        "metricx": {
+          "score": 2.94
+        },
+        "comet_kiwi": {
+          "score": 0.7429
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     }

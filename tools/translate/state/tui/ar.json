@@ -88,7 +88,7 @@
     "msgstr": "هل تريد الاستمرار؟"
   },
   "Continued": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "مستمر"
   },
   "Continued past %{minutes} minutes": {
@@ -104,7 +104,7 @@
     "msgstr": "أجهزة"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطأ: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -168,7 +168,7 @@
     "msgstr": "لا يوجد أي نظام توجيه مُكوّن على هذا الخادم، لذا فإن المكالمات الواردة إلى هنا تصل مباشرة."
   },
   "Now:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "الآن:"
   },
   "Other languages: %{calls}": {
@@ -188,11 +188,11 @@
     "msgstr": "الصق الرابط الذي تم إرساله إليك:"
   },
   "Press Enter to find a rando.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "اضغط على Enter للعثور على rando."
   },
   "Reconnecting audio…": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "إعادة توصيل الصوت…"
   },
   "Send it to them however you like. It works once.": {
@@ -244,7 +244,7 @@
     "msgstr": "اليوم (حسابًا من الساعة %{time} بتوقيت غرينتش في تاريخ %{date}):"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "الطول النموذجي: %{length}"
   },
   "Waiting for your rando to open the link…": {
@@ -328,7 +328,7 @@
     "msgstr": "قطع الاتصال؛ إعادة الاتصال"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطأ: %{message}"
   },
   "in a call": {
@@ -336,8 +336,8 @@
     "msgstr": "خلال مكالمة"
   },
   "key\u000418+": {
-    "model": "translategemma-4b",
-    "msgstr": "18 سنة أو أكثر"
+    "model": "hy-mt2",
+    "msgstr": "18+"
   },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
@@ -380,7 +380,7 @@
     "msgstr": "النهاية"
   },
   "key\u0004end call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "إنهاء المكالمة"
   },
   "key\u0004find": {
@@ -606,6 +606,10 @@
   "the audio helper restarted": {
     "model": "madlad-400",
     "msgstr": "أعيد تشغيل مساعد الصوت"
+  },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-12b",
+    "msgstr": "ضع علامة (✓) في المربع الخاص بالفئة العمرية 18 سنة فما فوق أولاً."
   },
   "tick the 18+ box on the form first": {
     "model": "madlad-400",

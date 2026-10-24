@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ मिनट"
   },
+  "%{time} left": {
+    "model": "translategemma-12b",
+    "msgstr": "बचे हुए समय: %{time}"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} शेष"
@@ -323,6 +327,10 @@
     "model": "translategemma-12b",
     "msgstr": "आप इस लिंक को अपनी इच्छानुसार उन्हें भेज सकते हैं। यह लिंक एक बार काम करेगा, अगले %{minutes} मिनटों के लिए।"
   },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "आप इस लिंक को जैसे चाहें उन्हें भेज सकते हैं। यह सिर्फ एक बार ही काम करेगा।"
+  },
   "Share a link.": {
     "model": "madlad-400",
     "msgstr": "एक लिंक साझा करें."
@@ -336,7 +344,7 @@
     "msgstr": "किसी ने आपको कॉल करने के लिए आमंत्रित किया"
   },
   "Something went wrong!": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "कुछ गलत हो गया!"
   },
   "Source (AGPL-3.0)": {
@@ -452,7 +460,7 @@
     "msgstr": "सामान्य लम्बाई"
   },
   "View on GitHub": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "GitHub पर देखें"
   },
   "Waiting": {
@@ -484,7 +492,7 @@
     "msgstr": "क्या अभी कॉल्स कनेक्ट हो सकते हैं, और आज का दिन कैसा चल रहा है।"
   },
   "You": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "आप"
   },
   "You agreed to continue, waiting on your rando…": {
@@ -504,8 +512,8 @@
     "msgstr": "आप सुन सकते हैं %{languages}"
   },
   "Your call ended.": {
-    "model": "translategemma-4b",
-    "msgstr": "आपका कॉल समाप्त हो गया है।"
+    "model": "translategemma-12b",
+    "msgstr": "आपका कॉल समाप्त हो गया।"
   },
   "Your link expired before anyone used it.": {
     "model": "translategemma-4b",
@@ -532,7 +540,7 @@
     "msgstr": "जारी रखें"
   },
   "button\u0004Copy": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "कॉपी"
   },
   "button\u0004End": {
@@ -596,7 +604,7 @@
     "msgstr": "समाप्त"
   },
   "connection state\u0004failed": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "असफल"
   },
   "connection state\u0004microphone denied": {

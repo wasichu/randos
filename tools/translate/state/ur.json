@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ منٹ"
   },
+  "%{time} left": {
+    "model": "m2m100",
+    "msgstr": "%{time} باقی رہیں"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "%{time} باقی ہے"
@@ -100,7 +104,7 @@
     "msgstr": "کنکشن کھو گیا"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "اتصال:"
   },
   "Continued past %{minutes} minutes": {
@@ -292,7 +296,7 @@
     "msgstr": "پرائیویٹی"
   },
   "Ready": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "تیار"
   },
   "Reconnecting audio…": {
@@ -310,6 +314,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "hy-mt2",
     "msgstr": "آپ انہیں یہ لنک جس طرح چاہیں بھیج سکتے ہیں۔ یہ ایک بار کام کرتا ہے، اور آئندہ %{minutes} منٹوں تک کام کرتا رہے گا۔"
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "آپ جس طرح چاہیں ان تک یہ لنک بھیج دیں۔ یہ صرف ایک بار کام کرتا ہے۔"
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -672,7 +680,7 @@
     "msgstr": "1 منٹ سے کم"
   },
   "unexpected reply": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "غیر متوقع جواب"
   },
   "waiting for microphone": {

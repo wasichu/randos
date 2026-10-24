@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ دقيقة على الأقل"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} متبقية"
+  },
   "%{time} remaining": {
     "model": "translategemma-27b",
     "msgstr": "الوقت المتبقي: %{time}"
@@ -304,7 +308,7 @@
     "msgstr": "جاهز"
   },
   "Reconnecting audio…": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "إعادة توصيل الصوت…"
   },
   "Running this commit plus changes not yet committed": {
@@ -318,6 +322,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "hy-mt2",
     "msgstr": "أرسل لهم هذا الرابط بأي طريقة تريد. يعمل مرة واحدة، لمدة %{minutes} دقيقة قادمة."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "أرسل لهم هذا الرابط بأي طريقة تريد. إنه يعمل مرة واحدة فقط."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -336,7 +344,7 @@
     "msgstr": "حدث خطأ ما!"
   },
   "Source (AGPL-3.0)": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "المصدر (AGPL-3.0)"
   },
   "Starting call with rando.": {

@@ -23,24 +23,24 @@
       "fil"
     ],
     "strings": 159,
-    "at": "20261024T142514Z",
+    "at": "20261024T153713Z",
     "seconds": 4907.5,
     "scored": {
       "metricx": {
-        "at": "20261024T142537Z",
-        "seconds": 73.3
+        "at": "20261024T154009Z",
+        "seconds": 75.2
       },
       "comet_kiwi": {
-        "at": "20261024T142551Z",
-        "seconds": 105.8
+        "at": "20261024T154030Z",
+        "seconds": 107.7
       },
       "judge": {
-        "at": "20261024T142638Z",
-        "seconds": 342.4
+        "at": "20261024T154155Z",
+        "seconds": 355.6
       },
       "judge_qwen": {
-        "at": "20261024T150956Z",
-        "seconds": 128.3
+        "at": "20261024T154230Z",
+        "seconds": 132.8
       }
     },
     "appended": [
@@ -59,129 +59,133 @@
       {
         "at": "20261024T142514Z",
         "seconds": 28.9
+      },
+      {
+        "at": "20261024T153713Z",
+        "seconds": 65.2
       }
     ]
   },
   "summary": {
     "es": {
       "strings": 159,
-      "all_checks_pass": 66,
+      "all_checks_pass": 68,
       "failed": {
         "placeholders": 2,
         "glossary": 12,
         "length": 2,
         "script": 0,
-        "shape": 89,
+        "shape": 87,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 61.4
+      "mean_chrf": 61.8
     },
     "zh": {
       "strings": 159,
-      "all_checks_pass": 63,
+      "all_checks_pass": 65,
       "failed": {
         "placeholders": 5,
         "glossary": 12,
         "length": 1,
         "script": 1,
-        "shape": 90,
-        "unchanged": 0,
-        "letter_forms": 0,
-        "numbers": 0
-      },
-      "mean_chrf": 50.6
-    },
-    "hi": {
-      "strings": 159,
-      "all_checks_pass": 55,
-      "failed": {
-        "placeholders": 14,
-        "glossary": 13,
-        "length": 1,
-        "script": 2,
-        "shape": 93,
-        "unchanged": 0,
-        "letter_forms": 0,
-        "numbers": 0
-      },
-      "mean_chrf": 54.2
-    },
-    "ar": {
-      "strings": 159,
-      "all_checks_pass": 58,
-      "failed": {
-        "placeholders": 4,
-        "glossary": 12,
-        "length": 3,
-        "script": 0,
-        "shape": 96,
-        "unchanged": 0,
-        "letter_forms": 0,
-        "numbers": 0
-      },
-      "mean_chrf": 52.7
-    },
-    "pt": {
-      "strings": 159,
-      "all_checks_pass": 66,
-      "failed": {
-        "placeholders": 2,
-        "glossary": 8,
-        "length": 4,
-        "script": 0,
         "shape": 88,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 63.4
+      "mean_chrf": 51.0
     },
-    "bn": {
+    "hi": {
       "strings": 159,
       "all_checks_pass": 57,
       "failed": {
-        "placeholders": 5,
+        "placeholders": 14,
         "glossary": 13,
         "length": 1,
         "script": 2,
-        "shape": 93,
+        "shape": 91,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 53.6
+      "mean_chrf": 54.5
     },
-    "ru": {
+    "ar": {
       "strings": 159,
-      "all_checks_pass": 68,
+      "all_checks_pass": 60,
       "failed": {
         "placeholders": 4,
         "glossary": 12,
         "length": 3,
+        "script": 0,
+        "shape": 94,
+        "unchanged": 0,
+        "letter_forms": 0,
+        "numbers": 0
+      },
+      "mean_chrf": 53.1
+    },
+    "pt": {
+      "strings": 159,
+      "all_checks_pass": 68,
+      "failed": {
+        "placeholders": 2,
+        "glossary": 8,
+        "length": 4,
         "script": 0,
         "shape": 86,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 57.2
+      "mean_chrf": 63.9
+    },
+    "bn": {
+      "strings": 159,
+      "all_checks_pass": 58,
+      "failed": {
+        "placeholders": 5,
+        "glossary": 13,
+        "length": 1,
+        "script": 2,
+        "shape": 92,
+        "unchanged": 0,
+        "letter_forms": 0,
+        "numbers": 0
+      },
+      "mean_chrf": 53.3
+    },
+    "ru": {
+      "strings": 159,
+      "all_checks_pass": 69,
+      "failed": {
+        "placeholders": 4,
+        "glossary": 12,
+        "length": 3,
+        "script": 0,
+        "shape": 85,
+        "unchanged": 0,
+        "letter_forms": 0,
+        "numbers": 0
+      },
+      "mean_chrf": 57.0
     },
     "ja": {
       "strings": 159,
-      "all_checks_pass": 67,
+      "all_checks_pass": 68,
       "failed": {
         "placeholders": 0,
         "glossary": 13,
         "length": 1,
         "script": 1,
-        "shape": 86,
+        "shape": 85,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 48.9
+      "mean_chrf": 48.8
     },
     "fr": {
       "strings": 159,
@@ -200,28 +204,28 @@
     },
     "de": {
       "strings": 159,
-      "all_checks_pass": 66,
+      "all_checks_pass": 68,
       "failed": {
         "placeholders": 2,
         "glossary": 12,
         "length": 21,
         "script": 0,
-        "shape": 89,
+        "shape": 87,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 53.5
+      "mean_chrf": 53.8
     },
     "ko": {
       "strings": 159,
-      "all_checks_pass": 71,
+      "all_checks_pass": 72,
       "failed": {
         "placeholders": 9,
         "glossary": 13,
         "length": 1,
         "script": 1,
-        "shape": 75,
+        "shape": 74,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
@@ -230,78 +234,78 @@
     },
     "it": {
       "strings": 159,
-      "all_checks_pass": 58,
+      "all_checks_pass": 60,
       "failed": {
         "placeholders": 7,
         "glossary": 12,
         "length": 6,
         "script": 0,
-        "shape": 94,
+        "shape": 92,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 59.0
+      "mean_chrf": 59.4
     },
     "tr": {
       "strings": 159,
-      "all_checks_pass": 72,
+      "all_checks_pass": 74,
       "failed": {
         "placeholders": 6,
         "glossary": 12,
         "length": 2,
         "script": 0,
-        "shape": 79,
+        "shape": 77,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 57.5
+      "mean_chrf": 58.1
     },
     "id": {
       "strings": 159,
-      "all_checks_pass": 70,
+      "all_checks_pass": 71,
       "failed": {
         "placeholders": 2,
         "glossary": 12,
         "length": 0,
-        "script": 0,
-        "shape": 85,
-        "unchanged": 0,
-        "letter_forms": 0,
-        "numbers": 0
-      },
-      "mean_chrf": 58.9
-    },
-    "vi": {
-      "strings": 159,
-      "all_checks_pass": 70,
-      "failed": {
-        "placeholders": 4,
-        "glossary": 11,
-        "length": 4,
         "script": 0,
         "shape": 84,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 53.8
+      "mean_chrf": 59.3
+    },
+    "vi": {
+      "strings": 159,
+      "all_checks_pass": 71,
+      "failed": {
+        "placeholders": 4,
+        "glossary": 11,
+        "length": 4,
+        "script": 0,
+        "shape": 83,
+        "unchanged": 0,
+        "letter_forms": 0,
+        "numbers": 0
+      },
+      "mean_chrf": 54.0
     },
     "ur": {
       "strings": 159,
-      "all_checks_pass": 56,
+      "all_checks_pass": 58,
       "failed": {
         "placeholders": 4,
         "glossary": 13,
         "length": 5,
         "script": 0,
-        "shape": 93,
+        "shape": 91,
         "unchanged": 0,
         "letter_forms": 1,
         "numbers": 0
       },
-      "mean_chrf": 49.7
+      "mean_chrf": 50.0
     },
     "sw": {
       "strings": 159,
@@ -311,42 +315,42 @@
         "glossary": 12,
         "length": 2,
         "script": 0,
-        "shape": 84,
+        "shape": 83,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 51.3
+      "mean_chrf": 51.6
     },
     "fa": {
       "strings": 159,
-      "all_checks_pass": 57,
+      "all_checks_pass": 58,
       "failed": {
         "placeholders": 7,
         "glossary": 12,
         "length": 5,
         "script": 0,
-        "shape": 93,
+        "shape": 92,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 50.8
+      "mean_chrf": 50.9
     },
     "fil": {
       "strings": 159,
-      "all_checks_pass": 70,
+      "all_checks_pass": 72,
       "failed": {
         "placeholders": 1,
         "glossary": 6,
         "length": 7,
         "script": 0,
-        "shape": 85,
+        "shape": 83,
         "unchanged": 0,
         "letter_forms": 0,
         "numbers": 0
       },
-      "mean_chrf": 62.7
+      "mean_chrf": 63.2
     }
   },
   "entries": [
@@ -8081,66 +8085,6 @@
         },
         "comet_kiwi": {
           "score": 0.6835
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "es",
-      "text": "inactivo; detenido; en reposo.",
-      "back_translation": "inactive; stopped; at rest.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 9.4,
-        "metricx": {
-          "score": 1.18
-        },
-        "comet_kiwi": {
-          "score": 0.7828
         },
         "judge": {
           "score": null,
@@ -16509,66 +16453,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "zh",
-      "text": "空闲状态；怠速状态；未使用的。",
-      "back_translation": "Idle state; unused; available.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 22.2,
-        "metricx": {
-          "score": 0.79
-        },
-        "comet_kiwi": {
-          "score": 0.5574
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -24883,66 +24767,6 @@
         },
         "comet_kiwi": {
           "score": 0.6785
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "hi",
-      "text": "निष्क्रिय; बेकार; शांत।",
-      "back_translation": "Inactive; idle; quiet.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 43.2,
-        "metricx": {
-          "score": 2.2
-        },
-        "comet_kiwi": {
-          "score": 0.7208
         },
         "judge": {
           "score": null,
@@ -33307,66 +33131,6 @@
         },
         "comet_kiwi": {
           "score": 0.6997
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "ar",
-      "text": "خامل.",
-      "back_translation": "Inactive.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.0,
-        "metricx": {
-          "score": 1.75
-        },
-        "comet_kiwi": {
-          "score": 0.5973
         },
         "judge": {
           "score": null,
@@ -41771,66 +41535,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "pt",
-      "text": "ocioso; parado; inativo.",
-      "back_translation": "idle; stopped; inactive.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.4,
-        "metricx": {
-          "score": 1.44
-        },
-        "comet_kiwi": {
-          "score": 0.7972
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -50175,66 +49879,6 @@
         },
         "comet_kiwi": {
           "score": 0.5196
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "bn",
-      "text": "অচল; নিষ্ক্রিয়; অলস।",
-      "back_translation": "Inactive; idle; lazy.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 44.7,
-        "metricx": {
-          "score": 0.84
-        },
-        "comet_kiwi": {
-          "score": 0.808
         },
         "judge": {
           "score": null,
@@ -58603,66 +58247,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "ru",
-      "text": "Неиспользуемый.\nВ режиме ожидания.\nПростой.\nНеактивный.",
-      "back_translation": "Unused.\nStandby.\nIdle.\nInactive.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "line breaks the source doesn't have (alternatives?)"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 21.2,
-        "metricx": {
-          "score": 1.28
-        },
-        "comet_kiwi": {
-          "score": 0.6029
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -67001,66 +66585,6 @@
         },
         "comet_kiwi": {
           "score": 0.7717
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "ja",
-      "text": "停止状態.",
-      "back_translation": "Stopped state.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 8.6,
-        "metricx": {
-          "score": 0.91
-        },
-        "comet_kiwi": {
-          "score": 0.7603
         },
         "judge": {
           "score": null,
@@ -75436,70 +74960,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "fr",
-      "text": "inactif",
-      "back_translation": "inactive.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.0,
-        "metricx": {
-          "score": 1.07
-        },
-        "comet_kiwi": {
-          "score": 0.811
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly stiff, 'inactif' is more formal than needed",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Slightly stiff; 'inactif' feels more formal than needed for casual tone.",
-          "context": "\nWhere it appears: A log label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -83844,66 +83304,6 @@
         },
         "comet_kiwi": {
           "score": 0.5468
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "de",
-      "text": "Leerlauf.",
-      "back_translation": "Idle.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 44.9,
-        "metricx": {
-          "score": 0.21
-        },
-        "comet_kiwi": {
-          "score": 0.578
         },
         "judge": {
           "score": null,
@@ -92274,66 +91674,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "ko",
-      "text": "유휴 상태.",
-      "back_translation": "Idle state.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 34.4,
-        "metricx": {
-          "score": 1.68
-        },
-        "comet_kiwi": {
-          "score": 0.766
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -100660,66 +100000,6 @@
         },
         "comet_kiwi": {
           "score": 0.5408
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "it",
-      "text": "inattivo; fermo; al minimo.",
-      "back_translation": "inactive; stopped; at its lowest setting.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 9.6,
-        "metricx": {
-          "score": 2.08
-        },
-        "comet_kiwi": {
-          "score": 0.721
         },
         "judge": {
           "score": null,
@@ -109060,66 +108340,6 @@
         },
         "comet_kiwi": {
           "score": 0.4877
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "tr",
-      "text": "Boşta.",
-      "back_translation": "Available.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 20.4,
-        "metricx": {
-          "score": 5.5
-        },
-        "comet_kiwi": {
-          "score": 0.5904
         },
         "judge": {
           "score": null,
@@ -117530,66 +116750,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "id",
-      "text": "diam; tidak aktif; menganggur.",
-      "back_translation": "silent; inactive; unemployed.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 15.0,
-        "metricx": {
-          "score": 0.59
-        },
-        "comet_kiwi": {
-          "score": 0.8118
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -125957,66 +125117,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "vi",
-      "text": "Không hoạt động.",
-      "back_translation": "Inactive.\nOr:\nNot working.\nOr:\nOut of service.\nOr:\nDisabled.\n(The best translation depends on the context.)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 5.9,
-        "metricx": {
-          "score": 0.2
-        },
-        "comet_kiwi": {
-          "score": 0.6635
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -134277,66 +133377,6 @@
         },
         "comet_kiwi": {
           "score": 0.7245
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "ur",
-      "text": "غیر فعال، بیکار، ساکت۔",
-      "back_translation": "Inactive, idle, silent.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 41.7,
-        "metricx": {
-          "score": 0.62
-        },
-        "comet_kiwi": {
-          "score": 0.8002
         },
         "judge": {
           "score": null,
@@ -142651,66 +141691,6 @@
         },
         "comet_kiwi": {
           "score": 0.3688
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "sw",
-      "text": "bila matumizi; haitumiki; haifanyi kazi.",
-      "back_translation": "non-functional; unusable; not working.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.1,
-        "metricx": {
-          "score": 3.2
-        },
-        "comet_kiwi": {
-          "score": 0.7335
         },
         "judge": {
           "score": null,
@@ -151081,66 +150061,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "fa",
-      "text": "بی‌کار، غیرفعال، در حالت سکون.",
-      "back_translation": "Unemployed, inactive, or at rest.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 11.1,
-        "metricx": {
-          "score": 0.86
-        },
-        "comet_kiwi": {
-          "score": 0.8033
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -159439,66 +158359,6 @@
       }
     },
     {
-      "key": "log\u0004idle",
-      "msgid": "idle",
-      "msgctxt": "log",
-      "context": "A log label.",
-      "locale": "fil",
-      "text": "hindi ginagamit; walang ginagawa.",
-      "back_translation": "idle; doing nothing.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.4,
-        "metricx": {
-          "score": 0.36
-        },
-        "comet_kiwi": {
-          "score": 0.6063
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "log\u0004in call",
       "msgid": "in call",
       "msgctxt": "log",
@@ -162683,66 +161543,6 @@
       }
     },
     {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "es",
-      "text": "Marque primero la casilla que indica que tiene 18 años o más en el formulario.",
-      "back_translation": "First, check the box on the form that indicates you are 18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 46.8,
-        "metricx": {
-          "score": 1.12
-        },
-        "comet_kiwi": {
-          "score": 0.8535
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "waiting for someone to open your link",
       "msgid": "waiting for someone to open your link",
       "msgctxt": null,
@@ -163343,66 +162143,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "es",
-      "text": "18 años o más.",
-      "back_translation": "18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.7,
-        "metricx": {
-          "score": 1.34
-        },
-        "comet_kiwi": {
-          "score": 0.8322
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -163755,66 +162495,6 @@
         },
         "comet_kiwi": {
           "score": 0.8443
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "zh",
-      "text": "首先，请在表格上勾选“18岁以上”的选项。",
-      "back_translation": "First, please check the \"18 years or older\" option on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 39.0,
-        "metricx": {
-          "score": 0.46
-        },
-        "comet_kiwi": {
-          "score": 0.8349
         },
         "judge": {
           "score": null,
@@ -164439,66 +163119,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "zh",
-      "text": "18岁及以上。",
-      "back_translation": "18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.7,
-        "metricx": {
-          "score": 0.29
-        },
-        "comet_kiwi": {
-          "score": 0.838
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -164855,66 +163475,6 @@
         },
         "comet_kiwi": {
           "score": 0.8646
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "hi",
-      "text": "सबसे पहले, फॉर्म पर 18+ वाले बॉक्स को चिह्नित करें।",
-      "back_translation": "First, mark the \"18+\" box on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 53.4,
-        "metricx": {
-          "score": 1.81
-        },
-        "comet_kiwi": {
-          "score": 0.8482
         },
         "judge": {
           "score": null,
@@ -165531,66 +164091,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "hi",
-      "text": "18 वर्ष से अधिक उम्र के लिए।",
-      "back_translation": "For individuals aged 18 and over.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 13.2,
-        "metricx": {
-          "score": 1.68
-        },
-        "comet_kiwi": {
-          "score": 0.8139
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -165943,66 +164443,6 @@
         },
         "comet_kiwi": {
           "score": 0.8332
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "ar",
-      "text": "يرجى وضع علامة (صح) أولاً في المربع المخصص للأفراد الذين تزيد أعمارهم عن 18 عامًا في النموذج.",
-      "back_translation": "Please mark the box designated for individuals over the age of 18 on the form first.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 44.9,
-        "metricx": {
-          "score": 2.05
-        },
-        "comet_kiwi": {
-          "score": 0.772
         },
         "judge": {
           "score": null,
@@ -166615,66 +165055,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "ar",
-      "text": "18 سنة فما فوق.",
-      "back_translation": "18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.7,
-        "metricx": {
-          "score": 0.48
-        },
-        "comet_kiwi": {
-          "score": 0.8227
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -167023,66 +165403,6 @@
         },
         "comet_kiwi": {
           "score": 0.8412
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "pt",
-      "text": "Marque a caixa \"18 anos ou mais\" no formulário primeiro.",
-      "back_translation": "First, check the box that says \"18 years or older\" on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.9,
-        "metricx": {
-          "score": 1.87
-        },
-        "comet_kiwi": {
-          "score": 0.8283
         },
         "judge": {
           "score": null,
@@ -167699,66 +166019,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "pt",
-      "text": "18 anos ou mais.",
-      "back_translation": "18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.7,
-        "metricx": {
-          "score": 0.48
-        },
-        "comet_kiwi": {
-          "score": 0.8443
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -168111,66 +166371,6 @@
         },
         "comet_kiwi": {
           "score": 0.8751
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "bn",
-      "text": "প্রথমে ফর্মের ১৮+ চিহ্নিত ঘরটিতে টিক দিন।",
-      "back_translation": "First, mark the box labeled \"18+\" on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 42.9,
-        "metricx": {
-          "score": 0.94
-        },
-        "comet_kiwi": {
-          "score": 0.7655
         },
         "judge": {
           "score": null,
@@ -168787,70 +166987,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "bn",
-      "text": "১৮+",
-      "back_translation": "18+",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 100.0,
-        "metricx": {
-          "score": 0.19
-        },
-        "comet_kiwi": {
-          "score": 0.8687
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Perfectly accurate, natural, and matches the tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -169203,66 +167339,6 @@
         },
         "comet_kiwi": {
           "score": 0.8509
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "ru",
-      "text": "Сначала поставьте галочку в поле \"18+\" на форме.",
-      "back_translation": "First, check the \"18+\" box on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 56.2,
-        "metricx": {
-          "score": 0.37
-        },
-        "comet_kiwi": {
-          "score": 0.8368
         },
         "judge": {
           "score": null,
@@ -169875,70 +167951,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "ru",
-      "text": "18+",
-      "back_translation": "18+ (This indicates content intended for viewers aged 18 and older.)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 15.3,
-        "metricx": {
-          "score": 0.0
-        },
-        "comet_kiwi": {
-          "score": 0.816
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Correct, natural, and matches the tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 10,
-          "reason": "Perfect match in meaning, tone, and naturalness for Russian speakers.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -170291,66 +168303,6 @@
         },
         "comet_kiwi": {
           "score": 0.8765
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "ja",
-      "text": "まず、申込書にある18歳以上であることを示す欄にチェックを入れてください。",
-      "back_translation": "First, please check the box on the application form that indicates you are 18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 35.6,
-        "metricx": {
-          "score": 0.98
-        },
-        "comet_kiwi": {
-          "score": 0.875
         },
         "judge": {
           "score": null,
@@ -170967,66 +168919,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "ja",
-      "text": "18歳以上対象。",
-      "back_translation": "This product is intended for individuals aged 18 and over.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 8.5,
-        "metricx": {
-          "score": 0.89
-        },
-        "comet_kiwi": {
-          "score": 0.8649
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -171375,66 +169267,6 @@
         },
         "comet_kiwi": {
           "score": 0.8579
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "fr",
-      "text": "Cochez d'abord la case \"18 ans et plus\" sur le formulaire.",
-      "back_translation": "First, check the box that says \"18 years and older\" on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.6,
-        "metricx": {
-          "score": 1.38
-        },
-        "comet_kiwi": {
-          "score": 0.8537
         },
         "judge": {
           "score": null,
@@ -172059,66 +169891,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "fr",
-      "text": "18 ans et plus.",
-      "back_translation": "18 years and older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 19.3,
-        "metricx": {
-          "score": 0.7
-        },
-        "comet_kiwi": {
-          "score": 0.8534
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -172467,66 +170239,6 @@
         },
         "comet_kiwi": {
           "score": 0.8392
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "de",
-      "text": "Bitte setzen Sie zuerst das Häkchen bei der Option \"18+\" auf dem Formular.",
-      "back_translation": "Please first check the \"18+\" box on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 57.2,
-        "metricx": {
-          "score": 1.27
-        },
-        "comet_kiwi": {
-          "score": 0.831
         },
         "judge": {
           "score": null,
@@ -173151,66 +170863,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "de",
-      "text": "18+\noder\nNur für Erwachsene.",
-      "back_translation": "18+\nor\nFor adults only.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "line breaks the source doesn't have (alternatives?)"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 38.0,
-        "metricx": {
-          "score": 0.06
-        },
-        "comet_kiwi": {
-          "score": 0.7728
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -173563,66 +171215,6 @@
         },
         "comet_kiwi": {
           "score": 0.8724
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "ko",
-      "text": "먼저, 신청서에 있는 18세 이상임을 확인하는란에 체크해주세요.",
-      "back_translation": "First, please check the box on the application form that confirms you are 18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 36.7,
-        "metricx": {
-          "score": 1.32
-        },
-        "comet_kiwi": {
-          "score": 0.8639
         },
         "judge": {
           "score": null,
@@ -174239,66 +171831,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "ko",
-      "text": "18세 이상.",
-      "back_translation": "18 years of age or older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.7,
-        "metricx": {
-          "score": 0.14
-        },
-        "comet_kiwi": {
-          "score": 0.8634
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -174647,66 +172179,6 @@
         },
         "comet_kiwi": {
           "score": 0.8631
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "it",
-      "text": "Prima di tutto, spunti la casella \"18+\" sul modulo.",
-      "back_translation": "First, be sure to check the \"18+\" box on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 53.5,
-        "metricx": {
-          "score": 3.86
-        },
-        "comet_kiwi": {
-          "score": 0.8526
         },
         "judge": {
           "score": null,
@@ -175323,66 +172795,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "it",
-      "text": "18 anni compiuti.",
-      "back_translation": "18 years old.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 23.9,
-        "metricx": {
-          "score": 1.12
-        },
-        "comet_kiwi": {
-          "score": 0.8584
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -175735,66 +173147,6 @@
         },
         "comet_kiwi": {
           "score": 0.8707
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "tr",
-      "text": "Öncelikle formdaki \"18+\" kutucuğunu işaretleyin.",
-      "back_translation": "First, please check the \"18+\" box on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 53.7,
-        "metricx": {
-          "score": 1.59
-        },
-        "comet_kiwi": {
-          "score": 0.8769
         },
         "judge": {
           "score": null,
@@ -176407,66 +173759,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "tr",
-      "text": "18 yaş ve üzeri.",
-      "back_translation": "18 years of age and older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.2,
-        "metricx": {
-          "score": 0.98
-        },
-        "comet_kiwi": {
-          "score": 0.8718
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -176815,66 +174107,6 @@
         },
         "comet_kiwi": {
           "score": 0.8581
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "id",
-      "text": "Centang dulu kotak yang bertanda \"18+\" pada formulir tersebut.",
-      "back_translation": "Please check the box marked \"18+\" on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 41.2,
-        "metricx": {
-          "score": 0.17
-        },
-        "comet_kiwi": {
-          "score": 0.8586
         },
         "judge": {
           "score": null,
@@ -177487,70 +174719,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "id",
-      "text": "18+ (Berlaku untuk usia 18 tahun ke atas)",
-      "back_translation": "18+ (Applicable for ages 18 and up)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 27.5,
-        "metricx": {
-          "score": 0.0
-        },
-        "comet_kiwi": {
-          "score": 0.8208
-        },
-        "judge": {
-          "score": 7,
-          "reason": "Slightly formal, 'Berlaku' is stiff",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 6,
-          "reason": "Redundant phrasing; 'Berlaku untuk usia' is unnecessary and slightly stiff.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -177903,66 +175071,6 @@
         },
         "comet_kiwi": {
           "score": 0.8493
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "vi",
-      "text": "Đầu tiên, hãy đánh dấu vào ô \"18+\" trên mẫu đơn.",
-      "back_translation": "First, please check the \"18+\" box on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 53.7,
-        "metricx": {
-          "score": 0.22
-        },
-        "comet_kiwi": {
-          "score": 0.8198
         },
         "judge": {
           "score": null,
@@ -178579,70 +175687,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "vi",
-      "text": "18+ (Dành cho người từ 18 tuổi trở lên)",
-      "back_translation": "18+ (For ages 18 and up)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 38.0,
-        "metricx": {
-          "score": 0.0
-        },
-        "comet_kiwi": {
-          "score": 0.8506
-        },
-        "judge": {
-          "score": 10,
-          "reason": "Clear, natural, and matches the tone.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "mistral"
-        },
-        "judge_qwen": {
-          "score": 7,
-          "reason": "Natural but slightly stiff; could be more concise and informal.",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -178993,66 +176037,6 @@
         },
         "comet_kiwi": {
           "score": 0.8532
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "ur",
-      "text": "پہلے فارم پر موجود \"18 سال سے زائد\" والے باکس کو ضرور نشان زد کریں۔",
-      "back_translation": "Please be sure to mark the box that says \"18 years or older\" on the first form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 32.9,
-        "metricx": {
-          "score": 2.27
-        },
-        "comet_kiwi": {
-          "score": 0.8135
         },
         "judge": {
           "score": null,
@@ -179669,66 +176653,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "ur",
-      "text": "18 سال اور اس سے زائد عمر کے افراد کے لیے۔",
-      "back_translation": "For individuals aged 18 and over.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 13.2,
-        "metricx": {
-          "score": 0.8
-        },
-        "comet_kiwi": {
-          "score": 0.8107
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -180079,66 +177003,6 @@
         },
         "comet_kiwi": {
           "score": 0.6378
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "sw",
-      "text": "Kwanza, tafadhali weka alama kwenye kisanduku ambacho kinaonyesha \"umri wa miaka 18 au zaidi\" kwenye fomu.",
-      "back_translation": "First, please check the box that indicates \"18 years of age or older\" on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": false,
-          "detail": "length ratio 3.12"
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 38.9,
-        "metricx": {
-          "score": 0.61
-        },
-        "comet_kiwi": {
-          "score": 0.7769
         },
         "judge": {
           "score": null,
@@ -180753,68 +177617,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "sw",
-      "text": "18+ (Kwa watu walio na umri wa miaka 18 na zaidi.)",
-      "back_translation": "18+ (For individuals aged 18 and older.)",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": true,
-          "detail": ""
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 24.2,
-        "metricx": {
-          "score": 0.59
-        },
-        "comet_kiwi": {
-          "score": 0.7885
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": 4,
-          "reason": "Too formal and wordy; should be concise and natural like '18+'",
-          "context": "\nWhere it appears: A key label.\n",
-          "by": "qwen"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -181167,66 +177969,6 @@
         },
         "comet_kiwi": {
           "score": 0.8685
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "fa",
-      "text": "ابتدا، کادر مربوط به \"بالای ۱۸ سال\" را در فرم علامت بزنید.",
-      "back_translation": "First, check the box that says \"18 years or older\" on the form.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 40.9,
-        "metricx": {
-          "score": 0.58
-        },
-        "comet_kiwi": {
-          "score": 0.8307
         },
         "judge": {
           "score": null,
@@ -181843,66 +178585,6 @@
       }
     },
     {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "fa",
-      "text": "مناسب برای افراد بالای ۱۸ سال.",
-      "back_translation": "Suitable for individuals aged 18 and over.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 10.9,
-        "metricx": {
-          "score": 0.0
-        },
-        "comet_kiwi": {
-          "score": 0.8523
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
       "key": "key\u0004copy the link",
       "msgid": "copy the link",
       "msgctxt": "key",
@@ -182253,66 +178935,6 @@
         },
         "comet_kiwi": {
           "score": 0.8567
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
-        }
-      }
-    },
-    {
-      "key": "tick the 18+ box on the form first",
-      "msgid": "tick the 18+ box on the form first",
-      "msgctxt": null,
-      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
-      "locale": "fil",
-      "text": "Unang markahan ang kahon na nagsasaad ng \"18 pataas\" sa form.",
-      "back_translation": "First, check the box on the form that says \"18 and over.\"",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 49.6,
-        "metricx": {
-          "score": 2.58
-        },
-        "comet_kiwi": {
-          "score": 0.7497
         },
         "judge": {
           "score": null,
@@ -182927,66 +179549,6 @@
           "reason": "Natural and accurate, slight formality in 'kung pinapayagan ito'",
           "context": "\nWhere it appears: The link went to the terminal's clipboard; some terminals ignore that, and no program can tell.\n",
           "by": "qwen"
-        }
-      }
-    },
-    {
-      "key": "key\u000418+",
-      "msgid": "18+",
-      "msgctxt": "key",
-      "context": "A key label.",
-      "locale": "fil",
-      "text": "18 taong gulang pataas.",
-      "back_translation": "18 years of age and older.",
-      "checks": {
-        "placeholders": {
-          "ok": true,
-          "detail": ""
-        },
-        "glossary": {
-          "ok": true,
-          "detail": ""
-        },
-        "length": {
-          "ok": true,
-          "detail": ""
-        },
-        "script": {
-          "ok": true,
-          "detail": ""
-        },
-        "shape": {
-          "ok": false,
-          "detail": "ends a sentence the source doesn't"
-        },
-        "unchanged": {
-          "ok": true,
-          "detail": ""
-        },
-        "letter_forms": {
-          "ok": true,
-          "detail": ""
-        },
-        "numbers": {
-          "ok": true,
-          "detail": ""
-        }
-      },
-      "scores": {
-        "chrf": 16.2,
-        "metricx": {
-          "score": 0.72
-        },
-        "comet_kiwi": {
-          "score": 0.7831
-        },
-        "judge": {
-          "score": null,
-          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
-        },
-        "judge_qwen": {
-          "score": null,
-          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
         }
       }
     },
@@ -184225,6 +180787,3555 @@
         },
         "comet_kiwi": {
           "score": 0.877
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "es",
+      "text": "inactivo.",
+      "back_translation": "inactive.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 10.0,
+        "metricx": {
+          "score": 3.58
+        },
+        "comet_kiwi": {
+          "score": 0.8151
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "es",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "es",
+      "text": "Marque primero la casilla de \"18 años o más\" (pestaña).",
+      "back_translation": "First, check the box that says \"18 years or older\" (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 31.3,
+        "metricx": {
+          "score": 1.21
+        },
+        "comet_kiwi": {
+          "score": 0.5906
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "zh",
+      "text": "空闲的；不工作的；闲置的。",
+      "back_translation": "Idle; inactive; unused; available.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 20.2,
+        "metricx": {
+          "score": 0.39
+        },
+        "comet_kiwi": {
+          "score": 0.7296
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "zh",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "zh",
+      "text": "首先，请勾选“18岁以上”的选项（标签）。",
+      "back_translation": "First, please select the \"18 years or older\" option (or label).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 17.6,
+        "metricx": {
+          "score": 0.75
+        },
+        "comet_kiwi": {
+          "score": 0.7895
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "hi",
+      "text": "बेरोज़गार; निष्क्रिय; बेकार।",
+      "back_translation": "Unemployed; inactive; idle.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.8,
+        "metricx": {
+          "score": 1.63
+        },
+        "comet_kiwi": {
+          "score": 0.7737
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "hi",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match in meaning, tone, and format; natural and accurate.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "hi",
+      "text": "सबसे पहले \"18 वर्ष से अधिक\" वाले बॉक्स को चिह्नित करें (टैब)।",
+      "back_translation": "First, check the box that says \"18 years or older.\"",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 23.9,
+        "metricx": {
+          "score": 2.47
+        },
+        "comet_kiwi": {
+          "score": 0.8192
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "ar",
+      "text": "عارض.",
+      "back_translation": "Opponent.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 5.0,
+        "metricx": {
+          "score": 4.72
+        },
+        "comet_kiwi": {
+          "score": 0.4987
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "ar",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "ar",
+      "text": "ضع علامة (✓) في المربع الخاص بالفئة العمرية 18 سنة فما فوق أولاً.",
+      "back_translation": "Please mark (✓) the box corresponding to the age group of 18 years and older first.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 20.3,
+        "metricx": {
+          "score": 1.18
+        },
+        "comet_kiwi": {
+          "score": 0.7516
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, 'tick' is better as 'ضع علامة'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "ضع علامة (✓) في المربع الخاص بالفئة العمرية 18 سنة فما فوق أولاً."
+        },
+        "judge_qwen": {
+          "score": 7,
+          "reason": "Slight awkwardness; 'tab' omitted, and phrasing feels slightly formal.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "ضع علامة (✓) في المربع الخاص بالفئة العمرية 18 سنة فما فوق أولاً."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "pt",
+      "text": "ocioso; inativo; parado.",
+      "back_translation": "idle; inactive; stopped.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 40.4,
+        "metricx": {
+          "score": 1.13
+        },
+        "comet_kiwi": {
+          "score": 0.7939
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "pt",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "pt",
+      "text": "Marque a caixa \"18+\" primeiro (guia).",
+      "back_translation": "First, check the \"18+\" box (instructions).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 28.8,
+        "metricx": {
+          "score": 3.12
+        },
+        "comet_kiwi": {
+          "score": 0.7643
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'guia' is less natural than 'aba'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "Marque a caixa \"18+\" primeiro (guia)."
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Natural and clear, minor stiffness in 'guia' vs. 'aba'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "Marque a caixa \"18+\" primeiro (guia)."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "bn",
+      "text": "অবসৃত।",
+      "back_translation": "Retired.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 15.6,
+        "metricx": {
+          "score": 2.69
+        },
+        "comet_kiwi": {
+          "score": 0.4554
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "bn",
+      "text": "১৮+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.19
+        },
+        "comet_kiwi": {
+          "score": 0.8687
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "১৮+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfectly natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "১৮+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "bn",
+      "text": "প্রথমে \"১৮+\" লেখা বাক্সটি চিহ্নিত করুন (ট্যাব)।",
+      "back_translation": "First, locate and select the box labeled \"18+\".",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 22.1,
+        "metricx": {
+          "score": 1.76
+        },
+        "comet_kiwi": {
+          "score": 0.874
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "ru",
+      "text": "бездействующий.",
+      "back_translation": "inactive.\nor\nnon-functional.\nor\nout of service.\nor\nidle.\nor\ndormant.\nor\ndeactivated.\nor\ndisabled.\nor\nnon-operational.\nor\ninoperative.\nor\nnot working.\nor\nnot in use.\nor\nunused.\nor\ndormant.\nor\nstandby.\nor\noffline.\nor\nswitched off.\nor\nturned off.\nor\ndeactivated.\nor\ndecommissioned.\nor\nretired.\nor\nobsolete.\nor\nsuperseded.\nor\nreplaced.\nor\nphased out.\nor\ndiscontinued.\nor\nwithdrawn.\nor\nterminated.\nor\ncancelled.\nor\nvoid.\nor\nnull.\nor\nempty.\nor\nblank.\nor\nzero.\nor\nnothing.\nor\nnone.\nor\nvoid.\nor\nnull.\nor\nempty.\nor\nblank.\nor\nzero.\nor\nnothing.\nor\nnone.\nor\nvoid.\nor\nnull.\nor\nempty.\nor\nblank.\nor",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 2.5,
+        "metricx": {
+          "score": 2.62
+        },
+        "comet_kiwi": {
+          "score": 0.795
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "ru",
+      "text": "18+",
+      "back_translation": "18+ (meaning: intended for adults aged 18 and over)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 19.9,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match in meaning, tone, and format.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "ru",
+      "text": "Сначала поставьте галочку в поле \"18+\" (вкладка).",
+      "back_translation": "First, check the \"18+\" box (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 38.0,
+        "metricx": {
+          "score": 0.73
+        },
+        "comet_kiwi": {
+          "score": 0.8427
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, 'вкладка' is correct but 'tab' is more natural.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "Сначала поставьте галочку в поле \"18+\" (вкладка)."
+        },
+        "judge_qwen": {
+          "score": 7,
+          "reason": "Slight awkwardness with 'поле' and 'вкладка'; 'tab' is better as 'вкладка' but 'поле' is misleading.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "Сначала поставьте галочку в поле \"18+\" (вкладка)."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "ja",
+      "text": "放置状態.",
+      "back_translation": "Neglected.\nOr:\nLeft unattended.\nOr:\nIn a state of disrepair.\nOr:\nAbandoned.\n(The best translation depends on the context.)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 5.3,
+        "metricx": {
+          "score": 1.36
+        },
+        "comet_kiwi": {
+          "score": 0.7339
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "ja",
+      "text": "18歳以上対象。",
+      "back_translation": "This product is intended for individuals aged 18 and over.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 8.5,
+        "metricx": {
+          "score": 0.89
+        },
+        "comet_kiwi": {
+          "score": 0.8649
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "ja",
+      "text": "まず、「18歳以上」の欄にチェックを入れてください（タブ）。",
+      "back_translation": "First, please check the box that says \"18 years of age or older\" (or \"18+\").",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 24.0,
+        "metricx": {
+          "score": 1.92
+        },
+        "comet_kiwi": {
+          "score": 0.8695
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Clear, natural, and matches the friendly tone.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "まず、「18歳以上」の欄にチェックを入れてください（タブ）。"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Clear meaning, natural tone, minor formality in 'ください'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "まず、「18歳以上」の欄にチェックを入れてください（タブ）。"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "fr",
+      "text": "inactif.",
+      "back_translation": "inactive.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 10.0,
+        "metricx": {
+          "score": 2.14
+        },
+        "comet_kiwi": {
+          "score": 0.8011
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "fr",
+      "text": "18 ans et plus.",
+      "back_translation": "18 years and older.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 19.3,
+        "metricx": {
+          "score": 0.7
+        },
+        "comet_kiwi": {
+          "score": 0.8534
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "fr",
+      "text": "Cochez d'abord la case \"18 ans et plus\" (onglet).",
+      "back_translation": "First, check the box that says \"18 years and older\" (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 31.0,
+        "metricx": {
+          "score": 1.88
+        },
+        "comet_kiwi": {
+          "score": 0.847
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, 'onglet' is correct but less natural than 'onglet' for tab.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "Cochez d'abord la case \"18 ans et plus\" (onglet)."
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Clear meaning, natural phrasing, slightly formal tone with 'case' and 'tab'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "Cochez d'abord la case \"18 ans et plus\" (onglet)."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "de",
+      "text": "untätig; Leerlauf.",
+      "back_translation": "idle; inoperative; inactive.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 35.8,
+        "metricx": {
+          "score": 0.44
+        },
+        "comet_kiwi": {
+          "score": 0.6999
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "de",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "de",
+      "text": "Bitte wählen Sie zuerst das Kästchen \"18+\" aus (Registerkarte).",
+      "back_translation": "Please select the \"18+\" box first (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 55.4,
+        "metricx": {
+          "score": 0.71
+        },
+        "comet_kiwi": {
+          "score": 0.6944
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, 'Registerkarte' is technical",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "Bitte wählen Sie zuerst das Kästchen \"18+\" aus (Registerkarte)."
+        },
+        "judge_qwen": {
+          "score": 6,
+          "reason": "Slightly stiff; 'Bitte wählen Sie' is too formal for the tone.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "Bitte wählen Sie zuerst das Kästchen \"18+\" aus (Registerkarte)."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "ko",
+      "text": "유휴 상태.",
+      "back_translation": "Idle state.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 34.4,
+        "metricx": {
+          "score": 1.67
+        },
+        "comet_kiwi": {
+          "score": 0.766
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "ko",
+      "text": "18세 이상.",
+      "back_translation": "18 years of age or older.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 16.7,
+        "metricx": {
+          "score": 0.14
+        },
+        "comet_kiwi": {
+          "score": 0.8634
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "ko",
+      "text": "먼저 \"18세 이상\"에 해당하는 칸에 체크해주세요. (탭)",
+      "back_translation": "First, please check the box that corresponds to \"18 years of age or older.\" (tab)",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 27.7,
+        "metricx": {
+          "score": 1.16
+        },
+        "comet_kiwi": {
+          "score": 0.8548
+        },
+        "judge": {
+          "score": 8,
+          "reason": "Natural but slightly formal; 'tab' is unnecessary",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "먼저 \"18세 이상\"에 해당하는 칸에 체크해주세요. (탭)"
+        },
+        "judge_qwen": {
+          "score": 8,
+          "reason": "Clear meaning, natural tone, minor stiffness in phrasing",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "먼저 \"18세 이상\"에 해당하는 칸에 체크해주세요. (탭)"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "it",
+      "text": "inattivo; fermo; ozioso.",
+      "back_translation": "inactive; stationary; idle.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.8,
+        "metricx": {
+          "score": 1.18
+        },
+        "comet_kiwi": {
+          "score": 0.7997
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "it",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "it",
+      "text": "Selezionare innanzitutto la casella \"18+\" (scheda).",
+      "back_translation": "First, select the \"18+\" checkbox (or card).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 23.2,
+        "metricx": {
+          "score": 0.71
+        },
+        "comet_kiwi": {
+          "score": 0.8247
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly formal, 'scheda' is less natural than 'scheda' or 'tab'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "Selezionare innanzitutto la casella \"18+\" (scheda)."
+        },
+        "judge_qwen": {
+          "score": 5,
+          "reason": "Stiff phrasing; 'innanzitutto' feels too formal; 'scheda' unclear for 'tab'",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "Selezionare innanzitutto la casella \"18+\" (scheda)."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "tr",
+      "text": "boşta, hareketsiz, kullanılmayan.",
+      "back_translation": "idle, inactive, unused.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 41.7,
+        "metricx": {
+          "score": 5.25
+        },
+        "comet_kiwi": {
+          "score": 0.8107
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "tr",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for the context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "tr",
+      "text": "Öncelikle \"18+\" kutucuğunu işaretleyin (sekme).",
+      "back_translation": "First, please check the \"18+\" box (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.1,
+        "metricx": {
+          "score": 3.55
+        },
+        "comet_kiwi": {
+          "score": 0.8446
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "id",
+      "text": "menganggur.",
+      "back_translation": "unemployed.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 13.9,
+        "metricx": {
+          "score": 0.57
+        },
+        "comet_kiwi": {
+          "score": 0.7775
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "id",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Matches exactly, natural and appropriate for context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "id",
+      "text": "centang dulu kotak yang bertanda \"18+\" (tab).",
+      "back_translation": "Please check the box marked \"18+\" (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 30.5,
+        "metricx": {
+          "score": 0.94
+        },
+        "comet_kiwi": {
+          "score": 0.8599
+        },
+        "judge": {
+          "score": 7,
+          "reason": "Slightly stiff, 'dulu' feels formal here.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "mistral",
+          "text": "centang dulu kotak yang bertanda \"18+\" (tab)."
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Natural, accurate, and matches the calm, informal tone.",
+          "context": "\nWhere it appears: The joiner hasn't ticked the 18+ box on the form yet.\n",
+          "by": "qwen",
+          "text": "centang dulu kotak yang bertanda \"18+\" (tab)."
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "vi",
+      "text": "chờ đợi; không hoạt động.",
+      "back_translation": "waiting; inactive.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 7.6,
+        "metricx": {
+          "score": 1.12
+        },
+        "comet_kiwi": {
+          "score": 0.5449
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "vi",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": 10,
+          "reason": "Correct, natural, and matches the tone.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "mistral",
+          "text": "18+"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for context",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "vi",
+      "text": "Đầu tiên, hãy chọn ô \"18+\" (hoặc \"trên 18 tuổi\").",
+      "back_translation": "First, select the \"18+\" (or \"over 18\") option.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 19.6,
+        "metricx": {
+          "score": 1.08
+        },
+        "comet_kiwi": {
+          "score": 0.7039
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "ur",
+      "text": "غیر فعال.",
+      "back_translation": "Inactive.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 10.0,
+        "metricx": {
+          "score": 0.35
+        },
+        "comet_kiwi": {
+          "score": 0.8158
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "ur",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Matches exactly, natural and appropriate for context.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "ur",
+      "text": "پہلے \"18 سال سے زائد\" والے باکس پر نشان لگائیں (یا \"اس پر ٹیٖک لگائیں\")۔",
+      "back_translation": "Please mark the box that says \"18 years or older\" (or \"check this box\").",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 19.2,
+        "metricx": {
+          "score": 1.89
+        },
+        "comet_kiwi": {
+          "score": 0.7312
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "sw",
+      "text": "bila kazi; salama.",
+      "back_translation": "unemployed; safe.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 11.7,
+        "metricx": {
+          "score": 5.59
+        },
+        "comet_kiwi": {
+          "score": 0.5805
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "sw",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match, natural and appropriate for context",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "sw",
+      "text": "Angalia kuwa umeweka alama kwenye kisanduku ambacho kinaonyesha umri wa miaka 18 au zaidi (bonyeza).",
+      "back_translation": "Please ensure that you have selected the box indicating that you are 18 years of age or older (click).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": false,
+          "detail": "length ratio 3.57"
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 16.8,
+        "metricx": {
+          "score": 2.67
+        },
+        "comet_kiwi": {
+          "score": 0.6118
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "fa",
+      "text": "بی‌کار، بیکار، غیرفعال.",
+      "back_translation": "Unemployed, inactive, idle.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 36.8,
+        "metricx": {
+          "score": 2.03
+        },
+        "comet_kiwi": {
+          "score": 0.5997
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "fa",
+      "text": "مناسب برای افراد بالای ۱۸ سال.",
+      "back_translation": "Suitable for individuals aged 18 and over.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 10.9,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.8523
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "fa",
+      "text": "ابتدا کادر مربوط به \"18 سال به بالا\" را علامت بزنید (تب).",
+      "back_translation": "First, check the box that says \"18 years or older\" (or \"18+\").",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 25.3,
+        "metricx": {
+          "score": 1.48
+        },
+        "comet_kiwi": {
+          "score": 0.7677
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "log\u0004idle",
+      "msgid": "idle",
+      "msgctxt": "log",
+      "context": "A log line, one or two words: you're not looking or in a call any more.",
+      "locale": "fil",
+      "text": "walang ginagawa; hindi ginagamit.",
+      "back_translation": "idle; not in use.",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": false,
+          "detail": "ends a sentence the source doesn't"
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 54.5,
+        "metricx": {
+          "score": 1.02
+        },
+        "comet_kiwi": {
+          "score": 0.622
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": null,
+          "pending": "LLM tone judge (Qwen3 30B-A3B Instruct 2507, 4-bit MLX): ~17 GB, ungated"
+        }
+      }
+    },
+    {
+      "key": "key\u000418+",
+      "msgid": "18+",
+      "msgctxt": "key",
+      "context": "Key help, two or three characters: the 18+ box (\"18+\"), nothing more.",
+      "locale": "fil",
+      "text": "18+",
+      "back_translation": "18+",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 100.0,
+        "metricx": {
+          "score": 0.0
+        },
+        "comet_kiwi": {
+          "score": 0.816
+        },
+        "judge": {
+          "score": null,
+          "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
+        },
+        "judge_qwen": {
+          "score": 10,
+          "reason": "Perfect match in meaning, tone, and format.",
+          "context": "\nWhere it appears: Key help, two or three characters: the 18+ box (\"18+\"), nothing more.\n",
+          "by": "qwen",
+          "text": "18+"
+        }
+      }
+    },
+    {
+      "key": "tick the 18+ box first (tab)",
+      "msgid": "tick the 18+ box first (tab)",
+      "msgctxt": null,
+      "context": "The joiner hasn't ticked the 18+ box on the form yet.",
+      "locale": "fil",
+      "text": "Markahan muna ang kahon na may markang \"18+\" (tab).",
+      "back_translation": "First, mark the box labeled \"18+\" (tab).",
+      "checks": {
+        "placeholders": {
+          "ok": true,
+          "detail": ""
+        },
+        "glossary": {
+          "ok": true,
+          "detail": ""
+        },
+        "length": {
+          "ok": true,
+          "detail": ""
+        },
+        "script": {
+          "ok": true,
+          "detail": ""
+        },
+        "shape": {
+          "ok": true,
+          "detail": ""
+        },
+        "unchanged": {
+          "ok": true,
+          "detail": ""
+        },
+        "letter_forms": {
+          "ok": true,
+          "detail": ""
+        },
+        "numbers": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "scores": {
+        "chrf": 32.5,
+        "metricx": {
+          "score": 1.19
+        },
+        "comet_kiwi": {
+          "score": 0.6601
         },
         "judge": {
           "score": null,

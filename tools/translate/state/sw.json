@@ -224,7 +224,7 @@
     "msgstr": "Kuunganisha"
   },
   "Language": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Lugha"
   },
   "Languages spoken": {
@@ -314,6 +314,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "translategemma-4b",
     "msgstr": "Toa hii, au toa kwa njia ambayo unaipenda. Ina kazi kwa mara moja, kwa dakika %{minutes} zijazo."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "Tuma kiungo hiki kwao kwa njia yoyote unayopenda. Kitu hiki kitafanya kazi mara moja tu."
   },
   "Share a link.": {
     "model": "translategemma-12b",
@@ -489,7 +493,7 @@
   },
   "Your call ended.": {
     "model": "translategemma-12b",
-    "msgstr": "Simu yako imekwisha."
+    "msgstr": "Simu yako imekatika."
   },
   "Your link expired before anyone used it.": {
     "model": "translategemma-12b",

@@ -15,6 +15,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes}+分钟"
   },
+  "%{time} left": {
+    "model": "translategemma-4b",
+    "msgstr": "剩余时间：%{time}"
+  },
   "%{time} remaining": {
     "model": "translategemma-12b",
     "msgstr": "剩余时间：%{time}"
@@ -88,7 +92,7 @@
     "msgstr": "选择您的语言。"
   },
   "Connected": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "已连接"
   },
   "Connecting": {
@@ -144,7 +148,7 @@
     "msgstr": "当前通话"
   },
   "Done": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "已完成"
   },
   "Ephemeral by default": {
@@ -220,7 +224,7 @@
     "msgstr": "邀请"
   },
   "Inviting": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "邀请"
   },
   "It is meant for %{crosstalk}, language exchange, listening practice, and ordinary casual conversation without forcing people into rigid modes or labels.": {
@@ -300,7 +304,7 @@
     "msgstr": "准备通话"
   },
   "Privacy": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "隐私"
   },
   "Ready": {
@@ -322,6 +326,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "madlad-400",
     "msgstr": "您可以随意发送此链接给他们,它只会有效一次,持续时间为 %{minutes} 分钟。"
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "translategemma-12b",
+    "msgstr": "您可以选择任何方式将这个链接发送给他们。这个链接只能使用一次。"
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -348,7 +356,7 @@
     "msgstr": "开始与rando通话。"
   },
   "Status": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "状态"
   },
   "Stop looking": {
@@ -536,7 +544,7 @@
     "msgstr": "复制"
   },
   "button\u0004End": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "结束"
   },
   "button\u0004Find a rando": {
@@ -620,7 +628,7 @@
     "msgstr": "等待你的回复 rando"
   },
   "couldn't connect": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "无法连接"
   },
   "couldn't find the server": {
@@ -652,7 +660,7 @@
     "msgstr": "未要求任何身份验证"
   },
   "privacy": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "隐私"
   },
   "randos is a place for anonymous, audio-only language conversation.": {
@@ -700,7 +708,7 @@
     "msgstr": "等待麦克风"
   },
   "waiting for remote audio": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "等待远程音频"
   },
   "working": {

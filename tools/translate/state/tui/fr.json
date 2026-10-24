@@ -4,19 +4,19 @@
     "msgstr": "%{connected} · Votre niveau : %{you} dBFS · Niveau de l'interlocuteur : %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{device} (par défaut)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{language} dans les deux sens"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
@@ -68,7 +68,7 @@
     "msgstr": "Vérification du relais…"
   },
   "Connected: %{connected}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Connecté : %{connected}"
   },
   "Connecting to the server…": {
@@ -220,7 +220,7 @@
     "msgstr": "Le relais fonctionne."
   },
   "The relay isn't working.": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Le relais ne fonctionne pas."
   },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
@@ -232,7 +232,7 @@
     "msgstr": "Ce serveur n'a pas de page d'état (il est plus ancien que la requête d'état)."
   },
   "Time is up.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Le temps est écoulé."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -272,7 +272,7 @@
     "msgstr": "n'importe laquelle des langues que vous avez sélectionnées (%{count})."
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté"
   },
   "connected directly": {
@@ -284,7 +284,7 @@
     "msgstr": "connecté à %{server}"
   },
   "connected to the server": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté au serveur"
   },
   "connected via relay": {
@@ -336,8 +336,8 @@
     "msgstr": "lors d'un appel"
   },
   "key\u000418+": {
-    "model": "translategemma-4b",
-    "msgstr": "Âge requis : 18 ans et plus"
+    "model": "hy-mt2",
+    "msgstr": "18+"
   },
   "key\u0004about these numbers": {
     "model": "hy-mt2",
@@ -348,7 +348,7 @@
     "msgstr": "Retour"
   },
   "key\u0004cancel": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "annuler"
   },
   "key\u0004cancel the link": {
@@ -376,7 +376,7 @@
     "msgstr": "Copiez le lien"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "fin"
   },
   "key\u0004end call": {
@@ -388,7 +388,7 @@
     "msgstr": "trouver"
   },
   "key\u0004invite": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "inviter"
   },
   "key\u0004join": {
@@ -416,7 +416,7 @@
     "msgstr": "déplacer"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "muet"
   },
   "key\u0004next rando": {
@@ -452,7 +452,7 @@
     "msgstr": "Lien envoyé dans le presse-papiers de votre terminal (si celui-ci le permet)."
   },
   "log\u0004idle": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "inactif"
   },
   "log\u0004in call": {
@@ -512,11 +512,11 @@
     "msgstr": "Pas à la recherche d'un rando"
   },
   "not working": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ne fonctionne pas"
   },
   "panel title\u0004Connecting": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Connexion"
   },
   "panel title\u0004Find a rando": {
@@ -524,11 +524,11 @@
     "msgstr": "Trouver un rando"
   },
   "panel title\u0004In call": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "En appel"
   },
   "panel title\u0004Invitation": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Invitation"
   },
   "panel title\u0004Looking": {
@@ -607,6 +607,10 @@
     "model": "madlad-400",
     "msgstr": "L'assistant audio a redémarré"
   },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-12b",
+    "msgstr": "Cochez d'abord la case \"18 ans et plus\" (onglet)."
+  },
   "tick the 18+ box on the form first": {
     "model": "opus-mt",
     "msgstr": "cochez d'abord la case 18+ sur le formulaire"
@@ -620,7 +624,7 @@
     "msgstr": "moins d'une minute"
   },
   "unexpected reply": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "réponse inattendue"
   },
   "waiting for someone to open your link": {

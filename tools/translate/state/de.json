@@ -15,6 +15,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes}+ min"
   },
+  "%{time} left": {
+    "model": "hy-mt2",
+    "msgstr": "%{time} verbleibend"
+  },
   "%{time} remaining": {
     "model": "hy-mt2",
     "msgstr": "%{time} verbleibend"
@@ -100,7 +104,7 @@
     "msgstr": "Verbindung verloren"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Verbindung:"
   },
   "Continued past %{minutes} minutes": {
@@ -144,7 +148,7 @@
     "msgstr": "Aktueller Anruf"
   },
   "Done": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Fertig"
   },
   "Ephemeral by default": {
@@ -236,7 +240,7 @@
     "msgstr": "Sprache"
   },
   "Languages spoken": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Gesprochene Sprachen"
   },
   "Last checked at %{time} UTC.": {
@@ -322,6 +326,10 @@
   "Send them this link however you like. It works once, for the next %{minutes} minutes.": {
     "model": "hy-mt2",
     "msgstr": "Schicken Sie ihnen diesen Link auf die gewünschte Weise. Er funktioniert einmalig für die nächsten %{minutes} Minuten."
+  },
+  "Send them this link however you like. It works once.": {
+    "model": "hy-mt2",
+    "msgstr": "Schicken Sie ihnen diesen Link auf die gewünschte Weise. Er funktioniert nur einmal."
   },
   "Share a link.": {
     "model": "hy-mt2",
@@ -456,7 +464,7 @@
     "msgstr": "Auf GitHub ansehen"
   },
   "Waiting": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Warten"
   },
   "Waiting for your rando to open the link…": {

@@ -8,7 +8,7 @@
     "msgstr": "%{device} (impostazione predefinita)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -24,7 +24,7 @@
     "msgstr": "%{minutes} minuti o più"
   },
   "%{request} refused: %{reason}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{request} rifiutato: %{reason}"
   },
   "%{sent} sent / %{received} received": {
@@ -76,15 +76,15 @@
     "msgstr": "Connessione al server in corso…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Connessione:"
   },
   "Continue for another %{minutes} minutes?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Continuare per altri %{minutes} minuti?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Continuare?"
   },
   "Continued": {
@@ -100,11 +100,11 @@
     "msgstr": "Contato attraverso %{answered} di %{total} server."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Dispositivi"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Errore: %{message}"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
@@ -172,7 +172,7 @@
     "msgstr": "Attualmente:"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Altre lingue: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -200,7 +200,7 @@
     "msgstr": "Invialo a loro come preferisci. Funziona una sola volta."
   },
   "Server status": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Stato del server"
   },
   "Speaker:": {
@@ -244,11 +244,11 @@
     "msgstr": "Oggi (calcolato a partire da %{time} UTC del %{date}):"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Lunghezza tipica: %{length}"
   },
   "Waiting for your rando to open the link…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "In attesa che il tuo rando apra il link…"
   },
   "We count calls, not people: no addresses, no ids, nothing about anyone.": {
@@ -260,11 +260,11 @@
     "msgstr": "Tu sei"
   },
   "You're in a call.": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Sei in una chiamata."
   },
   "Your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Il tuo rando"
   },
   "any of the languages you picked (%{count})": {
@@ -272,7 +272,7 @@
     "msgstr": "una qualsiasi delle lingue che avete selezionato (%{count})."
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "connesso"
   },
   "connected directly": {
@@ -312,7 +312,7 @@
     "msgstr": "non è stato possibile connettersi"
   },
   "couldn't copy the link: select it with the mouse": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Non è stato possibile copiare il link: selezionalo con il mouse"
   },
   "couldn't find the server": {
@@ -328,7 +328,7 @@
     "msgstr": "disconnesso; riconnessione"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Errore: %{message}"
   },
   "in a call": {
@@ -336,8 +336,8 @@
     "msgstr": "durante una telefonata"
   },
   "key\u000418+": {
-    "model": "translategemma-4b",
-    "msgstr": "18 anni o più"
+    "model": "hy-mt2",
+    "msgstr": "18+"
   },
   "key\u0004about these numbers": {
     "model": "m2m100",
@@ -364,7 +364,7 @@
     "msgstr": "verificare"
   },
   "key\u0004close": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "chiudi"
   },
   "key\u0004continue": {
@@ -436,7 +436,7 @@
     "msgstr": "parlante"
   },
   "key\u0004status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "stato"
   },
   "key\u0004unmute": {
@@ -452,7 +452,7 @@
     "msgstr": "il link è stato inviato all'area di appunti del vostro terminale (se questa funzionalità è supportata)."
   },
   "log\u0004idle": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "inattivo"
   },
   "log\u0004in call": {
@@ -528,7 +528,7 @@
     "msgstr": "Durante una telefonata"
   },
   "panel title\u0004Invitation": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Invito"
   },
   "panel title\u0004Looking": {
@@ -607,6 +607,10 @@
     "model": "madlad-400",
     "msgstr": "Riavvia l'aiutante audio"
   },
+  "tick the 18+ box first (tab)": {
+    "model": "translategemma-12b",
+    "msgstr": "Selezionare innanzitutto la casella \"18+\" (scheda)."
+  },
   "tick the 18+ box on the form first": {
     "model": "opus-mt",
     "msgstr": "spuntare prima la casella 18+ sul modulo"
@@ -628,7 +632,7 @@
     "msgstr": "in attesa che qualcuno clicchi sul tuo link"
   },
   "waiting on your rando": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "In attesa del tuo rando"
   },
   "working": {
