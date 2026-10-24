@@ -21,6 +21,9 @@ models = [
     "transformers==4.56.2",
     "sentencepiece==0.2.1",
     "sacremoses==0.1.1",
+    # MetricX's T5 tokenizer is converted with it; only mlx-lm and COMET
+    # pulled it in, so a fresh env scoring MetricX first failed (2026-10-24).
+    "protobuf==4.25.9",
 ]
 # The MLX models (`--group mlx`): Hy-MT2, TranslateGemma, and the tone
 # judges (Mistral Small 3.2, Qwen3 30B-A3B), through mlx-lm on Apple's GPU.

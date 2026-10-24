@@ -970,6 +970,7 @@ mlx = [
     { name = "mlx-lm" },
 ]
 models = [
+    { name = "protobuf" },
     { name = "sacremoses" },
     { name = "sentencepiece" },
     { name = "torch" },
@@ -993,6 +994,7 @@ dev = [
 ]
 mlx = [{ name = "mlx-lm", specifier = "==0.32.2" }]
 models = [
+    { name = "protobuf", specifier = "==4.25.9" },
     { name = "sacremoses", specifier = "==0.1.1" },
     { name = "sentencepiece", specifier = "==0.2.1" },
     { name = "torch", specifier = "==2.8.0" },
