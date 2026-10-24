@@ -688,7 +688,7 @@ split). Done before Phases 5 and 6 run in parallel, so the pass and Phase
 
 No behaviour changes.
 
-## Quality pass before the voice lab, third (in progress 2026-10-24)
+## Quality pass before the voice lab, third (done 2026-10-24)
 
 Over what landed since the second (`a10ac18`..: the TUI's translation,
 invitations, the translation tool's plan/update/batching, CI and build
@@ -711,8 +711,34 @@ advisor's view, then the owner's decisions:
 
 T5's proposed length check for key/log hints was dropped after measuring:
 it flagged correct translations ("unmute" → "desactivar el silencio");
-only the printf check (a `%s` the source lacks) stays. The full inventory
-and what was left (with reasons) is recorded with the commits that fix it.
+only the printf check (a `%s` the source lacks) stays, inside the
+placeholders check.
+
+Outcome (commits "Quality pass 3, …" and after): every bug fixed, with
+tests: the server's (an invitation withdrawn on leave, the resumed
+joiner's own languages, `token` filtered from logs, the coordinator's
+sequence-only tests on long timers), the TUI's (its feedback was never
+drawn; the join prompt cut its 18+ line and the link; a disconnect left
+the prompt deaf; the help line dropped `l`; the clipboard's exit status
+and SSH), the translation tool's (`script_brand` inside words, judged
+text recorded per candidate, the update guard, test leaks), and the
+build's: `bin/prefetch.sh` (`just prefetch`) is now the one place that
+fetches what Erlang's :httpc can't (both NIFs and Tailwind), for setup,
+CI and the Dockerfile. Found while finishing: the TUI's key names were
+translated ("tab" became a browser tab in six languages, "(y/n)" became
+"(Ja/Nein)"), so key names are now placeholders; "idle" alone became
+"waste" in Japanese, so the log reuses "not looking for a rando"; and
+`just screenshots` read the developer's own TUI settings (now
+`RANDOS_TUI_SETTINGS`, dev only).
+
+Left, with reasons: MLXChat's and the judges' batching (four lines each,
+different post-processing: extract at a third user); `issue_fix`'s
+catalog default (the workflow is site-only); telemetry's `kind` without a
+consumer (harmless); the retired 27B's translations keep competing (as
+decided); two greedy word packers (different separators and cutting); the
+participant core's three similar clauses (clearer apart); Arabic letters
+reordered but not joined on terminals without bidi (shaping is out of
+scope, documented); `view.ex`'s length (split when it next grows).
 
 ## Quality pass before the voice lab, second (done 2026-10-23)
 
