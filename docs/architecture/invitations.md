@@ -168,4 +168,15 @@ All seven were the proposals.
     screenshots of every step, web and TUI, in a review wizard the owner
     approves step by step, with notes; translations only after.
 
+**The review's first round (2026-10-24)** approved the home form, the
+inviting screen, the call and the TUI's idle and call screens, and asked
+for: messages that say only what went wrong (no advice); a notice that
+the call ended for whoever didn't end it (`notice: call_ended`); the
+website's progress list with invitation steps (the creator's Invite,
+Waiting, Connecting, In call, Time is up; the joiner's Join, Connecting,
+In call, Time is up); `y` to copy the link in the TUI (`Tui.Clipboard`);
+and the TUI's join prompt staying open until the 18+ box is ticked (tab
+ticks it there). No call length on /join (the call shows a countdown).
+A second round shows those changes.
+
 Nothing is open.

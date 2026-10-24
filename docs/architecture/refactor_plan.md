@@ -778,6 +778,9 @@ Not scheduled; pick up when relevant.
   call; the same 10 + 10 + 10-minute limit; a 15-minute expiry; both
   clients in the first cut; counted among calls started but not language
   pairs; the button says "Invite someone". Likely before the voice lab.
+- **TUI help line (idea, the owner 2026-10-24).** It wraps to two rows
+  at 80 columns since invitations; fine for now. If it grows, show the
+  essentials and a `?` for a screen with every key, a common TUI move.
 - **RUSTSEC-2026-0387 ignored (2026-10-24, the owner's call).**
   crypto-bigint 0.5.5's timing side channels reach the helper through
   str0m's DTLS crypto (p256/p384/ecdsa 0.13); the fix needs str0m on the
