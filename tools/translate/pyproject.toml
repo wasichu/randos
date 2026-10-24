@@ -9,7 +9,7 @@ requires-python = "==3.13.*"
 # transformers needs.
 dependencies = [
     "polib==1.2.0",
-    "sacrebleu==2.5.1",
+    "sacrebleu==2.6.0",
 ]
 
 [dependency-groups]
@@ -17,10 +17,10 @@ dev = ["pytest==8.4.2", "ruff==0.12.12"]
 # Running models (`uv sync --group models`): Opus-MT, M2M100, MADLAD-400 and
 # the MetricX-24 scorer, through transformers on Apple's GPU (MPS).
 models = [
-    "torch==2.8.0",
+    "torch==2.14.1",
     "transformers==4.56.2",
-    "sentencepiece==0.2.1",
-    "sacremoses==0.1.1",
+    "sentencepiece==0.2.2",
+    "sacremoses==0.2.0",
     # MetricX's T5 tokenizer is converted with it; only mlx-lm and COMET
     # pulled it in, so a fresh env scoring MetricX first failed (2026-10-24).
     "protobuf==4.25.9",
