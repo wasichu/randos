@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest==8.4.2"]
+dev = ["pytest==9.1.1"]
 # Running the models (`uv sync --group models`): ECAPA-TDNN through
 # SpeechBrain for speaker identity, Whisper through transformers for
 # intelligibility, on the CPU or Apple's GPU (MPS).
