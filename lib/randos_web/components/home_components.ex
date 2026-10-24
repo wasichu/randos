@@ -91,6 +91,7 @@ defmodule RandosWeb.HomeComponents do
   attr :notice, :string, default: nil
   attr :live_action, :atom, default: :home
   attr :join_link, :atom, default: :unknown
+  attr :link_failed, :boolean, default: false
   attr :invitation, :map, default: nil
   attr :call_kind, :atom, default: nil
 
@@ -128,6 +129,7 @@ defmodule RandosWeb.HomeComponents do
             form={@form}
             preferences={@preferences}
             join_link={@join_link}
+            link_failed={@link_failed}
             matchmaking_error={@matchmaking_error}
           />
         <% :idle -> %>
@@ -315,9 +317,12 @@ defmodule RandosWeb.HomeComponents do
   attr :form, :any, required: true
   attr :preferences, :map, required: true
   attr :join_link, :atom, required: true
+  attr :link_failed, :boolean, default: false
   attr :matchmaking_error, :string, default: nil
 
-  # Where an invitation link lands. The JoinLink hook reads the token from
+  # Where an invitation link lands. Once the link has failed (used,
+  # expired, withdrawn, or not for this kind of client), only the message
+  # stays: there's nothing to join. The JoinLink hook reads the token from
   # the URL fragment and puts it in the form only as it's submitted.
   defp join_panel(assigns) do
     ~H"""
@@ -334,7 +339,7 @@ defmodule RandosWeb.HomeComponents do
         {gettext("This link is incomplete.")}
       </p>
       <.form
-        :if={@join_link != :missing}
+        :if={@join_link != :missing and not @link_failed}
         for={@form}
         id="join-form"
         phx-hook="JoinLink"

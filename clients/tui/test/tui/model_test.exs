@@ -329,12 +329,12 @@ defmodule Tui.ModelTest do
         Model.push(
           joined(),
           "state",
-          state("idle", %{"notice" => "call_ended", "notice_message" => "The call ended."})
+          state("idle", %{"notice" => "call_ended", "notice_message" => "Your call ended."})
         )
 
-      assert model.notice == "The call ended."
+      assert model.notice == "Your call ended."
       assert model.error == nil
-      assert ["The call ended." | _] = model.log
+      assert ["Your call ended." | _] = model.log
     end
 
     test "j opens a prompt that takes every key; enter joins with the part after #" do

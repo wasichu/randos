@@ -18,7 +18,7 @@ defmodule RandosWeb.ParticipantErrors do
       "Shown on the form after an invitation call the other person (or time) ended."
     )
 
-    gettext("The call ended.")
+    gettext("Your call ended.")
   end
 
   @doc "The message for a participant error (`nil` for none)."

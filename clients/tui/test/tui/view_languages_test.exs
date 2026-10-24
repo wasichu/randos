@@ -83,7 +83,7 @@ defmodule Tui.ViewLanguagesTest do
        })},
       {"join prompt",
        model("idle", nil, %{join_prompt: "https://randos.slowinput.org/join#AAAA"})},
-      {"after an invitation call", model("idle", nil, %{notice: "The call ended."})},
+      {"after an invitation call", model("idle", nil, %{notice: "Your call ended."})},
       {"invitation call",
        model(
          "in_call",

@@ -197,6 +197,8 @@ defmodule RandosWeb.HomeLive do
     |> assign(:webrtc_role, participant.webrtc_role)
     |> assign(:matchmaking_error, ParticipantErrors.message(participant.error))
     |> assign(:notice, ParticipantErrors.notice(participant.notice))
+    # On /join: the link can't be used from here (any more), so no form.
+    |> assign(:link_failed, participant.error in [:invitation_invalid, :audio_mismatch])
     |> assign(:invitation, ParticipantShell.client_state(participant).invitation)
     |> assign(:call_kind, participant.call_kind)
     |> assign(call_assigns(participant.call, participant.id))
@@ -257,6 +259,7 @@ defmodule RandosWeb.HomeLive do
             peer_languages={@peer_languages}
             live_action={@live_action}
             join_link={@join_link}
+            link_failed={@link_failed}
             invitation={@invitation}
             call_kind={@call_kind}
             peer_reconnecting={@peer_reconnecting}

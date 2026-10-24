@@ -530,7 +530,7 @@ defmodule RandosWeb.HomeLiveTest do
       assert eventually_has_element?(creator, "#conversation-form")
       assert has_element?(joiner, "#conversation-form")
       # The creator didn't end it: told why the form came back. The joiner did.
-      assert has_element?(creator, "#call-notice", "The call ended.")
+      assert has_element?(creator, "#call-notice", "Your call ended.")
       refute has_element?(joiner, "#call-notice")
       # Back to the usual steps, and the notice goes with the next search.
       assert has_element?(creator, "#state-progress[data-flow='random']")
@@ -540,6 +540,8 @@ defmodule RandosWeb.HomeLiveTest do
       view = join(conn, "not-a-real-token")
       assert has_element?(view, "#join-panel")
       assert has_element?(view, "#matchmaking-error", "That link doesn't work any more.")
+      # Nothing left to join: the form goes.
+      refute has_element?(view, "#join-form")
     end
   end
 end
