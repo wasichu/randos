@@ -39,8 +39,8 @@
         "seconds": 5807.0
       },
       "judge_qwen": {
-        "at": "20261024T142403Z",
-        "seconds": 77.5
+        "at": "20261024T150935Z",
+        "seconds": 78.5
       }
     },
     "appended": [
@@ -109283,7 +109283,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"ya seva zilizopo\" is unclear and unnatural.\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "Imehesabiwa kutoka kwa %{answered} kati ya %{total} ya seva zilizopo."
         }
       }
     },
@@ -124749,7 +124750,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"binilang batay sa\" feels stiff and unnatural for casual tone.\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "Binilang batay sa %{answered} sa %{total} na mga server."
         }
       }
     },

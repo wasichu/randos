@@ -39,8 +39,8 @@
         "seconds": 342.4
       },
       "judge_qwen": {
-        "at": "20261024T142658Z",
-        "seconds": 127.3
+        "at": "20261024T150956Z",
+        "seconds": 128.3
       }
     },
     "appended": [
@@ -67733,10 +67733,11 @@
           "by": "mistral"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 8, \"reason\": \"Clear meaning, natural French, slightly formal tone with \\'Niveau de l\\\\\\'interlocuteur\\'\"}'",
+          "score": 8,
+          "reason": "Clear meaning, natural French, slightly formal tone with 'Niveau de l''",
           "context": "\nWhere it appears: The call's audio levels: what you send and what you hear, in dBFS (keep the unit).\n",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "%{connected} · Votre niveau : %{you} dBFS · Niveau de l'interlocuteur : %{peer} dBFS"
         }
       }
     },
@@ -119662,7 +119663,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"đếm trên\" feels unnatural for this context.\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "Đếm trên %{answered} trong tổng số %{total} máy chủ."
         }
       }
     },

@@ -34,8 +34,8 @@
         "seconds": 328.2
       },
       "judge_qwen": {
-        "at": "20261024T142657Z",
-        "seconds": 122.4
+        "at": "20261024T150956Z",
+        "seconds": 123.3
       }
     },
     "appended": [
@@ -73532,7 +73532,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward; \"non sono ancora sufficienti le chiamate\" sounds unnatural and stiff.\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "non sono ancora sufficienti le chiamate"
         }
       }
     },
@@ -133327,10 +133328,11 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \\'تمام لنک\\' is unclear, should be \\'پیسٹ کریں جو آپ کو بھیجا گیا ہے\\'}'",
+          "score": 6,
+          "reason": "Slightly awkward phrasing; 'تمام لنک' is unclear, should be 'پورا لنک'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "آپ بھیجے گئے تمام لنک کو پیسٹ کریں"
         }
       }
     },

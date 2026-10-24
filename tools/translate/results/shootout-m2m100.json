@@ -39,8 +39,8 @@
         "seconds": 5900.8
       },
       "judge_qwen": {
-        "at": "20261024T142403Z",
-        "seconds": 201.7
+        "at": "20261024T150936Z",
+        "seconds": 203.7
       }
     },
     "appended": [
@@ -33265,7 +33265,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"в поисках\" feels formal, \"rando\" should be capitalized\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "В поисках rando"
         }
       }
     },
@@ -36314,7 +36315,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward word order; \"Звонки начались\" would sound more natural.\"}'",
           "context": "\nWhere it appears: A count on the status page: how many calls started today.\n",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "Начались звонки"
         }
       }
     },
@@ -57329,7 +57331,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"당신을 기다리고 있습니다\" feels too formal for the tone\"}'",
           "context": "\nWhere it appears: A connection state label.\n",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "당신을 기다리고 있습니다 rando"
         }
       }
     },
@@ -59885,7 +59888,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight stiffness; \"compatibile rando\" feels awkward, \"trovare un rando compatibile\" would flow better.\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "La ricerca di un compatibile rando."
         }
       }
     },
@@ -97419,9 +97423,10 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"rando\" should be in English as per guidelines\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"rando\" should not be capitalized and placement is off.\"}'",
           "context": "\nIt is a button label: it must be short.\n",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "ایک کو تلاش کریں rando"
         }
       }
     },

@@ -39,8 +39,8 @@
         "seconds": 697.0
       },
       "judge_qwen": {
-        "at": "20261024T142659Z",
-        "seconds": 260.4
+        "at": "20261024T150956Z",
+        "seconds": 264.2
       }
     },
     "appended": [
@@ -32568,7 +32568,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slight awkwardness; \"rando\" should be integrated more naturally.\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "في انتظارك rando"
         }
       }
     },
@@ -36180,9 +36181,10 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 7, \"reason\": \"Slight awkwardness; \\'em\\' sounds less natural than \\'em\\'}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \\'em\\' feels less natural than \\'em\\'}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "Contado em %{answered} de %{total} servidores."
         }
       }
     },
@@ -89840,7 +89842,8 @@
           "score": null,
           "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"동의했으며\" feels awkward; \"rando\" should be capitalized\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "시간이 다 됐습니다. 계속하기로 동의했으며 rando…"
         }
       }
     },
@@ -130672,9 +130675,10 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 5, \"reason\": \"Incorrect use of \\'گزشتہ\\' (past), should be \\'سے زیادہ\\' or \\'پار\\'}'",
+          "error": "unparsed reply: '{\"score\": 5, \"reason\": \"Incorrect use of \\'گزشتہ\\' (past), should be \\'سے زائد\\' or \\'پار\\'}'",
           "context": "\nWhere it appears: A count's label: calls whose two people chose to keep talking beyond the first %{minutes} minutes (\"past\" as in \"beyond\", not \"in the past\").\n",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "گزشتہ %{minutes} منٹ جاری"
         }
       }
     },

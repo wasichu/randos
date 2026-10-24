@@ -39,8 +39,8 @@
         "seconds": 432.8
       },
       "judge_qwen": {
-        "at": "20261024T142652Z",
-        "seconds": 156.4
+        "at": "20261024T150954Z",
+        "seconds": 156.8
       }
     },
     "appended": [
@@ -175262,9 +175262,10 @@
         },
         "judge_qwen": {
           "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"마우스로 선택\" is unclear, should be more natural\"}'",
+          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly stiff; \"마우스로 선택\" could be more natural as \"마우스로 선택해 주세요\"}'",
           "context": "",
-          "by": "qwen"
+          "by": "qwen",
+          "text": "링크를 복사 할 수 없습니다 : 마우스로 선택"
         }
       }
     },

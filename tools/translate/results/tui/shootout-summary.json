@@ -1,5 +1,5 @@
 {
-  "generated_at": "20261024T142702Z",
+  "generated_at": "20261024T150959Z",
   "runs": {
     "m2m100": {
       "at": "20261024T120415Z",
@@ -49,8 +49,8 @@
           "seconds": 432.8
         },
         "judge_qwen": {
-          "at": "20261024T142652Z",
-          "seconds": 156.4
+          "at": "20261024T150954Z",
+          "seconds": 156.8
         }
       }
     },
@@ -102,8 +102,8 @@
           "seconds": 697.0
         },
         "judge_qwen": {
-          "at": "20261024T142659Z",
-          "seconds": 260.4
+          "at": "20261024T150956Z",
+          "seconds": 264.2
         }
       }
     },
@@ -150,8 +150,8 @@
           "seconds": 328.2
         },
         "judge_qwen": {
-          "at": "20261024T142657Z",
-          "seconds": 122.4
+          "at": "20261024T150956Z",
+          "seconds": 123.3
         }
       }
     },
@@ -210,8 +210,8 @@
           "seconds": 719.0
         },
         "judge_qwen": {
-          "at": "20261024T142658Z",
-          "seconds": 249.4
+          "at": "20261024T150955Z",
+          "seconds": 252.4
         }
       }
     },
@@ -271,8 +271,8 @@
           "seconds": 342.4
         },
         "judge_qwen": {
-          "at": "20261024T142658Z",
-          "seconds": 127.3
+          "at": "20261024T150956Z",
+          "seconds": 128.3
         }
       }
     },
@@ -701,7 +701,7 @@
     "fil": {
       "winner": {
         "model": "madlad-400",
-        "why": "picked for 46 of the 159 strings filled"
+        "why": "picked for 45 of the 156 strings filled"
       },
       "models": {
         "hy-mt2": {
@@ -720,7 +720,7 @@
           "all_checks_pass": 143,
           "mean_chrf": 45.0,
           "mean_rank": 4.92,
-          "best_count": 5,
+          "best_count": 4,
           "mean_metricx": 6.094,
           "mean_comet_kiwi": 0.542,
           "mean_judge": null,
@@ -731,7 +731,7 @@
           "all_checks_pass": 159,
           "mean_chrf": 77.3,
           "mean_rank": 3.11,
-          "best_count": 46,
+          "best_count": 45,
           "mean_metricx": 2.916,
           "mean_comet_kiwi": 0.685,
           "mean_judge": null,
@@ -742,7 +742,7 @@
           "all_checks_pass": 159,
           "mean_chrf": 62.3,
           "mean_rank": 3.64,
-          "best_count": 20,
+          "best_count": 19,
           "mean_metricx": 3.17,
           "mean_comet_kiwi": 0.691,
           "mean_judge": null,
@@ -831,7 +831,7 @@
           "mean_metricx": 2.485,
           "mean_comet_kiwi": 0.758,
           "mean_judge": 9.132,
-          "mean_judge_qwen": 8.5
+          "mean_judge_qwen": 8.487
         },
         "translategemma-4b": {
           "strings": 159,
@@ -1334,7 +1334,7 @@
     "sw": {
       "winner": {
         "model": "madlad-400",
-        "why": "picked for 58 of the 159 strings filled"
+        "why": "picked for 57 of the 158 strings filled"
       },
       "models": {
         "m2m100": {
@@ -1353,7 +1353,7 @@
           "all_checks_pass": 158,
           "mean_chrf": 62.6,
           "mean_rank": 2.32,
-          "best_count": 58,
+          "best_count": 57,
           "mean_metricx": 5.105,
           "mean_comet_kiwi": 0.695,
           "mean_judge": null,
@@ -1505,7 +1505,7 @@
           "mean_metricx": 3.144,
           "mean_comet_kiwi": 0.712,
           "mean_judge": null,
-          "mean_judge_qwen": 8.369
+          "mean_judge_qwen": 8.333
         },
         "translategemma-12b": {
           "strings": 159,
