@@ -95,9 +95,11 @@ jobs:
       - name: Setup (deps and assets)
         run: |
           mix local.hex --force --if-missing
-          mix setup
+          # Both projects' deps, ex_ratatui's library (just tui-nifs), then compile.
+          mix deps.get
           (cd clients/tui && mix deps.get)
           just tui-nifs
+          mix setup
           cargo build --quiet -p randos_media
 
       - name: Browser smoke (two headless Chromes, fake mics)

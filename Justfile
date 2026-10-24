@@ -10,6 +10,9 @@ default:
 # Install the pinned toolchain, fetch deps, and build assets
 setup:
     mise install
+    mix deps.get
+    cd clients/tui && mix deps.get
+    just tui-nifs
     mix setup
 
 # Run the dev server (HTTP :4000, HTTPS :4001 when certs exist)
@@ -214,22 +217,29 @@ voice-wasm-check:
 # refuses responses with over 10 KB of headers, and GitHub's release
 # downloads now send more (2026-10-24: 10,860 bytes), so a clean compile
 # fails with header_too_long. The file is still checked against the
-# checksum ex_ratatui ships when it's used. Needs the TUI's deps fetched.
-# Fetch the TUI's precompiled terminal library (after mix deps.get)
+# checksum ex_ratatui ships when it's used. Both projects use ex_ratatui
+# (the TUI, and the server's dev dashboard, `just top`): run this after
+# `mix deps.get` and before anything compiles (`just setup` and CI do).
+# Fetch ex_ratatui's precompiled library for the server and the TUI (after deps.get)
 tui-nifs:
     #!/usr/bin/env bash
     set -euo pipefail
-    dep=clients/tui/deps/ex_ratatui
-    version="$(sed -n 's/^ *@version "\(.*\)"$/\1/p' "$dep/mix.exs" | head -1)"
     case "$(uname -s)" in Darwin) os=apple-darwin ;; Linux) os=unknown-linux-gnu ;; *) echo "tui-nifs: unknown OS" >&2; exit 1 ;; esac
     target="$(uname -m | sed 's/arm64/aarch64/')-${os}"
     cache="${RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH:-$(erl -noshell -eval 'io:format("~s", [filename:basedir(user_cache, "rustler_precompiled/precompiled_nifs")]), halt().')}"
     mkdir -p "$cache"
-    files="$(sed -n "s/^ *\"\(libex_ratatui-v${version}-nif-[0-9.]*-${target}\.so\.tar\.gz\)\".*/\1/p" "$dep"/checksum-*.exs)"
-    [ -n "$files" ] || { echo "tui-nifs: no ex_ratatui ${version} NIF for ${target} in its checksum file" >&2; exit 1; }
-    for file in $files; do
-      [ -s "$cache/$file" ] || curl -fsSL -o "$cache/$file" "https://github.com/mcass19/ex_ratatui/releases/download/v${version}/${file}"
+    found=0
+    for dep in deps/ex_ratatui clients/tui/deps/ex_ratatui; do
+      [ -f "$dep/mix.exs" ] || continue
+      found=1
+      version="$(sed -n 's/^ *@version "\(.*\)"$/\1/p' "$dep/mix.exs" | head -1)"
+      files="$(sed -n "s/^ *\"\(libex_ratatui-v${version}-nif-[0-9.]*-${target}\.so\.tar\.gz\)\".*/\1/p" "$dep"/checksum-*.exs)"
+      [ -n "$files" ] || { echo "tui-nifs: no ex_ratatui ${version} NIF for ${target} in its checksum file" >&2; exit 1; }
+      for file in $files; do
+        [ -s "$cache/$file" ] || curl -fsSL -o "$cache/$file" "https://github.com/mcass19/ex_ratatui/releases/download/v${version}/${file}"
+      done
     done
+    [ "$found" = 1 ] || { echo "tui-nifs: no ex_ratatui in deps/ or clients/tui/deps/ (mix deps.get first)" >&2; exit 1; }
 
 # The TUI as an installable archive (Phase 4.4): ERTS, the app, bin/randos,
 # and the media helper, in dist/randos-VERSION-OS-ARCH.tar.gz (+ .sha256).
