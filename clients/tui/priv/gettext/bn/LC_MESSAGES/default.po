@@ -690,6 +690,7 @@ msgctxt "key"
 msgid "unmute"
 msgstr "নীরবতা অপসারণ করো"
 
+#. A log line, one or two words: you're not looking or in a call any more.
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
@@ -794,12 +795,6 @@ msgstr "আপনার rando লিঙ্কটি খোলার জন্য
 msgid "paste the whole link you were sent"
 msgstr "যে লিঙ্কটি আপনাকে পাঠানো হয়েছে, তার পুরোটাই পেস্ট করুন"
 
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "প্রথমে ফর্মে ১৮+ বক্সে টিক দিন"
-
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -859,6 +854,7 @@ msgstr "লিঙ্ক অনুলিপি করা হয়েছে"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "লিঙ্কটি আপনার টার্মিনালের ক্লিপবোর্ডে পাঠানো হয়েছে (যদি আপনার টার্মিনাল এটি সমর্থন করে)।"
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
@@ -870,3 +866,9 @@ msgstr "১৮+"
 msgctxt "key"
 msgid "copy the link"
 msgstr "লিঙ্কটি অনুলিপি করুন"
+
+#. The joiner hasn't ticked the 18+ box on the form yet.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (tab)"
+msgstr ""

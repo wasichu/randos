@@ -109,6 +109,31 @@ defmodule Tui.ViewLanguagesTest do
 
   defp squeeze(text), do: String.replace(text, " ", "")
 
+  @link "https://randos.slowinput.org/join#Qx7mB2kPz9LwT4vN8cR1sA"
+
+  for language <- Tui.Language.available(), size <- [{80, 24}, {40, 20}] do
+    @language language
+    @size size
+    test "#{language} at #{elem(size, 0)}×#{elem(size, 1)}: the link and the prompt's 18+ line show whole" do
+      Gettext.with_locale(Tui.Gettext, @language, fn ->
+        inviting =
+          model("inviting", nil, %{invitation: %{"url" => @link, "expires_at_unix_ms" => 901_000}})
+
+        assert squeeze(flat(render(@size, inviting))) =~ squeeze(@link)
+
+        prompt = model("idle", nil, %{join_prompt: @link, adult_acknowledged?: false})
+        text = flat(render(@size, prompt))
+        assert text =~ "[ ]", "the prompt's 18+ box is hidden:\n#{text}"
+        # (Narrower, the link wraps inside the popup, between other panels' text.)
+        if elem(@size, 0) >= 80, do: assert(squeeze(text) =~ squeeze(@link))
+      end)
+    end
+  end
+
+  # The screen's text with line breaks and borders gone (a wrapped link
+  # spans lines).
+  defp flat(text), do: text |> String.replace(~r/[\n│]/u, "")
+
   for language <- Tui.Language.available(), size <- [{80, 24}, {60, 20}, {40, 20}] do
     @language language
     @size size
@@ -119,6 +144,10 @@ defmodule Tui.ViewLanguagesTest do
         for {name, model} <- screens() do
           text = render(@size, model)
           refute text =~ "%{", "#{name}: a placeholder left unfilled"
+
+          refute text =~ ~r/%[sd]/,
+                 "#{name}: a printf placeholder (a translation that's an error message)"
+
           help = text |> String.split("\n") |> Enum.take(-2) |> Enum.join(" ")
           # Spaces aside: the buffer shows a wide character's second cell as one.
           # (The join prompt takes q as a letter: its way out is esc.)

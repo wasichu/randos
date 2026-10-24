@@ -37,8 +37,9 @@ defmodule Tui.Connection do
   def push(connection, event, payload), do: GenServer.cast(connection, {:push, event, payload})
 
   @doc """
-  The interface language the next join asks for (`locale`: the server's
-  own words come in it). Takes effect when the channel next joins.
+  The interface language (`locale`: the server's own words come in it):
+  sent at once as `set_locale` when joined, and asked for at every join.
+  Its reply isn't tracked: an older server's `invalid_message` is harmless.
   """
   @spec set_locale(GenServer.server(), String.t()) :: :ok
   def set_locale(connection, locale), do: GenServer.cast(connection, {:set_locale, locale})
@@ -149,7 +150,10 @@ defmodule Tui.Connection do
   end
 
   @impl Slipstream
-  def handle_cast({:set_locale, locale}, socket), do: {:noreply, assign(socket, :locale, locale)}
+  def handle_cast({:set_locale, locale}, socket) do
+    if joined?(socket, @topic), do: push(socket, @topic, "set_locale", %{locale: locale})
+    {:noreply, assign(socket, :locale, locale)}
+  end
 
   def handle_cast({:push, event, payload}, socket) do
     case push(socket, @topic, event, payload) do

@@ -1,8 +1,7 @@
 defmodule Tui.View do
   @moduledoc """
   The TUI's screens, drawn from `Tui.App`'s state: pure functions of
-  `state.model`, `state.media_state`, `state.uri` and `state.config` (the
-  settings file's path, or `nil`), so a test can render
+  `state.model`, `state.media_state` and `state.uri`, so a test can render
   any screen without the app (`Tui.App.render/2` delegates here).
   """
 
@@ -46,7 +45,7 @@ defmodule Tui.View do
     model = state.model
     # Two rows when the keys don't fit in one (translations run longer),
     # broken between keys, never inside one.
-    help_lines = help_lines(help(model) ++ mic_help(state), frame.width)
+    help_lines = help_lines(with_quit_last(help(model), mic_help(state)), frame.width)
     help_rows = length(help_lines)
 
     # The main panel gives way first on a short terminal: the status lines
@@ -63,7 +62,7 @@ defmodule Tui.View do
        bottom_panels(state, status_area, side_by_side?) ++
        [
          {%Paragraph{text: Enum.join(help_lines, "\n"), style: %Style{fg: :dark_gray}}, help_area}
-       ])
+       ] ++ join_prompt(model, area))
     |> in_display_order(state)
   end
 
@@ -183,17 +182,13 @@ defmodule Tui.View do
   # (Paragraph wrapping trims leading spaces).
   defp main(%{connection: :connected, status: :idle} = model, area, mic_test) do
     [form_area, text_area] = Layout.split(area, :vertical, [{:length, 5}, {:min, 0}])
-    ack = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
     [speak, hear] = labels([gettext("I will speak:"), gettext("I'm happy to hear:")])
-
-    gettext_comment("The 18+ box on the form; its [x]/[ ] comes before it.")
-    adult = gettext("I'm 18+ and OK with anonymous, unmoderated calls")
 
     form = %List{
       items: [
         "#{speak}◀ #{Model.language_name(model, model.speaks)} ▶",
         "#{hear}#{hears_row(model)}",
-        "#{ack} #{adult}"
+        adult_line(model)
       ],
       selected: Enum.find_index([:speaks, :hears, :ack], &(&1 == model.focus)),
       highlight_symbol: "▶ ",
@@ -210,34 +205,52 @@ defmodule Tui.View do
     [
       {form, form_area},
       {%Paragraph{
-         text: notice <> error <> gettext("Press Enter to find a rando.") <> mic_test,
+         text:
+           notice <> error <> gettext("Press Enter to find a rando.") <> mic_test <> said(model),
          wrap: true
        }, text_area}
-    ] ++ join_prompt(model, area)
+    ]
   end
 
   defp main(model, area, extra) do
-    [{%Paragraph{text: main_text(model) <> extra, block: panel(title(model)), wrap: true}, area}]
+    text = main_text(model) <> extra <> said(model)
+    [{%Paragraph{text: text, block: panel(title(model)), wrap: true}, area}]
+  end
+
+  # What this client just said about the last key (`Model.message`: a copy,
+  # a refusal), below the panel's own text.
+  defp said(%{message: message}) when is_binary(message), do: "\n\n" <> message
+  defp said(_model), do: ""
+
+  # The 18+ box and its sentence: the form's row, and the join prompt's.
+  defp adult_line(model) do
+    box = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
+    gettext_comment("The 18+ box on the form; its [x]/[ ] comes before it.")
+    "#{box} " <> gettext("I'm 18+ and OK with anonymous, unmoderated calls")
   end
 
   # j (or a paste): the invitation link, over the form.
+  # Over the whole screen (it takes every key), with the 18+ box above the
+  # link so a long link never pushes it out, as tall as its lines wrapped
+  # as ratatui will (Bidi.wrap's rule).
   defp join_prompt(%{join_prompt: text} = model, area) when is_binary(text) do
-    box = if model.adult_acknowledged?, do: "[x]", else: "[ ]"
-    ack = "\n\n#{box} " <> gettext("I'm 18+ and OK with anonymous, unmoderated calls")
-
     gettext_comment(
       "The join prompt: put (paste, insert from the clipboard; the opposite of copy) the invitation link someone sent you."
     )
 
+    content =
+      gettext("Paste the link you were sent:") <>
+        "\n\n" <> adult_line(model) <> "\n\n> " <> text <> "▏" <> said(model)
+
+    inner = max(div(area.width * 80, 100) - 2, 10)
+    height = min(length(Tui.Bidi.wrap(content, inner)) + 2, area.height)
+
     [
       {%Popup{
-         content: %Paragraph{
-           text: gettext("Paste the link you were sent:") <> "\n\n> " <> text <> "▏" <> ack,
-           wrap: true
-         },
+         content: %Paragraph{text: content, wrap: true},
          block: panel(" #{gettext("Join through a link")} "),
          percent_width: 80,
-         fixed_height: 9
+         fixed_height: height
        }, area}
     ]
   end
@@ -510,7 +523,7 @@ defmodule Tui.View do
         ""
 
       seconds ->
-        time = "#{div(seconds, 60)}:#{pad(rem(seconds, 60))}"
+        time = mmss(seconds)
         "  " <> time_left_text(kind, time)
     end
   end
@@ -528,11 +541,12 @@ defmodule Tui.View do
   defp link_time_left(%{"expires_at_unix_ms" => at}, now_ms) when is_integer(at) do
     seconds = max(div(at - now_ms, 1000), 0)
     gettext_comment("How long the invitation link keeps working, as m:ss.")
-    "  " <> gettext("%{time} left", time: "#{div(seconds, 60)}:#{pad(rem(seconds, 60))}")
+    "  " <> gettext("%{time} left", time: mmss(seconds))
   end
 
   defp link_time_left(_invitation, _now_ms), do: ""
 
+  defp mmss(seconds), do: "#{div(seconds, 60)}:#{pad(rem(seconds, 60))}"
   defp pad(n), do: n |> Integer.to_string() |> String.pad_leading(2, "0")
 
   # The help line: each key, then what it does ("q quit"). The keys stay as
@@ -565,10 +579,12 @@ defmodule Tui.View do
     |> Enum.reverse()
   end
 
-  # The way out is never dropped: q, or esc where q is a letter (the join
-  # prompt).
+  # Never dropped: the way out (q, or esc where q is a letter, the join
+  # prompt) and the way to change an unreadable language (l).
+  @kept_keys ["q", "esc", "l"]
+
   defp drop_last_but_quit(hints) do
-    case hints |> Enum.reverse() |> Enum.find_index(&(elem(&1, 0) not in ["q", "esc"])) do
+    case hints |> Enum.reverse() |> Enum.find_index(&(elem(&1, 0) not in @kept_keys)) do
       nil -> hints
       index -> Elixir.List.delete_at(hints, length(hints) - 1 - index)
     end
@@ -576,13 +592,24 @@ defmodule Tui.View do
 
   defp quit, do: {"q", pgettext("key", "quit")}
 
+  defp plus18 do
+    gettext_comment("Key help, two or three characters: the 18+ box (\"18+\"), nothing more.")
+    pgettext("key", "18+")
+  end
+
+  # The screen's hints, then the mic's, then q: quitting reads last.
+  defp with_quit_last(hints, mic) do
+    {quits, rest} = Enum.split_with(hints, &(elem(&1, 0) == "q"))
+    rest ++ mic ++ quits
+  end
+
   defp help(%{connection: :connecting}), do: [quit()]
 
   # The prompt takes every key, q too: no quit here.
   defp help(%{join_prompt: text}) when is_binary(text),
     do: [
       {"enter", pgettext("key", "join")},
-      {"tab", pgettext("key", "18+")},
+      {"tab", plus18()},
       {"esc", pgettext("key", "cancel")}
     ]
 
@@ -689,8 +716,8 @@ defmodule Tui.View do
   end
 
   # The current state at a glance, like the website's status label and its
-  # "Connection:" line (notices, e.g. errors, go to tmp/tui.log; errors also
-  # show in the main panel). One line each, never wrapped (a wrapped line
+  # "Connection:" line (errors, the server's notice and this client's own
+  # messages show in the main panel; the full history is in tmp/tui.log). One line each, never wrapped (a wrapped line
   # pushes the next one out of the box): the connection line drops detail to
   # fit `width`, and anything still too long is cut with "…".
   defp status_text(state, width, devices?) do

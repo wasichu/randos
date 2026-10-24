@@ -690,6 +690,7 @@ msgctxt "key"
 msgid "unmute"
 msgstr "désactiver le son"
 
+#. A log line, one or two words: you're not looking or in a call any more.
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
@@ -794,12 +795,6 @@ msgstr "En attendant que votre rando ouvre le lien…"
 msgid "paste the whole link you were sent"
 msgstr "collez tout le lien qui vous a été envoyé"
 
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "cochez d'abord la case 18+ sur le formulaire"
-
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -859,6 +854,7 @@ msgstr "Lien copié"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "Lien envoyé dans le presse-papiers de votre terminal (si celui-ci le permet)."
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
@@ -870,3 +866,9 @@ msgstr "Âge requis : 18 ans et plus"
 msgctxt "key"
 msgid "copy the link"
 msgstr "Copiez le lien"
+
+#. The joiner hasn't ticked the 18+ box on the form yet.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (tab)"
+msgstr ""

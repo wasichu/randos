@@ -690,6 +690,7 @@ msgctxt "key"
 msgid "unmute"
 msgstr "음소거 해제"
 
+#. A log line, one or two words: you're not looking or in a call any more.
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
@@ -794,12 +795,6 @@ msgstr "링크를 열기 위해 rando을 기다리는 중…"
 msgid "paste the whole link you were sent"
 msgstr "발송받은 전체 링크를 복사하여 붙여넣어 주세요"
 
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "먼저, 양식에 18세 이상 여부 확인란을 선택하세요"
-
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -859,6 +854,7 @@ msgstr "링크 복사됨"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "링크가 터미널의 클립보드에 전송됩니다 (단, 터미널이 해당 기능을 지원하는 경우에만 해당)."
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
@@ -870,3 +866,9 @@ msgstr "18세 이상"
 msgctxt "key"
 msgid "copy the link"
 msgstr "링크를 복사"
+
+#. The joiner hasn't ticked the 18+ box on the form yet.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (tab)"
+msgstr ""

@@ -690,6 +690,7 @@ msgctxt "key"
 msgid "unmute"
 msgstr "अनमुट"
 
+#. A log line, one or two words: you're not looking or in a call any more.
 #: lib/tui/model.ex
 #, elixir-autogen, elixir-format
 msgctxt "log"
@@ -794,12 +795,6 @@ msgstr "आपके rando द्वारा लिंक खोलने क�
 msgid "paste the whole link you were sent"
 msgstr "आपको भेजा गया पूरा लिंक चिपकाएँ"
 
-#. The joiner hasn't ticked the 18+ box on the form yet.
-#: lib/tui/model.ex
-#, elixir-autogen, elixir-format
-msgid "tick the 18+ box on the form first"
-msgstr "फॉर्म पर पहले 18+ बॉक्स को चेक करें"
-
 #. The You panel's "Now:" row: your invitation link waits for someone.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -859,6 +854,7 @@ msgstr "लिंक नक़ल किया गया"
 msgid "link sent to your terminal's clipboard (if it allows that)"
 msgstr "लिंक आपके टर्मिनल के क्लिपबोर्ड पर भेजा गया है (यदि आपका टर्मिनल इसे अनुमति देता है)।"
 
+#. Key help, two or three characters: the 18+ box ("18+"), nothing more.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgctxt "key"
@@ -870,3 +866,9 @@ msgstr "18 वर्ष या उससे अधिक"
 msgctxt "key"
 msgid "copy the link"
 msgstr "लिंक कापी करें"
+
+#. The joiner hasn't ticked the 18+ box on the form yet.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box first (tab)"
+msgstr ""
