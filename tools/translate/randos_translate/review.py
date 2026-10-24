@@ -142,7 +142,8 @@ def pick(entries: dict[str, dict]) -> dict | None:
     there is no candidate, or the only one is one a judge rates at the veto
     line or below (`VETO_AT_MOST`): with nothing to compare it to, that
     rating alone decides ("rando 无法找到页面", "rando: page not found",
-    for "not looking for a rando")."""
+    for "not looking for a rando"). Nor ships a pick that every judge who
+    rated it rated at the line or below."""
     passing = candidates(entries)
     if not passing:
         return None
@@ -179,6 +180,11 @@ def pick(entries: dict[str, dict]) -> dict | None:
         return (primary, tiebreak[m], -chrf, len(passing[m]["text"]), passing[m]["text"])
 
     model = min(passing, key=key)
+    # Every judge that rated the pick rated it at the veto line or below:
+    # nothing ships (the English shows), the owner's rule (2026-10-24).
+    ratings = [s for judge in JUDGES if (s := _score(passing[model], judge)) is not None]
+    if ratings and all(s <= VETO_AT_MOST for s in ratings):
+        return None
     by = " and ".join(SCORERS[s]["label"] for s in deciding) or "the tie-breaks alone"
     veto = f", after the judge's veto of {', '.join(sorted(vetoed))}" if vetoed else ""
     return {"model": model, "why": f"best of {len(passing)} passing translations by {by}{veto}"}

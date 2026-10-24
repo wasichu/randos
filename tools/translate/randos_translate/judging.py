@@ -64,7 +64,14 @@ def _rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
         if id(entry["scores"]) in tried:
             return True
         verdict = entry["scores"].get(score) or {}
-        return verdict.get("score") is not None and scoring.judged_context(entry, score) == context(entry)
+        # A rating counts for the text it was given (a stop-stripped
+        # candidate's isn't the stored text's; verdicts from before this
+        # carry no text and count as given for it).
+        return (
+            verdict.get("score") is not None
+            and scoring.judged_context(entry, score) == context(entry)
+            and verdict.get("text", entry["text"]) == entry["text"]
+        )
 
     try:
         # What each string's pick chooses among (copies share their "scores").
@@ -87,7 +94,8 @@ def _rounds(name, table, runs, owner, cache, contexts, redo, counts) -> None:
                 seconds = time.monotonic() - began
                 touched: dict[Path, int] = {}
                 for e in mine:
-                    e["scores"][score] = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
+                    verdict = given.get(keys[id(e["scores"])]) or cache.get(locale, e, context(e), name)
+                    e["scores"][score] = verdict and verdict | {"text": e["text"]}
                     tried.add(id(e["scores"]))
                     touched[owner[id(e["scores"])]] = touched.get(owner[id(e["scores"])], 0) + 1
                 for path, n in touched.items():
