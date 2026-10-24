@@ -208,12 +208,34 @@ defmodule Tui.View do
       {form, form_area},
       {%Paragraph{text: error <> gettext("Press Enter to find a rando.") <> mic_test, wrap: true},
        text_area}
-    ]
+    ] ++ join_prompt(model, area)
   end
 
   defp main(model, area, extra) do
     [{%Paragraph{text: main_text(model) <> extra, block: panel(title(model)), wrap: true}, area}]
   end
+
+  # j (or a paste): the invitation link, over the form.
+  defp join_prompt(%{join_prompt: text} = model, area) when is_binary(text) do
+    ack =
+      if model.adult_acknowledged?,
+        do: "",
+        else: "\n\n" <> gettext("Tick the 18+ box on the form first.")
+
+    [
+      {%Popup{
+         content: %Paragraph{
+           text: gettext("Paste the link you were sent:") <> "\n\n> " <> text <> "▏" <> ack,
+           wrap: true
+         },
+         block: panel(" #{gettext("Join through a link")} "),
+         percent_width: 80,
+         fixed_height: 8
+       }, area}
+    ]
+  end
+
+  defp join_prompt(_model, _area), do: []
 
   # The language under the cursor with its box, then every checked code:
   # "◀ [x] Español (ES) ▶  EN ES".
@@ -272,7 +294,7 @@ defmodule Tui.View do
           ) ++
           meter(
             gettext("Your rando"),
-            Model.language_name(model, Model.peer_speaks(model)),
+            peer_languages(model),
             levels.peer,
             @peer_color,
             rows,
@@ -362,6 +384,7 @@ defmodule Tui.View do
   defp title_text(%{connection: :connecting}), do: pgettext("panel title", "Connecting")
   defp title_text(%{status: :idle}), do: pgettext("panel title", "Find a rando")
   defp title_text(%{status: :looking}), do: pgettext("panel title", "Looking")
+  defp title_text(%{status: :inviting}), do: pgettext("panel title", "Invitation")
   defp title_text(%{status: :connecting}), do: pgettext("panel title", "Matched")
   defp title_text(%{status: :in_call}), do: pgettext("panel title", "In call")
   defp title_text(%{status: :extension_pending}), do: pgettext("panel title", "Time is up")
@@ -369,8 +392,25 @@ defmodule Tui.View do
 
   # "English, Español or Français"; past three, a count, as on the website,
   # so a long choice doesn't make a long sentence.
-  defp hearing_summary(%{hears: hears} = model) when length(hears) <= 3 do
-    case Enum.map(hears, &Model.language_name(model, &1)) do
+  defp hearing_summary(%{hears: hears} = model) when length(hears) <= 3,
+    do: language_list(model, hears)
+
+  # The count in brackets, so no language has to agree a noun with it.
+  defp hearing_summary(%{hears: hears}),
+    do: gettext("any of the languages you picked (%{count})", count: length(hears))
+
+  # The languages your rando may speak (several only when they joined your
+  # invitation): the first three, then "…".
+  defp peer_languages(model) do
+    case Model.peer_speaks_any(model) do
+      [] -> Model.language_name(model, nil)
+      codes when length(codes) <= 3 -> language_list(model, codes)
+      codes -> language_list(model, Enum.take(codes, 3)) <> "…"
+    end
+  end
+
+  defp language_list(model, codes) do
+    case Enum.map(codes, &Model.language_name(model, &1)) do
       [only] ->
         only
 
@@ -384,10 +424,6 @@ defmodule Tui.View do
     end
   end
 
-  # The count in brackets, so no language has to agree a noun with it.
-  defp hearing_summary(%{hears: hears}),
-    do: gettext("any of the languages you picked (%{count})", count: length(hears))
-
   defp main_text(%{connection: :connecting}), do: gettext("Connecting to the server…")
 
   defp main_text(%{status: :looking} = model) do
@@ -399,6 +435,16 @@ defmodule Tui.View do
       hearing: hearing_summary(model),
       speaking: Model.language_name(model, model.speaks)
     )
+  end
+
+  # The link on a line of its own, to select and copy.
+  defp main_text(%{status: :inviting, invitation: %{"url" => url} = invitation} = model) do
+    gettext("Waiting for your rando to open the link…") <>
+      "\n\n" <>
+      url <>
+      "\n\n" <>
+      gettext("Send it to them however you like. It works once.") <>
+      link_time_left(invitation, model.now_ms)
   end
 
   defp main_text(%{status: :connecting}), do: gettext("Matched! Starting the call…")
@@ -472,6 +518,14 @@ defmodule Tui.View do
     gettext("%{time} to decide", time: time)
   end
 
+  defp link_time_left(%{"expires_at_unix_ms" => at}, now_ms) when is_integer(at) do
+    seconds = max(div(at - now_ms, 1000), 0)
+    gettext_comment("How long the invitation link keeps working, as m:ss.")
+    "  " <> gettext("%{time} left", time: "#{div(seconds, 60)}:#{pad(rem(seconds, 60))}")
+  end
+
+  defp link_time_left(_invitation, _now_ms), do: ""
+
   defp pad(n), do: n |> Integer.to_string() |> String.pad_leading(2, "0")
 
   # The help line: each key, then what it does ("q quit"). The keys stay as
@@ -511,6 +565,10 @@ defmodule Tui.View do
 
   defp help(%{connection: :connecting}), do: [quit()]
 
+  # The prompt takes every key, q too: no quit here.
+  defp help(%{join_prompt: text}) when is_binary(text),
+    do: [{"enter", pgettext("key", "join")}, {"esc", pgettext("key", "cancel")}]
+
   defp help(%{status: :idle, status_page: %{info?: true}}),
     do: [{"i/esc", pgettext("key", "close")}, quit()]
 
@@ -540,6 +598,8 @@ defmodule Tui.View do
       [
         {"space", check},
         {"enter", pgettext("key", "find")},
+        {"v", pgettext("key", "invite")},
+        {"j", pgettext("key", "join a link")},
         {"s", pgettext("key", "status")},
         {"l", pgettext("key", "language")},
         quit()
@@ -547,6 +607,14 @@ defmodule Tui.View do
   end
 
   defp help(%{status: :looking}), do: [{"c", pgettext("key", "cancel")}, quit()]
+
+  defp help(%{status: :inviting}) do
+    gettext_comment("Key help: withdraw the invitation link, so it stops working.")
+    [{"c", pgettext("key", "cancel the link")}, quit()]
+  end
+
+  defp help(%{status: s, call: %{"kind" => "invitation"}}) when s in [:connecting, :in_call],
+    do: [{"e", pgettext("key", "end call")}, quit()]
 
   defp help(%{status: s}) when s in [:connecting, :in_call] do
     gettext_comment("Key help: end this call and find another person to talk to.")
@@ -660,6 +728,12 @@ defmodule Tui.View do
   end
 
   defp status_label(%{status: :looking}), do: gettext("looking for a rando")
+
+  defp status_label(%{status: :inviting}) do
+    gettext_comment("The You panel's \"Now:\" row: your invitation link waits for someone.")
+    gettext("waiting for someone to open your link")
+  end
+
   defp status_label(%{status: :connecting}), do: gettext("matched, preparing the call")
   defp status_label(%{status: :in_call}), do: gettext("in a call")
 

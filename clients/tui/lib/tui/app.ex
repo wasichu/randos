@@ -140,6 +140,18 @@ defmodule Tui.App do
   def handle_event(%Event.Key{code: "c", kind: "press", modifiers: ["ctrl"]}, state),
     do: {:stop, state}
 
+  # The join prompt takes every key (a link is typed there), q included.
+  def handle_event(%Event.Key{code: code, kind: "press"}, %{model: %{join_prompt: text}} = state)
+      when is_binary(text) do
+    {model, commands} = Model.key(state.model, code)
+    {:noreply, apply_model(state, model, commands)}
+  end
+
+  def handle_event(%Event.Paste{content: text}, state) do
+    {model, commands} = Model.paste(state.model, text)
+    {:noreply, apply_model(state, model, commands)}
+  end
+
   def handle_event(%Event.Key{code: "q", kind: "press"}, state), do: {:stop, state}
 
   def handle_event(

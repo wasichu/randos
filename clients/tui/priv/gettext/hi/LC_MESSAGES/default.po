@@ -761,3 +761,88 @@ msgstr "समय समाप्त हो गया"
 #, elixir-autogen, elixir-format
 msgid "not looking for a rando"
 msgstr "एक rando के लिए नहीं देख रहे हैं"
+
+#. How long the invitation link keeps working, as m:ss.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{time} left"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Join through a link"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Paste the link you were sent:"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Send it to them however you like. It works once."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tick the 18+ box on the form first."
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Waiting for your rando to open the link…"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "paste the whole link you were sent"
+msgstr ""
+
+#. The joiner hasn't ticked the 18+ box on the form yet.
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "tick the 18+ box on the form first"
+msgstr ""
+
+#. The You panel's "Now:" row: your invitation link waits for someone.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "waiting for someone to open your link"
+msgstr ""
+
+#. Key help: withdraw the invitation link, so it stops working.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "cancel the link"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "invite"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "join"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "join a link"
+msgstr ""
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgctxt "log"
+msgid "invitation link ready to share"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "panel title"
+msgid "Invitation"
+msgstr ""

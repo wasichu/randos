@@ -10,6 +10,9 @@
 //   RELAY_ONLY=1 — this browser can never connect
 //   REPORT_EVERY_MS=N — also report Chrome's inbound stats every N ms while
 //     holding ({"event": "inbound", "inbound": {...}})
+//   INVITE=1 — make an invitation link instead of finding a rando, and
+//     report it ({"event": "invitation", "url": "..."})
+//   JOIN=<token> — join the invitation with this token instead
 //
 // Reports progress as JSON lines on stdout, one object each:
 //   {"event": "looking"}                          waiting in the queue
@@ -46,12 +49,18 @@ try {
     relayOnly: process.env.RELAY_ONLY === "1",
   })
   await page.open(BASE_URL)
-  await page.findRando(speaks, hears)
+  if (process.env.INVITE === "1") {
+    report({event: "invitation", url: await page.invite(speaks, hears)})
+  } else if (process.env.JOIN) {
+    await page.join(`${BASE_URL}/join#${process.env.JOIN}`)
+  } else {
+    await page.findRando(speaks, hears)
+  }
   // Either we wait in the queue, or a peer was already waiting and we match
   // at once (then there's no "looking" to report). A failing call can come
   // and go faster than this poll, so call_ends runs skip it and rely on the
   // call-ends counter.
-  if (expect !== "call_ends") {
+  if (expect !== "call_ends" && !process.env.INVITE && !process.env.JOIN) {
     await page.waitFor(
       `!!document.querySelector("#looking-panel") || !!document.querySelector("#webrtc-audio")`,
       "looking or matched",

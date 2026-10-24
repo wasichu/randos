@@ -19,6 +19,13 @@ defmodule Tui.Model do
   data as the website's /status page), or `unavailable?` for a server that
   doesn't know the request, and when it was last asked for (refreshed every
   30 s while open, see `refresh_status/1`).
+
+  Invitations (the protocol doc's "Invitations"): `v` on the idle screen
+  sends `invite`, and the server's `invitation` (the link to share) is
+  shown while `inviting`; `j` opens `join_prompt`, where a link is typed
+  or pasted (a paste on the idle screen opens it too), and Enter sends
+  `accept_invitation` with the part after `#`. An invitation call
+  (`call.kind`) has no `next`.
   """
 
   use Gettext, backend: Tui.Gettext
@@ -26,7 +33,7 @@ defmodule Tui.Model do
   @max_log 30
   @status_refresh_ms 30_000
 
-  @type status :: :connecting | :idle | :looking | :in_call | :extension_pending
+  @type status :: :connecting | :idle | :looking | :inviting | :in_call | :extension_pending
   @type command :: {:push, String.t(), map()}
 
   @typedoc """
@@ -52,7 +59,9 @@ defmodule Tui.Model do
           now_ms: integer(),
           log: [String.t()],
           status_page: status_page() | nil,
-          language: String.t()
+          language: String.t(),
+          invitation: map() | nil,
+          join_prompt: String.t() | nil
         }
 
   # `info?`: the "About these numbers" pop-up is open (i).
@@ -78,11 +87,14 @@ defmodule Tui.Model do
             now_ms: 0,
             log: [],
             status_page: nil,
-            language: "en"
+            language: "en",
+            invitation: nil,
+            join_prompt: nil
 
   @statuses %{
     "idle" => :idle,
     "looking" => :looking,
+    "inviting" => :inviting,
     "connecting" => :connecting,
     "in_call" => :in_call,
     "extension_pending" => :extension_pending
@@ -237,6 +249,23 @@ defmodule Tui.Model do
   @spec key(t(), String.t()) :: {t(), [command()]}
   def key(%{connection: :connecting} = model, _key), do: {model, []}
 
+  # The join prompt takes every key: a link is typed (or pasted, `paste/2`).
+  def key(%{join_prompt: text} = model, key) when is_binary(text) do
+    case key do
+      "esc" ->
+        {%{model | join_prompt: nil}, []}
+
+      "enter" ->
+        accept(model)
+
+      "backspace" ->
+        {%{model | join_prompt: String.slice(text, 0..-2//1)}, []}
+
+      k ->
+        if String.length(k) == 1, do: {%{model | join_prompt: text <> k}, []}, else: {model, []}
+    end
+  end
+
   # The status screen: i opens or closes "About these numbers" (esc closes it
   # first); s or esc goes back, r asks again now.
   def key(%{status: :idle, status_page: %{info?: true} = page} = model, k) when k in ["i", "esc"],
@@ -256,6 +285,9 @@ defmodule Tui.Model do
   def key(%{status: :idle} = model, "l"),
     do: {%{model | language: Tui.Language.next(model.language)}, []}
 
+  def key(%{status: :idle} = model, "v"), do: invite(model)
+  def key(%{status: :idle} = model, "j"), do: {%{model | join_prompt: ""}, []}
+
   def key(%{status: :idle} = model, key) do
     case key do
       k when k in ["tab", "down"] -> {%{model | focus: next_focus(model.focus)}, []}
@@ -271,6 +303,14 @@ defmodule Tui.Model do
   def key(%{status: :looking} = model, k) when k in ["c", "esc"],
     do: {model, [{:push, "cancel_search", %{}}]}
 
+  def key(%{status: :inviting} = model, k) when k in ["c", "esc"],
+    do: {model, [{:push, "cancel_invitation", %{}}]}
+
+  # No next in an invitation call (the server ignores it anyway).
+  def key(%{status: s, call: %{"kind" => "invitation"}} = model, "n")
+      when s in [:connecting, :in_call],
+      do: {model, []}
+
   def key(%{status: s} = model, "e") when s in [:connecting, :in_call],
     do: {model, [{:push, "end_call", %{}}]}
 
@@ -284,6 +324,21 @@ defmodule Tui.Model do
     do: {model, [{:push, "vote", %{vote: "end"}}]}
 
   def key(model, _key), do: {model, []}
+
+  @doc """
+  Pasted text (a bracketed paste, one event): into the join prompt, which
+  a paste on the idle screen opens.
+  """
+  @spec paste(t(), String.t()) :: {t(), [command()]}
+  def paste(%{join_prompt: text} = model, pasted) when is_binary(text),
+    do: {%{model | join_prompt: text <> one_line(pasted)}, []}
+
+  def paste(%{connection: :connected, status: :idle, status_page: nil} = model, pasted),
+    do: {%{model | join_prompt: one_line(pasted)}, []}
+
+  def paste(model, _pasted), do: {model, []}
+
+  defp one_line(text), do: text |> String.replace(~r/[\r\n\t]/, "") |> String.trim()
 
   ## Derived view data
 
@@ -313,6 +368,14 @@ defmodule Tui.Model do
   def peer_speaks(%{call: %{"peer_speaks" => code}}) when is_binary(code), do: code
   def peer_speaks(_model), do: nil
 
+  @doc """
+  Every language the rando may speak: more than one only when they joined
+  your invitation (taken to speak whatever you hear).
+  """
+  @spec peer_speaks_any(t()) :: [String.t()]
+  def peer_speaks_any(%{call: %{"peer_speaks_any" => [_ | _] = codes}}), do: codes
+  def peer_speaks_any(model), do: List.wrap(peer_speaks(model))
+
   @doc "Seconds left in the current segment or vote, if any."
   @spec seconds_left(t()) :: non_neg_integer() | nil
   def seconds_left(
@@ -339,7 +402,8 @@ defmodule Tui.Model do
       | status: status,
         webrtc_role: state["webrtc_role"],
         error: error,
-        call: state["call"]
+        call: state["call"],
+        invitation: state["invitation"]
     }
 
     cond do
@@ -352,6 +416,7 @@ defmodule Tui.Model do
   # The log's line when the status changes.
   defp status_line(:idle), do: pgettext("log", "idle")
   defp status_line(:looking), do: pgettext("log", "looking for a rando")
+  defp status_line(:inviting), do: pgettext("log", "invitation link ready to share")
   defp status_line(:connecting), do: pgettext("log", "matched; connecting")
   defp status_line(:in_call), do: pgettext("log", "in call")
   defp status_line(:extension_pending), do: pgettext("log", "time is up: continue? (y/n)")
@@ -362,6 +427,34 @@ defmodule Tui.Model do
     do: {log(model, gettext("pick at least one language to hear (space toggles one)")), []}
 
   defp find(model), do: {model, [{:push, "find", find_payload(model)}]}
+
+  # The same choices as find: what you'll speak, what you'd hear from them.
+  defp invite(%{hears: []} = model), do: find(model)
+  defp invite(model), do: {model, [{:push, "invite", find_payload(model)}]}
+
+  # The token is the link's part after "#" (or the whole thing, pasted bare).
+  defp accept(%{join_prompt: text} = model) do
+    token = text |> String.split("#") |> List.last() |> String.trim()
+
+    cond do
+      token == "" ->
+        {log(model, gettext("paste the whole link you were sent")), []}
+
+      not model.adult_acknowledged? ->
+        gettext_comment("The joiner hasn't ticked the 18+ box on the form yet.")
+        {log(%{model | join_prompt: nil}, gettext("tick the 18+ box on the form first")), []}
+
+      true ->
+        payload = %{
+          token: token,
+          adult_acknowledged: true,
+          audio: model.audio?,
+          ice_restart: model.audio?
+        }
+
+        {%{model | join_prompt: nil}, [{:push, "accept_invitation", payload}]}
+    end
+  end
 
   defp find_payload(model) do
     %{

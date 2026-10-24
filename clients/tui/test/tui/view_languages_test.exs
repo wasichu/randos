@@ -72,7 +72,22 @@ defmodule Tui.ViewLanguagesTest do
       {"vote", model("extension_pending", @call)},
       {"voted", model("extension_pending", Map.put(@call, "agreed_to_continue", true))},
       {"status", %{model("idle") | status_page: %{snapshot: @snapshot, info?: false}}},
-      {"about these numbers", %{model("idle") | status_page: %{snapshot: @snapshot, info?: true}}}
+      {"about these numbers",
+       %{model("idle") | status_page: %{snapshot: @snapshot, info?: true}}},
+      {"inviting",
+       model("inviting", nil, %{
+         invitation: %{
+           "url" => "https://randos.slowinput.org/join#AAAAAAAAAAAAAAAAAAAAAA",
+           "expires_at_unix_ms" => 1_000 + 900_000
+         }
+       })},
+      {"join prompt",
+       model("idle", nil, %{join_prompt: "https://randos.slowinput.org/join#AAAA"})},
+      {"invitation call",
+       model(
+         "in_call",
+         Map.merge(@call, %{"kind" => "invitation", "peer_speaks_any" => ~w(de ja)})
+       )}
     ]
   end
 
@@ -105,8 +120,11 @@ defmodule Tui.ViewLanguagesTest do
           refute text =~ "%{", "#{name}: a placeholder left unfilled"
           help = text |> String.split("\n") |> Enum.take(-2) |> Enum.join(" ")
           # Spaces aside: the buffer shows a wide character's second cell as one.
-          assert squeeze(help) =~ squeeze(quit),
-                 "#{name}: the help line lost #{inspect(quit)}:\n#{text}"
+          # (The join prompt takes q as a letter: its way out is esc.)
+          way_out = if name == "join prompt", do: "esc", else: quit
+
+          assert squeeze(help) =~ squeeze(way_out),
+                 "#{name}: the help line lost #{inspect(way_out)}:\n#{text}"
         end
       end)
     end

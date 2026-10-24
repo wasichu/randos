@@ -18,6 +18,8 @@ defmodule Tui.Integration.BrowserCallTest do
   @moduletag :native
   @moduletag timeout: 120_000
 
+  alias ExRatatui.Event
+  alias ExRatatui.Runtime
   alias Tui.Model
 
   @hold_ms 4_000
@@ -81,6 +83,41 @@ defmodule Tui.Integration.BrowserCallTest do
     find(app, model, "ru", "ar")
 
     assert %Model{webrtc_role: "answerer"} = await_model(app, &(&1.status == :in_call))
+    assert_audio_both_ways(await_call(app, port))
+  end
+
+  ## Invitations: whoever makes the link offers.
+
+  test "the browser invites; the TUI pastes the link and joins" do
+    port = browser("it", "tr", [{"INVITE", "1"}])
+    %{"url" => url} = await_browser(port, "invitation")
+
+    app = start_audio_tui(:joining_tui)
+    await_model(app, &(&1.status == :idle and &1.audio?))
+    # Tick 18+ (tab twice to it), then paste the link and press Enter.
+    keys(app, ["tab", "tab", " "])
+    Runtime.inject_event(app, %Event.Paste{content: url})
+    keys(app, ["enter"])
+
+    assert %Model{webrtc_role: "answerer", call: %{"kind" => "invitation"}} =
+             await_model(app, &(&1.status == :in_call))
+
+    assert_audio_both_ways(await_call(app, port))
+  end
+
+  test "the TUI invites (v); the browser opens the link" do
+    app = start_audio_tui(:inviting_tui)
+    await_model(app, &(&1.status == :idle and &1.audio?))
+    keys(app, ["tab", "tab", " ", "v"])
+    %Model{invitation: %{"url" => url}} = await_model(app, &(&1.status == :inviting))
+    assert url =~ "/join#"
+    [_, token] = String.split(url, "#")
+
+    port = browser("xx", "xx", [{"JOIN", token}])
+
+    assert %Model{webrtc_role: "offerer", call: %{"kind" => "invitation"}} =
+             await_model(app, &(&1.status == :in_call))
+
     assert_audio_both_ways(await_call(app, port))
   end
 

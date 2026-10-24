@@ -161,5 +161,11 @@ All seven were the proposals.
    creator's hearing language (all of them, when several).
 9. **Translations:** the new strings go through `just translate-update`
    for both catalogs when the wording is final, without asking again.
+10. **TUI keys: `v` invites, `j` joins** (a prompt for the link; a paste
+    on the idle screen opens it): `i`/`o` already pick the mic and
+    speaker there, so decision 5's `i` moved.
+11. **A design review before translating** (the owner, 2026-10-24):
+    screenshots of every step, web and TUI, in a review wizard the owner
+    approves step by step, with notes; translations only after.
 
 Nothing is open.

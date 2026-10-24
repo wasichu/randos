@@ -302,4 +302,63 @@ defmodule Tui.ModelTest do
     {next, []} = Model.key(model, "l")
     assert next.language == Tui.Language.next("en")
   end
+
+  describe "invitations" do
+    test "v invites with the form's choices; the link comes in the state" do
+      model = %{joined() | adult_acknowledged?: true}
+      {model, [{:push, "invite", payload}]} = Model.key(model, "v")
+      assert payload.speaks == "en" and payload.hears == ["en"] and payload.adult_acknowledged
+
+      invitation = %{"url" => "https://randos.example/join#tok", "expires_at_unix_ms" => 9}
+      {model, []} = Model.push(model, "state", state("inviting", %{"invitation" => invitation}))
+      assert model.status == :inviting
+      assert model.invitation == invitation
+
+      assert {_model, [{:push, "cancel_invitation", %{}}]} = Model.key(model, "c")
+    end
+
+    test "j opens a prompt that takes every key; enter joins with the part after #" do
+      model = %{joined() | adult_acknowledged?: true, audio?: true}
+      {model, []} = Model.key(model, "j")
+      assert model.join_prompt == ""
+
+      {model, []} = keys(model, String.graphemes("https://x/join#abq") ++ ["backspace", "c"])
+      assert model.join_prompt == "https://x/join#abc"
+      assert {joining, [{:push, "accept_invitation", payload}]} = Model.key(model, "enter")
+      assert payload == %{token: "abc", adult_acknowledged: true, audio: true, ice_restart: true}
+      assert joining.join_prompt == nil
+
+      assert {%{join_prompt: nil}, []} = Model.key(model, "esc")
+    end
+
+    test "a paste on the idle screen opens the prompt with it, on one line" do
+      {model, []} = Model.paste(joined(), "  https://x/join#tok\n")
+      assert model.join_prompt == "https://x/join#tok"
+      {model, []} = Model.paste(model, "more")
+      assert model.join_prompt == "https://x/join#tokmore"
+      # Nowhere else.
+      assert {%{join_prompt: nil}, []} = Model.paste(joined("looking"), "x")
+    end
+
+    test "joining needs a token and the 18+ box" do
+      model = %{joined() | join_prompt: "  "}
+      assert {_model, []} = Model.key(model, "enter")
+
+      model = %{joined() | join_prompt: "tok", adult_acknowledged?: false}
+      assert {%{join_prompt: nil, log: [line | _]}, []} = Model.key(model, "enter")
+      assert line =~ "18+"
+    end
+
+    test "an invitation call has no next; the rando may speak any of several languages" do
+      call = %{"kind" => "invitation", "peer_speaks" => "es", "peer_speaks_any" => ["es", "fr"]}
+      {model, []} = Model.push(joined(), "state", state("in_call", %{"call" => call}))
+      assert {^model, []} = Model.key(model, "n")
+      assert Model.peer_speaks_any(model) == ["es", "fr"]
+
+      random = %{"kind" => "random", "peer_speaks" => "es"}
+      {model, []} = Model.push(joined(), "state", state("in_call", %{"call" => random}))
+      assert Model.peer_speaks_any(model) == ["es"]
+      assert {_model, [{:push, "next", %{}}]} = Model.key(model, "n")
+    end
+  end
 end
