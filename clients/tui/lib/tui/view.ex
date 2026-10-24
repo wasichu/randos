@@ -633,6 +633,8 @@ defmodule Tui.View do
   defp mic_help(%{media_state: %{available?: false}}), do: []
 
   defp mic_help(%{model: %{status_page: %{}}}), do: []
+  # The join prompt takes t as a letter.
+  defp mic_help(%{model: %{join_prompt: text}}) when is_binary(text), do: []
 
   defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}) do
     [{"t", pgettext("key", "mic test")}] ++
