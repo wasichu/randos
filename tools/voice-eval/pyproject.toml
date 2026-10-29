@@ -16,7 +16,7 @@ dev = ["pytest==8.4.2"]
 # SpeechBrain for speaker identity, Whisper through transformers for
 # intelligibility, on the CPU or Apple's GPU (MPS).
 models = [
-    "torch==2.11.0",
+    "torch==2.14.1",
     "torchaudio==2.11.0",
     "speechbrain==1.1.2",
     "transformers==4.56.2",
