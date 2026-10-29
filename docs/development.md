@@ -110,6 +110,13 @@ CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
 plus both smoke tests. The tests never play sound and never reach the
 internet; the smoke tests start their own throwaway server on :4010.
 
+The shipping Signalsmith engine must pass the actual 48 kHz worklet stream
+test. WORLD is a lab comparison: its transport/PCM conformance uses a deliberately
+slowed fixture clock with the same samples, DSP settings, bridge, tail and
+offline-reference assertions. A separate actual 48 kHz run reports measured
+sustained overload as a research finding, not a real-time pass. Unexpected
+faults, invalid output, unbounded queues and cleanup failures still fail CI.
+
 `just setup` runs `just prefetch` (`bin/prefetch.sh`) between fetching
 dependencies and compiling: it fetches with curl the prebuilt files a
 build would otherwise download from GitHub releases with Erlang's :httpc,

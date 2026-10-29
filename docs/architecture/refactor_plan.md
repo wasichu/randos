@@ -2813,6 +2813,16 @@ compute overload versus scheduling remains unproven. **Add** numeric fault
 diagnostics (audio/wall clocks, queue counters and compute totals) before
 changing any buffering, deadline or pass criterion. No PCM enters diagnostics.
 
+Owner approved separating WORLD research performance from release qualification
+(2026-10-29): Signalsmith remains strict at the actual 48 kHz callback rate.
+WORLD retains the real bridge/offline-reference PCM, span, complete-tail and
+bounded-queue assertions under a deliberately slowed fixture clock. Its
+separate 48 kHz run may report only a diagnosed sustained-compute starvation
+as experimental overload; all other errors and teardown failures remain fatal.
+CI measured roughly 94 ms per 80 ms WORLD output hop. A larger buffer would
+postpone that sustained overload. The strong advisor reviewed this separation;
+no WORLD algorithm, production buffering or privacy behavior changes.
+
 Owner authorized preparation through the point immediately before pushing and
 tagging the release. Proposed inventory and advisor outcome: **leave** the
 shared DSP/FFI bridge, bounded media queues, server-owned call policy and
