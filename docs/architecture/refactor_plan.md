@@ -2823,6 +2823,14 @@ CI measured roughly 94 ms per 80 ms WORLD output hop. A larger buffer would
 postpone that sustained overload. The strong advisor reviewed this separation;
 no WORLD algorithm, production buffering or privacy behavior changes.
 
+Clean-checkout CI then exposed a live-preview test depending on ignored
+comparison WAVs. **Extract** the identical generated WAV helper from the engine
+and gentler-pitch UI tests, and reuse it for live-preview's prepared comparison
+handoff. **Leave** real DSP/microphone/failure/cleanup paths unchanged. The
+advisor approved this test-isolation correction; all three tests pass with
+unmocked prepared audio unavailable. README/self-hosting need no change because
+this adds no product behavior or operator setting.
+
 Owner authorized preparation through the point immediately before pushing and
 tagging the release. Proposed inventory and advisor outcome: **leave** the
 shared DSP/FFI bridge, bounded media queues, server-owned call policy and

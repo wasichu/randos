@@ -116,6 +116,9 @@ slowed fixture clock with the same samples, DSP settings, bridge, tail and
 offline-reference assertions. A separate actual 48 kHz run reports measured
 sustained overload as a research finding, not a real-time pass. Unexpected
 faults, invalid output, unbounded queues and cleanup failures still fail CI.
+Prepared-listening UI checks supply generated WAV fixtures; they must not rely
+on ignored audio files from a developer's previous experiment. Live-preview
+checks still run the actual DSP Worker/worklet and fake microphone.
 
 `just setup` runs `just prefetch` (`bin/prefetch.sh`) between fetching
 dependencies and compiling: it fetches with curl the prebuilt files a

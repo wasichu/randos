@@ -1,3 +1,4 @@
+import {wavFixture} from './wav_fixture.mjs'
 // Tiny local WAV fixtures and intercepted review writes; no microphone access.
 import assert from 'node:assert/strict'
 import {Browser,BASE_URL} from './cdp.mjs'
@@ -7,7 +8,7 @@ try{
  await page.send('Page.addScriptToEvaluateOnNewDocument',{source:`(()=>{
   const fetch=window.fetch.bind(window),start=AudioBufferSourceNode.prototype.start;window.gentleReviews=[];
   AudioBufferSourceNode.prototype.start=function(...args){window.gentleBuffer=this.buffer;return start.apply(this,args)};
-  const fixture=()=>{const b=new ArrayBuffer(48044),v=new DataView(b),text=(p,s)=>[...s].forEach((c,i)=>v.setUint8(p+i,c.charCodeAt(0)));text(0,'RIFF');v.setUint32(4,48036,true);text(8,'WAVE');text(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,48000,true);v.setUint32(28,96000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);text(36,'data');v.setUint32(40,48000,true);for(let i=0;i<24000;i++)v.setInt16(44+i*2,Math.sin(i*.03)*3000,true);return b};
+  const fixture=${wavFixture.toString()};
   window.fetch=(url,options)=>{if(url==='/dev/voice-lab/reviews'){window.gentleReviews.push(JSON.parse(options.body));return Promise.resolve(new Response(JSON.stringify({saved_at:new Date().toISOString()}),{status:201}))}if(String(url).includes('/voice-lab/models/'))return Promise.resolve(new Response(fixture()));return fetch(url,options)};
  })()`})
  await page.open(`${BASE_URL}/dev/voice-lab`)

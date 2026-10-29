@@ -1,5 +1,6 @@
 // Fake microphone only; Chrome is muted. No real audio or review writes.
 import assert from 'node:assert/strict'
+import {wavFixture} from './wav_fixture.mjs'
 import {Browser, BASE_URL} from './cdp.mjs'
 const browser=await Browser.launch()
 const instrument=`(() => {
@@ -8,8 +9,10 @@ const instrument=`(() => {
  window.Worker=class extends WorkerClass{constructor(...args){super(...args);window.dspWorkers.push(this)}postMessage(data,...args){if(data.type==='init')this.initConfig={engine:data.engine,pitch:data.pitch,scale:data.scale};return super.postMessage(data,...args)}terminate(){this.wasTerminated=true;super.terminate()}};
  window.AudioContext=class extends Context{constructor(...args){super(...args);window.dspContexts.push(this)}};
  navigator.mediaDevices.getUserMedia=(...args)=>{window.dspRequested=true;return capture(...args)};
+ const fixture=${wavFixture.toString()};
  const fetch=window.fetch.bind(window);window.fetch=(url,options)=>{
   if(url==='/dev/voice-lab/reviews')return Promise.reject(Error('This test must not save reviews'));
+  if(String(url).includes('/voice-lab/models/'))return Promise.resolve(new Response(fixture()));
   return fetch(url,options);
  };
 })()`
