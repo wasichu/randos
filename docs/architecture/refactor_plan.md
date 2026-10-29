@@ -2799,6 +2799,14 @@ reject crash dumps in the source inventory, and validate against a clean Git
 export. The strong advisor approved this focused correction; runtime behavior
 and the seven-file renderer patch are unchanged. Repeat CI before tagging.
 
+A second Linux CI finding exposed test-worker shutdown: detached
+`std::cin.get()` holds a stdio lock while glibc's normal exit needs it. A minimal
+GCC reproduction reaches the end of main but hangs; a raw pipe read exits
+normally. **Fix** the watchdog in the sanitizer and experimental native probe
+using POSIX reads (retry EINTR, exit on owner EOF/error). Preserve normal main
+return/destructors and fatal sanitizer exit checks, plus the 15-second deadline.
+The strong advisor approved both focused changes; product DSP is unchanged.
+
 Owner authorized preparation through the point immediately before pushing and
 tagging the release. Proposed inventory and advisor outcome: **leave** the
 shared DSP/FFI bridge, bounded media queues, server-owned call policy and
