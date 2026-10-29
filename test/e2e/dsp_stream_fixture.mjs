@@ -2,7 +2,7 @@
 export async function streamFixture(page,{engine="spectral",prefillSamples=7680,pitch=-2,scale=.9}={}) {
  return page.eval(`(async()=>{
    const engine=${JSON.stringify(engine)},prefillSamples=${prefillSamples},pitch=${pitch},scale=${scale},count=3840*24,context=new AudioContext({sampleRate:48000}),workers=[],ports=[];
-   let node,source,deadline,wholeDeadline,cancelled=false;
+   let node,source,deadline,wholeDeadline,startedAt,cancelled=false;
    const offline=(input)=>new Promise((resolve,reject)=>{
     if(cancelled)return reject(Error("Fixture cancelled"));
     const worker=new Worker('/assets/js/voice_lab/dsp_worker.js',{type:'module'});workers.push(worker);
@@ -30,7 +30,7 @@ export async function streamFixture(page,{engine="spectral",prefillSamples=7680,
     const rendered=new Promise((resolve,reject)=>{
      deadline=setTimeout(()=>reject(Error('Streaming fixture timed out')),20000);
      node.onprocessorerror=()=>reject(Error('Bridge error'));
-     node.port.onmessage=({data})=>{if(data.type==='fault')reject(Error(data.message));if(data.type==='test-result')resolve(data)};
+     node.port.onmessage=({data})=>{if(data.type==='fault')reject(Error(engine+': '+data.message+' '+JSON.stringify({...data.diagnostics,wallMs:performance.now()-startedAt})));if(data.type==='test-result')resolve(data)};
      worker.onerror=e=>reject(Error(e.message));worker.onmessage=({data})=>{
       if(cancelled)return;
       if(data.type==='fault')reject(Error(data.message));
@@ -41,7 +41,7 @@ export async function streamFixture(page,{engine="spectral",prefillSamples=7680,
         phase+=2*Math.PI*(145+18*Math.sin(seconds*4))/48000;wave[i]=gate*(.18*Math.sin(phase)+.055*Math.sin(phase*2)+.025*Math.sin(phase*3));
        }
        source=context.createBufferSource();source.buffer=buffer;
-       node.port.postMessage({type:'start',modified:true});source.connect(node);node.connect(context.destination);source.start(context.currentTime+.05);
+       startedAt=performance.now();node.port.postMessage({type:'start',modified:true});source.connect(node);node.connect(context.destination);source.start(context.currentTime+.05);
       }
      };
     });

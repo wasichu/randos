@@ -23,6 +23,8 @@ export class DspBridge extends AudioWorkletProcessor {
     this.maxPending = 0
     this.maxBuffered = 0
     this.computeMax = 0
+    this.computeTotal = 0
+    this.computeBlocks = 0
     this.started = false
     this.primed = false
     this.failed = false
@@ -47,7 +49,13 @@ export class DspBridge extends AudioWorkletProcessor {
     if (this.failed) return
     this.failed = true
     this.started = false
-    this.port.postMessage({type: 'fault', message})
+    this.port.postMessage({type: 'fault', message, diagnostics: {
+      clockFrames: this.clock, sentSamples: this.sent, acknowledgedSamples: this.acknowledged,
+      writtenSamples: this.written, playedSamples: this.played, bufferedSamples: this.available,
+      delaySamples: this.delay, prefillSamples: this.prefill,
+      pendingSamples: this.sent - this.acknowledged, computeMaxMs: this.computeMax,
+      computeTotalMs: this.computeTotal, computeBlocks: this.computeBlocks,
+    }})
   }
   receive(data) {
     if (this.failed) return
@@ -58,6 +66,8 @@ export class DspBridge extends AudioWorkletProcessor {
       this.acknowledged = data.received
       this.pool.push(new Float32Array(data.buffer))
       this.computeMax = Math.max(this.computeMax, data.computeMs)
+      this.computeTotal += data.computeMs
+      this.computeBlocks++
     } else if (data.type === 'output') {
       if (data.start !== this.written || !data.pcm.length || this.available + data.pcm.length > CAPACITY) { this.fault('Missing audio or output buffer overflow'); return }
       for (const sample of data.pcm) {

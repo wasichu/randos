@@ -2807,6 +2807,12 @@ using POSIX reads (retry EINTR, exit on owner EOF/error). Preserve normal main
 return/destructors and fatal sanitizer exit checks, plus the 15-second deadline.
 The strong advisor approved both focused changes; product DSP is unchanged.
 
+The repeated Linux WORLD fixture starvation triggered a focused timing review.
+The adapter's output spans and drain are contiguous in an isolated check;
+compute overload versus scheduling remains unproven. **Add** numeric fault
+diagnostics (audio/wall clocks, queue counters and compute totals) before
+changing any buffering, deadline or pass criterion. No PCM enters diagnostics.
+
 Owner authorized preparation through the point immediately before pushing and
 tagging the release. Proposed inventory and advisor outcome: **leave** the
 shared DSP/FFI bridge, bounded media queues, server-owned call policy and
