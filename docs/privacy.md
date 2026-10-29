@@ -25,6 +25,7 @@ something can't be checked from the outside, this says so.
 | **The web server** (Phoenix, on Fly.io) | Your IP address while you're connected (any website does); the languages you chose (and the interface language a terminal client asks for at join: only a code like `es`, as a browser's `Accept-Language` says); the connection messages for your call, never the audio | Events such as "call started" and "call ended", tagged with random call and match IDs. No IP addresses, no languages, no identifiers that outlive the call. | Our host, Fly.io, keeps app logs for a limited time; we don't send them anywhere else |
 | **The relay** (coturn, a DigitalOcean droplet) | Both IP addresses of each relayed call, its timing, and its encrypted packets, which it can't decrypt | Errors only, with every IP address zeroed before it's written | 7 days |
 | **Your browser** | Your choice of interface language, if you pick one | A `randos_locale` cookie holding only the language code (e.g. `es`), so the next visit is in your language; it identifies no one and goes nowhere else. Phoenix's session cookie (CSRF protection) also carries the language for the page. | A year, or until you clear it |
+| **Your browser (conversation preferences)** | Your speaking and hearing language choices | The first-party, host-only session cookie `randos_conversation`, containing only language codes and a format version. It accompanies requests to this host; it contains no participant identifier, audio, microphone/masking state or 18+ acknowledgment. See [preference hook](../assets/js/hooks/conversation_preferences.js). | Browser-defined session, including browser session restoration |
 | **Your browser (display preferences)** | Your color theme and whether you have opened keyboard shortcuts | Local storage only: `randos:theme` and the boolean flag `randos:shortcuts-opened`. No identifier or audio; these values are not sent to the server. See [theme](../assets/js/app.js) and [shortcuts](../assets/js/hooks/home_shortcuts.js). | Until you clear this site's local storage |
 | **Your terminal (the TUI)** | Nothing new | A settings file on your own computer (`~/.config/randos/config.json`, or `~/Library/Application Support/randos/config.json` on macOS): your languages, the TUI's own interface language, that you confirmed the 18+ notice, and the mic and speaker names. It never leaves your computer. | Until you delete it |
 | **Your rando's browser or terminal** | The relay's address, never yours; your voice | Nothing (randos has no recording feature) | Not applicable |
@@ -279,6 +280,8 @@ drafted in this browser's localStorage, separate for each source/setting/build
 or recovery/model run. Editing a review automatically sends ratings, notes and
 experiment metadata to the local dev server after a short pause, periodically
 while typing and when changing context. Untouched forms are not submitted.
+Clearing all answers after submission appends a text-only withdrawal marker;
+earlier records remain in local history. A new answer can reactivate the review.
 **Save now** is an immediate shortcut. Failed requests keep the draft and retry;
 unsent browser drafts resume on reload. The server appends validated text to ignored
 `tools/voice-eval/results/listening-reviews.jsonl`; no audio is accepted or

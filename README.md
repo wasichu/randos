@@ -78,7 +78,7 @@ new session; it changes how you sound, but people may still recognize you.
 Press **?** or click **Keyboard shortcuts** below the homepage form to show
 the shortcut bar and activate
 **F** Find, **I** Invite, **P** microphone preview, and **M** mute during a call.
-**X** stops looking while you’re queued. **A** toggles the acknowledgment checkbox and **B** opens/closes Voice masking.
+**C** cycles “I will speak in.” **X** stops looking while you’re queued. **A** toggles the acknowledgment checkbox and **B** opens/closes Voice masking.
 During a call, **E** ends it and **N** moves on to the next rando (except invitation calls).
 **P** opens the voice panel if needed; with it open, **S** cycles Style and **T**
 cycles Tone. **O** opens About, **R** Server Status, and **L** the interface-language
@@ -86,6 +86,10 @@ menu (arrows move, Enter applies, Esc closes the menu first). Letters work in ei
 shows connection health and call counts. Once you open shortcuts, this browser
 remembers to show them when you return or change language. Esc hides them for
 the current visit.
+
+Speaking/hearing choices carry across tabs and return visits during the browser
+session. They do not restore microphone preview, masking, or the 18+ checkbox
+on a fresh visit.
 
 ## In your terminal
 

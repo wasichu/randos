@@ -188,6 +188,7 @@ defmodule RandosWeb.HomeComponents do
       <.form
         for={@form}
         id="conversation-form"
+        phx-hook="ConversationPreferences"
         phx-change="update_preferences"
         phx-submit="find"
         class="space-y-5"
@@ -1036,6 +1037,7 @@ defmodule RandosWeb.HomeComponents do
             title={gettext("Conversation")}
             entries={[
               {"a", "A", gettext("Acknowledge")},
+              {"c", "C", gettext("I will speak in")},
               {"f", "F", pgettext("button", "Find")},
               {"i", "I", pgettext("button", "Invite")},
               {"x", "X", pgettext("button", "Stop looking")},

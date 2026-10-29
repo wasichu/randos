@@ -560,16 +560,16 @@ async function playLive(version) {
     const callbacks = {
       modified: version === "modified",
       onEnded: () => stopLive("Microphone disconnected. Choose a version to try again."),
-    }
-    const controller = dspMode() ? createDspPreview({
-      ...callbacks, engine: $("voice-lab-live-engine").value, ...liveDspSettings(),
-      prefillSamples: $("voice-lab-live-buffering").value === "short" ? 3840 : 7680,
       onFailure(error) {
         if (intent !== lab.live.intent) return
         stopLive()
         status.dataset.state = "failed"
-        status.textContent = `DSP preview stopped: ${error.message}. No original-voice fallback was used.`
+        status.textContent = `Microphone preview stopped: ${error.message}. No original-voice fallback was used.`
       },
+    }
+    const controller = dspMode() ? createDspPreview({
+      ...callbacks, engine: $("voice-lab-live-engine").value, ...liveDspSettings(),
+      prefillSamples: $("voice-lab-live-buffering").value === "short" ? 3840 : 7680,
       onStats(data) {
         if (intent !== lab.live.intent) return
         const metrics = $("voice-lab-live-dsp-metrics")

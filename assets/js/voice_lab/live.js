@@ -4,7 +4,7 @@
 import {captureLocalAudio} from "../randos/media"
 import {LAB_PROCESSORS, createLabVoiceNode} from "./processors"
 
-export function createLivePreview({processor, params, modified, onEnded}) {
+export function createLivePreview({processor, params, modified, onEnded, onFailure}) {
   const sampleRate = LAB_PROCESSORS[processor]?.sampleRate
   const context = new AudioContext({latencyHint: "interactive", ...(sampleRate ? {sampleRate} : {})})
   const settings = {...params}
@@ -14,6 +14,7 @@ export function createLivePreview({processor, params, modified, onEnded}) {
   let voice = null
 
   function close() {
+    if (closed) return
     closed = true
     source?.disconnect()
     voice?.disconnect()
@@ -44,6 +45,11 @@ export function createLivePreview({processor, params, modified, onEnded}) {
         }, {once: true})
       }
       voice = await createLabVoiceNode(context, processor)
+      voice.onprocessorerror = () => {
+        if (closed) return
+        close()
+        onFailure(new Error("The audio processor stopped"))
+      }
       if (closed) return false
       for (const [name, value] of Object.entries(settings)) voice.parameters.get(name)?.setValueAtTime(value, context.currentTime)
       source = context.createMediaStreamSource(stream)

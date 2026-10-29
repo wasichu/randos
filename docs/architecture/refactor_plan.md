@@ -1,6 +1,7 @@
 # randos roadmap
 
-Verified against the code at `8298bc9` plus the voice-lab usability, McAdams, prepared model/DSP comparisons, TVTSyn browser/resource experiments, WORLD auditions/chunking, browser DSP adapters/compact strength round/preferred engine/live preview/gentler pitch and buffering experiments, native-core cadence probe, owned Rust bridge, joint browser/TUI product controls and local auditions, auto-save, complete listening-matrix audit and compact product UI/help, desktop voice side panel and explicit interface-language picker and physical terminal redraw fix, continuous preview and expanded opt-in homepage shortcuts and continuous TUI audition with an inline shortcut bar and mode-specific mic stop hints and horizontal homepage navigation with laptop-sized, case-insensitive, grouped site/voice/conversation shortcuts and their local preference and in-call End/Next shortcuts plus v0.10.0 release preparation and clean-checkout renderer guard correction (2026-10-29). Update this line, and
+Verified against v0.10.0 (`31679a2`) plus the local post-release conversation
+preferences, speaking shortcut and agent-guide update (2026-10-29). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -2910,3 +2911,61 @@ scores and WER exactly. The compatible model updates and compact evidence in
 harness tests passed. This establishes equivalence only for the tested setting.
 The advisor confirmed the dependency scope. The remaining release sequence,
 translation fallbacks and PR dispositions are in `docs/releases/v0.10.0-readiness.md`.
+
+
+### Post-release guidance and conversation preferences (2026-10-29)
+
+Owner requested a current AGENTS guide and cross-tab language preferences for
+the browser session, plus a speaking-language cycle shortcut. **Link** detailed
+setup/workflows from a shorter root guide; preserve generated usage-rules/Trail
+content exactly. The old guide exceeded Codex's default 32 KiB instruction
+budget. **Move** machine-local code-intelligence setup to development docs.
+**Leave** release checks, product/privacy boundaries and protocol ownership intact;
+use strong review for substantive risk, cheaper bounded work when delegation helps.
+The strong advisor reviewed the guide and this scope.
+
+**Add** C/c through the existing select/change shortcut path and one language-only
+session-cookie hook. **Leave** form validation and invitations server-owned,
+without a new endpoint, call policy or protocol obligation. Restore once on form
+mount, synchronously update controls and send one existing preference event.
+Only language changes save; a stale tab's age checkbox cannot overwrite another
+tab's preference. Session cookies may be restored by a browser; the owner does
+not require guaranteed restart deletion or persistence. No microphone, masking,
+age acknowledgment or participant ID is stored. README/development/privacy are
+updated; self-hosting needs no change because there is no operator setting.
+
+The next lab work should first address the advisor's demonstrated runtime
+worklet-failure cleanup gap and misleading feedback when an already-saved review
+is cleared. Preserve append-only review history; agree on withdrawal semantics
+before changing saved-review meaning. No broad product DSP/FFI refactor is justified
+by the completed release review. Add an experiment registration checklist before
+extending the next DSP comparison; current provenance machinery remains useful.
+
+
+### Lab review withdrawal and runtime preview cleanup (2026-10-29)
+
+Owner chose withdrawal when all review fields are cleared. **Extend** the
+existing append-only record with optional `withdrawn: true` only for empty
+ratings and literal empty notes; normal records remain compatible. **Leave**
+user history intact. The latest append for the full exact context determines
+current judgment, and a withdrawal suppresses prior entries until reactivation.
+The browser persists a submission marker before sending, so an empty edit made
+while the first save is in flight still resumes as a withdrawal after reload.
+Signature/status checks share canonical payload construction; failed withdrawals
+remain visible and retry. No new reader abstraction, database or ordering policy
+is added; cross-page request ordering remains best effort.
+
+**Merge** legacy and DSP-preview failure ownership in the lab controller, and
+**fix** the missing legacy runtime `processorerror` handler. Close capture and
+context before reporting, including Original monitoring, and ignore retired
+errors. The strong advisor approved the focused design and race coverage.
+README/development/privacy describe the feedback contract; self-hosting and the
+public README need no additional changes for these dev-only fixes. Product DSP,
+Participant/Port contracts, masking presets and production bundles are unchanged.
+
+The implementation review reproduced one further confirmation race: restoring
+an exact earlier answer while withdrawal is pending, then reloading, could trust
+an obsolete saved signature. Invalidate that signature before each new POST;
+restore it only on acknowledgment. The regression requires a reactivation POST
+after reload. Conservative retries may append another valid revision; they do
+not silently claim a stale answer is current.

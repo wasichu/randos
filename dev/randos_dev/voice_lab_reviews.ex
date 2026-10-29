@@ -1,5 +1,5 @@
 defmodule RandosDev.VoiceLabReviews do
-  @moduledoc "Explicit, text-only local listening feedback; never part of production."
+  @moduledoc "Text-only local listening feedback and withdrawals; never part of production."
   use RandosWeb, :html
 
   @root Path.expand("../..", __DIR__)
@@ -74,12 +74,11 @@ defmodule RandosDev.VoiceLabReviews do
 
   defp validate(%{"context" => context, "ratings" => ratings, "notes" => notes} = payload)
        when is_map(context) and is_map(ratings) and is_binary(notes) do
-    valid = Map.keys(payload) |> Enum.sort() == ~w(context notes ratings)
+    valid = valid_content?(payload)
 
     if valid and byte_size(notes) <= 8000 and String.valid?(notes) and
          String.length(notes) <= 2000 and
-         valid_context?(context) and valid_ratings?(ratings, context) and
-         (map_size(ratings) > 0 or String.trim(notes) != "") do
+         valid_context?(context) and valid_ratings?(ratings, context) do
       {:ok,
        Map.merge(payload, %{
          "schema_version" => 1,
@@ -91,6 +90,14 @@ defmodule RandosDev.VoiceLabReviews do
   end
 
   defp validate(_payload), do: {:error, :invalid_review}
+
+  defp valid_content?(%{"withdrawn" => true, "ratings" => ratings, "notes" => ""} = payload),
+    do: map_size(ratings) == 0 and Enum.sort(Map.keys(payload)) == ~w(context notes ratings withdrawn)
+
+  defp valid_content?(%{"ratings" => ratings, "notes" => notes} = payload),
+    do:
+      Enum.sort(Map.keys(payload)) == ~w(context notes ratings) and
+        (map_size(ratings) > 0 or String.trim(notes) != "")
 
   defp valid_context?(%{"view" => "listen", "build_id" => build} = context) do
     Map.keys(context) |> Enum.sort() ==

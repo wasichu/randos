@@ -3,8 +3,11 @@ const STORAGE_KEY = "randos.voiceLab.reviews.v1"
 const canonical = value => value && typeof value === "object" && !Array.isArray(value)
   ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value
 const keyFor = value => JSON.stringify(canonical(value))
-const payloadFor = draft => ({context: draft.context, ratings: draft.ratings, notes: draft.notes})
 const hasAnswers = payload => Object.keys(payload.ratings).length > 0 || payload.notes.trim() !== ""
+const payloadFor = draft => {
+  const payload = {context: draft.context, ratings: draft.ratings, notes: draft.notes}
+  return hasAnswers(payload) ? payload : {...payload, notes: "", withdrawn: true}
+}
 
 export function setupReviews({listenContext, comparisonContexts = {}}) {
   const drafts = new Map(), pending = new Map(), errors = new Map(), attempts = new Map(), unpersisted = new Set()
@@ -43,7 +46,7 @@ export function setupReviews({listenContext, comparisonContexts = {}}) {
 
   const dirty = key => {
     const draft = drafts.get(key)
-    return draft && hasAnswers(draft) && draft.savedSignature !== keyFor(payloadFor(draft))
+    return draft && (hasAnswers(draft) || draft.savedSignature || draft.submitted) && draft.savedSignature !== keyFor(payloadFor(draft))
   }
   function indicateAll() { for (const form of forms) form.indicate() }
   function schedule() {
@@ -73,6 +76,15 @@ export function setupReviews({listenContext, comparisonContexts = {}}) {
     if (!dirty(key)) { schedule(); return }
     const snapshot = JSON.parse(JSON.stringify(payloadFor(drafts.get(key))))
     const signature = keyFor(snapshot)
+    // A request may reach the server even when its acknowledgment is lost.
+    // Keep that fact across edits/reloads so clearing an in-flight first save
+    // still sends a withdrawal instead of silently restoring the old judgment.
+    const submitted = {...drafts.get(key), submitted: true}
+    // An older confirmation cannot describe server state after this request.
+    // A reload must resend a later revert/reactivation until it is confirmed.
+    delete submitted.savedSignature
+    drafts.set(key, submitted)
+    store(key)
     saving = key
     errors.delete(key)
     indicateAll()
@@ -148,12 +160,13 @@ export function setupReviews({listenContext, comparisonContexts = {}}) {
     function show(text, kind) { status.textContent = text; status.dataset.state = kind }
     function indicate() {
       if (!form.isConnected) return
-      const payload = collect()
+      const payload = payloadFor(collect())
       const saved = state.context && drafts.get(state.key)?.savedSignature === keyFor(payload)
-      button.disabled = saving === state.key || !state.context || !hasAnswers(payload) || saved
-      if (saving === state.key && state.key) show("Saving review…", "saving")
-      else if (saved) show("Saved automatically. Say “reviews ready” when you're finished.", "saved")
+      button.disabled = saving === state.key || !state.context || !dirty(state.key)
+      if (saving === state.key && state.key) show(payload.withdrawn ? "Withdrawing review…" : "Saving review…", "saving")
+      else if (saved) show(payload.withdrawn ? "Review withdrawn. Earlier entries remain in history." : "Saved automatically. Say “reviews ready” when you're finished.", payload.withdrawn ? "withdrawn" : "saved")
       else if (errors.has(state.key)) show(errors.get(state.key), "failed")
+      else if (payload.withdrawn && dirty(state.key)) show("Withdrawal queued. Auto-saving shortly…", "draft")
       else if (hasAnswers(payload)) show(storageAvailable ? "Draft backed up here. Auto-saving shortly…" : "Browser drafts unavailable. Auto-saving to the checkout…", "draft")
       else show("Not judged yet. Answers and notes save automatically.", "empty")
     }

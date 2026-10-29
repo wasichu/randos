@@ -416,6 +416,10 @@ try {
   await page.eval(`{
     const capture = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
     window.labMicStreams = [];
+    window.labRuntimeWorklets = []; window.labRuntimeContexts = [];
+    const Worklet = window.AudioWorkletNode, Context = window.AudioContext;
+    window.AudioWorkletNode = class extends Worklet { constructor(...args) { super(...args); window.labRuntimeWorklets.push(this); } };
+    window.AudioContext = class extends Context { constructor(...args) { super(...args); window.labRuntimeContexts.push(this); } };
     window.labCapture = async (...args) => {
       const stream = await capture(...args);
       window.labMicStreams.push(stream);
@@ -470,6 +474,18 @@ try {
   }`)
   await page.click("#voice-lab-live-modified")
   await page.waitFor(`document.querySelector("#voice-lab-live-status").dataset.state === "failed" && window.labMicStreams.length === window.labBeforeWorkletFailure + 1 && ${micStopped}`, "worklet failure cleanup", 10_000)
+  await page.click("#voice-lab-live-modified")
+  await page.waitFor(monitoring, "modified runtime preview", 10_000)
+  // Chromium binds onprocessorerror to "error"; also exercise the spec name.
+  // https://chromium.googlesource.com/chromium/src/+/refs/heads/main/third_party/blink/renderer/modules/webaudio/audio_worklet_node.h
+  await page.eval(`window.retiredLabWorklet=window.labRuntimeWorklets.at(-1);for(const type of ['error','processorerror'])window.retiredLabWorklet.dispatchEvent(new ErrorEvent(type,{message:'Injected runtime failure'}))`)
+  await page.waitFor(`${micStopped}&&document.querySelector('#voice-lab-live-status').dataset.state==='failed'&&window.labRuntimeContexts.every(c=>c.state==='closed')`, "runtime worklet failure closes capture and context", 10_000)
+  await page.click("#voice-lab-live-original")
+  await page.waitFor(monitoring, "original monitoring after failure", 10_000)
+  await page.eval(`for(const type of ['error','processorerror'])window.retiredLabWorklet.dispatchEvent(new ErrorEvent(type,{message:'Retired runtime failure'}))`)
+  check(await page.eval(`${monitoring}`), "retired worklet failure cannot stop replacement preview")
+  await page.eval(`for(const type of ['error','processorerror'])window.labRuntimeWorklets.at(-1).dispatchEvent(new ErrorEvent(type,{message:'Original-route runtime failure'}))`)
+  await page.waitFor(`${micStopped}&&document.querySelector('#voice-lab-live-status').dataset.state==='failed'&&window.labRuntimeContexts.every(c=>c.state==='closed')`, "runtime failure also closes the original monitoring route", 10_000)
   await page.click("#voice-lab-live-original")
   await page.waitFor(monitoring, "microphone retry", 10_000)
   await page.eval(`window.labMicStreams.at(-1).getAudioTracks()[0].dispatchEvent(new Event("ended"))`)

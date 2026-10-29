@@ -36,6 +36,26 @@ just dev          # http://localhost:4000 (with IEx)
 `just serve` runs the same server without IEx, in the background
 (`just serve-stop` stops it).
 
+### Machine-local code intelligence
+
+Expert is pinned in `mise.toml`. Enable its Claude Code plugin per machine:
+
+```bash
+claude plugin marketplace add ./tools/claude-plugins --scope local
+claude plugin install expert-lsp@randos-local --scope local
+claude plugin install rust-analyzer-lsp@claude-plugins-official --scope local
+```
+
+Restart Claude Code after installation. These are machine-local settings, not
+committed project defaults. The plugin CLI may rewrite `.claude/settings.json`
+and clear graft's `footerLinksRegexes`; inspect `git diff` afterward.
+Rust-analyzer also comes from the pinned mise toolchain.
+
+`AGENTS.md` is the concise project instruction entry point; detailed workflows
+stay in the guides it links. Preserve its generated usage-rules/Trail blocks.
+Its organization follows [scoped instruction discovery](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+and [contextual agent guidance](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
+
 ### Tidewave MCP startup
 
 `.mcp.json` starts Tidewave with `mise exec -- ./bin/tidewave-mcp`. The
@@ -290,7 +310,16 @@ must actually import and run the updated libraries.
   “reviews ready” to have it read the file on its next turn. Untouched forms
   are not posted. Failed saves retain browser drafts and retry with bounded
   backoff; unsent drafts resume on reload. Requests are serialized and each
-  acknowledgment confirms its exact snapshot, preserving later edits.
+  acknowledgment confirms its exact snapshot, preserving later edits. Clearing
+  every answer after a submission appends an explicit withdrawal; it does not
+  delete history. Whitespace-only cleared notes are normalized to an empty
+  string. A browser-persisted submission marker covers clearing the first save
+  while its acknowledgment is still pending, including after reload. Each new
+  request invalidates the older confirmation until success, so undoing a pending
+  withdrawal and reloading resubmits the restored answer. Untouched
+  blank forms never post. Read the last append for each full context; a withdrawal
+  suppresses earlier judgments until a new answer is saved. Cross-page ordering
+  is best effort; do not order by timestamps or average earlier revisions.
   On departure, edits behind an in-flight request remain browser drafts until
   the lab opens again; only the Saved status confirms the checkout received them.
   A lost acknowledgment can cause a duplicate append: read the latest payload
@@ -476,7 +505,8 @@ peers do not depend on the runner's multicast/DNS setup. Production browser
 behavior is unchanged; default Chrome mDNS itself is not covered by this suite.
 Relay-only policy and the local test TURN interruption/recovery remain enforced.
 
-Homepage shortcuts also offer A (click the acknowledgment checkbox), B (native
+Homepage shortcuts also offer C (cycle the speaking-language select), A (click
+the acknowledgment checkbox), B (native
 voice-disclosure toggle), P (preview microphone on/off, opening the voice panel if needed),
 S (next Style) and T (next enabled Tone). M is only the call mute button.
 E clicks End call; N clicks Next rando. Both are shown only when their call
@@ -543,3 +573,32 @@ manual toggling working when the flag cannot be stored; a module-local boolean
 then supports same-runtime LiveView returns only. Restoration uses the existing
 setOpen path and never moves focus, scrolls, invokes an action or captures audio.
 The preference never enters participant/channel messages or server storage.
+
+### Browser-session conversation preferences
+
+`ConversationPreferences` owns only the `conversation-form` language preference
+cookie, not the form DOM. On mount it validates supported codes, sets the select
+and hearing checkboxes synchronously, then pushes one existing preference event.
+Later LiveView patches never re-read the cookie. Only language-control changes
+save; acknowledgment changes in an older tab must not overwrite a newer tab's
+choices. C/c uses the same select/change path and shortcut visibility/focus gates.
+
+`randos_conversation` is a host-only session cookie (`Path=/`, `SameSite=Lax`,
+`Secure` on HTTPS, no `Expires` or `Max-Age`). It contains a format version and
+speaking/hearing codes; no participant ID, microphone state, masking, or age
+acknowledgment. This is browser-defined session behavior, including any session
+restore the browser performs; there is no hard browser-restart expiry promise.
+Blocked or invalid cookies leave the normal form usable. Privacy details are in
+[privacy.md](privacy.md); [cookie semantics](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#expiresdate_optional)
+are browser-controlled. No operator configuration changes.
+
+The browser smoke covers cross-tab/reload/back/reconnect restoration, delayed
+Invite setup, stale-tab acknowledgment isolation, shortcut gates, empty hearing
+choices, invalid/blocked cookies and a fresh browser context. The shared
+`chooseLanguages` helper emits a real hearing-control change before acknowledgment,
+so tests follow the same save path as an actual user.
+
+The legacy live preview and DSP preview share the same guarded failure owner.
+A runtime `processorerror` closes capture/context before notifying the UI, both
+for modified monitoring and the explicit Original route. Closed controllers
+ignore retired processor errors, so they cannot stop a replacement preview.

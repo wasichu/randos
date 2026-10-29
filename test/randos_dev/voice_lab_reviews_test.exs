@@ -51,6 +51,47 @@ defmodule RandosDev.VoiceLabReviewsTest do
     assert first["schema_version"] == 1
   end
 
+  test "withdrawal preserves history and a later answer reactivates the context", %{path: path} do
+    original = review()
+    withdrawal = Map.merge(original, %{"ratings" => %{}, "notes" => "", "withdrawn" => true})
+    restored = Map.put(original, "notes", "A new judgment after withdrawal.")
+
+    for payload <- [original, withdrawal, restored] do
+      assert {:ok, _} = VoiceLabReviews.save(payload, path)
+    end
+
+    [first, withdrawn, latest] =
+      path |> File.read!() |> String.split("\n", trim: true) |> Enum.map(&JSON.decode!/1)
+
+    assert first["ratings"] == original["ratings"]
+    assert first["notes"] == original["notes"]
+    assert withdrawn["context"] == first["context"]
+    assert withdrawn["withdrawn"] == true
+    assert withdrawn["ratings"] == %{}
+    assert withdrawn["notes"] == ""
+    refute Map.has_key?(latest, "withdrawn")
+    assert latest["context"] == withdrawn["context"]
+    assert latest["notes"] == restored["notes"]
+  end
+
+  test "withdrawal requires an explicit true flag and empty content", %{path: path} do
+    withdrawal = Map.merge(review(), %{"ratings" => %{}, "notes" => "", "withdrawn" => true})
+
+    for payload <- [
+          Map.delete(withdrawal, "withdrawn"),
+          Map.put(withdrawal, "withdrawn", false),
+          Map.put(withdrawal, "withdrawn", "true"),
+          Map.put(withdrawal, "ratings", review()["ratings"]),
+          Map.put(withdrawal, "notes", "still a judgment"),
+          Map.put(withdrawal, "notes", "  "),
+          put_in(withdrawal, ["context", "source_id"], "invalid")
+        ] do
+      assert {:error, :invalid_review} = VoiceLabReviews.save(payload, path)
+    end
+
+    refute File.exists?(path)
+  end
+
   test "concurrent bounded appends keep complete parseable JSONL records", %{path: path} do
     results =
       1..24

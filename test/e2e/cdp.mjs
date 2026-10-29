@@ -144,11 +144,13 @@ export class Browser {
   // can never connect, with or without TURN. `ignoreRelayPolicy` plays an
   // older or disobedient client: it ignores a relay-only call's policy and
   // offers its direct addresses (the server must keep them from the peer).
-  async newPage(name, {getUserMediaDelayMs = 0, getUserMediaError = null, relayOnly = false, ignoreRelayPolicy = false} = {}) {
-    const {browserContextId} = await this.send("Target.createBrowserContext")
+  async newPage(name, {getUserMediaDelayMs = 0, getUserMediaError = null, relayOnly = false, ignoreRelayPolicy = false, browserContextId: sharedContextId = null} = {}) {
+    // Separate people by default; an explicit ID models tabs of one browser session.
+    const {browserContextId} = sharedContextId ? {browserContextId: sharedContextId} : await this.send("Target.createBrowserContext")
     const {targetId} = await this.send("Target.createTarget", {url: "about:blank", browserContextId})
     const {sessionId} = await this.send("Target.attachToTarget", {targetId, flatten: true})
     const page = new Page(this, name, sessionId)
+    page.browserContextId = browserContextId
     this.pages.set(sessionId, page)
     await page.send("Page.enable")
     await page.send("Runtime.enable")
@@ -336,6 +338,7 @@ export class Page {
         box.checked = heard.includes(box.value);
       const ack = document.getElementById("conversation_adult_acknowledgment");
       ack.checked = true;
+      document.querySelector("#hearing-languages input[type=checkbox]").dispatchEvent(new Event("change", {bubbles: true}));
       ack.dispatchEvent(new Event("change", {bubbles: true}));
     })()`)
     const exactly = heard.map(code => `#hearing-language-${code}[checked]`).join(", ")
