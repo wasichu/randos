@@ -22,6 +22,7 @@ msgid "A doorway, not a platform"
 msgstr "플랫폼이 아닌 출입구"
 
 #. The page that explains what randos is ("about us"), not "approximately".
+#: lib/randos_web/components/home_components.ex
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
@@ -139,7 +140,7 @@ msgstr "언어"
 msgid "Looking"
 msgstr "찾는 중"
 
-#: lib/randos_web/components/home_components.ex
+#: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "계정이 필요 없고, 프로필을 만들 필요도 없으며, 영상도 필요 없습니다. 아무런 부담도 느껴지지 않을 거예요."
@@ -450,11 +451,6 @@ msgstr "당신을 기다리고 있습니다 rando"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
-msgid "I'm happy to hear"
-msgstr "듣게 되어 기쁘네요"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
 msgstr "%{hearing_languages}를 말하고 %{speaking_language}를 듣고 싶어하는 rando을 찾고 있습니다."
 
@@ -568,13 +564,6 @@ msgstr "TLS를 통해 (UDP가 차단되는 네트워크에서)"
 #, elixir-autogen, elixir-format
 msgid "Over UDP (most calls)"
 msgstr "UDP를 통해 (대부분의 통화)"
-
-#. The service status page: whether calls can connect now, and today's call counts.
-#: lib/randos_web/components/layouts.ex
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
-msgid "Status"
-msgstr "상태"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -968,3 +957,207 @@ msgstr "남은 시간: %{time} (분:초)"
 #, elixir-autogen, elixir-format
 msgid "Send them this link however you like. It works once."
 msgstr "이 링크를 그들에게 원하는 방식으로 보내세요. 이 링크는 한 번만 작동합니다."
+
+#. Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Brighter"
+msgstr "더 밝은"
+
+#. Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Fuller"
+msgstr "충만한"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Off"
+msgstr "끄기"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Opening microphone…"
+msgstr "마이크 열기…"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Preview failed. Microphone stopped; try again."
+msgstr "미리보기에 실패했습니다. 마이크가 작동을 중지했습니다. 다시 시도해 주세요."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Style"
+msgstr "스타일"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "These styles change your voice, but people may still recognize you."
+msgstr "이러한 스타일은 목소리를 변화시키지만, 사람들은 여전히 당신을 알아볼 수 있습니다."
+
+#. Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tone"
+msgstr "음색"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking"
+msgstr "목소리 변조"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking on"
+msgstr "음성 마스킹 켜기"
+
+#. Short button label: listen to your own microphone locally to try a changed voice.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Hear myself"
+msgstr "제 목소리 듣기"
+
+#. Short button label: stop listening to the local microphone preview, not a call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Stop preview"
+msgstr "미리 보기 중지"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Call progress"
+msgstr "통화 진행"
+
+#. Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds).
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tone + Pitch"
+msgstr "음색 + 음높이"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing is recorded or uploaded."
+msgstr "아무것도 기록되거나 업로드되지 않습니다."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "%{style} + %{tone}"
+msgstr "%{style} + %{tone}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone off."
+msgstr "마이크 끄기."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Keyboard shortcuts"
+msgstr "키보드 단축키"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone on."
+msgstr "마이크 켜"
+
+#. The service status page: whether calls can connect now, and today's call counts.
+#: lib/randos_web/components/home_components.ex
+#: lib/randos_web/components/layouts.ex
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "Server Status"
+msgstr "서버 상태"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Keyboard shortcuts"
+msgstr "키보드 단축키"
+
+#. Keyboard shortcut: turn your microphone off or on during a voice call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Mute/unmute"
+msgstr "음소거/음소거 해제"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Preview"
+msgstr "미리 보기"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "헤드폰 권장"
+
+#. Screen-reader label for the website's main navigation links and language menu.
+#: lib/randos_web/components/layouts.ex
+#, elixir-autogen, elixir-format
+msgid "Main navigation"
+msgstr "메인 네비게이션"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Conversation"
+msgstr "대화"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgctxt "button"
+msgid "Stop looking"
+msgstr "더 이상 찾지 마"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Hide shortcuts"
+msgstr "단축키 숨기기"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Acknowledge"
+msgstr "인정"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Language menu"
+msgstr "언어 메뉴"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Masking"
+msgstr "마스킹"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Site"
+msgstr "웹사이트"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice"
+msgstr "목소리"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Find"
+msgstr "찾아보기"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgctxt "button"
+msgid "Invite"
+msgstr "초대"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "듣고 싶어요"
+
+#. Short keyboard shortcut label: hang up the current voice call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "End call"
+msgstr "통화 종료"

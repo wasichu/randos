@@ -1,0 +1,521 @@
+{
+  "identity": {
+    "probe": "40a7e0c15453add6fc49593c78faa457fca6ae522e287ef5239bbd778fa050e7",
+    "publisher": "d3005950421825f5e47ae793a31d684ca7baad67d47b572f92eef52d0831d71e",
+    "variants": [
+      {
+        "id": "original",
+        "label": "Original"
+      },
+      {
+        "id": "spectral",
+        "label": "Signalsmith"
+      },
+      {
+        "id": "world",
+        "label": "WORLD"
+      }
+    ],
+    "cases": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__engine_compare_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "spectral": "high_voice__engine_compare_spectral__a32854b7de245f9b59bd9fe3a3176b8500ae8e2bdf43f027b56e9696404cd616.wav",
+          "world": "high_voice__engine_compare_world__7cba01add2de9d9333ed95fb337ea55cd62c5442c5267b2082a7e771dab9a75d.wav"
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "spectral": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+          "world": "Pitch -2 semitones \u00b7 resonances \u00d70.90"
+        },
+        "settings": {
+          "pitch": -2,
+          "scale": 0.9
+        },
+        "profile": "lower_mild",
+        "note": "Your preferred settings, held constant across both engines.",
+        "gains": {
+          "original": 1.0,
+          "spectral": 1.0335434855108663,
+          "world": 0.9220582780091334
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__engine_compare_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "spectral": "low_voice__engine_compare_spectral__f092255888fa81675cdeac37e53fbd892088f0277ed63a386e3ec3a9324b1e65.wav",
+          "world": "low_voice__engine_compare_world__1b3a77126b188aaf01d07cf34b1737e869276cf3e31a74c70ae452fea966a509.wav"
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "spectral": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+          "world": "Pitch +2 semitones \u00b7 resonances \u00d71.10"
+        },
+        "settings": {
+          "pitch": 2,
+          "scale": 1.1
+        },
+        "profile": "higher_mild",
+        "note": "Your preferred settings, held constant across both engines.",
+        "gains": {
+          "original": 1.0,
+          "spectral": 1.0426848029650233,
+          "world": 0.8821586555222453
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__engine_compare_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "spectral": "mid_voice__engine_compare_spectral__d6a19685c463e8e4185661f093d4206adf51007ff8545122cd5a72576919806d.wav",
+          "world": "mid_voice__engine_compare_world__a05da2be1f1bc79612e941873dd19754856d687abb606d7cd87df77a4834fc72.wav"
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "spectral": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+          "world": "Pitch -2 semitones \u00b7 resonances \u00d70.90"
+        },
+        "settings": {
+          "pitch": -2,
+          "scale": 0.9
+        },
+        "profile": "lower_mild",
+        "note": "Unresolved: you found no useful disguise for mid voice. Mild settings are included for comparison, not as a successful mask.",
+        "gains": {
+          "original": 1.0,
+          "spectral": 1.022720240826337,
+          "world": 0.9400234476453876
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__engine_compare_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "spectral": "mencken_wasichu__engine_compare_spectral__21a841124c08870c3bacf232217a0d863324ef7d62e1e6c40f2c84967aa1f755.wav",
+          "world": "mencken_wasichu__engine_compare_world__9534b56f1325d731e8f102451e82b0bd5a21fb758118f0f6cfb816a22b1e1149.wav"
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "spectral": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+          "world": "Pitch +2 semitones \u00b7 resonances \u00d71.25"
+        },
+        "settings": {
+          "pitch": 2,
+          "scale": 1.25
+        },
+        "profile": "higher_resonance",
+        "note": "Your preferred settings, held constant across both engines.",
+        "gains": {
+          "original": 1.0,
+          "spectral": 1.242311839012786,
+          "world": 0.9326557980810117
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__engine_compare_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "spectral": "test_tone__engine_compare_spectral__4cf0cdc0f5d925c7e342e16268c65db4775bac4a47c743062659fd4e801840c4.wav",
+          "world": "test_tone__engine_compare_world__9a9d107f869d8ae5f37e7a601e126a9fc3d9640eb74f566de535fb414efea223.wav"
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "spectral": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+          "world": "Pitch -2 semitones \u00b7 resonances \u00d70.90"
+        },
+        "settings": {
+          "pitch": -2,
+          "scale": 0.9
+        },
+        "profile": "lower_mild",
+        "note": "Tone diagnostic only; judge masking on speech.",
+        "gains": {
+          "original": 1.0,
+          "spectral": 1.0238421946335179,
+          "world": 1.0660392812910402
+        }
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original"
+    },
+    {
+      "id": "spectral",
+      "label": "Signalsmith"
+    },
+    {
+      "id": "world",
+      "label": "WORLD"
+    }
+  ],
+  "cases": {
+    "high_voice.wav": {
+      "audio": {
+        "original": "high_voice__engine_compare_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+        "spectral": "high_voice__engine_compare_spectral__a32854b7de245f9b59bd9fe3a3176b8500ae8e2bdf43f027b56e9696404cd616.wav",
+        "world": "high_voice__engine_compare_world__7cba01add2de9d9333ed95fb337ea55cd62c5442c5267b2082a7e771dab9a75d.wav"
+      },
+      "context": {
+        "view": "round",
+        "mode": "engine_comparison_1",
+        "processor": "signalsmith_world",
+        "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+        "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+        "sample": "high_voice",
+        "case_id": "high_voice",
+        "run_id": "2026-10-27T12:21:00.414Z"
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "spectral": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "world": "Pitch -2 semitones \u00b7 resonances \u00d70.90"
+      },
+      "settings": {
+        "pitch": -2,
+        "scale": 0.9
+      },
+      "profile": "lower_mild",
+      "note": "Your preferred settings, held constant across both engines.",
+      "gains": {
+        "original": 1.0,
+        "spectral": 1.0335434855108663,
+        "world": 0.9220582780091334
+      }
+    },
+    "low_voice.wav": {
+      "audio": {
+        "original": "low_voice__engine_compare_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+        "spectral": "low_voice__engine_compare_spectral__f092255888fa81675cdeac37e53fbd892088f0277ed63a386e3ec3a9324b1e65.wav",
+        "world": "low_voice__engine_compare_world__1b3a77126b188aaf01d07cf34b1737e869276cf3e31a74c70ae452fea966a509.wav"
+      },
+      "context": {
+        "view": "round",
+        "mode": "engine_comparison_1",
+        "processor": "signalsmith_world",
+        "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+        "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+        "sample": "low_voice",
+        "case_id": "low_voice",
+        "run_id": "2026-10-27T12:21:00.414Z"
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "spectral": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+        "world": "Pitch +2 semitones \u00b7 resonances \u00d71.10"
+      },
+      "settings": {
+        "pitch": 2,
+        "scale": 1.1
+      },
+      "profile": "higher_mild",
+      "note": "Your preferred settings, held constant across both engines.",
+      "gains": {
+        "original": 1.0,
+        "spectral": 1.0426848029650233,
+        "world": 0.8821586555222453
+      }
+    },
+    "mid_voice.wav": {
+      "audio": {
+        "original": "mid_voice__engine_compare_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+        "spectral": "mid_voice__engine_compare_spectral__d6a19685c463e8e4185661f093d4206adf51007ff8545122cd5a72576919806d.wav",
+        "world": "mid_voice__engine_compare_world__a05da2be1f1bc79612e941873dd19754856d687abb606d7cd87df77a4834fc72.wav"
+      },
+      "context": {
+        "view": "round",
+        "mode": "engine_comparison_1",
+        "processor": "signalsmith_world",
+        "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+        "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+        "sample": "mid_voice",
+        "case_id": "mid_voice",
+        "run_id": "2026-10-27T12:21:00.414Z"
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "spectral": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "world": "Pitch -2 semitones \u00b7 resonances \u00d70.90"
+      },
+      "settings": {
+        "pitch": -2,
+        "scale": 0.9
+      },
+      "profile": "lower_mild",
+      "note": "Unresolved: you found no useful disguise for mid voice. Mild settings are included for comparison, not as a successful mask.",
+      "gains": {
+        "original": 1.0,
+        "spectral": 1.022720240826337,
+        "world": 0.9400234476453876
+      }
+    },
+    "mencken_wasichu.wav": {
+      "audio": {
+        "original": "mencken_wasichu__engine_compare_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+        "spectral": "mencken_wasichu__engine_compare_spectral__21a841124c08870c3bacf232217a0d863324ef7d62e1e6c40f2c84967aa1f755.wav",
+        "world": "mencken_wasichu__engine_compare_world__9534b56f1325d731e8f102451e82b0bd5a21fb758118f0f6cfb816a22b1e1149.wav"
+      },
+      "context": {
+        "view": "round",
+        "mode": "engine_comparison_1",
+        "processor": "signalsmith_world",
+        "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+        "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+        "sample": "mencken_wasichu",
+        "case_id": "mencken_wasichu",
+        "run_id": "2026-10-27T12:21:00.414Z"
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "spectral": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+        "world": "Pitch +2 semitones \u00b7 resonances \u00d71.25"
+      },
+      "settings": {
+        "pitch": 2,
+        "scale": 1.25
+      },
+      "profile": "higher_resonance",
+      "note": "Your preferred settings, held constant across both engines.",
+      "gains": {
+        "original": 1.0,
+        "spectral": 1.242311839012786,
+        "world": 0.9326557980810117
+      }
+    },
+    "test_tone": {
+      "audio": {
+        "original": "test_tone__engine_compare_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+        "spectral": "test_tone__engine_compare_spectral__4cf0cdc0f5d925c7e342e16268c65db4775bac4a47c743062659fd4e801840c4.wav",
+        "world": "test_tone__engine_compare_world__9a9d107f869d8ae5f37e7a601e126a9fc3d9640eb74f566de535fb414efea223.wav"
+      },
+      "context": {
+        "view": "round",
+        "mode": "engine_comparison_1",
+        "processor": "signalsmith_world",
+        "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+        "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+        "sample": "test_tone",
+        "case_id": "test_tone",
+        "run_id": "2026-10-27T12:21:00.414Z"
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "spectral": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "world": "Pitch -2 semitones \u00b7 resonances \u00d70.90"
+      },
+      "settings": {
+        "pitch": -2,
+        "scale": 0.9
+      },
+      "profile": "lower_mild",
+      "note": "Tone diagnostic only; judge masking on speech.",
+      "gains": {
+        "original": 1.0,
+        "spectral": 1.0238421946335179,
+        "world": 1.0660392812910402
+      }
+    }
+  },
+  "candidates": {
+    "preferred_spectral": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__engine_compare_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__engine_compare_spectral__a32854b7de245f9b59bd9fe3a3176b8500ae8e2bdf43f027b56e9696404cd616.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Your preferred settings, held constant across both engines. Signalsmith synthetic-impulse parity differences remain unresolved.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_spectral",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__engine_compare_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__engine_compare_spectral__f092255888fa81675cdeac37e53fbd892088f0277ed63a386e3ec3a9324b1e65.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+        "note": "Your preferred settings, held constant across both engines. Signalsmith synthetic-impulse parity differences remain unresolved.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_spectral",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__engine_compare_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__engine_compare_spectral__d6a19685c463e8e4185661f093d4206adf51007ff8545122cd5a72576919806d.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Unresolved: you found no useful disguise for mid voice. Mild settings are included for comparison, not as a successful mask. Signalsmith synthetic-impulse parity differences remain unresolved.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_spectral",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__engine_compare_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__engine_compare_spectral__21a841124c08870c3bacf232217a0d863324ef7d62e1e6c40f2c84967aa1f755.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+        "note": "Your preferred settings, held constant across both engines. Signalsmith synthetic-impulse parity differences remain unresolved.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_spectral",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__engine_compare_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__engine_compare_spectral__4cf0cdc0f5d925c7e342e16268c65db4775bac4a47c743062659fd4e801840c4.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Tone diagnostic only; judge masking on speech. Signalsmith synthetic-impulse parity differences remain unresolved.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_spectral",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      }
+    },
+    "preferred_world": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__engine_compare_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__engine_compare_world__7cba01add2de9d9333ed95fb337ea55cd62c5442c5267b2082a7e771dab9a75d.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Your preferred settings, held constant across both engines. WORLD uses bounded 80 ms reset windows.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_world",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__engine_compare_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__engine_compare_world__1b3a77126b188aaf01d07cf34b1737e869276cf3e31a74c70ae452fea966a509.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+        "note": "Your preferred settings, held constant across both engines. WORLD uses bounded 80 ms reset windows.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_world",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__engine_compare_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__engine_compare_world__a05da2be1f1bc79612e941873dd19754856d687abb606d7cd87df77a4834fc72.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Unresolved: you found no useful disguise for mid voice. Mild settings are included for comparison, not as a successful mask. WORLD uses bounded 80 ms reset windows.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_world",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__engine_compare_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__engine_compare_world__9534b56f1325d731e8f102451e82b0bd5a21fb758118f0f6cfb816a22b1e1149.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+        "note": "Your preferred settings, held constant across both engines. WORLD uses bounded 80 ms reset windows.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_world",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__engine_compare_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__engine_compare_world__9a9d107f869d8ae5f37e7a601e126a9fc3d9640eb74f566de535fb414efea223.wav"
+        },
+        "level_matched": true,
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Tone diagnostic only; judge masking on speech. WORLD uses bounded 80 ms reset windows.",
+        "context": {
+          "view": "model",
+          "mode": "preferred_engines",
+          "processor": "preferred_world",
+          "build_id": "1f77c5423bf895503120fab550adb8484eade0ac8ca2c32cddca49e14f743f4b",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-27T12:21:00.414Z"
+        }
+      }
+    }
+  },
+  "title": "Same voice settings, two different engines",
+  "intro": "Compare Original \u2192 Signalsmith \u2192 WORLD at the settings you preferred. Mid voice remains unresolved; changing engines may improve sound quality without hiding cadence or accent.",
+  "details": [
+    "Both engines receive exactly the same input and fixed pitch/resonance settings. Levels are matched together across all three recordings.",
+    "WORLD rebuilds speech in overlapping 80 ms windows. Signalsmith continuously modifies the spectrum. Existing Signalsmith impulse-parity discrepancies remain unresolved.",
+    "Use in live preview selects this profile without opening the microphone. Start monitoring explicitly in Try your voice, using headphones. No new performance or privacy claim is made."
+  ]
+}

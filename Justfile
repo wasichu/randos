@@ -112,9 +112,19 @@ test *args:
 
 # Browser smoke test: two headless Chromes place a real WebRTC call (needs Chrome)
 smoke:
+    RANDOS_CALL_SEGMENT_MS=60000 test/e2e/with_test_server.sh tmp/smoke-voice-product.log env BASE_URL=http://localhost:4010 node test/e2e/voice_product_smoke.mjs
+    node --test test/e2e/cdp_startup_test.mjs
     test/e2e/with_test_server.sh tmp/smoke-server.log env BASE_URL=http://localhost:4010 SMOKE_SERVER_LOG=tmp/smoke-server.log node test/e2e/call_smoke.mjs
     RANDOS_TEST_UNREACHABLE_RELAY=1 test/e2e/with_test_server.sh tmp/smoke-relay-server.log env BASE_URL=http://localhost:4010 node test/e2e/relay_only_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-voice-lab-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_lab_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-voice-review-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_lab_review_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-voice-model-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_model_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-voice-model-menu-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_model_menu_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-voice-round-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_round_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-engine-comparison.log env BASE_URL=http://localhost:4010 node test/e2e/voice_engine_comparison_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-gentle.log env BASE_URL=http://localhost:4010 node test/e2e/voice_gentle_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-dsp-stream.log env BASE_URL=http://localhost:4010 node test/e2e/voice_dsp_stream_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-dsp-live.log env BASE_URL=http://localhost:4010 node test/e2e/voice_dsp_live_smoke.mjs
     just recovery-smoke
 
 # A call whose media path dies comes back (ICE restart, obligation 10):
@@ -154,6 +164,9 @@ precommit: check-state-encrypted check-privacy
     cargo build --quiet -p randos_media
     cd clients/tui && mix precommit
     just translate-test
+    node tools/voice-dsp/browser/clock.test.mjs
+    python3 tools/voice-dsp/browser/check_vendor.py
+    cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev ruff check ../voice-browser ../voice-model ../voice-dsp
     just voice-eval-test
 
 # Media helper loopback: default mic → Opus → default speaker; latency on stderr (use headphones)
@@ -184,8 +197,13 @@ rust-lints-check:
 # warnings as errors, tests, cargo-deny), and that the committed .wasm is
 # the voice processors' current build
 native-check: rust-lints-check voice-wasm-check
+    python3 tools/check_renderer.py
+    cargo deny --manifest-path vendor/ex_ratatui/native/ex_ratatui/Cargo.toml --config clients/tui/native/deny.toml --log-level error check --warn unmaintained --hide-inclusion-graph
+    python3 tools/voice-dsp/browser/check_vendor.py
+    python3 tools/voice-dsp/native/sanitize_bridge.py
     cd clients/tui/native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet && cargo deny --log-level error check --hide-inclusion-graph
     cd voice && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo clippy --target wasm32-unknown-unknown -- -D warnings && cargo test --quiet
+    cd voice-native && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --quiet
 
 # Build the voice processors (voice/) to WASM for the browser's worklets:
 # assets/js/randos/voice/randos_voice.wasm, committed (production builds
@@ -231,6 +249,9 @@ tui-release:
     cargo build --release -p randos_media
     (cd clients/tui && MIX_ENV=prod mix deps.get --only prod >/dev/null)
     bin/prefetch.sh nifs
+    # Mix --overwrite retains old app/dependency directories. Archives must
+    # contain only this assembly; keep compilation caches, not old releases.
+    rm -rf clients/tui/_build/prod/rel/randos_tui
     (cd clients/tui && MIX_ENV=prod mix release randos_tui --overwrite --quiet)
     version="$(sed -n 's/^ *version: "\(.*\)",$/\1/p' clients/tui/mix.exs | head -1)"
     os="$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/darwin/macos/')"
@@ -239,12 +260,21 @@ tui-release:
     rm -rf "dist/${name}" "dist/${name}.tar.gz"
     mkdir -p dist
     cp -R clients/tui/_build/prod/rel/randos_tui "dist/${name}"
-    tar -C dist -czf "dist/${name}.tar.gz" "${name}"
+    mkdir -p "dist/${name}/licenses"
+    cp vendor/ex_ratatui/LICENSE "dist/${name}/licenses/ex-ratatui-MIT.txt"
+    cp vendor/signalsmith/stretch/LICENSE.txt "dist/${name}/licenses/signalsmith-stretch-MIT.txt"
+    cp vendor/signalsmith/signalsmith-linear/LICENSE.txt "dist/${name}/licenses/signalsmith-linear-MIT.txt"
+    COPYFILE_DISABLE=1 tar -C dist -czf "dist/${name}.tar.gz" "${name}"
     (cd dist && shasum -a 256 "${name}.tar.gz" > "${name}.tar.gz.sha256")
     rm -rf "dist/${name}"
     # Check the archive itself: unpacked elsewhere, it runs and finds its helper.
     check="$(mktemp -d)"
     tar -C "$check" -xzf "dist/${name}.tar.gz"
+    duplicates="$(find "$check/${name}/lib" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed -E 's/-[0-9].*$//' | sort | uniq -d)"
+    test -z "$duplicates" || { echo "duplicate packaged apps: $duplicates" >&2; exit 1; }
+    test -d "$check/${name}/lib/tui-${version}"
+    test -f "$check/${name}/licenses/signalsmith-stretch-MIT.txt"
+    test -f "$check/${name}/licenses/signalsmith-linear-MIT.txt"
     "$check/${name}/bin/randos" --version
     "$check/${name}/bin/randos" --check
     rm -rf "$check"
@@ -305,12 +335,98 @@ translate-update catalog="site":
 # identify a speaker after each processor, and can Whisper understand them?
 # Downloads LibriSpeech test-clean (346 MB) and the models (~0.4 GB) once;
 # writes tools/voice-eval/results/benchmark.json, which the voice lab shows
-voice-eval:
-    cd tools/voice-eval && uv run --group models python -m randos_voice_eval.bench
+voice-eval *args:
+    cd tools/voice-eval && uv run --group models python -m randos_voice_eval.bench {{args}}
+
+# Approximate recovery from the four public lab clips (no recognition models).
+voice-recovery:
+    cd tools/voice-eval && uv run --group models python -m randos_voice_eval.reconstruction
+
+# Isolated pretrained-model listening experiment (public clips, local inference).
+voice-model:
+    bash tools/voice-model/run.sh
+
+# Actual streaming ONNX in muted Chrome (public clip; isolated research tool).
+voice-browser:
+    bash tools/voice-browser/run.sh
+
+# After voice-browser: fixed public-clip comparisons and staged resource checks.
+voice-experiments:
+    tmp/tvtsyn/.venv/bin/python tools/voice-browser/compare_presets.py
+    bash tools/voice-browser/resources.sh
+    tmp/tvtsyn/.venv/bin/python tools/voice-browser/report.py
+
+# Four voices, isolated DSP operations and saved TVTSyn; no new model inference.
+voice-sound-check:
+    tmp/tvtsyn/.venv/bin/python tools/voice-browser/sound_quality.py
+
+# Model-free WORLD resynthesis: four public voices, no neural weights.
+voice-dsp:
+    bash tools/voice-dsp/run.sh
+
+# Causal-window WORLD audition against saved whole-recording reference; no model.
+voice-dsp-chunks:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/chunked.py
+
+# Build and audition three model-free DSP adapters in a paced browser Worker.
+voice-dsp-browser:
+    node tools/voice-dsp/browser/clock.test.mjs
+    python3 tools/voice-dsp/browser/build.py
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/prepare.py
+    node tools/voice-dsp/browser/run.mjs
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/publish.py
+
+# A bounded five-way stronger Signalsmith listening round; preserves old reports.
+voice-dsp-round:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/round.py
+    node tools/voice-dsp/browser/run.mjs --round
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/round.py --publish
+
+# Preferred settings through both engines; all voices and tone, no timing claim.
+voice-dsp-engines:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/engines.py
+    node tools/voice-dsp/browser/run.mjs --engines
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/engines.py --publish
+
+# One-variable gentler Signalsmith pitch audition, preserving previous rounds.
+voice-dsp-gentle:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/gentle.py
+    node tools/voice-dsp/browser/run.mjs --gentle
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/gentle.py --publish
+
+# Compare only Signalsmith playback prefill: exact callback PCM and 60 s per mode.
+voice-dsp-buffering:
+    python3 tools/voice-dsp/browser/check_vendor.py
+    mix esbuild voice_lab
+    test/e2e/with_test_server.sh tmp/buffering-experiment.log env BASE_URL=http://localhost:4010 node tools/voice-dsp/browser/buffering.mjs
+
+# Native C++ core at TUI frame cadence; does not modify the helper or calls.
+voice-dsp-native:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/native/run.py
+    node tools/voice-dsp/browser/run.mjs --native-cadence
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/native/run.py --measure
+
+# Actual Rust boundary and causal frame adapter against saved browser PCM.
+voice-bridge-check:
+    python3 tools/voice-dsp/browser/check_vendor.py
+    cargo build --offline --release -p randos_voice_native --example render_signalsmith
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/native/check_bridge.py
+
+# Fill missing actual-browser TVTSyn clips, preserving existing listening reviews.
+voice-listening-complete:
+    tmp/tvtsyn/.venv/bin/python tools/voice-browser/complete_listening.py
+
+# Canonical synthetic-tone diagnostics for all prepared modifications (cached models).
+voice-tone:
+    tmp/tvtsyn/.venv/bin/python tools/voice-browser/tone.py
+
+# Audit every modification/voice in the running dev lab, with muted Chrome.
+voice-lab-audit:
+    node tools/voice-browser/audit-lab.mjs
 
 # The benchmark's metrics and verdicts (offline, no models)
 voice-eval-test:
-    cd tools/voice-eval && uv run --group dev pytest -q
+    cd tools/voice-eval && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev pytest -q
 
 # The Homebrew formula for VERSION, from the GitHub release's checksums
 # (packaging/homebrew/README.md); --local uses dist/ instead

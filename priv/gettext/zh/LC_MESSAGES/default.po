@@ -22,6 +22,7 @@ msgid "A doorway, not a platform"
 msgstr "门道,不是站台"
 
 #. The page that explains what randos is ("about us"), not "approximately".
+#: lib/randos_web/components/home_components.ex
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
@@ -139,7 +140,7 @@ msgstr "语言"
 msgid "Looking"
 msgstr "正在寻找"
 
-#: lib/randos_web/components/home_components.ex
+#: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "无需注册账号，无需创建个人资料，无需上传视频，无需任何压力。"
@@ -450,11 +451,6 @@ msgstr "等待你的回复 rando"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
-msgid "I'm happy to hear"
-msgstr "我很高兴听到"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
 msgstr "正在寻找会说 %{hearing_languages} 语言且愿意听 %{speaking_language} 语言的rando。"
 
@@ -568,13 +564,6 @@ msgstr "通过 TLS（传输层安全协议）网络（这些网络会阻止 UDP 
 #, elixir-autogen, elixir-format
 msgid "Over UDP (most calls)"
 msgstr "通过 UDP 协议 (大部分通话)。"
-
-#. The service status page: whether calls can connect now, and today's call counts.
-#: lib/randos_web/components/layouts.ex
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
-msgid "Status"
-msgstr "状态"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -968,3 +957,207 @@ msgstr "剩余时间：%{time}"
 #, elixir-autogen, elixir-format
 msgid "Send them this link however you like. It works once."
 msgstr "您可以选择任何方式将这个链接发送给他们。这个链接只能使用一次。"
+
+#. Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Brighter"
+msgstr "更明亮"
+
+#. Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Fuller"
+msgstr "更饱满"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Off"
+msgstr "关闭"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Opening microphone…"
+msgstr "开启麦克风…"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Preview failed. Microphone stopped; try again."
+msgstr "预览失败。麦克风已停止工作，请重试。"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Style"
+msgstr "风格"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "These styles change your voice, but people may still recognize you."
+msgstr "這些風格改變你的聲音,但人們可能仍然認識你。"
+
+#. Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tone"
+msgstr "音调"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking"
+msgstr "语音伪装"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking on"
+msgstr "语音掩蔽已开启"
+
+#. Short button label: listen to your own microphone locally to try a changed voice.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Hear myself"
+msgstr "听我说"
+
+#. Short button label: stop listening to the local microphone preview, not a call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Stop preview"
+msgstr "停止预览"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Call progress"
+msgstr "呼叫进度"
+
+#. Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds).
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tone + Pitch"
+msgstr "音调 + 音高"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing is recorded or uploaded."
+msgstr "没有任何内容被记录或上传。"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "%{style} + %{tone}"
+msgstr "%{style} + %{tone}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone off."
+msgstr "关掉麦克风"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Keyboard shortcuts"
+msgstr "键盘快捷键"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone on."
+msgstr "麦克风开启"
+
+#. The service status page: whether calls can connect now, and today's call counts.
+#: lib/randos_web/components/home_components.ex
+#: lib/randos_web/components/layouts.ex
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "Server Status"
+msgstr "服务器状态"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Keyboard shortcuts"
+msgstr "键盘快捷键"
+
+#. Keyboard shortcut: turn your microphone off or on during a voice call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Mute/unmute"
+msgstr "静音/无音"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Preview"
+msgstr "预览"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "建议使用耳机"
+
+#. Screen-reader label for the website's main navigation links and language menu.
+#: lib/randos_web/components/layouts.ex
+#, elixir-autogen, elixir-format
+msgid "Main navigation"
+msgstr "主导航栏"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Conversation"
+msgstr "对话"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgctxt "button"
+msgid "Stop looking"
+msgstr "别再看了"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Hide shortcuts"
+msgstr "隐藏快捷方式"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Acknowledge"
+msgstr "确认"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Language menu"
+msgstr "语言选择"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Masking"
+msgstr "遮盖"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Site"
+msgstr "网站"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice"
+msgstr "聲音"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Find"
+msgstr "查找"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgctxt "button"
+msgid "Invite"
+msgstr "邀请"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "我想听"
+
+#. Short keyboard shortcut label: hang up the current voice call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "End call"
+msgstr "结束通话"

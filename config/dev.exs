@@ -48,6 +48,8 @@ endpoint_config =
       watchers: [
         esbuild: {Esbuild, :install_and_run, [:randos, ~w(--sourcemap=inline --watch)]},
         voice_lab: {Esbuild, :install_and_run, [:voice_lab, ~w(--sourcemap=inline --watch)]},
+        voice_masking:
+          {Esbuild, :install_and_run, [:voice_masking, ~w(--sourcemap=inline --watch)]},
         tailwind: {Tailwind, :install_and_run, [:randos, ~w(--watch)]}
       ]
     ]

@@ -20,21 +20,17 @@ defmodule RandosWeb.HomeComponents do
 
   def hero_panel(assigns) do
     ~H"""
-    <%!-- In the one-column layout (below lg) the hero's parts are grid items
-         of the page, so the form can sit between the title and the steps. --%>
-    <div id="hero-panel" class="contents lg:flex lg:flex-col lg:justify-between lg:gap-10">
-      <div class="order-1 lg:order-none">
-        <div class="flex items-center gap-3 sm:gap-4">
-          <img src={~p"/images/logo.svg"} alt="" class="size-12 sm:size-16" />
-          <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-7xl">
+    <%!-- Header and progress are separate items in the centered page grid. --%>
+    <div id="hero-panel" class="contents">
+      <div class="order-1 mx-auto w-full max-w-2xl text-center">
+        <div class="flex items-center justify-center gap-3">
+          <img src={~p"/images/logo.svg"} alt="" class="size-10 sm:size-12" />
+          <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-5xl">
             randos
           </h1>
         </div>
-        <p class="mt-4 max-w-xl text-lg leading-7 text-stone-700 sm:mt-6 sm:text-xl sm:leading-8">
+        <p class="mt-3 text-base leading-7 text-stone-700 sm:text-lg">
           {gettext("Short anonymous conversations for language practice.")}
-        </p>
-        <p class="mt-3 text-base text-stone-500">
-          {gettext("No accounts. No profiles. No video. No pressure.")}
         </p>
       </div>
 
@@ -52,27 +48,25 @@ defmodule RandosWeb.HomeComponents do
     assigns = assign(assigns, :steps, progress_steps(assigns.flow))
 
     ~H"""
-    <div
+    <ol
       id="state-progress"
       data-flow={@flow}
-      class={[
-        "order-3 grid grid-cols-1 gap-2 text-sm min-[420px]:grid-cols-2 lg:order-none lg:grid-cols-1",
-        length(@steps) == 5 && "sm:grid-cols-5",
-        length(@steps) == 4 && "sm:grid-cols-4"
-      ]}
+      aria-label={gettext("Call progress")}
+      class="order-2 flex flex-wrap items-center justify-center gap-2"
     >
-      <div
+      <li
         :for={state <- @steps}
         id={"state-progress-#{state}"}
+        aria-current={if state in lit_steps(@ui_state), do: "step"}
         class={[
-          "rounded-md border px-3 py-2 transition-colors duration-200 sm:px-4 sm:py-3",
+          "rounded-full border px-3 py-1 text-xs font-medium transition-colors duration-200",
           progress_step_class(@ui_state, state)
         ]}
       >
-        <p class="font-semibold">{state_label(state)}</p>
-        <p class="mt-1 text-xs leading-5 opacity-75">{state_description(state)}</p>
-      </div>
-    </div>
+        <span>{state_label(state)}</span>
+        <span class="sr-only"> — {state_description(state)}</span>
+      </li>
+    </ol>
     """
   end
 
@@ -103,7 +97,10 @@ defmodule RandosWeb.HomeComponents do
 
   def conversation_card(assigns) do
     ~H"""
-    <div class="order-2 grid min-w-0 grid-cols-1 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3 lg:order-none">
+    <div
+      id="conversation-card"
+      class="order-3 grid w-full max-w-2xl min-w-0 grid-cols-1 justify-self-center overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3"
+    >
       <%!-- Keyed by call: a new call (even an instant rematch, in the same
            render) gets a new element and a fresh WebRTC hook, never the
            previous call's (#webrtc-audio itself is phx-update="ignore"). --%>
@@ -158,6 +155,8 @@ defmodule RandosWeb.HomeComponents do
           <.extension_panel agreed_to_continue={@agreed_to_continue} />
       <% end %>
 
+      <.voice_settings :if={@ui_state == :idle} />
+
       <.call_timer_panel
         :if={@ui_state == :in_call}
         call_status={@call_status}
@@ -208,40 +207,43 @@ defmodule RandosWeb.HomeComponents do
           />
         </div>
 
-        <button
-          id="find-rando-button"
-          type="submit"
-          disabled={!acknowledged?(@preferences)}
-          class={[
-            "inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition duration-200",
-            acknowledged?(@preferences) &&
-              "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300",
-            !acknowledged?(@preferences) && "cursor-not-allowed bg-stone-200 text-stone-500"
-          ]}
-        >
-          <.icon name="hero-magnifying-glass" class="size-5" />
-          {pgettext("button", "Find a rando")}
-        </button>
+        <div id="conversation-actions" class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <button
+            id="find-rando-button"
+            type="submit"
+            disabled={!acknowledged?(@preferences)}
+            class={[
+              "inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent px-5 py-3 text-base font-semibold transition duration-200",
+              acknowledged?(@preferences) &&
+                "bg-stone-950 text-white shadow-sm hover:-translate-y-0.5 hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-teal-300",
+              !acknowledged?(@preferences) && "cursor-not-allowed bg-stone-200 text-stone-500"
+            ]}
+          >
+            <.icon name="hero-magnifying-glass" class="size-5 shrink-0" />
+            {pgettext("button", "Find a rando")}
+          </button>
 
-        <%!-- Quieter: bring someone you know instead (an invitation link). --%>
-        <button
-          id="invite-button"
-          type="button"
-          phx-click="invite"
-          disabled={!acknowledged?(@preferences)}
-          class={[
-            "inline-flex w-full items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-sm font-semibold transition duration-200",
-            acknowledged?(@preferences) &&
-              "border-stone-300 text-stone-700 hover:border-stone-950 hover:text-stone-950",
-            !acknowledged?(@preferences) && "cursor-not-allowed border-stone-200 text-stone-400"
-          ]}
-        >
-          <.icon name="hero-link" class="size-4" />
-          <% gettext_comment(
-            "Button: make a private link to share with someone you already know, instead of meeting a stranger."
-          ) %>
-          {pgettext("button", "Invite someone")}
-        </button>
+          <%!-- Quieter: bring someone you know instead (an invitation link). --%>
+          <button
+            id="invite-button"
+            type="button"
+            phx-click="invite"
+            disabled={!acknowledged?(@preferences)}
+            class={[
+              "inline-flex w-full items-center justify-center gap-2 rounded-md border px-5 py-3 text-base font-semibold transition duration-200",
+              acknowledged?(@preferences) &&
+                "border-teal-600 bg-teal-50 text-teal-900 shadow-sm hover:-translate-y-0.5 hover:bg-teal-100 focus:outline-none focus:ring-4 focus:ring-teal-100 dark:hover:bg-teal-950",
+              !acknowledged?(@preferences) &&
+                "cursor-not-allowed border-stone-200 bg-stone-200 text-stone-500"
+            ]}
+          >
+            <.icon name="hero-link" class="size-5 shrink-0" />
+            <% gettext_comment(
+              "Button: make a private link to share with someone you already know, instead of meeting a stranger."
+            ) %>
+            {pgettext("button", "Invite someone")}
+          </button>
+        </div>
 
         <p
           :if={@matchmaking_error}
@@ -418,16 +420,14 @@ defmodule RandosWeb.HomeComponents do
       />
       <fieldset id="hearing-languages">
         <legend class="mb-1.5 text-sm font-semibold text-stone-800">
-          {gettext("I'm happy to hear")}
+          {gettext("I want to hear")}
         </legend>
         <%!-- The choice in one line; "Change" opens the chips. Native
-             <details>, no script. Open on every page load (nothing is
-             stored between visits), so people see the choices; after
-             that, ignore_attributes keeps it as the person left it. --%>
+             <details>, no script. Start collapsed with the current choice
+             visible; ignore_attributes preserves how the person leaves it. --%>
         <details
           id="hearing-details"
           class="group"
-          open
           phx-mounted={JS.ignore_attributes(["open"])}
         >
           <summary
@@ -732,6 +732,7 @@ defmodule RandosWeb.HomeComponents do
               {gettext("waiting for remote audio")}
             </span>
           </p>
+          <p data-voice-masking hidden class="text-teal-700">{gettext("Voice masking on")}</p>
         </div>
       </div>
 
@@ -993,5 +994,250 @@ defmodule RandosWeb.HomeComponents do
       "any of the %{count} languages you picked",
       length(codes)
     )
+  end
+
+  def keyboard_shortcuts(assigns) do
+    ~H"""
+    <div
+      id="homepage-shortcuts"
+      phx-hook="HomeShortcuts"
+      phx-update="ignore"
+      class="order-4 w-full max-w-2xl justify-self-center text-center"
+    >
+      <div class="flex min-h-6 items-center justify-center gap-2">
+        <button
+          id="homepage-shortcuts-help"
+          type="button"
+          aria-controls="homepage-shortcuts-panel"
+          aria-expanded="false"
+          class="rounded-md px-3 py-1 text-xs text-stone-500 transition-colors hover:bg-stone-100 hover:text-teal-700"
+        >
+          <kbd class="me-1 font-mono">?</kbd> {pgettext("button", "Keyboard shortcuts")}
+        </button>
+        <button
+          id="homepage-shortcuts-close"
+          hidden
+          type="button"
+          aria-label={pgettext("button", "Hide shortcuts")}
+          class="inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-xs text-stone-600 hover:bg-stone-100 hover:text-teal-700"
+        >
+          <kbd class="rounded border border-stone-300 px-1 font-mono">Esc</kbd>
+          <span>{pgettext("button", "Hide shortcuts")}</span>
+        </button>
+      </div>
+      <section
+        id="homepage-shortcuts-panel"
+        hidden
+        aria-label={gettext("Keyboard shortcuts")}
+        class="rounded-xl border border-stone-200 bg-stone-100 p-3 text-start text-stone-950"
+      >
+        <div class="grid gap-3 sm:grid-cols-3">
+          <.shortcut_group
+            title={gettext("Conversation")}
+            entries={[
+              {"a", "A", gettext("Acknowledge")},
+              {"f", "F", pgettext("button", "Find")},
+              {"i", "I", pgettext("button", "Invite")},
+              {"x", "X", pgettext("button", "Stop looking")},
+              {"e", "E",
+               (
+                 gettext_comment("Short keyboard shortcut label: hang up the current voice call.")
+                 gettext("End call")
+               )},
+              {"n", "N", pgettext("button", "Next rando")}
+            ]}
+          />
+          <.shortcut_group
+            title={gettext("Voice")}
+            entries={[
+              {"b", "B", gettext("Masking")},
+              {"p", "P", gettext("Preview")},
+              {"s", "S", gettext("Style")},
+              {"t", "T", gettext("Tone")},
+              {"m", "M",
+               (
+                 gettext_comment(
+                   "Keyboard shortcut: turn your microphone off or on during a voice call."
+                 )
+
+                 gettext("Mute/unmute")
+               )}
+            ]}
+          />
+          <.shortcut_group
+            title={gettext("Site")}
+            entries={[
+              {"o", "O", gettext("About")},
+              {"r", "R", gettext("Server Status")},
+              {"l", "L", gettext("Language menu")}
+            ]}
+          />
+        </div>
+      </section>
+    </div>
+    """
+  end
+
+  attr :title, :string, required: true
+  attr :entries, :list, required: true
+
+  defp shortcut_group(assigns) do
+    ~H"""
+    <div data-shortcut-group class="min-w-0">
+      <h3 class="mb-1 text-[0.65rem] font-semibold uppercase tracking-wider text-stone-500">
+        {@title}
+      </h3>
+      <dl class="flex flex-wrap gap-x-3 gap-y-1">
+        <div
+          :for={{action, key, label} <- @entries}
+          data-shortcut={action}
+          class="inline-flex items-center gap-2 text-xs"
+        >
+          <dt class="order-2 text-stone-700">{label}</dt>
+          <dd>
+            <kbd class="inline-flex min-w-6 justify-center rounded border border-stone-300 bg-stone-50 px-1.5 py-0.5 font-mono font-semibold text-teal-700 shadow-sm">{key}</kbd>
+          </dd>
+        </div>
+      </dl>
+    </div>
+    """
+  end
+
+  def voice_settings(assigns) do
+    assigns =
+      assign(assigns, :voice_form, to_form(%{"family" => "off", "tone" => "fuller"}, as: :voice))
+
+    ~H"""
+    <details
+      id="voice-settings"
+      phx-hook="VoiceSettings"
+      phx-update="ignore"
+      class="group col-span-full border-t border-stone-200"
+      data-labels={
+        Jason.encode!(%{
+          opening: gettext("Opening microphone…"),
+          active: gettext("Microphone on."),
+          stopped: gettext("Microphone off."),
+          failed: gettext("Preview failed. Microphone stopped; try again."),
+          choice: gettext("%{style} + %{tone}", style: "%{style}", tone: "%{tone}"),
+          hear:
+            (
+              gettext_comment(
+                "Short button label: listen to your own microphone locally to try a changed voice."
+              )
+
+              pgettext("button", "Hear myself")
+            ),
+          stop:
+            (
+              gettext_comment(
+                "Short button label: stop listening to the local microphone preview, not a call."
+              )
+
+              pgettext("button", "Stop preview")
+            )
+        })
+      }
+    >
+      <summary
+        id="voice-settings-toggle"
+        class="flex cursor-pointer list-none items-center gap-2 px-5 py-4 text-sm font-medium text-stone-700 hover:text-teal-700 sm:px-7 [&::-webkit-details-marker]:hidden"
+      >
+        <.icon name="hero-voice-waveform" class="size-4 shrink-0" />
+        <span class="shrink-0">{gettext("Voice masking")}</span>
+        <span
+          id="voice-choice-label"
+          class="ms-auto min-w-0 max-w-[50%] text-end text-xs text-stone-500"
+        >{gettext("Off")}</span>
+        <.icon
+          name="hero-chevron-down"
+          class="size-4 transition-transform group-open:rotate-180"
+        />
+      </summary>
+      <div class="px-5 pb-5 sm:px-7">
+        <p id="voice-masking-warning" role="note" class="font-mono text-xs leading-5 text-stone-500">
+          {gettext("These styles change your voice, but people may still recognize you.")}
+        </p>
+        <.form
+          for={@voice_form}
+          id="voice-settings-form"
+          class="mt-4 grid gap-3 lg:grid-cols-1"
+        >
+          <.input
+            field={@voice_form[:family]}
+            id="voice-family"
+            type="select"
+            label={gettext("Style")}
+            options={[
+              {gettext("Off"), "off"},
+              {(
+                 gettext_comment(
+                   "Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone."
+                 )
+
+                 gettext("Tone")
+               ), "tone"},
+              {(
+                 gettext_comment(
+                   "Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds)."
+                 )
+
+                 gettext("Tone + Pitch")
+               ), "tone_pitch"}
+            ]}
+          />
+          <div id="voice-tone-choice" hidden>
+            <.input
+              field={@voice_form[:tone]}
+              id="voice-tone"
+              type="select"
+              label={gettext("Tone")}
+              options={[
+                {(
+                   gettext_comment(
+                     "Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name."
+                   )
+
+                   gettext("Fuller")
+                 ), "fuller"},
+                {(
+                   gettext_comment(
+                     "Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence."
+                   )
+
+                   gettext("Brighter")
+                 ), "brighter"}
+              ]}
+            />
+          </div>
+        </.form>
+        <p id="voice-preview-info" role="note" class="mt-3 text-xs text-stone-500">
+          {gettext("Headphones recommended")}
+        </p>
+        <button
+          id="voice-preview"
+          type="button"
+          class="mt-3 inline-flex items-center gap-2 rounded-md border border-stone-300 px-3 py-2 text-sm font-semibold disabled:opacity-50"
+        >
+          <span data-voice-preview-play><.icon name="hero-play-solid" class="size-4" /></span>
+          <span data-voice-preview-stop hidden><.icon name="hero-stop-solid" class="size-4" /></span>
+          <span data-voice-preview-label>{pgettext(
+            "button",
+            "Hear myself"
+          )}</span>
+        </button>
+        <p
+          id="voice-preview-status"
+          class="mt-2 font-mono text-xs leading-5 text-stone-600"
+          role="status"
+        >
+          {gettext("Microphone off.")}
+        </p>
+        <p class="mt-2 text-xs text-stone-500">
+          {gettext("Nothing is recorded or uploaded.")}
+        </p>
+      </div>
+    </details>
+    """
   end
 end

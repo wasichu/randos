@@ -19,12 +19,20 @@ pub struct Request {
 #[serde(tag = "cmd", rename_all = "snake_case")]
 pub enum Command {
     Ping,
+    Capabilities,
     LoopbackStart {
+        #[serde(default)]
+        audition: Option<u64>,
         #[serde(rename = "in")]
         input: String,
         out: String,
+        #[serde(default)]
+        masking: Option<String>,
     },
     LoopbackStop,
+    LoopbackMasking {
+        masking: String,
+    },
     /// Starts a call. `ice_servers` are the call's, from the channel's state
     /// push (STUN and TURN). `bind_ip` is for tests (`127.0.0.1`); by default
     /// the default route's address is used.
@@ -42,6 +50,8 @@ pub enum Command {
         /// `ice_transport_policy` `"relay"`), so the peer never sees our IP.
         #[serde(default)]
         relay_only: bool,
+        #[serde(default)]
+        masking: Option<String>,
     },
     /// A signal from the peer, exactly as the channel's `signal` push has it.
     CallSignal {
@@ -84,6 +94,11 @@ pub enum Outgoing {
     Error {
         reply: Option<u64>,
         error: String,
+    },
+    AuditionEvent {
+        audition: u64,
+        #[serde(flatten)]
+        event: Event,
     },
     Event(Event),
 }
@@ -151,6 +166,7 @@ pub struct CallStats {
 /// Where the loopback's latency goes, in milliseconds, plus health counters.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct LoopbackStats {
+    pub voice_ms: f64,
     pub latency_ms: f64,
     pub capture_device_ms: f64,
     pub capture_ring_ms: f64,
@@ -242,8 +258,19 @@ mod tests {
             Ok(Request {
                 id: 2,
                 command: Command::LoopbackStart {
+                    audition: None,
+                    masking: None,
                     input: "sine".into(),
                     out: "null".into()
+                }
+            })
+        );
+        assert_eq!(
+            parse(br#"{"id":12,"cmd":"loopback_masking","masking":"off"}"#),
+            Ok(Request {
+                id: 12,
+                command: Command::LoopbackMasking {
+                    masking: "off".into()
                 }
             })
         );

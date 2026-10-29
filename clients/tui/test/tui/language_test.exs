@@ -22,10 +22,11 @@ defmodule Tui.LanguageTest do
     assert Language.resolve("en", %{"LANG" => "es_ES"}) in Language.available()
   end
 
-  test "l cycles through the languages, wrapping" do
+  test "picker navigation wraps in both directions" do
     languages = Language.available()
     assert hd(languages) == "en"
-    assert Language.next(List.last(languages)) == "en"
-    assert Language.next("not-one") == "en"
+    assert Language.step("en", -1) == List.last(languages)
+    assert Language.step(List.last(languages), 1) == "en"
+    assert Language.step("not-one", 1) == "en"
   end
 end

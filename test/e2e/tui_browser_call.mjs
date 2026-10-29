@@ -49,6 +49,15 @@ try {
     relayOnly: process.env.RELAY_ONLY === "1",
   })
   await page.open(BASE_URL)
+  if (process.env.MASKING) {
+    const id = process.env.MASKING
+    if (!['lower_resonance','lower_resonance_pitch','higher_resonance','higher_resonance_pitch'].includes(id)) throw Error('Invalid test masking style')
+    await page.eval(`{
+      const family=document.getElementById('voice-family'),tone=document.getElementById('voice-tone');
+      family.value=${JSON.stringify(id.endsWith('_pitch')?'tone_pitch':'tone')};family.dispatchEvent(new Event('change',{bubbles:true}));
+      tone.value=${JSON.stringify(id.startsWith('lower')?'fuller':'brighter')};tone.dispatchEvent(new Event('change',{bubbles:true}));
+    }`)
+  }
   if (process.env.INVITE === "1") {
     report({event: "invitation", url: await page.invite(speaks, hears)})
   } else if (process.env.JOIN) {

@@ -17,6 +17,8 @@ module.exports = plugin(function({matchComponents, theme}) {
       values[name] = {name, fullPath: path.join(iconsDir, dir, file)}
     })
   })
+  // App-specific artwork uses the same icon component and currentColor mask.
+  values["voice-waveform"] = {name: "voice-waveform", fullPath: path.join(__dirname, "../icons/voice-waveform.svg")}
   matchComponents({
     "hero": ({name, fullPath}) => {
       let content = fs.readFileSync(fullPath).toString().replace(/\r?\n|\r/g, "")

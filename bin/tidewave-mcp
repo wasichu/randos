@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# MCP startup must not depend on an interactive shell or a running dev server.
+# The caller uses `mise exec` for the repo's pinned tools. Only the proxy may
+# write stdout: it carries the MCP protocol.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if ! curl -s -o /dev/null --max-time 2 http://localhost:4000/; then
+  mkdir -p tmp
+  # The dev server intentionally survives the MCP client; just serve reuses an
+  # existing server. Stop it explicitly with just serve-stop.
+  (nohup just serve > tmp/serve.log 2>&1 < /dev/null &)
+fi
+
+exec mcp-proxy --initial-retry-interval 1 http://localhost:4000/tidewave/mcp

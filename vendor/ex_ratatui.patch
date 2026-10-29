@@ -1,0 +1,217 @@
+--- a/lib/ex_ratatui/app.ex
++++ b/lib/ex_ratatui/app.ex
+@@ -81,6 +81,7 @@
+   | `commands: [...]` | `[]` | Side effects to execute after the state transition. Designed for the reducer runtime but executed under both — under the callback runtime, results are delivered to `handle_info/2`. See `ExRatatui.Command`. |
+   | `intents: [...]` | `[]` | Opaque directives forwarded verbatim to the transport's `intent_writer_fn` in the order they were emitted. ex_ratatui defines no vocabulary — consumers do. `phoenix_ex_ratatui` consumes `{:navigate, path}`, `{:patch, path}`, `{:redirect, path}` to dispatch LV navigation, for example. Transports that don't supply an intent writer (the existing 3-tuple `:cell_session` shape, plus `:local` / `:session` / `:distributed_server`) silently drop intents — apps stay portable across transports. |
+   | `render?: bool` | `true` | Whether to re-render after this transition. Works under both runtimes. |
++  | `full_redraw?: bool` | `false` | randos: local transitions may clear the physical screen and invalidate its retained frame before drawing. Requests survive render coalescing. |
+   | `trace?: bool` | unchanged | Enable or disable in-memory runtime tracing. |
+   | `probe_image_protocol: bool` | `false` | When `true` on the `:local` transport, the runtime calls `ExRatatui.Image.auto_local_protocol/1` once right after `mount/1` so image widgets with `protocol: :auto` resolve to the detected terminal protocol (Kitty / Sixel / iTerm2 / Halfblocks). Soft-fails silently with no TTY. Skipped under `test_mode: {w, h}`. No effect on other transports — CellSession forces halfblocks, SSH / Distributed use their session-level `:image_protocol` opt. Only meaningful on `mount/1`. See the [Images guide](guides/core/images.md). |
+ 
+--- a/lib/ex_ratatui/native.ex
++++ b/lib/ex_ratatui/native.ex
+@@ -1,7 +1,5 @@
+ defmodule ExRatatui.Native do
+   @moduledoc false
+-
+-  alias ExRatatui.Native.BuildConfig
+ 
+   @otp_app :ex_ratatui
+   @load_lock {__MODULE__, :nif_load_lock}
+@@ -12,6 +10,7 @@
+     terminal_size: 0,
+     set_terminal_title: 1,
+     draw_frame: 2,
++    clear_terminal: 1,
+     poll_event: 1,
+     layout_split: 4,
+     init_test_terminal: 2,
+@@ -65,33 +64,13 @@
+ 
+   version = Mix.Project.config()[:version]
+ 
+-  # Precedence, highest first:
+-  #
+-  #   1. config :rustler_precompiled, force_build_all: true
+-  #      (or RUSTLER_PRECOMPILED_FORCE_BUILD_ALL=1)
+-  #   2. config :rustler_precompiled, :force_build, ex_ratatui: true
+-  #   3. EX_RATATUI_BUILD=1
+-  #
+-  # Resolved eagerly here, before the option list is handed to
+-  # RustlerPrecompiled: the `:force_build` key must carry the final answer,
+-  # because anything that tries to fill it in later can only use
+-  # `Keyword.put_new/3` and would find the key already set.
+-  force_build? =
+-    BuildConfig.force_build?(
+-      Application.compile_env(
+-        :rustler_precompiled,
+-        :force_build_all,
+-        BuildConfig.truthy?(System.get_env("RUSTLER_PRECOMPILED_FORCE_BUILD_ALL"))
+-      ),
+-      Application.compile_env(:rustler_precompiled, [:force_build, @otp_app]),
+-      System.get_env("EX_RATATUI_BUILD")
+-    )
+-
++  # randos: our clear+invalidate NIF is not in upstream prebuilt artifacts.
++  # Always build the pinned source while carrying this patch.
+   precompiled_opts = [
+     otp_app: @otp_app,
+     crate: "ex_ratatui",
+     base_url: "https://github.com/mcass19/ex_ratatui/releases/download/v#{version}",
+-    force_build: force_build?,
++    force_build: true,
+     version: version,
+     targets: ~w(
+       aarch64-apple-darwin
+--- a/lib/ex_ratatui/server.ex
++++ b/lib/ex_ratatui/server.ex
+@@ -49,7 +49,8 @@
+     # Nested so the struct stays within 32 keys (a flat map past that
+     # switches to the slower hash-map representation).
+     mailbox: %{warn_threshold: @default_mailbox_warn_threshold, alarm?: false, warned_at: nil},
+-    render_pending?: false
++    render_pending?: false,
++    full_redraw_pending?: false
+   ]
+ 
+   @subscription_message :__ex_ratatui_subscription_tick__
+@@ -823,6 +824,7 @@
+ 
+     :telemetry.span([:ex_ratatui, :render, :frame], start_meta, fn ->
+       widgets = state.mod.render(state.user_state, frame)
++      maybe_full_redraw(state)
+       draw_widgets(state, widgets)
+ 
+       next_state =
+@@ -830,6 +832,7 @@
+         |> Map.update!(:render_count, &(&1 + 1))
+         |> Map.put(:last_rendered_at, System.system_time(:millisecond))
+         |> Map.put(:render_pending?, false)
++        |> Map.put(:full_redraw_pending?, false)
+         |> trace(:render, %{frame: frame, widget_count: length(widgets)})
+ 
+       {next_state, Map.put(start_meta, :widget_count, length(widgets))}
+@@ -863,6 +866,16 @@
+     resolve_terminal_size(tm, size_fn || (&ExRatatui.terminal_size/0))
+   end
+ 
++  # randos: kept pending across coalesced transitions, consumed by a draw.
++  defp maybe_full_redraw(%__MODULE__{
++         transport: :local,
++         full_redraw_pending?: true,
++         terminal_ref: ref
++       }),
++       do: :ok = ExRatatui.Native.clear_terminal(ref)
++
++  defp maybe_full_redraw(_state), do: :ok
++
+   defp draw_widgets(_state, []), do: :ok
+ 
+   defp draw_widgets(%__MODULE__{transport: :local, terminal_ref: terminal_ref} = state, widgets) do
+@@ -873,6 +886,7 @@
+       {:error, reason} ->
+         emit_render_dropped(state, reason)
+         Logger.error("ExRatatui draw error: #{inspect(reason)}")
++        if state.full_redraw_pending?, do: raise("full redraw failed: #{inspect(reason)}")
+     end
+   end
+ 
+@@ -1029,6 +1043,7 @@
+       commands: [],
+       intents: [],
+       render?: true,
++      full_redraw?: false,
+       trace?: nil,
+       probe_image_protocol: false
+     }
+@@ -1045,6 +1060,7 @@
+       commands: Command.normalize(Map.get(runtime_opts, :commands)),
+       intents: normalize_intents(Map.get(runtime_opts, :intents)),
+       render?: Map.get(runtime_opts, :render?, true),
++      full_redraw?: Map.get(runtime_opts, :full_redraw?, false),
+       trace?: Map.get(runtime_opts, :trace?),
+       probe_image_protocol: Map.get(runtime_opts, :probe_image_protocol, false)
+     }
+@@ -1068,6 +1084,7 @@
+     next_state =
+       state
+       |> Map.put(:user_state, user_state)
++      |> Map.put(:full_redraw_pending?, state.full_redraw_pending? or runtime_opts.full_redraw?)
+       |> maybe_set_trace(runtime_opts)
+       |> reconcile_subscriptions()
+       |> queue_commands(runtime_opts)
+--- a/native/ex_ratatui/src/terminal.rs
++++ b/native/ex_ratatui/src/terminal.rs
+@@ -101,6 +101,25 @@
+     }
+ }
+ 
++// randos: clear the physical terminal and reset Ratatui's remembered cells
++// together, so the next draw restores unchanged UI after multilingual overlays.
++#[rustler::nif(schedule = "DirtyIo")]
++fn clear_terminal(resource: ResourceArc<TerminalResource>) -> Result<Atom, Error> {
++    let mut guard = resource
++        .terminal
++        .lock()
++        .map_err(|_| Error::Term(Box::new("terminal lock poisoned")))?;
++    let terminal = guard
++        .as_mut()
++        .ok_or_else(|| Error::Term(Box::new("terminal not initialized")))?;
++    match terminal {
++        AnyTerminal::Crossterm(t) => t.clear(),
++        AnyTerminal::Test(t) => t.clear().map_err(std::io::Error::other),
++    }
++    .map_err(|e| Error::Term(Box::new(format!("{e}"))))?;
++    Ok(atoms::ok())
++}
++
+ /// Draw a frame using the given terminal resource.
+ pub fn with_terminal_draw<F>(resource: &TerminalResource, f: F) -> Result<Atom, Error>
+ where
+--- a/native/ex_ratatui/Cargo.toml
++++ b/native/ex_ratatui/Cargo.toml
+@@ -1,6 +1,7 @@
+ [package]
+ name = "ex_ratatui"
+ version = "0.17.1"
++license = "MIT"
+ authors = ["mcass19"]
+ edition = "2021"
+ 
+@@ -21,8 +22,8 @@
+ image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp", "bmp"] }
+ tui-big-text = "0.8.4"
+ syntect = "5"
+-render3d = { path = "vendor/render3d", default-features = false }
+-ratatui-3d = { path = "vendor/ratatui-3d", default-features = false }
++render3d = { path = "vendor/render3d", version = "=0.1.0", default-features = false }
++ratatui-3d = { path = "vendor/ratatui-3d", version = "=0.1.0", default-features = false }
+ 
+ [build-dependencies]
+ cc = "1"
+--- a/native/ex_ratatui/vendor/ratatui-3d/Cargo.toml
++++ b/native/ex_ratatui/vendor/ratatui-3d/Cargo.toml
+@@ -15,7 +15,7 @@
+ categories = ["command-line-interface", "graphics", "rendering"]
+ 
+ [dependencies]
+-render3d = { path = "../render3d", default-features = false }
++render3d = { path = "../render3d", version = "=0.1.0", default-features = false }
+ ratatui = "0.30"
+ 
+ [features]
+--- a/native/ex_ratatui/Cargo.lock
++++ b/native/ex_ratatui/Cargo.lock
+@@ -1432,9 +1432,9 @@
+ 
+ [[package]]
+ name = "pulldown-cmark"
+-version = "0.13.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7c3a14896dfa883796f1cb410461aef38810ea05f2b2c33c5aded3649095fdad"
++version = "0.13.5"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "278e9268c93b9e498a2da46c34d90ba93a3255eb99009646398f34bc73ab36eb"
+ dependencies = [
+  "bitflags 2.13.0",
+  "getopts",

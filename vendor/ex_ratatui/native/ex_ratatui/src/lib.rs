@@ -1,0 +1,20 @@
+mod cell_session;
+mod cell_size;
+mod decode;
+mod events;
+mod highlight;
+mod image;
+mod layout;
+mod pixel_region;
+mod rendering;
+mod session;
+mod session_input;
+mod style;
+mod terminal;
+mod test_utils;
+mod text;
+mod text_input;
+mod textarea;
+mod widgets;
+
+rustler::init!("Elixir.ExRatatui.Native");

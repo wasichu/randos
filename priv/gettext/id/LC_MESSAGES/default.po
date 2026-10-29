@@ -22,6 +22,7 @@ msgid "A doorway, not a platform"
 msgstr "Pintu masuk, bukan platform"
 
 #. The page that explains what randos is ("about us"), not "approximately".
+#: lib/randos_web/components/home_components.ex
 #: lib/randos_web/components/layouts.ex
 #: lib/randos_web/live/about_live.ex
 #, elixir-autogen, elixir-format
@@ -139,7 +140,7 @@ msgstr "Bahasa"
 msgid "Looking"
 msgstr "Mencari"
 
-#: lib/randos_web/components/home_components.ex
+#: lib/randos_web/components/layouts.ex
 #, elixir-autogen, elixir-format
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "Tidak ada akun. Tidak ada profil. Tidak ada video. Tanpa tekanan."
@@ -450,11 +451,6 @@ msgstr "menunggu rando Anda"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
-msgid "I'm happy to hear"
-msgstr "Saya senang mendengar"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
 msgid "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}."
 msgstr "Mencari rando yang bisa berbicara dalam %{hearing_languages} dan ingin mendengar %{speaking_language}."
 
@@ -568,13 +564,6 @@ msgstr "Melalui TLS (jaringan yang memblokir UDP)."
 #, elixir-autogen, elixir-format
 msgid "Over UDP (most calls)"
 msgstr "Melalui UDP (sebagian besar panggilan)"
-
-#. The service status page: whether calls can connect now, and today's call counts.
-#: lib/randos_web/components/layouts.ex
-#: lib/randos_web/live/status_live.ex
-#, elixir-autogen, elixir-format
-msgid "Status"
-msgstr "Status"
 
 #: lib/randos_web/live/status_live.ex
 #, elixir-autogen, elixir-format
@@ -968,3 +957,207 @@ msgstr "Waktu tersisa: %{time}"
 #, elixir-autogen, elixir-format
 msgid "Send them this link however you like. It works once."
 msgstr "Kirimkan tautan ini kepada mereka dengan cara apa pun yang Anda inginkan. Tautan ini hanya berfungsi sekali."
+
+#. Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Brighter"
+msgstr "Lebih cerah"
+
+#. Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Fuller"
+msgstr "Fuller"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Off"
+msgstr "Tutup"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Opening microphone…"
+msgstr "Membuka mikrofon…"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Preview failed. Microphone stopped; try again."
+msgstr "Pratinjau gagal. Mikrofon berhenti bekerja; coba lagi."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Style"
+msgstr "Gaya"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "These styles change your voice, but people may still recognize you."
+msgstr "Gaya ini mengubah suara Anda, tetapi orang mungkin masih mengenali Anda."
+
+#. Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tone"
+msgstr "Nada suara"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking"
+msgstr "Masker suara"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking on"
+msgstr "Masking suara diaktifkan"
+
+#. Short button label: listen to your own microphone locally to try a changed voice.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Hear myself"
+msgstr "Dengarkan diriku"
+
+#. Short button label: stop listening to the local microphone preview, not a call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Stop preview"
+msgstr "Hentikan pratinjau"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Call progress"
+msgstr "Kemajuan panggilan"
+
+#. Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds).
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Tone + Pitch"
+msgstr "Nada + Tinggi Suara"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing is recorded or uploaded."
+msgstr "Tidak ada yang direkam atau diunggah."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "%{style} + %{tone}"
+msgstr "%{style} + %{tone}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone off."
+msgstr "Mikrofon dimatikan."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Keyboard shortcuts"
+msgstr "Jalan pintas papan ketik"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone on."
+msgstr "Mikrofon menyala."
+
+#. The service status page: whether calls can connect now, and today's call counts.
+#: lib/randos_web/components/home_components.ex
+#: lib/randos_web/components/layouts.ex
+#: lib/randos_web/live/status_live.ex
+#, elixir-autogen, elixir-format
+msgid "Server Status"
+msgstr "Status Server"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Keyboard shortcuts"
+msgstr "Jalan pintas papan ketik"
+
+#. Keyboard shortcut: turn your microphone off or on during a voice call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Mute/unmute"
+msgstr "Matikan/aktifkan"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Preview"
+msgstr "Pratinjau"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "Headset yang disarankan"
+
+#. Screen-reader label for the website's main navigation links and language menu.
+#: lib/randos_web/components/layouts.ex
+#, elixir-autogen, elixir-format
+msgid "Main navigation"
+msgstr "Navigasi utama"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Conversation"
+msgstr "Percakapan"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgctxt "button"
+msgid "Stop looking"
+msgstr "Berhenti mencari"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Hide shortcuts"
+msgstr "Sembunyikan pintasan"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Acknowledge"
+msgstr "Mengakui"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Language menu"
+msgstr "Menu bahasa"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Masking"
+msgstr "Menutupi"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Site"
+msgstr "Situs web"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Voice"
+msgstr "Suara"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Find"
+msgstr "Temukan"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgctxt "button"
+msgid "Invite"
+msgstr "Mengundang"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "Saya ingin mendengar"
+
+#. Short keyboard shortcut label: hang up the current voice call.
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format, fuzzy
+msgid "End call"
+msgstr "Akhiri panggilan"

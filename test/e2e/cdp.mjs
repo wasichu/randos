@@ -48,7 +48,7 @@ export class Browser {
   // as the pipe closes, which the OS does when this process dies, however it
   // dies (even kill -9). So a Chrome can never outlive the run that started
   // it, and concurrent runs can't collide on a port. `extraArgs`: more flags.
-  static async launch({extraArgs = []} = {}) {
+  static async launch({extraArgs = [], gpu = false} = {}) {
     const {bin, headlessFlag} = findChrome()
     const profile = mkdtempSync(join(tmpdir(), "randos-smoke-"))
     const args = [
@@ -61,8 +61,12 @@ export class Browser {
       // measured; only the output is silent.
       "--mute-audio",
       "--autoplay-policy=no-user-gesture-required",
-      "--disable-gpu",
+      ...(!gpu ? ["--disable-gpu"] : []),
       "--no-first-run",
+      // Hermetic peers use local host candidates, without DNS or a TURN server.
+      // mDNS resolution can be unavailable on the host running headless Chrome.
+      "--disable-features=WebRtcHideLocalIpsWithMdns",
+
       ...extraArgs,
       "about:blank",
     ]
@@ -76,11 +80,24 @@ export class Browser {
 
     const browser = new Browser(proc, profile)
     // Chrome answers once it's up; fail clearly if it can't start.
-    await Promise.race([
-      browser.send("Browser.getVersion"),
-      new Promise((_, reject) => proc.once("exit", code => reject(failed(`Chrome exited (${code}) at startup`)))),
-      sleep(20_000).then(() => Promise.reject(failed("Chrome did not start"))),
-    ])
+    let startupTimer
+    try {
+      await Promise.race([
+        browser.send("Browser.getVersion"),
+        new Promise((_, reject) => {
+          proc.once("exit", code => reject(failed(`Chrome exited (${code}) at startup`)))
+          proc.once("error", error => reject(failed(`Chrome could not start: ${error.message}`)))
+        }),
+        new Promise((_, reject) => { startupTimer = setTimeout(() => reject(failed("Chrome did not start")), 20_000) }),
+      ])
+    } catch (error) {
+      proc.stdio[3].destroy()
+      proc.kill("SIGKILL")
+      rmSync(profile, {recursive: true, force: true})
+      throw error
+    } finally {
+      clearTimeout(startupTimer)
+    }
     proc.stderr.removeAllListeners("data")
     proc.stderr.resume()
     return browser
@@ -88,6 +105,10 @@ export class Browser {
 
   constructor(proc, profile) {
     Object.assign(this, {proc, profile, nextId: 0, pending: new Map(), buffer: "", pages: new Map()})
+    proc.stdio[3].on("error", error => {
+      for (const {reject} of this.pending.values()) reject(error)
+      this.pending.clear()
+    })
     // Messages from Chrome arrive on fd 4, each terminated by a NUL byte.
     proc.stdio[4].setEncoding("utf8")
     proc.stdio[4].on("data", chunk => {

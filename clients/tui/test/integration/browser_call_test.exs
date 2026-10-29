@@ -49,7 +49,7 @@ defmodule Tui.Integration.BrowserCallTest do
     end
   end
 
-  defp assert_audio_both_ways(result) do
+  defp assert_audio_both_ways(result, minimum_energy \\ 0.01) do
     assert result.connected?, "the TUI's helper never connected"
     assert result.heard?, "the TUI never heard the browser's mic"
 
@@ -58,7 +58,8 @@ defmodule Tui.Integration.BrowserCallTest do
     assert inbound["packetsReceived"] > 50,
            "Chrome received #{inbound["packetsReceived"]} packets"
 
-    assert inbound["totalAudioEnergy"] > 0.01, "Chrome heard silence: #{inspect(inbound)}"
+    assert inbound["totalAudioEnergy"] > minimum_energy,
+           "Chrome heard silence: #{inspect(inbound)}"
   end
 
   test "the TUI waits first and offers; the browser answers" do
@@ -72,6 +73,38 @@ defmodule Tui.Integration.BrowserCallTest do
     port = browser("bn", "hi")
     assert %Model{webrtc_role: "offerer"} = await_model(app, &(&1.status == :in_call))
     assert_audio_both_ways(await_call(app, port))
+  end
+
+  test "selected masking is carried in real browser/TUI calls in both roles" do
+    for {id, first?, speaks, hears} <- [
+          {:masked_offer, true, "ja", "ko"},
+          {:masked_answer, false, "fr", "de"}
+        ] do
+      app = start_audio_tui(id)
+      model = await_model(app, &(&1.status == :idle and &1.audio?))
+      keys(app, ["b", "3", "right", "esc"])
+      await_media(app, &(&1.voice_family == "tone_pitch" and &1.voice_tone == "brighter"))
+
+      if first? do
+        find(app, model, speaks, hears)
+        await_model(app, &(&1.status == :looking))
+      end
+
+      port = browser(hears, speaks, [{"MASKING", "lower_resonance"}])
+
+      unless first? do
+        await_browser(port, "looking")
+        find(app, model, speaks, hears)
+      end
+
+      assert %Model{webrtc_role: role} = await_model(app, &(&1.status == :in_call))
+      assert role == if(first?, do: "offerer", else: "answerer")
+      await_media(app, &match?(%{call: %{masking: "higher_resonance_pitch"}}, &1))
+      # Fixed quarter-amplitude input headroom means one-sixteenth energy.
+      assert_audio_both_ways(await_call(app, port), 0.01 / 16)
+      keys(app, ["e"])
+      await_model(app, &(&1.status == :idle))
+    end
   end
 
   test "the browser waits first and offers; the TUI answers" do

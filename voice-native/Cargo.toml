@@ -1,0 +1,14 @@
+[package]
+name = "randos_voice_native"
+version = "0.1.0"
+edition = "2024"
+description = "Owned native Signalsmith bridge for randos; the browser uses the same pinned C++ core as WASM."
+license = "AGPL-3.0-or-later"
+publish = false
+
+[build-dependencies]
+# Existing workspace transitive dependency; compiles our C++ boundary offline.
+cc = "1.9"
+
+[lints]
+workspace = true

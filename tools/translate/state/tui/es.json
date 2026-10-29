@@ -8,7 +8,7 @@
     "msgstr": "%{device} (por defecto)"
   },
   "%{first} or %{last}": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "%{first} o %{last}"
   },
   "%{language} both ways": {
@@ -23,8 +23,12 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes} minutos o más"
   },
+  "%{name} ✓": {
+    "model": "madlad-400",
+    "msgstr": "%{name} ✓"
+  },
   "%{request} refused: %{reason}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{request} rechazado: %{reason}"
   },
   "%{sent} sent / %{received} received": {
@@ -43,12 +47,24 @@
     "model": "hy-mt2",
     "msgstr": "%{time} para tomar una decisión"
   },
+  "1  Off": {
+    "model": "madlad-400",
+    "msgstr": "1 Desactivado"
+  },
+  "2  Tone": {
+    "model": "opus-mt",
+    "msgstr": "2 Tono"
+  },
+  "3  Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "3. Tono + Altura"
+  },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "hy-mt2",
     "msgstr": "Una pareja de idiomas se muestra una vez que ha tenido al menos %{count} consultas; las de menor cantidad se consideran “otros”."
   },
   "About these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Acerca de estos números"
   },
   "Asking the server…": {
@@ -59,6 +75,10 @@
     "model": "madlad-400",
     "msgstr": "El audio está encendido."
   },
+  "Brighter": {
+    "model": "opus-mt",
+    "msgstr": "Más brillante"
+  },
   "Calls started: %{started}": {
     "model": "m2m100",
     "msgstr": "Las llamadas comenzaron: %{started}"
@@ -66,6 +86,10 @@
   "Checking the relay…": {
     "model": "hy-mt2",
     "msgstr": "Verificando el relé…"
+  },
+  "Checking voice options…": {
+    "model": "hy-mt2",
+    "msgstr": "Verificando opciones de voz…"
   },
   "Connected: %{connected}": {
     "model": "m2m100",
@@ -76,7 +100,7 @@
     "msgstr": "Conectar con el servidor…"
   },
   "Connection:": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Conexión:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -84,7 +108,7 @@
     "msgstr": "¿Desea continuar durante otros %{minutes} minutos?"
   },
   "Continue?": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "¿Continuar?"
   },
   "Continued": {
@@ -100,12 +124,16 @@
     "msgstr": "Contabilizado en el %{answered}% de los %{total} servidores."
   },
   "Devices": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Dispositivos"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Error: %{message}"
+  },
+  "Fuller": {
+    "model": "madlad-400",
+    "msgstr": "Fuller"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
@@ -123,9 +151,17 @@
     "model": "opus-mt",
     "msgstr": "Me alegra oír:"
   },
+  "Interface language": {
+    "model": "opus-mt",
+    "msgstr": "Lenguaje de interfaz"
+  },
   "Join through a link": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Únete a través de un enlace"
+  },
+  "Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "Atajos de teclado"
   },
   "Languages spoken:": {
     "model": "hy-mt2",
@@ -155,6 +191,10 @@
     "model": "translategemma-4b",
     "msgstr": "Micrófono:"
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "hy-mt2",
+    "msgstr": "Micrófono: %{bars}%{peak}   (Presione %{key} para detener)"
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-4b",
     "msgstr": "Micrófono: %{bars}%{peak} (presione \"t\" para detener)"
@@ -163,16 +203,36 @@
     "model": "translategemma-4b",
     "msgstr": "Micrófono: encendido…"
   },
+  "Microphone off.": {
+    "model": "madlad-400",
+    "msgstr": "Micrófono apagado."
+  },
+  "Microphone on.": {
+    "model": "opus-mt",
+    "msgstr": "Micrófono encendido."
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "madlad-400",
     "msgstr": "No hay ningún relé configurado en este servidor, por lo que las llamadas aquí van directamente."
+  },
+  "Nothing is recorded or uploaded.": {
+    "model": "madlad-400",
+    "msgstr": "Nada se graba ni se carga."
   },
   "Now:": {
     "model": "m2m100",
     "msgstr": "Y ahora:"
   },
-  "Other languages: %{calls}": {
+  "Off": {
     "model": "hy-mt2",
+    "msgstr": "Apagado"
+  },
+  "Opening microphone…": {
+    "model": "translategemma-4b",
+    "msgstr": "Abriendo el micrófono…"
+  },
+  "Other languages: %{calls}": {
+    "model": "madlad-400",
     "msgstr": "Otros idiomas: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -191,20 +251,28 @@
     "model": "m2m100",
     "msgstr": "Presione Enter para encontrar un rando."
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "opus-mt",
+    "msgstr": "Falló la vista previa. El micrófono se detuvo; vuelva a intentarlo."
+  },
   "Reconnecting audio…": {
-    "model": "translategemma-12b",
+    "model": "madlad-400",
     "msgstr": "Reconectando el audio…"
+  },
+  "Selected: %{style}": {
+    "model": "opus-mt",
+    "msgstr": "Seleccionado: %{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "translategemma-12b",
     "msgstr": "Envíenlo a quien quieran, de la manera que prefieran. Funciona una vez."
   },
   "Server status": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Estado del servidor"
   },
   "Speaker:": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Orador:"
   },
   "Text only (no audio helper).": {
@@ -216,12 +284,16 @@
     "msgstr": "El relé funciona parcialmente."
   },
   "The relay is working.": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "El relé está funcionando."
   },
   "The relay isn't working.": {
-    "model": "translategemma-12b",
+    "model": "madlad-400",
     "msgstr": "El relé no funciona."
+  },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "translategemma-12b",
+    "msgstr": "Estos estilos modifican tu voz, pero es posible que la gente aún te reconozca."
   },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "translategemma-12b",
@@ -243,9 +315,41 @@
     "model": "translategemma-12b",
     "msgstr": "Hoy (contando desde las %{time} UTC del %{date}):"
   },
+  "Tone": {
+    "model": "opus-mt",
+    "msgstr": "Tono"
+  },
+  "Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "Tono + Altura"
+  },
+  "Tone: %{tone} (left/right)": {
+    "model": "madlad-400",
+    "msgstr": "Tono: %{tone} (izquierda/derecha)"
+  },
   "Typical length: %{length}": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Longitud típica: %{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "translategemma-4b",
+    "msgstr": "Actualice el asistente de audio para poder previsualizar los cambios en la voz."
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "opus-mt",
+    "msgstr": "Utilice auriculares y mantenga el volumen bajo."
+  },
+  "Voice masking": {
+    "model": "m2m100",
+    "msgstr": "Máscara de voz"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "opus-mt",
+    "msgstr": "El enmascaramiento de voz no está disponible. Actualizar randos o elegir Desactivar."
+  },
+  "Voice masking on": {
+    "model": "translategemma-4b",
+    "msgstr": "Ocultamiento del sonido"
   },
   "Waiting for your rando to open the link…": {
     "model": "opus-mt",
@@ -256,7 +360,7 @@
     "msgstr": "Contamos llamadas, no personas: no recopilamos direcciones, ni identificadores, ni información sobre nadie."
   },
   "You": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Tú"
   },
   "You're in a call.": {
@@ -272,11 +376,11 @@
     "msgstr": "cualquiera de los idiomas que escogiste (%{count})"
   },
   "connected": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "conectado"
   },
   "connected directly": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "conectado directamente"
   },
   "connected to %{server}": {
@@ -284,7 +388,7 @@
     "msgstr": "Conectado con %{server}"
   },
   "connected to the server": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "conectado al servidor"
   },
   "connected via relay": {
@@ -292,7 +396,7 @@
     "msgstr": "Conectado vía relé"
   },
   "connecting to %{server}…": {
-    "model": "translategemma-12b",
+    "model": "madlad-400",
     "msgstr": "Conectando a %{server}…"
   },
   "connecting to the server…": {
@@ -328,7 +432,7 @@
     "msgstr": "desconectado; reconectando"
   },
   "error: %{message}": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "error: %{message}"
   },
   "in a call": {
@@ -336,7 +440,7 @@
     "msgstr": "en una llamada telefónica"
   },
   "key\u000418+": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -359,9 +463,17 @@
     "model": "hy-mt2",
     "msgstr": "cambiar"
   },
+  "key\u0004change tone": {
+    "model": "opus-mt",
+    "msgstr": "cambiar el tono"
+  },
   "key\u0004check": {
     "model": "translategemma-4b",
     "msgstr": "verificar"
+  },
+  "key\u0004choose": {
+    "model": "m2m100",
+    "msgstr": "Elegir"
   },
   "key\u0004close": {
     "model": "translategemma-4b",
@@ -387,12 +499,20 @@
     "model": "opus-mt",
     "msgstr": "encontrar"
   },
-  "key\u0004invite": {
+  "key\u0004hear myself / stop": {
+    "model": "opus-mt",
+    "msgstr": "escucharme a mí mismo / parar"
+  },
+  "key\u0004help": {
     "model": "hy-mt2",
+    "msgstr": "ayuda"
+  },
+  "key\u0004invite": {
+    "model": "opus-mt",
     "msgstr": "invitar"
   },
   "key\u0004join": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "unirse"
   },
   "key\u0004join a link": {
@@ -431,6 +551,10 @@
     "model": "translategemma-4b",
     "msgstr": "refrescar"
   },
+  "key\u0004scroll": {
+    "model": "madlad-400",
+    "msgstr": "scroll"
+  },
   "key\u0004speaker": {
     "model": "m2m100",
     "msgstr": "Hablantes"
@@ -439,9 +563,17 @@
     "model": "opus-mt",
     "msgstr": "situación actual"
   },
+  "key\u0004style": {
+    "model": "opus-mt",
+    "msgstr": "estilo"
+  },
   "key\u0004unmute": {
     "model": "translategemma-4b",
     "msgstr": "desactivar el silencio"
+  },
+  "key\u0004voice masking": {
+    "model": "madlad-400",
+    "msgstr": "Enmascaramiento de voz"
   },
   "link copied": {
     "model": "hy-mt2",
@@ -460,7 +592,7 @@
     "msgstr": "en llamada"
   },
   "log\u0004invitation link ready to share": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "Enlace de invitación listo para compartir"
   },
   "log\u0004looking for a rando": {
@@ -488,7 +620,7 @@
     "msgstr": "Emparejados, preparando la llamada"
   },
   "muted": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "silenciado"
   },
   "no answer": {
@@ -519,6 +651,10 @@
     "model": "opus-mt",
     "msgstr": "no funciona"
   },
+  "p: hear myself / stop. Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "p: Escúchame / detente. Esc: Atrás."
+  },
   "panel title\u0004Connecting": {
     "model": "madlad-400",
     "msgstr": "Conexión"
@@ -532,7 +668,7 @@
     "msgstr": "Durante la llamada"
   },
   "panel title\u0004Invitation": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Invitación"
   },
   "panel title\u0004Looking": {
@@ -632,11 +768,11 @@
     "msgstr": "El tiempo se ha agotado: ¿continuar?"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "menos de 1 minuto"
   },
   "unexpected reply": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "respuesta inesperada"
   },
   "waiting for someone to open your link": {

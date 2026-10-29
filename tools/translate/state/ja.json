@@ -15,6 +15,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes}+ 分"
   },
+  "%{style} + %{tone}": {
+    "model": "madlad-400",
+    "msgstr": "%{style}+%{tone}"
+  },
   "%{time} left": {
     "model": "translategemma-4b",
     "msgstr": "残り時間：%{time}"
@@ -51,6 +55,10 @@
     "model": "hy-mt2",
     "msgstr": "randoを探す前に、18歳以上であることの確認に同意してください。"
   },
+  "Acknowledge": {
+    "model": "madlad-400",
+    "msgstr": "確認"
+  },
   "Attempting to reconnect": {
     "model": "hy-mt2",
     "msgstr": "再接続を試みています"
@@ -58,6 +66,14 @@
   "Both people choose whether to continue.": {
     "model": "hy-mt2",
     "msgstr": "二人とも、続けるかどうかを選ぶ。"
+  },
+  "Brighter": {
+    "model": "translategemma-4b",
+    "msgstr": "より明るい"
+  },
+  "Call progress": {
+    "model": "hy-mt2",
+    "msgstr": "進行状況を呼び出す"
   },
   "Calls started": {
     "model": "madlad-400",
@@ -110,6 +126,10 @@
   "Continued past 10 minutes": {
     "model": "madlad-400",
     "msgstr": "10 分経過後も続行"
+  },
+  "Conversation": {
+    "model": "hy-mt2",
+    "msgstr": "会話"
   },
   "Conversation is active.": {
     "model": "translategemma-12b",
@@ -179,6 +199,14 @@
     "model": "madlad-400",
     "msgstr": "あなたのrandoが開くために。"
   },
+  "Fuller": {
+    "model": "translategemma-4b",
+    "msgstr": "より豊か"
+  },
+  "Headphones recommended": {
+    "model": "m2m100",
+    "msgstr": "ヘッドフォン推奨"
+  },
   "Help fix a translation": {
     "model": "translategemma-4b",
     "msgstr": "翻訳の修正をお手伝いします"
@@ -194,6 +222,10 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "translategemma-12b",
     "msgstr": "私は18歳以上であり、このチャットでの会話は匿名で行われ、監視されないことを理解しています。"
+  },
+  "I want to hear": {
+    "model": "m2m100",
+    "msgstr": "聞きたい"
   },
   "I will speak in": {
     "model": "madlad-400",
@@ -231,9 +263,17 @@
     "model": "hy-mt2",
     "msgstr": "参加してください"
   },
+  "Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "キーボードショートカット"
+  },
   "Language": {
     "model": "hy-mt2",
     "msgstr": "言語"
+  },
+  "Language menu": {
+    "model": "hy-mt2",
+    "msgstr": "言語メニュー"
   },
   "Languages spoken": {
     "model": "madlad-400",
@@ -251,6 +291,26 @@
     "model": "madlad-400",
     "msgstr": "%{hearing_languages} を話し、%{speaking_language} を聞きたい rando を探す。"
   },
+  "Main navigation": {
+    "model": "hy-mt2",
+    "msgstr": "メインナビゲーション"
+  },
+  "Masking": {
+    "model": "translategemma-4b",
+    "msgstr": "マスク"
+  },
+  "Microphone off.": {
+    "model": "hy-mt2",
+    "msgstr": "マイクをオフにしてください。"
+  },
+  "Microphone on.": {
+    "model": "hy-mt2",
+    "msgstr": "マイクオン。"
+  },
+  "Mute/unmute": {
+    "model": "madlad-400",
+    "msgstr": "ミュート/アンミュート"
+  },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-4b",
     "msgstr": "アカウントは不要。プロフィールも不要。動画も不要。プレッシャーもありません。"
@@ -267,9 +327,21 @@
     "model": "madlad-400",
     "msgstr": "まだ翻訳されていません"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "hy-mt2",
+    "msgstr": "何も記録されたりアップロードされたりしません。"
+  },
   "Nothing matches.": {
     "model": "translategemma-12b",
     "msgstr": "何も一致しません。"
+  },
+  "Off": {
+    "model": "hy-mt2",
+    "msgstr": "オフ"
+  },
+  "Opening microphone…": {
+    "model": "madlad-400",
+    "msgstr": "マイクを開く…"
   },
   "Other languages: %{calls}": {
     "model": "m2m100",
@@ -299,6 +371,14 @@
     "model": "hy-mt2",
     "msgstr": "通話の準備をしています"
   },
+  "Preview": {
+    "model": "hy-mt2",
+    "msgstr": "プレビュー"
+  },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "hy-mt2",
+    "msgstr": "プレビューに失敗しました。マイクの動作が停止しています。もう一度試してください。"
+  },
   "Privacy": {
     "model": "hy-mt2",
     "msgstr": "プライバシー"
@@ -327,6 +407,10 @@
     "model": "translategemma-12b",
     "msgstr": "このリンクを、どのような方法でもお送りください。ただし、このリンクは一度しか使用できません。"
   },
+  "Server Status": {
+    "model": "hy-mt2",
+    "msgstr": "サーバーの状況"
+  },
   "Share a link.": {
     "model": "hy-mt2",
     "msgstr": "リンクを共有しましょう。"
@@ -334,6 +418,10 @@
   "Short anonymous conversations for language practice.": {
     "model": "hy-mt2",
     "msgstr": "言語練習のための短い匿名の会話。"
+  },
+  "Site": {
+    "model": "hy-mt2",
+    "msgstr": "サイト"
   },
   "Someone invited you to a call": {
     "model": "m2m100",
@@ -358,6 +446,10 @@
   "Stop looking": {
     "model": "hy-mt2",
     "msgstr": "探すのをやめる"
+  },
+  "Style": {
+    "model": "hy-mt2",
+    "msgstr": "スタイル"
   },
   "Suggest a fix": {
     "model": "m2m100",
@@ -419,6 +511,10 @@
     "model": "translategemma-12b",
     "msgstr": "randosには、アカウント、プロフィール、連絡先、フォロワー、フィード、連続ログイン日数、スコア、といった要素や、固定されたソーシャルグラフといったものは存在しません。randosは、ソーシャルメディアというよりも、コミュニケーションのための基盤に近いと言えるでしょう。"
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "hy-mt2",
+    "msgstr": "これらのスタイルは声を変えますが、それでも人々はあなたを認識できるかもしれません。"
+  },
   "This link is incomplete.": {
     "model": "hy-mt2",
     "msgstr": "このリンクは不完全です。"
@@ -447,6 +543,14 @@
     "model": "translategemma-4b",
     "msgstr": "ダークモードを切り替える"
   },
+  "Tone": {
+    "model": "hy-mt2",
+    "msgstr": "トーン"
+  },
+  "Tone + Pitch": {
+    "model": "m2m100",
+    "msgstr": "トーン + ピッチ"
+  },
   "Translations": {
     "model": "hy-mt2",
     "msgstr": "翻訳"
@@ -458,6 +562,18 @@
   "View on GitHub": {
     "model": "translategemma-27b",
     "msgstr": "GitHubで見る"
+  },
+  "Voice": {
+    "model": "m2m100",
+    "msgstr": "声"
+  },
+  "Voice masking": {
+    "model": "madlad-400",
+    "msgstr": "音声マスキング"
+  },
+  "Voice masking on": {
+    "model": "madlad-400",
+    "msgstr": "音声マスキングを有効にする"
   },
   "Waiting": {
     "model": "hy-mt2",
@@ -543,9 +659,25 @@
     "model": "hy-mt2",
     "msgstr": "終了"
   },
+  "button\u0004End call": {
+    "model": "madlad-400",
+    "msgstr": "コールを終了"
+  },
+  "button\u0004Find": {
+    "model": "m2m100",
+    "msgstr": "検索"
+  },
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "rando を見つける"
+  },
+  "button\u0004Hear myself": {
+    "model": "m2m100",
+    "msgstr": "自分を聞く"
+  },
+  "button\u0004Hide shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "ショートカットを非表示にする"
   },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
@@ -555,6 +687,10 @@
     "model": "hy-mt2",
     "msgstr": "通話に参加してください"
   },
+  "button\u0004Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "キーボードショートカット"
+  },
   "button\u0004Mute": {
     "model": "translategemma-12b",
     "msgstr": "ミュート (マイクをオフにする)"
@@ -562,6 +698,10 @@
   "button\u0004Next rando": {
     "model": "m2m100",
     "msgstr": "次へ rando"
+  },
+  "button\u0004Stop preview": {
+    "model": "translategemma-12b",
+    "msgstr": "プレビューを停止"
   },
   "button\u0004Unmute": {
     "model": "hy-mt2",

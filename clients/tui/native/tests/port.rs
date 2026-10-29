@@ -15,12 +15,128 @@ mod common;
 use common::{Call, Helper};
 
 #[test]
+fn masking_is_validated_and_local_audition_uses_the_call_processor() {
+    let mut helper = Helper::spawn();
+    let mut events = Vec::new();
+    let invalid = helper.request(
+        json!({"id":101,"cmd":"loopback_start","in":"sine","out":"null","masking":"unknown"}),
+        &mut events,
+    );
+    assert!(invalid["error"].is_string());
+    for (id, style) in [
+        "off",
+        "lower_resonance",
+        "lower_resonance_pitch",
+        "higher_resonance",
+        "higher_resonance_pitch",
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        let reply = helper.request(
+            json!({"id":id,"cmd":"loopback_start","in":"sine","out":"null","masking":style}),
+            &mut events,
+        );
+        assert!(reply.get("ok").is_some(), "{reply:?}");
+        if style == "higher_resonance_pitch" {
+            std::thread::sleep(Duration::from_millis(1300));
+        }
+        helper.request(json!({"id":id+20,"cmd":"loopback_stop"}), &mut events);
+    }
+    assert!(
+        events
+            .iter()
+            .any(|event| event["event"] == "loopback_stats" && event["voice_ms"] == 220.0)
+    );
+    assert_eq!(helper.close(), 0);
+}
+
+#[test]
+fn live_audition_changes_keep_one_loopback_and_stop_remains_authoritative() {
+    let mut helper = Helper::spawn();
+    let mut events = Vec::new();
+    let capabilities = helper.request(json!({"id":1,"cmd":"capabilities"}), &mut events);
+    assert_eq!(capabilities["ok"]["live_audition"], true);
+    let started = helper.request(
+        json!({"id":2,"cmd":"loopback_start","in":"sine","out":"null","masking":"off","audition":42}),
+        &mut events,
+    );
+    assert!(started.get("ok").is_some());
+    for (id, style, delay) in [
+        (3, "higher_resonance_pitch", 220.0),
+        (4, "off", 0.0),
+        (5, "lower_resonance", 220.0),
+    ] {
+        let reply = helper.request(
+            json!({"id":id,"cmd":"loopback_masking","masking":style}),
+            &mut events,
+        );
+        assert_eq!(reply["ok"], true);
+        let deadline = std::time::Instant::now() + Duration::from_secs(5);
+        loop {
+            let event = helper.receive();
+            assert_ne!(event["event"], "loopback_failed", "{event:?}");
+            assert_eq!(
+                event["audition"], 42,
+                "audition events retain their session"
+            );
+            let applied = event["event"] == "loopback_stats" && event["voice_ms"] == delay;
+            events.push(event);
+            if applied {
+                break;
+            }
+            assert!(
+                std::time::Instant::now() < deadline,
+                "new preview was not installed"
+            );
+        }
+    }
+    let invalid = helper.request(
+        json!({"id":6,"cmd":"loopback_masking","masking":"unknown"}),
+        &mut events,
+    );
+    assert!(invalid["error"].is_string());
+    let occupied = helper.request(
+        json!({"id":7,"cmd":"loopback_start","in":"sine","out":"null"}),
+        &mut events,
+    );
+    assert_eq!(occupied["error"], "loopback already running");
+    for (id, style) in [
+        (8, "off"),
+        (9, "lower_resonance_pitch"),
+        (10, "higher_resonance"),
+        (11, "off"),
+    ] {
+        assert_eq!(
+            helper.request(
+                json!({"id":id,"cmd":"loopback_masking","masking":style}),
+                &mut events
+            )["ok"],
+            true
+        );
+    }
+    assert_eq!(
+        helper.request(json!({"id":12,"cmd":"loopback_stop"}), &mut events)["ok"],
+        true
+    );
+    let stopped = helper.request(
+        json!({"id":13,"cmd":"loopback_masking","masking":"off"}),
+        &mut events,
+    );
+    assert_eq!(stopped["error"], "no loopback running");
+    assert!(!events.iter().any(|e| e["event"] == "loopback_failed"));
+    assert_eq!(helper.close(), 0);
+}
+
+#[test]
 fn ping_and_malformed_requests() {
     let mut helper = Helper::spawn();
     let mut events = Vec::new();
 
     let reply = helper.request(json!({"id": 1, "cmd": "ping"}), &mut events);
     assert_eq!(reply, json!({"reply": 1, "ok": "pong"}));
+    let capabilities = helper.request(json!({"id": 10, "cmd": "capabilities"}), &mut events);
+    assert_eq!(capabilities["ok"]["voice_masking"], true);
 
     let reply = helper.request(json!({"id": 2, "cmd": "dance"}), &mut events);
     assert_eq!(reply["reply"], 2);

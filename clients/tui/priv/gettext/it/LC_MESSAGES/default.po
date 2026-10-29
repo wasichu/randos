@@ -208,12 +208,6 @@ msgstr "Il test del microfono è fallito: %{error}"
 msgid "Mic:"
 msgstr "Microfono:"
 
-#. The mic test's level meter (bars), its peak, and how to stop it (t).
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Mic: %{bars}%{peak}   (t to stop)"
-msgstr "Microfono: livello: %{bars}, picco: %{peak}   (premi \"t\" per interrompere)."
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Mic: opening…"
@@ -868,3 +862,188 @@ msgstr "Selezionare innanzitutto la casella \"18+\" (%{key})."
 msgctxt "log"
 msgid "time is up: continue? (%{yes}/%{no})"
 msgstr "il tempo è scaduto: continuare? (%{yes}/%{no})"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "1  Off"
+msgstr "1 Off"
+
+#. Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Brighter"
+msgstr "Più brillante"
+
+#. Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Fuller"
+msgstr "Fuller"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Off"
+msgstr "Off"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Opening microphone…"
+msgstr "Aprire il microfono…"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview failed. Microphone stopped; try again."
+msgstr "Anteprima non riuscita. Microfono interrotto; riprovare."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Selected: %{style}"
+msgstr "Selezionato: %{style}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "These styles change your voice, but people may still recognize you."
+msgstr "Questi stili modificano la tua voce, ma le persone potrebbero comunque riconoscerti."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone: %{tone} (left/right)"
+msgstr "Tonalità: %{tone} (sinistra/destra)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Use headphones and keep the volume low."
+msgstr "Utilizzate le cuffie e mantenete il volume basso."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking"
+msgstr "Mascheramento vocale"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking on"
+msgstr "Mascheramento vocale attivato"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop. Esc: back."
+msgstr "p: ascoltami / fermati. Esc: indietro."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "voice masking"
+msgstr "mascheramento della voce"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Checking voice options…"
+msgstr "Controllo delle opzioni vocali…"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking is unavailable. Update randos or choose Off."
+msgstr "La maschera vocale non è disponibile. Aggiorna randos o scegli Off."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Keyboard shortcuts"
+msgstr "Scorciatoie da tastiera"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "change tone"
+msgstr "Cambia tono"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "hear myself / stop"
+msgstr "sentire la mia voce / fermarsi"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "help"
+msgstr "aiuto"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "scroll"
+msgstr "scorrimento"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "style"
+msgstr "Stile"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{name} ✓"
+msgstr "%{name} ✓"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Interface language"
+msgstr "Il linguaggio di interfaccia"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "choose"
+msgstr "scegli"
+
+#. Voice masking option 2: change vocal timbre or resonance, without changing pitch. Keep the 2 keyboard hint.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "2  Tone"
+msgstr "2  Tono"
+
+#. Voice masking option 3: change both vocal timbre and pitch (how high or low the voice sounds). Keep the 3 keyboard hint.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "3  Tone + Pitch"
+msgstr "3  Timbro + Tonalità"
+
+#. Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone"
+msgstr "Tono"
+
+#. Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds).
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone + Pitch"
+msgstr "Tono + Frequenza vocale"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing is recorded or uploaded."
+msgstr "Nessun dato viene registrato o caricato."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone off."
+msgstr "Microfono disattivato."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone on."
+msgstr "Microfono attivo."
+
+#: lib/tui/media/state.ex
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Update the audio helper to preview voice changes."
+msgstr "Aggiornare l’assistente audio per visualizzare in anteprima le modifiche della voce."
+
+#. The microphone meter, its peak, and the active stop key: p for voice preview, t for the silent mic test.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
+msgstr "Microfono: %{bars}%{peak}   (Premere %{key} per fermare)"

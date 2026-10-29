@@ -92,17 +92,33 @@ defmodule Tui.ViewLanguagesTest do
     ]
   end
 
-  defp render({width, height}, model) do
-    state = %{
-      model: model,
-      uri: "ws://localhost:4000/participant/websocket",
-      media_state: MediaState.new(false)
-    }
+  defp render({width, height}, model, extra \\ %{}) do
+    {popup_only?, extra} = Map.pop(extra, :popup_only?, false)
+
+    state =
+      Map.merge(
+        %{
+          model: model,
+          uri: "ws://localhost:4000/participant/websocket",
+          media_state: MediaState.new(false)
+        },
+        extra
+      )
 
     terminal = ExRatatui.init_test_terminal(width, height)
+    widgets = App.render(state, %ExRatatui.Frame{width: width, height: height})
 
-    :ok =
-      ExRatatui.draw(terminal, App.render(state, %ExRatatui.Frame{width: width, height: height}))
+    widgets =
+      if popup_only? do
+        Enum.filter(widgets, fn
+          {%ExRatatui.Widgets.Popup{}, _area} -> true
+          _other -> false
+        end)
+      else
+        widgets
+      end
+
+    :ok = ExRatatui.draw(terminal, widgets)
 
     ExRatatui.get_buffer_content(terminal)
   end
@@ -126,6 +142,37 @@ defmodule Tui.ViewLanguagesTest do
         assert text =~ "[ ]", "the prompt's 18+ box is hidden:\n#{text}"
         # (Narrower, the link wraps inside the popup, between other panels' text.)
         if elem(@size, 0) >= 80, do: assert(squeeze(text) =~ squeeze(@link))
+      end)
+    end
+  end
+
+  for language <- Tui.Language.available() do
+    @language language
+    test "#{language}: masking controls and recognition warning fit at 80×24" do
+      Gettext.with_locale(Tui.Gettext, @language, fn ->
+        media = %{
+          MediaState.new(true)
+          | voice_panel?: true,
+            voice_family: "tone_pitch",
+            voice_tone: "brighter",
+            masking_available?: true,
+            audition_available?: true
+        }
+
+        # Draw the actual popup without text outside its rectangle being
+        # interleaved between wrapped lines when the buffer is flattened.
+        text =
+          render({80, 24}, model("idle"), %{media_state: media, popup_only?: true})
+          |> flat()
+          |> squeeze()
+
+        for message <- [
+              gettext("3  Tone + Pitch"),
+              gettext("p: hear myself / stop. Esc: back."),
+              gettext("These styles change your voice, but people may still recognize you.")
+            ] do
+          assert text =~ squeeze(message), "masking panel clipped #{inspect(message)}:\n#{text}"
+        end
       end)
     end
   end

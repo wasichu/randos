@@ -254,6 +254,23 @@ impl Capture {
         }
     }
 
+    /// Native masking's gate has reopened: discard samples captured before it
+    /// opened, including resampler overlap. Runs only on the worker. A ring
+    /// snapshot bounds the discard even while callbacks keep producing audio.
+    pub fn discard_pending(&mut self) -> Result<(), Error> {
+        match self {
+            Capture::Device(end) => {
+                let pending = end.ring.occupied_len();
+                end.ring.skip(pending);
+                end.resampler = FrameResampler::new(end.rate, SAMPLE_RATE)?;
+                end.mono.fill(0.0);
+                end.interleaved.fill(0.0);
+            }
+            Capture::Sine { next_frame, .. } => *next_frame = Instant::now(),
+        }
+        Ok(())
+    }
+
     /// Captured audio waiting to be read.
     pub fn queued_ms(&self) -> f64 {
         match self {
@@ -333,6 +350,18 @@ impl Playback {
                 Ok(true)
             }
         }
+    }
+
+    /// Starts fresh worker-owned resampler history after a preview change.
+    /// Audio already queued for the callback drains normally; its consumer
+    /// remains owned by that callback.
+    pub fn reset_resampler(&mut self) -> Result<(), Error> {
+        if let Playback::Device(end) = self {
+            end.resampler = FrameResampler::new(SAMPLE_RATE, end.rate)?;
+            end.mono.fill(0.0);
+            end.interleaved.fill(0.0);
+        }
+        Ok(())
     }
 
     /// Flushes what needs flushing (the WAV header).
@@ -584,6 +613,27 @@ fn micros(duration: Duration) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn reopening_native_capture_discards_ring_and_resampler_history() {
+        let (mut producer, consumer) = HeapRb::<f32>::new(16_384).split();
+        let resampler = FrameResampler::new(44_100, SAMPLE_RATE).unwrap();
+        let mut capture = Capture::Device(DeviceEnd::new(consumer, 2, 44_100, resampler, 882));
+        let mut frame = [0.0; FRAME];
+        producer.push_slice(&[0.8; 1764]);
+        assert!(capture.read(&mut frame).unwrap()); // Populate FFT overlap.
+        producer.push_slice(&[0.8; 3539]); // Includes a partial device frame.
+        capture.discard_pending().unwrap();
+        assert!(!capture.read(&mut frame).unwrap());
+        for _ in 0..3 {
+            producer.push_slice(&[0.0; 1764]);
+            assert!(capture.read(&mut frame).unwrap());
+            assert!(
+                frame.iter().all(|x| x.abs() < 1e-8),
+                "old capture overlap leaked"
+            );
+        }
+    }
 
     #[test]
     fn devices_by_name_or_the_default() {

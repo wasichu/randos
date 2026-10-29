@@ -68,9 +68,20 @@ defmodule RandosWeb.Router do
       live "/voice-lab", RandosDev.VoiceLabLive, :index
       get "/voice-lab/clips", RandosDev.VoiceLabClips, :index
       get "/voice-lab/clips/:name", RandosDev.VoiceLabClips, :show
+      get "/voice-lab/recovery/:name", RandosDev.VoiceLabClips, :recovery
+      get "/voice-lab/models/:name", RandosDev.VoiceLabClips, :models
+      get "/voice-lab/browser-probe", RandosDev.VoiceLabClips, :browser_probe
+      post "/voice-lab/reviews", RandosDev.VoiceLabReviewsController, :create
 
       # The translation shootout's review page (Phase 6): dev only, modules in dev/.
       live "/translations", RandosDev.TranslationReviewLive, :index
+    end
+
+    # Fixed, locally built report assets: static delivery needs no session or
+    # browser-pipeline JavaScript response protection. The controller permits
+    # only the three generated public report filenames.
+    scope "/dev/voice-lab/browser-probe" do
+      get "/:name", RandosDev.VoiceLabClips, :browser_probe
     end
   end
 end

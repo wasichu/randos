@@ -208,12 +208,6 @@ msgstr "마이크 테스트에 실패했습니다: %{error}"
 msgid "Mic:"
 msgstr "마이크:"
 
-#. The mic test's level meter (bars), its peak, and how to stop it (t).
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Mic: %{bars}%{peak}   (t to stop)"
-msgstr "마이크: %{bars}%{peak}   (정지하려면 t 사용)"
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Mic: opening…"
@@ -868,3 +862,188 @@ msgstr "먼저 18세 이상 여부 확인란에 체크하세요 (%{key})"
 msgctxt "log"
 msgid "time is up: continue? (%{yes}/%{no})"
 msgstr "시간이 만료되었습니다. 계속 진행하시겠습니까? (%{yes}/%{no})"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "1  Off"
+msgstr "1 오프"
+
+#. Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Brighter"
+msgstr "더 밝은"
+
+#. Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Fuller"
+msgstr "충만한"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Off"
+msgstr "끄기"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Opening microphone…"
+msgstr "마이크 열기…"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview failed. Microphone stopped; try again."
+msgstr "미리보기에 실패했습니다. 마이크가 작동을 중지했습니다. 다시 시도해 주세요."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Selected: %{style}"
+msgstr "선택됨: %{style}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "These styles change your voice, but people may still recognize you."
+msgstr "이러한 스타일은 목소리를 변화시키지만, 사람들은 여전히 당신을 알아볼 수 있습니다."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone: %{tone} (left/right)"
+msgstr "톤: %{tone} (왼쪽/오른쪽)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Use headphones and keep the volume low."
+msgstr "헤드폰을 사용하고 볼륨을 낮게 유지하십시오."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking"
+msgstr "목소리 변조"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking on"
+msgstr "음성 마스킹 켜기"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop. Esc: back."
+msgstr "p: 내 목소리를 듣는다 / 멈춘다. Esc: 뒤로."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "voice masking"
+msgstr "음성 가림"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Checking voice options…"
+msgstr "음성 설정 확인 중입니다…"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking is unavailable. Update randos or choose Off."
+msgstr "음성 마스킹을 사용할 수 없습니다. randos을 업데이트하거나 끄기를 선택합니다."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Keyboard shortcuts"
+msgstr "키보드 단축키"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "change tone"
+msgstr "음색 바꾸기"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "hear myself / stop"
+msgstr "나의 목소리를 듣다 / 멈추다"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "help"
+msgstr "도움말"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "scroll"
+msgstr "스크롤"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "style"
+msgstr "스타일"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{name} ✓"
+msgstr "%{name} ✓"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Interface language"
+msgstr "인터페이스 언어"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "choose"
+msgstr "선택하기"
+
+#. Voice masking option 2: change vocal timbre or resonance, without changing pitch. Keep the 2 keyboard hint.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "2  Tone"
+msgstr "2톤"
+
+#. Voice masking option 3: change both vocal timbre and pitch (how high or low the voice sounds). Keep the 3 keyboard hint.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "3  Tone + Pitch"
+msgstr "3. 음색 + 음높이"
+
+#. Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone"
+msgstr "음색"
+
+#. Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds).
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone + Pitch"
+msgstr "음색 + 음높이"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing is recorded or uploaded."
+msgstr "아무것도 기록되거나 업로드되지 않습니다."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone off."
+msgstr "마이크 끄기."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone on."
+msgstr "마이크 켜"
+
+#: lib/tui/media/state.ex
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Update the audio helper to preview voice changes."
+msgstr "음성 변경을 미리 볼 수 있도록 오디오 헬퍼를 업데이트하십시오."
+
+#. The microphone meter, its peak, and the active stop key: p for voice preview, t for the silent mic test.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
+msgstr "마이크: %{bars}%{peak}   (정지하려면 %{key} 입력)"

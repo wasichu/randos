@@ -25,6 +25,7 @@ mod stun;
 #[cfg(test)]
 mod test_support;
 mod tls_stream;
+mod voice;
 
 use std::io::{self, BufReader, BufWriter};
 use std::process::ExitCode;
@@ -128,7 +129,7 @@ fn read_requests(outgoing: &Sender<Outgoing>) -> Result<(), Error> {
 
     while let Some(body) = frame::read_frame(&mut input)? {
         let reply = match protocol::parse(&body) {
-            Ok(request) => match handle(request.command, &mut media, &notify) {
+            Ok(request) => match handle(request.command, &mut media, &notify, outgoing) {
                 Ok(ok) => Outgoing::Ok {
                     reply: request.id,
                     ok,
@@ -147,21 +148,60 @@ fn read_requests(outgoing: &Sender<Outgoing>) -> Result<(), Error> {
     Ok(())
 }
 
+fn masking_style(value: Option<String>) -> Result<Option<randos_voice_native::Style>, Error> {
+    match value.as_deref() {
+        None | Some("off") => Ok(None),
+        Some(name) => Ok(Some(randos_voice_native::Style::parse(name)?)),
+    }
+}
+
 fn handle(
     command: Command,
     media: &mut Media,
     notify: &Notify,
+    outgoing: &Sender<Outgoing>,
 ) -> Result<serde_json::Value, Error> {
     media.reap();
     match command {
         Command::Ping => Ok("pong".into()),
+        Command::Capabilities => {
+            Ok(serde_json::json!({"voice_masking": true, "live_audition": true}))
+        }
         Command::Devices => Ok(serde_json::to_value(audio::list_devices()?)?),
-        Command::LoopbackStart { input, out } => {
+        Command::LoopbackStart {
+            audition: audition_id,
+            input,
+            out,
+            masking,
+        } => {
             media.ensure_idle()?;
-            let (running, started) =
-                Loopback::start(input.parse()?, out.parse()?, Arc::clone(notify))?;
+            let audition = masking.is_some();
+            let loopback_notify: Notify = if let Some(audition) = audition_id {
+                let outgoing = outgoing.clone();
+                Arc::new(move |event| {
+                    let _ = outgoing.send(Outgoing::AuditionEvent { audition, event });
+                })
+            } else {
+                Arc::clone(notify)
+            };
+            let (running, started) = Loopback::start_with_mask(
+                input.parse()?,
+                out.parse()?,
+                loopback_notify,
+                masking_style(masking)?,
+                audition,
+            )?;
             media.loopback = Some(running);
             Ok(serde_json::to_value(started)?)
+        }
+        Command::LoopbackMasking { masking } => {
+            let style = masking_style(Some(masking))?;
+            media
+                .loopback
+                .as_ref()
+                .ok_or("no loopback running")?
+                .set_masking(style)?;
+            Ok(true.into())
         }
         Command::LoopbackStop => {
             media.loopback.take().map(Loopback::stop).transpose()?;
@@ -174,11 +214,13 @@ fn handle(
             out,
             bind_ip,
             relay_only,
+            masking,
         } => {
             media.ensure_idle()?;
             let config = CallConfig {
                 ice_servers,
                 relay_only,
+                masking: masking_style(masking)?,
                 bind_ip: bind_ip.map(|ip| ip.parse()).transpose()?,
                 ..CallConfig::new(role.parse()?)
             };

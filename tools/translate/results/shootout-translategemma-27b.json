@@ -39,8 +39,8 @@
         "seconds": 5807.0
       },
       "judge_qwen": {
-        "at": "20261024T153519Z",
-        "seconds": 79.1
+        "at": "20261029T024032Z",
+        "seconds": 79.9
       }
     },
     "appended": [
@@ -109280,8 +109280,8 @@
           "pending": "LLM tone judge (Mistral Small 3.2 24B, 4-bit MLX): ~14 GB, ungated"
         },
         "judge_qwen": {
-          "score": null,
-          "error": "unparsed reply: '{\"score\": 6, \"reason\": \"Slightly awkward phrasing; \"ya seva zilizopo\" is unclear and unnatural.\"}'",
+          "score": 6,
+          "reason": "Slightly awkward phrasing; 'ya seva zilizopo' is unclear and unnatural.",
           "context": "",
           "by": "qwen",
           "text": "Imehesabiwa kutoka kwa %{answered} kati ya %{total} ya seva zilizopo."

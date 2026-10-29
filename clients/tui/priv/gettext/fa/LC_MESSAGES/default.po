@@ -208,12 +208,6 @@ msgstr "تست میکروفون با خطا مواجه شد: %{error}"
 msgid "Mic:"
 msgstr "میک:"
 
-#. The mic test's level meter (bars), its peak, and how to stop it (t).
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Mic: %{bars}%{peak}   (t to stop)"
-msgstr "میکروفون: سطح صدا: %{bars}، حداکثر صدا: %{peak} (برای متوقف کردن، کلید \"t\" را فشار دهید)."
-
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "Mic: opening…"
@@ -868,3 +862,188 @@ msgstr "ابتدا کادر مربوط به \"بالای ۱۸ سال\" را عل
 msgctxt "log"
 msgid "time is up: continue? (%{yes}/%{no})"
 msgstr "زمان به پایان رسیده است: آیا می‌خواهید ادامه دهید؟ (%{yes}/%{no})"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "1  Off"
+msgstr "۱. خاموش"
+
+#. Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Brighter"
+msgstr "روشن تر"
+
+#. Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Fuller"
+msgstr "پررنگ‌تر، با صدای غنی‌تر"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Off"
+msgstr "خاموش"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Opening microphone…"
+msgstr "باز کردن میکروفون"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview failed. Microphone stopped; try again."
+msgstr "پیش‌نمایش با خطا مواجه شد. میکروفون متوقف شد؛ دوباره تلاش کنید."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Selected: %{style}"
+msgstr "انتخاب شده: %{style}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "These styles change your voice, but people may still recognize you."
+msgstr "این سبک‌ها صدای شما را تغییر می‌دهند، اما مردم هنوز هم ممکن است شما را بشناسند."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone: %{tone} (left/right)"
+msgstr "لحن: %{tone} (چپ/راست)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Use headphones and keep the volume low."
+msgstr "از هدفون استفاده کنید و حجم را کم نگه دارید."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking"
+msgstr "پنهان کردن صدا"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking on"
+msgstr "مخفی کردن صدا"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop. Esc: back."
+msgstr "p: صدای خودم را بشنوید / توقف. Esc: برگردید."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "voice masking"
+msgstr "پنهان‌سازی صدا"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Checking voice options…"
+msgstr "در حال بررسی تنظیمات صدا…"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Voice masking is unavailable. Update randos or choose Off."
+msgstr "امکان فعال‌سازی ماسک صدا وجود ندارد. لطفاً randos را به‌روزرسانی کنید یا گزینه \"خاموش\" را انتخاب کنید."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Keyboard shortcuts"
+msgstr "میان‌برهای صفحه‌کلید"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "change tone"
+msgstr "تغییر لحن"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "hear myself / stop"
+msgstr "صدای خودم را بشنوم / متوقف شوم"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "help"
+msgstr "کمک کنید"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "scroll"
+msgstr "اسکرول"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "style"
+msgstr "سبک"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "%{name} ✓"
+msgstr "%{name} ✓"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Interface language"
+msgstr "زبان رابط کاربری"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "choose"
+msgstr "انتخاب کنید"
+
+#. Voice masking option 2: change vocal timbre or resonance, without changing pitch. Keep the 2 keyboard hint.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "2  Tone"
+msgstr "2. لحن"
+
+#. Voice masking option 3: change both vocal timbre and pitch (how high or low the voice sounds). Keep the 3 keyboard hint.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "3  Tone + Pitch"
+msgstr "3. تغییر لحن و آهنگ صدا"
+
+#. Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone"
+msgstr "لحن"
+
+#. Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds).
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Tone + Pitch"
+msgstr "تون + فرکانس صدا"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Nothing is recorded or uploaded."
+msgstr "هیچ چیز ضبط و یا بارگذاری نمی شود."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone off."
+msgstr "میکروفون خاموش است."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Microphone on."
+msgstr "میکروفون روشن است."
+
+#: lib/tui/media/state.ex
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Update the audio helper to preview voice changes."
+msgstr "کمک‌کننده صوتی را برای نمایش اولیه تغییرات صدا به‌روزرسانی کنید."
+
+#. The microphone meter, its peak, and the active stop key: p for voice preview, t for the silent mic test.
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
+msgstr "میکروفون: %{bars}%{peak}   (برای متوقف کردن، از کلید %{key} استفاده کنید)"

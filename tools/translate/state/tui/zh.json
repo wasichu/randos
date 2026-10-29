@@ -8,7 +8,7 @@
     "msgstr": "%{device}（默认）"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "%{first}或%{last}"
   },
   "%{language} both ways": {
@@ -22,6 +22,10 @@
   "%{minutes} min or more": {
     "model": "opus-mt",
     "msgstr": "%{minutes}分钟或更长"
+  },
+  "%{name} ✓": {
+    "model": "hy-mt2",
+    "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
     "model": "hy-mt2",
@@ -43,6 +47,18 @@
     "model": "madlad-400",
     "msgstr": "%{time} 决定"
   },
+  "1  Off": {
+    "model": "hy-mt2",
+    "msgstr": "1  关闭"
+  },
+  "2  Tone": {
+    "model": "opus-mt",
+    "msgstr": "2 个音调"
+  },
+  "3  Tone + Pitch": {
+    "model": "madlad-400",
+    "msgstr": "3 音调 + 音高"
+  },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "hy-mt2",
     "msgstr": "当某对语言的调用次数达到至少 %{count} 次时，才会被显示出来；调用次数较少的则归类为“其他”。"
@@ -59,6 +75,10 @@
     "model": "translategemma-4b",
     "msgstr": "开启音频。"
   },
+  "Brighter": {
+    "model": "hy-mt2",
+    "msgstr": "更明亮"
+  },
   "Calls started: %{started}": {
     "model": "hy-mt2",
     "msgstr": "已发起通话： %{started}"
@@ -66,6 +86,10 @@
   "Checking the relay…": {
     "model": "opus-mt",
     "msgstr": "正在检查中继器…"
+  },
+  "Checking voice options…": {
+    "model": "translategemma-12b",
+    "msgstr": "正在检查语音设置…"
   },
   "Connected: %{connected}": {
     "model": "hy-mt2",
@@ -76,7 +100,7 @@
     "msgstr": "正在连接服务器…"
   },
   "Connection:": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "连接："
   },
   "Continue for another %{minutes} minutes?": {
@@ -84,7 +108,7 @@
     "msgstr": "继续再等%{minutes}分钟?"
   },
   "Continue?": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "继续？"
   },
   "Continued": {
@@ -107,6 +131,10 @@
     "model": "translategemma-12b",
     "msgstr": "错误：%{message}"
   },
+  "Fuller": {
+    "model": "translategemma-4b",
+    "msgstr": "更饱满"
+  },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
     "msgstr": "通话结束方式：已完成 %{finished}，无法连接 %{not_connected}，连接中断 %{lost}，已取消 %{canceled}"
@@ -123,9 +151,17 @@
     "model": "translategemma-12b",
     "msgstr": "我很高兴听到："
   },
+  "Interface language": {
+    "model": "m2m100",
+    "msgstr": "界面语言"
+  },
   "Join through a link": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "通过链接加入"
+  },
+  "Keyboard shortcuts": {
+    "model": "madlad-400",
+    "msgstr": "键盘快捷键"
   },
   "Languages spoken:": {
     "model": "opus-mt",
@@ -155,6 +191,10 @@
     "model": "hy-mt2",
     "msgstr": "麦克风："
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "hy-mt2",
+    "msgstr": "麦克风： %{bars}%{peak}   （按 %{key} 键可停止）"
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-12b",
     "msgstr": "麦克风：%{bars}%{peak} (按“t”键停止)"
@@ -163,13 +203,33 @@
     "model": "madlad-400",
     "msgstr": "麦克风：开启"
   },
+  "Microphone off.": {
+    "model": "opus-mt",
+    "msgstr": "关掉麦克风"
+  },
+  "Microphone on.": {
+    "model": "madlad-400",
+    "msgstr": "麦克风开启"
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "hy-mt2",
     "msgstr": "该服务器上未配置中继，因此这里的通话会直接传输。"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "translategemma-12b",
+    "msgstr": "没有任何内容被记录或上传。"
+  },
   "Now:": {
     "model": "hy-mt2",
     "msgstr": "当前："
+  },
+  "Off": {
+    "model": "hy-mt2",
+    "msgstr": "关闭"
+  },
+  "Opening microphone…": {
+    "model": "opus-mt",
+    "msgstr": "开启麦克风…"
   },
   "Other languages: %{calls}": {
     "model": "hy-mt2",
@@ -191,9 +251,17 @@
     "model": "opus-mt",
     "msgstr": "按 Enter 键查找 rando。"
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "translategemma-12b",
+    "msgstr": "预览失败。麦克风已停止工作，请重试。"
+  },
   "Reconnecting audio…": {
     "model": "m2m100",
     "msgstr": "重新连接音频…"
+  },
+  "Selected: %{style}": {
+    "model": "translategemma-12b",
+    "msgstr": "已选择：%{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "translategemma-4b",
@@ -223,6 +291,10 @@
     "model": "hy-mt2",
     "msgstr": "中继器无法正常工作。"
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "m2m100",
+    "msgstr": "這些風格改變你的聲音,但人們可能仍然認識你。"
+  },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "hy-mt2",
     "msgstr": "该客户端在无音频模式下运行（没有媒体处理功能）：如果对方提供音频功能（如浏览器），通话就会结束，然后会回到空闲状态。两个终端客户端可以保持通话状态，以便测试计时功能及扩展投票功能。"
@@ -243,9 +315,41 @@
     "model": "translategemma-12b",
     "msgstr": "今天（从%{date} %{time} UTC开始计算）："
   },
+  "Tone": {
+    "model": "hy-mt2",
+    "msgstr": "音调"
+  },
+  "Tone + Pitch": {
+    "model": "hy-mt2",
+    "msgstr": "音调 + 音高"
+  },
+  "Tone: %{tone} (left/right)": {
+    "model": "opus-mt",
+    "msgstr": "音调: %{tone} (左/右)"
+  },
   "Typical length: %{length}": {
     "model": "translategemma-12b",
     "msgstr": "典型长度：%{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "translategemma-4b",
+    "msgstr": "更新音频助手，以便预览语音变化。"
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "madlad-400",
+    "msgstr": "使用耳机并保持低音量。"
+  },
+  "Voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "语音伪装"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "hy-mt2",
+    "msgstr": "语音掩蔽功能不可用。请更新randos版本或选择关闭该功能。"
+  },
+  "Voice masking on": {
+    "model": "hy-mt2",
+    "msgstr": "语音掩蔽已开启"
   },
   "Waiting for your rando to open the link…": {
     "model": "opus-mt",
@@ -256,7 +360,7 @@
     "msgstr": "我们只统计通话次数，不记录任何个人信息：没有地址，没有身份信息，没有任何关于任何人的信息。"
   },
   "You": {
-    "model": "translategemma-4b",
+    "model": "m2m100",
     "msgstr": "你"
   },
   "You're in a call.": {
@@ -272,11 +376,11 @@
     "msgstr": "您选择的任何一种语言（共%{count}种）。"
   },
   "connected": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "已连接"
   },
   "connected directly": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "直接连接"
   },
   "connected to %{server}": {
@@ -304,11 +408,11 @@
     "msgstr": "正在连接中…"
   },
   "connection closed": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "连接已关闭"
   },
   "couldn't connect": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "无法连接"
   },
   "couldn't copy the link: select it with the mouse": {
@@ -344,7 +448,7 @@
     "msgstr": "关于这些数字"
   },
   "key\u0004back": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "返回"
   },
   "key\u0004cancel": {
@@ -359,9 +463,17 @@
     "model": "m2m100",
     "msgstr": "改變"
   },
+  "key\u0004change tone": {
+    "model": "hy-mt2",
+    "msgstr": "改变语气"
+  },
   "key\u0004check": {
     "model": "m2m100",
     "msgstr": "检查"
+  },
+  "key\u0004choose": {
+    "model": "m2m100",
+    "msgstr": "选择"
   },
   "key\u0004close": {
     "model": "m2m100",
@@ -376,7 +488,7 @@
     "msgstr": "复制链接"
   },
   "key\u0004end": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "结束"
   },
   "key\u0004end call": {
@@ -386,6 +498,14 @@
   "key\u0004find": {
     "model": "opus-mt",
     "msgstr": "查找"
+  },
+  "key\u0004hear myself / stop": {
+    "model": "opus-mt",
+    "msgstr": "听听我的声音/停止"
+  },
+  "key\u0004help": {
+    "model": "madlad-400",
+    "msgstr": "帮助"
   },
   "key\u0004invite": {
     "model": "m2m100",
@@ -412,7 +532,7 @@
     "msgstr": "麦克风测试"
   },
   "key\u0004move": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "移动"
   },
   "key\u0004mute": {
@@ -424,24 +544,36 @@
     "msgstr": "下一页 rando"
   },
   "key\u0004quit": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "退出"
   },
   "key\u0004refresh": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "刷新"
+  },
+  "key\u0004scroll": {
+    "model": "translategemma-4b",
+    "msgstr": "滚动"
   },
   "key\u0004speaker": {
     "model": "opus-mt",
     "msgstr": "发言者"
   },
   "key\u0004status": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "状态"
   },
+  "key\u0004style": {
+    "model": "m2m100",
+    "msgstr": "风格"
+  },
   "key\u0004unmute": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "取消静音"
+  },
+  "key\u0004voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "语音伪装"
   },
   "link copied": {
     "model": "hy-mt2",
@@ -515,6 +647,10 @@
     "model": "opus-mt",
     "msgstr": "没有工作"
   },
+  "p: hear myself / stop. Esc: back.": {
+    "model": "translategemma-4b",
+    "msgstr": "p: 听到自己的声音/停止。 Esc: 返回。"
+  },
   "panel title\u0004Connecting": {
     "model": "opus-mt",
     "msgstr": "正在连接"
@@ -568,7 +704,7 @@
     "msgstr": "rando正在重新连接中……"
   },
   "reconnected as a new participant": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "作为新参与者重新连接"
   },
   "reconnected; back in the call": {
@@ -584,7 +720,7 @@
     "msgstr": "拒绝"
   },
   "secure connection failed": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "安全连接失败"
   },
   "starting audio…": {

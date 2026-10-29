@@ -63,6 +63,7 @@ defmodule Tui.Model do
           log: [String.t()],
           status_page: status_page() | nil,
           language: String.t(),
+          language_picker: String.t() | nil,
           invitation: map() | nil,
           join_prompt: String.t() | nil,
           notice: String.t() | nil,
@@ -93,6 +94,7 @@ defmodule Tui.Model do
             log: [],
             status_page: nil,
             language: "en",
+            language_picker: nil,
             invitation: nil,
             join_prompt: nil,
             notice: nil,
@@ -191,7 +193,7 @@ defmodule Tui.Model do
   @spec disconnected(t()) :: {t(), [command()]}
   # The join prompt closes: it takes every key, and nothing can be joined.
   def disconnected(model) do
-    model = %{model | connection: :connecting, join_prompt: nil}
+    model = %{model | connection: :connecting, join_prompt: nil, language_picker: nil}
     {log(model, gettext("disconnected; reconnecting")), []}
   end
 
@@ -284,6 +286,26 @@ defmodule Tui.Model do
     end
   end
 
+  defp press(%{language_picker: cursor} = model, key) when is_binary(cursor) do
+    case key do
+      k when k in ["up", "left"] ->
+        {%{model | language_picker: Tui.Language.step(cursor, -1)}, []}
+
+      k when k in ["down", "right"] ->
+        {%{model | language_picker: Tui.Language.step(cursor, 1)}, []}
+
+      "enter" ->
+        language = if cursor in Tui.Language.available(), do: cursor, else: model.language
+        {%{model | language: language, language_picker: nil}, []}
+
+      k when k in ["esc", "l"] ->
+        {%{model | language_picker: nil}, []}
+
+      _ ->
+        {model, []}
+    end
+  end
+
   # The status screen: i opens or closes "About these numbers" (esc closes it
   # first); s or esc goes back, r asks again now.
   defp press(%{status: :idle, status_page: %{info?: true} = page} = model, k)
@@ -302,7 +324,7 @@ defmodule Tui.Model do
   defp press(%{status: :idle} = model, "s"), do: ask_status(model)
 
   defp press(%{status: :idle} = model, "l"),
-    do: {%{model | language: Tui.Language.next(model.language)}, []}
+    do: {%{model | language_picker: model.language}, []}
 
   defp press(%{status: :idle} = model, "v"), do: invite(model)
   defp press(%{status: :idle} = model, "j"), do: {%{model | join_prompt: ""}, []}
@@ -367,6 +389,9 @@ defmodule Tui.Model do
   a paste on the idle screen opens.
   """
   @spec paste(t(), String.t()) :: {t(), [command()]}
+  def paste(%{language_picker: cursor} = model, _pasted) when is_binary(cursor),
+    do: {model, []}
+
   def paste(%{join_prompt: text} = model, pasted) when is_binary(text),
     do: {%{model | join_prompt: text <> one_line(pasted), message: nil}, []}
 
@@ -447,6 +472,7 @@ defmodule Tui.Model do
         invitation: state["invitation"],
         # News, not an error (an invitation call ended): the server's words.
         notice: state["notice_message"],
+        language_picker: kept_language_picker(model, status),
         message: kept_message(model, status)
     }
 
@@ -456,6 +482,10 @@ defmodule Tui.Model do
       status != model.status and model.status != nil -> log(updated, status_line(status))
       true -> updated
     end
+  end
+
+  defp kept_language_picker(model, status) do
+    if status == model.status, do: model.language_picker
   end
 
   # The log's line when the status changes.

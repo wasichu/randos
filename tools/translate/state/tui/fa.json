@@ -8,7 +8,7 @@
     "msgstr": "%{device} (پیش‌فرض)"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} یا %{last}"
   },
   "%{language} both ways": {
@@ -16,12 +16,16 @@
     "msgstr": "%{language} هر دو راه"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} دقیقه"
   },
   "%{minutes} min or more": {
     "model": "madlad-400",
     "msgstr": "%{minutes} دقیقه یا بیشتر"
+  },
+  "%{name} ✓": {
+    "model": "madlad-400",
+    "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
     "model": "hy-mt2",
@@ -43,6 +47,18 @@
     "model": "madlad-400",
     "msgstr": "%{time} برای تصمیم‌گیری"
   },
+  "1  Off": {
+    "model": "hy-mt2",
+    "msgstr": "۱. خاموش"
+  },
+  "2  Tone": {
+    "model": "translategemma-4b",
+    "msgstr": "2. لحن"
+  },
+  "3  Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "3. تغییر لحن و آهنگ صدا"
+  },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "hy-mt2",
     "msgstr": "یک جفت زبان زمانی نمایش داده می‌شود که حداقل %{count} بار فراخوانی داشته باشد؛ جفت‌های کمتر، در دسته «سایر» قرار می‌گیرند."
@@ -59,6 +75,10 @@
     "model": "translategemma-12b",
     "msgstr": "صدا روشن شد."
   },
+  "Brighter": {
+    "model": "opus-mt",
+    "msgstr": "روشن تر"
+  },
   "Calls started: %{started}": {
     "model": "opus-mt",
     "msgstr": "تماس ها آغاز شد: %{started}"
@@ -66,6 +86,10 @@
   "Checking the relay…": {
     "model": "opus-mt",
     "msgstr": "در حال بررسی رله…"
+  },
+  "Checking voice options…": {
+    "model": "translategemma-12b",
+    "msgstr": "در حال بررسی تنظیمات صدا…"
   },
   "Connected: %{connected}": {
     "model": "translategemma-4b",
@@ -100,12 +124,16 @@
     "msgstr": "بر روی %{answered} از مجموع %{total} سرور شمارش شد."
   },
   "Devices": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "دستگاه‌ها"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "خطا: %{message}"
+  },
+  "Fuller": {
+    "model": "translategemma-4b",
+    "msgstr": "پررنگ‌تر، با صدای غنی‌تر"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "madlad-400",
@@ -123,9 +151,17 @@
     "model": "translategemma-4b",
     "msgstr": "من از شنیدن این خبر بسیار خوشحال هستم:"
   },
+  "Interface language": {
+    "model": "hy-mt2",
+    "msgstr": "زبان رابط کاربری"
+  },
   "Join through a link": {
     "model": "madlad-400",
     "msgstr": "پیوستن از طریق یک پیوند"
+  },
+  "Keyboard shortcuts": {
+    "model": "madlad-400",
+    "msgstr": "میان‌برهای صفحه‌کلید"
   },
   "Languages spoken:": {
     "model": "hy-mt2",
@@ -155,6 +191,10 @@
     "model": "hy-mt2",
     "msgstr": "میک:"
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "hy-mt2",
+    "msgstr": "میکروفون: %{bars}%{peak}   (برای متوقف کردن، از کلید %{key} استفاده کنید)"
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-12b",
     "msgstr": "میکروفون: سطح صدا: %{bars}، حداکثر صدا: %{peak} (برای متوقف کردن، کلید \"t\" را فشار دهید)."
@@ -163,13 +203,33 @@
     "model": "translategemma-12b",
     "msgstr": "میکروفون: در حال روشن شدن…"
   },
+  "Microphone off.": {
+    "model": "hy-mt2",
+    "msgstr": "میکروفون خاموش است."
+  },
+  "Microphone on.": {
+    "model": "hy-mt2",
+    "msgstr": "میکروفون روشن است."
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "translategemma-12b",
     "msgstr": "در این سرور، هیچ تنظیمات رله‌ای وجود ندارد، بنابراین تماس‌ها مستقیماً برقرار می‌شوند."
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "m2m100",
+    "msgstr": "هیچ چیز ضبط و یا بارگذاری نمی شود."
+  },
   "Now:": {
     "model": "hy-mt2",
     "msgstr": "در حال حاضر:"
+  },
+  "Off": {
+    "model": "madlad-400",
+    "msgstr": "خاموش"
+  },
+  "Opening microphone…": {
+    "model": "m2m100",
+    "msgstr": "باز کردن میکروفون"
   },
   "Other languages: %{calls}": {
     "model": "opus-mt",
@@ -191,9 +251,17 @@
     "model": "hy-mt2",
     "msgstr": "برای یافتن یک rando، کلید Enter را فشار دهید."
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "translategemma-12b",
+    "msgstr": "پیش‌نمایش با خطا مواجه شد. میکروفون متوقف شد؛ دوباره تلاش کنید."
+  },
   "Reconnecting audio…": {
     "model": "translategemma-12b",
     "msgstr": "در حال برقراری مجدد اتصال صدا…"
+  },
+  "Selected: %{style}": {
+    "model": "opus-mt",
+    "msgstr": "انتخاب شده: %{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "translategemma-12b",
@@ -223,6 +291,10 @@
     "model": "hy-mt2",
     "msgstr": "رله کار نمی‌کند."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "madlad-400",
+    "msgstr": "این سبک‌ها صدای شما را تغییر می‌دهند، اما مردم هنوز هم ممکن است شما را بشناسند."
+  },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "hy-mt2",
     "msgstr": "این کلاینت بدون صدا کار می‌کند (بدون کمک‌فریم ویدیو/صوتی): اگر طرف مقابل صدا ارائه دهد (مثلاً یک مرورگر)، تماس پایان یافته و شما دوباره به حالت آماده برمی‌گردید. دو کلاینت ترمینالی می‌توانند در یک تماس باقی بمانند تا زمان‌سنج‌ها و رأی‌های مربوط به افزونه‌ها را آزمایش کنند."
@@ -243,9 +315,41 @@
     "model": "hy-mt2",
     "msgstr": "امروز (از ساعت %{time} UTC در تاریخ %{date} محاسبه می‌شود):"
   },
+  "Tone": {
+    "model": "translategemma-4b",
+    "msgstr": "لحن"
+  },
+  "Tone + Pitch": {
+    "model": "hy-mt2",
+    "msgstr": "تون + فرکانس صدا"
+  },
+  "Tone: %{tone} (left/right)": {
+    "model": "hy-mt2",
+    "msgstr": "لحن: %{tone} (چپ/راست)"
+  },
   "Typical length: %{length}": {
     "model": "hy-mt2",
     "msgstr": "طول معمولی: %{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "hy-mt2",
+    "msgstr": "کمک‌کننده صوتی را برای نمایش اولیه تغییرات صدا به‌روزرسانی کنید."
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "opus-mt",
+    "msgstr": "از هدفون استفاده کنید و حجم را کم نگه دارید."
+  },
+  "Voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "پنهان کردن صدا"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "translategemma-4b",
+    "msgstr": "امکان فعال‌سازی ماسک صدا وجود ندارد. لطفاً randos را به‌روزرسانی کنید یا گزینه \"خاموش\" را انتخاب کنید."
+  },
+  "Voice masking on": {
+    "model": "translategemma-4b",
+    "msgstr": "مخفی کردن صدا"
   },
   "Waiting for your rando to open the link…": {
     "model": "madlad-400",
@@ -292,7 +396,7 @@
     "msgstr": "اتصال از طریق رله"
   },
   "connecting to %{server}…": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "در حال اتصال به %{server}…"
   },
   "connecting to the server…": {
@@ -324,11 +428,11 @@
     "msgstr": "اعتبارسنجی رد شد"
   },
   "disconnected; reconnecting": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "قطع شده؛ در حال اتصال مجدد"
   },
   "error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "خطا: %{message}"
   },
   "in a call": {
@@ -344,7 +448,7 @@
     "msgstr": "درباره این اعداد"
   },
   "key\u0004back": {
-    "model": "translategemma-4b",
+    "model": "m2m100",
     "msgstr": "بازگشت"
   },
   "key\u0004cancel": {
@@ -356,12 +460,20 @@
     "msgstr": "پیوند را لغو کنید"
   },
   "key\u0004change": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "تغییر"
+  },
+  "key\u0004change tone": {
+    "model": "hy-mt2",
+    "msgstr": "تغییر لحن"
   },
   "key\u0004check": {
     "model": "hy-mt2",
     "msgstr": "بررسی کنید"
+  },
+  "key\u0004choose": {
+    "model": "opus-mt",
+    "msgstr": "انتخاب کنید"
   },
   "key\u0004close": {
     "model": "hy-mt2",
@@ -386,6 +498,14 @@
   "key\u0004find": {
     "model": "madlad-400",
     "msgstr": "پیدا کردن"
+  },
+  "key\u0004hear myself / stop": {
+    "model": "hy-mt2",
+    "msgstr": "صدای خودم را بشنوم / متوقف شوم"
+  },
+  "key\u0004help": {
+    "model": "hy-mt2",
+    "msgstr": "کمک کنید"
   },
   "key\u0004invite": {
     "model": "m2m100",
@@ -431,17 +551,29 @@
     "model": "hy-mt2",
     "msgstr": "به‌روزرسانی"
   },
+  "key\u0004scroll": {
+    "model": "translategemma-4b",
+    "msgstr": "اسکرول"
+  },
   "key\u0004speaker": {
-    "model": "translategemma-12b",
+    "model": "madlad-400",
     "msgstr": "بلندگو"
   },
   "key\u0004status": {
     "model": "madlad-400",
     "msgstr": "وضعیت"
   },
+  "key\u0004style": {
+    "model": "m2m100",
+    "msgstr": "سبک"
+  },
   "key\u0004unmute": {
     "model": "translategemma-12b",
     "msgstr": "بی‌صدا کردن (مجدداً)"
+  },
+  "key\u0004voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "پنهان‌سازی صدا"
   },
   "link copied": {
     "model": "m2m100",
@@ -518,6 +650,10 @@
   "not working": {
     "model": "translategemma-4b",
     "msgstr": "غیر فعال"
+  },
+  "p: hear myself / stop. Esc: back.": {
+    "model": "madlad-400",
+    "msgstr": "p: صدای خودم را بشنوید / توقف. Esc: برگردید."
   },
   "panel title\u0004Connecting": {
     "model": "hy-mt2",
@@ -632,7 +768,7 @@
     "msgstr": "زمان به پایان رسید: آیا باید ادامه داد؟"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "کمتر از ۱ دقیقه"
   },
   "unexpected reply": {

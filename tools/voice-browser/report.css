@@ -1,0 +1,13 @@
+:root { color-scheme: light dark; font: 16px/1.55 system-ui, sans-serif; color: #292524; background: #fafaf9; }
+main { max-width: 1050px; margin: 3rem auto; padding: 0 1.5rem 3rem; }
+h1 { line-height: 1.2; letter-spacing: -.03em; } h2 { margin-top: 2rem; }
+h3 { font-size: .95rem; } .lead { font-size: 1.25rem; font-weight: 600; }
+a { color: #0f766e; } table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { padding: .8rem; border-bottom: 1px solid #d6d3d1; text-align: left; }
+.scroll { overflow-x: auto; } .players { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+audio { width: 100%; } button { border: 0; border-radius: .4rem; padding: .7rem 1rem; background: #0f766e; color: white; font: inherit; cursor: pointer; }
+.controls { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; } button:disabled { opacity: .5; }
+figure { margin: 1.5rem 0; max-width: 620px; } svg { width: 100%; } svg text { fill: currentColor; font-size: 12px; }
+figcaption { font-size: .85rem; color: #78716c; } code { overflow-wrap: anywhere; }
+@media (max-width: 720px) { .players { grid-template-columns: 1fr; } main { margin-top: 2rem; } }
+@media (prefers-color-scheme: dark) { :root { color: #e7e5e4; background: #1c1917; } a { color: #5eead4; } th, td { border-color: #57534e; } }

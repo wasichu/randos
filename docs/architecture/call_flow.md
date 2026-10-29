@@ -277,6 +277,6 @@ sequenceDiagram
 | Mic, speaker, codec | browser (Opus) | cpal + libopus + resampling in the helper |
 | ICE restart (obligation 10) | `restartIce()` on the same peer connection | `call_restart`: a new UDP socket and every candidate gathered again; the answerer re-gathers when an offer's ICE credentials change |
 | Out of reach past the offline limit (obligation 11) | the call hook's timer stops the mic | `Tui.Media.State.offline/1` stops the helper's call |
-| Voice processor (Phase 5's seam) | an AudioWorklet (`assets/js/randos/voice/`), set by `RANDOS_VOICE_PROCESSOR` | `CallConfig::voice` in the helper; not selectable over the Port yet |
+| Voice processor (Phase 5's seam) | Local session choice; stable processed track through the same-origin Signalsmith Worker/worklet, gated on current ICE/connection state and mute | Local session choice through optional Port `masking`, capability-checked before capture; owned Signalsmith core with pre-DSP connection/mute gate. Both clients purge history and re-prime; failure stops rather than sending dry audio |
 | "I'm leaving" | `pagehide` → `peer_disconnected` | quit → `peer_disconnected` (`Tui.Connection.leave/2`) |
 | Error text | from the server (`ParticipantErrors`) | same, via `error_message` |

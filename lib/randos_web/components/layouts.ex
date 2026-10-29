@@ -35,19 +35,43 @@ defmodule RandosWeb.Layouts do
     default: false,
     doc: "hides the language switcher (switching reloads the page, ending the call)"
 
+  attr :home, :boolean,
+    default: false,
+    doc: "compact homepage navigation without duplicate branding"
+
   slot :inner_block, required: true
 
   def app(assigns) do
     ~H"""
-    <header class="flex items-center justify-between gap-4 border-b border-stone-200 bg-stone-50/90 px-5 py-4 backdrop-blur dark:border-stone-800 dark:bg-stone-950/90 sm:px-8">
+    <header
+      id="site-header"
+      class={[
+        @home &&
+          "home-navigation flex justify-end px-4 pt-3 lg:absolute lg:end-5 lg:top-6 lg:z-30 lg:p-0",
+        !@home &&
+          "flex items-center justify-between gap-4 border-b border-stone-200 bg-stone-50/90 px-5 py-4 backdrop-blur dark:border-stone-800 dark:bg-stone-950/90 sm:px-8"
+      ]}
+    >
       <a
+        :if={!@home}
+        id="site-brand"
         href="/"
         class="inline-flex items-center gap-3 text-sm font-semibold text-stone-950 dark:text-stone-50"
       >
         <img src={~p"/images/logo.svg"} alt="" class="size-9" />
         <span>randos</span>
       </a>
-      <nav class="flex items-center gap-4 text-sm font-medium text-stone-600 dark:text-stone-300">
+      <nav
+        id="site-navigation"
+        aria-label={
+          gettext_comment(
+            "Screen-reader label for the website's main navigation links and language menu."
+          )
+
+          gettext("Main navigation")
+        }
+        class="flex items-center gap-4 text-sm font-medium text-stone-600 dark:text-stone-300"
+      >
         <%!-- Two pairs: the pages (About, Status), then the settings (language, theme). --%>
         <div id="header-pages" class="flex items-center gap-2">
           <.link
@@ -62,11 +86,11 @@ defmodule RandosWeb.Layouts do
           <.link
             id="header-status-link"
             navigate={~p"/status"}
-            title={gettext("Status")}
+            title={gettext("Server Status")}
             class="inline-flex size-9 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-600 transition hover:border-stone-400 hover:text-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:text-white"
           >
             <.icon name="hero-signal" class="size-4" />
-            <span class="sr-only">{gettext("Status")}</span>
+            <span class="sr-only">{gettext("Server Status")}</span>
           </.link>
         </div>
         <div id="header-settings" class="flex items-center gap-2">
@@ -94,7 +118,7 @@ defmodule RandosWeb.Layouts do
       {render_slot(@inner_block)}
     </main>
 
-    <.site_footer />
+    <.site_footer home={@home} />
 
     <.flash_group flash={@flash} />
     """
@@ -102,6 +126,8 @@ defmodule RandosWeb.Layouts do
 
   # Quiet links on every page: whether calls work, what's kept, and the
   # code, with the commit this server runs (so anyone can read exactly that).
+  attr :home, :boolean, default: false
+
   defp site_footer(assigns) do
     assigns = assign(assigns, :commit, Application.get_env(:randos, :commit, ""))
 
@@ -111,7 +137,7 @@ defmodule RandosWeb.Layouts do
       class="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-5 py-8 text-sm text-stone-500 sm:px-8"
     >
       <.link id="footer-status" navigate={~p"/status"} class="transition hover:text-stone-900">
-        {gettext("Status")}
+        {gettext("Server Status")}
       </.link>
       <a
         id="footer-privacy"
@@ -142,6 +168,9 @@ defmodule RandosWeb.Layouts do
       >
         {@commit}
       </a>
+      <p :if={@home} id="footer-philosophy" class="ms-auto max-w-full text-end text-xs">
+        {gettext("No accounts. No profiles. No video. No pressure.")}
+      </p>
     </footer>
     """
   end

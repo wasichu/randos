@@ -501,3 +501,14 @@ the server never touches media), `media_state` (validated and acted on;
   dropped while idle or queued starts fresh (and is out of the queue).
 - No IP-level rate limiting; that belongs at the edge (Fly).
 - No identity of any kind, by design.
+
+
+### Local voice masking
+
+Voice style selection and optional microphone audition are local client state,
+not participant-channel messages. Both clients start Off each fresh session,
+freeze the selected style per call, stop auditions before joining, and send only
+processed audio when masking is selected. Processor failure ends audio rather
+than falling back to the original voice. Server call-health obligations above
+continue to apply unchanged. The TUI helper's local Port extension is documented
+in `clients/tui/native/README.md`.

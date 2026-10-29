@@ -15,6 +15,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes}+ dakika"
   },
+  "%{style} + %{tone}": {
+    "model": "translategemma-12b",
+    "msgstr": "%{style} + %{tone}"
+  },
   "%{time} remaining": {
     "model": "madlad-400",
     "msgstr": "%{time} iliyobaki"
@@ -51,6 +55,10 @@
     "model": "madlad-400",
     "msgstr": "Kukubali 18+ kukiri kabla ya kutafuta rando."
   },
+  "Acknowledge": {
+    "model": "madlad-400",
+    "msgstr": "Kukubali"
+  },
   "Attempting to reconnect": {
     "model": "m2m100",
     "msgstr": "kujaribu kuunganisha tena"
@@ -58,6 +66,10 @@
   "Both people choose whether to continue.": {
     "model": "translategemma-12b",
     "msgstr": "Watu wote wawili huamua kama watataka kuendelea."
+  },
+  "Call progress": {
+    "model": "m2m100",
+    "msgstr": "Kuwasiliana na maendeleo"
   },
   "Cancel": {
     "model": "m2m100",
@@ -106,6 +118,10 @@
   "Continued past 10 minutes": {
     "model": "m2m100",
     "msgstr": "Kuendelea kwa dakika 10 iliyopita"
+  },
+  "Conversation": {
+    "model": "translategemma-4b",
+    "msgstr": "Mazungumzo"
   },
   "Conversation is active.": {
     "model": "translategemma-12b",
@@ -175,6 +191,10 @@
     "model": "madlad-400",
     "msgstr": "Kwa rando yako kufungua."
   },
+  "Headphones recommended": {
+    "model": "translategemma-4b",
+    "msgstr": "Sikilizaji zinapendekezwa"
+  },
   "Help fix a translation": {
     "model": "translategemma-4b",
     "msgstr": "Msaada wa kurekebisha tafsiri"
@@ -186,6 +206,10 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "translategemma-27b",
     "msgstr": "Nina umri wa miaka 18 au zaidi, na ninaelewa kuwa mazungumzo yote yatafanyika bila kujulikana na hayataangaliwa na yeyote."
+  },
+  "I want to hear": {
+    "model": "madlad-400",
+    "msgstr": "Nataka kusikia"
   },
   "I will speak in": {
     "model": "madlad-400",
@@ -223,9 +247,17 @@
     "model": "m2m100",
     "msgstr": "Kuunganisha"
   },
+  "Keyboard shortcuts": {
+    "model": "madlad-400",
+    "msgstr": "Vifupisho vya Kibodi"
+  },
   "Language": {
     "model": "translategemma-4b",
     "msgstr": "Lugha"
+  },
+  "Language menu": {
+    "model": "translategemma-4b",
+    "msgstr": "Menyu ya lugha"
   },
   "Languages spoken": {
     "model": "translategemma-4b",
@@ -243,6 +275,22 @@
     "model": "madlad-400",
     "msgstr": "Kuangalia kwa rando ambaye anaongea %{hearing_languages} na anataka kusikia %{speaking_language}."
   },
+  "Main navigation": {
+    "model": "madlad-400",
+    "msgstr": "Urambazaji mkuu"
+  },
+  "Masking": {
+    "model": "translategemma-4b",
+    "msgstr": "Kuficha"
+  },
+  "Microphone off.": {
+    "model": "translategemma-12b",
+    "msgstr": "Kifaa cha sauti kimezimwa."
+  },
+  "Microphone on.": {
+    "model": "translategemma-12b",
+    "msgstr": "Mikrofoni imewashwa."
+  },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "madlad-400",
     "msgstr": "Hakuna akaunti. Hakuna wasifu. Hakuna video. Hakuna shinikizo."
@@ -259,9 +307,21 @@
     "model": "m2m100",
     "msgstr": "Hakuna kutafsiriwa"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "translategemma-12b",
+    "msgstr": "Hakuna chochote kilichorekodiwa au kupakiwa."
+  },
   "Nothing matches.": {
     "model": "translategemma-12b",
     "msgstr": "Hakuna kitu kinacholingana."
+  },
+  "Off": {
+    "model": "m2m100",
+    "msgstr": "kuondoka"
+  },
+  "Opening microphone…": {
+    "model": "madlad-400",
+    "msgstr": "Kufungua mikrofoni…"
   },
   "Other languages: %{calls}": {
     "model": "translategemma-12b",
@@ -291,6 +351,14 @@
     "model": "translategemma-4b",
     "msgstr": "Kupanga simu"
   },
+  "Preview": {
+    "model": "translategemma-4b",
+    "msgstr": "Maelezo ya awali"
+  },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "m2m100",
+    "msgstr": "Mikrofoni imefungwa; jaribu tena."
+  },
   "Privacy": {
     "model": "m2m100",
     "msgstr": "Usalama wa"
@@ -319,6 +387,10 @@
     "model": "translategemma-12b",
     "msgstr": "Tuma kiungo hiki kwao kwa njia yoyote unayopenda. Kitu hiki kitafanya kazi mara moja tu."
   },
+  "Server Status": {
+    "model": "m2m100",
+    "msgstr": "Hali ya Server"
+  },
   "Share a link.": {
     "model": "translategemma-12b",
     "msgstr": "Shiriki kiungo."
@@ -326,6 +398,10 @@
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-4b",
     "msgstr": "Mazungumzo fupi na bila majina kwa madhumuni ya mazoezi ya lugha."
+  },
+  "Site": {
+    "model": "m2m100",
+    "msgstr": "Tovuti ya"
   },
   "Someone invited you to a call": {
     "model": "madlad-400",
@@ -350,6 +426,10 @@
   "Stop looking": {
     "model": "madlad-400",
     "msgstr": "Kuacha kuangalia"
+  },
+  "Style": {
+    "model": "translategemma-4b",
+    "msgstr": "Mtindo"
   },
   "Suggest a fix": {
     "model": "madlad-400",
@@ -407,6 +487,10 @@
     "model": "translategemma-27b",
     "msgstr": "Hakuna akaunti, wasifu, orodha ya marafiki, wafuasi, habari za matukio, alama, au muundo wa uhusiano wa kijamii unaodumu. randos ni zaidi kama miundombinu ya mawasiliano ya kawaida kuliko mitandao ya kijamii."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "madlad-400",
+    "msgstr": "Mitindo hii hubadilisha sauti yako, lakini watu bado wanaweza kukutambua."
+  },
   "This link is incomplete.": {
     "model": "translategemma-4b",
     "msgstr": "Kiungo hiki haujamilika."
@@ -431,6 +515,10 @@
     "model": "m2m100",
     "msgstr": "Siku hii"
   },
+  "Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "Saada + Kiwango"
+  },
   "Translations": {
     "model": "madlad-400",
     "msgstr": "Tafsiri"
@@ -442,6 +530,18 @@
   "View on GitHub": {
     "model": "translategemma-4b",
     "msgstr": "Angalia kwenye GitHub"
+  },
+  "Voice": {
+    "model": "translategemma-4b",
+    "msgstr": "Sauti"
+  },
+  "Voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "Kufunika sauti"
+  },
+  "Voice masking on": {
+    "model": "translategemma-4b",
+    "msgstr": "Kufunika sauti"
   },
   "Waiting": {
     "model": "m2m100",
@@ -527,9 +627,25 @@
     "model": "m2m100",
     "msgstr": "Mwisho wa"
   },
+  "button\u0004End call": {
+    "model": "translategemma-4b",
+    "msgstr": "isha simu"
+  },
+  "button\u0004Find": {
+    "model": "m2m100",
+    "msgstr": "kutafuta"
+  },
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "Kupata rando"
+  },
+  "button\u0004Hear myself": {
+    "model": "m2m100",
+    "msgstr": "kusikia mwenyewe"
+  },
+  "button\u0004Hide shortcuts": {
+    "model": "translategemma-4b",
+    "msgstr": "Fichua njia za haraka"
   },
   "button\u0004Invite someone": {
     "model": "madlad-400",
@@ -539,6 +655,10 @@
     "model": "m2m100",
     "msgstr": "Kuingia kwenye simu"
   },
+  "button\u0004Keyboard shortcuts": {
+    "model": "madlad-400",
+    "msgstr": "Vifupisho vya Kibodi"
+  },
   "button\u0004Mute": {
     "model": "madlad-400",
     "msgstr": "Kuzima"
@@ -546,6 +666,10 @@
   "button\u0004Next rando": {
     "model": "madlad-400",
     "msgstr": "Ifuatayo rando"
+  },
+  "button\u0004Stop preview": {
+    "model": "m2m100",
+    "msgstr": "Mwisho wa Preview"
   },
   "button\u0004Unmute": {
     "model": "translategemma-4b",

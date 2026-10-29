@@ -1,0 +1,934 @@
+{
+  "generated_at": "2026-10-25T10:47:58.504076+00:00",
+  "speakers": 20,
+  "enrollment_per_speaker": 2,
+  "trial_count": 60,
+  "results": {
+    "original": {
+      "eer": 0.0008771929824561404,
+      "identification": 1.0
+    },
+    "converted_original_references": {
+      "eer": 0.5026315789473684,
+      "identification": 0.05
+    },
+    "converted_matching_transform": {
+      "eer": 0.31842105263157894,
+      "identification": 0.21666666666666667
+    },
+    "original_wer": 0.05712050078247261,
+    "converted_wer": 0.09233176838810642
+  },
+  "render_manifest": {
+    "graph": {
+      "config.json": "de7b6e3ddfe4cf0b6f6604c636cacd634a4d31b5a3d99777499cafb7be6aaa03",
+      "onnx/tvtsyn_step_100ms.onnx": "5cae8bb2aec55037a95136bad30fb3e2c9694738da96afed82f09f15a3b614aa",
+      "onnx/tvtsyn_step_100ms.onnx.json": "7c5ee5b21cbc66fa7dc8a85bfd2bd105818df01e233633b70a773b19c6931231"
+    },
+    "speaker_embedding": "df5c2694d9e78981cae62b2a4a5c4a3a394e4cec6bd857bbc5f4dd728c7e1e0b",
+    "rows": [
+      {
+        "id": "121-121726-0000",
+        "speaker": "121",
+        "source_sha256": "81378fdb3e648b43efb1cb8c4f87da3fc9cfbe19c5dda97e9e7361c4a2470d2f",
+        "peak": 1.5051109790802002,
+        "samples": 135360,
+        "at_unit_boundary": 5,
+        "output_sha256": "3f105a6b05ee50d6c03d198924d632ac55256657118c74a1483eb0233edfece5"
+      },
+      {
+        "id": "121-121726-0001",
+        "speaker": "121",
+        "source_sha256": "4d4459266056fcd052ced71563e093ecf74a420abfa3a402283fb6b8eb848441",
+        "peak": 1.5051113367080688,
+        "samples": 94800,
+        "at_unit_boundary": 5,
+        "output_sha256": "0806e54bc307887c7232aa3b9b2d9eb1e4dc6bbda8f57496207bd63c0b054a47"
+      },
+      {
+        "id": "121-121726-0002",
+        "speaker": "121",
+        "source_sha256": "5d461a2020d7c302d607d3b5a6a8f81a01d29e2b29041faccc7925ee098d6dc7",
+        "peak": 1.4674739837646484,
+        "samples": 70560,
+        "at_unit_boundary": 5,
+        "output_sha256": "a9c352213a7cd5490a5ac196ceea74efc0b9a72a002eec719b8c6098c00a83a0"
+      },
+      {
+        "id": "121-121726-0003",
+        "speaker": "121",
+        "source_sha256": "4ebfb6ebfc9dcc963e8d9c51b2ddce0d6c11f3113cea5ec0be40651c9b9872b2",
+        "peak": 1.5051110982894897,
+        "samples": 108080,
+        "at_unit_boundary": 5,
+        "output_sha256": "51df67342ed3061705d5db2069f48bc183a2d5618be118795133a43ecca6c718"
+      },
+      {
+        "id": "121-121726-0004",
+        "speaker": "121",
+        "source_sha256": "44b0420506873ae701c23442188985b373540acd9d505718deffedb81cc2b22c",
+        "peak": 1.5051110982894897,
+        "samples": 64320,
+        "at_unit_boundary": 5,
+        "output_sha256": "83f3f1ca05ff0179115ca5ac308abfbeb6186a41ed304e0e18d4cae5b2b5534f"
+      },
+      {
+        "id": "237-126133-0000",
+        "speaker": "237",
+        "source_sha256": "25466538df82602d1e597b0cb016e4dd0ce11031cb8994a4289d1c07170878ee",
+        "peak": 1.2742968797683716,
+        "samples": 212640,
+        "at_unit_boundary": 4,
+        "output_sha256": "b05c8b56608bc5d4a817e94818f3fb3e3083032bfb76d00f0bc44d64ca2f67e8"
+      },
+      {
+        "id": "237-126133-0001",
+        "speaker": "237",
+        "source_sha256": "dfde7ea9d4eb3121b32043dffe260b257aaaad3ba163a815491d5b6dad01e5d0",
+        "peak": 1.53456711769104,
+        "samples": 191440,
+        "at_unit_boundary": 5,
+        "output_sha256": "90832ab54b048a63a1c6e322711f8bbd534d4c7b8acb1ddeac8ecca1bd82b37b"
+      },
+      {
+        "id": "237-126133-0002",
+        "speaker": "237",
+        "source_sha256": "3b5dc6a941b833c976fb1d5fec3f443820b199b5d718943b22de023ab1a9a53d",
+        "peak": 1.4570636749267578,
+        "samples": 142720,
+        "at_unit_boundary": 5,
+        "output_sha256": "f97fb4694e907e9f1fb0cd198312210590413a103f4235d99264a367186f0803"
+      },
+      {
+        "id": "237-126133-0003",
+        "speaker": "237",
+        "source_sha256": "18c38673f71d4012a9c023d7548bff3c0f78172415f67c69abf403590c4e84bc",
+        "peak": 1.3728240728378296,
+        "samples": 104960,
+        "at_unit_boundary": 4,
+        "output_sha256": "d4d22f2de26520f024c7b44b96511e5936307829437f02039e1ef98df225598f"
+      },
+      {
+        "id": "237-126133-0005",
+        "speaker": "237",
+        "source_sha256": "68f811de322c7142d423adbaff1d854ece0d0948be98968da2c71ba01cb8690a",
+        "peak": 1.6099138259887695,
+        "samples": 104160,
+        "at_unit_boundary": 5,
+        "output_sha256": "30387dfe427684fb1807c1133d6b74954f41eac267f212b20a6d6f27b06bfc93"
+      },
+      {
+        "id": "1221-135766-0000",
+        "speaker": "1221",
+        "source_sha256": "1f6b9ba126dc0f0a3cb813b04e2c970ff9583beeaf8cfaa8f7c8199244aa2514",
+        "peak": 1.5984687805175781,
+        "samples": 198960,
+        "at_unit_boundary": 5,
+        "output_sha256": "1cf938bb261732291d2464d11c255a3778955d780b6fb06bd1221362433ba4c9"
+      },
+      {
+        "id": "1221-135766-0002",
+        "speaker": "1221",
+        "source_sha256": "1f02bae046f9567010f0163e8f204612fd1035a751383586a7aef6cb0fcc6e60",
+        "peak": 1.5248230695724487,
+        "samples": 77200,
+        "at_unit_boundary": 5,
+        "output_sha256": "c13edf5f2de929438052f216654c2c1b7afbac736d30fa98f8a1ccaffb8b3c64"
+      },
+      {
+        "id": "1221-135766-0003",
+        "speaker": "1221",
+        "source_sha256": "9f44ad009d249aac43da84960e5482148b6ad56f9e566ff9531d26436b6f87d4",
+        "peak": 1.3296421766281128,
+        "samples": 219520,
+        "at_unit_boundary": 4,
+        "output_sha256": "9284cbb36fb2e7e4b42bbbf73d58b04691055dd5fc984d465e37b25b18a70b28"
+      },
+      {
+        "id": "1221-135766-0004",
+        "speaker": "1221",
+        "source_sha256": "0c9ef992cd12b597219de360d086cd1638170c61640049fd3ebcb21918bf1009",
+        "peak": 1.5433839559555054,
+        "samples": 119040,
+        "at_unit_boundary": 5,
+        "output_sha256": "805f895b09ef926d5049ae5f718ad709e2ba53aafc2ca69b1ec8bd20b0363660"
+      },
+      {
+        "id": "1221-135766-0006",
+        "speaker": "1221",
+        "source_sha256": "2d2ce93b5e27db02117c0ca8fa7bb1b6533999bc60512a4a6244ad584e642024",
+        "peak": 1.3126566410064697,
+        "samples": 182640,
+        "at_unit_boundary": 4,
+        "output_sha256": "68f2af614877f1298c2546e0271bb4f5cbff40782ffe86d6cc0b13e58262f06b"
+      },
+      {
+        "id": "1284-1180-0000",
+        "speaker": "1284",
+        "source_sha256": "1b76cef86ab0f918aac7f576be7398f29bfa968e6c78bdf024c335faedd378f1",
+        "peak": 1.4938844442367554,
+        "samples": 129920,
+        "at_unit_boundary": 5,
+        "output_sha256": "b5c35873a1599b85c5e5dd21f5805d08b7670f80576b538666c1c1c93092e9d0"
+      },
+      {
+        "id": "1284-1180-0001",
+        "speaker": "1284",
+        "source_sha256": "b44a1ad458675ba4d8d4dd6d4529d40fbc6fc63d27afce7877dc2024592b5414",
+        "peak": 1.5456668138504028,
+        "samples": 124080,
+        "at_unit_boundary": 5,
+        "output_sha256": "893db989152e154ddc770e1225f1d611961321b3a472784d3af04a847b372635"
+      },
+      {
+        "id": "1284-1180-0002",
+        "speaker": "1284",
+        "source_sha256": "d63c23000041a12d901979f70ea981048d509b37bbcfbf176f92089ce13c0c5b",
+        "peak": 1.522068738937378,
+        "samples": 122880,
+        "at_unit_boundary": 5,
+        "output_sha256": "53226202bde860230f15df2763515c9114409e78dbf2f91ab5668c4ba81dc5ac"
+      },
+      {
+        "id": "1284-1180-0003",
+        "speaker": "1284",
+        "source_sha256": "e9850c58c0b066ec8eeceda7ded87ba42cb6823f69b935bfe5d3619c46fe166a",
+        "peak": 1.5409772396087646,
+        "samples": 77360,
+        "at_unit_boundary": 5,
+        "output_sha256": "b83d0d8f9e2dae3679cf754b05cc8093965fd3aa3e3807dfc627b9386ca7fd0b"
+      },
+      {
+        "id": "1284-1180-0004",
+        "speaker": "1284",
+        "source_sha256": "a1c1b8e7f39f808dd4ec7a0aa45a0204f27ce05818b524d3c9674eb4117f8209",
+        "peak": 1.4422032833099365,
+        "samples": 68560,
+        "at_unit_boundary": 4,
+        "output_sha256": "5b8dd9504a1570ffa55df6312047b0adb00a312dcd2f5891a1ccb979ead2c9ef"
+      },
+      {
+        "id": "1580-141083-0000",
+        "speaker": "1580",
+        "source_sha256": "59123e88017e4bf645e39506a878b5734b3d94fe990018de25b712ba881cf7a5",
+        "peak": 1.4794981479644775,
+        "samples": 143040,
+        "at_unit_boundary": 5,
+        "output_sha256": "dbfac41f5ad55f6dc09778ded39d120f38800557fcb9bda5a673f96c7209531e"
+      },
+      {
+        "id": "1580-141083-0001",
+        "speaker": "1580",
+        "source_sha256": "9914a442f04e4fed4a8144ec63326ec3b5f031ccd73203b1a9c309182a172ba7",
+        "peak": 1.4048080444335938,
+        "samples": 164080,
+        "at_unit_boundary": 4,
+        "output_sha256": "406fc42f804825ba886b4ff48c9029d058bc7c1c788ef38cbe83824bf5293555"
+      },
+      {
+        "id": "1580-141083-0002",
+        "speaker": "1580",
+        "source_sha256": "0c6462db43bf4400eb14dd29f67b5077013e4705a7ca72a77a8075ff041bd6cb",
+        "peak": 1.4781323671340942,
+        "samples": 98160,
+        "at_unit_boundary": 5,
+        "output_sha256": "0c2ae6ce897505dfd908b6dfd66da41e0965deab193b8f5aef1e2327dcb31ecb"
+      },
+      {
+        "id": "1580-141083-0003",
+        "speaker": "1580",
+        "source_sha256": "cf85e23cde64fbc080a6c713a0a9d5bc047092f2365b59fe11437dacec7e0985",
+        "peak": 1.4518133401870728,
+        "samples": 104800,
+        "at_unit_boundary": 5,
+        "output_sha256": "af3b690749a43fc3d06bbbe8c192208bc632e800d6a25579e198bbe0348084ed"
+      },
+      {
+        "id": "1580-141083-0004",
+        "speaker": "1580",
+        "source_sha256": "30b322da14fed6218c8fb755c8ab009a72ff8c00088547e1ea3a2041ee1c73dc",
+        "peak": 1.4700442552566528,
+        "samples": 72240,
+        "at_unit_boundary": 5,
+        "output_sha256": "d710341ca86d3b2c35224dbdd21f3eb6962d2993af5b338cbbfe5b3fd3ef2fb2"
+      },
+      {
+        "id": "1995-1826-0000",
+        "speaker": "1995",
+        "source_sha256": "74596627a026feb72e3acba17ee9268f120ee25e9f4afb935bb2f3d3ba779e57",
+        "peak": 1.4352153539657593,
+        "samples": 151760,
+        "at_unit_boundary": 4,
+        "output_sha256": "74acadd996363d4f5035500420fa1b2d4babd8d6870fdd6a8225face1b4d226e"
+      },
+      {
+        "id": "1995-1826-0001",
+        "speaker": "1995",
+        "source_sha256": "56d8ebeb4138c7cc33c7f468aec078a3d76694b8759b1e860d876288f475e8ee",
+        "peak": 1.357805609703064,
+        "samples": 162720,
+        "at_unit_boundary": 4,
+        "output_sha256": "4ba01fac2cfef685e4917f3c6ca5d3a7b4dfbf10c367a81a04c5af20dab8c1c3"
+      },
+      {
+        "id": "1995-1826-0002",
+        "speaker": "1995",
+        "source_sha256": "e40ad1d69a0f4bf941cd58cbb04a347e05d8a5571cef8bfcf6b16a0781db9e41",
+        "peak": 1.3727214336395264,
+        "samples": 73680,
+        "at_unit_boundary": 4,
+        "output_sha256": "425cbe116d71b2615834f5e2c1923e108040d5dd7df0bc6e8553abb86d2c1943"
+      },
+      {
+        "id": "1995-1826-0005",
+        "speaker": "1995",
+        "source_sha256": "0f8f5bb56b73a96e1f8a0a9390816e11cd24bbec445b63c37e9822ee9da4bf82",
+        "peak": 1.3975259065628052,
+        "samples": 82000,
+        "at_unit_boundary": 4,
+        "output_sha256": "6620e4c438527b05777d1752aa73b73885ce7aecebd60050dc9e5f7db1a293b9"
+      },
+      {
+        "id": "1995-1826-0007",
+        "speaker": "1995",
+        "source_sha256": "ceca7507f3c524314e92c3d29d0b072df6490fe3609fe0de91da368dfccbf921",
+        "peak": 1.333056926727295,
+        "samples": 112960,
+        "at_unit_boundary": 4,
+        "output_sha256": "e9f3b936ea2ec657871c6fcf1c50d8da699c1f77c0b65792e918be490093f8cd"
+      },
+      {
+        "id": "2094-142345-0001",
+        "speaker": "2094",
+        "source_sha256": "b4fb8a76b5026b1cff5193cba298dc66156f93e228a221a06d26790c34cc049f",
+        "peak": 1.5049229860305786,
+        "samples": 128480,
+        "at_unit_boundary": 5,
+        "output_sha256": "e8899d70c0ce5f181bab9dc77a7900f1743313cb783e7236b88c2163377aa044"
+      },
+      {
+        "id": "2094-142345-0003",
+        "speaker": "2094",
+        "source_sha256": "6380396cf25f4741a308cf998967d99ca75aff4951ead3de14b41aad419a30fc",
+        "peak": 1.4471980333328247,
+        "samples": 234800,
+        "at_unit_boundary": 5,
+        "output_sha256": "1593f91ecb4edfed0db7dacff200c1314ed3074d7cbc0c456dcb571014b16433"
+      },
+      {
+        "id": "2094-142345-0005",
+        "speaker": "2094",
+        "source_sha256": "d49d15ab4ba625ea6afaf5fcd9d7acc384d8817023f75c824083b9f4cb5c21a5",
+        "peak": 1.4886455535888672,
+        "samples": 145440,
+        "at_unit_boundary": 5,
+        "output_sha256": "157d3a4e918ad0a76fc4878c763b462ce2c83c01a96c66c92e8b33dd3a1cff77"
+      },
+      {
+        "id": "2094-142345-0006",
+        "speaker": "2094",
+        "source_sha256": "2e45f7383fe9295b9c9de4eb4790f1015c5e0e2207d7c08f0f86b04ef44cccb7",
+        "peak": 1.5219476222991943,
+        "samples": 221120,
+        "at_unit_boundary": 5,
+        "output_sha256": "e9a17920d48fa90813b3330c6d65e959441334bb275115d40f663d45c401249a"
+      },
+      {
+        "id": "2094-142345-0009",
+        "speaker": "2094",
+        "source_sha256": "88fac62e32178d6a350ad3e40862ae942cc6b5cfe31a3f4ce355d1b752363584",
+        "peak": 1.5131386518478394,
+        "samples": 230480,
+        "at_unit_boundary": 5,
+        "output_sha256": "290f8e9e571c6d038917d6837b924f99cc5c7bda98cbe2a3c8cb0a1811ff41dd"
+      },
+      {
+        "id": "2961-960-0001",
+        "speaker": "2961",
+        "source_sha256": "73a2c08a15dc492ae512877618f9bd2ba6dd8b3c1bd5a5e8d59ef63d7ef3d5fb",
+        "peak": 1.5037634372711182,
+        "samples": 132001,
+        "at_unit_boundary": 5,
+        "output_sha256": "23194daa2e7451b15536d97ed0d172d07b9e632854abeb2e70ff13c6d54ac85b"
+      },
+      {
+        "id": "2961-960-0004",
+        "speaker": "2961",
+        "source_sha256": "c815b1d8d37cd643047430c39f790067c75ee3adb93fdfbbe3da493f71d44615",
+        "peak": 1.4956326484680176,
+        "samples": 131520,
+        "at_unit_boundary": 5,
+        "output_sha256": "17dfd7e02319e403e91a98df6a5647b4587dbfd6d3e764f10beb249fcca8ac64"
+      },
+      {
+        "id": "2961-960-0005",
+        "speaker": "2961",
+        "source_sha256": "0d0c423dc55c236b5f55ca2fc4ab87b39b85d5d2a34585573afe6038ebf3a091",
+        "peak": 1.5564149618148804,
+        "samples": 165680,
+        "at_unit_boundary": 5,
+        "output_sha256": "3ab60260cf5442041dbd919e39e189e9b33b9dadb53d8c3ae242bf24c608f340"
+      },
+      {
+        "id": "2961-960-0007",
+        "speaker": "2961",
+        "source_sha256": "cbe3523d63071020b9bb004f85a87104f512abe8928fb4a32a45ed8cc7771f13",
+        "peak": 1.6273369789123535,
+        "samples": 122240,
+        "at_unit_boundary": 5,
+        "output_sha256": "eb98a0a9736d5bb450bed4e786554ddbb1ef21744d7ff05fc9db1ef5f60f03be"
+      },
+      {
+        "id": "2961-960-0009",
+        "speaker": "2961",
+        "source_sha256": "d07dbff717206b44944af7fb78ca3b3ef2952be89e939e9f8db21471a0ab22a1",
+        "peak": 1.5181630849838257,
+        "samples": 189760,
+        "at_unit_boundary": 5,
+        "output_sha256": "88af9570a6c65c91fe146ddbc92a049b2b58b8c1e49460547aa59ef3bf2cc51f"
+      },
+      {
+        "id": "3570-5694-0000",
+        "speaker": "3570",
+        "source_sha256": "55049eed3f6a821b44b5b8d0e2a7348fc01692fc79981ec56b140ac0f051579e",
+        "peak": 1.4036904573440552,
+        "samples": 193360,
+        "at_unit_boundary": 4,
+        "output_sha256": "28baf09bb78c8bf729e173f0dae41ac6a2aed095d49b4225ef72a571edb78a0f"
+      },
+      {
+        "id": "3570-5694-0001",
+        "speaker": "3570",
+        "source_sha256": "83d42febda01d467c35c0b90dc7bb5d5d80b18ed95d65748a831afca53f2e3cd",
+        "peak": 1.5096362829208374,
+        "samples": 90800,
+        "at_unit_boundary": 5,
+        "output_sha256": "5fa1d358662e33d36bd75118ff9d45561374a081caba47970766ed2792ecee3a"
+      },
+      {
+        "id": "3570-5694-0002",
+        "speaker": "3570",
+        "source_sha256": "a21a557d5db7d6bea193ba2e49efaa488f9a4c468f898b4e24c722544bbc6844",
+        "peak": 1.5340372323989868,
+        "samples": 169840,
+        "at_unit_boundary": 5,
+        "output_sha256": "339b746d22fa28bc7f67c932ab74b3892a79decff3c4d9db0a9ddac022051855"
+      },
+      {
+        "id": "3570-5694-0004",
+        "speaker": "3570",
+        "source_sha256": "e7c4c68060bd5da1df857aa90f0fb6601cfee83e0001d75b64164988b070e7d8",
+        "peak": 1.4973350763320923,
+        "samples": 85280,
+        "at_unit_boundary": 5,
+        "output_sha256": "64d978c38d826cd42399db57c2fea1cafcd2f632017283311e12e61ec237a484"
+      },
+      {
+        "id": "3570-5694-0005",
+        "speaker": "3570",
+        "source_sha256": "d4cce782491bd2a800ebcf0d9c466df1ac6a166c3a33b297ae4024622822a058",
+        "peak": 1.5520800352096558,
+        "samples": 134480,
+        "at_unit_boundary": 5,
+        "output_sha256": "c7c94ebb290e8fb4e4e4e4d13a22a639ec27ea81443db9f03681660e4ebba5fb"
+      },
+      {
+        "id": "3575-170457-0000",
+        "speaker": "3575",
+        "source_sha256": "96ab958dda879bdd4bc9fc61c2e5b0d632c569c256b54bcb1c0ecbeadd31448e",
+        "peak": 1.5313916206359863,
+        "samples": 131680,
+        "at_unit_boundary": 5,
+        "output_sha256": "4b78e32cff8b13eeff5430fb0316e37bed8f0d43bc7eca8f01763fe27948c1a5"
+      },
+      {
+        "id": "3575-170457-0003",
+        "speaker": "3575",
+        "source_sha256": "a9e859bb34faf71044cb5099fa717b3dab58223c51ab0990db2002d0327b447e",
+        "peak": 1.5382990837097168,
+        "samples": 121520,
+        "at_unit_boundary": 5,
+        "output_sha256": "4e4e864f95e1dd2316625d9208cb276aa27fee563831d8207ddb757aa344baa0"
+      },
+      {
+        "id": "3575-170457-0005",
+        "speaker": "3575",
+        "source_sha256": "fa3b2e3fac1c7e3babde9b5ec40307fcdef4703f615208ac75a18519e4878a96",
+        "peak": 1.535184383392334,
+        "samples": 117440,
+        "at_unit_boundary": 5,
+        "output_sha256": "c08b4e61cdd39de361b860e507fa25db7377de500a113e679ec101e6b0d9da20"
+      },
+      {
+        "id": "3575-170457-0006",
+        "speaker": "3575",
+        "source_sha256": "04d7f6017cfba4ccd3ed68d04b4edeb62dff1152a49bfce3c82928a1c82a530a",
+        "peak": 1.5201584100723267,
+        "samples": 132800,
+        "at_unit_boundary": 5,
+        "output_sha256": "e2ca14dc27ad2ecce456d926e8f0e66818d10eb16447814a0fcd579e20a7398e"
+      },
+      {
+        "id": "3575-170457-0007",
+        "speaker": "3575",
+        "source_sha256": "3378ca17bcb30347cb56b9f371c9c2129e3386e0d36ee4b75d38133b0e3d6446",
+        "peak": 1.4928874969482422,
+        "samples": 124400,
+        "at_unit_boundary": 5,
+        "output_sha256": "636d479ad0a240bdc0d103992503797f25b1d4fe77090e1abc1afe902072837e"
+      },
+      {
+        "id": "61-70968-0000",
+        "speaker": "61",
+        "source_sha256": "fd3c84146d8b357efc7f0d21de86de770721fc5ddac7e6577688dbf3cdabff5b",
+        "peak": 1.3218227624893188,
+        "samples": 78480,
+        "at_unit_boundary": 4,
+        "output_sha256": "dda015631dd82a86e08e844d60d6c04d811438b5e6735971e387bbb8b3ea5bc9"
+      },
+      {
+        "id": "61-70968-0003",
+        "speaker": "61",
+        "source_sha256": "c50e106a06d1603451f1b1a3f145900e83f733f2873deb12fa9838ef5f74655a",
+        "peak": 1.348347544670105,
+        "samples": 69040,
+        "at_unit_boundary": 4,
+        "output_sha256": "39067fd00a3620889661e31286924abf8d1b2155cb360903697fd66f2d294790"
+      },
+      {
+        "id": "61-70968-0005",
+        "speaker": "61",
+        "source_sha256": "1022f303c108707548ff8738b7d7f512403b8fa443b9664bab94f740ef412183",
+        "peak": 1.4777799844741821,
+        "samples": 81120,
+        "at_unit_boundary": 5,
+        "output_sha256": "6d10b03476a98abb53fd68f3119a537f03f2445f8bc43d46d2440ae5944dc957"
+      },
+      {
+        "id": "61-70968-0009",
+        "speaker": "61",
+        "source_sha256": "4bcc8b7198b6162f26470adcb461a4eb23c77a803c30b7896c4b0a2d011ccfbb",
+        "peak": 1.3201708793640137,
+        "samples": 72160,
+        "at_unit_boundary": 4,
+        "output_sha256": "4db8f9b635a8d7f86ac023ae8539ff4ca52fc00c2686b2218dcd815bfb08305e"
+      },
+      {
+        "id": "61-70968-0010",
+        "speaker": "61",
+        "source_sha256": "d70f1f718ac85ea815adcf8f63f6e90feb8b17c739593fcdffd899c9e215ef1b",
+        "peak": 1.2887425422668457,
+        "samples": 132720,
+        "at_unit_boundary": 4,
+        "output_sha256": "7c24d5c16ea92c13cf8b2ff870cdb4ef055391d8a6c87500533b12b8653d7123"
+      },
+      {
+        "id": "260-123286-0000",
+        "speaker": "260",
+        "source_sha256": "d654a43d06f0e8b586b525e8ec83d6e3c0dc83c3f4742f8e25fd291db77248b3",
+        "peak": 1.5051110982894897,
+        "samples": 112640,
+        "at_unit_boundary": 5,
+        "output_sha256": "04f952c9ab30e7fd4558d7c39a91022589861ad98589d332230fb5e5a42dd676"
+      },
+      {
+        "id": "260-123286-0002",
+        "speaker": "260",
+        "source_sha256": "25d5b388fb4d8f14752fbbfb9f1b020b4de121b9be7d20ee6632b060ab88bd82",
+        "peak": 1.5051108598709106,
+        "samples": 159760,
+        "at_unit_boundary": 5,
+        "output_sha256": "cf229e594b1328bdd46c11e58e31501f382d49b820a34dc9cc739d80216f4f8c"
+      },
+      {
+        "id": "260-123286-0003",
+        "speaker": "260",
+        "source_sha256": "07a827233cc275019deb9b43f6531d73cdd08f0e6eeb90b660d5511a1500b95b",
+        "peak": 1.5615981817245483,
+        "samples": 117920,
+        "at_unit_boundary": 5,
+        "output_sha256": "da92c4214bf87a5e2feaa86ba975b1ca922cf1ab6a89d6adf7bc8d879a6f2ffa"
+      },
+      {
+        "id": "260-123286-0005",
+        "speaker": "260",
+        "source_sha256": "4a8782c6fc11289057c003ad243f3127183d25ff6e8fb014c224e89613f639b1",
+        "peak": 1.534821629524231,
+        "samples": 76960,
+        "at_unit_boundary": 5,
+        "output_sha256": "2ad53aa410fa30ea157339d861076741a62476d95d46e1570b5e9323db42a076"
+      },
+      {
+        "id": "260-123286-0006",
+        "speaker": "260",
+        "source_sha256": "18d3fad4abbbf59db9a8dd9431ffced27a20916525ccc03e968d091702d63e44",
+        "peak": 1.5051108598709106,
+        "samples": 118480,
+        "at_unit_boundary": 5,
+        "output_sha256": "9392efc2599d4ec12f67bdf17c3ebb01ecb4373fd2409595eadc87c6bb7ce47d"
+      },
+      {
+        "id": "672-122797-0000",
+        "speaker": "672",
+        "source_sha256": "776b1ce553e7ecb2dc0254b2aa4b35af0bde50db65dbf7bdbdfa1560a2c9ec36",
+        "peak": 1.5035027265548706,
+        "samples": 65120,
+        "at_unit_boundary": 5,
+        "output_sha256": "6fe4c645218e0713afb92613fd836a4e1e7a0dfb3272c152878bc8a55160e027"
+      },
+      {
+        "id": "672-122797-0002",
+        "speaker": "672",
+        "source_sha256": "d73ab91c2692f9ad1ef35b209122024b10741b7928930fb560553275be88cf0a",
+        "peak": 1.5038763284683228,
+        "samples": 217920,
+        "at_unit_boundary": 5,
+        "output_sha256": "ea481509e85e50c18cd9f76102850eb6b4ee31e4045168f1bffde6002960f3c1"
+      },
+      {
+        "id": "672-122797-0003",
+        "speaker": "672",
+        "source_sha256": "b00cbf4705fcd94f9ea9130da79993f83b7e3a83313328314b3492d19295af94",
+        "peak": 1.5223875045776367,
+        "samples": 76160,
+        "at_unit_boundary": 5,
+        "output_sha256": "113015b899ebd7ace64ba8f22f9152ae4e349a57334379a952b8e0be8acf45c9"
+      },
+      {
+        "id": "672-122797-0004",
+        "speaker": "672",
+        "source_sha256": "8dcbb709d46e0630605e5d886e8510b8fab159da5de229f05536d1f8b0fd9a9e",
+        "peak": 1.5581753253936768,
+        "samples": 164000,
+        "at_unit_boundary": 5,
+        "output_sha256": "e316a772942cb4668e65051cb0a2c5d978613260ac6d505e7b187ba79d3da9bd"
+      },
+      {
+        "id": "672-122797-0006",
+        "speaker": "672",
+        "source_sha256": "5aaba86de6556521ec716151d53a6ac1894dfbc3400e09d91e821dc97cfff362",
+        "peak": 1.225612998008728,
+        "samples": 223200,
+        "at_unit_boundary": 3,
+        "output_sha256": "840db0427ba1ab885820727e9516975d71d7fac3c118458ab086bb2e0e8dd672"
+      },
+      {
+        "id": "908-157963-0000",
+        "speaker": "908",
+        "source_sha256": "1f11115c9c3be561851f6e41eed9b176b42d084d07dd75d8436f42c8d2b5da22",
+        "peak": 1.1154316663742065,
+        "samples": 201920,
+        "at_unit_boundary": 3,
+        "output_sha256": "861780ef85f22be40a578687f29dc486fab627d29ff7544fe7f096492193117d"
+      },
+      {
+        "id": "908-157963-0004",
+        "speaker": "908",
+        "source_sha256": "ec9c6f95f6ee1d332fc1fc45df710bf086714fddc25d3bfa687b5a88aef47520",
+        "peak": 1.202050805091858,
+        "samples": 223840,
+        "at_unit_boundary": 3,
+        "output_sha256": "12a3266641e845795224f5a06c7f7802bee12ec1e6a9f3abb45bca3e8d03df5a"
+      },
+      {
+        "id": "908-157963-0005",
+        "speaker": "908",
+        "source_sha256": "82f60bcb9b1368b5d395895b738cb7aa9a9b9f100b1b315c3478f51c91bb5b21",
+        "peak": 1.568788766860962,
+        "samples": 112560,
+        "at_unit_boundary": 5,
+        "output_sha256": "37aef38c5bd23e72f93aeac7a9a83a0bb7a8bdec71d913be053228df689dd7ce"
+      },
+      {
+        "id": "908-157963-0006",
+        "speaker": "908",
+        "source_sha256": "f47123f788a739e348e82badb202bf08434455fc01aa6aea7e88edd18fa2e14f",
+        "peak": 1.5619124174118042,
+        "samples": 129760,
+        "at_unit_boundary": 5,
+        "output_sha256": "c9a25097940f94feee546003d7bc48ec0732d21eba391b79fafc5b468636eb9e"
+      },
+      {
+        "id": "908-157963-0009",
+        "speaker": "908",
+        "source_sha256": "0a405e23d60bda5ae56af77181ef458768c33e089bf40a3da611d0ff54e265c0",
+        "peak": 1.2218860387802124,
+        "samples": 64960,
+        "at_unit_boundary": 3,
+        "output_sha256": "81afde2bea125df5db533e87eac5f4bcbbdffbaca4df0ee8a186d5dcf111af7e"
+      },
+      {
+        "id": "1089-134686-0000",
+        "speaker": "1089",
+        "source_sha256": "30885601173f96b0d8ddd020dc959b055c6c1582b85a33e3fcab8c4b08ed94c2",
+        "peak": 1.4814496040344238,
+        "samples": 166960,
+        "at_unit_boundary": 5,
+        "output_sha256": "2c6aa6372e0b2657ba20f5d645e0d868ac271ab7d6e011906510afafb00bbd83"
+      },
+      {
+        "id": "1089-134686-0002",
+        "speaker": "1089",
+        "source_sha256": "66277a3fa3df407261dc2a3ce685a7ceef19999ab0c10531bee5257cb64cb59d",
+        "peak": 1.5353268384933472,
+        "samples": 106000,
+        "at_unit_boundary": 5,
+        "output_sha256": "fe4ca15ee919578847489a21b10b731ec982da246d62f722a2f0e685294d8fd1"
+      },
+      {
+        "id": "1089-134686-0004",
+        "speaker": "1089",
+        "source_sha256": "5658bd6183a1360eca5f58d618ca2efbb5f1fdcd74332b849549e722cc65d6fe",
+        "peak": 1.5533041954040527,
+        "samples": 83441,
+        "at_unit_boundary": 5,
+        "output_sha256": "e1dfaa3ecd2d332b130546b20945de31ce354390bb99a97134d6e9dbc33c1beb"
+      },
+      {
+        "id": "1089-134686-0005",
+        "speaker": "1089",
+        "source_sha256": "e1de54742a0e04615bb7fb80ef9a613fc03ec91ed4f1548e8f0e96aac024361f",
+        "peak": 1.5690938234329224,
+        "samples": 154160,
+        "at_unit_boundary": 5,
+        "output_sha256": "08e688dc731805c26b85af9ebc446f55ee943e166a5bdb134403490e41b47f08"
+      },
+      {
+        "id": "1089-134686-0006",
+        "speaker": "1089",
+        "source_sha256": "cd6c37cf12d5a9394fe1e997c2a068aa598a431a489d40279e2bbddbfc2436f5",
+        "peak": 1.4676713943481445,
+        "samples": 168880,
+        "at_unit_boundary": 5,
+        "output_sha256": "19a88f7e0064f0fc7e630c81fbb5328038bde0a35259c1406a5199bd3efdd16b"
+      },
+      {
+        "id": "1188-133604-0000",
+        "speaker": "1188",
+        "source_sha256": "4a10149395cb5af8aa5d04ef3adb49b3980baa93114d0851046e6343744b26cb",
+        "peak": 1.4925870895385742,
+        "samples": 171600,
+        "at_unit_boundary": 5,
+        "output_sha256": "ca43ee8b24f7e7d9b97b618ab2f2ac85985b2c77ff708dba5dd0568304e092a8"
+      },
+      {
+        "id": "1188-133604-0001",
+        "speaker": "1188",
+        "source_sha256": "3022b442af790536b60f18abe88b5376418a208f2774547b8d9700d4ef00bb03",
+        "peak": 1.5205632448196411,
+        "samples": 144640,
+        "at_unit_boundary": 5,
+        "output_sha256": "fda57b4a83595d004b1d82bae088f0ebca86163e87998ad02f5a57cf1a489d25"
+      },
+      {
+        "id": "1188-133604-0003",
+        "speaker": "1188",
+        "source_sha256": "a013400c991a40062cb4f458d247cfd6dac24fa0016bf6e2eac7a3e8e08b8ae8",
+        "peak": 1.5449126958847046,
+        "samples": 201760,
+        "at_unit_boundary": 5,
+        "output_sha256": "919ae6c5a47a768214739466a09dd91b69f8c3b97b967a57f7b22904839f6037"
+      },
+      {
+        "id": "1188-133604-0004",
+        "speaker": "1188",
+        "source_sha256": "8c29126fd45deee12f8368556dd6847a03bde9ac2b1241110fe9391964bf8bc4",
+        "peak": 1.580705165863037,
+        "samples": 170400,
+        "at_unit_boundary": 5,
+        "output_sha256": "e4d7c28c04d1248b042b9aa951ac3b5855f21c2c66093c0555fc8a0837005dce"
+      },
+      {
+        "id": "1188-133604-0005",
+        "speaker": "1188",
+        "source_sha256": "d94b8c28ac1fa90b2641f97e1e4e02c8b6d4de203b4f8c2fea00240a743afccf",
+        "peak": 1.712327241897583,
+        "samples": 136960,
+        "at_unit_boundary": 5,
+        "output_sha256": "4412587bfee1eeba86a70618b3f16cc29b2a928f5072577f5d9225afa45eddb3"
+      },
+      {
+        "id": "1320-122612-0000",
+        "speaker": "1320",
+        "source_sha256": "2f914687b13e1864d267282c3749ab6f0b6a5b7dcb2b772f28b6a3af7854859e",
+        "peak": 1.3627586364746094,
+        "samples": 215680,
+        "at_unit_boundary": 4,
+        "output_sha256": "bdf0556cd44bbd2ce06781fd78365aec3c29f4944d1998ae4056bc925b879016"
+      },
+      {
+        "id": "1320-122612-0001",
+        "speaker": "1320",
+        "source_sha256": "0a79505430aa3995a69d287ed16f8368a889b652ff6f3f4f25c371e07f7f0a20",
+        "peak": 1.1956268548965454,
+        "samples": 152320,
+        "at_unit_boundary": 3,
+        "output_sha256": "72cce784069096c98c5f3e4c2723aaf7c3d3d9cbd88e7b7ab58aa3c3339fa3c0"
+      },
+      {
+        "id": "1320-122612-0002",
+        "speaker": "1320",
+        "source_sha256": "bcf8ec844960246ee63b0c22e95beef40dfc0b6e5efae89ac7a0d78e5afe0c9b",
+        "peak": 1.1834772825241089,
+        "samples": 119360,
+        "at_unit_boundary": 3,
+        "output_sha256": "98fda69f3de1a5bcc2315c75fd7a26a93ad26d926fced12b4ee2777ef3e872e4"
+      },
+      {
+        "id": "1320-122612-0003",
+        "speaker": "1320",
+        "source_sha256": "0c77177884f8558fe30c0c61ab80c1edd164f9a914fdeb0a60ccb7eaecb4b933",
+        "peak": 1.2329167127609253,
+        "samples": 157840,
+        "at_unit_boundary": 4,
+        "output_sha256": "7351eee40f8a12ed489bb561ec53caaab55d188798aa1c00ed82547e0f481a5f"
+      },
+      {
+        "id": "1320-122612-0004",
+        "speaker": "1320",
+        "source_sha256": "8d9a1195950140b1799204ed5d21577708d2398a0e7b3b5936dace5b03c66139",
+        "peak": 1.1107115745544434,
+        "samples": 102800,
+        "at_unit_boundary": 3,
+        "output_sha256": "dac20a59b6c5043cbf58442c90ee0d1ba1f061d4eb04569da07465b9c4ada523"
+      },
+      {
+        "id": "2300-131720-0000",
+        "speaker": "2300",
+        "source_sha256": "84cb3f03857e7a68d5811c2f07f14725f8583a61d3a280816e30ec44956d8d7e",
+        "peak": 1.3325698375701904,
+        "samples": 81280,
+        "at_unit_boundary": 4,
+        "output_sha256": "5224a3b36912a86ae42b465c56ad0a4bbc5531a0005ed988aae6ba17611cd8a2"
+      },
+      {
+        "id": "2300-131720-0001",
+        "speaker": "2300",
+        "source_sha256": "421a5788b45cc79e2c7eb4cc91ad5ca98a0644a0dab2978436a20fc4cd1853ce",
+        "peak": 1.5051110982894897,
+        "samples": 234080,
+        "at_unit_boundary": 5,
+        "output_sha256": "f368c62008e91bae0719ccd337ad4a6af35579de94089c50fb6675a0ed97cd13"
+      },
+      {
+        "id": "2300-131720-0002",
+        "speaker": "2300",
+        "source_sha256": "2b3dfdfd676c5e0132d83191ced000b5f2e73bb1f9e37bf5a785f922161f67bf",
+        "peak": 1.5051110982894897,
+        "samples": 209840,
+        "at_unit_boundary": 5,
+        "output_sha256": "a2bdfc943607a5c582d74d2d9b806ce5cf73a700753f9c047d013d99df5b478d"
+      },
+      {
+        "id": "2300-131720-0005",
+        "speaker": "2300",
+        "source_sha256": "0a754ffc8d86480e82057e7c2e4d9d6cd6d9d35e5a919b1ccd5643d7bf088280",
+        "peak": 1.5194171667099,
+        "samples": 110400,
+        "at_unit_boundary": 5,
+        "output_sha256": "c1b653115da50c6e5c3ee11da4b03ebc09e9dcccce7579f62f69d042a0d9a7e5"
+      },
+      {
+        "id": "2300-131720-0006",
+        "speaker": "2300",
+        "source_sha256": "f027efc2156257442c4bfc0aa585f034bf9179655a0792b37c548da80dbe8520",
+        "peak": 1.496337652206421,
+        "samples": 65920,
+        "at_unit_boundary": 5,
+        "output_sha256": "c683576f8441f5d8816a4cd0b74716699006efe0e792537bcfa80ae6b15a36a2"
+      },
+      {
+        "id": "2830-3979-0000",
+        "speaker": "2830",
+        "source_sha256": "b21719bb12120d2ec798c65e4b251c3dca7a002d2c5fda59859524b171fa9d5c",
+        "peak": 1.562233567237854,
+        "samples": 97920,
+        "at_unit_boundary": 5,
+        "output_sha256": "5695155c91a771b1ec5527496efed0592509156ac23b19e2e3197285cffd11df"
+      },
+      {
+        "id": "2830-3979-0002",
+        "speaker": "2830",
+        "source_sha256": "e9dfc31973729f94002247903620760456a6e183b10233dde71f28e4435ea27b",
+        "peak": 1.3984429836273193,
+        "samples": 69040,
+        "at_unit_boundary": 4,
+        "output_sha256": "7fd494b5ddd33d0d26b16c155952338321f6d1eb3593628924bd5f6110d6e98a"
+      },
+      {
+        "id": "2830-3979-0003",
+        "speaker": "2830",
+        "source_sha256": "1c9efaa4c501d7d3a27948e262ea7c00475621347e7aaf5303a40a8839d411d9",
+        "peak": 1.5196388959884644,
+        "samples": 129360,
+        "at_unit_boundary": 5,
+        "output_sha256": "95b2adc924819e0d7ece7d279b40072c8b257b2bddd7a005d38110bef38af713"
+      },
+      {
+        "id": "2830-3979-0006",
+        "speaker": "2830",
+        "source_sha256": "a69f3c0f765d8e4dbb4e13c8336d1154c2fb10d1e6b785aa5c71a0c86450711d",
+        "peak": 1.4912534952163696,
+        "samples": 72800,
+        "at_unit_boundary": 5,
+        "output_sha256": "47f3c86ed9e656e6f65a71db39ebdc20402860b4fbb6d41147893b95278b2cf4"
+      },
+      {
+        "id": "2830-3979-0007",
+        "speaker": "2830",
+        "source_sha256": "af8ea2de095dde54cde454877b332b092ee99d901c3678c301ecad2de5f0dad9",
+        "peak": 1.4993035793304443,
+        "samples": 234800,
+        "at_unit_boundary": 5,
+        "output_sha256": "4caccd2bc0298b27a3357e1ea0bd878ffcc8a10af1eb8b2bbe695045e6279cf1"
+      },
+      {
+        "id": "4077-13751-0000",
+        "speaker": "4077",
+        "source_sha256": "d76a732a69cca08d2f249fae5e63b28e417e5569e3233915f22f28c08a67c21a",
+        "peak": 1.2673605680465698,
+        "samples": 152960,
+        "at_unit_boundary": 4,
+        "output_sha256": "9d71243acfe3f1313caa7041867990947495b9084ade57fb0d4f34b6b8e96b64"
+      },
+      {
+        "id": "4077-13751-0001",
+        "speaker": "4077",
+        "source_sha256": "1f85c5ad8dfb8fcf3c8d86e54afc055f756f147e7b426ff8b7f48780d8d43c0e",
+        "peak": 1.492888331413269,
+        "samples": 139920,
+        "at_unit_boundary": 5,
+        "output_sha256": "e1203093a94c2b790ee7adadda88121e1f5fec7eac65637121690aa79d1f903e"
+      },
+      {
+        "id": "4077-13751-0002",
+        "speaker": "4077",
+        "source_sha256": "ae95df4576fd6f4a6ace8fc88333e43367b22e9ef5a4d07702aa5d6ac09039ad",
+        "peak": 1.1857094764709473,
+        "samples": 156000,
+        "at_unit_boundary": 3,
+        "output_sha256": "75dc2d3b6dbea078ca8a0171c2281eda4240a7c5f6697b849173c02532b0df40"
+      },
+      {
+        "id": "4077-13751-0006",
+        "speaker": "4077",
+        "source_sha256": "969803f07780cc65e4836592ea4ff63ab885fed7e852f36cb0cb50c3cacd36f4",
+        "peak": 1.1622116565704346,
+        "samples": 209040,
+        "at_unit_boundary": 3,
+        "output_sha256": "bbe1e228484d7b15824299cfc4266065d2572bbd69d4bd410282e53f72a2c022"
+      },
+      {
+        "id": "4077-13751-0008",
+        "speaker": "4077",
+        "source_sha256": "402ca6491239be2aa5eefde5a3212164bdc2b8ffa7b0d00f1f94e5bc98136b1c",
+        "peak": 1.4290210008621216,
+        "samples": 168880,
+        "at_unit_boundary": 4,
+        "output_sha256": "2ef0fbd750b53e674092367ecd6d119055d22d6b235edda0839404564ab5bbe2"
+      }
+    ],
+    "output_hashes_added_after_complete_render": true
+  },
+  "scope": "Fixed pretrained ECAPA, no attacker retraining. Different utterances for enrollment/trials. Target recording is separate from evaluated utterances. Recognition is not waveform recovery. TVTSyn reconstruction resistance remains untested."
+}

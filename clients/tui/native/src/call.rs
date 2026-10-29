@@ -41,7 +41,9 @@ use crate::echo::EchoCanceller;
 use crate::protocol::Event;
 use crate::report::Report;
 use crate::tls_stream::TlsStream;
-use randos_voice::{Processor, Variant};
+use crate::voice::Voice;
+use randos_voice::Variant;
+use randos_voice_native::Style;
 
 /// The longest the loop waits on the socket, so mic frames and commands are
 /// serviced well inside one 20 ms frame.
@@ -87,6 +89,9 @@ pub struct CallConfig {
     /// Not in the Port protocol yet.
     pub voice: Variant,
     pub voice_params: Vec<f32>,
+    /// Product masking selected through the Port protocol. Off by default;
+    /// mutually exclusive with the legacy processor.
+    pub masking: Option<Style>,
 }
 
 impl CallConfig {
@@ -101,6 +106,7 @@ impl CallConfig {
             loss_every: 0,
             voice: Variant::Passthrough,
             voice_params: Vec::new(),
+            masking: None,
         }
     }
 }
@@ -247,7 +253,7 @@ struct Session {
     echo: Option<EchoCanceller>,
     /// Phase 5's seam: runs on every mic frame before it's muted, metered,
     /// and encoded, so all three see the processed voice (as in the browser).
-    voice: Processor,
+    voice: Voice,
 }
 
 impl Session {
@@ -304,7 +310,7 @@ impl Session {
             muted: false,
             last_seq: None,
             echo: acoustic.then(EchoCanceller::new),
-            voice: voice_processor(config),
+            voice: Voice::new(config.voice, &config.voice_params, config.masking)?,
             tls: TlsStream::default(),
         })
     }
@@ -331,6 +337,7 @@ impl Session {
                 }
                 Ok(Command::Mute(muted)) => {
                     self.muted = muted;
+                    self.update_voice_gate()?;
                     continue;
                 }
                 Ok(Command::Restart(ice_servers)) => {
@@ -355,7 +362,7 @@ impl Session {
                     echo.capture(&mut frame, queued)?;
                 }
                 let mut voice = [0.0; FRAME];
-                self.voice.process(&frame, &mut voice);
+                self.voice.process(&frame, &mut voice)?;
                 self.send_frame(&voice)?;
                 self.drain()?;
                 continue;
@@ -632,15 +639,24 @@ impl Session {
         }
     }
 
+    fn update_voice_gate(&mut self) -> Result<(), Error> {
+        if self.voice.set_eligible(self.connected && !self.muted)? {
+            self.capture.discard_pending()?;
+        }
+        Ok(())
+    }
+
     fn handle_event(&mut self, event: RtcEvent) -> Result<(), Error> {
         match event {
             RtcEvent::Connected => {
                 self.dtls_up = true;
                 self.connected = true;
+                self.update_voice_gate()?;
                 self.state("connected", None);
             }
             RtcEvent::IceConnectionStateChange(IceConnectionState::Disconnected) => {
                 self.connected = false;
+                self.update_voice_gate()?;
                 self.state("disconnected", None);
             }
             // ICE recovered after a disconnect (DTLS is still up): report it,
@@ -649,6 +665,7 @@ impl Session {
                 IceConnectionState::Connected | IceConnectionState::Completed,
             ) if self.dtls_up && !self.connected => {
                 self.connected = true;
+                self.update_voice_gate()?;
                 self.state("connected", None);
             }
             RtcEvent::MediaAdded(added) => {
@@ -838,15 +855,6 @@ fn remote_candidate(payload: &Value, report: &mut Report) -> Option<Candidate> {
             None
         }
     }
-}
-
-/// The voice processor `config` asks for, with its parameters set.
-fn voice_processor(config: &CallConfig) -> Processor {
-    let mut processor = Processor::new(config.voice, crate::codec::SAMPLE_RATE as f32);
-    for (index, value) in config.voice_params.iter().enumerate() {
-        processor.set_param(index, *value);
-    }
-    processor
 }
 
 /// A UDP socket for the call on `bind_ip`, or else on the default route's
@@ -1132,6 +1140,77 @@ mod tests {
             (200..=240).contains(&rising),
             "heard about {rising} Hz, expected 220 (440 an octave down)"
         );
+    }
+
+    #[test]
+    fn native_masking_carries_real_opus_audio_and_restarts_cleanly_after_mute() {
+        for (index, style, expected_hz) in [
+            (0, Style::LowerResonance, 440.0_f32),
+            (
+                1,
+                Style::HigherResonancePitch,
+                440.0 * 2.0_f32.powf(1.0 / 12.0),
+            ),
+        ] {
+            let heard = std::env::temp_dir().join(format!(
+                "randos-native-mask-{}-{index}.wav",
+                std::process::id()
+            ));
+            let (offerer, offerer_seen) = peer_from(CallConfig {
+                bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+                masking: Some(style),
+                ..CallConfig::new(Role::Offerer)
+            });
+            let (answerer, answerer_seen) = peer_into(
+                CallConfig {
+                    bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+                    ..CallConfig::new(Role::Answerer)
+                },
+                Output::Wav(heard.clone()),
+            );
+            let pair = ((&offerer, &*offerer_seen), (&answerer, &*answerer_seen));
+            connect(pair.0, pair.1);
+            let before = answerer_seen
+                .lock()
+                .unwrap()
+                .stats
+                .last()
+                .unwrap()
+                .packets_received;
+            offerer.mute(true).unwrap();
+            relay(pair.0, pair.1, Duration::from_millis(2500));
+            let muted = answerer_seen.lock().unwrap().stats.last().cloned().unwrap();
+            assert!(
+                muted.packets_received > before + 50,
+                "RTP must continue while muted"
+            );
+            assert!(
+                muted.output_peak_dbfs < -60.0,
+                "muted audio: {} dBFS",
+                muted.output_peak_dbfs
+            );
+            offerer.mute(false).unwrap();
+            relay(pair.0, pair.1, Duration::from_millis(1500));
+            offerer.stop().unwrap();
+            answerer.stop().unwrap();
+            let samples: Vec<f32> = hound::WavReader::open(&heard)
+                .unwrap()
+                .into_samples::<f32>()
+                .map(Result::unwrap)
+                .collect();
+            std::fs::remove_file(heard).unwrap();
+            let last = &samples[samples.len() - 48000..];
+            let rms = (last.iter().map(|x| x * x).sum::<f32>() / 48000.0).sqrt();
+            let rising = last
+                .windows(2)
+                .filter(|w| w[0] < 0.0 && w[1] >= 0.0)
+                .count() as f32;
+            assert!(rms > 0.02, "no usable masked audio after unmute: {rms}");
+            assert!(
+                (rising - expected_hz).abs() < 8.0,
+                "heard {rising} Hz, expected {expected_hz}"
+            );
+        }
     }
 
     #[test]

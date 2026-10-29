@@ -1,0 +1,364 @@
+{
+  "generated_at": "2026-10-24T22:37:17.661Z",
+  "runtime": "v26.10.0",
+  "cpu": "Apple M5 Pro",
+  "wasm_sha256": "b0b8d6566cfacd697b95a50749ae9bb13784fa70c594a2817a14a01366511d9a",
+  "sample_rate": 48000,
+  "block_samples": 128,
+  "block_budget_ms": 2.6666666666666665,
+  "limitation": "Node WASM with buffer copies; not browser AudioWorklet scheduling or a real-time guarantee.",
+  "results": [
+    {
+      "clip": "low_voice",
+      "variant": "pitch_shift",
+      "parameter": -4,
+      "maximum_error": 2.9802322387695312e-8,
+      "rms_error": 5.129451735869986e-10,
+      "native": {
+        "frames": 0,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.00475,
+        "seconds": 0.001601917,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.012082999999996957,
+        "seconds": 0.0031237919999999946
+      }
+    },
+    {
+      "clip": "low_voice",
+      "variant": "mcadams",
+      "parameter": 1,
+      "maximum_error": 0,
+      "rms_error": 0,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.026417000000000003,
+        "seconds": 0.018306208,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.028125000000002842,
+        "seconds": 0.019036790999999994
+      }
+    },
+    {
+      "clip": "low_voice",
+      "variant": "mcadams",
+      "parameter": 0.7,
+      "maximum_error": 5.960464477539063e-8,
+      "rms_error": 2.020883425776098e-10,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 2824,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.081959,
+        "seconds": 0.037731083,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.28479200000003857,
+        "seconds": 0.10685554200000001
+      }
+    },
+    {
+      "clip": "low_voice",
+      "variant": "mcadams",
+      "parameter": 0.9,
+      "maximum_error": 1.4901161193847656e-8,
+      "rms_error": 1.1045209323180756e-10,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.073334,
+        "seconds": 0.037669292,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.28937500000006366,
+        "seconds": 0.10686799999999994
+      }
+    },
+    {
+      "clip": "mid_voice",
+      "variant": "pitch_shift",
+      "parameter": -4,
+      "maximum_error": 2.2351741790771484e-8,
+      "rms_error": 4.1538811558396664e-10,
+      "native": {
+        "frames": 0,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.015791,
+        "seconds": 0.001629875,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.005084000000010747,
+        "seconds": 0.0028435830000000805
+      }
+    },
+    {
+      "clip": "mid_voice",
+      "variant": "mcadams",
+      "parameter": 1,
+      "maximum_error": 0,
+      "rms_error": 0,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.025584000000000003,
+        "seconds": 0.018470542,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.02733299999999872,
+        "seconds": 0.01875462500000003
+      }
+    },
+    {
+      "clip": "mid_voice",
+      "variant": "mcadams",
+      "parameter": 0.7,
+      "maximum_error": 5.960464477539063e-8,
+      "rms_error": 2.6685468395394915e-10,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 1048,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.06483299999999999,
+        "seconds": 0.035773708,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.24575000000004366,
+        "seconds": 0.10220433400000002
+      }
+    },
+    {
+      "clip": "mid_voice",
+      "variant": "mcadams",
+      "parameter": 0.9,
+      "maximum_error": 1.4901161193847656e-8,
+      "rms_error": 1.2954784904009908e-10,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.069125,
+        "seconds": 0.035724458,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.24662499999999454,
+        "seconds": 0.10248325
+      }
+    },
+    {
+      "clip": "high_voice",
+      "variant": "pitch_shift",
+      "parameter": -4,
+      "maximum_error": 1.4901161193847656e-8,
+      "rms_error": 3.1640238143596664e-10,
+      "native": {
+        "frames": 0,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.020667,
+        "seconds": 0.001615208,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.0542920000000322,
+        "seconds": 0.002931833000000097
+      }
+    },
+    {
+      "clip": "high_voice",
+      "variant": "mcadams",
+      "parameter": 1,
+      "maximum_error": 0,
+      "rms_error": 0,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.022208000000000002,
+        "seconds": 0.018324584,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.02800000000002001,
+        "seconds": 0.01878458300000011
+      }
+    },
+    {
+      "clip": "high_voice",
+      "variant": "mcadams",
+      "parameter": 0.7,
+      "maximum_error": 2.9802322387695312e-8,
+      "rms_error": 1.8961940192903381e-10,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 14,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.066083,
+        "seconds": 0.038096417,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.2642080000000533,
+        "seconds": 0.1096389999999999
+      }
+    },
+    {
+      "clip": "high_voice",
+      "variant": "mcadams",
+      "parameter": 0.9,
+      "maximum_error": 7.450580596923828e-9,
+      "rms_error": 5.162126769305187e-11,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.057833,
+        "seconds": 0.038101916,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.25995800000009694,
+        "seconds": 0.10945820800000002
+      }
+    },
+    {
+      "clip": "mencken_wasichu",
+      "variant": "pitch_shift",
+      "parameter": -4,
+      "maximum_error": 1.1175870895385742e-8,
+      "rms_error": 1.4271428199817322e-10,
+      "native": {
+        "frames": 0,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.002042,
+        "seconds": 0.00157775,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.0025840000000698637,
+        "seconds": 0.002859000000000151
+      }
+    },
+    {
+      "clip": "mencken_wasichu",
+      "variant": "mcadams",
+      "parameter": 1,
+      "maximum_error": 0,
+      "rms_error": 0,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.022917,
+        "seconds": 0.0182755,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.8303339999999935,
+        "seconds": 0.019720458000000007
+      }
+    },
+    {
+      "clip": "mencken_wasichu",
+      "variant": "mcadams",
+      "parameter": 0.7,
+      "maximum_error": 1.4901161193847656e-8,
+      "rms_error": 6.317159706486125e-11,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.067166,
+        "seconds": 0.039752667,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.27720799999997325,
+        "seconds": 0.11860229200000004
+      }
+    },
+    {
+      "clip": "mencken_wasichu",
+      "variant": "mcadams",
+      "parameter": 0.9,
+      "maximum_error": 7.450580596923828e-9,
+      "rms_error": 2.6904588494211223e-11,
+      "native": {
+        "frames": 599,
+        "failed_frames": 0,
+        "clipped_samples": 0,
+        "corrected_poles": 0,
+        "corrected_frames": 0,
+        "worst_block_ms": 0.07054200000000001,
+        "seconds": 0.040255125,
+        "aligned_delay_samples": 0,
+        "samples": 288000
+      },
+      "wasm": {
+        "worst_block_ms": 0.2761249999998654,
+        "seconds": 0.11867075000000023
+      }
+    }
+  ]
+}

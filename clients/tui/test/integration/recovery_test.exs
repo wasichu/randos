@@ -166,12 +166,13 @@ defmodule Tui.Integration.RecoveryTest do
     @tag :browser
     test "TUI ↔ browser, #{name}: both paths cut, the call comes back", %{turn: turn} do
       {tui_speaks, browser_speaks} = unquote(pair)
-      env = [{"REPORT_EVERY_MS", "500"}]
+      env = [{"REPORT_EVERY_MS", "500"}, {"MASKING", "lower_resonance"}]
 
       {app, port} =
         if unquote(tui_first?) do
           app = start_audio_tui(:recover_tui)
           model = await_model(app, &(&1.status == :idle and &1.audio?))
+          keys(app, ["b", "3", "right", "esc"])
           find(app, model, tui_speaks, browser_speaks)
           await_model(app, &(&1.status == :looking))
           {app, start_browser(browser_speaks, tui_speaks, 40_000, env)}
@@ -180,20 +181,32 @@ defmodule Tui.Integration.RecoveryTest do
           await_browser(port, "looking")
           app = start_audio_tui(:recover_tui)
           model = await_model(app, &(&1.status == :idle and &1.audio?))
+          keys(app, ["b", "3", "right", "esc"])
           find(app, model, tui_speaks, browser_speaks)
           {app, port}
         end
 
       %{call: %{"id" => call_id}} = await_model(app, &(&1.status == :in_call))
       heard_tui = packets(await_media(app, &(packets(&1) > 50 and &1.relay_only?)))
-      heard_browser = browser_heard(await_browser(port, "inbound", &(browser_heard(&1) > 50)))
+      before = await_browser(port, "inbound", &(browser_heard(&1) > 50))
+      heard_browser = browser_heard(before)
 
       cut_at = System.monotonic_time(:millisecond)
       cut_all(turn)
       assert_recovers(app, call_id, cut_at)
 
-      await_media(app, &(packets(&1) > heard_tui + @fresh), 20_000)
-      await_browser(port, "inbound", &(browser_heard(&1) > heard_browser + @fresh))
+      await_media(
+        app,
+        &(packets(&1) > heard_tui + @fresh and &1.call.stats["output_peak_dbfs"] > -50),
+        20_000
+      )
+
+      await_browser(
+        port,
+        "inbound",
+        &(browser_heard(&1) > heard_browser + @fresh and
+            &1["inbound"]["totalAudioEnergy"] > before["inbound"]["totalAudioEnergy"] + 0.000001)
+      )
     end
   end
 end

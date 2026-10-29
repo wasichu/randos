@@ -14,6 +14,17 @@ Hide
 Type "cd clients/tui && rm -f tmp/screenshots-settings.json && clear && LC_ALL=en_US.UTF-8 RANDOS_TUI_SETTINGS=tmp/screenshots-settings.json RANDOS_FAKE_AUDIO=1 mix tui --url ws://localhost:4010/participant/websocket"
 Enter
 Sleep 5s
+Show
+Sleep 500ms
+Screenshot tmp/tui-language-pristine.png
+Type "l"
+Sleep 500ms
+Screenshot docs/assets/tui-language.png
+Escape
+Sleep 500ms
+Screenshot tmp/tui-language-dismissed.png
+
+Hide
 # Also happy to hear Spanish (the peer speaks it), then confirm "I'm an
 # adult". The cursor stays on the hearing row, for the screenshot.
 Tab
@@ -26,6 +37,19 @@ Sleep 500ms
 Show
 Sleep 500ms
 Screenshot docs/assets/tui-idle.png
+Sleep 500ms
+
+Type "?"
+Sleep 500ms
+Screenshot docs/assets/tui-help.png
+Escape
+Sleep 500ms
+
+Type "b3"
+Right
+Sleep 500ms
+Screenshot docs/assets/tui-voice.png
+Escape
 Sleep 500ms
 
 Enter

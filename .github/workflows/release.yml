@@ -36,6 +36,10 @@ jobs:
           install_args: erlang elixir just rust cmake
 
       - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            vendor/ex_ratatui/native/ex_ratatui -> target
 
       - name: Hex
         run: mix local.hex --force --if-missing
@@ -63,6 +67,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v7
+
       - uses: actions/download-artifact@v8
         with:
           path: dist
@@ -72,7 +78,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          notes=(--notes "The randos terminal client. Unpack and run bin/randos, or install with Homebrew. Checksums are in the .sha256 files.")
+          if [ -f "docs/releases/${GITHUB_REF_NAME}.md" ]; then
+            notes=(--notes-file "docs/releases/${GITHUB_REF_NAME}.md")
+          fi
           gh release create "${GITHUB_REF_NAME}" dist/*.tar.gz dist/*.sha256 \
             --repo "${GITHUB_REPOSITORY}" \
             --title "randos ${GITHUB_REF_NAME}" \
-            --notes "The randos terminal client. Unpack and run bin/randos, or install with Homebrew. Checksums are in the .sha256 files."
+            "${notes[@]}"

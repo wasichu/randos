@@ -66,13 +66,19 @@ are product requirements, not suggestions. Don't add features that violate them.
   - `just tofu <cmd>` — OpenTofu for the coturn server (`infra/coturn`). State is
     encrypted and committed; needs `TF_VAR_state_passphrase` (user's password
     manager) and `TF_VAR_do_token`. Never commit plaintext state (`just precommit` checks).
+- The TUI renderer is source-pinned under `vendor/ex_ratatui` with an atomic
+  physical-clear/backbuffer-reset patch (see `vendor/README.md`). Its NIF builds
+  through Rustler; `just prefetch` skips unpatched renderer binaries.
 - MCP servers (`.mcp.json`): `graft` (code graph, always on) and `tidewave`
   (runtime: eval in the running app, logs, docs, SQL-free introspection).
   Prefer Tidewave over `mix run` scripts for poking at live process state
   (Matchmaker, calls). Tidewave is served by the dev server on :4000, so:
-  - Claude Code reaches it through `mcp-proxy` (pinned in `mise.toml`), a stdio
-    proxy that waits for the server and reconnects when it restarts, so the
-    connection survives a server that isn't up yet;
+  - Both Claude Code and Codex should use `mise exec -- ./bin/tidewave-mcp`:
+    the launcher starts or reuses `just serve`, then runs `mcp-proxy` (pinned
+    in `mise.toml`), which waits for the server and reconnects after restarts.
+    Keep the MCP startup timeout at 120 seconds so a cold compile can finish.
+    Don't configure Codex with a direct HTTP URL: it can fail before the dev
+    server is ready. Codex reads its own `config.toml`, not `.mcp.json`;
   - a `SessionStart` hook in `.claude/settings.json` runs `just serve` in the
     background (logs in `tmp/serve.log`; it reuses a running server).
 - **Standing rule: start the dev server yourself when needed.** If Tidewave,
@@ -226,8 +232,9 @@ which `just translate-test` and so `just precommit` use, safe during a run). Its
 
 ## Rust (the TUI media helper, `clients/tui/native`)
 
-- The root `Cargo.toml` is a Cargo workspace with two members: the media
-  helper and `voice/` (the voice processors, `randos_voice`, also compiled
+- The root `Cargo.toml` is a Cargo workspace with three members: the media
+  helper, `voice-native/` (the owned Signalsmith C++ bridge, with unsafe FFI
+  isolated in `src/ffi.rs`; the helper still forbids unsafe), and `voice/` (the voice processors, `randos_voice`, also compiled
   to WASM for the browser by `just voice-wasm`; the committed `.wasm` is
   checked fresh by `just voice-wasm-check` in `native-check`). The voice
   crate uses `deny(unsafe_code)`, not `forbid`; its README explains the one
@@ -461,44 +468,44 @@ mix usage_rules.search_docs "Enum.zip" --query-by title
 <!-- usage_rules:otp-end -->
 <!-- usage-rules-end -->
 
-<!-- graft:start -->
-## Graft — repo context graph
+<!-- trail:start -->
+## Trail — repo context graph
 
-This repo is indexed in `graft/`: small linked markdown nodes that explain each
+This repo is indexed in `.trail/cache/`: small linked markdown nodes that explain each
 system and carry exact file:line spans, kept in sync with the code through git.
 
 For ANY task here — understanding how something works, finding where code lives,
 or scoping a change — get context from the graph before grepping or opening
 source files. Re-ask freely (it's cheap) and reuse literal identifiers you
 already have (symbol, error string, file name) as the query. New to this repo?
-Run `graft map` first — a token-budgeted orientation (dir clusters, hubs,
+Run `trail map` first — a token-budgeted orientation (dir clusters, hubs,
 hotspots), no LLM, no key.
 
-- Run `graft ask "<your question>" --source` → ranked nodes with the relevant
+- Run `trail ask "<your question>" --source` → ranked nodes with the relevant
   code spans inlined (each hit's ≤8-line crux by default; `--full` for whole
   definitions when the crux isn't enough). Match the tool to the task shape:
   for understanding or editing, the top node IS the answer — cite its
   `covers:` file:line spans and edit straight from `--source`. For
   exhaustive tasks ("every occurrence / every caller of this pattern"), ranked
-  results are top-N, not complete — run `graft grep "<literal>"` instead
+  results are top-N, not complete — run `trail grep "<literal>"` instead
   (exhaustive over indexed files, grouped by enclosing symbol), falling back
   to raw `grep -rn` only for unindexed files.
-- `graft skeleton <file>` → every definition's signature + span, ~10× cheaper
+- `trail skeleton <file>` → every definition's signature + span, ~10× cheaper
   than reading the file; use it to skim an API surface.
-- `graft callers <symbol>` gives precomputed, exact edges — who calls this.
+- `trail callers <symbol>` gives precomputed, exact edges — who calls this.
   Add `--direction out` for what it calls, or `--depth N` to walk
   transitively for the full blast radius. For structural questions, skip
   ranking and use this directly.
-- Or browse: `graft/INDEX.md` lists every node; follow the links.
+- Or browse: `.trail/cache/INDEX.md` lists every node; follow the links.
 - Monorepos and folders of multiple repos rank fairly across sub-projects —
   hits carry `[scope/]` labels naming which one they're from. Narrow with
-  `graft ask "<task>" --in <scope>/` once you know where you're working.
+  `trail ask "<task>" --in <scope>/` once you know where you're working.
 
 If a returned span is truncated ("+N more lines"), open the file at that exact
 range before finalizing. Only open source files when a node genuinely lacks a
 needed detail, and then at the exact file:line the node points to — never
 re-read whole files.
 
-After big code changes, refresh the graph with `graft build` (deterministic,
+After big code changes, refresh the graph with `trail build` (deterministic,
 no API key, $0).
-<!-- graft:end -->
+<!-- trail:end -->

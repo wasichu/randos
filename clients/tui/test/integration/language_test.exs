@@ -11,6 +11,22 @@ defmodule Tui.Integration.LanguageTest do
   @moduletag :integration
   @moduletag timeout: 30_000
 
+  test "choosing a language explicitly updates both client and server locale" do
+    app = start_app(:picker_tui, {100, 24}, language: "en")
+    await_model(app, &(&1.status == :idle))
+    keys(app, ["l"])
+    await_model(app, &(&1.language_picker == "en"))
+    index = Enum.find_index(Tui.Language.available(), &(&1 == "es"))
+    keys(app, List.duplicate("down", index))
+    await_model(app, &(&1.language_picker == "es" and &1.language == "en"))
+    keys(app, ["enter"])
+    await_model(app, &(&1.language == "es" and is_nil(&1.language_picker)))
+    keys(app, ["enter"])
+    %{error: error} = await_model(app, &(&1.error != nil))
+    refute error == "Accept the 18+ acknowledgment before looking for a rando."
+    assert error =~ "18+"
+  end
+
   test "a TUI in Spanish gets the server's error message in Spanish" do
     app = start_app(:spanish_tui, {100, 24}, language: "es")
     await_model(app, &(&1.status == :idle))

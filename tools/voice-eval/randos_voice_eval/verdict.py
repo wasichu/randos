@@ -11,6 +11,11 @@ HIDDEN_EER = 0.30
 WER_MARGIN = 0.10
 
 
+def defective(processing):
+    return (processing.get("failed_frames", 0) > 0
+            or processing.get("clipped_samples", 0) / max(processing.get("samples", 1), 1) > 0.001)
+
+
 def of(result, baseline):
     """`result`: `eer_ignorant`, `eer_informed`, `wer`; `baseline`: the
     original audio's `eer` and `wer`. Returns `{kind, text}`."""
@@ -18,17 +23,27 @@ def of(result, baseline):
     ignorant = result["eer_ignorant"] >= HIDDEN_EER
     informed = result["eer_informed"] >= HIDDEN_EER
     # Only measured where there's a transformation to undo (pitch shifts).
-    undo = result.get("eer_undo")
-    survives_undo = undo is None or undo >= HIDDEN_EER
+    undo = result.get("eer_adaptive", result.get("eer_undo"))
+    survives_undo = undo is not None and undo >= HIDDEN_EER
+    # Check each reference configuration separately; aggregating could hide
+    # a broken attack behind many clean reference clips.
+    bad_attack = (defective(result.get("attack_processing", {}))
+                  or any(defective(item["processing"]) for item in result.get("reference_processing", [])))
 
-    if not intelligible:
+    if defective(result.get("processing", {})):
+        kind, text = "processing_defect", "Processing failures or clipping disqualify this setting."
+    elif not intelligible:
         kind, text = "hurts_intelligibility", "Speech recognition suffers too much to count as usable."
+    elif ignorant and informed and survives_undo and bad_attack:
+        kind, text = "invalid_attack", "Attack audio has processing defects; privacy evidence is inconclusive."
     elif ignorant and informed and survives_undo:
-        kind, text = "hides", "Hides the speaker from every attacker tried and stays intelligible."
+        kind, text = "needs_review", "Confuses tested attacks and preserves transcription; inspect identification accuracy and listen before drawing conclusions."
+    elif ignorant and informed and undo is None:
+        kind, text = "untested_attack", "Looks promising, but an adaptive attack has not been measured."
     elif ignorant and informed:
         kind, text = (
             "undone",
-            "Fools both attackers, but shifting the voice back reveals the speaker.",
+            "Confuses the first comparisons, but the adaptive attack still identifies speakers.",
         )
     elif ignorant:
         kind, text = (

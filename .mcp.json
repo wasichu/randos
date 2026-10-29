@@ -7,11 +7,11 @@
       ]
     },
     "tidewave": {
-      "command": "mcp-proxy",
+      "command": "mise",
       "args": [
-        "--initial-retry-interval",
-        "1",
-        "http://localhost:4000/tidewave/mcp"
+        "exec",
+        "--",
+        "./bin/tidewave-mcp"
       ]
     }
   }

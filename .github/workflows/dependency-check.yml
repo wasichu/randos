@@ -1,7 +1,7 @@
 # Weekly: known advisories against what's locked, even when nobody pushes
 # (CI checks only when something is pushed or a PR opens). cargo deny reads the Rust advisory database
 # (with clients/tui/native/deny.toml's ignores); mix hex.audit lists Hex
-# packages their authors retired. A failed scheduled run emails the
+# known security advisories and retired packages. A failed scheduled run emails the
 # repository's owner. Fixes usually arrive as Dependabot PRs
 # (.github/dependabot.yml).
 name: Dependency check
@@ -27,7 +27,12 @@ jobs:
       - name: Rust advisories (cargo deny)
         run: cd clients/tui/native && cargo deny --log-level error check advisories
 
-      - name: Retired Hex packages (server and TUI)
+      - name: Renderer advisories (source-built NIF)
+        # Existing syntax-highlighter maintenance notices remain warnings;
+        # vulnerabilities still fail. Same policy as native-check.
+        run: cargo deny --manifest-path vendor/ex_ratatui/native/ex_ratatui/Cargo.toml --config clients/tui/native/deny.toml check advisories --warn unmaintained
+
+      - name: Hex advisories and retired packages (server and TUI)
         run: |
           mix local.hex --force --if-missing
           mix deps.get

@@ -1,0 +1,192 @@
+{
+  "candidates": {
+    "tvtsyn_browser": {
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__browser_original__af4c7014b58069072b3cd505dd6d3902054b62c531fb0d7070673291e0af78e0.wav",
+          "converted": "low_voice__browser_converted__abfb2aa74000c8b1354d3110995c114aa22cea34bcbef1028bb557d89f6bfbe2.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "browser_wasm",
+          "processor": "tvtsyn_browser",
+          "build_id": "7eccba1243b83885660c271564736ea642431d530c73aea607480a1ebc08af5d",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-25T14:08:32.486Z"
+        },
+        "description": "TVTSyn output rendered by the browser WASM probe.",
+        "note": "Actual browser WASM output, checked against native ONNX on identical input. Prepared WAV playback only; no weights load in this lab view."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__browser_original__d4111e3dcde2c539b5f22cb4c47fa89e4bc5075984c760b22cd32492ca9af85e.wav",
+          "converted": "mid_voice__browser_converted__cab88ecab6bc8447a8a23d724299ea7e2164440eacba17225287729622fe1262.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "browser_wasm",
+          "processor": "tvtsyn_browser",
+          "build_id": "c22bbe84094aa5ba8fb5d72143dbf47e7711656dc7a33f68dcb2589ec1d89cbe",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-25T14:08:36.420Z"
+        },
+        "description": "TVTSyn browser WASM, target-voice control.",
+        "note": "Actual browser WASM output, checked against native ONNX on identical input. Prepared WAV playback only; no weights load in this lab view. This recording is also the target voice: a control, not disguise evidence."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__browser_original__eeaeabd4688e4d428ce21f23b7c7e53a7d03dd5a653251d18cd63d04333fb94b.wav",
+          "converted": "mencken_wasichu__browser_converted__903fab1f0cccd3e37a037ac99010148815d7c068c4e3b34bac5807dec91fcb89.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "browser_wasm",
+          "processor": "tvtsyn_browser",
+          "build_id": "9e5d77345c90c2c3cf668af227bbc9f6cd57e5643eb7bc09ab40638e333b31c6",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-25T14:08:40.269Z"
+        },
+        "description": "TVTSyn output rendered by the browser WASM probe.",
+        "note": "Actual browser WASM output, checked against native ONNX on identical input. Prepared WAV playback only; no weights load in this lab view."
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__browser_original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__browser_converted__bc648fb62e90a219597af5fb3d7a346e4b920cfca1491c35d007dc973b9e1ffc.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "browser_wasm",
+          "processor": "tvtsyn_browser",
+          "build_id": "21b033e6e881d7e02a521f14ab7f90860c95c766659405ec4471cd6a363018b4",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:56:17.276Z"
+        },
+        "description": "Synthetic-tone diagnostic through browser WASM.",
+        "note": "Actual browser WASM output, checked against native ONNX on identical input. Prepared WAV playback only; no weights load in this lab view. Synthetic tone, not speech or evidence of masking quality."
+      }
+    }
+  },
+  "runs": {
+    "low_voice": {
+      "path": "tools/voice-browser/results/browser-low_voice.json",
+      "execution": {
+        "graph": {
+          "sha256": "5cae8bb2aec55037a95136bad30fb3e2c9694738da96afed82f09f15a3b614aa",
+          "bytes": 359896673
+        },
+        "input": {
+          "sha256": "5369dc0f6cf05d691b60c4ba439c6a9bce44557bc0cb499c08eca5bfa414e71a",
+          "bytes": 384000
+        },
+        "speaker": {
+          "sha256": "df5c2694d9e78981cae62b2a4a5c4a3a394e4cec6bd857bbc5f4dd728c7e1e0b",
+          "bytes": 2816
+        },
+        "native_reference": {
+          "sha256": "2df4857616979343c211a40c591bf78bdeaabfb94684464b2f1b3fc96bf090a9",
+          "bytes": 384000
+        }
+      },
+      "comparison": {
+        "samples": 96000,
+        "max_absolute_error": 1.6983598470687866e-05,
+        "rms_error": 1.0724760850172003e-06,
+        "relative_rms_error": 8.411655182892204e-06,
+        "peak": 1.658117413520813
+      }
+    },
+    "mid_voice": {
+      "path": "tools/voice-browser/results/browser-mid_voice.json",
+      "execution": {
+        "graph": {
+          "sha256": "5cae8bb2aec55037a95136bad30fb3e2c9694738da96afed82f09f15a3b614aa",
+          "bytes": 359896673
+        },
+        "input": {
+          "sha256": "ce4a75626df39cef6fc10dfa472598379f1426dfe3f739f7262b90e61ee61693",
+          "bytes": 384000
+        },
+        "speaker": {
+          "sha256": "df5c2694d9e78981cae62b2a4a5c4a3a394e4cec6bd857bbc5f4dd728c7e1e0b",
+          "bytes": 2816
+        },
+        "native_reference": {
+          "sha256": "15c58a83191c5f0e29485a5cdf1d16b86c8b11bef6070da6318851bcd6da3bd5",
+          "bytes": 384000
+        }
+      },
+      "comparison": {
+        "samples": 96000,
+        "max_absolute_error": 3.888830542564392e-05,
+        "rms_error": 9.742383662849173e-07,
+        "relative_rms_error": 8.301900737380849e-06,
+        "peak": 1.2581156492233276
+      }
+    },
+    "mencken_wasichu": {
+      "path": "tools/voice-browser/results/browser-mencken_wasichu.json",
+      "execution": {
+        "graph": {
+          "sha256": "5cae8bb2aec55037a95136bad30fb3e2c9694738da96afed82f09f15a3b614aa",
+          "bytes": 359896673
+        },
+        "input": {
+          "sha256": "458d6c45b316370923f34a3102776435ca13f85893fa941f201b4d0a2e00d09b",
+          "bytes": 384000
+        },
+        "speaker": {
+          "sha256": "df5c2694d9e78981cae62b2a4a5c4a3a394e4cec6bd857bbc5f4dd728c7e1e0b",
+          "bytes": 2816
+        },
+        "native_reference": {
+          "sha256": "965b148166a81c7a9ea1b0b9d8110197854d8592d7b1b65e7b9a273e0a3915ca",
+          "bytes": 384000
+        }
+      },
+      "comparison": {
+        "samples": 96000,
+        "max_absolute_error": 5.5164098739624023e-05,
+        "rms_error": 2.4704438018841326e-06,
+        "relative_rms_error": 2.5581212154636762e-05,
+        "peak": 1.7161568403244019
+      }
+    },
+    "test_tone": {
+      "path": "tools/voice-browser/results/browser-test_tone.json",
+      "execution": {
+        "graph": {
+          "sha256": "5cae8bb2aec55037a95136bad30fb3e2c9694738da96afed82f09f15a3b614aa",
+          "bytes": 359896673
+        },
+        "input": {
+          "sha256": "4b6455d0519b0930ff66df09840a40061e787b6df1c58719ee60a8fc3a5b3642",
+          "bytes": 256000
+        },
+        "speaker": {
+          "sha256": "df5c2694d9e78981cae62b2a4a5c4a3a394e4cec6bd857bbc5f4dd728c7e1e0b",
+          "bytes": 2816
+        },
+        "native_reference": {
+          "sha256": "71f03f5adad5e886c311177f6e4a03c7b9f749a702ce7fbe3729b170064ee609",
+          "bytes": 256000
+        }
+      },
+      "comparison": {
+        "samples": 64000,
+        "max_absolute_error": 9.520351886749268e-05,
+        "rms_error": 8.649999981011908e-06,
+        "relative_rms_error": 3.0797267865708235e-05,
+        "peak": 1.5227038860321045
+      }
+    }
+  }
+}

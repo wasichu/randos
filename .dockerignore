@@ -45,6 +45,9 @@ erl_crash.dump
 /priv/static/assets/
 /priv/static/cache_manifest.json
 
+# Local HTTPS credentials belong only to the development server.
+/priv/cert/
+
 # Not part of the server image (the Dockerfile copies only mix files, config,
 # priv, lib, assets, and rel). Without these, every deploy uploaded ~560 MB.
 /target/
@@ -52,8 +55,16 @@ erl_crash.dump
 /clients/
 /infra/
 /graft/
+/.trail/
+/dist/
 /dev/
 /docs/
 /tools/
 /.github/
 /.claude/
+
+# Source-built TUI renderer artifacts are not site build inputs.
+/vendor/ex_ratatui/native/ex_ratatui/target/
+/vendor/ex_ratatui/priv/
+/vendor/ex_ratatui/_build/
+/vendor/ex_ratatui/deps/

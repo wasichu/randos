@@ -26,12 +26,16 @@ import {hooks as colocatedHooks} from "phoenix-colocated/randos"
 import topbar from "../vendor/topbar"
 import {WebRTCAudio} from "./hooks/call_hook"
 import {CallCountdown} from "./hooks/countdown_hook"
+import {HomeShortcuts} from "./hooks/home_shortcuts"
+import {VoiceSettings} from "./hooks/voice_settings"
 import {CopyLink, JoinLink} from "./hooks/invitation_hooks"
 import {resumeTicket, setResumeTicket} from "./randos/resume"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const browserLocale = navigator.languages?.[0] || navigator.language || null
 const Hooks = {
+  HomeShortcuts,
+  VoiceSettings,
   CallCountdown,
   CopyLink,
   JoinLink,

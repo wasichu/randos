@@ -1,0 +1,11 @@
+{
+  "upstream": "51383efd921027683c89e5348211d93ff12ac2a8",
+  "models": {
+    "Plachta/Seed-VC": {"revision": "257283f9f41585055e8f858fba4fd044e5caed6e", "files": ["v2/cfm_small.pth", "v2/ar_base.pth", "README.md"]},
+    "Plachta/ASTRAL-quantization": {"revision": "4a2e9679f76eb03753adc8c503e3c23bb9c22f26", "files": ["bsq32/bsq32_light.pth", "bsq2048/bsq2048_light.pth", "README.md"]},
+    "funasr/campplus": {"revision": "e4b6ede7ce16997aff4ae69fbca1f0175e2afede", "files": ["campplus_cn_common.bin", "README.md"]},
+    "facebook/hubert-large-ll60k": {"revision": "ff022d095678a2995f3c49bab18a96a9e553f782", "files": ["config.json", "preprocessor_config.json", "pytorch_model.bin", "README.md"]},
+    "openai/whisper-small": {"revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "files": ["*.json", "merges.txt", "README.md"]},
+    "nvidia/bigvgan_v2_22khz_80band_256x": {"revision": "633ff708ed5b74903e86ff1298cf4a98e921c513", "files": ["config.json", "bigvgan_generator.pt", "LICENSE", "README.md"]}
+  }
+}

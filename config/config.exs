@@ -41,11 +41,16 @@ config :esbuild,
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ],
+  voice_masking: [
+    args:
+      ~w(randos/voice/masking_worker=js/randos/voice/masking_worker.js randos/voice/masking_worklet=js/randos/voice/masking_worklet.js --bundle --format=esm --target=es2022 --outdir=../priv/static/assets/js --loader:.wasm=binary),
+    cd: Path.expand("../assets", __DIR__)
+  ],
   # The voice lab's page script: dev only (its watcher is in config/dev.exs;
   # `mix assets.deploy` never builds it).
   voice_lab: [
     args:
-      ~w(js/voice_lab/lab.js --bundle --target=es2022 --outfile=../priv/static/assets/js/voice_lab.js),
+      ~w(voice_lab=js/voice_lab/lab.js voice_lab/mcadams=js/voice_lab/mcadams.js voice_lab/dsp_worker=js/voice_lab/dsp/worker.js voice_lab/dsp_bridge=js/voice_lab/dsp/bridge_worklet.js --bundle --format=esm --target=es2022 --outdir=../priv/static/assets/js --loader:.wasm=binary),
     cd: Path.expand("../assets", __DIR__)
   ]
 

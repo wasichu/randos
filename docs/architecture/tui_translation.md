@@ -1,5 +1,8 @@
 # Translating the TUI (plan, 2026-10-23; built the same day)
 
+Current UI (2026-10-28): `l` now opens a language picker; arrows move, Enter
+applies/saves, Esc cancels. The cycling described in this dated plan is historical.
+
 The owner's order (2026-10-23): TUI translation next, then invitations.
 The TUI's text is all English today; the website's is in 20 languages,
 machine-made through the shootout (`tools/translate/`). None of the

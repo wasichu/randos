@@ -1,8 +1,10 @@
 # Cargo workspace for the repo's Rust code (so rust-analyzer and cargo find it
 # from the repo root): the TUI's media helper (clients/tui/native/README.md)
-# and the voice processors it shares with the browser (voice/README.md).
+# and the Rust voice processors (voice/README.md), plus the isolated native
+# Signalsmith boundary (voice-native/README.md; browser core is separate WASM).
 [workspace]
-members = ["clients/tui/native", "voice"]
+members = ["clients/tui/native", "voice", "voice-native"]
+exclude = ["vendor/ex_ratatui/native/ex_ratatui"]
 resolver = "3"
 
 # One set of lints for all our Rust (each crate's `[lints] workspace = true`):
@@ -13,6 +15,8 @@ resolver = "3"
 [workspace.lints.rust]
 # The helper forbids it outright (#![forbid] in main.rs); the voice crate
 # has one documented exception (`#[unsafe(no_mangle)]` on its WASM exports).
+# voice-native/src/ffi.rs separately isolates C++ ownership/FFI; all other files
+# still deny unsafe code, and the helper retains its crate-level forbid.
 unsafe_code = "deny"
 
 [workspace.lints.clippy]

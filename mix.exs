@@ -82,7 +82,8 @@ defmodule Randos.MixProject do
       {:tidewave, "~> 0.9", only: :dev},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       # Dev-only terminal dashboard (`just top`); never in the release.
-      {:ex_ratatui, "~> 0.17", only: [:dev, :test]},
+      {:ex_ratatui, path: "vendor/ex_ratatui", only: [:dev, :test]},
+      {:rustler, "~> 0.38", only: [:dev, :test], runtime: false},
       {:phoenix, "~> 1.8"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -117,10 +118,11 @@ defmodule Randos.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind randos", "esbuild randos"],
+      "assets.build": ["compile", "tailwind randos", "esbuild randos", "esbuild voice_masking"],
       "assets.deploy": [
         "tailwind randos --minify",
         "esbuild randos --minify",
+        "esbuild voice_masking --minify",
         "phx.digest"
       ],
       precommit: [

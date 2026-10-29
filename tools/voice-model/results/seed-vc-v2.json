@@ -1,0 +1,185 @@
+{
+  "model": "Seed-VC V2",
+  "generated_at": "2026-10-25T01:47:19+00:00",
+  "upstream_revision": "51383efd921027683c89e5348211d93ff12ac2a8",
+  "manifest": {
+    "upstream": "51383efd921027683c89e5348211d93ff12ac2a8",
+    "models": {
+      "Plachta/Seed-VC": {
+        "revision": "257283f9f41585055e8f858fba4fd044e5caed6e",
+        "files": [
+          "v2/cfm_small.pth",
+          "v2/ar_base.pth",
+          "README.md"
+        ]
+      },
+      "Plachta/ASTRAL-quantization": {
+        "revision": "4a2e9679f76eb03753adc8c503e3c23bb9c22f26",
+        "files": [
+          "bsq32/bsq32_light.pth",
+          "bsq2048/bsq2048_light.pth",
+          "README.md"
+        ]
+      },
+      "funasr/campplus": {
+        "revision": "e4b6ede7ce16997aff4ae69fbca1f0175e2afede",
+        "files": [
+          "campplus_cn_common.bin",
+          "README.md"
+        ]
+      },
+      "facebook/hubert-large-ll60k": {
+        "revision": "ff022d095678a2995f3c49bab18a96a9e553f782",
+        "files": [
+          "config.json",
+          "preprocessor_config.json",
+          "pytorch_model.bin",
+          "README.md"
+        ]
+      },
+      "openai/whisper-small": {
+        "revision": "973afd24965f72e36ca33b3055d56a652f456b4d",
+        "files": [
+          "*.json",
+          "merges.txt",
+          "README.md"
+        ]
+      },
+      "nvidia/bigvgan_v2_22khz_80band_256x": {
+        "revision": "633ff708ed5b74903e86ff1298cf4a98e921c513",
+        "files": [
+          "config.json",
+          "bigvgan_generator.pt",
+          "LICENSE",
+          "README.md"
+        ]
+      }
+    }
+  },
+  "weights_sha256": {
+    "Plachta/Seed-VC": {
+      "v2/ar_base.pth": "42e2afabf97e5d856580af1f81a9705423b4fb21bb9475cece9925b62355cc5c",
+      "v2/cfm_small.pth": "73ae18615dc8cb01710086629973198226dedc63ebeaab0aee17863d767b3474"
+    },
+    "Plachta/ASTRAL-quantization": {
+      "bsq32/bsq32_light.pth": "b01d6ba14a7af57ecc02b3eb5897a7e2abdaefab06b3f218d6709dc98b0e83a3",
+      "bsq2048/bsq2048_light.pth": "d7953115a60609c72a50bc79e88aa7248ffd4444b3912f89e8375ec1c6485fc6"
+    },
+    "funasr/campplus": {
+      "campplus_cn_common.bin": "3388cf5fd3493c9ac9c69851d8e7a8badcfb4f3dc631020c4961371646d5ada8"
+    },
+    "facebook/hubert-large-ll60k": {
+      "config.json": "52e48f7f44bf7f1be327cc3e82368681acf0cc8c5538d757eae9e6685bfe2b16",
+      "pytorch_model.bin": "45a299050945479a68cffe2ab7a63fd08931718ba18f05a42dbb86a5164178e0",
+      "preprocessor_config.json": "a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335"
+    },
+    "openai/whisper-small": {
+      "added_tokens.json": "9715fd2243b6f06a5858b5e32950d2853f73dd5bc201aafcf76f5082a2d8acd1",
+      "tokenizer_config.json": "2a4c4281cf9f51ac6ccc406fdc711a087afe6530f671fa7b80953edc498275ce",
+      "special_tokens_map.json": "e67ae3a0aaa99abcd9f187138e12db1f65c16a14761c50ef10eef2c174a7a691",
+      "config.json": "e6a2b489da1b5aed65a8eb8d1e7466fa867ad5643a8bc138ba708bd56b2875c4",
+      "tokenizer.json": "27fc476bfe7f17299480be2273fc0608e4d5a99aba2ab5dec5374b4482d1a566",
+      "generation_config.json": "71565b8ef50d0bf7a1193ed4bbed195b94e70c18894d81bba2f1233dcec3ab53",
+      "normalizer.json": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+      "merges.txt": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+      "vocab.json": "8f680bba319e01a653d2e8a5dbc17a9157179e0576e6ce74ce0c06356c6e24f9",
+      "preprocessor_config.json": "9b5cd03a36fbb8a627c64d98a5b5b126ead95a77720723944487311f0110b666"
+    },
+    "nvidia/bigvgan_v2_22khz_80band_256x": {
+      "config.json": "88a1f47acf747db0b21e97a389d838566147f7a5464583ff5c8d819d870f03ee",
+      "bigvgan_generator.pt": "e95ba25972d3de0628d99cd156e9315a9c018899bf739988959ebe3544080ced"
+    }
+  },
+  "build_id": "25cab35754ca498cb45bf84a4e504ae507784c0d7044cf928f17943462acfcc9",
+  "settings": {
+    "diffusion_steps": 30,
+    "length_adjust": 1.0,
+    "intelligebility_cfg_rate": 0.7,
+    "similarity_cfg_rate": 0.7,
+    "top_p": 0.9,
+    "temperature": 1.0,
+    "repetition_penalty": 1.0,
+    "convert_style": true,
+    "anonymization_only": true
+  },
+  "seed": 20261024,
+  "device": "mps",
+  "dtype": "torch.float16",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "torch_version": "2.8.0",
+  "load_seconds": 3.570743915857747,
+  "listen_gain": 0.25,
+  "target": "mid_voice",
+  "target_sha256": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+  "results": [
+    {
+      "id": "high_voice",
+      "clip": "high_voice",
+      "source_sha256": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+      "status": "ready",
+      "inference_seconds": 10.206489708041772,
+      "input_seconds": 6.0,
+      "output_seconds": 6.489977324263038,
+      "sample_rate": 22050,
+      "peak": 1.0,
+      "samples_at_unit_boundary": 19,
+      "listening_clipped_samples": 0,
+      "audio": {
+        "original": "high_voice__original__78e13fef97c8904470a3093f053b520f2773123a5357eff5594ce4b4155561d8.wav",
+        "converted": "high_voice__converted__fbc53a7de5638586ab9c7dfe2287c7c36ffbf7fa8529ce42b7b16f4bd0130259.wav"
+      }
+    },
+    {
+      "id": "low_voice",
+      "clip": "low_voice",
+      "source_sha256": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+      "status": "ready",
+      "inference_seconds": 8.197342375060543,
+      "input_seconds": 6.0,
+      "output_seconds": 6.30421768707483,
+      "sample_rate": 22050,
+      "peak": 1.0,
+      "samples_at_unit_boundary": 13,
+      "listening_clipped_samples": 0,
+      "audio": {
+        "original": "low_voice__original__b195eb737d29db655291854b5259aa9dda8c772659e4269900b985e932d6caf0.wav",
+        "converted": "low_voice__converted__783d74a2a870394d53280641754e8001a611e57d3b63a545d29a820278ca8d85.wav"
+      }
+    },
+    {
+      "id": "mid_voice",
+      "clip": "mid_voice",
+      "source_sha256": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+      "status": "ready",
+      "inference_seconds": 8.462873665848747,
+      "input_seconds": 6.0,
+      "output_seconds": 6.524807256235827,
+      "sample_rate": 22050,
+      "peak": 1.0,
+      "samples_at_unit_boundary": 270,
+      "listening_clipped_samples": 0,
+      "audio": {
+        "original": "mid_voice__original__1825d7a129f17fd9556b167d0b31beed0cae13f4bd039bf6b93646fa22346dce.wav",
+        "converted": "mid_voice__converted__6cf20561351bf1a8088da8b76f72f4683870a451c473918f702b118ad4505c03.wav"
+      }
+    },
+    {
+      "id": "mencken_wasichu",
+      "clip": "mencken_wasichu",
+      "source_sha256": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+      "status": "ready",
+      "inference_seconds": 7.756764709018171,
+      "input_seconds": 6.0,
+      "output_seconds": 5.88625850340136,
+      "sample_rate": 22050,
+      "peak": 1.0,
+      "samples_at_unit_boundary": 31,
+      "listening_clipped_samples": 0,
+      "audio": {
+        "original": "mencken_wasichu__original__a38b9d6ca833c704c6fcd3d0ab623469c367e73234dc3e4e42923cd7842272fe.wav",
+        "converted": "mencken_wasichu__converted__e6224368db23548914485e703adc055b81120fd3cce3fa4bc992993cb5260f44.wav"
+      }
+    }
+  ],
+  "scope": "Four public LibriVox clips; offline whole-clip inference. Not a reconstruction attack, anonymity result, or live/browser latency measurement."
+}

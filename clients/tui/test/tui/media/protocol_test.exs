@@ -14,6 +14,22 @@ defmodule Tui.Media.ProtocolTest do
 
     assert encoded(3, :loopback_stop) == %{"id" => 3, "cmd" => "loopback_stop"}
 
+    assert encoded(14, {:audition_start, 9, "sine", "null", "off"}) ==
+             %{
+               "id" => 14,
+               "cmd" => "loopback_start",
+               "in" => "sine",
+               "out" => "null",
+               "masking" => "off",
+               "audition" => 9
+             }
+
+    assert encoded(12, {:loopback_masking, 9, "off"}) ==
+             %{"id" => 12, "cmd" => "loopback_masking", "masking" => "off"}
+
+    assert encoded(13, {:loopback_masking, 9, "higher_resonance_pitch"})["masking"] ==
+             "higher_resonance_pitch"
+
     ice = [%{"urls" => "stun:stun.example:3478"}]
 
     assert encoded(4, {:call_start, "offerer", ice, "device", "device", true}) == %{
@@ -48,6 +64,9 @@ defmodule Tui.Media.ProtocolTest do
     assert Protocol.decode(~s({"reply":1,"ok":"pong"})) == {:reply, 1, {:ok, "pong"}}
     assert Protocol.decode(~s({"reply":2,"error":"nope"})) == {:reply, 2, {:error, "nope"}}
     assert Protocol.decode(~s({"reply":null,"error":"bad"})) == {:reply, nil, {:error, "bad"}}
+
+    assert Protocol.decode(~s({"event":"loopback_failed","audition":9,"error":"gone"})) ==
+             {:event, "loopback_failed", %{"audition" => 9, "error" => "gone"}}
 
     assert Protocol.decode(~s({"event":"loopback_failed","error":"gone"})) ==
              {:event, "loopback_failed", %{"error" => "gone"}}

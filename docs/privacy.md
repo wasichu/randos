@@ -25,6 +25,7 @@ something can't be checked from the outside, this says so.
 | **The web server** (Phoenix, on Fly.io) | Your IP address while you're connected (any website does); the languages you chose (and the interface language a terminal client asks for at join: only a code like `es`, as a browser's `Accept-Language` says); the connection messages for your call, never the audio | Events such as "call started" and "call ended", tagged with random call and match IDs. No IP addresses, no languages, no identifiers that outlive the call. | Our host, Fly.io, keeps app logs for a limited time; we don't send them anywhere else |
 | **The relay** (coturn, a DigitalOcean droplet) | Both IP addresses of each relayed call, its timing, and its encrypted packets, which it can't decrypt | Errors only, with every IP address zeroed before it's written | 7 days |
 | **Your browser** | Your choice of interface language, if you pick one | A `randos_locale` cookie holding only the language code (e.g. `es`), so the next visit is in your language; it identifies no one and goes nowhere else. Phoenix's session cookie (CSRF protection) also carries the language for the page. | A year, or until you clear it |
+| **Your browser (display preferences)** | Your color theme and whether you have opened keyboard shortcuts | Local storage only: `randos:theme` and the boolean flag `randos:shortcuts-opened`. No identifier or audio; these values are not sent to the server. See [theme](../assets/js/app.js) and [shortcuts](../assets/js/hooks/home_shortcuts.js). | Until you clear this site's local storage |
 | **Your terminal (the TUI)** | Nothing new | A settings file on your own computer (`~/.config/randos/config.json`, or `~/Library/Application Support/randos/config.json` on macOS): your languages, the TUI's own interface language, that you confirmed the 18+ notice, and the mic and speaker names. It never leaves your computer. | Until you delete it |
 | **Your rando's browser or terminal** | The relay's address, never yours; your voice | Nothing (randos has no recording feature) | Not applicable |
 
@@ -165,6 +166,33 @@ use" in [`signaling_test.exs`](../test/randos/signaling_test.exs)). A
 possible hardening for the future would be letting clients show the call's
 fingerprint so two people could compare.
 
+## Local voice masking
+
+Browser and TUI voice choices start Off and stay in this session's memory only.
+They are not added to cookies, local storage, the TUI settings file, participant
+signaling or server call records. The selection freezes for a call. When enabled,
+the TUI processes locally after echo cancellation and before Opus; the browser
+uses a same-origin, locally built Worker/worklet containing the same DSP core.
+Muted or unconnected input is excluded before the buffered DSP; closure purges
+its history/queues and reopening discards pending capture/resampler history.
+Processing failure stops the call instead of sending the unmodified voice.
+Stop discards queued speech. This adds no server audio, audio upload, storage,
+model download or external process. The tests write only generated synthetic
+tones to temporary WAVs. See [`voice.rs`](../clients/tui/native/src/voice.rs),
+[`call.rs`](../clients/tui/native/src/call.rs),
+[`audio.rs`](../clients/tui/native/src/audio.rs) and the
+[`bridge safety audit`](../voice-native/README.md).
+
+Hear myself (TUI: p in the voice panel) explicitly opens a local microphone
+audition through headphones. It records/uploads nothing, and stops on Stop,
+exit or before call capture. Style/tone changes keep the microphone open while
+replacing the processor; Off explicitly plays the original. Late microphone
+grants are closed.
+Masking is not a guarantee against recognizing a speaker. See the browser
+[`owner`](../assets/js/randos/voice/masking.js),
+[`session choices`](../assets/js/randos/voice/masking_choices.js) and
+[`preview hook`](../assets/js/hooks/voice_settings.js).
+
 ## What you have to trust
 
 You can read exactly how every part is configured, and see that the
@@ -175,3 +203,88 @@ by the server rather than left to each client.
 
 Run your own instance ([self-hosting](self-hosting.md)) if you'd rather
 trust only yourself.
+
+## Local development voice lab
+
+The development-only `/dev/voice-lab` can play bundled public-domain samples
+or monitor the developer’s microphone locally through headphones. Microphone
+access starts only on an explicit preview button press. The preview uses no
+recorder or audio upload, and closes its tracks on Stop, tab exit, navigation,
+setup failure, or device loss. Cancellation during a permission prompt also
+closes any subsequently granted stream before connecting audio output.
+See [`live.js`](../assets/js/voice_lab/live.js) and the explicit
+[DSP preview](../assets/js/voice_lab/dsp/live.js) for capture and cleanup, and
+[`lab.js`](../assets/js/voice_lab/lab.js) for the UI lifecycle. This page and
+its bundle are development-only; none of this changes production call handling.
+
+The optional Signalsmith/WORLD live experiment keeps bounded, in-flight PCM
+only in browser memory: a small [AudioWorklet bridge](../assets/js/voice_lab/dsp/bridge_worklet.js)
+passes transferable buffers directly to a [local Worker](../assets/js/voice_lab/dsp/worker.js).
+Its compiled code is vendored and bundled from this repository; it fetches no
+remote model or runtime script. The preview sends no microphone PCM to the server,
+creates no recording/replay, and discards buffers on Stop/failure/navigation.
+An overload fails visibly rather than playing an unintended original-voice path.
+The original/modified switch is explicit. Tests alone enable bounded fixture
+capture in the bridge, using generated inputs and muted fake microphones; the UI
+never enables it. This remains a dev-only headset experiment, not a call feature.
+
+The optional shorter-buffer experiment changes only local output prefill and
+retains the same bounded queues and stop-on-failure behavior. Its eligibility
+comes from generated public-fixture tests and source hashes. The gentler-pitch
+choice changes pitch independently of resonance; zero pitch is processed output,
+not an original-voice bypass. Neither adds audio persistence or network uploads.
+
+The lab's Recovery test serves offline-generated derivatives of the four
+public LibriVox excerpts, not microphone or call recordings. `just voice-recovery`
+reads those bundled files and writes review WAVs under ignored
+`tmp/voice-recovery/` plus a saved experiment report. Only WAV basenames in
+that directory can be served by the dev-only recovery route
+([`voice_lab_clips.ex`](../dev/randos_dev/voice_lab_clips.ex)); audio players
+pause on case/view changes. The inverse receives the disguised public sample
+and its known setting; the original is used only in the offline controls and
+assessment ([`reconstruction.py`](../tools/voice-eval/randos_voice_eval/reconstruction.py)).
+
+The Models tab similarly serves only offline derivatives of those public
+excerpts. `just voice-model` downloads pinned pretrained weights from Hugging
+Face and upstream code from GitHub, then performs inference locally; these
+downloads expose the developer's network request, never any audio upload.
+Generated WAVs stay in ignored `tmp/voice-model`, served by a separate dev-only
+WAV-basename route. Neither model code nor weights enter production assets or
+call handling. See [`probe.py`](../tools/voice-model/probe.py),
+[`models.json`](../tools/voice-model/models.json) and
+[`voice_lab_clips.ex`](../dev/randos_dev/voice_lab_clips.ex).
+
+Prepared model/DSP choices in Listen & compare fetch only paired, immutable
+WAV derivatives of those public clips. Selecting them does not download model
+weights, run neural inference, or enable model processing of the microphone.
+Their source/run/build metadata attaches to explicit local text reviews,
+including the same contexts used in the research sections. See
+[`prepared.js`](../assets/js/voice_lab/prepared.js) and
+[`voice_lab_models.ex`](../dev/randos_dev/voice_lab_models.ex).
+
+`just voice-browser` is an additional local-only public-clip experiment. It
+prepares a fixed target embedding and native reference, then a throwaway
+loopback site serves the pretrained TVTSyn model to muted Chrome for actual
+browser inference. No audio leaves the machine. Its browser/server processes
+end with the runner; code/weights remain outside production bundles. The
+dev-only `/dev/voice-lab/browser-probe` route serves only generated
+fixed report files (HTML, JS, CSS), embedding public comparison WAVs in the report;
+it cannot serve model weights or arbitrary paths. See
+[`run.mjs`](../tools/voice-browser/run.mjs),
+[`prepare.py`](../tools/voice-browser/prepare.py), and
+[`voice_lab_clips.ex`](../dev/randos_dev/voice_lab_clips.ex).
+
+Listening feedback is optional, development-only research data. Answers are
+drafted in this browser's localStorage, separate for each source/setting/build
+or recovery/model run. Editing a review automatically sends ratings, notes and
+experiment metadata to the local dev server after a short pause, periodically
+while typing and when changing context. Untouched forms are not submitted.
+**Save now** is an immediate shortcut. Failed requests keep the draft and retry;
+unsent browser drafts resume on reload. The server appends validated text to ignored
+`tools/voice-eval/results/listening-reviews.jsonl`; no audio is accepted or
+saved by this endpoint. The assistant can read that file on a later task turn,
+so the owner need not copy the answers into chat. A save does not itself start
+an assistant turn. The route is inside the dev-only scope and browser CSRF
+pipeline; see [`voice_lab_reviews.ex`](../dev/randos_dev/voice_lab_reviews.ex)
+and [`review.js`](../assets/js/voice_lab/review.js). No account, tracking,
+production feedback collection or database is added.

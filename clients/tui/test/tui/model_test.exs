@@ -297,10 +297,27 @@ defmodule Tui.ModelTest do
     assert Model.seconds_left(joined()) == nil
   end
 
-  test "l on the idle screen moves to the next interface language" do
+  test "interface language picker stages a choice, commits with Enter and cancels with Esc" do
     model = %Model{status: :idle, connection: :connected}
-    {next, []} = Model.key(model, "l")
-    assert next.language == Tui.Language.next("en")
+    {opened, []} = Model.key(model, "l")
+    assert opened.language == "en"
+    assert opened.language_picker == "en"
+    {moved, []} = Model.key(opened, "down")
+    assert moved.language_picker == Tui.Language.step("en", 1)
+    assert moved.language == "en"
+    assert Model.paste(moved, "a link") == {moved, []}
+    {cancelled, []} = Model.key(moved, "esc")
+    assert cancelled.language == "en"
+    assert cancelled.language_picker == nil
+    {chosen, []} = Model.key(moved, "enter")
+    assert chosen.language == moved.language_picker
+    assert chosen.language_picker == nil
+    refute Map.has_key?(Model.saved(chosen), "language_picker")
+    {disconnected, _} = Model.disconnected(moved)
+    assert disconnected.language_picker == nil
+    {called, []} = Model.push(moved, "state", %{"status" => "connecting"})
+    assert called.language_picker == nil
+    assert called.language == "en"
   end
 
   describe "invitations" do

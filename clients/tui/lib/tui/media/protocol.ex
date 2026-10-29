@@ -11,11 +11,16 @@ defmodule Tui.Media.Protocol do
   @type id :: pos_integer()
   @type command ::
           :ping
+          | :capabilities
           | :devices
           | {:loopback_start, input :: String.t(), output :: String.t()}
+          | {:loopback_start, String.t(), String.t(), String.t()}
+          | {:audition_start, pos_integer(), String.t(), String.t(), String.t()}
+          | {:loopback_masking, pos_integer(), String.t()}
           | :loopback_stop
           | {:call_start, role :: String.t(), ice_servers :: list() | nil, input :: String.t(),
              output :: String.t(), relay_only :: boolean()}
+          | {:call_start, String.t(), list() | nil, String.t(), String.t(), boolean(), String.t()}
           | {:call_signal, type :: String.t(), payload :: map()}
           | {:call_mute, boolean()}
           | {:call_restart, ice_servers :: list() | nil}
@@ -26,11 +31,50 @@ defmodule Tui.Media.Protocol do
           | {:invalid, binary()}
 
   @spec encode(id(), command()) :: iodata()
+  # The generation scopes local helper events and asynchronous reply metadata.
+  def encode(id, {:audition_start, generation, input, output, masking}),
+    do:
+      Jason.encode_to_iodata!(%{
+        id: id,
+        cmd: "loopback_start",
+        in: input,
+        out: output,
+        masking: masking,
+        audition: generation
+      })
+
+  def encode(id, {:loopback_start, input, output, masking}),
+    do:
+      Jason.encode_to_iodata!(%{
+        id: id,
+        cmd: "loopback_start",
+        in: input,
+        out: output,
+        masking: masking
+      })
+
+  def encode(id, {:call_start, role, ice_servers, input, output, relay_only, masking}),
+    do:
+      Jason.encode_to_iodata!(%{
+        id: id,
+        cmd: "call_start",
+        role: role,
+        ice_servers: ice_servers || [],
+        in: input,
+        out: output,
+        relay_only: relay_only,
+        masking: masking
+      })
+
   def encode(id, :ping), do: Jason.encode_to_iodata!(%{id: id, cmd: "ping"})
+  def encode(id, :capabilities), do: Jason.encode_to_iodata!(%{id: id, cmd: "capabilities"})
   def encode(id, :devices), do: Jason.encode_to_iodata!(%{id: id, cmd: "devices"})
 
   def encode(id, {:loopback_start, input, output}),
     do: Jason.encode_to_iodata!(%{id: id, cmd: "loopback_start", in: input, out: output})
+
+  def encode(id, {:loopback_masking, _generation, masking}),
+    do: Jason.encode_to_iodata!(%{id: id, cmd: "loopback_masking", masking: masking})
 
   def encode(id, :loopback_stop), do: Jason.encode_to_iodata!(%{id: id, cmd: "loopback_stop"})
 

@@ -1,0 +1,609 @@
+{
+  "completed": true,
+  "generated_at": "2026-10-27T19:44:53Z",
+  "scope": "Native C++ core with TUI-sized frames. Not Rust FFI, devices, AEC, Opus, WebRTC or working TUI integration. One-machine evidence, not phone qualification or privacy proof.",
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "release": "27.0.0"
+  },
+  "build": {
+    "dependencies": {
+      "signalsmith-stretch": "88061fd4eda56a2353c5d65c74aa3f4ccf76f9da",
+      "signalsmith-linear": "7bb1c8f36794d6980080ce817c91f8da8fe56a66"
+    },
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin",
+    "compile_commands": [
+      [
+        "clang++",
+        "-std=c++17",
+        "-ffp-contract=off",
+        "-pthread",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Itmp/signalsmith-stretch",
+        "-Itmp/voice-dsp/browser/include",
+        "tools/voice-dsp/native/probe.cpp",
+        "tools/voice-dsp/browser/spectral.cpp",
+        "-O3",
+        "-o",
+        "tmp/voice-dsp/native/probe"
+      ],
+      [
+        "clang++",
+        "-std=c++17",
+        "-ffp-contract=off",
+        "-pthread",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Itmp/signalsmith-stretch",
+        "-Itmp/voice-dsp/browser/include",
+        "tools/voice-dsp/native/probe.cpp",
+        "tools/voice-dsp/browser/spectral.cpp",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "-o",
+        "tmp/voice-dsp/native/probe-sanitized"
+      ]
+    ],
+    "binary_sha256": "479aa6a4cc0a32b883b434f554c9525e0aaeed7e266bf3354851998f3b95d7c3",
+    "binary_bytes": 116152,
+    "binary_gzip_bytes": 46395,
+    "dynamic_libraries": "tmp/voice-dsp/native/probe:\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.27.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)",
+    "provenance": {
+      "tools/voice-dsp/native/probe.cpp": "a3147f915d97390238dd10049c7b66c4d5b58111752debf1179b8ad37197ff78",
+      "tools/voice-dsp/native/run.py": "f02af8175515fe86ec194f215191da8e49f8d94d30352080048b84b404f63b38",
+      "tools/voice-dsp/browser/spectral.cpp": "862e6743238f09bf56efcbc265f78a5b34fc812151dd45c74ee29517bc17b051",
+      "tools/voice-dsp/browser/sources.json": "6e0e69c66c47716a15af2d27c9fb3696e21e9b593ffcbc28daf8b70b121772fa",
+      "tools/voice-dsp/browser/run.mjs": "2d7dc917a9478e63e2cd617d6eeede6b6739c51c2e0ac6c9f349c84158c7cc85",
+      "tools/voice-dsp/browser/worker.mjs": "f8a8eb08a848dafec73d654215497d6d97d463019cc3171e17f5a583cbf06297",
+      "tools/voice-dsp/browser/adapters.mjs": "22df32e132322b110275b92b794906ef70ce1467d6bc3dafb06e2ba98b05b31b",
+      "tools/voice-dsp/browser/page.mjs": "3d1855e3fa5e61a9a8b976038d1db8643568e27fdc322856885f4a9fcfe48d19",
+      "assets/js/voice_lab/dsp/adapter.js": "310f24f4eef519346620e509bf1457655fca554de92f43927f54e899e0616d81",
+      "assets/vendor/voice_dsp/manifest.json": "6c102adc44ba5a5c421163725935c80f73a3c4ff26e19da40b1214c3b1142ec3",
+      "assets/vendor/voice_dsp/spectral.mjs": "5feaf3d85d23c8223abd23c46428e0aa7a147e3315eff14ac60f2bbbec95ec84",
+      "assets/vendor/voice_dsp/spectral.wasm": "ddc122500ba02ca93da99b56e08050439c7d55ac49e70ce7e8641be9265aa6cc"
+    },
+    "sanitized_fixtures": 32,
+    "stdin_eof_exit_pass": true
+  },
+  "paced_input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747",
+  "delivery_scope": "Frames delivered at 20 ms clock boundaries, including one starting at 60 s. No device playback. Live stop discards the bounded queue; finite comparisons flush the complete tail.",
+  "browser_report_sha256": "053d91cbb83c92eba0a74ca9902a2ec1921a31db2186ad04174893b0212fb275",
+  "speech_tone_pairs": 20,
+  "speech_tone_parity_pass": true,
+  "boundary_checks": [
+    {
+      "clip": "check_silence__lower_resonance_only",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.7999999523162842,
+          1.1000001430511475,
+          0,
+          0.09999990463256836
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0,
+        "setup_ms": 4.799999952316284,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.20000004768371582,
+        "elapsed_ms": 3.3999998569488525
+      },
+      "output_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c",
+      "parity": {
+        "relative_rms": 0,
+        "absolute_rms": 0,
+        "max_abs": 0,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_silence__lower_resonance_pitch",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.8000001907348633,
+          1.1999998092651367,
+          0,
+          0
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0,
+        "setup_ms": 4.599999904632568,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.3000001907348633,
+        "elapsed_ms": 3.4000000953674316
+      },
+      "output_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c",
+      "parity": {
+        "relative_rms": 0,
+        "absolute_rms": 0,
+        "max_abs": 0,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_silence__higher_resonance_only",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.7000000476837158,
+          1,
+          0.09999990463256836,
+          0
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0,
+        "setup_ms": 5.299999952316284,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.20000004768371582,
+        "elapsed_ms": 3
+      },
+      "output_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c",
+      "parity": {
+        "relative_rms": 0,
+        "absolute_rms": 0,
+        "max_abs": 0,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_silence__higher_resonance_pitch",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.7000000476837158,
+          1.1000001430511475,
+          0,
+          0
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0,
+        "setup_ms": 4,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.2999999523162842,
+        "elapsed_ms": 3.200000047683716
+      },
+      "output_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c",
+      "parity": {
+        "relative_rms": 0,
+        "absolute_rms": 0,
+        "max_abs": 0,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_onset__lower_resonance_only",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.6999998092651367,
+          1,
+          1,
+          0
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.08001036942005157,
+        "setup_ms": 4.1000001430511475,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.20000004768371582,
+        "elapsed_ms": 3.8999998569488525
+      },
+      "output_sha256": "b0c129648f5b9fa3cfed1b22048a2ae60531d6036e8c85a70be0ed06e1abf07c",
+      "parity": {
+        "relative_rms": 4.1064177380684794e-22,
+        "absolute_rms": 3.0569303344477886e-25,
+        "max_abs": 3.484498330379629e-23,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_onset__lower_resonance_pitch",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.7999999523162842,
+          1.1000001430511475,
+          1,
+          0
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.08144742250442505,
+        "setup_ms": 4,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.2999999523162842,
+        "elapsed_ms": 4.200000047683716
+      },
+      "output_sha256": "a2154e619991b9c7522ae419583faab1ee85b078c24406a59978a6f8055589cb",
+      "parity": {
+        "relative_rms": 0.000915582387259783,
+        "absolute_rms": 7.032164987500141e-07,
+        "max_abs": 9.451046935282648e-06,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_onset__higher_resonance_only",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.5999999046325684,
+          1,
+          0.9000000953674316,
+          0.09999990463256836
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.09995117038488388,
+        "setup_ms": 4,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.10000014305114746,
+        "elapsed_ms": 3.799999952316284
+      },
+      "output_sha256": "9ee2b4b364e2f6165c35e693c75c4d65f1a07c4dc1064e302e8d471d2fa1bd61",
+      "parity": {
+        "relative_rms": 4.236917136607025e-18,
+        "absolute_rms": 3.71552857000433e-21,
+        "max_abs": 4.235213656249916e-19,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_onset__higher_resonance_pitch",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.5999999046325684,
+          1.2000000476837158,
+          1,
+          0
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.09615931659936905,
+        "setup_ms": 4.1000001430511475,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.20000004768371582,
+        "elapsed_ms": 4.199999809265137
+      },
+      "output_sha256": "92b42cbfcff16a660c954dcb4500b52126459b1712ab342b371a29d75b8dccd8",
+      "parity": {
+        "relative_rms": 0.0011062478004290155,
+        "absolute_rms": 9.43401541244299e-07,
+        "max_abs": 1.1260767678322736e-05,
+        "pass": false
+      }
+    },
+    {
+      "clip": "check_ending__lower_resonance_only",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.6000001430511475,
+          1.0999999046325684,
+          0.9000000953674316,
+          0.5
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.08001036942005157,
+        "setup_ms": 3.8999998569488525,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.8999998569488525,
+        "elapsed_ms": 5
+      },
+      "output_sha256": "a70e5e30a39e9a8d7bb57f8b46248e1fd4e682e63b7a0dcb2c810e922d428894",
+      "parity": {
+        "relative_rms": 5.0154131054716515e-18,
+        "absolute_rms": 3.9352422075678995e-21,
+        "max_abs": 4.1415826916460806e-19,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_ending__lower_resonance_pitch",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.7999999523162842,
+          1.1000001430511475,
+          1.0999999046325684,
+          0.40000009536743164
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.08137191087007523,
+        "setup_ms": 4.099999904632568,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.9000000953674316,
+        "elapsed_ms": 5.400000095367432
+      },
+      "output_sha256": "7185d976039d2312533eff18c17c2c0ab078f2f464ad31ce499820d6f582146d",
+      "parity": {
+        "relative_rms": 0.0036227610080850226,
+        "absolute_rms": 2.8949600581714805e-06,
+        "max_abs": 5.272459748084657e-05,
+        "pass": false
+      }
+    },
+    {
+      "clip": "check_ending__higher_resonance_only",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.5999999046325684,
+          1,
+          0.9000000953674316,
+          0.5
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.09995117038488388,
+        "setup_ms": 4.5,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.9000000953674316,
+        "elapsed_ms": 5
+      },
+      "output_sha256": "bc87acba8dd82f43ce1aa7c6246d9f3dc35edf4f29cb7085427babcfe8176ca0",
+      "parity": {
+        "relative_rms": 1.1199296833391327e-18,
+        "absolute_rms": 9.82197679983033e-22,
+        "max_abs": 9.048221112927277e-20,
+        "pass": true
+      }
+    },
+    {
+      "clip": "check_ending__higher_resonance_pitch",
+      "name": "spectral",
+      "stats": {
+        "total": 12993,
+        "compute_ms": [
+          1.6000001430511475,
+          1.0999999046325684,
+          1.1000001430511475,
+          0.5
+        ],
+        "max_queue_samples": 12993,
+        "producer_late_ms": 0,
+        "required_playout_ms": 0,
+        "memory_start": 33554432,
+        "memory_end": 33554432,
+        "emitted": 12993,
+        "peak": 0.09596454352140427,
+        "setup_ms": 4.200000047683716,
+        "declared_buffer_samples": 3840,
+        "finish_ms": 0.8999998569488525,
+        "elapsed_ms": 5.3999998569488525
+      },
+      "output_sha256": "749624e574c04f14ae8ea9f80fb184a1f79c197731a863c3e59d5898a0d611ed",
+      "parity": {
+        "relative_rms": 0.0039484957585108294,
+        "absolute_rms": 3.3731461992694525e-06,
+        "max_abs": 5.1175991359286854e-05,
+        "pass": false
+      }
+    }
+  ],
+  "trials": [
+    {
+      "setting": "lower_resonance_only",
+      "pitch": 0,
+      "scale": 0.8,
+      "stats": {
+        "mode": "paced",
+        "seconds": 60,
+        "elapsed_ms": 60007.98183,
+        "input_samples": 2880000,
+        "delivered_samples": 2869440,
+        "buffer_delay_ms": 240,
+        "remaining_output_samples": 6720,
+        "min_output_samples": 3840,
+        "prefill_samples": 7680,
+        "compute_p50_ms": 0.003417,
+        "compute_p95_ms": 1.418958,
+        "compute_max_ms": 2.072917,
+        "release_lateness_p95_ms": 8.836875,
+        "release_lateness_max_ms": 10.174333,
+        "delivery_lateness_max_ms": 11.421291,
+        "missed_release_periods": 0,
+        "missed_delivery_periods": 0,
+        "starvations": 0,
+        "overflows": 0,
+        "frame_samples": 960,
+        "batch_samples": 3840,
+        "core_delay_samples": 3840,
+        "initialization_ms": 0.136625,
+        "peak_rss_before_init_bytes": 3358720,
+        "peak_rss_after_init_bytes": 4407296,
+        "peak_rss_end_bytes": 4702208,
+        "max_input_samples": 3840,
+        "max_output_samples": 7680,
+        "queue_capacity_samples": 15360,
+        "output_peak": 0.05091333017
+      },
+      "pass": true
+    },
+    {
+      "setting": "lower_resonance_pitch",
+      "pitch": -1,
+      "scale": 0.8,
+      "stats": {
+        "mode": "paced",
+        "seconds": 60,
+        "elapsed_ms": 60006.40837,
+        "input_samples": 2880000,
+        "delivered_samples": 2869440,
+        "buffer_delay_ms": 240,
+        "remaining_output_samples": 6720,
+        "min_output_samples": 3840,
+        "prefill_samples": 7680,
+        "compute_p50_ms": 0.003459,
+        "compute_p95_ms": 1.734334,
+        "compute_max_ms": 3.549375,
+        "release_lateness_p95_ms": 8.826791,
+        "release_lateness_max_ms": 9.989875,
+        "delivery_lateness_max_ms": 11.6585,
+        "missed_release_periods": 0,
+        "missed_delivery_periods": 0,
+        "starvations": 0,
+        "overflows": 0,
+        "frame_samples": 960,
+        "batch_samples": 3840,
+        "core_delay_samples": 3840,
+        "initialization_ms": 0.494125,
+        "peak_rss_before_init_bytes": 3342336,
+        "peak_rss_after_init_bytes": 4390912,
+        "peak_rss_end_bytes": 4669440,
+        "max_input_samples": 3840,
+        "max_output_samples": 7680,
+        "queue_capacity_samples": 15360,
+        "output_peak": 0.05579811707
+      },
+      "pass": true
+    },
+    {
+      "setting": "higher_resonance_only",
+      "pitch": 0,
+      "scale": 1.25,
+      "stats": {
+        "mode": "paced",
+        "seconds": 60,
+        "elapsed_ms": 60002.30271,
+        "input_samples": 2880000,
+        "delivered_samples": 2869440,
+        "buffer_delay_ms": 240,
+        "remaining_output_samples": 6720,
+        "min_output_samples": 3840,
+        "prefill_samples": 7680,
+        "compute_p50_ms": 0.0035,
+        "compute_p95_ms": 1.39525,
+        "compute_max_ms": 4.086917,
+        "release_lateness_p95_ms": 8.764833,
+        "release_lateness_max_ms": 10.003042,
+        "delivery_lateness_max_ms": 12.929625,
+        "missed_release_periods": 0,
+        "missed_delivery_periods": 0,
+        "starvations": 0,
+        "overflows": 0,
+        "frame_samples": 960,
+        "batch_samples": 3840,
+        "core_delay_samples": 3840,
+        "initialization_ms": 0.700166,
+        "peak_rss_before_init_bytes": 3358720,
+        "peak_rss_after_init_bytes": 4407296,
+        "peak_rss_end_bytes": 4685824,
+        "max_input_samples": 3840,
+        "max_output_samples": 7680,
+        "queue_capacity_samples": 15360,
+        "output_peak": 0.07214325666
+      },
+      "pass": true
+    },
+    {
+      "setting": "higher_resonance_pitch",
+      "pitch": 1,
+      "scale": 1.25,
+      "stats": {
+        "mode": "paced",
+        "seconds": 60,
+        "elapsed_ms": 60005.98921,
+        "input_samples": 2880000,
+        "delivered_samples": 2869440,
+        "buffer_delay_ms": 240,
+        "remaining_output_samples": 6720,
+        "min_output_samples": 3840,
+        "prefill_samples": 7680,
+        "compute_p50_ms": 0.003375,
+        "compute_p95_ms": 1.751708,
+        "compute_max_ms": 2.199583,
+        "release_lateness_p95_ms": 8.752583,
+        "release_lateness_max_ms": 9.987583,
+        "delivery_lateness_max_ms": 11.697417,
+        "missed_release_periods": 0,
+        "missed_delivery_periods": 0,
+        "starvations": 0,
+        "overflows": 0,
+        "frame_samples": 960,
+        "batch_samples": 3840,
+        "core_delay_samples": 3840,
+        "initialization_ms": 0.442875,
+        "peak_rss_before_init_bytes": 3358720,
+        "peak_rss_after_init_bytes": 4407296,
+        "peak_rss_end_bytes": 4685824,
+        "max_input_samples": 3840,
+        "max_output_samples": 7680,
+        "queue_capacity_samples": 15360,
+        "output_peak": 0.08821435273
+      },
+      "pass": true
+    }
+  ],
+  "native_cadence_pass": true
+}

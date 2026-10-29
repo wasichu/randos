@@ -15,6 +15,10 @@
     "model": "madlad-400",
     "msgstr": "%{minutes}+ 분"
   },
+  "%{style} + %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "%{style} + %{tone}"
+  },
   "%{time} left": {
     "model": "translategemma-12b",
     "msgstr": "남은 시간: %{time} (분:초)"
@@ -55,6 +59,10 @@
     "model": "madlad-400",
     "msgstr": "rando을 찾기 전에 18+ 인정을 수락하십시오."
   },
+  "Acknowledge": {
+    "model": "translategemma-4b",
+    "msgstr": "인정"
+  },
   "Attempting to reconnect": {
     "model": "madlad-400",
     "msgstr": "다시 연결하려고 시도 중"
@@ -62,6 +70,14 @@
   "Both people choose whether to continue.": {
     "model": "hy-mt2",
     "msgstr": "두 사람 모두 계속할지 말지를 선택합니다."
+  },
+  "Brighter": {
+    "model": "translategemma-4b",
+    "msgstr": "더 밝은"
+  },
+  "Call progress": {
+    "model": "madlad-400",
+    "msgstr": "통화 진행"
   },
   "Calls started": {
     "model": "madlad-400",
@@ -114,6 +130,10 @@
   "Continued past 10 minutes": {
     "model": "translategemma-4b",
     "msgstr": "10분 이상 지속"
+  },
+  "Conversation": {
+    "model": "hy-mt2",
+    "msgstr": "대화"
   },
   "Conversation is active.": {
     "model": "translategemma-27b",
@@ -179,6 +199,14 @@
     "model": "madlad-400",
     "msgstr": "귀하의 rando을 열 수 있습니다."
   },
+  "Fuller": {
+    "model": "m2m100",
+    "msgstr": "충만한"
+  },
+  "Headphones recommended": {
+    "model": "madlad-400",
+    "msgstr": "헤드폰 권장"
+  },
   "Help fix a translation": {
     "model": "madlad-400",
     "msgstr": "번역을 고치는 데 도움을 주세요"
@@ -194,6 +222,10 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "translategemma-4b",
     "msgstr": "저는 18세 이상이며, 대화가 익명으로 진행되고 관리되지 않는다는 것을 이해합니다."
+  },
+  "I want to hear": {
+    "model": "madlad-400",
+    "msgstr": "듣고 싶어요"
   },
   "I'm happy to hear": {
     "model": "madlad-400",
@@ -227,9 +259,17 @@
     "model": "hy-mt2",
     "msgstr": "참여하기"
   },
+  "Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "키보드 단축키"
+  },
   "Language": {
     "model": "m2m100",
     "msgstr": "언어"
+  },
+  "Language menu": {
+    "model": "hy-mt2",
+    "msgstr": "언어 메뉴"
   },
   "Languages spoken": {
     "model": "madlad-400",
@@ -247,6 +287,26 @@
     "model": "madlad-400",
     "msgstr": "%{hearing_languages}를 말하고 %{speaking_language}를 듣고 싶어하는 rando을 찾고 있습니다."
   },
+  "Main navigation": {
+    "model": "translategemma-4b",
+    "msgstr": "메인 네비게이션"
+  },
+  "Masking": {
+    "model": "hy-mt2",
+    "msgstr": "마스킹"
+  },
+  "Microphone off.": {
+    "model": "hy-mt2",
+    "msgstr": "마이크 끄기."
+  },
+  "Microphone on.": {
+    "model": "madlad-400",
+    "msgstr": "마이크 켜"
+  },
+  "Mute/unmute": {
+    "model": "hy-mt2",
+    "msgstr": "음소거/음소거 해제"
+  },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-12b",
     "msgstr": "계정이 필요 없고, 프로필을 만들 필요도 없으며, 영상도 필요 없습니다. 아무런 부담도 느껴지지 않을 거예요."
@@ -263,9 +323,21 @@
     "model": "madlad-400",
     "msgstr": "아직 번역되지 않음"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "hy-mt2",
+    "msgstr": "아무것도 기록되거나 업로드되지 않습니다."
+  },
   "Nothing matches.": {
     "model": "translategemma-27b",
     "msgstr": "어울리는 게 하나도 없네."
+  },
+  "Off": {
+    "model": "m2m100",
+    "msgstr": "끄기"
+  },
+  "Opening microphone…": {
+    "model": "madlad-400",
+    "msgstr": "마이크 열기…"
   },
   "Other languages: %{calls}": {
     "model": "hy-mt2",
@@ -295,6 +367,14 @@
     "model": "translategemma-4b",
     "msgstr": "전화 준비"
   },
+  "Preview": {
+    "model": "madlad-400",
+    "msgstr": "미리 보기"
+  },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "hy-mt2",
+    "msgstr": "미리보기에 실패했습니다. 마이크가 작동을 중지했습니다. 다시 시도해 주세요."
+  },
   "Privacy": {
     "model": "m2m100",
     "msgstr": "개인 정보"
@@ -323,6 +403,10 @@
     "model": "translategemma-4b",
     "msgstr": "이 링크를 그들에게 원하는 방식으로 보내세요. 이 링크는 한 번만 작동합니다."
   },
+  "Server Status": {
+    "model": "madlad-400",
+    "msgstr": "서버 상태"
+  },
   "Share a link.": {
     "model": "hy-mt2",
     "msgstr": "링크를 공유하세요."
@@ -330,6 +414,10 @@
   "Short anonymous conversations for language practice.": {
     "model": "madlad-400",
     "msgstr": "언어 연습을 위한 짧은 익명 대화."
+  },
+  "Site": {
+    "model": "translategemma-4b",
+    "msgstr": "웹사이트"
   },
   "Someone invited you to a call": {
     "model": "translategemma-4b",
@@ -354,6 +442,10 @@
   "Stop looking": {
     "model": "translategemma-4b",
     "msgstr": "더 이상 찾지 마"
+  },
+  "Style": {
+    "model": "hy-mt2",
+    "msgstr": "스타일"
   },
   "Suggest a fix": {
     "model": "madlad-400",
@@ -415,6 +507,10 @@
     "model": "madlad-400",
     "msgstr": "계정, 프로필, 연락처, 팔로워, 피드, 스트레이크, 점수, 영구적인 소셜 그래프가 없습니다. randos은 소셜 미디어보다 대화형 인프라에 더 가깝습니다."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "translategemma-4b",
+    "msgstr": "이러한 스타일은 목소리를 변화시키지만, 사람들은 여전히 당신을 알아볼 수 있습니다."
+  },
   "This link is incomplete.": {
     "model": "hy-mt2",
     "msgstr": "이 링크는 불완전합니다."
@@ -443,6 +539,14 @@
     "model": "hy-mt2",
     "msgstr": "다크 모드 전환"
   },
+  "Tone": {
+    "model": "translategemma-12b",
+    "msgstr": "음색"
+  },
+  "Tone + Pitch": {
+    "model": "hy-mt2",
+    "msgstr": "음색 + 음높이"
+  },
   "Translations": {
     "model": "translategemma-4b",
     "msgstr": "번역"
@@ -454,6 +558,18 @@
   "View on GitHub": {
     "model": "hy-mt2",
     "msgstr": "GitHub에서 보기"
+  },
+  "Voice": {
+    "model": "translategemma-4b",
+    "msgstr": "목소리"
+  },
+  "Voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "목소리 변조"
+  },
+  "Voice masking on": {
+    "model": "hy-mt2",
+    "msgstr": "음성 마스킹 켜기"
   },
   "Waiting": {
     "model": "translategemma-4b",
@@ -535,9 +651,25 @@
     "model": "madlad-400",
     "msgstr": "끝"
   },
+  "button\u0004End call": {
+    "model": "hy-mt2",
+    "msgstr": "통화 종료"
+  },
+  "button\u0004Find": {
+    "model": "translategemma-4b",
+    "msgstr": "찾아보기"
+  },
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "검색 rando"
+  },
+  "button\u0004Hear myself": {
+    "model": "hy-mt2",
+    "msgstr": "제 목소리 듣기"
+  },
+  "button\u0004Hide shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "단축키 숨기기"
   },
   "button\u0004Invite someone": {
     "model": "m2m100",
@@ -547,6 +679,10 @@
     "model": "madlad-400",
     "msgstr": "통화에 참여하기"
   },
+  "button\u0004Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "키보드 단축키"
+  },
   "button\u0004Mute": {
     "model": "hy-mt2",
     "msgstr": "음소거"
@@ -554,6 +690,10 @@
   "button\u0004Next rando": {
     "model": "m2m100",
     "msgstr": "다음과 같이 rando"
+  },
+  "button\u0004Stop preview": {
+    "model": "hy-mt2",
+    "msgstr": "미리 보기 중지"
   },
   "button\u0004Unmute": {
     "model": "hy-mt2",

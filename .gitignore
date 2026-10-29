@@ -61,3 +61,11 @@ npm-debug.log
 
 # Agent worktrees (Claude Code)
 /.claude/worktrees/
+# Explicit local listening feedback, never a source artifact.
+/tools/voice-eval/results/listening-reviews.jsonl
+
+# Patched renderer build output; upstream source and Cargo.lock are committed.
+/vendor/ex_ratatui/native/ex_ratatui/target/
+/vendor/ex_ratatui/priv/
+/vendor/ex_ratatui/_build/
+/vendor/ex_ratatui/deps/

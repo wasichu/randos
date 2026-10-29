@@ -15,6 +15,10 @@
     "model": "opus-mt",
     "msgstr": "%{minutes}+ min"
   },
+  "%{style} + %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "%{style} + %{tone}"
+  },
   "%{time} left": {
     "model": "translategemma-12b",
     "msgstr": "Kalan süre: %{time}"
@@ -55,6 +59,10 @@
     "model": "madlad-400",
     "msgstr": "rando'ı aramadan önce 18+ onayını kabul edin."
   },
+  "Acknowledge": {
+    "model": "hy-mt2",
+    "msgstr": "Kabul ediyorum"
+  },
   "Attempting to reconnect": {
     "model": "hy-mt2",
     "msgstr": "Yeniden bağlanmaya çalışıyor"
@@ -62,6 +70,14 @@
   "Both people choose whether to continue.": {
     "model": "translategemma-12b",
     "msgstr": "Her iki taraf da devam edip etmeme konusunda karar verme özgürlüğüne sahiptir."
+  },
+  "Brighter": {
+    "model": "hy-mt2",
+    "msgstr": "Daha parlak"
+  },
+  "Call progress": {
+    "model": "translategemma-4b",
+    "msgstr": "Çağrının ilerleme durumu"
   },
   "Calls started": {
     "model": "madlad-400",
@@ -114,6 +130,10 @@
   "Continued past 10 minutes": {
     "model": "hy-mt2",
     "msgstr": "10 dakikadan fazla sürdü"
+  },
+  "Conversation": {
+    "model": "m2m100",
+    "msgstr": "Konuşma"
   },
   "Conversation is active.": {
     "model": "hy-mt2",
@@ -183,6 +203,14 @@
     "model": "hy-mt2",
     "msgstr": "rando’nuzun onu açabilmesi için."
   },
+  "Fuller": {
+    "model": "hy-mt2",
+    "msgstr": "Daha dolgun"
+  },
+  "Headphones recommended": {
+    "model": "m2m100",
+    "msgstr": "Önerilen kulaklıklar"
+  },
   "Help fix a translation": {
     "model": "opus-mt",
     "msgstr": "Çeviriyi düzeltmeye yardım et"
@@ -198,6 +226,10 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "opus-mt",
     "msgstr": "18 ya da daha yaşlıyım ve konuşmaların anonim ve moderatörsüz olduğunu anlıyorum."
+  },
+  "I want to hear": {
+    "model": "m2m100",
+    "msgstr": "duymak istiyorum"
   },
   "I will speak in": {
     "model": "translategemma-4b",
@@ -235,9 +267,17 @@
     "model": "m2m100",
     "msgstr": "katılın"
   },
+  "Keyboard shortcuts": {
+    "model": "translategemma-4b",
+    "msgstr": "Klavyede kullanılan kısayollar"
+  },
   "Language": {
     "model": "hy-mt2",
     "msgstr": "Dil"
+  },
+  "Language menu": {
+    "model": "hy-mt2",
+    "msgstr": "Dil menüsü"
   },
   "Languages spoken": {
     "model": "hy-mt2",
@@ -255,6 +295,26 @@
     "model": "hy-mt2",
     "msgstr": "%{hearing_languages} dili konuşan ve %{speaking_language} dilini duymak isteyen bir rando arıyorum."
   },
+  "Main navigation": {
+    "model": "translategemma-4b",
+    "msgstr": "Ana menü"
+  },
+  "Masking": {
+    "model": "hy-mt2",
+    "msgstr": "Maskeleme"
+  },
+  "Microphone off.": {
+    "model": "m2m100",
+    "msgstr": "Mikrofonu kapatın"
+  },
+  "Microphone on.": {
+    "model": "hy-mt2",
+    "msgstr": "Mikrofon açık."
+  },
+  "Mute/unmute": {
+    "model": "madlad-400",
+    "msgstr": "Sessizleştir/sessizliği kaldır"
+  },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-12b",
     "msgstr": "Hesap açmanıza, profil oluşturmanıza, video izlemenize gerek yok. Herhangi bir zorunluluk yok."
@@ -271,9 +331,21 @@
     "model": "m2m100",
     "msgstr": "henüz tercüme edilmemiş"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "hy-mt2",
+    "msgstr": "Hiçbir şey kaydedilmiyor veya yüklenmiyor."
+  },
   "Nothing matches.": {
     "model": "translategemma-27b",
     "msgstr": "Hiçbir şey uyuşmuyor."
+  },
+  "Off": {
+    "model": "madlad-400",
+    "msgstr": "Kapalı"
+  },
+  "Opening microphone…": {
+    "model": "translategemma-4b",
+    "msgstr": "Mikrofonu açıyorum…"
   },
   "Other languages: %{calls}": {
     "model": "m2m100",
@@ -303,6 +375,14 @@
     "model": "m2m100",
     "msgstr": "Çağrı Hazırlama"
   },
+  "Preview": {
+    "model": "hy-mt2",
+    "msgstr": "Önizleme"
+  },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "opus-mt",
+    "msgstr": "Önizleme başarısız oldu. Mikrofon durdu; tekrar deneyin."
+  },
   "Privacy": {
     "model": "hy-mt2",
     "msgstr": "Gizlilik"
@@ -331,6 +411,10 @@
     "model": "translategemma-12b",
     "msgstr": "Bu bağlantıyı istediğiniz gibi onlara iletebilirsiniz. Ancak bu bağlantı sadece bir kez kullanılabilir."
   },
+  "Server Status": {
+    "model": "hy-mt2",
+    "msgstr": "Sunucu Durumu"
+  },
   "Share a link.": {
     "model": "madlad-400",
     "msgstr": "Bir bağlantı paylaş."
@@ -338,6 +422,10 @@
   "Short anonymous conversations for language practice.": {
     "model": "hy-mt2",
     "msgstr": "Dil pratiği için kısa, anonim sohbetler."
+  },
+  "Site": {
+    "model": "hy-mt2",
+    "msgstr": "Site"
   },
   "Someone invited you to a call": {
     "model": "m2m100",
@@ -362,6 +450,10 @@
   "Stop looking": {
     "model": "m2m100",
     "msgstr": "Bakmayı bırakın"
+  },
+  "Style": {
+    "model": "hy-mt2",
+    "msgstr": "Stil"
   },
   "Suggest a fix": {
     "model": "m2m100",
@@ -423,6 +515,10 @@
     "model": "translategemma-12b",
     "msgstr": "\"randos\" platformunda hesaplar, profiller, kişiler, takipçiler, gönderi akışları, sıralamalar, puanlar veya kalıcı bir sosyal ağ bulunmamaktadır. \"randos\", sosyal medya platformlarından ziyade, daha çok bir iletişim altyapısıdır."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "translategemma-4b",
+    "msgstr": "Bu tarzlar sesinizi değiştirse de, insanlar hala sizi tanıyabilirler."
+  },
   "This link is incomplete.": {
     "model": "hy-mt2",
     "msgstr": "Bu bağlantı eksik."
@@ -451,6 +547,14 @@
     "model": "translategemma-4b",
     "msgstr": "Karanlık modu etkinleştir/devre dışı bırak"
   },
+  "Tone": {
+    "model": "m2m100",
+    "msgstr": "tonu"
+  },
+  "Tone + Pitch": {
+    "model": "opus-mt",
+    "msgstr": "Ton + Pitch"
+  },
   "Translations": {
     "model": "m2m100",
     "msgstr": "Çeviri"
@@ -462,6 +566,18 @@
   "View on GitHub": {
     "model": "translategemma-4b",
     "msgstr": "GitHub'da görüntüle"
+  },
+  "Voice": {
+    "model": "m2m100",
+    "msgstr": "Sesi"
+  },
+  "Voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "Ses maskeleme"
+  },
+  "Voice masking on": {
+    "model": "hy-mt2",
+    "msgstr": "Ses maskeleme açık"
   },
   "Waiting": {
     "model": "m2m100",
@@ -547,9 +663,21 @@
     "model": "hy-mt2",
     "msgstr": "Kapat"
   },
+  "button\u0004End call": {
+    "model": "m2m100",
+    "msgstr": "Son Çağrı"
+  },
+  "button\u0004Find": {
+    "model": "hy-mt2",
+    "msgstr": "Bulun"
+  },
   "button\u0004Find a rando": {
     "model": "opus-mt",
     "msgstr": "Bir rando bul"
+  },
+  "button\u0004Hide shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "Kısayolları gizle"
   },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
@@ -559,6 +687,10 @@
     "model": "m2m100",
     "msgstr": "Çağrıya katılın"
   },
+  "button\u0004Keyboard shortcuts": {
+    "model": "translategemma-4b",
+    "msgstr": "Klavyede kullanılan kısayollar"
+  },
   "button\u0004Mute": {
     "model": "madlad-400",
     "msgstr": "Sessizleştir"
@@ -566,6 +698,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "Bir sonraki rando"
+  },
+  "button\u0004Stop preview": {
+    "model": "madlad-400",
+    "msgstr": "Önizlemeyi durdur"
   },
   "button\u0004Unmute": {
     "model": "hy-mt2",

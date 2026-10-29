@@ -52,7 +52,7 @@ both go back to the form afterwards, never to a stranger.
 </picture>
 
 That's all there is. Nothing about the call is kept. The site speaks
-all 20 languages, with a switcher in the header. Its translations are
+all 20 languages, with a switcher in the navigation. Its translations are
 machine-made, so
 [/translations](https://randos.slowinput.org/translations) lists every
 string next to the English: "Suggest a fix" opens a GitHub issue with
@@ -69,6 +69,24 @@ calls, not people.
 Open [randos.slowinput.org](https://randos.slowinput.org) and allow the
 microphone when asked. Tested in Chrome and Safari, on desktop and mobile.
 
+Before a call, expand **Voice masking** in the setup card. It offers a changed tone, with or without a gentle
+pitch change. Choose Fuller or Brighter and use **Hear myself** with headphones
+to try it locally. Preview stays on as you change styles; choosing Off lets you
+hear your original voice. Nothing is recorded or uploaded. Masking starts off in each
+new session; it changes how you sound, but people may still recognize you.
+
+Press **?** or click **Keyboard shortcuts** below the homepage form to show
+the shortcut bar and activate
+**F** Find, **I** Invite, **P** microphone preview, and **M** mute during a call.
+**X** stops looking while you’re queued. **A** toggles the acknowledgment checkbox and **B** opens/closes Voice masking.
+During a call, **E** ends it and **N** moves on to the next rando (except invitation calls).
+**P** opens the voice panel if needed; with it open, **S** cycles Style and **T**
+cycles Tone. **O** opens About, **R** Server Status, and **L** the interface-language
+menu (arrows move, Enter applies, Esc closes the menu first). Letters work in either case. **?** or **Esc** hides the bar and disables shortcuts. **Server Status**
+shows connection health and call counts. Once you open shortcuts, this browser
+remembers to show them when you return or change language. Esc hides them for
+the current visit.
+
 ## In your terminal
 
 The same calls, from a terminal (macOS on Apple Silicon, or Linux x86_64
@@ -80,24 +98,32 @@ brew install wasichu/randos/randos
 randos
 ```
 
+In the terminal, press **b** before finding someone to open Voice masking.
+Choose a style with **1/2/3**, change tone with **left/right**, and press **p**
+to hear yourself or stop. Preview stays on while you change style or tone;
+Off lets you hear your original voice. **Esc** closes the preview. Choices last for this
+session and apply to your next call. Press **l** to choose the interface
+language from a list; arrows move, Enter applies, Esc cancels. See the [voice panel](docs/assets/tui-voice.png).
+
 On Linux without Homebrew, download the archive from the
 [latest release](https://github.com/wasichu/randos/releases/latest), unpack
-it anywhere, and run `bin/randos` (it needs ALSA and OpenSSL 3, which most
-desktop distributions have).
+it anywhere, and run `bin/randos` (it needs ALSA, OpenSSL 3 and the system C++
+standard library—`libstdc++6` on Ubuntu—which most desktop distributions have).
 
 <table>
   <tr>
     <td><img alt="The terminal client's start screen: choose the language you'll speak and the one you want to hear" src="docs/assets/tui-idle.png"></td>
-    <td><img alt="A call in the terminal: your voice and your rando's as two bar meters, connected directly, 9:54 remaining" src="docs/assets/tui-call.png"></td>
+    <td><img alt="A call in the terminal: your voice and your rando's as two bar meters, connected through the relay, 9:54 remaining" src="docs/assets/tui-call.png"></td>
   </tr>
   <tr>
     <td colspan="2"><img alt="Inviting someone from the terminal: the one-time link on a line of its own, with the time it has left; y copies it" src="docs/assets/tui-invite.png"></td>
   </tr>
 </table>
 
-- The keys for each screen are listed along the bottom: arrows to pick
-  languages (space checks the ones you're happy to hear), Enter to find a
-  rando, `m` to mute, `n` for the next rando, `e` to end the call, `q` to
+- The essential keys for each screen are listed along the bottom; press **?**
+  for all shortcuts available on that screen (**Esc** closes help, **↑/↓** scroll).
+  Use arrows to pick languages (space checks the ones you're happy to hear)
+  and Enter to find a rando. During a call, `m` to mute, `n` for the next rando, `e` to end the call, `q` to
   quit.
 - `v` invites someone you know: it shows a one-time link to send them
   (`y` copies it, `c` withdraws it). `j` joins through a link you were

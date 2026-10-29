@@ -1,0 +1,671 @@
+{
+  "candidates": {
+    "quality_pitch": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__quality_original__3f3556b02a76ab8d69ae3aa01fbae359c475cea8b48cc7288740a6a6d4ee3d58.wav",
+          "converted": "high_voice__quality_pitch__425d1227fec6b6d6609316ea5e47f2aa794c558e270d03150a9f6b8f1ca59af7.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_pitch",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "high_voice"
+        },
+        "level_matched": true,
+        "description": "Pitch only: -2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__quality_original__b750a2c01af12f0c9590a74489117f99bd26c0ab0b40b0b9a0fb9108d6835164.wav",
+          "converted": "low_voice__quality_pitch__92ed68bc2ab1825b5cd1bf2823f5dc39d5944f7b8323ea279a9ce0a62bd1bf94.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_pitch",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "low_voice"
+        },
+        "level_matched": true,
+        "description": "Pitch only: +2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__quality_original__fe4e9ce48651ce1fdef700477b747b53663e59e5b6da45ac5a9c73959e0220fc.wav",
+          "converted": "mid_voice__quality_pitch__4ef33e88fd582e1fa64ccdcb49c7ffb3e35da826e48ea93b0012762de5b75eea.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_pitch",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mid_voice"
+        },
+        "level_matched": true,
+        "description": "Pitch only: -2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__quality_original__4c3951654b0f1a510149bd035fdadc0de5cf3eecd5fa29a374828fc990395bcc.wav",
+          "converted": "mencken_wasichu__quality_pitch__40c3f33a9221cd672142cb59435d3c0f298ccb61d35f5b116b1741cce35529c7.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_pitch",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mencken_wasichu"
+        },
+        "level_matched": true,
+        "description": "Pitch only: +2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      }
+    },
+    "quality_resonance": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__quality_original__3f3556b02a76ab8d69ae3aa01fbae359c475cea8b48cc7288740a6a6d4ee3d58.wav",
+          "converted": "high_voice__quality_resonance__b7da8407840c314f1796490f9658e4fa12a8960f42f81105353598007f7f2c6e.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_resonance",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "high_voice"
+        },
+        "level_matched": true,
+        "description": "Resonance only: McAdams coefficient 0.9.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__quality_original__b750a2c01af12f0c9590a74489117f99bd26c0ab0b40b0b9a0fb9108d6835164.wav",
+          "converted": "low_voice__quality_resonance__aeb9bce1c8a21d301ebcd4f03da9f1f3cd05742e423444a3cbb6f6efd0ab8098.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_resonance",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "low_voice"
+        },
+        "level_matched": true,
+        "description": "Resonance only: McAdams coefficient 0.9.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__quality_original__fe4e9ce48651ce1fdef700477b747b53663e59e5b6da45ac5a9c73959e0220fc.wav",
+          "converted": "mid_voice__quality_resonance__7492620113faf92d6d898638b2f3b7780510b6f46aad4dcb0c344f7bd8f6969f.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_resonance",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mid_voice"
+        },
+        "level_matched": true,
+        "description": "Resonance only: McAdams coefficient 0.9.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__quality_original__4c3951654b0f1a510149bd035fdadc0de5cf3eecd5fa29a374828fc990395bcc.wav",
+          "converted": "mencken_wasichu__quality_resonance__18c5500b2af0ba431951e67769089843e8c8d7a86dc23470899436c3e7c78640.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_resonance",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mencken_wasichu"
+        },
+        "level_matched": true,
+        "description": "Resonance only: McAdams coefficient 0.9.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      }
+    },
+    "quality_both": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__quality_original__3f3556b02a76ab8d69ae3aa01fbae359c475cea8b48cc7288740a6a6d4ee3d58.wav",
+          "converted": "high_voice__quality_both__a2b56bb86a18a976fa8de7e86c82b2f75f5c5a70f68d920c0bdabe258857f1fb.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_both",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "high_voice"
+        },
+        "level_matched": true,
+        "description": "McAdams 0.9, then pitch -2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__quality_original__b750a2c01af12f0c9590a74489117f99bd26c0ab0b40b0b9a0fb9108d6835164.wav",
+          "converted": "low_voice__quality_both__8393d578fc48c634d3ab78515fdd6bd8606693a5ecfe838b239251ff731c6da8.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_both",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "low_voice"
+        },
+        "level_matched": true,
+        "description": "McAdams 0.9, then pitch +2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__quality_original__fe4e9ce48651ce1fdef700477b747b53663e59e5b6da45ac5a9c73959e0220fc.wav",
+          "converted": "mid_voice__quality_both__235f36cf54b2927c3dbd4a1b6e53c2c7d3d13d150b7f81f9f0911db6833e69f1.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_both",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mid_voice"
+        },
+        "level_matched": true,
+        "description": "McAdams 0.9, then pitch -2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__quality_original__4c3951654b0f1a510149bd035fdadc0de5cf3eecd5fa29a374828fc990395bcc.wav",
+          "converted": "mencken_wasichu__quality_both__0f5e9d152e04fa0d0dcb69887528f42537f7082a64e6544ac5848cb34f9766e8.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_both",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mencken_wasichu"
+        },
+        "level_matched": true,
+        "description": "McAdams 0.9, then pitch +2 semitones, 40 ms slices.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      }
+    },
+    "quality_tvtsyn": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__quality_original__3f3556b02a76ab8d69ae3aa01fbae359c475cea8b48cc7288740a6a6d4ee3d58.wav",
+          "converted": "high_voice__quality_tvtsyn__bc961cd6f0685a2389b4e69441676cb4f89e541655ebf01ac490f2311aba9cb5.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_tvtsyn",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "high_voice"
+        },
+        "level_matched": true,
+        "description": "TVTSyn with a fixed mid-voice target. Prepared output.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__quality_original__b750a2c01af12f0c9590a74489117f99bd26c0ab0b40b0b9a0fb9108d6835164.wav",
+          "converted": "low_voice__quality_tvtsyn__e7fe3740e5b7c4f6cc2c650e643c62cbe9b354c26d3e3f51e76e5df174b44d85.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_tvtsyn",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "low_voice"
+        },
+        "level_matched": true,
+        "description": "TVTSyn with a fixed mid-voice target. Prepared output.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__quality_original__fe4e9ce48651ce1fdef700477b747b53663e59e5b6da45ac5a9c73959e0220fc.wav",
+          "converted": "mid_voice__quality_tvtsyn__75f1ff5f5da3e4ac82a8ae4db4561bc3ee288ac4518b3bdb1d4486763a7d6a03.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_tvtsyn",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mid_voice"
+        },
+        "level_matched": true,
+        "description": "TVTSyn target-voice control: this recording also supplies the target voice.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound. Mid voice is also TVTSyn's target: its model output is a control, not a disguise test."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__quality_original__4c3951654b0f1a510149bd035fdadc0de5cf3eecd5fa29a374828fc990395bcc.wav",
+          "converted": "mencken_wasichu__quality_tvtsyn__e3f86c5ead9874e633094e350093c2c63d84b4614f52a8b93fdce99f3c58c7fd.wav"
+        },
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_tvtsyn",
+          "build_id": "289e1d65f875b5ebd06252fc5179b20a0a5e2370b59a9fad14767af04e3dc115",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "run_id": "2026-10-25T13:52:46.687796+00:00",
+          "case_id": "mencken_wasichu"
+        },
+        "level_matched": true,
+        "description": "TVTSyn with a fixed mid-voice target. Prepared output.",
+        "note": "Compare the four sound checks for roughness, clarity and how different the voice sounds. Average levels are matched (RMS, not exact perceived loudness). McAdams also filters out some high-frequency sound."
+      }
+    }
+  },
+  "experiment": {
+    "generated_at": "2026-10-25T13:52:46.687796+00:00",
+    "provenance": {
+      "script": "4ba6c1d08be85ee2cc50ba5ee6931bb27b8e62f891ea05396a7d4d98411ca40d",
+      "renderer": "6460f400ba02e5319749bd8cd8c7f6f52574de9e2396438ac288de13b93e0c74",
+      "references": {
+        "high_voice": {
+          "source": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "tvtsyn": "3b75dc58c8b6758e76a84def1e0fbe7ff814e3fa02faf77e47d3259294ba0bd6",
+          "context": {
+            "view": "model",
+            "mode": "native_onnx",
+            "processor": "tvtsyn_native",
+            "build_id": "1895d30ad8fbd93cd9283ed95e1cae09c8c06a26b01944020577282945781ffa",
+            "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+            "sample": "high_voice",
+            "run_id": "2026-10-25T10:57:53.455721+00:00",
+            "case_id": "high_voice"
+          }
+        },
+        "low_voice": {
+          "source": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "tvtsyn": "a86ccdf98eb79414a8d3f8e0841253fbbef4f5d1d8b4482adc232d024408b93b",
+          "context": {
+            "view": "model",
+            "mode": "native_onnx",
+            "processor": "tvtsyn_native",
+            "build_id": "1895d30ad8fbd93cd9283ed95e1cae09c8c06a26b01944020577282945781ffa",
+            "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+            "sample": "low_voice",
+            "run_id": "2026-10-25T10:57:53.455721+00:00",
+            "case_id": "low_voice"
+          }
+        },
+        "mid_voice": {
+          "source": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "tvtsyn": "a53bb3d14dba630cf757a41f3cfc3e53d8455483f1473ef95d9aa08d1e27e2dd",
+          "context": {
+            "view": "model",
+            "mode": "native_onnx",
+            "processor": "tvtsyn_native",
+            "build_id": "1895d30ad8fbd93cd9283ed95e1cae09c8c06a26b01944020577282945781ffa",
+            "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+            "sample": "mid_voice",
+            "run_id": "2026-10-25T10:57:53.455721+00:00",
+            "case_id": "mid_voice"
+          }
+        },
+        "mencken_wasichu": {
+          "source": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "tvtsyn": "f539542ce63f71b9b887e510b5b3995d3fa45a2817156abf6fcfdef9fc343b7c",
+          "context": {
+            "view": "model",
+            "mode": "native_onnx",
+            "processor": "tvtsyn_native",
+            "build_id": "1895d30ad8fbd93cd9283ed95e1cae09c8c06a26b01944020577282945781ffa",
+            "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+            "sample": "mencken_wasichu",
+            "run_id": "2026-10-25T10:57:53.455721+00:00",
+            "case_id": "mencken_wasichu"
+          }
+        }
+      }
+    },
+    "cases": {
+      "high_voice": {
+        "gains": {
+          "original": 1.0,
+          "quality_pitch": 1.1552051718957055,
+          "quality_resonance": 1.0273060779017122,
+          "quality_both": 1.1769996574663244,
+          "quality_tvtsyn": 0.24859875025174893
+        },
+        "semitones": -2,
+        "diagnostics": {
+          "resonance": {
+            "frames": 601,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.089958,
+            "seconds": 0.04587525,
+            "aligned_delay_samples": 1022,
+            "samples": 289022
+          },
+          "pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.008084,
+            "seconds": 0.001546416,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          },
+          "combined_pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.001834,
+            "seconds": 0.001559833,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          }
+        },
+        "levels": {
+          "original": {
+            "rms": 0.009098267798778615,
+            "peak": 0.06528936326503754,
+            "gain": 1.0
+          },
+          "quality_pitch": {
+            "rms": 0.009098267475434746,
+            "peak": 0.07477720081806183,
+            "gain": 1.1552051718957055
+          },
+          "quality_resonance": {
+            "rms": 0.009098267815481361,
+            "peak": 0.09148583561182022,
+            "gain": 1.0273060779017122
+          },
+          "quality_both": {
+            "rms": 0.009098268035188387,
+            "peak": 0.10339836031198502,
+            "gain": 1.1769996574663244
+          },
+          "quality_tvtsyn": {
+            "rms": 0.009098267952146877,
+            "peak": 0.10305681079626083,
+            "gain": 0.24859875025174893
+          }
+        }
+      },
+      "low_voice": {
+        "gains": {
+          "original": 1.0,
+          "quality_pitch": 1.1592820961023458,
+          "quality_resonance": 1.149389328419601,
+          "quality_both": 1.3401496852028973,
+          "quality_tvtsyn": 0.47640231469879724
+        },
+        "semitones": 2,
+        "diagnostics": {
+          "resonance": {
+            "frames": 601,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.066791,
+            "seconds": 0.035452125,
+            "aligned_delay_samples": 1022,
+            "samples": 289022
+          },
+          "pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.018667,
+            "seconds": 0.001593584,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          },
+          "combined_pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.005083000000000001,
+            "seconds": 0.001526458,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          }
+        },
+        "levels": {
+          "original": {
+            "rms": 0.015377462164301782,
+            "peak": 0.08773035556077957,
+            "gain": 1.0
+          },
+          "quality_pitch": {
+            "rms": 0.015377462058973003,
+            "peak": 0.09546517580747604,
+            "gain": 1.1592820961023458
+          },
+          "quality_resonance": {
+            "rms": 0.015377462937207261,
+            "peak": 0.09333457797765732,
+            "gain": 1.149389328419601
+          },
+          "quality_both": {
+            "rms": 0.015377461656628419,
+            "peak": 0.10257115960121155,
+            "gain": 1.3401496852028973
+          },
+          "quality_tvtsyn": {
+            "rms": 0.01537746209311406,
+            "peak": 0.19108140468597412,
+            "gain": 0.47640231469879724
+          }
+        }
+      },
+      "mid_voice": {
+        "gains": {
+          "original": 1.0,
+          "quality_pitch": 1.1055336511350145,
+          "quality_resonance": 1.1454161336032527,
+          "quality_both": 1.299356149254904,
+          "quality_tvtsyn": 0.4371948754905921
+        },
+        "semitones": -2,
+        "diagnostics": {
+          "resonance": {
+            "frames": 601,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.06475,
+            "seconds": 0.034240167,
+            "aligned_delay_samples": 1022,
+            "samples": 289022
+          },
+          "pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.006292,
+            "seconds": 0.001573584,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          },
+          "combined_pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.002,
+            "seconds": 0.001527709,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          }
+        },
+        "levels": {
+          "original": {
+            "rms": 0.012697327931885435,
+            "peak": 0.08010290563106537,
+            "gain": 1.0
+          },
+          "quality_pitch": {
+            "rms": 0.012697327341611608,
+            "peak": 0.0793403759598732,
+            "gain": 1.1055336511350145
+          },
+          "quality_resonance": {
+            "rms": 0.012697328008020729,
+            "peak": 0.09604257345199585,
+            "gain": 1.1454161336032527
+          },
+          "quality_both": {
+            "rms": 0.012697327478085467,
+            "peak": 0.10250555723905563,
+            "gain": 1.299356149254904
+          },
+          "quality_tvtsyn": {
+            "rms": 0.012697328145760698,
+            "peak": 0.13306105136871338,
+            "gain": 0.4371948754905921
+          }
+        }
+      },
+      "mencken_wasichu": {
+        "gains": {
+          "original": 1.0,
+          "quality_pitch": 1.1432342706108967,
+          "quality_resonance": 0.8817700084354139,
+          "quality_both": 1.005408766180963,
+          "quality_tvtsyn": 0.16162653076610628
+        },
+        "semitones": 2,
+        "diagnostics": {
+          "resonance": {
+            "frames": 601,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.062916,
+            "seconds": 0.038415167,
+            "aligned_delay_samples": 1022,
+            "samples": 289022
+          },
+          "pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.007791,
+            "seconds": 0.0015375,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          },
+          "combined_pitch": {
+            "frames": 0,
+            "failed_frames": 0,
+            "clipped_samples": 0,
+            "corrected_poles": 0,
+            "corrected_frames": 0,
+            "worst_block_ms": 0.005125,
+            "seconds": 0.001560958,
+            "aligned_delay_samples": 0,
+            "samples": 292800
+          }
+        },
+        "levels": {
+          "original": {
+            "rms": 0.0038160638552925405,
+            "peak": 0.03305721655488014,
+            "gain": 1.0
+          },
+          "quality_pitch": {
+            "rms": 0.003816063795625592,
+            "peak": 0.03568955138325691,
+            "gain": 1.1432342706108967
+          },
+          "quality_resonance": {
+            "rms": 0.003816063883066991,
+            "peak": 0.050692327320575714,
+            "gain": 0.8817700084354139
+          },
+          "quality_both": {
+            "rms": 0.0038160638465760625,
+            "peak": 0.048310600221157074,
+            "gain": 1.005408766180963
+          },
+          "quality_tvtsyn": {
+            "rms": 0.003816063900558024,
+            "peak": 0.06711091846227646,
+            "gain": 0.16162653076610628
+          }
+        }
+      }
+    }
+  }
+}

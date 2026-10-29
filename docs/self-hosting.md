@@ -30,6 +30,11 @@ The repository has a `Dockerfile` for a release image (`just docker-build`
 builds it locally); `fly.toml` is our Fly.io configuration (`just deploy`).
 Without Docker:
 
+Build from a clean source tree: development bundles under `priv/static/assets`
+and local certificates under `priv/cert` must not enter the release. The Docker
+context excludes both directories; a direct Mix release does not apply
+`.dockerignore`.
+
 ```bash
 MIX_ENV=prod mix assets.deploy
 MIX_ENV=prod mix release
@@ -57,6 +62,12 @@ the app itself serves plain HTTP on `PORT`.
 | `RANDOS_VOICE_PROCESSOR` | | Runs every browser call's mic through a voice processor (`passthrough`, `pitch_shift`; the voice lab's experiments). Unset: none, the mic is sent as it is. An unknown name stops the server from starting. |
 | `RANDOS_CONNECT_TIMEOUT_MS` | | How long a call may take to connect before it ends (default 15 s). |
 | `DNS_CLUSTER_QUERY` | | Erlang clustering via DNS. Clustering alone doesn't share the waiting room (see above). |
+
+Voice masking is a local, off-by-default choice in both clients, not an additional
+`RANDOS_VOICE_PROCESSOR` name. Leave that legacy fixed-worklet setting unset to
+use the product choices; it cannot be stacked with masking. Building the media helper requires C++17;
+Linux binaries need the system C++ standard library (`libstdc++6` on Ubuntu).
+See `voice-native/README.md`. Phoenix-only deployment needs no C++ toolchain.
 
 ### TURN
 

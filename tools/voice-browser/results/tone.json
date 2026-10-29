@@ -1,0 +1,384 @@
+{
+  "candidates": {
+    "seed_vc_v2": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__converted__ee702fa16c5052efe14ac7276a28095da29c0580071874bc6dc10f80745556a3.wav"
+        },
+        "level_matched": false,
+        "context": {
+          "view": "model",
+          "mode": "average_voice_style",
+          "processor": "seed_vc_v2",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "tvtsyn_native": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__diagnostic_original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__tvtsyn_native__42f29881b6668026de0932f61b5c939256775e8441adfdde04cd258aaccb2719.wav"
+        },
+        "level_matched": false,
+        "context": {
+          "view": "model",
+          "mode": "native_onnx",
+          "processor": "tvtsyn_native",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "tvtsyn_int8": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__diagnostic_original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__tvtsyn_int8__9837f008349641769abe2b002ec756ec41bfe976195838dd12eda4ed0d76f326.wav"
+        },
+        "level_matched": false,
+        "context": {
+          "view": "model",
+          "mode": "dynamic_int8_onnx",
+          "processor": "tvtsyn_int8",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "hybrid_down_2": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__diagnostic_original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__hybrid_down_2__eeffa688da539165072c9e19f8ac38ddd0cdd8bdcce9a6e60fe1323823c5015b.wav"
+        },
+        "level_matched": false,
+        "context": {
+          "view": "model",
+          "mode": "fixed_dsp",
+          "processor": "hybrid_down_2",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "hybrid_up_2": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__diagnostic_original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__hybrid_up_2__20ffd96ff8d8a73eaf781c1cd0a27979eb8e9178d6ff133662c470d0130ec133.wav"
+        },
+        "level_matched": false,
+        "context": {
+          "view": "model",
+          "mode": "fixed_dsp",
+          "processor": "hybrid_up_2",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "hybrid_mild": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__diagnostic_original__a8b44f4d1be7afacc5a9d13835132e32a9b210d3257e8b562be8d386f0ac37ef.wav",
+          "converted": "test_tone__hybrid_mild__6aefd91c4bfd0f2d85093bfe890d5a6eab23cb6a71a1cb879234614e239b3d9c.wav"
+        },
+        "level_matched": false,
+        "context": {
+          "view": "model",
+          "mode": "fixed_dsp",
+          "processor": "hybrid_mild",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "quality_pitch": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__quality_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__quality_pitch__39587845ad990f5541d95447c61597dfa2e9d7013109358612b8ad27313b9c27.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_pitch",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "quality_resonance": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__quality_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__quality_resonance__f3b99d27034e0bbb96efd70b80f0cd4f9a5b0e1ed52a24561cd7005ae20029a5.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_resonance",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "quality_both": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__quality_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__quality_both__7ed9b6a9f76ea8df51d2a0eee8ca6530217bdb7da36276648d501bbda5f0e499.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_both",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "quality_tvtsyn": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__quality_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__quality_tvtsyn__6f238cd050f42f75b255d94516a630e529072fef87488b4f11b04d4f62fcb486.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "rms_matched",
+          "processor": "quality_tvtsyn",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "world_control": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__world_control__e2943b4d05579017ba1413931f24b710ed0805956fdb885b29eeba37eab1806c.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "model_free_dsp",
+          "processor": "world_control",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "world_pitch": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__world_pitch__bf53dbc8cf3c0cfd57b8e6c5609abc97ca82b0fe801b2c09ec32bd6340f4c212.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "model_free_dsp",
+          "processor": "world_pitch",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "world_formants": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__world_formants__81205be0bc017f326118a1e657ce0689fe259727ac43358467293bf6c25317bf.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "model_free_dsp",
+          "processor": "world_formants",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    },
+    "world_texture": {
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__world_texture__8ed4da63eb00fa6702cd4bd95d181e60f401df1b5f45f27ce3b8a6d9b267dc2d.wav"
+        },
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "model_free_dsp",
+          "processor": "world_texture",
+          "build_id": "4ff62e318448eb43ad7ee5e36b8b772c2b977381ee53755b8b1cd8a338413a75",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-25T16:58:56.100033+00:00"
+        },
+        "description": "Synthetic-tone diagnostic through this modification.",
+        "note": "A generated 110\u2013220 Hz harmonic glide, not speech. Useful for hearing artifacts; neural models may turn it into unrelated speech-like sound. This is not evidence of voice masking or speech quality."
+      }
+    }
+  },
+  "experiment": {
+    "generated_at": "2026-10-25T16:58:56.100033+00:00",
+    "provenance": {
+      "generator_sha256": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+      "input_wav_sha256": "3e2ae3ca582b546bf7c780f3ac9bae82e8668354b0f7de61abf5e85266d04bdb",
+      "script_sha256": "1ffa78d8c4e1a368d5c64fea4e648c67a6ef7b8893b46b9afbcc92b9d47a0eaf",
+      "rust_renderer_sha256": "6460f400ba02e5319749bd8cd8c7f6f52574de9e2396438ac288de13b93e0c74",
+      "world_extension_sha256": "8177653c3427a0e3a1d29c709d7534be8ca1707c516c2179b74f82c58cb0200e",
+      "world_script_sha256": "ff7f1baad790503230760c594c17c026a01f4f6a0b811fa9d8fece8575839ea5",
+      "seed_build_id": "8e111ffe016984a9766cc16bb4453a720d809a04ea110ffb77c479205b250baa",
+      "tvtsyn_graph": {
+        "config.json": "de7b6e3ddfe4cf0b6f6604c636cacd634a4d31b5a3d99777499cafb7be6aaa03",
+        "onnx/tvtsyn_step_100ms.onnx": "5cae8bb2aec55037a95136bad30fb3e2c9694738da96afed82f09f15a3b614aa",
+        "onnx/tvtsyn_step_100ms.onnx.json": "7c5ee5b21cbc66fa7dc8a85bfd2bd105818df01e233633b70a773b19c6931231"
+      },
+      "int8_graph_sha256": "599239498f5197b9d785604073f4be39ffa12c4df5c13673e96b6737f59bc828"
+    },
+    "world": {
+      "source_sha256": "3e2ae3ca582b546bf7c780f3ac9bae82e8668354b0f7de61abf5e85266d04bdb",
+      "audio": {
+        "original": "test_tone__original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+        "world_control": "test_tone__world_control__e2943b4d05579017ba1413931f24b710ed0805956fdb885b29eeba37eab1806c.wav",
+        "world_pitch": "test_tone__world_pitch__bf53dbc8cf3c0cfd57b8e6c5609abc97ca82b0fe801b2c09ec32bd6340f4c212.wav",
+        "world_formants": "test_tone__world_formants__81205be0bc017f326118a1e657ce0689fe259727ac43358467293bf6c25317bf.wav",
+        "world_texture": "test_tone__world_texture__8ed4da63eb00fa6702cd4bd95d181e60f401df1b5f45f27ce3b8a6d9b267dc2d.wav"
+      },
+      "levels": {
+        "original": {
+          "rms": 0.054602313414690934,
+          "peak": 0.10809730738401413,
+          "gain": 1.0
+        },
+        "world_control": {
+          "rms": 0.05460231341397356,
+          "peak": 0.1736070215702057,
+          "gain": 0.9693376360742074
+        },
+        "world_pitch": {
+          "rms": 0.054602313415963236,
+          "peak": 0.18433433771133423,
+          "gain": 0.9689034460479723
+        },
+        "world_formants": {
+          "rms": 0.054602313419443785,
+          "peak": 0.17605362832546234,
+          "gain": 1.0227505537349
+        },
+        "world_texture": {
+          "rms": 0.05460231343969867,
+          "peak": 0.19598259031772614,
+          "gain": 1.0216184909342794
+        }
+      },
+      "analysis_seconds": 0.5334220000077039,
+      "timings": {
+        "world_control": {
+          "synthesis_and_transform_seconds": 0.06376058398745954,
+          "analysis_plus_synthesis_rtf": 0.14929564599879086,
+          "generated_samples": 197040
+        },
+        "world_pitch": {
+          "synthesis_and_transform_seconds": 0.05671770893968642,
+          "analysis_plus_synthesis_rtf": 0.14753492723684758,
+          "generated_samples": 197040
+        },
+        "world_formants": {
+          "synthesis_and_transform_seconds": 0.07151154102757573,
+          "analysis_plus_synthesis_rtf": 0.1512333852588199,
+          "generated_samples": 197040
+        },
+        "world_texture": {
+          "synthesis_and_transform_seconds": 0.07263708300888538,
+          "analysis_plus_synthesis_rtf": 0.15151477075414732,
+          "generated_samples": 197040
+        }
+      },
+      "harvest_voiced_frames_before_d4c": 802,
+      "frames": 821,
+      "analysis_f0_floor_hz": 50,
+      "fft_size": 4096,
+      "peak_python_worker_rss_bytes": 236240896,
+      "extension_bytes": 480640,
+      "extension_sha256": "8177653c3427a0e3a1d29c709d7534be8ca1707c516c2179b74f82c58cb0200e"
+    },
+    "scope": "Synthetic-tone diagnostics only; existing voice artifacts and review contexts unchanged."
+  }
+}

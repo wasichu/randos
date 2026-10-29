@@ -7,6 +7,8 @@ import {
 import {serializeIceCandidate, serializeSessionDescription} from "./signaling"
 import {logDebug, logEvent, logWarning} from "./logging"
 import {processLocalStream} from "./voice/seam"
+import {createMaskingStream} from "./voice/masking"
+import {stopAudition} from "./voice/masking_choices"
 
 // Call health is the server's job (CallCoordinator): this client only
 // reports its raw media state (`media_state` signals) and tears down when the
@@ -37,6 +39,8 @@ export class WebRTCClient {
     // answer, old candidates) are expected, not errors.
     restartable = false,
     voiceProcessor = null,
+    masking = null,
+    onAudioFailure,
     pushSignal,
     onStateChange,
     onLocalStream,
@@ -48,6 +52,10 @@ export class WebRTCClient {
     this.restartable = restartable
     // A key of VOICE_PROCESSORS (voice/seam.js), or null: send the mic as is.
     this.voiceProcessor = voiceProcessor
+    this.masking = masking
+    this.onAudioFailure = onAudioFailure
+    this.muted = false
+    this.processingAbort = null
     this.pushSignal = pushSignal
     this.onStateChange = onStateChange
     this.onLocalStream = onLocalStream
@@ -82,6 +90,9 @@ export class WebRTCClient {
       iceTransportPolicy: this.iceTransportPolicy,
       voiceProcessor: this.voiceProcessor,
     })
+    await stopAudition()
+    if (this.cleaned) return
+    if (this.masking && this.voiceProcessor) throw Error('Choose one voice processor')
     const stream = await this.captureLocalAudio()
 
     // The call may have ended while the mic prompt was open; never keep a
@@ -93,7 +104,12 @@ export class WebRTCClient {
 
     // The seam: what's sent, muted, and drawn is the processed stream.
     this.rawStream = stream
-    this.voice = await processLocalStream(stream, this.voiceProcessor)
+    for (const track of stream.getAudioTracks()) track.addEventListener('ended', () => this.failAudio(Error('Microphone stopped')), {once: true})
+    this.processingAbort = new AbortController()
+    this.voice = this.masking
+      ? createMaskingStream(stream, this.masking, error => this.failAudio(error), this.processingAbort.signal)
+      : await processLocalStream(stream, this.voiceProcessor)
+    await this.voice.ready
     if (this.cleaned) {
       this.releaseLocalAudio()
       return
@@ -151,7 +167,8 @@ export class WebRTCClient {
   }
 
   setMuted(muted) {
-    setStreamMuted(this.localStream, muted)
+    this.muted = muted
+    this.updateVoiceGate()
     logEvent("media.microphone_muted", {muted})
   }
 
@@ -305,6 +322,8 @@ export class WebRTCClient {
 
   // Stops the mic itself (the raw tracks) and whatever processing made.
   releaseLocalAudio() {
+    this.processingAbort?.abort()
+    this.processingAbort = null
     this.voice?.close()
     this.voice = null
     stopStream(this.localStream)
@@ -338,6 +357,7 @@ export class WebRTCClient {
   // Both iceConnectionState and connectionState feed this; `source` names
   // which one in any payload sent to the server.
   handleConnectionState(source, state) {
+    this.updateVoiceGate()
     logDebug("webrtc.connection_state", {source, state})
 
     switch (state) {
@@ -371,6 +391,7 @@ export class WebRTCClient {
   // that's safe only because the server keeps asking for restarts on its
   // own timer until the call is healthy or out of budget (CallCoordinator).
   reportMediaState(state, details = {}) {
+    this.updateVoiceGate()
     if (this.reportedMediaState === state) return
 
     this.reportedMediaState = state
@@ -389,5 +410,19 @@ export class WebRTCClient {
     this.state = state
     this.onStateChange?.(state)
     logDebug("webrtc.state", {state})
+  }
+
+  updateVoiceGate() {
+    const pc = this.peerConnection
+    const connected = pc?.connectionState === "connected" && ["connected", "completed"].includes(pc.iceConnectionState)
+    if (this.voice?.setEligible) this.voice.setEligible(connected && !this.muted)
+    else setStreamMuted(this.localStream, this.muted)
+  }
+
+  failAudio(error) {
+    if (this.cleaned) return
+    this.teardown()
+    this.setState(WebRTCClientState.FAILED)
+    this.onAudioFailure?.(error)
   }
 }

@@ -43,12 +43,15 @@ defmodule Tui.Language do
     Map.get(@aliases, language, language)
   end
 
-  @doc "The next language after `code` (wrapping), for the `l` key."
-  @spec next(String.t()) :: String.t()
-  def next(code) do
+  @doc "Move the picker cursor through available locales, wrapping at either end."
+  @spec step(String.t(), -1 | 1) :: String.t()
+  def step(code, direction) when direction in [-1, 1] do
     languages = available()
-    index = Enum.find_index(languages, &(&1 == code)) || -1
-    Enum.at(languages, rem(index + 1, length(languages)))
+
+    case Enum.find_index(languages, &(&1 == code)) do
+      nil -> @default
+      index -> Enum.at(languages, Integer.mod(index + direction, length(languages)))
+    end
   end
 
   @doc "Makes `code` this process's language (the app renders in its own process)."

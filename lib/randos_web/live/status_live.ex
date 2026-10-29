@@ -24,7 +24,7 @@ defmodule RandosWeb.StatusLive do
       "The service status page: whether calls can connect now, and today's call counts."
     )
 
-    {:ok, assign(socket, page_title: gettext("Status"), status: Status.snapshot())}
+    {:ok, assign(socket, page_title: gettext("Server Status"), status: Status.snapshot())}
   end
 
   @impl true
@@ -42,7 +42,7 @@ defmodule RandosWeb.StatusLive do
         <article class="mx-auto max-w-3xl px-4 py-10 sm:px-8 sm:py-16">
           <header class="space-y-3">
             <h1 class="text-4xl font-semibold tracking-normal text-stone-950">
-              {gettext("Status")}
+              {gettext("Server Status")}
             </h1>
             <p class="text-lg leading-8 text-stone-700">
               {gettext("Whether calls can connect right now, and how today is going.")}

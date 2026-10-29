@@ -1,0 +1,48 @@
+{
+  "dependency_pr": 10,
+  "decision": "accepted_with_matching_torch_pin",
+  "original_pr_failure": "TorchAudio 2.11 with Torch 2.8 fails import: missing _torch_library_impl",
+  "versions": {
+    "numpy": "2.5.4",
+    "soundfile": "0.14.0",
+    "torch": "2.11.0",
+    "torchaudio": "2.11.0",
+    "speechbrain": "1.1.2"
+  },
+  "protocol_version": 2,
+  "dataset": {
+    "name": "LibriSpeech test-clean (CC-BY 4.0)",
+    "speakers": 20,
+    "female": 10,
+    "male": 10,
+    "enrollment_per_speaker": 2,
+    "trials": 60
+  },
+  "setting": "passthrough",
+  "baseline": {
+    "eer_ignorant": 0.0008771929824561404,
+    "eer_informed": 0.0008771929824561404,
+    "identification_ignorant": 1.0,
+    "identification_informed": 1.0,
+    "wer": 0.056338028169014086
+  },
+  "updated": {
+    "eer_ignorant": 0.0008771929824561404,
+    "eer_informed": 0.0008771929824561404,
+    "identification_ignorant": 1.0,
+    "identification_informed": 1.0,
+    "wer": 0.056338028169014086
+  },
+  "delta": {
+    "eer_ignorant": 0.0,
+    "eer_informed": 0.0,
+    "identification_ignorant": 0.0,
+    "identification_informed": 0.0,
+    "wer": 0.0
+  },
+  "models": {
+    "speaker": "speechbrain/spkrec-ecapa-voxceleb",
+    "asr": "openai/whisper-base.en"
+  },
+  "comparison_inputs": "current benchmark implementation and cached model weights; identical corpus/protocol"
+}

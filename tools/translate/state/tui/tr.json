@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · Sizin gönderdiğiniz: %{you} dBFS · Karşı tarafın gönderdiği: %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{device} (varsayılan)"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} veya %{last}"
   },
   "%{language} both ways": {
@@ -20,8 +20,12 @@
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} dakika veya daha fazla"
+  },
+  "%{name} ✓": {
+    "model": "madlad-400",
+    "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
     "model": "madlad-400",
@@ -43,6 +47,18 @@
     "model": "translategemma-4b",
     "msgstr": "Karar vermek için %{time} kaldı"
   },
+  "1  Off": {
+    "model": "opus-mt",
+    "msgstr": "1 Kapalı"
+  },
+  "2  Tone": {
+    "model": "m2m100",
+    "msgstr": "2 ton"
+  },
+  "3  Tone + Pitch": {
+    "model": "translategemma-12b",
+    "msgstr": "3. Ses Tonu + Ses Yüksekliği"
+  },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "translategemma-4b",
     "msgstr": "Bir dil çifti, en az %{count} çağrıya ulaştığında görüntülenir; daha az sayıda çağrı, \"diğer\" olarak kabul edilir."
@@ -59,6 +75,10 @@
     "model": "hy-mt2",
     "msgstr": "Ses açık."
   },
+  "Brighter": {
+    "model": "hy-mt2",
+    "msgstr": "Daha parlak"
+  },
   "Calls started: %{started}": {
     "model": "opus-mt",
     "msgstr": "Aramalar başladı: %{started}"
@@ -66,6 +86,10 @@
   "Checking the relay…": {
     "model": "hy-mt2",
     "msgstr": "Röleyi kontrol ediyorum…"
+  },
+  "Checking voice options…": {
+    "model": "hy-mt2",
+    "msgstr": "Ses seçeneklerini kontrol ediyorum…"
   },
   "Connected: %{connected}": {
     "model": "translategemma-4b",
@@ -76,7 +100,7 @@
     "msgstr": "Sunucu ile bağlantı kurmak…"
   },
   "Connection:": {
-    "model": "translategemma-12b",
+    "model": "madlad-400",
     "msgstr": "Bağlantı:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -104,8 +128,12 @@
     "msgstr": "Aygıtlar"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Hata: %{message}"
+  },
+  "Fuller": {
+    "model": "translategemma-4b",
+    "msgstr": "Daha dolgun"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "translategemma-4b",
@@ -123,12 +151,20 @@
     "model": "opus-mt",
     "msgstr": "Bunu duyduğuma sevindim:"
   },
+  "Interface language": {
+    "model": "madlad-400",
+    "msgstr": "Arayüz dili"
+  },
   "Join through a link": {
     "model": "hy-mt2",
     "msgstr": "Bir bağlantı üzerinden katılın"
   },
+  "Keyboard shortcuts": {
+    "model": "translategemma-4b",
+    "msgstr": "Klavyede kullanılan kısayollar"
+  },
   "Languages spoken:": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Konuşulan diller:"
   },
   "Languages spoken: no calls yet": {
@@ -155,6 +191,10 @@
     "model": "translategemma-12b",
     "msgstr": "Mikrofon:"
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "hy-mt2",
+    "msgstr": "Mikrofon: %{bars}%{peak}   (Durdurmak için %{key})"
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-4b",
     "msgstr": "Mikrofon: %{bars}%{peak} (Durdurmak için \"t\" tuşuna basın)"
@@ -163,13 +203,33 @@
     "model": "translategemma-4b",
     "msgstr": "Mikrofon: açılıyor…"
   },
+  "Microphone off.": {
+    "model": "m2m100",
+    "msgstr": "Mikrofonu kapatın"
+  },
+  "Microphone on.": {
+    "model": "hy-mt2",
+    "msgstr": "Mikrofon açık."
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "hy-mt2",
     "msgstr": "Bu sunucuda herhangi bir yönlendirici yapılandırılmamıştır, bu yüzden aramalar doğrudan iletilir."
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "m2m100",
+    "msgstr": "Hiçbir şey kaydedilmez ya da yüklenmez."
+  },
   "Now:": {
     "model": "madlad-400",
     "msgstr": "Şimdi:"
+  },
+  "Off": {
+    "model": "madlad-400",
+    "msgstr": "Kapalı"
+  },
+  "Opening microphone…": {
+    "model": "translategemma-4b",
+    "msgstr": "Mikrofonu açıyorum…"
   },
   "Other languages: %{calls}": {
     "model": "m2m100",
@@ -191,20 +251,28 @@
     "model": "opus-mt",
     "msgstr": "Bir rando bulmak için Enter tuşuna basın."
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "opus-mt",
+    "msgstr": "Önizleme başarısız oldu. Mikrofon durdu; tekrar deneyin."
+  },
   "Reconnecting audio…": {
     "model": "translategemma-4b",
     "msgstr": "Ses bağlantısını yeniden kurma…"
+  },
+  "Selected: %{style}": {
+    "model": "opus-mt",
+    "msgstr": "Seçilen: %{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "hy-mt2",
     "msgstr": "Onlara istediğiniz şekilde gönderin. Bir kez işe yarar."
   },
   "Server status": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Sunucu durumu"
   },
   "Speaker:": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Konuşmacı:"
   },
   "Text only (no audio helper).": {
@@ -223,6 +291,10 @@
     "model": "m2m100",
     "msgstr": "Relay işe yaramıyor."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "translategemma-4b",
+    "msgstr": "Bu tarzlar sesinizi değiştirse de, insanlar hala sizi tanıyabilirler."
+  },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "translategemma-4b",
     "msgstr": "Bu istemci, ses işleme özelliği olmadan çalışıyor (hiçbir medya yardımcı programı yok). Eğer diğer istemci ses sunuyorsa (bir tarayıcı), görüşme sona erer ve tekrar bekleme durumuna dönersiniz. İki terminal istemcisi, zamanlayıcıları ve uzantı oylamalarını denemek için aynı görüşmede kalabilir."
@@ -232,7 +304,7 @@
     "msgstr": "Bu sunucunun durum sayfası yoktur (durum isteğinden daha eskidir)."
   },
   "Time is up.": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Zaman doldu."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -243,9 +315,41 @@
     "model": "hy-mt2",
     "msgstr": "Bugün (%{date} tarihindeki %{time} UTC’sinden itibaren):"
   },
+  "Tone": {
+    "model": "m2m100",
+    "msgstr": "tonu"
+  },
+  "Tone + Pitch": {
+    "model": "opus-mt",
+    "msgstr": "Ton + Pitch"
+  },
+  "Tone: %{tone} (left/right)": {
+    "model": "madlad-400",
+    "msgstr": "Ton: %{tone} (sol/sağ)"
+  },
   "Typical length: %{length}": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Tipik uzunluk: %{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "m2m100",
+    "msgstr": "Ses değişikliklerini önceden görmek için ses asistanını güncelleyin."
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "hy-mt2",
+    "msgstr": "Kulaklık kullanın ve ses seviyesini düşük tutun."
+  },
+  "Voice masking": {
+    "model": "opus-mt",
+    "msgstr": "Ses maskeleme"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "hy-mt2",
+    "msgstr": "Ses maskeleme mevcut değil. randos uygulamasını güncelleyin veya “Kapalı” seçeneğini seçin."
+  },
+  "Voice masking on": {
+    "model": "hy-mt2",
+    "msgstr": "Ses maskeleme açık"
   },
   "Waiting for your rando to open the link…": {
     "model": "madlad-400",
@@ -256,7 +360,7 @@
     "msgstr": "Aramaları sayıyoruz, insanları değil. Adres yok, kimlik yok, kimse hakkında hiçbir şey yok."
   },
   "You": {
-    "model": "translategemma-4b",
+    "model": "m2m100",
     "msgstr": "Sen"
   },
   "You're in a call.": {
@@ -272,11 +376,11 @@
     "msgstr": "Seçtiğiniz dillerden herhangi biri (%{count})."
   },
   "connected": {
-    "model": "translategemma-4b",
+    "model": "opus-mt",
     "msgstr": "bağlı"
   },
   "connected directly": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "doğrudan bağlı"
   },
   "connected to %{server}": {
@@ -336,7 +440,7 @@
     "msgstr": "bir telefon görüşmesinde"
   },
   "key\u000418+": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -359,9 +463,17 @@
     "model": "opus-mt",
     "msgstr": "değiştir"
   },
+  "key\u0004change tone": {
+    "model": "hy-mt2",
+    "msgstr": "tonu değiştirin"
+  },
   "key\u0004check": {
     "model": "madlad-400",
     "msgstr": "kontrol"
+  },
+  "key\u0004choose": {
+    "model": "translategemma-4b",
+    "msgstr": "seç"
   },
   "key\u0004close": {
     "model": "madlad-400",
@@ -387,6 +499,14 @@
     "model": "translategemma-12b",
     "msgstr": "bulun"
   },
+  "key\u0004hear myself / stop": {
+    "model": "m2m100",
+    "msgstr": "Kendimi dinle / dur"
+  },
+  "key\u0004help": {
+    "model": "madlad-400",
+    "msgstr": "yardım"
+  },
   "key\u0004invite": {
     "model": "madlad-400",
     "msgstr": "davet et"
@@ -400,7 +520,7 @@
     "msgstr": "Bir bağlantıya katıl"
   },
   "key\u0004language": {
-    "model": "translategemma-12b",
+    "model": "opus-mt",
     "msgstr": "dil"
   },
   "key\u0004mic": {
@@ -431,6 +551,10 @@
     "model": "madlad-400",
     "msgstr": "güncelle"
   },
+  "key\u0004scroll": {
+    "model": "opus-mt",
+    "msgstr": "kaydırma"
+  },
   "key\u0004speaker": {
     "model": "hy-mt2",
     "msgstr": "konuşmacı"
@@ -439,9 +563,17 @@
     "model": "madlad-400",
     "msgstr": "durum"
   },
+  "key\u0004style": {
+    "model": "m2m100",
+    "msgstr": "tarzı"
+  },
   "key\u0004unmute": {
     "model": "translategemma-4b",
     "msgstr": "sesi aç"
+  },
+  "key\u0004voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "ses maskeleme"
   },
   "link copied": {
     "model": "hy-mt2",
@@ -516,8 +648,12 @@
     "msgstr": "bir rando arıyor değilim"
   },
   "not working": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "çalışmıyor"
+  },
+  "p: hear myself / stop. Esc: back.": {
+    "model": "m2m100",
+    "msgstr": "P: Kendimi dinle / dur. Esc: geri."
   },
   "panel title\u0004Connecting": {
     "model": "translategemma-4b",
@@ -536,7 +672,7 @@
     "msgstr": "davetiye"
   },
   "panel title\u0004Looking": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Bakıyorum"
   },
   "panel title\u0004Matched": {
@@ -596,7 +732,7 @@
     "msgstr": "Ses kaydı başlıyor…"
   },
   "system default": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "sistem varsayılanı"
   },
   "text only": {

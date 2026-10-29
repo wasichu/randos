@@ -23,6 +23,10 @@
     "model": "m2m100",
     "msgstr": "%{minutes} dakika au zaidi ya"
   },
+  "%{name} ✓": {
+    "model": "madlad-400",
+    "msgstr": "%{name} ✓"
+  },
   "%{request} refused: %{reason}": {
     "model": "madlad-400",
     "msgstr": "%{request} alikataa: %{reason}"
@@ -42,6 +46,18 @@
   "%{time} to decide": {
     "model": "madlad-400",
     "msgstr": "%{time} kuamua"
+  },
+  "1  Off": {
+    "model": "m2m100",
+    "msgstr": "1 Kuondoka"
+  },
+  "2  Tone": {
+    "model": "m2m100",
+    "msgstr": "2 Toni ya"
+  },
+  "3  Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "3  Sauti + Kiwango"
   },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "translategemma-4b",
@@ -67,8 +83,12 @@
     "model": "translategemma-4b",
     "msgstr": "Tafadhali, angalia swichi…"
   },
-  "Connected: %{connected}": {
+  "Checking voice options…": {
     "model": "translategemma-12b",
+    "msgstr": "Kuangalia chaguo za sauti…"
+  },
+  "Connected: %{connected}": {
+    "model": "madlad-400",
     "msgstr": "Imeunganishwa: %{connected}"
   },
   "Connecting to the server…": {
@@ -123,12 +143,20 @@
     "model": "translategemma-12b",
     "msgstr": "Ninafurahi kusikia:"
   },
+  "Interface language": {
+    "model": "translategemma-4b",
+    "msgstr": "Lugha ya mawasiliano"
+  },
   "Join through a link": {
     "model": "translategemma-4b",
     "msgstr": "Jiunge kupitia kiungo"
   },
+  "Keyboard shortcuts": {
+    "model": "madlad-400",
+    "msgstr": "Vifupisho vya Kibodi"
+  },
   "Languages spoken:": {
-    "model": "translategemma-12b",
+    "model": "madlad-400",
     "msgstr": "Lugha zinazozungumzwa:"
   },
   "Languages spoken: no calls yet": {
@@ -155,6 +183,10 @@
     "model": "translategemma-12b",
     "msgstr": "Mikrofoni:"
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "translategemma-12b",
+    "msgstr": "Mikrofoni: %{bars}%{peak}   (%{key} ili kusitisha)."
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-12b",
     "msgstr": "Mikrofoni: %{bars}%{peak} (bonyeza 't' ili kusitisha)."
@@ -163,13 +195,33 @@
     "model": "madlad-400",
     "msgstr": "Mic: kufungua…"
   },
+  "Microphone off.": {
+    "model": "madlad-400",
+    "msgstr": "Kuzima mikrofoni."
+  },
+  "Microphone on.": {
+    "model": "translategemma-12b",
+    "msgstr": "Mikrofoni imewashwa."
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "translategemma-12b",
     "msgstr": "Hakuna mfumo wa usambazaji (relay) uliosanidiwa kwenye seva hii, kwa hivyo simu zinazotumwa hapa huenda moja kwa moja."
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "translategemma-12b",
+    "msgstr": "Hakuna chochote kilichorekodiwa au kupakiwa."
+  },
   "Now:": {
     "model": "m2m100",
     "msgstr": "Kwa sasa:"
+  },
+  "Off": {
+    "model": "m2m100",
+    "msgstr": "kuondoka"
+  },
+  "Opening microphone…": {
+    "model": "madlad-400",
+    "msgstr": "Kufungua mikrofoni…"
   },
   "Other languages: %{calls}": {
     "model": "translategemma-12b",
@@ -191,9 +243,17 @@
     "model": "m2m100",
     "msgstr": "Kuingia kwa ajili ya kutafuta rando."
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "m2m100",
+    "msgstr": "Mikrofoni imefungwa; jaribu tena."
+  },
   "Reconnecting audio…": {
     "model": "madlad-400",
     "msgstr": "Kuunganisha tena sauti…"
+  },
+  "Selected: %{style}": {
+    "model": "translategemma-12b",
+    "msgstr": "Chaguliwa: %{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "translategemma-12b",
@@ -223,6 +283,10 @@
     "model": "translategemma-12b",
     "msgstr": "Kitufe cha kusogeza (relay) hakifanyi kazi."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "madlad-400",
+    "msgstr": "Mitindo hii hubadilisha sauti yako, lakini watu bado wanaweza kukutambua."
+  },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "translategemma-12b",
     "msgstr": "Mteja huyu unafanya kazi bila sauti (hakuna mfumo wa usaidizi wa media): ikiwa mteja mwingine anatoa sauti (kupitia kivinjari), simu itakatika na utarudi kwenye hali ya kusubiri. Wateja wawili wanaweza kuwa kwenye simu ili kujaribu vipima muda na kupiga kura za vipengele."
@@ -243,9 +307,37 @@
     "model": "translategemma-12b",
     "msgstr": "Leo (ikiwa ni siku ambazo zimepita tangu saa ya UTC ya %{time} mnamo %{date}):"
   },
+  "Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "Saada + Kiwango"
+  },
+  "Tone: %{tone} (left/right)": {
+    "model": "translategemma-12b",
+    "msgstr": "Sauti: %{tone} (kushoto/kulia)"
+  },
   "Typical length: %{length}": {
     "model": "translategemma-4b",
     "msgstr": "Urefu wa kawaida: %{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "madlad-400",
+    "msgstr": "Kuboresha msaidizi wa sauti ili kutazama mabadiliko ya sauti."
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "translategemma-4b",
+    "msgstr": "Tumia vifaa vya kusikiliza na weka sauti kwa kiwango kidogo."
+  },
+  "Voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "Kufunika sauti"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "madlad-400",
+    "msgstr": "Sauti masking haipatikani. Update randos au kuchagua Off."
+  },
+  "Voice masking on": {
+    "model": "translategemma-4b",
+    "msgstr": "Kufunika sauti"
   },
   "Waiting for your rando to open the link…": {
     "model": "madlad-400",
@@ -359,9 +451,17 @@
     "model": "translategemma-4b",
     "msgstr": "badilisha"
   },
+  "key\u0004change tone": {
+    "model": "madlad-400",
+    "msgstr": "kubadili toni"
+  },
   "key\u0004check": {
     "model": "translategemma-12b",
     "msgstr": "angalia"
+  },
+  "key\u0004choose": {
+    "model": "m2m100",
+    "msgstr": "kuchagua"
   },
   "key\u0004close": {
     "model": "translategemma-4b",
@@ -386,6 +486,14 @@
   "key\u0004find": {
     "model": "m2m100",
     "msgstr": "kutafuta"
+  },
+  "key\u0004hear myself / stop": {
+    "model": "madlad-400",
+    "msgstr": "kusikia mwenyewe / kuacha"
+  },
+  "key\u0004help": {
+    "model": "madlad-400",
+    "msgstr": "msaada"
   },
   "key\u0004invite": {
     "model": "translategemma-4b",
@@ -427,6 +535,10 @@
     "model": "translategemma-4b",
     "msgstr": "fanya upya"
   },
+  "key\u0004scroll": {
+    "model": "translategemma-12b",
+    "msgstr": "teleza chini"
+  },
   "key\u0004speaker": {
     "model": "translategemma-12b",
     "msgstr": "mzungumzaji"
@@ -435,9 +547,17 @@
     "model": "m2m100",
     "msgstr": "hali ya"
   },
+  "key\u0004style": {
+    "model": "madlad-400",
+    "msgstr": "mtindo"
+  },
   "key\u0004unmute": {
     "model": "madlad-400",
     "msgstr": "kuzima"
+  },
+  "key\u0004voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "kughushi sauti"
   },
   "link copied": {
     "model": "madlad-400",
@@ -515,8 +635,12 @@
     "model": "m2m100",
     "msgstr": "Hakuna kazi"
   },
+  "p: hear myself / stop. Esc: back.": {
+    "model": "translategemma-12b",
+    "msgstr": "p: sikia sauti yangu / acha. Esc: rudi nyuma."
+  },
   "panel title\u0004Connecting": {
-    "model": "translategemma-4b",
+    "model": "m2m100",
     "msgstr": "Kuunganisha"
   },
   "panel title\u0004Find a rando": {

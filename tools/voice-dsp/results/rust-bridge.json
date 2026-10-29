@@ -1,0 +1,603 @@
+{
+  "completed": true,
+  "scope": "Actual safe Rust API and owned C++ boundary versus saved browser PCM; includes the live 20 ms adapter. Finite test rendering only, no devices.",
+  "binary_sha256": "758ef0b21daa4dbe97252b6c7ad0eda3c048c3a84c7b4f859835f755d268f795",
+  "reference_sha256": "053d91cbb83c92eba0a74ca9902a2ec1921a31db2186ad04174893b0212fb275",
+  "provenance": {
+    "Cargo.lock": "bd25ae728a620cacc62eb0debdedbfdebc996a381b5e913b13d44f7a53115d54",
+    "Cargo.toml": "b8fc8700ac357f50783d9dfcaca4c15f80268ba7f8cb20ffac38f8a167a39a29",
+    "voice-native/Cargo.toml": "70d0aebfb64ac136fa2e2edb3de8b87d52e6ed6fcebcaefb2bb11935bbdedba9",
+    "tools/voice-dsp/native/check_bridge.py": "44d5da83c6523a81c3db6bca7491121a05a2e925a9bbfaf1a066c927e3aba9a8",
+    "vendor/signalsmith/manifest.json": "07a743672596f1766d40da2e4e8cf2d52ae36cf53a5d4dfefcb14291cdd8d059",
+    "vendor/signalsmith/signalsmith-linear/approx.h": "bf6f703193253a241e7a80d44547bb73c383a9a1f1ebe1f7fefdcf3d234515bd",
+    "vendor/signalsmith/signalsmith-linear/fft.h": "fb55f69ac14cdbac66b9c76053069ff63bc36d18af20d8c028b9acc0aad6516a",
+    "vendor/signalsmith/signalsmith-linear/linear.h": "bf0d23a37efd4d89e5baf2b2969374748f23690697a5158774feb0d00cf9502b",
+    "vendor/signalsmith/signalsmith-linear/stft.h": "20f3695bb8d162cf4b3f1aacdca477f0c8a301ffebd6fec53b437e9ce623462b",
+    "vendor/signalsmith/stretch/signalsmith-stretch.h": "1188667959ac19dd40c0a6abbce694e44705615ec4f0e8db8af0f1cfb4c5dea7",
+    "voice-native/build.rs": "83bc7b3ea0629563fa5574f477e98580dc5357147aa62624775076e5efcf9f16",
+    "voice-native/examples/render_signalsmith.rs": "b65a9f0cb37bb23b7dfd008db6357f8f193aa47064b08841b8ad09308591a602",
+    "voice-native/src/ffi.rs": "9b9ada1f03651e8ffc17b7d0e505525fece89de78eab5208f6d55d3d169a7120",
+    "voice-native/src/lib.rs": "facb91ab79073eea1a04aca78cc3cc11638f0a1cfccd7378322585ad0d6b3ef3",
+    "voice-native/src/bridge.cpp": "c964f28fdd391dd68b030ba5db04bf2ce83d89bc97982e79d1dd4d5de8481dbf"
+  },
+  "cases": [
+    {
+      "case": "high_voice__lower_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__lower_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 2.6339956079154343e-13,
+      "max_abs": 9.094947017729282e-13,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 2.6339956079154343e-13,
+      "max_abs": 9.094947017729282e-13,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__higher_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__higher_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 2.2608231742312877e-13,
+      "max_abs": 9.094947017729282e-13,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "high_voice__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 2.2608231742312877e-13,
+      "max_abs": 9.094947017729282e-13,
+      "pass": true,
+      "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a"
+    },
+    {
+      "case": "low_voice__lower_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__lower_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 2.9682810382322534e-10,
+      "max_abs": 1.862645149230957e-09,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 2.9682810382322534e-10,
+      "max_abs": 1.862645149230957e-09,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__higher_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__higher_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 1.6949112330888057e-11,
+      "max_abs": 1.1641532182693481e-10,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "low_voice__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 1.6949112330888057e-11,
+      "max_abs": 1.1641532182693481e-10,
+      "pass": true,
+      "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2"
+    },
+    {
+      "case": "mid_voice__lower_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 1.608766606571306e-18,
+      "max_abs": 6.938893903907228e-18,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__lower_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 1.608766606571306e-18,
+      "max_abs": 6.938893903907228e-18,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__higher_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__higher_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 1.6060612041587457e-16,
+      "max_abs": 8.881784197001252e-16,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mid_voice__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 1.6060612041587457e-16,
+      "max_abs": 8.881784197001252e-16,
+      "pass": true,
+      "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747"
+    },
+    {
+      "case": "mencken_wasichu__lower_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__lower_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 9.256555396944467e-10,
+      "max_abs": 9.313225746154785e-10,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 9.256555396944467e-10,
+      "max_abs": 9.313225746154785e-10,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__higher_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__higher_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 4.220791782402893e-10,
+      "max_abs": 4.656612873077393e-10,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "mencken_wasichu__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 4.220791782402893e-10,
+      "max_abs": 4.656612873077393e-10,
+      "pass": true,
+      "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1"
+    },
+    {
+      "case": "test_tone__lower_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__lower_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__higher_resonance_only",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__higher_resonance_only",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": false,
+      "relative_rms": 8.149698210526349e-14,
+      "max_abs": 1.8189894035458565e-12,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "test_tone__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": false,
+      "relative_rms": 8.149698210526349e-14,
+      "max_abs": 1.8189894035458565e-12,
+      "pass": true,
+      "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97"
+    },
+    {
+      "case": "check_silence__lower_resonance_only",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__lower_resonance_only",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__higher_resonance_only",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__higher_resonance_only",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_silence__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.0,
+      "max_abs": 0.0,
+      "pass": true,
+      "input_sha256": "1b27b8622fb3def1180088409c5f6ca47850b22e1de41e7e8b019b1d77279b0c"
+    },
+    {
+      "case": "check_onset__lower_resonance_only",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 4.1064177380684803e-22,
+      "max_abs": 3.484498330379629e-23,
+      "pass": true,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__lower_resonance_only",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 4.1064177380684803e-22,
+      "max_abs": 3.484498330379629e-23,
+      "pass": true,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.000915578421629671,
+      "max_abs": 9.451046935282648e-06,
+      "pass": true,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.000915578421629671,
+      "max_abs": 9.451046935282648e-06,
+      "pass": true,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__higher_resonance_only",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 4.236917136607023e-18,
+      "max_abs": 4.235213656249916e-19,
+      "pass": true,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__higher_resonance_only",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 4.236917136607023e-18,
+      "max_abs": 4.235213656249916e-19,
+      "pass": true,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.001106254425749527,
+      "max_abs": 1.1260767678322736e-05,
+      "pass": false,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_onset__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.001106254425749527,
+      "max_abs": 1.1260767678322736e-05,
+      "pass": false,
+      "input_sha256": "7b2b8d59e031cb8c818f4918aeb2991c10ac9de8519da75931ce1c10a503c98c"
+    },
+    {
+      "case": "check_ending__lower_resonance_only",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 5.015413105471647e-18,
+      "max_abs": 4.1415826916460806e-19,
+      "pass": true,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__lower_resonance_only",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 5.015413105471647e-18,
+      "max_abs": 4.1415826916460806e-19,
+      "pass": true,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__lower_resonance_pitch",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.0036227331960469967,
+      "max_abs": 5.272459748084657e-05,
+      "pass": false,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__lower_resonance_pitch",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.0036227331960469967,
+      "max_abs": 5.272459748084657e-05,
+      "pass": false,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__higher_resonance_only",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 1.1199296833391321e-18,
+      "max_abs": 9.048221112927277e-20,
+      "pass": true,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__higher_resonance_only",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 1.1199296833391321e-18,
+      "max_abs": 9.048221112927277e-20,
+      "pass": true,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__higher_resonance_pitch",
+      "mode": "raw",
+      "boundary": true,
+      "relative_rms": 0.003948560472369859,
+      "max_abs": 5.1175991359286854e-05,
+      "pass": false,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    },
+    {
+      "case": "check_ending__higher_resonance_pitch",
+      "mode": "stream",
+      "boundary": true,
+      "relative_rms": 0.003948560472369859,
+      "max_abs": 5.1175991359286854e-05,
+      "pass": false,
+      "input_sha256": "6aacb3074ad1f079d6de28b03a9daee85f8d4c7df643e3596e7ca4b22fb8f75c"
+    }
+  ],
+  "speech_tone_pass": true,
+  "boundary_pass": false
+}

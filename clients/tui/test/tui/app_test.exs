@@ -45,6 +45,170 @@ defmodule Tui.AppTest do
     ExRatatui.get_buffer_content(terminal)
   end
 
+  describe "keyboard help" do
+    test "compact footer and full context, including audio controls" do
+      extra = %{media_state: MediaState.new(true)}
+      text = render_text(model("idle"), extra, {80, 24})
+      assert text =~ "? help"
+      assert text =~ "enter find"
+      refute text =~ "b voice masking"
+      full = render_text(model("idle"), Map.put(extra, :help_open?, true), {80, 30})
+      assert full =~ "Keyboard shortcuts"
+      assert full =~ "b  voice masking"
+      assert full =~ "v  invite"
+      assert full =~ "?/esc close"
+    end
+
+    test "small terminals can scroll through all shortcuts" do
+      state = %{model: model("idle"), media_state: MediaState.new(true)}
+      limit = Tui.View.help_scroll_limit(state, {45, 14})
+      assert limit > 0
+
+      text =
+        render_text(
+          state.model,
+          %{help_open?: true, help_scroll: limit, media_state: state.media_state},
+          {45, 14}
+        )
+
+      assert text =~ "q  quit"
+      assert text =~ "?/esc close"
+    end
+
+    test "help keeps its close hint above the voice panel on a short translated terminal" do
+      Tui.Language.apply("ar")
+      model = %{model("idle") | language: "ar"}
+      media = %{MediaState.new(true) | voice_panel?: true}
+      text = render_text(model, %{help_open?: true, media_state: media, bidi: :no}, {16, 14})
+      assert text =~ "?/esc"
+      assert text =~ "q"
+    end
+
+    test "help owns keys and paste, clamps on resize, and closes on call transition" do
+      {:ok, state} = App.mount(connection: self(), test_mode: {45, 14})
+
+      {:noreply, state} =
+        App.handle_info(
+          {:randos, {:joined, %{"state" => server_state("idle"), "languages" => @languages}}},
+          state
+        )
+
+      key = fn code -> %ExRatatui.Event.Key{code: code, kind: "press"} end
+      {:noreply, opened} = App.handle_event(key.("?"), state)
+      assert opened.help_open?
+      assert App.handle_event(key.("v"), opened) == {:noreply, opened}
+
+      assert App.handle_event(%ExRatatui.Event.Paste{content: "a link"}, opened) ==
+               {:noreply, opened}
+
+      {:noreply, scrolled} = App.handle_event(key.("down"), opened)
+      assert scrolled.help_scroll == 1
+
+      {:noreply, resized} =
+        App.handle_event(%ExRatatui.Event.Resize{width: 120, height: 40}, scrolled)
+
+      assert resized.help_scroll == 0
+      {:noreply, closed} = App.handle_event(key.("esc"), resized)
+      refute closed.help_open?
+
+      {:noreply, changed} =
+        App.handle_info({:randos, {:push, "state", server_state("connecting")}}, opened)
+
+      refute changed.help_open?
+      assert App.handle_event(key.("q"), opened) == {:stop, opened}
+    end
+  end
+
+  describe "interface language picker" do
+    @tag :tmp_dir
+    test "confirming the current inferred locale saves an explicit preference", %{tmp_dir: dir} do
+      path = Path.join(dir, "config.json")
+
+      {:ok, state} =
+        App.mount(connection: self(), test_mode: {100, 30}, config: path, language: "en")
+
+      state = %{state | model: %{state.model | connection: :connected, status: :idle}}
+      key = fn code -> %ExRatatui.Event.Key{code: code, kind: "press"} end
+      {:noreply, opened, full_redraw?: true} = App.handle_event(key.("l"), state)
+      refute File.exists?(path)
+      {:noreply, _closed, full_redraw?: true} = App.handle_event(key.("enter"), opened)
+      assert Tui.Config.load(path)["language"] == "en"
+    end
+
+    test "physical clear also invalidates the retained frame so unchanged UI is restored" do
+      state = %{
+        model: model("idle"),
+        uri: "ws://localhost:4000/participant/websocket",
+        media_state: MediaState.new(false)
+      }
+
+      frame = %ExRatatui.Frame{width: 100, height: 30}
+      terminal = ExRatatui.init_test_terminal(100, 30)
+      widgets = App.render(state, frame)
+      :ok = ExRatatui.draw(terminal, widgets)
+      expected = ExRatatui.get_buffer_content(terminal)
+      :ok = ExRatatui.Native.clear_terminal(terminal)
+      refute ExRatatui.get_buffer_content(terminal) == expected
+      :ok = ExRatatui.draw(terminal, widgets)
+      assert ExRatatui.get_buffer_content(terminal) == expected
+    end
+
+    test "closing a multilingual picker restores the previous terminal frame exactly" do
+      model = %{
+        model("idle")
+        | languages: [
+            %{code: "en", name: "English (EN)"},
+            %{code: "bn", name: "বাংলা (BN)"},
+            %{code: "hi", name: "हिन्दी (HI)"},
+            %{code: "zh", name: "中文 (ZH)"}
+          ]
+      }
+
+      state = %{
+        model: model,
+        uri: "ws://localhost:4000/participant/websocket",
+        media_state: MediaState.new(false)
+      }
+
+      frame = %ExRatatui.Frame{width: 100, height: 30}
+      terminal = ExRatatui.init_test_terminal(100, 30)
+      :ok = ExRatatui.draw(terminal, App.render(state, frame))
+      before = ExRatatui.get_buffer_content(terminal)
+      opened = put_in(state.model.language_picker, "en")
+      :ok = ExRatatui.draw(terminal, App.render(opened, frame))
+      :ok = ExRatatui.draw(terminal, App.render(state, frame))
+      assert ExRatatui.get_buffer_content(terminal) == before
+    end
+
+    test "shows every available interface locale and the current language" do
+      model = %{model("idle") | language_picker: "en"}
+      text = render_text(model, %{}, {100, 30})
+      assert text =~ "Interface language"
+      assert text =~ "English (EN) ✓"
+      assert text =~ "Español (ES)"
+      for code <- Tui.Language.available() -- ["en", "es"], do: assert(text =~ code)
+      assert text =~ "enter choose"
+      assert text =~ "esc/l cancel"
+    end
+
+    test "RTL terminals that need reordering can render and scroll the language picker" do
+      Tui.Language.apply("ar")
+      cursor = List.last(Tui.Language.available())
+      model = %{model("idle") | language: "ar", language_picker: cursor}
+      text = render_text(model, %{bidi: :no}, {40, 14})
+      assert text =~ "▶ #{cursor}"
+      assert text =~ "esc/l"
+    end
+
+    test "the cursor remains visible near the end of the list in a short terminal" do
+      cursor = List.last(Tui.Language.available())
+      model = %{model("idle") | language_picker: cursor}
+      text = render_text(model, %{}, {40, 14})
+      assert text =~ "▶ #{cursor}"
+      assert text =~ "esc/l cancel"
+    end
+  end
+
   describe "screens" do
     test "connecting" do
       text = render_text(Model.new())
@@ -116,7 +280,7 @@ defmodule Tui.AppTest do
             "Español (ES) both ways: 3",
             "Other languages: 4",
             "Counted across 2 of 2 servers.",
-            "s/esc back  r refresh  i about these numbers  q quit"
+            "s/esc back  r refresh  i about these numbers  ? help  q quit"
           ],
           do: assert(text =~ line, "missing: #{line}\n\n#{text}")
 
@@ -128,7 +292,7 @@ defmodule Tui.AppTest do
       assert about_text =~ "About these numbers"
       assert about_text =~ "We count calls, not people"
       assert about_text =~ "A language pair shows once it has at least 3 calls"
-      assert about_text =~ "i/esc close  q quit"
+      assert about_text =~ "i/esc close  ? help  q quit"
 
       for k <- ["i", "esc"] do
         {closed, []} = Tui.Model.key(about, k)
@@ -174,7 +338,8 @@ defmodule Tui.AppTest do
     end
 
     test "the idle screen offers the status screen" do
-      assert render_text(model("idle"), %{}, {120, 24}) =~ "s status"
+      refute render_text(model("idle"), %{}, {120, 24}) =~ "s status"
+      assert render_text(model("idle"), %{help_open?: true}, {120, 24}) =~ "s  status"
     end
 
     test "the idle screen doesn't spell out where settings are saved (the docs and --settings do)" do
@@ -200,7 +365,10 @@ defmodule Tui.AppTest do
 
       # No separate hint line: the key is in the help line.
       refute with_media.(nil) =~ "Press t to test your mic"
-      assert with_media.(nil) =~ "t mic test"
+      refute with_media.(nil) =~ "t mic test"
+
+      assert render_text(model("idle"), %{help_open?: true, media_state: MediaState.new(true)}) =~
+               "t  mic test"
 
       assert with_media.(%{phase: :starting, stats: nil, levels: nil, error: nil}) =~
                "Mic: opening…"
@@ -208,6 +376,8 @@ defmodule Tui.AppTest do
       # A silent meter: bars and the last second's peak, nothing about hearing yourself.
       running = %{phase: :running, stats: nil, levels: [0.0, 0.5, 1.0], error: nil}
       assert with_media.(running) =~ "Mic: ▁▅█   (t to stop)"
+      assert with_media.(Map.put(running, :mode, :audition)) =~ "Mic: ▁▅█   (p to stop)"
+      refute with_media.(Map.put(running, :mode, :audition)) =~ "(t to stop)"
 
       assert with_media.(%{running | stats: %{"input_peak_dbfs" => -40.4}}) =~
                "Mic: ▁▅█  peak -40 dBFS   (t to stop)"
@@ -310,8 +480,11 @@ defmodule Tui.AppTest do
       assert text =~ "Mic:        Mic A (default)"
       assert text =~ "Speaker:    Speakers (default)"
       # The keys break between hints when they need a second row.
-      assert text =~ "i mic"
-      assert text =~ "o speaker"
+      refute text =~ "i mic"
+      help = render_text(model("idle"), %{help_open?: true, media_state: media}, {100, 30})
+      assert help =~ "i  mic"
+      refute text =~ "o speaker"
+      assert help =~ "o  speaker"
 
       # On every screen, so a call shows them too.
       assert render_text(model("in_call"), %{media_state: media}) =~ "Mic:        Mic A"
@@ -497,6 +670,48 @@ defmodule Tui.AppTest do
                      5_000
     end
 
+    @tag :native
+    @tag :capture_log
+    test "voice preview stays running across keyboard changes and closes on Escape" do
+      app = idle_app(:app_test_audition, mic_test: {"sine", "null"}, call_audio: {"sine", "null"})
+      start_supervised!({Tui.Media, name: :app_test_audition, notify: app})
+
+      assert_receive {:tui_media, ^app,
+                      %{audition_available?: true, endpoints: {"sine", "null"}}},
+                     5_000
+
+      keys(app, ["b", "p"])
+
+      assert_receive {:tui_media, ^app, %{mic_test: %{mode: :audition, phase: :running, seq: 1}}},
+                     5_000
+
+      keys(app, ["2", "right", "3"])
+
+      assert_receive {:tui_media, ^app,
+                      %{
+                        voice_family: "tone_pitch",
+                        voice_tone: "brighter",
+                        mic_test: %{phase: :running, seq: 1}
+                      }},
+                     5_000
+
+      assert_receive {:tui_media, ^app,
+                      %{mic_test: %{phase: :running, stats: %{"voice_ms" => 220.0}}}},
+                     5_000
+
+      keys(app, ["1"])
+
+      assert_receive {:tui_media, ^app,
+                      %{
+                        voice_family: "off",
+                        mic_test: %{phase: :running, seq: 1, stats: %{"voice_ms" => +0.0}}
+                      }},
+                     5_000
+
+      keys(app, ["esc"])
+      assert_receive {:tui_media, ^app, %{voice_panel?: false, mic_test: nil}}, 5_000
+    end
+
     test "without a media helper it explains instead of crashing" do
       app = idle_app(nil)
       keys(app, ["t"])
@@ -537,10 +752,10 @@ defmodule Tui.AppTest do
       app
     end
 
-    test "the join prompt takes q and t as letters" do
+    test "the join prompt takes q, t, l and question marks as text" do
       app = invitation_app()
-      keys(app, ["j", "q", "t"])
-      assert_receive {:tui_model, ^app, %Model{join_prompt: "qt"}}
+      keys(app, ["j", "q", "t", "l", "?"])
+      assert_receive {:tui_model, ^app, %Model{join_prompt: "qtl?"}}
       assert Process.alive?(app)
     end
 

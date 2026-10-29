@@ -45,7 +45,12 @@ nifs() {
   found=0
 
   rust_cache="${RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH:-$(user_cache rustler_precompiled/precompiled_nifs)}"
+  # The patched renderer is source-built; never fetch its unpatched NIF.
+  if [ -f vendor/ex_ratatui/mix.exs ]; then
+    found=1
+  fi
   for dep in deps/ex_ratatui clients/tui/deps/ex_ratatui; do
+    [ ! -f vendor/ex_ratatui/mix.exs ] || continue
     [ -f "$dep/mix.exs" ] || continue
     found=1
     version="$(sed -n 's/^ *@version "\(.*\)"$/\1/p' "$dep/mix.exs" | head -1)"

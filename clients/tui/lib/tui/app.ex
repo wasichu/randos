@@ -82,6 +82,9 @@ defmodule Tui.App do
           Keyword.get(opts, :call_audio, {"device", "device"})
         )
         |> MediaState.restore_choice(saved),
+      help_size: help_size(opts),
+      help_open?: false,
+      help_scroll: 0,
       config: config,
       test_pid: Keyword.get(opts, :test_pid),
       # Whether this terminal shows right-to-left text right (a test app:
@@ -97,6 +100,8 @@ defmodule Tui.App do
 
   @impl true
   def handle_info({:randos, message}, state) do
+    previous = state
+
     {model, commands} =
       case message do
         {:joined, reply} -> Model.joined(state.model, reply)
@@ -106,7 +111,7 @@ defmodule Tui.App do
       end
 
     state = apply_model(state, model, commands)
-    {:noreply, follow_call(state, message)}
+    reply_with_redraw(previous, follow_call(state, message))
   end
 
   def handle_info(:tick, state) do
@@ -148,8 +153,10 @@ defmodule Tui.App do
       )
       when is_binary(text) do
     {model, commands} = Model.key(state.model, code)
-    {:noreply, state |> apply_model(model, commands) |> persist()}
+    reply_with_redraw(state, state |> apply_model(model, commands) |> persist())
   end
+
+  def handle_event(%Event.Paste{}, %{help_open?: true} = state), do: {:noreply, state}
 
   def handle_event(%Event.Paste{content: text}, state) do
     {model, commands} = Model.paste(state.model, text)
@@ -157,6 +164,73 @@ defmodule Tui.App do
   end
 
   def handle_event(%Event.Key{code: "q", kind: "press"}, state), do: {:stop, state}
+
+  def handle_event(%Event.Key{code: code, kind: "press"}, %{help_open?: true} = state) do
+    previous = state
+
+    state =
+      case code do
+        key when key in ["?", "esc", "enter"] ->
+          %{state | help_open?: false}
+
+        "up" ->
+          %{state | help_scroll: max(state.help_scroll - 1, 0)}
+
+        "down" ->
+          %{
+            state
+            | help_scroll:
+                min(state.help_scroll + 1, View.help_scroll_limit(state, state.help_size))
+          }
+
+        _ ->
+          state
+      end
+
+    reply_with_redraw(previous, state)
+  end
+
+  def handle_event(%Event.Key{code: "?", kind: "press"}, state),
+    do: reply_with_redraw(state, %{state | help_open?: true, help_scroll: 0})
+
+  def handle_event(
+        %Event.Key{code: code, kind: "press"},
+        %{model: %{language_picker: cursor}} = state
+      )
+      when is_binary(cursor) do
+    {model, commands} = Model.key(state.model, code)
+    reply_with_redraw(state, state |> apply_model(model, commands) |> persist(code == "enter"))
+  end
+
+  def handle_event(
+        %Event.Key{code: code, kind: "press"},
+        %{media_state: %{voice_panel?: true}} = state
+      ) do
+    step =
+      case code do
+        key when key in ["esc", "enter", "b"] ->
+          MediaState.close_voice(state.media_state)
+
+        "p" ->
+          MediaState.toggle_audition(state.media_state)
+
+        key when key in ["1", "2", "3", "left", "right"] ->
+          MediaState.voice_key(state.media_state, key)
+
+        _ ->
+          {state.media_state, []}
+      end
+
+    {:noreply, run_media(state, step)}
+  end
+
+  def handle_event(
+        %Event.Key{code: "b", kind: "press"},
+        %{model: %{status: :idle, status_page: nil}, media_state: %{available?: true}} = state
+      ) do
+    {media, commands} = MediaState.close_voice(state.media_state)
+    {:noreply, run_media(state, {%{media | voice_panel?: true}, commands})}
+  end
 
   def handle_event(
         %Event.Key{code: "t", kind: "press"},
@@ -187,7 +261,18 @@ defmodule Tui.App do
 
   def handle_event(%Event.Key{code: code, kind: "press"}, state) do
     {model, commands} = Model.key(state.model, code)
-    {:noreply, state |> apply_model(model, commands) |> persist()}
+    reply_with_redraw(state, state |> apply_model(model, commands) |> persist())
+  end
+
+  def handle_event(%Event.Resize{width: width, height: height}, state) do
+    size = {width, height}
+
+    {:noreply,
+     %{
+       state
+       | help_size: size,
+         help_scroll: min(state.help_scroll, View.help_scroll_limit(state, size))
+     }}
   end
 
   def handle_event(_event, state), do: {:noreply, state}
@@ -310,18 +395,43 @@ defmodule Tui.App do
     end
 
     if state.test_pid, do: send(state.test_pid, {:tui_model, self(), model})
-    %{state | model: model}
+
+    if {model.connection, model.status} != {state.model.connection, state.model.status},
+      do: %{state | model: model, help_open?: false, help_scroll: 0},
+      else: %{state | model: model}
+  end
+
+  defp help_size(opts) do
+    case Keyword.get(opts, :test_mode) || ExRatatui.terminal_size() do
+      {width, height} -> {width, height}
+      _ -> {80, 24}
+    end
+  end
+
+  # Multilingual overlays can leave physical glyphs outside their logical
+  # cells on terminals with different Indic character-width rules. Ask the
+  # renderer to clear both the screen and its cache in the same draw.
+  defp reply_with_redraw(previous, state) do
+    changed? = previous.model.language_picker != state.model.language_picker
+    help_changed? = previous.help_open? != state.help_open?
+
+    multilingual? =
+      is_binary(previous.model.language_picker) or is_binary(state.model.language_picker)
+
+    if multilingual? and (changed? or help_changed?),
+      do: {:noreply, state, full_redraw?: true},
+      else: {:noreply, state}
   end
 
   # Saves the settings file when what it keeps has changed.
-  defp persist(state) do
-    case settings(state) do
-      same when same == state.saved ->
-        state
+  defp persist(state, force? \\ false) do
+    settings = settings(state)
 
-      settings ->
-        Config.save(state.config, settings)
-        %{state | saved: settings}
+    if force? or settings != state.saved do
+      Config.save(state.config, settings)
+      %{state | saved: settings}
+    else
+      state
     end
   end
 

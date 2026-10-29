@@ -4,6 +4,166 @@ defmodule Tui.Media.StateTest do
   alias Tui.Media.State
 
   @endpoints {"device", "device"}
+  test "a legacy helper cannot silently ignore selected masking" do
+    {selected, []} = State.voice_key(State.new(true, {"sine", "null"}), "2")
+
+    {waiting, []} =
+      State.server_state(selected, :connecting, "offerer", %{
+        "id" => "masked",
+        "ice_servers" => []
+      })
+
+    assert waiting.call == nil
+    {unsupported, commands} = State.reply(waiting, :capabilities, {:error, "unknown command"})
+    assert unsupported.masking_available? == false
+    assert {:push, "end_call", %{reason: "audio_unavailable"}} in commands
+
+    refute Enum.any?(commands, fn
+             {:request, command} when is_tuple(command) -> elem(command, 0) == :call_start
+             _ -> false
+           end)
+
+    {supported, commands} = State.reply(waiting, :capabilities, {:ok, %{"voice_masking" => true}})
+    assert supported.masking_available?
+    assert [{:request, {:call_start, _, _, _, _, _, "lower_resonance"}}] = commands
+  end
+
+  test "voice choices stay local and audition stops before a masked call" do
+    initial = %{
+      State.new(true, {"sine", "null"})
+      | masking_available?: true,
+        audition_available?: true
+    }
+
+    assert State.masking(initial) == nil
+    {selected, []} = State.voice_key(initial, "3")
+    {selected, []} = State.voice_key(selected, "right")
+    assert State.masking(selected) == "higher_resonance_pitch"
+    assert Map.keys(State.saved_choice(selected)) |> Enum.sort() == ["input", "output"]
+    {preview, [{:request, start}]} = State.toggle_audition(selected)
+    assert start == {:audition_start, 1, "sine", "null", "higher_resonance_pitch"}
+    {preview, []} = State.reply(preview, start, {:ok, %{}})
+
+    {call, commands} =
+      State.server_state(preview, :connecting, "offerer", %{
+        "id" => "voice-call",
+        "ice_servers" => []
+      })
+
+    assert [
+             {:request, :loopback_stop},
+             {:request,
+              {:call_start, "offerer", [], "sine", "null", false, "higher_resonance_pitch"}}
+           ] = commands
+
+    assert call.mic_test == nil
+    assert call.call.masking == "higher_resonance_pitch"
+  end
+
+  test "audition changes keep capture on, including Off and pending startup" do
+    initial = %{
+      State.new(true, {"sine", "null"})
+      | masking_available?: true,
+        audition_available?: true
+    }
+
+    {preview, [{:request, start}]} = State.toggle_audition(initial)
+    assert start == {:audition_start, 1, "sine", "null", "off"}
+    assert preview.mic_test.mode == :audition
+
+    {preview, [{:request, {:loopback_masking, 1, "lower_resonance"}}]} =
+      State.voice_key(preview, "2")
+
+    assert preview.mic_test.phase == :starting
+    {preview, []} = State.reply(preview, start, {:ok, %{}})
+
+    {preview, [{:request, {:loopback_masking, 1, "higher_resonance"}}]} =
+      State.voice_key(preview, "right")
+
+    {preview, [{:request, {:loopback_masking, 1, "higher_resonance_pitch"}}]} =
+      State.voice_key(preview, "3")
+
+    assert preview.mic_test.phase == :running
+    assert State.voice_key(preview, "3") == {preview, []}
+    {original, [{:request, {:loopback_masking, 1, "off"}}]} = State.voice_key(preview, "1")
+    assert original.mic_test.phase == :running
+    {closed, [{:request, :loopback_stop}]} = State.close_voice(original)
+    assert closed.mic_test == nil
+    assert State.reply(closed, {:loopback_masking, 1, "off"}, {:ok, true}) == {closed, []}
+  end
+
+  test "silent meter does not change processor with voice choices; old helpers cannot misreport preview" do
+    {meter, _} = State.toggle_mic_test(State.new(true), {"sine", "null"})
+    {meter, []} = State.voice_key(meter, "2")
+    assert meter.mic_test.mode == :meter
+    assert meter.mic_test.phase == :starting
+    {legacy, []} = State.reply(State.new(true), :capabilities, {:ok, %{"voice_masking" => true}})
+    {legacy, []} = State.toggle_audition(legacy)
+    assert legacy.mic_test.phase == :failed
+    assert legacy.mic_test.error =~ "Update the audio helper"
+  end
+
+  test "a failed preview update stops instead of playing a different voice" do
+    state = %{
+      State.new(true, {"sine", "null"})
+      | masking_available?: true,
+        audition_available?: true
+    }
+
+    {state, _} = State.toggle_audition(state)
+
+    {state, [{:request, :loopback_stop}]} =
+      State.reply(state, {:loopback_masking, 1, "off"}, {:error, "worker stopped"})
+
+    assert state.mic_test.phase == :failed
+    {state, _} = State.close_voice(state)
+    assert State.reply(state, {:loopback_masking, 1, "off"}, {:error, "late"}) == {state, []}
+  end
+
+  test "late update errors and startup replies cannot affect a replacement audition" do
+    initial = %{
+      State.new(true, {"sine", "null"})
+      | masking_available?: true,
+        audition_available?: true
+    }
+
+    {first, [{:request, first_start}]} = State.toggle_audition(initial)
+    {first, [{:request, first_update}]} = State.voice_key(first, "2")
+    {stopped, [{:request, :loopback_stop}]} = State.toggle_audition(first)
+    {replacement, [{:request, second_start}]} = State.toggle_audition(stopped)
+    assert replacement.mic_test.seq == 2
+
+    assert State.reply(replacement, {:loopback_start, "sine", "null"}, {:ok, %{}}) ==
+             {replacement, []}
+
+    assert State.reply(replacement, {:loopback_start, "sine", "null"}, {:error, "old meter"}) ==
+             {replacement, []}
+
+    assert State.reply(replacement, first_update, {:error, "old failure"}) == {replacement, []}
+
+    assert State.reply(replacement, first_start, {:error, "old start failure"}) ==
+             {replacement, []}
+
+    assert State.reply(replacement, first_start, {:ok, %{}}) == {replacement, []}
+    {running, []} = State.reply(replacement, second_start, {:ok, %{}})
+    assert running.mic_test.phase == :running
+    assert State.reply(running, first_update, {:error, "late"}) == {running, []}
+
+    assert State.event(replacement, "loopback_failed", %{"audition" => 1, "error" => "old worker"}) ==
+             {replacement, []}
+
+    assert State.event(replacement, "loopback_failed", %{"error" => "old meter"}) ==
+             {replacement, []}
+
+    assert State.event(running, "loopback_levels", %{"audition" => 1, "you" => [0.5]}) ==
+             {running, []}
+
+    {failed, [{:request, :loopback_stop}]} =
+      State.event(running, "loopback_failed", %{"audition" => 2, "error" => "current worker"})
+
+    assert failed.mic_test.phase == :failed
+  end
+
   # Silent: whatever the endpoints say, nothing is played back.
   @start {:loopback_start, "device", "null"}
 
@@ -52,10 +212,14 @@ defmodule Tui.Media.StateTest do
     {state, []} = State.reply(starting, @start, {:error, "no 48 kHz config"})
     assert %{phase: :failed, error: "no 48 kHz config"} = state.mic_test
 
-    {state, []} = State.event(running(), "loopback_failed", %{"error" => "device gone"})
+    {state, [{:request, :loopback_stop}]} =
+      State.event(running(), "loopback_failed", %{"error" => "device gone"})
+
     assert %{phase: :failed, error: "device gone"} = state.mic_test
 
-    {state, [{:request, :devices}]} = State.event(starting, "ready", %{})
+    {state, [{:request, :capabilities}, {:request, :devices}]} =
+      State.event(starting, "ready", %{})
+
     assert %{phase: :failed, error: "the audio helper restarted"} = state.mic_test
   end
 
@@ -73,11 +237,13 @@ defmodule Tui.Media.StateTest do
   test "events and replies with no test in progress change nothing" do
     idle = State.new(true)
     # A fresh helper: ask what devices there are.
-    assert State.event(idle, "ready", %{}) == {idle, [{:request, :devices}]}
+    assert State.event(idle, "ready", %{}) ==
+             {idle, [{:request, :capabilities}, {:request, :devices}]}
+
     # With test endpoints (a tone, no output), there are no devices to choose.
     test_tone = State.new(true, {"sine", "null"})
-    assert State.event(test_tone, "ready", %{}) == {test_tone, []}
-    assert State.helper_started(test_tone) == {test_tone, []}
+    assert State.event(test_tone, "ready", %{}) == {test_tone, [{:request, :capabilities}]}
+    assert State.helper_started(test_tone) == {test_tone, [{:request, :capabilities}]}
     assert State.event(idle, "loopback_stats", %{}) == {idle, []}
     assert State.event(idle, "loopback_levels", %{"you" => [0.1]}) == {idle, []}
     assert State.reply(idle, :loopback_stop, {:ok, true}) == {idle, []}
@@ -245,7 +411,8 @@ defmodule Tui.Media.StateTest do
       assert {%{call: nil},
               [
                 {:request, :call_stop},
-                {:push, "end_call", %{reason: "audio_failed"}}
+                {:push, "end_call", %{reason: "audio_failed"}},
+                {:request, :capabilities}
               ]} = State.event(in_call(), "ready", %{})
     end
 
@@ -354,7 +521,9 @@ defmodule Tui.Media.StateTest do
     end
 
     test "a helper already running when the app started is asked for devices" do
-      assert State.helper_started(State.new(true)) == {State.new(true), [{:request, :devices}]}
+      assert State.helper_started(State.new(true)) ==
+               {State.new(true), [{:request, :capabilities}, {:request, :devices}]}
+
       assert State.helper_started(State.new(false)) == {State.new(false), []}
     end
 

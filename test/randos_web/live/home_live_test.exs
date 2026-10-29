@@ -22,6 +22,10 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view, _html} = live(conn, ~p"/")
 
     assert has_element?(view, "#conversation-form")
+    assert has_element?(view, "#voice-settings .hero-voice-waveform")
+    assert has_element?(view, "#voice-masking-warning[role=note]")
+    assert has_element?(view, "#voice-preview-info[role=note]")
+    assert has_element?(view, "#voice-preview-status.font-mono")
     assert has_element?(view, "#find-rando-button[disabled]")
     assert has_element?(view, "#theme-toggle[data-theme-toggle]")
     # Outside a call, the language switcher shows.
@@ -49,11 +53,13 @@ defmodule RandosWeb.HomeLiveTest do
     refute has_element?(view, "#find-rando-button[disabled]")
   end
 
-  test "hearing languages: a summary line over chips, open on a fresh page", %{conn: conn} do
+  test "hearing languages: a compact summary over chips, collapsed on a fresh page", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/")
 
-    # Open on load, and it keeps whatever the person does with it after.
-    assert has_element?(view, "#hearing-languages #hearing-details[open][phx-mounted]")
+    assert has_element?(view, "#hearing-languages #hearing-details[phx-mounted]")
+    refute has_element?(view, "#hearing-details[open]")
+    assert has_element?(view, "#state-progress li[aria-current=step]")
+    assert has_element?(view, "#conversation-card #voice-settings:not([open])")
 
     assert has_element?(
              view,

@@ -28,8 +28,12 @@ def eer(scores, is_target):
     # Sweep the threshold down through every score: accept everything at or
     # above it.
     order = np.argsort(-scores, kind="stable")
-    hits = np.cumsum(is_target[order])
-    false_accepts = np.cumsum(~is_target[order])
+    # A threshold must accept all equal scores together. Sweeping individual
+    # tied trials makes the result depend on their input order.
+    sorted_scores = scores[order]
+    thresholds = np.concatenate([np.flatnonzero(np.diff(sorted_scores)), [len(scores) - 1]])
+    hits = np.cumsum(is_target[order])[thresholds]
+    false_accepts = np.cumsum(~is_target[order])[thresholds]
     far = np.concatenate([[0.0], false_accepts / nontargets])
     frr = np.concatenate([[1.0], 1.0 - hits / targets])
 

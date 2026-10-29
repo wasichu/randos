@@ -4,7 +4,7 @@ defmodule Tui.MixProject do
   def project do
     [
       app: :tui,
-      version: "0.9.0",
+      version: "0.10.0",
       elixir: "~> 1.20",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -63,8 +63,9 @@ defmodule Tui.MixProject do
   # Kept small on purpose (see AGENTS.md: justify every dependency).
   defp deps do
     [
-      # Terminal UI (ratatui via precompiled NIFs).
-      {:ex_ratatui, "~> 0.17"},
+      # Terminal UI (ratatui via the patched, source-built renderer NIF).
+      {:ex_ratatui, path: "../../vendor/ex_ratatui"},
+      {:rustler, "~> 0.38", runtime: false},
       # Phoenix channels client: join, heartbeats, reconnect/rejoin, and a
       # SocketTest helper; the alternative is hand-writing that protocol.
       {:slipstream, "~> 1.2"},

@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · вы %{you} dBFS · собеседник %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{device} (по умолчанию)"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} или %{last}"
   },
   "%{language} both ways": {
@@ -23,12 +23,16 @@
     "model": "m2m100",
     "msgstr": "%{minutes} минуты или более"
   },
+  "%{name} ✓": {
+    "model": "madlad-400",
+    "msgstr": "%{name} ✓"
+  },
   "%{request} refused: %{reason}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{request} отклонено: %{reason}"
   },
   "%{sent} sent / %{received} received": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{sent} отправлено / %{received} получено"
   },
   "%{time} left": {
@@ -42,6 +46,18 @@
   "%{time} to decide": {
     "model": "madlad-400",
     "msgstr": "%{time} для принятия решения"
+  },
+  "1  Off": {
+    "model": "hy-mt2",
+    "msgstr": "1  Выключено"
+  },
+  "2  Tone": {
+    "model": "opus-mt",
+    "msgstr": "2 Тон"
+  },
+  "3  Tone + Pitch": {
+    "model": "translategemma-4b",
+    "msgstr": "3. Тон и высота голоса"
   },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "hy-mt2",
@@ -59,6 +75,10 @@
     "model": "madlad-400",
     "msgstr": "Включите звук."
   },
+  "Brighter": {
+    "model": "madlad-400",
+    "msgstr": "Ярче"
+  },
   "Calls started: %{started}": {
     "model": "m2m100",
     "msgstr": "Начались звонки: %{started}"
@@ -67,8 +87,12 @@
     "model": "opus-mt",
     "msgstr": "Проверяю реле…"
   },
+  "Checking voice options…": {
+    "model": "madlad-400",
+    "msgstr": "Проверка параметров голоса…"
+  },
   "Connected: %{connected}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Подключено: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,19 +124,23 @@
     "msgstr": "Подсчитано на основе данных с %{answered} из %{total} серверов."
   },
   "Devices": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Устройства"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Ошибка: %{message}"
+  },
+  "Fuller": {
+    "model": "hy-mt2",
+    "msgstr": "более насыщенный"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
     "msgstr": "Как заканчивались звонки: завершены — %{finished}, невозможно было подключиться — %{not_connected}, потеряно соединение — %{lost}, отменены — %{canceled}"
   },
   "I will speak:": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "Я буду говорить:"
   },
   "I'm 18+ and OK with anonymous, unmoderated calls": {
@@ -123,9 +151,17 @@
     "model": "madlad-400",
     "msgstr": "Я рад услышать:"
   },
+  "Interface language": {
+    "model": "madlad-400",
+    "msgstr": "Язык интерфейса"
+  },
   "Join through a link": {
     "model": "hy-mt2",
     "msgstr": "Подключитесь по ссылке"
+  },
+  "Keyboard shortcuts": {
+    "model": "opus-mt",
+    "msgstr": "Короткие клавиши клавиатуры"
   },
   "Languages spoken:": {
     "model": "madlad-400",
@@ -155,6 +191,10 @@
     "model": "translategemma-12b",
     "msgstr": "Микрофон:"
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "translategemma-12b",
+    "msgstr": "Микрофон: %{bars} %{peak} (%{key} – для отключения)."
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-4b",
     "msgstr": "Микрофон: %{bars}%{peak} (нажмите \"t\" для остановки)"
@@ -163,16 +203,36 @@
     "model": "translategemma-4b",
     "msgstr": "Микрофон: включение…"
   },
+  "Microphone off.": {
+    "model": "madlad-400",
+    "msgstr": "Микрофон выключен."
+  },
+  "Microphone on.": {
+    "model": "madlad-400",
+    "msgstr": "Микрофон включён."
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "madlad-400",
     "msgstr": "На этом сервере не настроен ретранслятор, поэтому вызовы на него поступают напрямую."
+  },
+  "Nothing is recorded or uploaded.": {
+    "model": "hy-mt2",
+    "msgstr": "Ничего не записывается и не загружается."
   },
   "Now:": {
     "model": "hy-mt2",
     "msgstr": "Сейчас:"
   },
-  "Other languages: %{calls}": {
+  "Off": {
     "model": "hy-mt2",
+    "msgstr": "Выключено"
+  },
+  "Opening microphone…": {
+    "model": "translategemma-4b",
+    "msgstr": "Открываю микрофон…"
+  },
+  "Other languages: %{calls}": {
+    "model": "m2m100",
     "msgstr": "Другие языки: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -191,9 +251,17 @@
     "model": "m2m100",
     "msgstr": "Нажмите Enter, чтобы найти rando."
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "hy-mt2",
+    "msgstr": "Предварительный просмотр не удался. Микрофон перестал работать; попробуйте ещё раз."
+  },
   "Reconnecting audio…": {
     "model": "opus-mt",
     "msgstr": "Переподключение звука…"
+  },
+  "Selected: %{style}": {
+    "model": "hy-mt2",
+    "msgstr": "Выбрано: %{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "hy-mt2",
@@ -223,6 +291,10 @@
     "model": "m2m100",
     "msgstr": "Релей не работает."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "m2m100",
+    "msgstr": "Эти стили меняют ваш голос, но люди все еще могут распознать вас."
+  },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "hy-mt2",
     "msgstr": "Этот клиент работает без аудио (отсутствует медиа-вспомогательный модуль): если собеседник предлагает аудио (браузер), звонок прерывается, и вы возвращаетесь в режим ожидания. Два терминальных клиента могут оставаться в процессе звонка для тестирования таймеров и голосования по расширениям."
@@ -243,9 +315,41 @@
     "model": "madlad-400",
     "msgstr": "Сегодня (считая с %{time} UTC на %{date}):"
   },
+  "Tone": {
+    "model": "opus-mt",
+    "msgstr": "Тон"
+  },
+  "Tone + Pitch": {
+    "model": "madlad-400",
+    "msgstr": "Тон + высота звука"
+  },
+  "Tone: %{tone} (left/right)": {
+    "model": "translategemma-12b",
+    "msgstr": "Тон: %{tone} (слева/справа)."
+  },
   "Typical length: %{length}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Типичная длина: %{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "translategemma-4b",
+    "msgstr": "Обновите аудио-помощник, чтобы он мог предварительно прослушивать изменения голоса."
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "madlad-400",
+    "msgstr": "Используйте наушники и держите громкость низкой."
+  },
+  "Voice masking": {
+    "model": "madlad-400",
+    "msgstr": "Маскировка голоса"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "hy-mt2",
+    "msgstr": "Маскировка голоса недоступна. Обновите randos или выберите «Выкл»."
+  },
+  "Voice masking on": {
+    "model": "madlad-400",
+    "msgstr": "Маскировка голоса включена"
   },
   "Waiting for your rando to open the link…": {
     "model": "hy-mt2",
@@ -336,7 +440,7 @@
     "msgstr": "в телефонном разговоре"
   },
   "key\u000418+": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -344,7 +448,7 @@
     "msgstr": "об этих цифрах"
   },
   "key\u0004back": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "назад"
   },
   "key\u0004cancel": {
@@ -359,9 +463,17 @@
     "model": "hy-mt2",
     "msgstr": "изменить"
   },
+  "key\u0004change tone": {
+    "model": "madlad-400",
+    "msgstr": "изменить тон"
+  },
   "key\u0004check": {
     "model": "hy-mt2",
     "msgstr": "проверить"
+  },
+  "key\u0004choose": {
+    "model": "m2m100",
+    "msgstr": "Выберите"
   },
   "key\u0004close": {
     "model": "m2m100",
@@ -376,7 +488,7 @@
     "msgstr": "скопируйте ссылку"
   },
   "key\u0004end": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "конец"
   },
   "key\u0004end call": {
@@ -384,11 +496,19 @@
     "msgstr": "завершить звонок"
   },
   "key\u0004find": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "найти"
   },
+  "key\u0004hear myself / stop": {
+    "model": "translategemma-12b",
+    "msgstr": "услышать себя / остановиться"
+  },
+  "key\u0004help": {
+    "model": "m2m100",
+    "msgstr": "Помогите"
+  },
   "key\u0004invite": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "пригласить"
   },
   "key\u0004join": {
@@ -400,7 +520,7 @@
     "msgstr": "Присоединяйтесь к ссылке"
   },
   "key\u0004language": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "язык"
   },
   "key\u0004mic": {
@@ -431,6 +551,10 @@
     "model": "opus-mt",
     "msgstr": "Обновить"
   },
+  "key\u0004scroll": {
+    "model": "hy-mt2",
+    "msgstr": "скроллить"
+  },
   "key\u0004speaker": {
     "model": "madlad-400",
     "msgstr": "спикер"
@@ -439,9 +563,17 @@
     "model": "m2m100",
     "msgstr": "Статус"
   },
+  "key\u0004style": {
+    "model": "m2m100",
+    "msgstr": "Стиль"
+  },
   "key\u0004unmute": {
     "model": "translategemma-4b",
     "msgstr": "включить звук"
+  },
+  "key\u0004voice masking": {
+    "model": "madlad-400",
+    "msgstr": "маскировка голоса"
   },
   "link copied": {
     "model": "hy-mt2",
@@ -519,8 +651,12 @@
     "model": "madlad-400",
     "msgstr": "не работает"
   },
-  "panel title\u0004Connecting": {
+  "p: hear myself / stop. Esc: back.": {
     "model": "hy-mt2",
+    "msgstr": "p: Послушать себя / остановиться. Esc: назад."
+  },
+  "panel title\u0004Connecting": {
+    "model": "madlad-400",
     "msgstr": "Подключение"
   },
   "panel title\u0004Find a rando": {
@@ -532,7 +668,7 @@
     "msgstr": "Во время телефонного разговора"
   },
   "panel title\u0004Invitation": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "Приглашение"
   },
   "panel title\u0004Looking": {
@@ -632,7 +768,7 @@
     "msgstr": "Время истекло: продолжать?"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "m2m100",
     "msgstr": "менее 1 минуты"
   },
   "unexpected reply": {

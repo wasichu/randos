@@ -1,0 +1,12 @@
+{
+  "name": "randos-voice-browser-probe",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild worker.js --bundle --format=esm --outfile=../../tmp/voice-browser/site/worker.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "onnxruntime-web": "1.24.3"
+  }
+}

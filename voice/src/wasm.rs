@@ -42,6 +42,11 @@ pub extern "C" fn voice_new(variant: u32, sample_rate: f32, frames: u32) -> u32 
     let Some(variant) = Variant::from_id(variant) else {
         return 0;
     };
+    if variant == Variant::McAdams
+        && (!sample_rate.is_finite() || (sample_rate - 48_000.0).abs() >= 0.1)
+    {
+        return 0;
+    }
     let frames = frames as usize;
     with_state(|state| {
         *state = Some(State {

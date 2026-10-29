@@ -45,7 +45,7 @@ defmodule Tui.View do
     model = state.model
     # Two rows when the keys don't fit in one (translations run longer),
     # broken between keys, never inside one.
-    help_lines = help_lines(with_quit_last(help(model), mic_help(state)), frame.width)
+    help_lines = help_lines(primary_help(state), frame.width)
     help_rows = length(help_lines)
 
     # The main panel gives way first on a short terminal: the status lines
@@ -62,7 +62,9 @@ defmodule Tui.View do
        bottom_panels(state, status_area, side_by_side?) ++
        [
          {%Paragraph{text: Enum.join(help_lines, "\n"), style: %Style{fg: :dark_gray}}, help_area}
-       ] ++ join_prompt(model, area))
+       ] ++
+       join_prompt(model, area) ++
+       voice_panel(state, area) ++ language_picker(state, area) ++ shortcuts_panel(state, area))
     |> in_display_order(state)
   end
 
@@ -79,10 +81,7 @@ defmodule Tui.View do
   defp reorder({%Paragraph{} = paragraph, area}),
     do: {reorder(paragraph, inner(area.width, paragraph.block)), area}
 
-  defp reorder({%List{} = list, area}),
-    do:
-      {%{list | items: Enum.map(list.items, &Bidi.visual/1), block: reorder_title(list.block)},
-       area}
+  defp reorder({%List{} = list, area}), do: {reorder(list, area.width), area}
 
   defp reorder({%Popup{content: content} = popup, area}) do
     width = div(area.width * popup.percent_width, 100)
@@ -95,6 +94,9 @@ defmodule Tui.View do
   end
 
   defp reorder(widget), do: widget
+
+  defp reorder(%List{} = list, _width),
+    do: %{list | items: Enum.map(list.items, &Bidi.visual/1), block: reorder_title(list.block)}
 
   defp reorder(%Paragraph{} = paragraph, width) do
     lines =
@@ -260,6 +262,211 @@ defmodule Tui.View do
   end
 
   defp join_prompt(_model, _area), do: []
+
+  defp voice_panel(%{help_open?: true}, _area), do: []
+
+  defp voice_panel(%{media_state: %{voice_panel?: true} = media}, area) do
+    style =
+      case media.voice_family do
+        "tone" ->
+          gettext_comment(
+            "Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone."
+          )
+
+          gettext("Tone")
+
+        "tone_pitch" ->
+          gettext_comment(
+            "Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds)."
+          )
+
+          gettext("Tone + Pitch")
+
+        _ ->
+          gettext("Off")
+      end
+
+    tone =
+      if media.voice_tone == "fuller" do
+        gettext_comment(
+          "Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name."
+        )
+
+        gettext("Fuller")
+      else
+        gettext_comment(
+          "Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence."
+        )
+
+        gettext("Brighter")
+      end
+
+    content =
+      Enum.join(
+        [
+          gettext("1  Off"),
+          (
+            gettext_comment(
+              "Voice masking option 2: change vocal timbre or resonance, without changing pitch. Keep the 2 keyboard hint."
+            )
+
+            gettext("2  Tone")
+          ),
+          (
+            gettext_comment(
+              "Voice masking option 3: change both vocal timbre and pitch (how high or low the voice sounds). Keep the 3 keyboard hint."
+            )
+
+            gettext("3  Tone + Pitch")
+          ),
+          "",
+          gettext("Selected: %{style}", style: style),
+          gettext("Tone: %{tone} (left/right)", tone: tone),
+          "",
+          gettext("Use headphones and keep the volume low."),
+          gettext("p: hear myself / stop. Esc: back."),
+          voice_status(media),
+          "",
+          gettext("Nothing is recorded or uploaded."),
+          gettext("These styles change your voice, but people may still recognize you.")
+        ],
+        "\n"
+      )
+
+    width = max(div(area.width * 85, 100) - 2, 10)
+    height = min(length(Tui.Bidi.wrap(content, width)) + 2, area.height)
+
+    [
+      {%Popup{
+         content: %Paragraph{text: content, wrap: true},
+         block: panel(" #{gettext("Voice masking")} "),
+         percent_width: 85,
+         fixed_height: height
+       }, area}
+    ]
+  end
+
+  defp voice_panel(_state, _area), do: []
+
+  defp voice_status(%{masking_available?: false}),
+    do: gettext("Voice masking is unavailable. Update randos or choose Off.")
+
+  defp voice_status(%{masking_available?: nil}), do: gettext("Checking voice options…")
+
+  defp voice_status(%{audition_available?: false}),
+    do: gettext("Update the audio helper to preview voice changes.")
+
+  defp voice_status(%{mic_test: %{phase: :starting}}), do: gettext("Opening microphone…")
+
+  defp voice_status(%{mic_test: %{phase: :running}}),
+    do: gettext("Microphone on.")
+
+  defp voice_status(%{mic_test: %{phase: :failed}}),
+    do: gettext("Preview failed. Microphone stopped; try again.")
+
+  defp voice_status(_), do: gettext("Microphone off.")
+
+  defp language_picker(%{help_open?: true}, _area), do: []
+
+  defp language_picker(%{model: %{language_picker: cursor} = model}, area)
+       when is_binary(cursor) do
+    codes = Tui.Language.available()
+
+    items =
+      Enum.map(codes, fn code ->
+        name = Model.language_name(model, code)
+        if code == model.language, do: gettext("%{name} ✓", name: name), else: name
+      end)
+
+    [
+      {%Popup{
+         content: %List{
+           items: items,
+           selected: Enum.find_index(codes, &(&1 == cursor)),
+           highlight_symbol: "▶ ",
+           highlight_style: %Style{fg: :cyan, modifiers: [:bold]}
+         },
+         block: panel(" #{gettext("Interface language")} "),
+         percent_width: 80,
+         fixed_height: min(length(codes) + 2, max(area.height - 4, 3))
+       }, area}
+    ]
+  end
+
+  defp language_picker(_state, _area), do: []
+
+  @doc "Last scroll offset after wrapping help to the terminal's cell width."
+  def help_scroll_limit(state, {width, height}),
+    do: max(length(shortcut_lines(state, width)) - help_visible_rows(height), 0)
+
+  defp help_visible_rows(height), do: max(height - 8, 1)
+
+  defp shortcut_lines(state, width) do
+    text = Enum.map_join(all_shortcuts(state), "\n", fn {key, action} -> "#{key}  #{action}" end)
+    Bidi.wrap(text, max(div(width * 90, 100) - 2, 1))
+  end
+
+  defp all_shortcuts(%{model: %{language_picker: cursor}}) when is_binary(cursor) do
+    [
+      {"↑↓", pgettext("key", "move")},
+      {"enter", pgettext("key", "choose")},
+      {"esc/l", pgettext("key", "cancel")},
+      quit()
+    ]
+  end
+
+  defp all_shortcuts(%{media_state: %{voice_panel?: true}}) do
+    [
+      {"1/2/3", pgettext("key", "style")},
+      {"←→", pgettext("key", "change tone")},
+      {"p", pgettext("key", "hear myself / stop")},
+      {"esc/b/enter", pgettext("key", "back")},
+      quit()
+    ]
+  end
+
+  defp all_shortcuts(state), do: with_quit_last(help(state.model), mic_help(state))
+
+  defp primary_help(%{model: %{join_prompt: text}} = state) when is_binary(text),
+    do: all_shortcuts(state)
+
+  defp primary_help(%{help_open?: true}),
+    do: [{"↑↓", pgettext("key", "scroll")}, {"?/esc", pgettext("key", "close")}, quit()]
+
+  defp primary_help(state) do
+    state
+    |> primary_shortcuts()
+    |> with_quit_last([{"?", pgettext("key", "help")}])
+  end
+
+  defp primary_shortcuts(%{model: %{status: :idle, status_page: nil}} = state) do
+    Enum.reject(all_shortcuts(state), fn {key, _} ->
+      key in ["v", "j", "s", "l", "t", "b", "i", "o"]
+    end)
+  end
+
+  defp primary_shortcuts(state), do: all_shortcuts(state)
+
+  defp shortcuts_panel(%{help_open?: true} = state, area) do
+    visible = help_visible_rows(area.height)
+    lines = shortcut_lines(state, area.width)
+
+    offset =
+      min(Map.get(state, :help_scroll, 0), help_scroll_limit(state, {area.width, area.height}))
+
+    text = lines |> Enum.drop(offset) |> Enum.take(visible) |> Enum.join("\n")
+
+    [
+      {%Popup{
+         content: %Paragraph{text: text, wrap: false},
+         block: panel(" #{gettext("Keyboard shortcuts")} "),
+         percent_width: 90,
+         fixed_height: min(length(lines) + 2, visible + 2)
+       }, area}
+    ]
+  end
+
+  defp shortcuts_panel(_state, _area), do: []
 
   # The language under the cursor with its box, then every checked code:
   # "◀ [x] Español (ES) ▶  EN ES".
@@ -585,10 +792,13 @@ defmodule Tui.View do
 
   # Never dropped: the way out (q, or esc where q is a letter, the join
   # prompt) and the way to change an unreadable language (l).
-  @kept_keys ["q", "esc", "l"]
+  @kept_keys ["q", "esc", "?"]
+
+  defp kept_hint?({key, _action}),
+    do: Enum.any?(String.split(key, "/"), &(&1 in @kept_keys))
 
   defp drop_last_but_quit(hints) do
-    case hints |> Enum.reverse() |> Enum.find_index(&(elem(&1, 0) not in @kept_keys)) do
+    case hints |> Enum.reverse() |> Enum.find_index(&(not kept_hint?(&1))) do
       nil -> hints
       index -> Elixir.List.delete_at(hints, length(hints) - 1 - index)
     end
@@ -686,7 +896,7 @@ defmodule Tui.View do
   defp mic_help(%{model: %{join_prompt: text}}) when is_binary(text), do: []
 
   defp mic_help(%{model: %{connection: :connected, status: :idle}, media_state: media}) do
-    [{"t", pgettext("key", "mic test")}] ++
+    [{"t", pgettext("key", "mic test")}, {"b", pgettext("key", "voice masking")}] ++
       if(media.devices,
         do: [{"i", pgettext("key", "mic")}, {"o", pgettext("key", "speaker")}],
         else: []
@@ -703,6 +913,9 @@ defmodule Tui.View do
   defp mic_help(_state), do: []
 
   defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state) <> rtl_note(state)
+
+  defp extra_text(%{media_state: %{call: %{masking: style}}}) when is_binary(style),
+    do: "\n\n" <> gettext("Voice masking on")
 
   defp extra_text(_state), do: ""
 
@@ -881,18 +1094,23 @@ defmodule Tui.View do
   defp mic_test_line(%{levels: nil}), do: gettext("Mic: opening…")
 
   # One line: the bars (as the call's "You" meter has them) and the last
-  # second's peak. Nothing is played back.
-  defp mic_test_line(%{levels: levels, stats: stats}) do
+  # second's peak, with the stop key for the active audio mode.
+  defp mic_test_line(%{levels: levels, stats: stats} = test) do
     peak =
       if stats,
         do: "  " <> gettext("peak %{level} dBFS", level: round(stats["input_peak_dbfs"])),
         else: ""
 
-    gettext_comment("The mic test's level meter (bars), its peak, and how to stop it (t).")
+    stop_key = if Map.get(test, :mode) == :audition, do: "p", else: "t"
 
-    gettext("Mic: %{bars}%{peak}   (t to stop)",
+    gettext_comment(
+      "The microphone meter, its peak, and the active stop key: p for voice preview, t for the silent mic test."
+    )
+
+    gettext("Mic: %{bars}%{peak}   (%{key} to stop)",
       bars: Enum.map_join(levels, &level_char/1),
-      peak: peak
+      peak: peak,
+      key: stop_key
     )
   end
 

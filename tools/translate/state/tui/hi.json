@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · आपका स्तर %{you} dBFS · सामने वाले का स्तर %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{device} (डिफ़ॉल्ट)"
   },
   "%{first} or %{last}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{first} या %{last}"
   },
   "%{language} both ways": {
@@ -16,12 +16,16 @@
     "msgstr": "%{language} दोनों तरीकों से"
   },
   "%{minutes} min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "%{minutes} मिनट"
   },
   "%{minutes} min or more": {
     "model": "hy-mt2",
     "msgstr": "%{minutes} मिनट या उससे अधिक"
+  },
+  "%{name} ✓": {
+    "model": "madlad-400",
+    "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
     "model": "madlad-400",
@@ -43,12 +47,24 @@
     "model": "m2m100",
     "msgstr": "%{time} निर्णय लेने के लिए"
   },
+  "1  Off": {
+    "model": "opus-mt",
+    "msgstr": "1 बन्द"
+  },
+  "2  Tone": {
+    "model": "hy-mt2",
+    "msgstr": "2  टोन"
+  },
+  "3  Tone + Pitch": {
+    "model": "madlad-400",
+    "msgstr": "3 टोन + पिच"
+  },
   "A language pair shows once it has at least %{count} calls; smaller ones count as \"other\".": {
     "model": "madlad-400",
     "msgstr": " एक भाषा जोड़ी तब दिखाई देती है जब इसमें कम से कम %{count} कॉल हों; छोटे को \"अन्य\" के रूप में गिना जाता है।"
   },
   "About these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "Asking the server…": {
@@ -59,6 +75,10 @@
     "model": "madlad-400",
     "msgstr": "ऑडियो चालू है।"
   },
+  "Brighter": {
+    "model": "m2m100",
+    "msgstr": "चमकदार"
+  },
   "Calls started: %{started}": {
     "model": "m2m100",
     "msgstr": "कॉल शुरू हो चुके हैं: %{started}"
@@ -67,8 +87,12 @@
     "model": "hy-mt2",
     "msgstr": "रिले की जाँच कर रहा हूँ…"
   },
-  "Connected: %{connected}": {
+  "Checking voice options…": {
     "model": "hy-mt2",
+    "msgstr": "वॉइस विकल्पों की जाँच कर रहा हूँ…"
+  },
+  "Connected: %{connected}": {
+    "model": "madlad-400",
     "msgstr": "कनेक्टेड: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,12 +124,16 @@
     "msgstr": "%{total} सर्वरों में से %{answered} सर्वरों पर गिनती की गई।"
   },
   "Devices": {
-    "model": "translategemma-4b",
+    "model": "m2m100",
     "msgstr": "उपकरण"
   },
   "Error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "त्रुटि: %{message}"
+  },
+  "Fuller": {
+    "model": "madlad-400",
+    "msgstr": "फुलर"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "madlad-400",
@@ -123,9 +151,17 @@
     "model": "translategemma-12b",
     "msgstr": "मुझे यह सुनकर खुशी हुई:"
   },
+  "Interface language": {
+    "model": "m2m100",
+    "msgstr": "इंटरफ़ेस भाषा"
+  },
   "Join through a link": {
     "model": "hy-mt2",
     "msgstr": "लिंक के माध्यम से जुड़ें"
+  },
+  "Keyboard shortcuts": {
+    "model": "translategemma-4b",
+    "msgstr": "कीबोर्ड शॉर्टकट"
   },
   "Languages spoken:": {
     "model": "translategemma-4b",
@@ -155,6 +191,10 @@
     "model": "translategemma-12b",
     "msgstr": "माइक्रोफोन:"
   },
+  "Mic: %{bars}%{peak}   (%{key} to stop)": {
+    "model": "hy-mt2",
+    "msgstr": "माइक्रोफोन: %{bars}%{peak}   (रोकने हेतु %{key})"
+  },
   "Mic: %{bars}%{peak}   (t to stop)": {
     "model": "translategemma-4b",
     "msgstr": "माइक: %{bars}%{peak} (रोकने के लिए 't' दबाएं)"
@@ -163,16 +203,36 @@
     "model": "translategemma-4b",
     "msgstr": "माइक्रोफोन: चालू करना…"
   },
+  "Microphone off.": {
+    "model": "translategemma-4b",
+    "msgstr": "माइक्रोफ़ोन बंद।"
+  },
+  "Microphone on.": {
+    "model": "hy-mt2",
+    "msgstr": "माइक्रोफोन चालू।"
+  },
   "No relay is configured on this server, so calls here go directly.": {
     "model": "hy-mt2",
     "msgstr": "इस सर्वर पर कोई रिले सेट नहीं किया गया है, इसलिए यहाँ कॉल सीधे ही जाती हैं।"
+  },
+  "Nothing is recorded or uploaded.": {
+    "model": "translategemma-12b",
+    "msgstr": "कुछ भी रिकॉर्ड नहीं किया गया है और न ही अपलोड किया गया है।"
   },
   "Now:": {
     "model": "madlad-400",
     "msgstr": "अब:"
   },
+  "Off": {
+    "model": "madlad-400",
+    "msgstr": "बन्द"
+  },
+  "Opening microphone…": {
+    "model": "translategemma-4b",
+    "msgstr": "माइक्रोफ़ोन खोलें…"
+  },
   "Other languages: %{calls}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "अन्य भाषाएँ: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -191,9 +251,17 @@
     "model": "madlad-400",
     "msgstr": "rando ढूंढने के लिए एंटर दबाएँ."
   },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "hy-mt2",
+    "msgstr": "प्रीव्यू विफल रहा। माइक्रोफोन बंद हो गया; फिर से कोशिश करें।"
+  },
   "Reconnecting audio…": {
     "model": "translategemma-4b",
     "msgstr": "ऑडियो को फिर से कनेक्ट करना…"
+  },
+  "Selected: %{style}": {
+    "model": "opus-mt",
+    "msgstr": "चयनित: %{style}"
   },
   "Send it to them however you like. It works once.": {
     "model": "hy-mt2",
@@ -223,6 +291,10 @@
     "model": "hy-mt2",
     "msgstr": "रिले काम नहीं कर रहा है।"
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "m2m100",
+    "msgstr": "ये शैलियां आपकी आवाज को बदलती हैं, लेकिन लोग अभी भी आपको पहचान सकते हैं।"
+  },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
     "model": "translategemma-4b",
     "msgstr": "यह क्लाइंट बिना ऑडियो के चल रहा है (कोई मीडिया सहायक नहीं): यदि दूसरा पक्ष ऑडियो प्रदान करता है (एक ब्राउज़र), तो कॉल समाप्त हो जाएगी और आप निष्क्रिय स्थिति में वापस आ जाएंगे। दो टर्मिनल क्लाइंट एक साथ कॉल में रहकर टाइमर और एक्सटेंशन वोट का परीक्षण कर सकते हैं।"
@@ -243,9 +315,41 @@
     "model": "madlad-400",
     "msgstr": "आज (%{date} पर %{time} UTC से गिनती):"
   },
-  "Typical length: %{length}": {
+  "Tone": {
+    "model": "m2m100",
+    "msgstr": "टोन"
+  },
+  "Tone + Pitch": {
+    "model": "m2m100",
+    "msgstr": "टोन + पिच"
+  },
+  "Tone: %{tone} (left/right)": {
     "model": "hy-mt2",
+    "msgstr": "टोन: %{tone} (बाएँ/दाएँ)"
+  },
+  "Typical length: %{length}": {
+    "model": "m2m100",
     "msgstr": "सामान्य लंबाई: %{length}"
+  },
+  "Update the audio helper to preview voice changes.": {
+    "model": "madlad-400",
+    "msgstr": "आवाज परिवर्तनों का पूर्वावलोकन करने के लिए ऑडियो हेल्पर को अद्यतन करें."
+  },
+  "Use headphones and keep the volume low.": {
+    "model": "m2m100",
+    "msgstr": "हेडफोन का उपयोग करें और वॉल्यूम को कम रखें।"
+  },
+  "Voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "वॉइस मास्किंग"
+  },
+  "Voice masking is unavailable. Update randos or choose Off.": {
+    "model": "translategemma-12b",
+    "msgstr": "वॉइस मास्किंग उपलब्ध नहीं है। \"randos\" को अपडेट करें या \"ऑफ\" विकल्प चुनें।"
+  },
+  "Voice masking on": {
+    "model": "hy-mt2",
+    "msgstr": "वॉइस मास्किंग चालू"
   },
   "Waiting for your rando to open the link…": {
     "model": "translategemma-4b",
@@ -328,7 +432,7 @@
     "msgstr": "डिसकनेक्टेड; रीकनेक्टिंग"
   },
   "error: %{message}": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "त्रुटि: %{message}"
   },
   "in a call": {
@@ -336,11 +440,11 @@
     "msgstr": "कॉल में"
   },
   "key\u000418+": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "इन संख्याओं के बारे में"
   },
   "key\u0004back": {
@@ -359,16 +463,24 @@
     "model": "hy-mt2",
     "msgstr": "बदलें"
   },
+  "key\u0004change tone": {
+    "model": "hy-mt2",
+    "msgstr": "टोन बदलें"
+  },
   "key\u0004check": {
     "model": "translategemma-4b",
     "msgstr": "जाँच करें"
   },
+  "key\u0004choose": {
+    "model": "m2m100",
+    "msgstr": "चुनें"
+  },
   "key\u0004close": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "बंद करें"
   },
   "key\u0004continue": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "जारी रखें"
   },
   "key\u0004copy the link": {
@@ -387,6 +499,14 @@
     "model": "m2m100",
     "msgstr": "खोजें"
   },
+  "key\u0004hear myself / stop": {
+    "model": "m2m100",
+    "msgstr": "खुद को सुनो / रुकें"
+  },
+  "key\u0004help": {
+    "model": "madlad-400",
+    "msgstr": "मदद"
+  },
   "key\u0004invite": {
     "model": "hy-mt2",
     "msgstr": "निमंत्रण देना"
@@ -400,7 +520,7 @@
     "msgstr": "एक लिंक में शामिल हों"
   },
   "key\u0004language": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "भाषा"
   },
   "key\u0004mic": {
@@ -431,6 +551,10 @@
     "model": "madlad-400",
     "msgstr": "ताज़ा करें"
   },
+  "key\u0004scroll": {
+    "model": "hy-mt2",
+    "msgstr": "स्क्रॉल करें"
+  },
   "key\u0004speaker": {
     "model": "hy-mt2",
     "msgstr": "वक्ता"
@@ -439,9 +563,17 @@
     "model": "opus-mt",
     "msgstr": "स्थिति"
   },
+  "key\u0004style": {
+    "model": "hy-mt2",
+    "msgstr": "शैली"
+  },
   "key\u0004unmute": {
     "model": "opus-mt",
     "msgstr": "अनमुट"
+  },
+  "key\u0004voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "आवाज़ छिपाना"
   },
   "link copied": {
     "model": "madlad-400",
@@ -519,6 +651,10 @@
     "model": "translategemma-4b",
     "msgstr": "काम नहीं कर रहा"
   },
+  "p: hear myself / stop. Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "p: खुद की आवाज़ सुनें / रुकें। Esc: वापस।"
+  },
   "panel title\u0004Connecting": {
     "model": "hy-mt2",
     "msgstr": "कनेक्ट हो रहा है"
@@ -532,7 +668,7 @@
     "msgstr": "कॉल में"
   },
   "panel title\u0004Invitation": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "निमंत्रण"
   },
   "panel title\u0004Looking": {
@@ -632,7 +768,7 @@
     "msgstr": "समय समाप्त: क्या आप जारी रखना चाहेंगे?"
   },
   "under 1 min": {
-    "model": "hy-mt2",
+    "model": "madlad-400",
     "msgstr": "1 मिनट से कम"
   },
   "unexpected reply": {

@@ -12,7 +12,7 @@
 // VHS is a child that exits with its tape, and the server has its watchdog.
 
 import {spawn} from "node:child_process"
-import {writeFileSync} from "node:fs"
+import {writeFileSync,readFileSync} from "node:fs"
 import {Browser, sleep} from "../../test/e2e/cdp.mjs"
 
 const OUT = "docs/assets"
@@ -85,6 +85,17 @@ try {
   await peer.findRando("es", "en")
   await peer.waitFor(`!!document.querySelector("#cancel-search-button")`, "the peer waiting")
   await run("vhs", ["tools/screenshots/tui.tape"])
+  // The headless native buffer cannot catch physical cursor-width residue.
+  // Compare actual terminal-emulator pixels after dismissing the multilingual menu.
+  const before=readFileSync('tmp/tui-language-pristine.png').toString('base64')
+  const after=readFileSync('tmp/tui-language-dismissed.png').toString('base64')
+  const same=await a.eval(`(async()=>{
+    const pixels=async base64=>{const img=new Image();img.src='data:image/png;base64,'+base64;await img.decode();const canvas=document.createElement('canvas');canvas.width=img.width;canvas.height=img.height;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);return {width:img.width,height:img.height,data:ctx.getImageData(0,0,img.width,img.height).data}};
+    const left=await pixels(${JSON.stringify(before)}),right=await pixels(${JSON.stringify(after)});
+    return left.width===right.width&&left.height===right.height&&left.data.every((value,index)=>value===right.data[index]);
+  })()`)
+  if(!same)throw Error('Dismissing the TUI language picker changed the physical terminal frame')
+  console.log('  multilingual picker dismissal restores the exact terminal pixels')
 } finally {
   await browser.close()
 }

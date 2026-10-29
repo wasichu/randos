@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ منٹ"
   },
+  "%{style} + %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "%{style} + %{tone}"
+  },
   "%{time} left": {
     "model": "m2m100",
     "msgstr": "%{time} باقی رہیں"
@@ -55,6 +59,10 @@
     "model": "hy-mt2",
     "msgstr": "کسی rando کو تلاش کرنے سے پہلے 18+ کی شرط کو قبول کریں۔"
   },
+  "Acknowledge": {
+    "model": "hy-mt2",
+    "msgstr": "تسلیم کرنا"
+  },
   "Attempting to reconnect": {
     "model": "opus-mt",
     "msgstr": "دوبارہ رابطہ کرنے کی کوشش"
@@ -62,6 +70,14 @@
   "Both people choose whether to continue.": {
     "model": "translategemma-12b",
     "msgstr": "دونوں افراد یہ فیصلہ کرتے ہیں کہ آیا وہ آگے بڑھنا چاہتے ہیں یا نہیں۔"
+  },
+  "Brighter": {
+    "model": "opus-mt",
+    "msgstr": "روشن تر"
+  },
+  "Call progress": {
+    "model": "madlad-400",
+    "msgstr": "کال کی پیش رفت"
   },
   "Calls started": {
     "model": "opus-mt",
@@ -114,6 +130,10 @@
   "Continued past 10 minutes": {
     "model": "translategemma-4b",
     "msgstr": "پچھلے 10 منٹوں سے جاری"
+  },
+  "Conversation": {
+    "model": "hy-mt2",
+    "msgstr": "گفتگو"
   },
   "Conversation is active.": {
     "model": "hy-mt2",
@@ -183,6 +203,14 @@
     "model": "hy-mt2",
     "msgstr": "تاکہ آپ کا rando اسے کھول سکے۔"
   },
+  "Fuller": {
+    "model": "hy-mt2",
+    "msgstr": "زیادہ گہری آواز"
+  },
+  "Headphones recommended": {
+    "model": "opus-mt",
+    "msgstr": "ہیڈ فون کی سفارش کی"
+  },
   "Help fix a translation": {
     "model": "madlad-400",
     "msgstr": "ترجمے کو درست کرنے میں مدد کریں"
@@ -194,6 +222,10 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "translategemma-27b",
     "msgstr": "میں 18 سال یا اس سے بڑا ہوں اور مجھے معلوم ہے کہ یہاں ہونے والی گفتگو مکمل طور پر غیر شناخت شدہ اور کسی کی نگرانی کے بغیر ہوگی۔"
+  },
+  "I want to hear": {
+    "model": "opus-mt",
+    "msgstr": "میں سننا چاہتا ہوں"
   },
   "I'm happy to hear": {
     "model": "madlad-400",
@@ -223,9 +255,17 @@
     "model": "madlad-400",
     "msgstr": "شامل ہوں"
   },
+  "Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "کی بورڈ شارٹ کٹس"
+  },
   "Language": {
     "model": "hy-mt2",
     "msgstr": "زبان"
+  },
+  "Language menu": {
+    "model": "madlad-400",
+    "msgstr": "زبانوں کا مینو"
   },
   "Languages spoken": {
     "model": "opus-mt",
@@ -243,6 +283,26 @@
     "model": "hy-mt2",
     "msgstr": "ایسے rando کی تلاش ہے جو %{hearing_languages} زبانیں بول سکے اور %{speaking_language} سننا چاہے۔"
   },
+  "Main navigation": {
+    "model": "opus-mt",
+    "msgstr": "اہم نیویگیشن"
+  },
+  "Masking": {
+    "model": "madlad-400",
+    "msgstr": "ماسک"
+  },
+  "Microphone off.": {
+    "model": "translategemma-12b",
+    "msgstr": "مائیکروفون بند کر دیں۔"
+  },
+  "Microphone on.": {
+    "model": "translategemma-12b",
+    "msgstr": "مائیکروفون آن کر دیا گیا۔"
+  },
+  "Mute/unmute": {
+    "model": "hy-mt2",
+    "msgstr": "خاموش کریں/خاموشی ختم کریں"
+  },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "hy-mt2",
     "msgstr": "کوئی اکاؤنٹس نہیں۔ کوئی پروفائلز نہیں۔ کوئی ویڈیو نہیں۔ کوئی دباؤ نہیں۔"
@@ -259,9 +319,21 @@
     "model": "opus-mt",
     "msgstr": "ابھی تک ترجمہ نہیں ہوا"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "hy-mt2",
+    "msgstr": "کچھ بھی ریکارڈ نہیں کیا گیا اور نہ ہی اپ لوڈ کیا گیا۔"
+  },
   "Nothing matches.": {
     "model": "opus-mt",
     "msgstr": "کوئی مماثلت نہیں."
+  },
+  "Off": {
+    "model": "opus-mt",
+    "msgstr": "بند کریں"
+  },
+  "Opening microphone…": {
+    "model": "madlad-400",
+    "msgstr": "مائیکرو فون کھول رہا ہے…"
   },
   "Other languages: %{calls}": {
     "model": "hy-mt2",
@@ -291,6 +363,14 @@
     "model": "madlad-400",
     "msgstr": "کال کی تیاری کی جارہی ہے"
   },
+  "Preview": {
+    "model": "opus-mt",
+    "msgstr": "پیش نظارہ"
+  },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "translategemma-12b",
+    "msgstr": "پیش نظارہ ناکام رہا۔ مائیکروفون بند ہو گیا؛ دوبارہ کوشش کریں۔"
+  },
   "Privacy": {
     "model": "translategemma-4b",
     "msgstr": "پرائیویٹی"
@@ -319,6 +399,10 @@
     "model": "hy-mt2",
     "msgstr": "آپ جس طرح چاہیں ان تک یہ لنک بھیج دیں۔ یہ صرف ایک بار کام کرتا ہے۔"
   },
+  "Server Status": {
+    "model": "madlad-400",
+    "msgstr": "سرور کی حالت"
+  },
   "Share a link.": {
     "model": "hy-mt2",
     "msgstr": "ایک لنک شیئر کریں۔"
@@ -326,6 +410,10 @@
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-27b",
     "msgstr": "زبان کی مشق کے لیے مختصر، نام ظاہر نہ کرنے والی گفتگو۔"
+  },
+  "Site": {
+    "model": "translategemma-4b",
+    "msgstr": "موقع"
   },
   "Someone invited you to a call": {
     "model": "m2m100",
@@ -350,6 +438,10 @@
   "Stop looking": {
     "model": "madlad-400",
     "msgstr": "دیکھنا بند کرو"
+  },
+  "Style": {
+    "model": "hy-mt2",
+    "msgstr": "اسلوب"
   },
   "Suggest a fix": {
     "model": "madlad-400",
@@ -407,6 +499,10 @@
     "model": "madlad-400",
     "msgstr": "یہاں کوئی اکاونٹ، پروفائل، رابطہ، پیروکار، فیڈز، سٹریک، اسکور، یا مستقل سوشل گراف نہیں ہے۔ randos سوشل میڈیا سے زیادہ گفتگو کے بنیادی ڈھانچے کے قریب ہے۔"
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "hy-mt2",
+    "msgstr": "یہ انداز آپ کی آواز کو تبدیل کر دیتے ہیں، لیکن لوگ پھر بھی آپ کو پہچان سکتے ہیں۔"
+  },
   "This link is incomplete.": {
     "model": "translategemma-12b",
     "msgstr": "یہ لنک مکمل نہیں ہے۔"
@@ -435,6 +531,14 @@
     "model": "opus-mt",
     "msgstr": "ڈارک موڈ ٹوگل کریں"
   },
+  "Tone": {
+    "model": "hy-mt2",
+    "msgstr": "لہجہ"
+  },
+  "Tone + Pitch": {
+    "model": "m2m100",
+    "msgstr": "ٹون + پچ"
+  },
   "Translations": {
     "model": "madlad-400",
     "msgstr": "ترجمے"
@@ -446,6 +550,18 @@
   "View on GitHub": {
     "model": "hy-mt2",
     "msgstr": "گیٹ ہب پر دیکھیں"
+  },
+  "Voice": {
+    "model": "hy-mt2",
+    "msgstr": "آواز"
+  },
+  "Voice masking": {
+    "model": "translategemma-4b",
+    "msgstr": "آواز کو پوشیدہ کرنا"
+  },
+  "Voice masking on": {
+    "model": "translategemma-4b",
+    "msgstr": "آواز کو پوشیدہ کرنا"
   },
   "Waiting": {
     "model": "translategemma-4b",
@@ -531,9 +647,25 @@
     "model": "madlad-400",
     "msgstr": "ختم"
   },
+  "button\u0004End call": {
+    "model": "hy-mt2",
+    "msgstr": "کال ختم کریں"
+  },
+  "button\u0004Find": {
+    "model": "opus-mt",
+    "msgstr": "تلاش کریں"
+  },
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "rando تلاش کریں"
+  },
+  "button\u0004Hear myself": {
+    "model": "m2m100",
+    "msgstr": "اپنے آپ کو سنو"
+  },
+  "button\u0004Hide shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "شارٹ کٹس چھپائیں"
   },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
@@ -543,6 +675,10 @@
     "model": "madlad-400",
     "msgstr": "کال میں شامل ہوں"
   },
+  "button\u0004Keyboard shortcuts": {
+    "model": "hy-mt2",
+    "msgstr": "کی بورڈ شارٹ کٹس"
+  },
   "button\u0004Mute": {
     "model": "madlad-400",
     "msgstr": "خاموش"
@@ -550,6 +686,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "اگلا rando"
+  },
+  "button\u0004Stop preview": {
+    "model": "opus-mt",
+    "msgstr": "پیش نظارہ بند کریں"
   },
   "button\u0004Unmute": {
     "model": "madlad-400",

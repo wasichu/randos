@@ -242,9 +242,13 @@ defmodule RandosWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} in_call={@call_status in [:connecting, :active, :extension_pending]}>
+    <Layouts.app
+      home={true}
+      flash={@flash}
+      in_call={@call_status in [:connecting, :active, :extension_pending]}
+    >
       <div class="min-h-[calc(100vh-5rem)] overflow-x-hidden bg-stone-50 text-stone-950">
-        <section class="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 sm:gap-10 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1.08fr)] lg:py-14">
+        <section class="mx-auto grid w-full max-w-6xl gap-3 px-4 py-5 sm:px-8 sm:py-6">
           <.hero_panel
             ui_state={@ui_state}
             flow={progress_flow(@live_action, @ui_state, @call_kind, @webrtc_role)}
@@ -274,6 +278,7 @@ defmodule RandosWeb.HomeLive do
             matchmaking_error={@matchmaking_error}
             notice={@notice}
           />
+          <.keyboard_shortcuts />
         </section>
       </div>
     </Layouts.app>

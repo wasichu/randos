@@ -76,11 +76,24 @@ defmodule Tui.Integration.ResumeTest do
     await_model(b, &(&1.status in [:looking, :idle]))
   end
 
-  test "with audio: the call's media keeps going through the drop, on the same session" do
+  for {label, masked?} <- [{"audio", false}, {"masked audio", true}] do
+    test "with #{label}: media keeps going through the drop, on the same session" do
+      assert_audio_resume(unquote(masked?))
+    end
+  end
+
+  defp assert_audio_resume(masked?) do
     a = start_audio_tui(:resume_audio_a)
     b = start_audio_tui(:resume_audio_b)
     a_model = await_model(a, &(&1.status == :idle and &1.audio?))
     b_model = await_model(b, &(&1.status == :idle and &1.audio?))
+
+    if masked? do
+      keys(a, ["b", "2", "esc"])
+      keys(b, ["b", "3", "right", "esc"])
+      await_media(a, &(&1.voice_family == "tone"))
+      await_media(b, &(&1.voice_family == "tone_pitch" and &1.voice_tone == "brighter"))
+    end
 
     find(a, a_model, "fa", "ur")
     await_model(a, &(&1.status == :looking))
@@ -88,8 +101,18 @@ defmodule Tui.Integration.ResumeTest do
 
     %{call: %{"id" => call_id}} = await_model(a, &(&1.status == :in_call))
     await_model(b, &(&1.status == :in_call))
-    %{call: %{seq: session}} = await_media(a, &(packets(&1) > 50))
-    heard = packets(await_media(b, &(packets(&1) > 50)))
+    %{call: %{seq: session}} = a_media = await_media(a, &(packets(&1) > 50))
+    b_media = await_media(b, &(packets(&1) > 50))
+    heard = packets(b_media)
+
+    for media <- [a_media, b_media] do
+      assert media.call.stats["output_peak_dbfs"] > -50, "peer audio was silent"
+    end
+
+    if masked? do
+      assert a_media.call.masking == "lower_resonance"
+      assert b_media.call.masking == "higher_resonance_pitch"
+    end
 
     drop_websocket(a)
     await_model(b, &match?(%{call: %{"peer_reconnecting" => true}}, &1))

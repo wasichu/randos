@@ -1,0 +1,768 @@
+{
+  "identity": {
+    "probe": "70a523a8a158cc4f7f5be86a94010c4c5c1cd6146ca629cc70b52254867b6904",
+    "publisher": "54a5378b97664e3a7fef27601050f96c5552699b867769f7b0b926dc4ee01b5e",
+    "variants": [
+      {
+        "id": "original",
+        "label": "Original"
+      },
+      {
+        "id": "current_pitch",
+        "label": "Current pitch shift",
+        "engine": "spectral",
+        "pitch_strength": "current_pitch"
+      },
+      {
+        "id": "half_pitch",
+        "label": "Half the pitch shift",
+        "engine": "spectral",
+        "pitch_strength": "half_pitch"
+      },
+      {
+        "id": "zero_pitch",
+        "label": "No pitch shift \u00b7 resonance retained",
+        "engine": "spectral",
+        "pitch_strength": "zero_pitch"
+      }
+    ],
+    "cases": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__gentle_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "current_pitch": "high_voice__gentle_current_pitch__a32854b7de245f9b59bd9fe3a3176b8500ae8e2bdf43f027b56e9696404cd616.wav",
+          "half_pitch": "high_voice__gentle_half_pitch__39d44bd19b86f6b168f292723808104c6ab446c6e969e1345acc72f9baf9276d.wav",
+          "zero_pitch": "high_voice__gentle_zero_pitch__1ef4147dbf0da74052decaddfa714b25bbe6f4b52a2d2aa0f57a51dbd4a9c607.wav"
+        },
+        "settings": {
+          "current_pitch": {
+            "pitch": -2,
+            "scale": 0.9
+          },
+          "half_pitch": {
+            "pitch": -1,
+            "scale": 0.9
+          },
+          "zero_pitch": {
+            "pitch": 0,
+            "scale": 0.9
+          }
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "current_pitch": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+          "half_pitch": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+          "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d70.90"
+        },
+        "gains": {
+          "original": 1.0,
+          "current_pitch": 1.0335434855108663,
+          "half_pitch": 1.176177612306688,
+          "zero_pitch": 1.3113456417707658
+        },
+        "profile": "lower_mild",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__gentle_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "current_pitch": "low_voice__gentle_current_pitch__f092255888fa81675cdeac37e53fbd892088f0277ed63a386e3ec3a9324b1e65.wav",
+          "half_pitch": "low_voice__gentle_half_pitch__b4c9bcae316a13c72e459928074b4df09594d8fb4de47791fce7a268cf0b8db2.wav",
+          "zero_pitch": "low_voice__gentle_zero_pitch__95963df7a4906e32ac300f32dc68faa6c57ad765b2286312a1ee92c0c7df3d23.wav"
+        },
+        "settings": {
+          "current_pitch": {
+            "pitch": 2,
+            "scale": 1.1
+          },
+          "half_pitch": {
+            "pitch": 1,
+            "scale": 1.1
+          },
+          "zero_pitch": {
+            "pitch": 0,
+            "scale": 1.1
+          }
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "current_pitch": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+          "half_pitch": "Pitch +1 semitones \u00b7 resonances \u00d71.10",
+          "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d71.10"
+        },
+        "gains": {
+          "original": 1.0,
+          "current_pitch": 1.0426848029650233,
+          "half_pitch": 1.0562605472000246,
+          "zero_pitch": 1.1001153876502083
+        },
+        "profile": "higher_mild",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__gentle_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "current_pitch": "mid_voice__gentle_current_pitch__d6a19685c463e8e4185661f093d4206adf51007ff8545122cd5a72576919806d.wav",
+          "half_pitch": "mid_voice__gentle_half_pitch__c8bba8549640dc236ab71dd8db89458b6ba975704b45f03e3d9cc623c825fedd.wav",
+          "zero_pitch": "mid_voice__gentle_zero_pitch__8990f944eeaff48015e6b2295ca26ad845bbc5d564ec9668e9a91ccb296a727c.wav"
+        },
+        "settings": {
+          "current_pitch": {
+            "pitch": -2,
+            "scale": 0.9
+          },
+          "half_pitch": {
+            "pitch": -1,
+            "scale": 0.9
+          },
+          "zero_pitch": {
+            "pitch": 0,
+            "scale": 0.9
+          }
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "current_pitch": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+          "half_pitch": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+          "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d70.90"
+        },
+        "gains": {
+          "original": 1.0,
+          "current_pitch": 1.022720240826337,
+          "half_pitch": 1.123954270179189,
+          "zero_pitch": 1.2911099413977403
+        },
+        "profile": "lower_mild",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Mid voice remains unresolved: less pitch movement may sound better without hiding its cadence or accent."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__gentle_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "current_pitch": "mencken_wasichu__gentle_current_pitch__21a841124c08870c3bacf232217a0d863324ef7d62e1e6c40f2c84967aa1f755.wav",
+          "half_pitch": "mencken_wasichu__gentle_half_pitch__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+          "zero_pitch": "mencken_wasichu__gentle_zero_pitch__ac942f70e510b17de0264c54de43c0ac07bc653157a29985a230842f164244d8.wav"
+        },
+        "settings": {
+          "current_pitch": {
+            "pitch": 2,
+            "scale": 1.25
+          },
+          "half_pitch": {
+            "pitch": 1,
+            "scale": 1.25
+          },
+          "zero_pitch": {
+            "pitch": 0,
+            "scale": 1.25
+          }
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "current_pitch": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+          "half_pitch": "Pitch +1 semitones \u00b7 resonances \u00d71.25",
+          "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d71.25"
+        },
+        "gains": {
+          "original": 1.0,
+          "current_pitch": 1.242311839012786,
+          "half_pitch": 1.1784666873943415,
+          "zero_pitch": 1.1058984410105899
+        },
+        "profile": "higher_resonance",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed."
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__gentle_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "current_pitch": "test_tone__gentle_current_pitch__4cf0cdc0f5d925c7e342e16268c65db4775bac4a47c743062659fd4e801840c4.wav",
+          "half_pitch": "test_tone__gentle_half_pitch__3b40b2d3c405fdfc8a4c36299ae8f0feb0f9c0b915fe167063ec40af8fd43d1b.wav",
+          "zero_pitch": "test_tone__gentle_zero_pitch__c66320444d58793d723a65d0acbed4949e7336204fa4684046592df2a6045530.wav"
+        },
+        "settings": {
+          "current_pitch": {
+            "pitch": -2,
+            "scale": 0.9
+          },
+          "half_pitch": {
+            "pitch": -1,
+            "scale": 0.9
+          },
+          "zero_pitch": {
+            "pitch": 0,
+            "scale": 0.9
+          }
+        },
+        "descriptions": {
+          "original": "Original sample, with matched average level.",
+          "current_pitch": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+          "half_pitch": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+          "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d70.90"
+        },
+        "gains": {
+          "original": 1.0,
+          "current_pitch": 1.0238421946335179,
+          "half_pitch": 1.0831700108445934,
+          "zero_pitch": 1.1437170100469236
+        },
+        "profile": "lower_mild",
+        "note": "Tone diagnostic only; judge voice masking on speech."
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original"
+    },
+    {
+      "id": "current_pitch",
+      "label": "Current pitch shift",
+      "engine": "spectral",
+      "pitch_strength": "current_pitch"
+    },
+    {
+      "id": "half_pitch",
+      "label": "Half the pitch shift",
+      "engine": "spectral",
+      "pitch_strength": "half_pitch"
+    },
+    {
+      "id": "zero_pitch",
+      "label": "No pitch shift \u00b7 resonance retained",
+      "engine": "spectral",
+      "pitch_strength": "zero_pitch"
+    }
+  ],
+  "cases": {
+    "high_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "gentle_pitch_1",
+        "processor": "signalsmith",
+        "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+        "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+        "sample": "high_voice",
+        "case_id": "high_voice",
+        "run_id": "2026-10-27T18:16:37.595Z"
+      },
+      "audio": {
+        "original": "high_voice__gentle_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+        "current_pitch": "high_voice__gentle_current_pitch__a32854b7de245f9b59bd9fe3a3176b8500ae8e2bdf43f027b56e9696404cd616.wav",
+        "half_pitch": "high_voice__gentle_half_pitch__39d44bd19b86f6b168f292723808104c6ab446c6e969e1345acc72f9baf9276d.wav",
+        "zero_pitch": "high_voice__gentle_zero_pitch__1ef4147dbf0da74052decaddfa714b25bbe6f4b52a2d2aa0f57a51dbd4a9c607.wav"
+      },
+      "settings": {
+        "current_pitch": {
+          "pitch": -2,
+          "scale": 0.9
+        },
+        "half_pitch": {
+          "pitch": -1,
+          "scale": 0.9
+        },
+        "zero_pitch": {
+          "pitch": 0,
+          "scale": 0.9
+        }
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "current_pitch": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "half_pitch": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+        "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d70.90"
+      },
+      "gains": {
+        "original": 1.0,
+        "current_pitch": 1.0335434855108663,
+        "half_pitch": 1.176177612306688,
+        "zero_pitch": 1.3113456417707658
+      },
+      "profile": "lower_mild",
+      "note": "Only pitch changes between the three processed versions; resonance is held fixed."
+    },
+    "low_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "gentle_pitch_1",
+        "processor": "signalsmith",
+        "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+        "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+        "sample": "low_voice",
+        "case_id": "low_voice",
+        "run_id": "2026-10-27T18:16:37.595Z"
+      },
+      "audio": {
+        "original": "low_voice__gentle_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+        "current_pitch": "low_voice__gentle_current_pitch__f092255888fa81675cdeac37e53fbd892088f0277ed63a386e3ec3a9324b1e65.wav",
+        "half_pitch": "low_voice__gentle_half_pitch__b4c9bcae316a13c72e459928074b4df09594d8fb4de47791fce7a268cf0b8db2.wav",
+        "zero_pitch": "low_voice__gentle_zero_pitch__95963df7a4906e32ac300f32dc68faa6c57ad765b2286312a1ee92c0c7df3d23.wav"
+      },
+      "settings": {
+        "current_pitch": {
+          "pitch": 2,
+          "scale": 1.1
+        },
+        "half_pitch": {
+          "pitch": 1,
+          "scale": 1.1
+        },
+        "zero_pitch": {
+          "pitch": 0,
+          "scale": 1.1
+        }
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "current_pitch": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+        "half_pitch": "Pitch +1 semitones \u00b7 resonances \u00d71.10",
+        "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d71.10"
+      },
+      "gains": {
+        "original": 1.0,
+        "current_pitch": 1.0426848029650233,
+        "half_pitch": 1.0562605472000246,
+        "zero_pitch": 1.1001153876502083
+      },
+      "profile": "higher_mild",
+      "note": "Only pitch changes between the three processed versions; resonance is held fixed."
+    },
+    "mid_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "gentle_pitch_1",
+        "processor": "signalsmith",
+        "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+        "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+        "sample": "mid_voice",
+        "case_id": "mid_voice",
+        "run_id": "2026-10-27T18:16:37.595Z"
+      },
+      "audio": {
+        "original": "mid_voice__gentle_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+        "current_pitch": "mid_voice__gentle_current_pitch__d6a19685c463e8e4185661f093d4206adf51007ff8545122cd5a72576919806d.wav",
+        "half_pitch": "mid_voice__gentle_half_pitch__c8bba8549640dc236ab71dd8db89458b6ba975704b45f03e3d9cc623c825fedd.wav",
+        "zero_pitch": "mid_voice__gentle_zero_pitch__8990f944eeaff48015e6b2295ca26ad845bbc5d564ec9668e9a91ccb296a727c.wav"
+      },
+      "settings": {
+        "current_pitch": {
+          "pitch": -2,
+          "scale": 0.9
+        },
+        "half_pitch": {
+          "pitch": -1,
+          "scale": 0.9
+        },
+        "zero_pitch": {
+          "pitch": 0,
+          "scale": 0.9
+        }
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "current_pitch": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "half_pitch": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+        "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d70.90"
+      },
+      "gains": {
+        "original": 1.0,
+        "current_pitch": 1.022720240826337,
+        "half_pitch": 1.123954270179189,
+        "zero_pitch": 1.2911099413977403
+      },
+      "profile": "lower_mild",
+      "note": "Only pitch changes between the three processed versions; resonance is held fixed. Mid voice remains unresolved: less pitch movement may sound better without hiding its cadence or accent."
+    },
+    "mencken_wasichu.wav": {
+      "context": {
+        "view": "round",
+        "mode": "gentle_pitch_1",
+        "processor": "signalsmith",
+        "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+        "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+        "sample": "mencken_wasichu",
+        "case_id": "mencken_wasichu",
+        "run_id": "2026-10-27T18:16:37.595Z"
+      },
+      "audio": {
+        "original": "mencken_wasichu__gentle_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+        "current_pitch": "mencken_wasichu__gentle_current_pitch__21a841124c08870c3bacf232217a0d863324ef7d62e1e6c40f2c84967aa1f755.wav",
+        "half_pitch": "mencken_wasichu__gentle_half_pitch__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+        "zero_pitch": "mencken_wasichu__gentle_zero_pitch__ac942f70e510b17de0264c54de43c0ac07bc653157a29985a230842f164244d8.wav"
+      },
+      "settings": {
+        "current_pitch": {
+          "pitch": 2,
+          "scale": 1.25
+        },
+        "half_pitch": {
+          "pitch": 1,
+          "scale": 1.25
+        },
+        "zero_pitch": {
+          "pitch": 0,
+          "scale": 1.25
+        }
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "current_pitch": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+        "half_pitch": "Pitch +1 semitones \u00b7 resonances \u00d71.25",
+        "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d71.25"
+      },
+      "gains": {
+        "original": 1.0,
+        "current_pitch": 1.242311839012786,
+        "half_pitch": 1.1784666873943415,
+        "zero_pitch": 1.1058984410105899
+      },
+      "profile": "higher_resonance",
+      "note": "Only pitch changes between the three processed versions; resonance is held fixed."
+    },
+    "test_tone": {
+      "context": {
+        "view": "round",
+        "mode": "gentle_pitch_1",
+        "processor": "signalsmith",
+        "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+        "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+        "sample": "test_tone",
+        "case_id": "test_tone",
+        "run_id": "2026-10-27T18:16:37.595Z"
+      },
+      "audio": {
+        "original": "test_tone__gentle_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+        "current_pitch": "test_tone__gentle_current_pitch__4cf0cdc0f5d925c7e342e16268c65db4775bac4a47c743062659fd4e801840c4.wav",
+        "half_pitch": "test_tone__gentle_half_pitch__3b40b2d3c405fdfc8a4c36299ae8f0feb0f9c0b915fe167063ec40af8fd43d1b.wav",
+        "zero_pitch": "test_tone__gentle_zero_pitch__c66320444d58793d723a65d0acbed4949e7336204fa4684046592df2a6045530.wav"
+      },
+      "settings": {
+        "current_pitch": {
+          "pitch": -2,
+          "scale": 0.9
+        },
+        "half_pitch": {
+          "pitch": -1,
+          "scale": 0.9
+        },
+        "zero_pitch": {
+          "pitch": 0,
+          "scale": 0.9
+        }
+      },
+      "descriptions": {
+        "original": "Original sample, with matched average level.",
+        "current_pitch": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "half_pitch": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+        "zero_pitch": "Pitch +0 semitones \u00b7 resonances \u00d70.90"
+      },
+      "gains": {
+        "original": 1.0,
+        "current_pitch": 1.0238421946335179,
+        "half_pitch": 1.0831700108445934,
+        "zero_pitch": 1.1437170100469236
+      },
+      "profile": "lower_mild",
+      "note": "Tone diagnostic only; judge voice masking on speech."
+    }
+  },
+  "candidates": {
+    "gentle_current_pitch": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__gentle_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__gentle_current_pitch__a32854b7de245f9b59bd9fe3a3176b8500ae8e2bdf43f027b56e9696404cd616.wav"
+        },
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_current_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__gentle_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__gentle_current_pitch__f092255888fa81675cdeac37e53fbd892088f0277ed63a386e3ec3a9324b1e65.wav"
+        },
+        "description": "Pitch +2 semitones \u00b7 resonances \u00d71.10",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_current_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__gentle_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__gentle_current_pitch__d6a19685c463e8e4185661f093d4206adf51007ff8545122cd5a72576919806d.wav"
+        },
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Mid voice remains unresolved: less pitch movement may sound better without hiding its cadence or accent. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_current_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__gentle_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__gentle_current_pitch__21a841124c08870c3bacf232217a0d863324ef7d62e1e6c40f2c84967aa1f755.wav"
+        },
+        "description": "Pitch +2 semitones \u00b7 resonances \u00d71.25",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_current_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__gentle_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__gentle_current_pitch__4cf0cdc0f5d925c7e342e16268c65db4775bac4a47c743062659fd4e801840c4.wav"
+        },
+        "description": "Pitch -2 semitones \u00b7 resonances \u00d70.90",
+        "note": "Tone diagnostic only; judge voice masking on speech. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_current_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      }
+    },
+    "gentle_half_pitch": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__gentle_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__gentle_half_pitch__39d44bd19b86f6b168f292723808104c6ab446c6e969e1345acc72f9baf9276d.wav"
+        },
+        "description": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_half_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__gentle_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__gentle_half_pitch__b4c9bcae316a13c72e459928074b4df09594d8fb4de47791fce7a268cf0b8db2.wav"
+        },
+        "description": "Pitch +1 semitones \u00b7 resonances \u00d71.10",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_half_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__gentle_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__gentle_half_pitch__c8bba8549640dc236ab71dd8db89458b6ba975704b45f03e3d9cc623c825fedd.wav"
+        },
+        "description": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Mid voice remains unresolved: less pitch movement may sound better without hiding its cadence or accent. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_half_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__gentle_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__gentle_half_pitch__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav"
+        },
+        "description": "Pitch +1 semitones \u00b7 resonances \u00d71.25",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_half_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__gentle_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__gentle_half_pitch__3b40b2d3c405fdfc8a4c36299ae8f0feb0f9c0b915fe167063ec40af8fd43d1b.wav"
+        },
+        "description": "Pitch -1 semitones \u00b7 resonances \u00d70.90",
+        "note": "Tone diagnostic only; judge voice masking on speech. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_half_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      }
+    },
+    "gentle_zero_pitch": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__gentle_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__gentle_zero_pitch__1ef4147dbf0da74052decaddfa714b25bbe6f4b52a2d2aa0f57a51dbd4a9c607.wav"
+        },
+        "description": "Pitch +0 semitones \u00b7 resonances \u00d70.90",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_zero_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__gentle_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__gentle_zero_pitch__95963df7a4906e32ac300f32dc68faa6c57ad765b2286312a1ee92c0c7df3d23.wav"
+        },
+        "description": "Pitch +0 semitones \u00b7 resonances \u00d71.10",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_zero_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__gentle_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__gentle_zero_pitch__8990f944eeaff48015e6b2295ca26ad845bbc5d564ec9668e9a91ccb296a727c.wav"
+        },
+        "description": "Pitch +0 semitones \u00b7 resonances \u00d70.90",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Mid voice remains unresolved: less pitch movement may sound better without hiding its cadence or accent. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_zero_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__gentle_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__gentle_zero_pitch__ac942f70e510b17de0264c54de43c0ac07bc653157a29985a230842f164244d8.wav"
+        },
+        "description": "Pitch +0 semitones \u00b7 resonances \u00d71.25",
+        "note": "Only pitch changes between the three processed versions; resonance is held fixed. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_zero_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__gentle_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__gentle_zero_pitch__c66320444d58793d723a65d0acbed4949e7336204fa4684046592df2a6045530.wav"
+        },
+        "description": "Pitch +0 semitones \u00b7 resonances \u00d70.90",
+        "note": "Tone diagnostic only; judge voice masking on speech. Signalsmith impulse-parity caveat remains; no privacy guarantee.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "gentle_pitch",
+          "processor": "gentle_zero_pitch",
+          "build_id": "3a237ea88b006b9ccbeda76b75d6758ef20be1730773445dacbeb91c9bcfc82c",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-27T18:16:37.595Z"
+        }
+      }
+    }
+  },
+  "title": "A gentler pitch change?",
+  "intro": "Compare the current pitch shift, half the shift, and no pitch shift. Resonance stays fixed so you can judge pitch on its own.",
+  "details": [
+    "Current moves pitch two semitones; Half moves it one. No pitch shift still changes resonance: it is not the original recording or a bypass.",
+    "All four versions are level-matched together. Pick the best balance of clear speech, naturalness and useful masking; None is useful remains a valid answer.",
+    "Use live transfers the chosen pitch strength and resonance profile without opening your microphone. Existing Signalsmith impulse-parity discrepancies remain unresolved."
+  ]
+}

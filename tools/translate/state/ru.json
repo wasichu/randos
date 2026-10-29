@@ -15,6 +15,10 @@
     "model": "hy-mt2",
     "msgstr": "%{minutes}+ минут"
   },
+  "%{style} + %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "%{style} + %{tone}"
+  },
   "%{time} left": {
     "model": "madlad-400",
     "msgstr": "%{time} осталось"
@@ -55,6 +59,10 @@
     "model": "madlad-400",
     "msgstr": "Примите подтверждение 18+, прежде чем искать rando."
   },
+  "Acknowledge": {
+    "model": "hy-mt2",
+    "msgstr": "Подтвердить"
+  },
   "Attempting to reconnect": {
     "model": "hy-mt2",
     "msgstr": "Попытка восстановить соединение"
@@ -62,6 +70,14 @@
   "Both people choose whether to continue.": {
     "model": "translategemma-27b",
     "msgstr": "Обоим сторонам предоставляется возможность решить, продолжать или нет."
+  },
+  "Brighter": {
+    "model": "hy-mt2",
+    "msgstr": "Ярче"
+  },
+  "Call progress": {
+    "model": "hy-mt2",
+    "msgstr": "Статус вызова"
   },
   "Calls started": {
     "model": "m2m100",
@@ -114,6 +130,10 @@
   "Continued past 10 minutes": {
     "model": "hy-mt2",
     "msgstr": "Продолжалось более 10 минут"
+  },
+  "Conversation": {
+    "model": "hy-mt2",
+    "msgstr": "Разговор"
   },
   "Conversation is active.": {
     "model": "translategemma-12b",
@@ -183,6 +203,14 @@
     "model": "opus-mt",
     "msgstr": "Чтобы твой rando открыл его."
   },
+  "Fuller": {
+    "model": "hy-mt2",
+    "msgstr": "более насыщенный"
+  },
+  "Headphones recommended": {
+    "model": "madlad-400",
+    "msgstr": "Рекомендуются наушники"
+  },
   "Help fix a translation": {
     "model": "m2m100",
     "msgstr": "Помогите поправить перевод"
@@ -198,6 +226,10 @@
   "I am 18 or older and understand that conversations are anonymous and unmoderated.": {
     "model": "translategemma-27b",
     "msgstr": "Мне исполнилось 18 лет или больше, и я понимаю, что переписка является анонимной и не подвергается модерации."
+  },
+  "I want to hear": {
+    "model": "m2m100",
+    "msgstr": "Я хочу услышать"
   },
   "I will speak in": {
     "model": "m2m100",
@@ -235,9 +267,17 @@
     "model": "madlad-400",
     "msgstr": "Присоединяйтесь"
   },
+  "Keyboard shortcuts": {
+    "model": "opus-mt",
+    "msgstr": "Короткие клавиши клавиатуры"
+  },
   "Language": {
     "model": "hy-mt2",
     "msgstr": "Язык"
+  },
+  "Language menu": {
+    "model": "hy-mt2",
+    "msgstr": "Меню языков"
   },
   "Languages spoken": {
     "model": "hy-mt2",
@@ -255,6 +295,26 @@
     "model": "madlad-400",
     "msgstr": "Ищу rando, который говорит %{hearing_languages} и хочет услышать %{speaking_language}."
   },
+  "Main navigation": {
+    "model": "translategemma-4b",
+    "msgstr": "Основное меню"
+  },
+  "Masking": {
+    "model": "opus-mt",
+    "msgstr": "Маскирование"
+  },
+  "Microphone off.": {
+    "model": "hy-mt2",
+    "msgstr": "Микрофон выключен."
+  },
+  "Microphone on.": {
+    "model": "madlad-400",
+    "msgstr": "Микрофон включён."
+  },
+  "Mute/unmute": {
+    "model": "translategemma-4b",
+    "msgstr": "Включить/выключить звук"
+  },
   "No accounts. No profiles. No video. No pressure.": {
     "model": "translategemma-12b",
     "msgstr": "Без аккаунтов. Без профилей. Без видео. Без давления."
@@ -271,9 +331,21 @@
     "model": "madlad-400",
     "msgstr": "Еще не переведено"
   },
+  "Nothing is recorded or uploaded.": {
+    "model": "hy-mt2",
+    "msgstr": "Ничего не записывается и не загружается."
+  },
   "Nothing matches.": {
     "model": "hy-mt2",
     "msgstr": "Ничего не совпадает."
+  },
+  "Off": {
+    "model": "hy-mt2",
+    "msgstr": "Выключено"
+  },
+  "Opening microphone…": {
+    "model": "translategemma-4b",
+    "msgstr": "Открываю микрофон…"
   },
   "Other languages: %{calls}": {
     "model": "translategemma-27b",
@@ -303,6 +375,14 @@
     "model": "hy-mt2",
     "msgstr": "Подготовка к звонку"
   },
+  "Preview": {
+    "model": "hy-mt2",
+    "msgstr": "Предварительный просмотр"
+  },
+  "Preview failed. Microphone stopped; try again.": {
+    "model": "hy-mt2",
+    "msgstr": "Предварительный просмотр не удался. Микрофон перестал работать; попробуйте ещё раз."
+  },
   "Privacy": {
     "model": "hy-mt2",
     "msgstr": "Конфиденциальность"
@@ -331,6 +411,10 @@
     "model": "translategemma-4b",
     "msgstr": "Вы можете отправить им эту ссылку любым удобным способом. Она работает только один раз."
   },
+  "Server Status": {
+    "model": "hy-mt2",
+    "msgstr": "Статус сервера"
+  },
   "Share a link.": {
     "model": "hy-mt2",
     "msgstr": "Поделитесь ссылкой."
@@ -338,6 +422,10 @@
   "Short anonymous conversations for language practice.": {
     "model": "translategemma-12b",
     "msgstr": "Короткие анонимные беседы для практики языка."
+  },
+  "Site": {
+    "model": "m2m100",
+    "msgstr": "Сайт"
   },
   "Someone invited you to a call": {
     "model": "madlad-400",
@@ -362,6 +450,10 @@
   "Stop looking": {
     "model": "translategemma-4b",
     "msgstr": "Прекратите поиски"
+  },
+  "Style": {
+    "model": "hy-mt2",
+    "msgstr": "Стиль"
   },
   "Suggest a fix": {
     "model": "translategemma-4b",
@@ -423,6 +515,10 @@
     "model": "translategemma-4b",
     "msgstr": "В randos нет аккаунтов, профилей, контактов, подписчиков, лент новостей, последовательностей, оценок или постоянной социальной сети. randos больше похож на инфраструктуру для общения, чем на социальные сети."
   },
+  "These styles change your voice, but people may still recognize you.": {
+    "model": "m2m100",
+    "msgstr": "Эти стили меняют ваш голос, но люди все еще могут распознать вас."
+  },
   "This link is incomplete.": {
     "model": "hy-mt2",
     "msgstr": "Эта ссылка неполная."
@@ -451,6 +547,14 @@
     "model": "madlad-400",
     "msgstr": "Переключить темный режим"
   },
+  "Tone": {
+    "model": "madlad-400",
+    "msgstr": "Тон"
+  },
+  "Tone + Pitch": {
+    "model": "madlad-400",
+    "msgstr": "Тон + высота звука"
+  },
   "Translations": {
     "model": "hy-mt2",
     "msgstr": "Переводы"
@@ -462,6 +566,18 @@
   "View on GitHub": {
     "model": "hy-mt2",
     "msgstr": "Просмотр на GitHub"
+  },
+  "Voice": {
+    "model": "hy-mt2",
+    "msgstr": "Голос"
+  },
+  "Voice masking": {
+    "model": "hy-mt2",
+    "msgstr": "Маскировка голоса"
+  },
+  "Voice masking on": {
+    "model": "madlad-400",
+    "msgstr": "Маскировка голоса включена"
   },
   "Waiting": {
     "model": "hy-mt2",
@@ -547,9 +663,25 @@
     "model": "madlad-400",
     "msgstr": "Конец"
   },
+  "button\u0004End call": {
+    "model": "hy-mt2",
+    "msgstr": "Завершить звонок"
+  },
+  "button\u0004Find": {
+    "model": "hy-mt2",
+    "msgstr": "Найти"
+  },
   "button\u0004Find a rando": {
     "model": "madlad-400",
     "msgstr": "Найти rando"
+  },
+  "button\u0004Hear myself": {
+    "model": "hy-mt2",
+    "msgstr": "Послушать себя"
+  },
+  "button\u0004Hide shortcuts": {
+    "model": "translategemma-4b",
+    "msgstr": "Скрыть ярлыки"
   },
   "button\u0004Invite someone": {
     "model": "madlad-400",
@@ -559,6 +691,10 @@
     "model": "translategemma-4b",
     "msgstr": "Присоединяйтесь к звонку"
   },
+  "button\u0004Keyboard shortcuts": {
+    "model": "opus-mt",
+    "msgstr": "Короткие клавиши клавиатуры"
+  },
   "button\u0004Mute": {
     "model": "hy-mt2",
     "msgstr": "Отключить микрофон"
@@ -566,6 +702,10 @@
   "button\u0004Next rando": {
     "model": "madlad-400",
     "msgstr": "Следующая rando"
+  },
+  "button\u0004Stop preview": {
+    "model": "hy-mt2",
+    "msgstr": "Прекратить превью"
   },
   "button\u0004Unmute": {
     "model": "translategemma-4b",

@@ -37,6 +37,24 @@ Each message is a 4-byte big-endian length plus a JSON object (Erlang
 `{:packet, 4}`). The Elixir side is `Tui.Media` / `Tui.Media.Protocol`; the
 Rust side is `src/protocol.rs`. Change all three, and this table, together.
 
+`capabilities` returns `{"voice_masking": true, "live_audition": true}`. The TUI checks it before
+starting any selected masking or audition. Missing/unsupported capability blocks
+masked capture, protecting against older helpers silently ignoring new fields.
+Unmasked calls remain compatible. `live_audition` separately advertises live
+preview changes; an older helper cannot claim to have applied a new selection.
+
+Both `call_start` and `loopback_start` accept optional `masking`: absent, null
+or `"off"` disables it; `"lower_resonance"`, `"lower_resonance_pitch"`,
+`"higher_resonance"` and `"higher_resonance_pitch"` select fixed styles. Unknown
+values fail before devices open. `loopback_start` with a selected style is the
+explicit headphone audition; the TUI uses its selected output, and stops it on
+exit, Stop or before a call. Settings changes use `loopback_masking` to keep the
+same input/output devices and worker open. Explicit `masking: "off"` previews
+the original at the same quarter-level headroom as masked auditions; absent/null
+masking preserves ordinary meter/CLI levels. `voice_ms` is the additive 220 ms frame
+adapter offset when masked (zero otherwise); the codec estimate already includes
+the first capture frame, so adding 240 ms would count that frame twice.
+
 Requests carry an integer `id`, and each gets exactly one reply echoing it as
 `reply`, with either `ok` (a result) or `error` (a message). Events are
 unsolicited and carry `event` instead.
@@ -44,8 +62,10 @@ unsolicited and carry `event` instead.
 | Request (`cmd`) | Fields | `ok` result |
 | --- | --- | --- |
 | `ping` | | `"pong"` |
+| `capabilities` | | `{"voice_masking": true, "live_audition": true}` |
 | `devices` | | `{"inputs": [...], "outputs": [...], "default_input", "default_output"}`: device names, to pass as `device:NAME` |
 | `loopback_start` | `in`: `device`\|`device:NAME`\|`sine`; `out`: `device`\|`device:NAME`\|`null`\|`wav:PATH` (`device` is the system default; a `device:NAME` that isn't there falls back to the default, and the reply's name says so) | `{"input": "...", "output": "..."}`: what was opened |
+| `loopback_masking` | `masking`: a style name or `"off"`; no loopback is an error | `true`: queued, not yet applied; worker coalesces pending changes at a frame boundary |
 | `loopback_stop` | | `true` (also when none was running) |
 | `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the call's, from the channel's `state`; `stun:` URLs give server-reflexive candidates, the first UDP `turn:` URL with credentials a relayed one); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address); `relay_only` (default `false`): only the relay candidate, never a direct connection, for the call map's `ice_transport_policy` `"relay"` | `{"input", "output"}` |
 | `call_signal` | `type` and `payload` of a peer's signal, exactly as the channel's `signal` push has them (`offer`, `answer`, `ice_candidate`; others are ignored) | `true` |
@@ -62,7 +82,7 @@ parse. A request too malformed to have an id gets `{"reply": null, "error": ...}
 
 | Event | Fields |
 | --- | --- |
-| `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `resample_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
+| `loopback_stats` | once a second: `latency_ms` and its parts (`capture_device_ms`, `capture_ring_ms`, `codec_ms`, `voice_ms`, `resample_ms`, `playback_ring_ms`, `playback_device_ms`), `kbps`, `input_peak_dbfs`, `underruns`, `overruns`, `dropped` |
 | `loopback_levels` | every 50 ms: `you`, the mic's 12 meter bars (0..1, lowest frequencies first, as in `call_levels`); not printed by `--loopback` |
 | `loopback_failed` | `error`; the loopback stopped on its own |
 | `stream_error` | `error`; a device stream reported a problem |
@@ -172,6 +192,32 @@ The transitive tree has duplicate versions (`thiserror` 1/2, `syn`,
 
 ## Checks
 
+### First native voice integration
+
+`CallConfig::masking` optionally selects native Signalsmith through
+`randos_voice_native` (`voice-native/README.md`). It is **off by default**, selected locally through the TUI voice panel or the optional
+Port `masking` field. The browser uses the same styles through its production
+Worker/worklet. Legacy processing and native masking cannot be stacked.
+Selections are session-only and never enter participant signaling.
+
+The worker path is capture → AEC → connection/mute gate → fixed ×.25 headroom →
+native masking → meter/Opus. Gate closure immediately discards native input,
+output and analysis history. Reopening discards capture-ring/resampler history
+and re-primes. Capture/AEC still drain while gated; RTP silence continues during
+mute/startup. Errors terminate processing through the existing call failure
+path, never dry fallback. Stop discards pending speech. cpal callbacks are
+unchanged. Tests use only synthetic/file audio, never the developer's speakers.
+
+Dependency addition: `randos_voice_native` is ours (AGPL-3.0-or-later); it compiles
+the pinned MIT Signalsmith Stretch/Linear headers with build-only `cc`
+(MIT/Apache-2.0, already in the lockfile). Requires C++17 at build time and the
+system C++ standard library at runtime (libc++ on macOS, libstdc++ on Linux).
+No Emscripten, model, extra process or download at runtime. Unsafe code is
+isolated in the bridge's audited `ffi.rs`; this helper still forbids it.
+Release archives include both upstream MIT notices under `licenses/`.
+
+### Automated checks
+
 `just native-check` (part of `just precommit`): `cargo fmt --check`,
 `cargo clippy --all-targets -- -D warnings`, `cargo test`, `cargo deny check`.
 
@@ -186,3 +232,22 @@ and one through TLS TURN (`turns:` only), so ICE, DTLS and audio all go
 through coturn. The hermetic tests
 use a fake TURN server and can't prove that: on one machine the host pair
 always wins.
+
+
+Live preview changes replace Voice and codec state on the existing loopback
+worker, discard capture/resampler history and reset the playback resampler.
+Previously queued local playback drains normally (the worker queue is limited
+by the existing 40 ms playback threshold, plus one frame/device buffers); the
+new masked processor then primes, so switching can have a short silent gap.
+This is local listening, with no claim of an instantaneous playback purge.
+Only the device callback owns the playback ring consumer. No callback allocates
+or locks. Statistics are reset only after installation; `voice_ms` reflects the
+installed processor. Errors end the loopback with `loopback_failed`, without
+an automatic original-voice fallback. Stop wins over pending changes.
+
+TUI auditions add an optional integer `audition` to `loopback_start`. The helper
+includes it on every event from that loopback (stats, levels and failure). The
+TUI ignores events from retired generations, including a silent meter's untagged
+events during an audition. Local start/update command metadata also retains the
+generation for delayed replies. These identifiers never enter the participant
+channel. Legacy meter/CLI requests and events remain untagged.

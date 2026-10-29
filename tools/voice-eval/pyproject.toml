@@ -5,9 +5,9 @@ description = "The voice-anonymization benchmark for randos: can a speaker-recog
 requires-python = "==3.13.*"
 # The metrics and data handling (EER, WER, LibriSpeech's layout): small, no models.
 dependencies = [
-    "numpy==2.3.3",
+    "numpy==2.5.4",
     "jiwer==4.0.0",
-    "soundfile==0.13.1",
+    "soundfile==0.14.0",
 ]
 
 [dependency-groups]
@@ -16,9 +16,9 @@ dev = ["pytest==8.4.2"]
 # SpeechBrain for speaker identity, Whisper through transformers for
 # intelligibility, on the CPU or Apple's GPU (MPS).
 models = [
-    "torch==2.8.0",
-    "torchaudio==2.8.0",
-    "speechbrain==1.0.3",
+    "torch==2.11.0",
+    "torchaudio==2.11.0",
+    "speechbrain==1.1.2",
     "transformers==4.56.2",
 ]
 

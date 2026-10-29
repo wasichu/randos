@@ -5,6 +5,7 @@ import {logEvent, logWarning} from "../randos/logging"
 import {AudioLevelVisualizer} from "../randos/audio_visualizer"
 import {iceServersFrom, iceTransportPolicyFrom} from "../randos/ice_servers"
 import {WebRTCClient, WebRTCClientState} from "../randos/webrtc_client"
+import {selectedMasking} from "../randos/voice/masking_choices"
 
 // Distinguish "the mic was refused or missing" from network/peer failures so
 // the server and the peer see a meaningful reason.
@@ -40,6 +41,8 @@ export const WebRTCAudio = {
     this.localVisualizer = null
     this.remoteVisualizer = null
     this.muted = false
+    const maskingLabel = this.el.querySelector('[data-voice-masking]')
+    if (maskingLabel) maskingLabel.hidden = !selectedMasking()
 
     this.cleanupBag.addEventListener(window, "pagehide", () => this.cleanup({notify: true}))
     this.cleanupBag.addEventListener(this.muteButton, "click", () => this.toggleMute())
@@ -53,6 +56,10 @@ export const WebRTCAudio = {
     }
 
     this.peer = new WebRTCClient({
+      masking: selectedMasking(),
+      onAudioFailure: () => {
+        if (!this.cleaned) this.pushEvent("end_call", {reason: "audio_failed"})
+      },
       role: this.el.dataset.webrtcRole,
       iceServers: iceServersFrom(this.el),
       iceTransportPolicy: iceTransportPolicyFrom(this.el),
@@ -74,6 +81,7 @@ export const WebRTCAudio = {
     this.peer
       .start()
       .catch(error => {
+        if (this.cleaned) return
         const reason = startFailureReason(error)
         logEvent("call.start_failed", {reason})
         this.pushEvent("end_call", {reason})

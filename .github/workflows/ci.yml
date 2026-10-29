@@ -40,6 +40,10 @@ jobs:
           install_args: ${{ env.MISE_TOOLS }}
 
       - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            vendor/ex_ratatui/native/ex_ratatui -> target
 
       - name: Cache Mix deps and builds
         uses: actions/cache@v6
@@ -80,6 +84,10 @@ jobs:
           install_args: erlang elixir just node rust cmake
 
       - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            vendor/ex_ratatui/native/ex_ratatui -> target
 
       - name: Cache Mix deps and builds
         uses: actions/cache@v6

@@ -113,3 +113,56 @@
 [data-theme="dark"] canvas {
   background-color: #1c1917;
 }
+
+/* Native details stays stacked unless the desktop side-panel enhancement is
+   supported. Its DOM order and microphone owner never change. */
+@supports selector(:has(*)) {
+  @media (min-width: 64rem) {
+    #conversation-card:has(> #voice-settings[open]),
+    #conversation-card:has(> #voice-settings[open]) ~ #homepage-shortcuts {
+      max-width: 64rem;
+    }
+
+    #conversation-card:has(> #voice-settings[open]) {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+    }
+
+    #conversation-card:has(> #voice-settings[open]) > :is(#idle-panel, #join-panel) {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    #conversation-card > #voice-settings[open] {
+      grid-column: 2;
+      grid-row: 1;
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--color-stone-200);
+    }
+
+    #voice-settings-toggle .hero-chevron-down {
+      rotate: -90deg;
+    }
+
+    #voice-settings[open] #voice-settings-toggle .hero-chevron-down {
+      rotate: 90deg;
+    }
+
+    [dir="rtl"] #voice-settings-toggle .hero-chevron-down {
+      rotate: 90deg;
+    }
+
+    [dir="rtl"] #voice-settings[open] #voice-settings-toggle .hero-chevron-down {
+      rotate: -90deg;
+    }
+
+    [data-theme="dark"] #conversation-card > #voice-settings[open] {
+      border-inline-start-color: #44403c;
+    }
+  }
+}
+
+/* The homepage toolbar sits beside its single brand without reserving a
+   second header row. On narrow screens it stays in normal page flow. */
+.home-navigation #locale-options {
+  max-height: min(20rem, calc(100dvh - 5rem));
+}
