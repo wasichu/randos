@@ -1,6 +1,6 @@
 # randos roadmap
 
-Verified against the code at `8298bc9` plus the voice-lab usability, McAdams, prepared model/DSP comparisons, TVTSyn browser/resource experiments, WORLD auditions/chunking, browser DSP adapters/compact strength round/preferred engine/live preview/gentler pitch and buffering experiments, native-core cadence probe, owned Rust bridge, joint browser/TUI product controls and local auditions, auto-save, complete listening-matrix audit and compact product UI/help, desktop voice side panel and explicit interface-language picker and physical terminal redraw fix, continuous preview and expanded opt-in homepage shortcuts and continuous TUI audition with an inline shortcut bar and mode-specific mic stop hints and horizontal homepage navigation with laptop-sized, case-insensitive, grouped site/voice/conversation shortcuts and their local preference and in-call End/Next shortcuts plus v0.10.0 release preparation (2026-10-28). Update this line, and
+Verified against the code at `8298bc9` plus the voice-lab usability, McAdams, prepared model/DSP comparisons, TVTSyn browser/resource experiments, WORLD auditions/chunking, browser DSP adapters/compact strength round/preferred engine/live preview/gentler pitch and buffering experiments, native-core cadence probe, owned Rust bridge, joint browser/TUI product controls and local auditions, auto-save, complete listening-matrix audit and compact product UI/help, desktop voice side panel and explicit interface-language picker and physical terminal redraw fix, continuous preview and expanded opt-in homepage shortcuts and continuous TUI audition with an inline shortcut bar and mode-specific mic stop hints and horizontal homepage navigation with laptop-sized, case-insensitive, grouped site/voice/conversation shortcuts and their local preference and in-call End/Next shortcuts plus v0.10.0 release preparation and clean-checkout renderer guard correction (2026-10-29). Update this line, and
 check that every module/function named below still exists, whenever the plan
 changes. This doc names symbols, never `file:line` (line numbers rot; graft
 finds symbols). The reasoning and code review behind the 2026-10-19 decisions
@@ -2791,6 +2791,13 @@ once the English copy is settled and the owner authorizes the local model run.
 
 
 ### Pre-packaging full pass for v0.10.0 (2026-10-28)
+
+Native CI follow-up (2026-10-29): **fix** the renderer source inventory, which
+included an upstream `erl_crash.dump` excluded by Git. A local ignored copy hid
+the mismatch. Preserve its provenance as an explicitly excluded upstream file,
+reject crash dumps in the source inventory, and validate against a clean Git
+export. The strong advisor approved this focused correction; runtime behavior
+and the seven-file renderer patch are unchanged. Repeat CI before tagging.
 
 Owner authorized preparation through the point immediately before pushing and
 tagging the release. Proposed inventory and advisor outcome: **leave** the

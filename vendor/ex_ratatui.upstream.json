@@ -114,7 +114,6 @@
     "native/ex_ratatui/Cargo.toml": "59803e090507ff38f89ac63bc518547240b664479c51ea2ab35a057d79da0534",
     "native/ex_ratatui/Cargo.lock": "d3808e13dfe134e4f32f106f193a3a79142334ea0b362322a39b576686a0a080",
     "native/ex_ratatui/build.rs": "fe9fad8a6a6730d53f07797244e0aabdd606d0a909f16a76df74f0b74361e911",
-    "native/ex_ratatui/erl_crash.dump": "bb2a1116ebdb61f6977ea5020a19965f0b2d72a2c1b2ee3606f3501e080f362d",
     "native/ex_ratatui/.cargo/config.toml": "12894f9aceb02ebd91f1f6e8fd8d1b36370d94379246b48f120769ac167a2366",
     "native/ex_ratatui/syntaxes/LICENSE": "9ea3900c433bd24d4c93751ee262a0c097ebae0676ad433943dbb9e4a4e57f91",
     "native/ex_ratatui/syntaxes/README.md": "c1609ee1a05330140e9e7dd3f54d0b7f5c47649cabbe20b1bdea61e6b5c9c884",
@@ -201,5 +200,11 @@
     "native/ex_ratatui/vendor/ratatui-3d/Cargo.toml",
     "native/ex_ratatui/Cargo.lock"
   ],
-  "native_lock_sha256": "14eb869b416ed87c158670d6cb85b6301a55ab197488997d916d5d9756fc69d9"
+  "native_lock_sha256": "14eb869b416ed87c158670d6cb85b6301a55ab197488997d916d5d9756fc69d9",
+  "excluded_upstream_files": {
+    "native/ex_ratatui/erl_crash.dump": {
+      "sha256": "bb2a1116ebdb61f6977ea5020a19965f0b2d72a2c1b2ee3606f3501e080f362d",
+      "reason": "Upstream runtime crash dump; not source and intentionally omitted from the vendored tree."
+    }
+  }
 }
