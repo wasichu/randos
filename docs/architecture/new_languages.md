@@ -1,3 +1,5 @@
+> **Dated language/model research and outcome.** Current locale list: [languages](../languages.md) and [catalog guide](../../priv/gettext/README.md); current procedure: [translation tooling](../../tools/translate/README.md). Revalidate model availability and terms before new runs.
+
 # Five new languages (research, 2026-10-22; built the same day)
 
 **Outcome (2026-10-22).** All five added, as practice and interface

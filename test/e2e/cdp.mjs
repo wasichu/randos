@@ -289,6 +289,11 @@ export class Page {
     return this.eval(`document.querySelector(${JSON.stringify(selector)}).click()`)
   }
 
+  async labView(view) {
+    await this.waitFor(`document.getElementById('voice-lab-view')?.dataset.ready === 'true'`, "lab view selector ready")
+    await this.eval(`{const select=document.getElementById('voice-lab-view');select.value=${JSON.stringify(view)};select.dispatchEvent(new Event('change',{bubbles:true}))}`)
+  }
+
   // Choose languages, accept the terms, and press "Find a rando".
   // Speak `speaks`; hear exactly `hears` (a code or a list of codes).
   async findRando(speaks, hears) {

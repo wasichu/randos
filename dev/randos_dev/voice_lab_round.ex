@@ -7,6 +7,12 @@ defmodule RandosDev.VoiceLabRound do
   @engines Path.expand("../../tools/voice-dsp/results/engine-comparison.json", __DIR__)
 
   @gentle Path.expand("../../tools/voice-dsp/results/gentle-pitch.json", __DIR__)
+  @envelope Path.expand("../../tools/voice-dsp/results/selective-resonance.json", __DIR__)
+  @bandwidth Path.expand("../../tools/voice-dsp/results/bandwidth.json", __DIR__)
+  @source_shape Path.expand("../../tools/voice-dsp/results/source.json", __DIR__)
+  @fargan Path.expand("../../tools/voice-fargan/results/quality.json", __DIR__)
+  @fargan_mask Path.expand("../../tools/voice-fargan/results/masking.json", __DIR__)
+  @fargan_combined Path.expand("../../tools/voice-fargan/results/combined.json", __DIR__)
   @buffering Path.expand("../../tools/voice-dsp/results/buffering.json", __DIR__)
   @root Path.expand("../..", __DIR__)
 
@@ -15,6 +21,12 @@ defmodule RandosDev.VoiceLabRound do
       case kind do
         "engines" -> {@engines, 3}
         "gentle" -> {@gentle, 4}
+        "envelope" -> {@envelope, 4}
+        "bandwidth" -> {@bandwidth, 5}
+        "source_shape" -> {@source_shape, 5}
+        "fargan" -> {@fargan, 4}
+        "fargan_mask" -> {@fargan_mask, 5}
+        "fargan_combined" -> {@fargan_combined, 4}
         _ -> {@path, 5}
       end
 
@@ -114,6 +126,11 @@ defmodule RandosDev.VoiceLabRound do
       <code>{case @id do
         "engines" -> "just voice-dsp-engines"
         "gentle" -> "just voice-dsp-gentle"
+        "envelope" -> "just voice-dsp-envelope"
+        kind when kind in ["bandwidth", "source_shape"] -> "just voice-dsp-texture"
+        "fargan" -> "just voice-fargan"
+        "fargan_mask" -> "just voice-fargan-mask"
+        "fargan_combined" -> "just voice-fargan-combined"
         _ -> "just voice-dsp-round"
       end}</code>
       to prepare this comparison, then reload.
@@ -126,7 +143,20 @@ defmodule RandosDev.VoiceLabRound do
       assigns
       |> assign(
         :count_word,
-        Map.fetch!(%{"engines" => "three", "gentle" => "four", "round" => "five"}, assigns.id)
+        Map.fetch!(
+          %{
+            "engines" => "three",
+            "gentle" => "four",
+            "envelope" => "four",
+            "bandwidth" => "five",
+            "source_shape" => "five",
+            "fargan" => "four",
+            "fargan_mask" => "five",
+            "fargan_combined" => "four",
+            "round" => "five"
+          },
+          assigns.id
+        )
       )
       |> assign(
         :engine_choices,
@@ -140,6 +170,56 @@ defmodule RandosDev.VoiceLabRound do
               {"Half the pitch shift", "half_pitch"},
               {"No pitch shift · resonance retained", "zero_pitch"},
               {"None is useful", "none"}
+            ]
+
+          "bandwidth" ->
+            [
+              {"Signalsmith reference", "reference"},
+              {"Matched reconstruction", "control"},
+              {"Narrower resonances", "narrower"},
+              {"Wider resonances", "wider"},
+              {"None is useful", "none"}
+            ]
+
+          "source_shape" ->
+            [
+              {"Signalsmith reference", "reference"},
+              {"Matched reconstruction", "control"},
+              {"Softer excitation pulses", "softer"},
+              {"Sharper excitation pulses", "sharper"},
+              {"None is useful", "none"}
+            ]
+
+          "envelope" ->
+            [
+              {"Released style", "current"},
+              {"Bend A", "bend_a"},
+              {"Bend B", "bend_b"},
+              {"None is useful", "none"}
+            ]
+
+          "fargan_combined" ->
+            [
+              {"Unchanged FARGAN", "control"},
+              {"FARGAN · combined", "combined"},
+              {"Signalsmith reference", "reference"},
+              {"None is useful", "none"}
+            ]
+
+          "fargan_mask" ->
+            [
+              {"Unchanged FARGAN", "control"},
+              {"FARGAN · pitch only", "pitch"},
+              {"FARGAN · resonance only", "envelope"},
+              {"Signalsmith reference", "reference"},
+              {"None is useful", "none"}
+            ]
+
+          "fargan" ->
+            [
+              {"Good enough to try masking edits", "acceptable"},
+              {"Clear, but the quality needs work", "rough"},
+              {"Too much speech quality is lost", "unusable"}
             ]
 
           _ ->
@@ -265,8 +345,15 @@ defmodule RandosDev.VoiceLabRound do
             kind={@id}
             preference
             preference_choices={@engine_choices}
-            voices={[{"comparison", "Choose one for this sample"}]}
-            notes_placeholder="Optional: what sounds clearer, more disguised, nasal or artificial?"
+            voices={[{"comparison", @report["review_prompt"] || "Choose one for this sample"}]}
+            preference_label={
+              @report["preference_label"] || "Best balance of disguise, naturalness and clarity"
+            }
+            notes_placeholder={
+              if @id == "fargan",
+                do: "Optional: lost words, harshness, muffling, or changes in pronunciation?",
+                else: "Optional: what sounds clearer, more disguised, nasal or artificial?"
+            }
           />
           <details class="rounded-lg border border-stone-200 p-4 text-sm text-stone-600">
             <summary class="cursor-pointer font-medium">What changed in this round?</summary>

@@ -16,7 +16,7 @@ agents (and people who like rules written down) should also read
 | Translation shootout | `tools/translate/` | Python (uv): machine-translates the UI's gettext strings and scores the models |
 | Voice benchmark | `tools/voice-eval/` | Python (uv): can a speaker model still identify a voice after a processor? |
 | TURN server | `infra/coturn/` | coturn as code (OpenTofu + cloud-init): [its README](../infra/coturn/README.md) |
-| Design notes | `docs/architecture/` | The [roadmap](architecture/refactor_plan.md), the [call flow](architecture/call_flow.md), the channel protocol, and more |
+| Architecture | `docs/architecture/` | Start with the short [current architecture and roadmap](architecture/refactor_plan.md); it routes to authoritative contracts and the preserved historical evidence |
 
 There is no database: the matchmaking queue and each call's coordinator are
 processes, and everything vanishes on restart.
@@ -375,6 +375,44 @@ The terminal client is released from a version tag:
    `Formula/randos.rb` ([details](../packaging/homebrew/README.md)).
 
 The server is deployed separately (`just deploy`, to Fly.io).
+
+The local voice lab opens the **current experiment** first. Its grouped view
+selector separates current work, listening/live tools, previous experiments and
+reference material. `just voice-fargan-combined` prepares the current final
+combined-preset comparison against unchanged FARGAN and Signalsmith, using the
+same nominal pitch and low-frequency resonance scale. The engines differ;
+this is not an equivalence claim. The earlier `just voice-fargan-mask` isolates
+pitch/envelope edits. Both reuse the accepted cache from `just voice-fargan`, which prepares
+the earlier unchanged-synthesis quality gate. The owner accepted its small
+clarity loss before feature edits. These use a pinned native C build and the existing DSP Python
+environment; setup downloads a hash-checked multi-model Opus archive. No
+product dependency, microphone capture or remote inference is added. Details,
+resource measurement limits and the remaining DSP shortlist are in
+`tools/voice-fargan/README.md`.
+
+After listening approval, `just voice-fargan-browser` builds a separate pinned
+WASM/portable pair, checks framing and numerical differences, then measures
+independently paced Workers against full-band Signalsmith. It needs the existing
+Emscripten SDK/cache. Its local HTML artifact contains actual browser recordings;
+the timer probe does not qualify microphone, AudioWorklet, iPad or call latency.
+Neither this command nor its generated bundles enters the production image.
+
+`just voice-dsp-texture` prepares the current **Resonance width** and
+**Voice-source shape** rounds: Original, Signalsmith, matched reconstruction and
+two isolated changes, for every public voice and the test tone. Prepared choices
+also appear in Listen & compare. No weights or microphone are used. The existing
+DSP research environment supplies NumPy/SciPy/SoundFile;
+`just voice-dsp-texture-test` runs model-free numerical tests without adding
+SciPy to the minimal CI environment. See `tools/voice-dsp/README.md` for scope.
+
+`just voice-dsp-envelope` prepares the dev lab's **Selective resonance** round:
+Original, the released strong-resonance + one-semitone style, and two nonlinear
+envelope bends, for all four public voices and the test tone. It uses native
+rendering with the existing research environment; no model or SDK download.
+The zero-bend copy must exactly reproduce the untouched pinned engine. New
+bends are prepared auditions only, with no live-mic handoff or browser streaming
+qualification. Production processors stay unchanged. See
+`tools/voice-dsp/README.md` for the formula, provenance and stopping rule.
 
 `just voice-dsp-browser` runs the dev-only three-adapter DSP Worker screen
 (WORLD, Signalsmith, and the existing Rust chain), then publishes all five

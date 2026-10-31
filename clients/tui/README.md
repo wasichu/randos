@@ -35,7 +35,7 @@ one (pick as many as you like; your speaking language starts checked).
 
 The TUI speaks your language too: it starts in your system's
 (`LC_ALL`, `LC_MESSAGES`, `LANG`), else English, and `l` on the start
-screen moves to the next one. Its text is translated by machine, as the
+screen opens a picker: arrows move, Enter applies/saves, Esc cancels. Its text is translated by machine, as the
 website's is (`tools/translate`, `--catalog tui`); the server's own
 words (errors, the status screen) come in the same language, and switch
 with it. The command line's own help

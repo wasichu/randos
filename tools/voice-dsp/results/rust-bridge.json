@@ -1,10 +1,10 @@
 {
   "completed": true,
   "scope": "Actual safe Rust API and owned C++ boundary versus saved browser PCM; includes the live 20 ms adapter. Finite test rendering only, no devices.",
-  "binary_sha256": "758ef0b21daa4dbe97252b6c7ad0eda3c048c3a84c7b4f859835f755d268f795",
+  "binary_sha256": "4c1d60a3b58b3716eab3f3e22b0c12276bac154ff543dd23d1d4a61e25dce995",
   "reference_sha256": "053d91cbb83c92eba0a74ca9902a2ec1921a31db2186ad04174893b0212fb275",
   "provenance": {
-    "Cargo.lock": "bd25ae728a620cacc62eb0debdedbfdebc996a381b5e913b13d44f7a53115d54",
+    "Cargo.lock": "f0adf56bdbfb7dd17e61aa732eee089b23d8e8cff9b070b2be1303b7a09a252a",
     "Cargo.toml": "b8fc8700ac357f50783d9dfcaca4c15f80268ba7f8cb20ffac38f8a167a39a29",
     "voice-native/Cargo.toml": "70d0aebfb64ac136fa2e2edb3de8b87d52e6ed6fcebcaefb2bb11935bbdedba9",
     "tools/voice-dsp/native/check_bridge.py": "44d5da83c6523a81c3db6bca7491121a05a2e925a9bbfaf1a066c927e3aba9a8",
@@ -15,9 +15,9 @@
     "vendor/signalsmith/signalsmith-linear/stft.h": "20f3695bb8d162cf4b3f1aacdca477f0c8a301ffebd6fec53b437e9ce623462b",
     "vendor/signalsmith/stretch/signalsmith-stretch.h": "1188667959ac19dd40c0a6abbce694e44705615ec4f0e8db8af0f1cfb4c5dea7",
     "voice-native/build.rs": "83bc7b3ea0629563fa5574f477e98580dc5357147aa62624775076e5efcf9f16",
-    "voice-native/examples/render_signalsmith.rs": "b65a9f0cb37bb23b7dfd008db6357f8f193aa47064b08841b8ad09308591a602",
+    "voice-native/examples/render_signalsmith.rs": "3265e9e623d64e43c3e1020da4b8e9898c637db93e2294fb38137e03dd6b2bb4",
     "voice-native/src/ffi.rs": "9b9ada1f03651e8ffc17b7d0e505525fece89de78eab5208f6d55d3d169a7120",
-    "voice-native/src/lib.rs": "facb91ab79073eea1a04aca78cc3cc11638f0a1cfccd7378322585ad0d6b3ef3",
+    "voice-native/src/lib.rs": "d212f0d74604fcc07eee364f3d0f4beb506b67b0d3d0bc54ec0354df8a1af952",
     "voice-native/src/bridge.cpp": "c964f28fdd391dd68b030ba5db04bf2ce83d89bc97982e79d1dd4d5de8481dbf"
   },
   "cases": [

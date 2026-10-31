@@ -1,0 +1,23 @@
+{
+  "source": "Owner feedback in conversation after the two prepared DSP auditions",
+  "scope": "Overall listening assessment, not individual voice ratings or a fabricated in-lab review",
+  "reports": {
+    "bandwidth": {
+      "path": "tools/voice-dsp/results/bandwidth.json",
+      "sha256": "3280d1f95050e6d22d1fcfdeb1d5570bf3b29626ca4245992a5bf4f4a5e7d212",
+      "build_ids": [
+        "c2442350a3aab7f116a484179b3be03e1ae154a3facbeae17b65b780d2574d93"
+      ]
+    },
+    "source": {
+      "path": "tools/voice-dsp/results/source.json",
+      "sha256": "63c357b7997325ee7aec150f11695436a96bbf2afa9071449f1f29146967f4d9",
+      "build_ids": [
+        "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6"
+      ]
+    }
+  },
+  "owner_note": "hmm, i didn't leave notes but the resonance width didn't really change anything for me. same with voice-source shape. i dunno but everything felt a little subtle and not significantly different or improved from the baseline signalsmith",
+  "interpretation": "Both tested candidates felt subtle and offered no significant perceived difference or improvement over baseline Signalsmith.",
+  "agent_recommendation": "Park these implementations/settings; retain Signalsmith as the product baseline. Preserve recordings and earlier reviews; no further strength sweep or product integration without a specific new hypothesis."
+}

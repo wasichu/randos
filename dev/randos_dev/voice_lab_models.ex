@@ -9,6 +9,12 @@ defmodule RandosDev.VoiceLabModels do
   @dsp_audio Path.expand("../../tools/voice-dsp/results/listening.json", __DIR__)
   @tone_audio Path.expand("../../tools/voice-browser/results/tone.json", __DIR__)
   @gentle_pitch Path.expand("../../tools/voice-dsp/results/gentle-pitch.json", __DIR__)
+  @envelope Path.expand("../../tools/voice-dsp/results/selective-resonance.json", __DIR__)
+  @bandwidth Path.expand("../../tools/voice-dsp/results/bandwidth.json", __DIR__)
+  @source_shape Path.expand("../../tools/voice-dsp/results/source.json", __DIR__)
+  @fargan Path.expand("../../tools/voice-fargan/results/quality.json", __DIR__)
+  @fargan_mask Path.expand("../../tools/voice-fargan/results/masking.json", __DIR__)
+  @fargan_combined Path.expand("../../tools/voice-fargan/results/combined.json", __DIR__)
   @engine_comparison Path.expand("../../tools/voice-dsp/results/engine-comparison.json", __DIR__)
   @masking_round Path.expand("../../tools/voice-dsp/results/masking-round.json", __DIR__)
   @browser_dsp Path.expand("../../tools/voice-dsp/results/browser-listening.json", __DIR__)
@@ -73,7 +79,13 @@ defmodule RandosDev.VoiceLabModels do
         @browser_dsp,
         @masking_round,
         @engine_comparison,
-        @gentle_pitch
+        @gentle_pitch,
+        @envelope,
+        @bandwidth,
+        @source_shape,
+        @fargan,
+        @fargan_mask,
+        @fargan_combined
       ],
       base,
       &merge_candidates/2

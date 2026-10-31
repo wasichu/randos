@@ -1,0 +1,1182 @@
+{
+  "identity": {
+    "provenance": {
+      "tools/voice-dsp/browser/texture.py": "ec6a341f6f91dba5f4c904476a9b89e79ccc74efad3666b11b0182ef8e9f6912",
+      "tools/voice-dsp/browser/texture_core.py": "a349e1a4c16bd267b1df6c86a7fa9fc7f742d1073183fb1366b014a9937436c4",
+      "tools/voice-dsp/browser/test_texture.py": "9e50e05837054b6c0cae0ae7c76726a94c70d19731a8ca7aae5cdc4da29b1f9a",
+      "tools/voice-dsp/browser/envelope.py": "83f71f96a06f556ce7f41f75fd95d77b819a9a9493a8a956ba2e699b4231001b",
+      "tools/voice-dsp/browser/prepare.py": "8173be8eeea41b25c8c7e29c253005e1d11ff3bbdeaadd1d37234c1f540beb71",
+      "tools/voice-dsp/browser/spectral.cpp": "862e6743238f09bf56efcbc265f78a5b34fc812151dd45c74ee29517bc17b051",
+      "vendor/signalsmith/manifest.json": "07a743672596f1766d40da2e4e8cf2d52ae36cf53a5d4dfefcb14291cdd8d059",
+      "vendor/signalsmith/stretch/signalsmith-stretch.h": "1188667959ac19dd40c0a6abbce694e44705615ec4f0e8db8af0f1cfb4c5dea7",
+      "tmp/voice-dsp/browser/texture_reference.dylib": "5d0d8385b2fa17ea15f4c7e568ab96d5902eac63c71e2c2935a2cfa9dd0d7726",
+      "tools/voice-dsp/results/engine-comparison-probe.json": "40a7e0c15453add6fc49593c78faa457fca6ae522e287ef5239bbd778fa050e7"
+    },
+    "checks": [
+      {
+        "kind": "source",
+        "clip": "high_voice",
+        "reference_pcm_sha256": "087724861b1e5a3c570a429ec251dad7e352318d702fcc2c1cec98167489f931",
+        "raw_pcm_sha256": {
+          "original": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a",
+          "reference": "087724861b1e5a3c570a429ec251dad7e352318d702fcc2c1cec98167489f931",
+          "control": "087724861b1e5a3c570a429ec251dad7e352318d702fcc2c1cec98167489f931",
+          "softer": "005b0c43277bfdbebe6c73d78144965016f6b0fe12255a18ee0e42c4b8855eb0",
+          "sharper": "47034f37ac12765b41243d5e876d29dde5bf57b45764dee055fae5440914fa79"
+        },
+        "reconstruction_max_abs": 3.0444397003392965e-16,
+        "reconstruction_relative_rms": 4.178364716946861e-15,
+        "control_path": "direct_filter",
+        "statistics": {
+          "control": {
+            "frames": 308,
+            "voiced_frames": 206,
+            "bypassed_frames": 102,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 4.440892098500626e-16,
+            "max_sos_identity_error": 0.0
+          },
+          "softer": {
+            "frames": 308,
+            "voiced_frames": 206,
+            "bypassed_frames": 102,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 4.440892098500626e-16,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 101.3967921026051,
+            "raw_peak": 0.07270778689844916,
+            "rms_delta_from_reference": 0.005169133408115146
+          },
+          "sharper": {
+            "frames": 308,
+            "voiced_frames": 206,
+            "bypassed_frames": 102,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 4.440892098500626e-16,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 102.97270910814404,
+            "raw_peak": 0.05598517001810676,
+            "rms_delta_from_reference": 0.0033575875340398896
+          }
+        }
+      },
+      {
+        "kind": "source",
+        "clip": "low_voice",
+        "reference_pcm_sha256": "5c30125eb23cd224c1721c93d8525ee8438019c0b52d26673013a66b2e946f42",
+        "raw_pcm_sha256": {
+          "original": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2",
+          "reference": "5c30125eb23cd224c1721c93d8525ee8438019c0b52d26673013a66b2e946f42",
+          "control": "5c30125eb23cd224c1721c93d8525ee8438019c0b52d26673013a66b2e946f42",
+          "softer": "8fa1cff692dbb23d2a1b0bb7882ef1e55c15e540fe30ecbb0af239c8da00654a",
+          "sharper": "d5b820619faff619a726d7a4a01dad4d347f53b463a116a0e3c12ac79a6b9af9"
+        },
+        "reconstruction_max_abs": 3.404394821604484e-16,
+        "reconstruction_relative_rms": 2.41419984918318e-15,
+        "control_path": "direct_filter",
+        "statistics": {
+          "control": {
+            "frames": 308,
+            "voiced_frames": 121,
+            "bypassed_frames": 187,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 1.1969591984239969e-15,
+            "max_sos_identity_error": 0.0
+          },
+          "softer": {
+            "frames": 308,
+            "voiced_frames": 121,
+            "bypassed_frames": 187,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 1.1969591984239969e-15,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 65.18899998627603,
+            "raw_peak": 0.10119756975601239,
+            "rms_delta_from_reference": 0.0045549614206824626
+          },
+          "sharper": {
+            "frames": 308,
+            "voiced_frames": 121,
+            "bypassed_frames": 187,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 1.1969591984239969e-15,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 64.72400017082691,
+            "raw_peak": 0.1005255552781411,
+            "rms_delta_from_reference": 0.0017358473682540885
+          }
+        }
+      },
+      {
+        "kind": "source",
+        "clip": "mid_voice",
+        "reference_pcm_sha256": "a4812375db1726b7430a51f6c1e7479347c7109f92009d0aa95bb2fffcb66514",
+        "raw_pcm_sha256": {
+          "original": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747",
+          "reference": "a4812375db1726b7430a51f6c1e7479347c7109f92009d0aa95bb2fffcb66514",
+          "control": "a4812375db1726b7430a51f6c1e7479347c7109f92009d0aa95bb2fffcb66514",
+          "softer": "5da6ddefb6d192c048e59e8365b9b7cc65590d82bfae9c48e5520a7911c0cf4a",
+          "sharper": "ac6f7dd926cb37ef6c2608a7185080de13a869b82046bcd4333b2e2cd4673620"
+        },
+        "reconstruction_max_abs": 3.226585665316861e-16,
+        "reconstruction_relative_rms": 3.863746369554643e-15,
+        "control_path": "direct_filter",
+        "statistics": {
+          "control": {
+            "frames": 308,
+            "voiced_frames": 187,
+            "bypassed_frames": 121,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 4.848552115355176e-16,
+            "max_sos_identity_error": 0.0
+          },
+          "softer": {
+            "frames": 308,
+            "voiced_frames": 187,
+            "bypassed_frames": 121,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 4.848552115355176e-16,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 114.04558294452727,
+            "raw_peak": 0.10751719606095372,
+            "rms_delta_from_reference": 0.006038009003072029
+          },
+          "sharper": {
+            "frames": 308,
+            "voiced_frames": 187,
+            "bypassed_frames": 121,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 4.848552115355176e-16,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 93.06391701102257,
+            "raw_peak": 0.06178128831238721,
+            "rms_delta_from_reference": 0.003380447170826157
+          }
+        }
+      },
+      {
+        "kind": "source",
+        "clip": "mencken_wasichu",
+        "reference_pcm_sha256": "58362e43f240f10ffb26d17d44be7c992b5c6a810974c6d0fcdeb68a83e64064",
+        "raw_pcm_sha256": {
+          "original": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1",
+          "reference": "58362e43f240f10ffb26d17d44be7c992b5c6a810974c6d0fcdeb68a83e64064",
+          "control": "58362e43f240f10ffb26d17d44be7c992b5c6a810974c6d0fcdeb68a83e64064",
+          "softer": "195ff2d9396fcefbb6f7f1b0303c5abbedcf0b2bec206620f04e20c843900a8f",
+          "sharper": "826e251566f66538e3edfc2126ff7fb42715a37bc36a045dc42f8f710bc47f29"
+        },
+        "reconstruction_max_abs": 8.760353553682876e-17,
+        "reconstruction_relative_rms": 1.6296120976969219e-15,
+        "control_path": "direct_filter",
+        "statistics": {
+          "control": {
+            "frames": 308,
+            "voiced_frames": 61,
+            "bypassed_frames": 247,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 2.445960101127298e-16,
+            "max_sos_identity_error": 0.0
+          },
+          "softer": {
+            "frames": 308,
+            "voiced_frames": 61,
+            "bypassed_frames": 247,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 2.445960101127298e-16,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 45.13820796273649,
+            "raw_peak": 0.04203557043469343,
+            "rms_delta_from_reference": 0.0007521549445748609
+          },
+          "sharper": {
+            "frames": 308,
+            "voiced_frames": 61,
+            "bypassed_frames": 247,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 2.445960101127298e-16,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 44.25375000573695,
+            "raw_peak": 0.03554032291830654,
+            "rms_delta_from_reference": 0.0003149513042715464
+          }
+        }
+      },
+      {
+        "kind": "source",
+        "clip": "test_tone",
+        "reference_pcm_sha256": "4f0d366c5d06cd965927bc2585e754177a5922dcd1984ea4d67e10a28cbd3824",
+        "raw_pcm_sha256": {
+          "original": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97",
+          "reference": "4f0d366c5d06cd965927bc2585e754177a5922dcd1984ea4d67e10a28cbd3824",
+          "control": "4f0d366c5d06cd965927bc2585e754177a5922dcd1984ea4d67e10a28cbd3824",
+          "softer": "f45dc11f001052647ce80e987bc70fbf071fe65aba0baa193562e214c543080e",
+          "sharper": "1437b37e244bd5f6e6f469b4c65b11c51ca3f6889fe5a6dcb8b5c4aea8d48f61"
+        },
+        "reconstruction_max_abs": 1.3253287356462806e-15,
+        "reconstruction_relative_rms": 6.510036987575405e-15,
+        "control_path": "direct_filter",
+        "statistics": {
+          "control": {
+            "frames": 208,
+            "voiced_frames": 200,
+            "bypassed_frames": 8,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 3.0149494012476907e-15,
+            "max_sos_identity_error": 0.0
+          },
+          "softer": {
+            "frames": 208,
+            "voiced_frames": 200,
+            "bypassed_frames": 8,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 3.0149494012476907e-15,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 96.59924986772239,
+            "raw_peak": 0.2614910332669725,
+            "rms_delta_from_reference": 0.04605981315676254
+          },
+          "sharper": {
+            "frames": 208,
+            "voiced_frames": 200,
+            "bypassed_frames": 8,
+            "changed_poles": 0,
+            "ineligible_poles": 0,
+            "max_angle_error": 0.0,
+            "max_reconstruction_error": 3.0149494012476907e-15,
+            "max_sos_identity_error": 0.0,
+            "offline_wall_ms": 93.63000001758337,
+            "raw_peak": 0.1102910892610061,
+            "rms_delta_from_reference": 0.012815540320344545
+          }
+        }
+      }
+    ],
+    "cases": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__texture_source_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "reference": "high_voice__texture_source_reference__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav",
+          "control": "high_voice__texture_source_control__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav",
+          "softer": "high_voice__texture_source_softer__bf64518af609a5c4d7bd74cef936fb0d4dd2b71eec909d98841a97fade37b58b.wav",
+          "sharper": "high_voice__texture_source_sharper__f04ffee64e0a2832d6dd9853344e83099912dcf111854f2bfd54e196d6d26fa2.wav"
+        },
+        "settings": {
+          "reference": {
+            "pitch": -1,
+            "scale": 0.8
+          },
+          "control": {
+            "bandwidth": 1.0,
+            "gamma": 1.0
+          },
+          "softer": {
+            "bandwidth": 1.0,
+            "gamma": 0.8,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          },
+          "sharper": {
+            "bandwidth": 1.0,
+            "gamma": 1.25,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 level matched",
+          "reference": "Released Signalsmith \u00b7 pitch -1 semitone \u00b7 resonance \u00d70.80",
+          "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+          "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 206/308 frames voiced",
+          "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 206/308 frames voiced"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.422994029272365,
+          "control": 1.4229940292723648,
+          "softer": 0.8722651526126908,
+          "sharper": 1.5322662791603825
+        },
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__texture_source_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "reference": "low_voice__texture_source_reference__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav",
+          "control": "low_voice__texture_source_control__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav",
+          "softer": "low_voice__texture_source_softer__44c8713200b1ea685faac5752fc079f386a0de325f9828ebbc560b813310c6a2.wav",
+          "sharper": "low_voice__texture_source_sharper__1edf7c37d9d0dcddce713b90d1d0f56c50d0dad0ca3473f70ed102b1f611f241.wav"
+        },
+        "settings": {
+          "reference": {
+            "pitch": 1,
+            "scale": 1.25
+          },
+          "control": {
+            "bandwidth": 1.0,
+            "gamma": 1.0
+          },
+          "softer": {
+            "bandwidth": 1.0,
+            "gamma": 0.8,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          },
+          "sharper": {
+            "bandwidth": 1.0,
+            "gamma": 1.25,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 level matched",
+          "reference": "Released Signalsmith \u00b7 pitch +1 semitone \u00b7 resonance \u00d71.25",
+          "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+          "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 121/308 frames voiced",
+          "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 121/308 frames voiced"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.211695203295392,
+          "control": 1.211695203295392,
+          "softer": 0.942167220341268,
+          "sharper": 1.3393636650585805
+        },
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__texture_source_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "reference": "mid_voice__texture_source_reference__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav",
+          "control": "mid_voice__texture_source_control__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav",
+          "softer": "mid_voice__texture_source_softer__ebec7555210175cff1c04bdc8a9f477094e6b8a7881a279be973524c7d9dda65.wav",
+          "sharper": "mid_voice__texture_source_sharper__d862fbfe6823ddff85838d3fb0b7bec2f09faaf92a37202232783a2e12c1c1f1.wav"
+        },
+        "settings": {
+          "reference": {
+            "pitch": -1,
+            "scale": 0.8
+          },
+          "control": {
+            "bandwidth": 1.0,
+            "gamma": 1.0
+          },
+          "softer": {
+            "bandwidth": 1.0,
+            "gamma": 0.8,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          },
+          "sharper": {
+            "bandwidth": 1.0,
+            "gamma": 1.25,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 level matched",
+          "reference": "Released Signalsmith \u00b7 pitch -1 semitone \u00b7 resonance \u00d70.80",
+          "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+          "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 187/308 frames voiced",
+          "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 187/308 frames voiced"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.4828962857400203,
+          "control": 1.4828962857400203,
+          "softer": 0.9275412283747121,
+          "sharper": 1.6624483873358606
+        },
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__texture_source_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "reference": "mencken_wasichu__texture_source_reference__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+          "control": "mencken_wasichu__texture_source_control__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+          "softer": "mencken_wasichu__texture_source_softer__20a35037dd72df0362d0341ec9bcc7ee1ae162238c777eba287abe0d957cf8c8.wav",
+          "sharper": "mencken_wasichu__texture_source_sharper__9678289902ece47601ebf7f5d26b54d89c828041ccd6a501b497fccc358c862f.wav"
+        },
+        "settings": {
+          "reference": {
+            "pitch": 1,
+            "scale": 1.25
+          },
+          "control": {
+            "bandwidth": 1.0,
+            "gamma": 1.0
+          },
+          "softer": {
+            "bandwidth": 1.0,
+            "gamma": 0.8,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          },
+          "sharper": {
+            "bandwidth": 1.0,
+            "gamma": 1.25,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 level matched",
+          "reference": "Released Signalsmith \u00b7 pitch +1 semitone \u00b7 resonance \u00d71.25",
+          "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+          "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 61/308 frames voiced",
+          "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 61/308 frames voiced"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.1784666867989158,
+          "control": 1.1784666867989158,
+          "softer": 1.0226717796072757,
+          "sharper": 1.248057823044925
+        },
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__texture_source_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "reference": "test_tone__texture_source_reference__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav",
+          "control": "test_tone__texture_source_control__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav",
+          "softer": "test_tone__texture_source_softer__9fffe66ff3a842eff4339a6ef81f26ab7c452c8195f6db9834a83d772d4d37d0.wav",
+          "sharper": "test_tone__texture_source_sharper__cbb946d50864a6db0f50a168df2c96c08250e19e7abc8879b8bfdd37d8f51d2e.wav"
+        },
+        "settings": {
+          "reference": {
+            "pitch": -1,
+            "scale": 0.8
+          },
+          "control": {
+            "bandwidth": 1.0,
+            "gamma": 1.0
+          },
+          "softer": {
+            "bandwidth": 1.0,
+            "gamma": 0.8,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          },
+          "sharper": {
+            "bandwidth": 1.0,
+            "gamma": 1.25,
+            "source_wet": 0.35,
+            "frame": 1920,
+            "hop": 960,
+            "lpc_order": 48,
+            "preemphasis": 0.97
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 level matched",
+          "reference": "Released Signalsmith \u00b7 pitch -1 semitone \u00b7 resonance \u00d70.80",
+          "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+          "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 200/208 frames voiced",
+          "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 200/208 frames voiced"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.2611850012511143,
+          "control": 1.2611850012511145,
+          "softer": 0.6161394598403953,
+          "sharper": 1.7176432562464523
+        },
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first. Diagnostic tone: this speech analysis can create artifacts here; do not rate disguise from it."
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original"
+    },
+    {
+      "id": "reference",
+      "label": "Signalsmith reference"
+    },
+    {
+      "id": "control",
+      "label": "Matched reconstruction control"
+    },
+    {
+      "id": "softer",
+      "label": "Softer excitation pulses"
+    },
+    {
+      "id": "sharper",
+      "label": "Sharper excitation pulses"
+    }
+  ],
+  "cases": {
+    "high_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "source_1",
+        "processor": "signalsmith_texture",
+        "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+        "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+        "sample": "high_voice",
+        "case_id": "high_voice",
+        "run_id": "2026-10-31T11:34:15.341311+00:00"
+      },
+      "audio": {
+        "original": "high_voice__texture_source_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+        "reference": "high_voice__texture_source_reference__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav",
+        "control": "high_voice__texture_source_control__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav",
+        "softer": "high_voice__texture_source_softer__bf64518af609a5c4d7bd74cef936fb0d4dd2b71eec909d98841a97fade37b58b.wav",
+        "sharper": "high_voice__texture_source_sharper__f04ffee64e0a2832d6dd9853344e83099912dcf111854f2bfd54e196d6d26fa2.wav"
+      },
+      "settings": {
+        "reference": {
+          "pitch": -1,
+          "scale": 0.8
+        },
+        "control": {
+          "bandwidth": 1.0,
+          "gamma": 1.0
+        },
+        "softer": {
+          "bandwidth": 1.0,
+          "gamma": 0.8,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        },
+        "sharper": {
+          "bandwidth": 1.0,
+          "gamma": 1.25,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 level matched",
+        "reference": "Released Signalsmith \u00b7 pitch -1 semitone \u00b7 resonance \u00d70.80",
+        "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 206/308 frames voiced",
+        "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 206/308 frames voiced"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.422994029272365,
+        "control": 1.4229940292723648,
+        "softer": 0.8722651526126908,
+        "sharper": 1.5322662791603825
+      },
+      "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+    },
+    "low_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "source_1",
+        "processor": "signalsmith_texture",
+        "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+        "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+        "sample": "low_voice",
+        "case_id": "low_voice",
+        "run_id": "2026-10-31T11:34:15.341311+00:00"
+      },
+      "audio": {
+        "original": "low_voice__texture_source_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+        "reference": "low_voice__texture_source_reference__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav",
+        "control": "low_voice__texture_source_control__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav",
+        "softer": "low_voice__texture_source_softer__44c8713200b1ea685faac5752fc079f386a0de325f9828ebbc560b813310c6a2.wav",
+        "sharper": "low_voice__texture_source_sharper__1edf7c37d9d0dcddce713b90d1d0f56c50d0dad0ca3473f70ed102b1f611f241.wav"
+      },
+      "settings": {
+        "reference": {
+          "pitch": 1,
+          "scale": 1.25
+        },
+        "control": {
+          "bandwidth": 1.0,
+          "gamma": 1.0
+        },
+        "softer": {
+          "bandwidth": 1.0,
+          "gamma": 0.8,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        },
+        "sharper": {
+          "bandwidth": 1.0,
+          "gamma": 1.25,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 level matched",
+        "reference": "Released Signalsmith \u00b7 pitch +1 semitone \u00b7 resonance \u00d71.25",
+        "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 121/308 frames voiced",
+        "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 121/308 frames voiced"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.211695203295392,
+        "control": 1.211695203295392,
+        "softer": 0.942167220341268,
+        "sharper": 1.3393636650585805
+      },
+      "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+    },
+    "mid_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "source_1",
+        "processor": "signalsmith_texture",
+        "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+        "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+        "sample": "mid_voice",
+        "case_id": "mid_voice",
+        "run_id": "2026-10-31T11:34:15.341311+00:00"
+      },
+      "audio": {
+        "original": "mid_voice__texture_source_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+        "reference": "mid_voice__texture_source_reference__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav",
+        "control": "mid_voice__texture_source_control__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav",
+        "softer": "mid_voice__texture_source_softer__ebec7555210175cff1c04bdc8a9f477094e6b8a7881a279be973524c7d9dda65.wav",
+        "sharper": "mid_voice__texture_source_sharper__d862fbfe6823ddff85838d3fb0b7bec2f09faaf92a37202232783a2e12c1c1f1.wav"
+      },
+      "settings": {
+        "reference": {
+          "pitch": -1,
+          "scale": 0.8
+        },
+        "control": {
+          "bandwidth": 1.0,
+          "gamma": 1.0
+        },
+        "softer": {
+          "bandwidth": 1.0,
+          "gamma": 0.8,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        },
+        "sharper": {
+          "bandwidth": 1.0,
+          "gamma": 1.25,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 level matched",
+        "reference": "Released Signalsmith \u00b7 pitch -1 semitone \u00b7 resonance \u00d70.80",
+        "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 187/308 frames voiced",
+        "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 187/308 frames voiced"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.4828962857400203,
+        "control": 1.4828962857400203,
+        "softer": 0.9275412283747121,
+        "sharper": 1.6624483873358606
+      },
+      "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+    },
+    "mencken_wasichu.wav": {
+      "context": {
+        "view": "round",
+        "mode": "source_1",
+        "processor": "signalsmith_texture",
+        "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+        "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+        "sample": "mencken_wasichu",
+        "case_id": "mencken_wasichu",
+        "run_id": "2026-10-31T11:34:15.341311+00:00"
+      },
+      "audio": {
+        "original": "mencken_wasichu__texture_source_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+        "reference": "mencken_wasichu__texture_source_reference__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+        "control": "mencken_wasichu__texture_source_control__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+        "softer": "mencken_wasichu__texture_source_softer__20a35037dd72df0362d0341ec9bcc7ee1ae162238c777eba287abe0d957cf8c8.wav",
+        "sharper": "mencken_wasichu__texture_source_sharper__9678289902ece47601ebf7f5d26b54d89c828041ccd6a501b497fccc358c862f.wav"
+      },
+      "settings": {
+        "reference": {
+          "pitch": 1,
+          "scale": 1.25
+        },
+        "control": {
+          "bandwidth": 1.0,
+          "gamma": 1.0
+        },
+        "softer": {
+          "bandwidth": 1.0,
+          "gamma": 0.8,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        },
+        "sharper": {
+          "bandwidth": 1.0,
+          "gamma": 1.25,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 level matched",
+        "reference": "Released Signalsmith \u00b7 pitch +1 semitone \u00b7 resonance \u00d71.25",
+        "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 61/308 frames voiced",
+        "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 61/308 frames voiced"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.1784666867989158,
+        "control": 1.1784666867989158,
+        "softer": 1.0226717796072757,
+        "sharper": 1.248057823044925
+      },
+      "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first."
+    },
+    "test_tone": {
+      "context": {
+        "view": "round",
+        "mode": "source_1",
+        "processor": "signalsmith_texture",
+        "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+        "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+        "sample": "test_tone",
+        "case_id": "test_tone",
+        "run_id": "2026-10-31T11:34:15.341311+00:00"
+      },
+      "audio": {
+        "original": "test_tone__texture_source_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+        "reference": "test_tone__texture_source_reference__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav",
+        "control": "test_tone__texture_source_control__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav",
+        "softer": "test_tone__texture_source_softer__9fffe66ff3a842eff4339a6ef81f26ab7c452c8195f6db9834a83d772d4d37d0.wav",
+        "sharper": "test_tone__texture_source_sharper__cbb946d50864a6db0f50a168df2c96c08250e19e7abc8879b8bfdd37d8f51d2e.wav"
+      },
+      "settings": {
+        "reference": {
+          "pitch": -1,
+          "scale": 0.8
+        },
+        "control": {
+          "bandwidth": 1.0,
+          "gamma": 1.0
+        },
+        "softer": {
+          "bandwidth": 1.0,
+          "gamma": 0.8,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        },
+        "sharper": {
+          "bandwidth": 1.0,
+          "gamma": 1.25,
+          "source_wet": 0.35,
+          "frame": 1920,
+          "hop": 960,
+          "lpc_order": 48,
+          "preemphasis": 0.97
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 level matched",
+        "reference": "Released Signalsmith \u00b7 pitch -1 semitone \u00b7 resonance \u00d70.80",
+        "control": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "softer": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 200/208 frames voiced",
+        "sharper": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 200/208 frames voiced"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.2611850012511143,
+        "control": 1.2611850012511145,
+        "softer": 0.6161394598403953,
+        "sharper": 1.7176432562464523
+      },
+      "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first. Diagnostic tone: this speech analysis can create artifacts here; do not rate disguise from it."
+    }
+  },
+  "candidates": {
+    "texture_source_control": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__texture_source_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__texture_source_control__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav"
+        },
+        "description": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_control",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__texture_source_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__texture_source_control__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav"
+        },
+        "description": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_control",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__texture_source_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__texture_source_control__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav"
+        },
+        "description": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_control",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__texture_source_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__texture_source_control__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav"
+        },
+        "description": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_control",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__texture_source_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__texture_source_control__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav"
+        },
+        "description": "Same reference through matched source/filter analysis and reconstruction \u00b7 no intentional change",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first. Diagnostic tone: this speech analysis can create artifacts here; do not rate disguise from it.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_control",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      }
+    },
+    "texture_source_softer": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__texture_source_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__texture_source_softer__bf64518af609a5c4d7bd74cef936fb0d4dd2b71eec909d98841a97fade37b58b.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 206/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_softer",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__texture_source_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__texture_source_softer__44c8713200b1ea685faac5752fc079f386a0de325f9828ebbc560b813310c6a2.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 121/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_softer",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__texture_source_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__texture_source_softer__ebec7555210175cff1c04bdc8a9f477094e6b8a7881a279be973524c7d9dda65.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 187/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_softer",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__texture_source_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__texture_source_softer__20a35037dd72df0362d0341ec9bcc7ee1ae162238c777eba287abe0d957cf8c8.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 61/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_softer",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__texture_source_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__texture_source_softer__9fffe66ff3a842eff4339a6ef81f26ab7c452c8195f6db9834a83d772d4d37d0.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=0.80 \u00b7 35% source blend \u00b7 200/208 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first. Diagnostic tone: this speech analysis can create artifacts here; do not rate disguise from it.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_softer",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      }
+    },
+    "texture_source_sharper": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__texture_source_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__texture_source_sharper__f04ffee64e0a2832d6dd9853344e83099912dcf111854f2bfd54e196d6d26fa2.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 206/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_sharper",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__texture_source_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__texture_source_sharper__1edf7c37d9d0dcddce713b90d1d0f56c50d0dad0ca3473f70ed102b1f611f241.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 121/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_sharper",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__texture_source_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__texture_source_sharper__d862fbfe6823ddff85838d3fb0b7bec2f09faaf92a37202232783a2e12c1c1f1.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 187/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_sharper",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__texture_source_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__texture_source_sharper__9678289902ece47601ebf7f5d26b54d89c828041ccd6a501b497fccc358c862f.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 61/308 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_sharper",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__texture_source_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__texture_source_sharper__cbb946d50864a6db0f50a168df2c96c08250e19e7abc8879b8bfdd37d8f51d2e.wav"
+        },
+        "description": "Estimated excitation signed-power \u03b3=1.25 \u00b7 35% source blend \u00b7 200/208 frames voiced",
+        "note": "Prepared full-band native/Python audition, not live or streaming-qualified. Compare the reconstruction control with Signalsmith first. Diagnostic tone: this speech analysis can create artifacts here; do not rate disguise from it.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "texture_source",
+          "processor": "texture_source_sharper",
+          "build_id": "0662180ab7751fd718b19122437465a48c9d7247c4f779ee37b091b44f68b2a6",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-31T11:34:15.341311+00:00"
+        }
+      }
+    }
+  },
+  "title": "Estimated voice-source shape",
+  "intro": "Does changing the estimated excitation pulse shape add a pleasant disguise without roughness or lost expression?",
+  "preference_label": "Best balance of pleasant disguise, clarity and expression",
+  "details": [
+    "Prioritize a pleasant disguise, clear words, emotional expression and conversational comfort. This is not a speaker-recognition contest.",
+    "Both candidates add just one technique to the same released Signalsmith preset. Compare the matched reconstruction control first: quality loss there belongs to the analysis, not the new modification.",
+    "40 ms full-band 48 kHz frames, 20 ms hops, fixed order-48 regularized LPC and a smoothed strength gate for periodic speech. Quiet/unvoiced frames bypass the extra stage. These prepared arrays are not a causal streaming implementation or a latency measurement.",
+    "All four voices and the test tone are included. Average levels are matched with common peak headroom, without limiting. No microphone or model weights are used.",
+    "This is estimated excitation shaping, not recovered glottal flow or a physiological voice-source model. A voiced-frame residual gets nonlinear signed-power shaping, DC correction and RMS restoration, with a fixed 35% blend. The vocal-tract estimate is held fixed; separation is imperfect."
+  ]
+}

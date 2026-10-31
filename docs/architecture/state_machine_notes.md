@@ -1,3 +1,5 @@
+> **Historical conceptual notes; state lists are not a current contract.** Use [call flow](call_flow.md), [participant obligations](participant_channel.md) and the [current ownership map](refactor_plan.md). The coordinator, participant core and media client still have distinct owners; illustrative states/events below may be superseded.
+
 # State Machine Notes
 
 randos uses explicit state machines to avoid ad hoc realtime lifecycle behavior.

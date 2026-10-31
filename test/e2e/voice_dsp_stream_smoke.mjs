@@ -6,7 +6,7 @@ import {Browser, BASE_URL} from './cdp.mjs'
 const browser=await Browser.launch()
 try {
  const page=await browser.newPage('dsp-stream')
- await page.open(`${BASE_URL}/dev/voice-lab`)
+ await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
  await page.waitFor(`document.getElementById('voice-lab-status')?.dataset.state==='rendered'`,'lab ready',30000)
  const checkPcm=result=>{
   assert(result.delaySamples>0&&result.delaySamples<48000,'bounded startup samples')

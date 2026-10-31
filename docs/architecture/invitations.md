@@ -1,3 +1,5 @@
+> **Dated design and decisions.** Current invitation behavior and protocol: [call flow](call_flow.md) and [participant channel](participant_channel.md). UI details below record how the feature was designed, not an independent current specification.
+
 # Invitation links (design 2026-10-22; built 2026-10-23 and 24; done)
 
 Proposed by the owner: **anonymous, one-time invitation links**, after

@@ -4,6 +4,63 @@ defmodule RandosDev.VoiceLabReviewsTest do
   alias RandosDev.VoiceLabReviews
   alias RandosDev.VoiceLabReviewsController
 
+  test "independent texture rounds accept only their own choices", %{path: path} do
+    base = %{
+      "view" => "round",
+      "processor" => "signalsmith_texture",
+      "build_id" => String.duplicate("a", 64),
+      "source_id" => String.duplicate("b", 64),
+      "sample" => "mid_voice",
+      "case_id" => "mid_voice",
+      "run_id" => "2026-10-31"
+    }
+
+    for {mode, choices, wrong} <- [
+          {"bandwidth_1", ~w(reference control narrower wider none unsure), "softer"},
+          {"source_1", ~w(reference control softer sharper none unsure), "narrower"}
+        ] do
+      context = Map.put(base, "mode", mode)
+
+      for choice <- choices do
+        assert {:ok, _} =
+                 VoiceLabReviews.save(
+                   %{
+                     "context" => context,
+                     "ratings" => %{"comparison" => %{"preference" => choice}},
+                     "notes" => ""
+                   },
+                   path
+                 )
+      end
+
+      assert {:error, :invalid_review} =
+               VoiceLabReviews.save(
+                 %{
+                   "context" => context,
+                   "ratings" => %{"comparison" => %{"preference" => wrong}},
+                   "notes" => ""
+                 },
+                 path
+               )
+    end
+
+    for {mode, processors} <- [
+          {"texture_bandwidth",
+           ~w(texture_bandwidth_control texture_bandwidth_narrower texture_bandwidth_wider)},
+          {"texture_source",
+           ~w(texture_source_control texture_source_softer texture_source_sharper)}
+        ],
+        processor <- processors do
+      context = Map.merge(base, %{"view" => "model", "mode" => mode, "processor" => processor})
+
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{"context" => context, "ratings" => %{}, "notes" => "Clear but rough"},
+                 path
+               )
+    end
+  end
+
   defp review do
     %{
       "context" => %{
@@ -112,6 +169,58 @@ defmodule RandosDev.VoiceLabReviewsTest do
     assert records |> Enum.map(& &1["notes"]) |> Enum.uniq() |> length() == 24
   end
 
+  test "selective resonance round accepts only its exact choices and preserves context", %{
+    path: path
+  } do
+    context = %{
+      "view" => "round",
+      "mode" => "selective_resonance_1",
+      "processor" => "signalsmith_envelope",
+      "build_id" => String.duplicate("a", 64),
+      "source_id" => String.duplicate("b", 64),
+      "sample" => "mid_voice",
+      "case_id" => "mid_voice",
+      "run_id" => "2026-10-29T00:00:00Z"
+    }
+
+    for preference <- ~w(current bend_a bend_b none unsure) do
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{
+                   "context" => context,
+                   "ratings" => %{"comparison" => %{"preference" => preference}},
+                   "notes" => ""
+                 },
+                 path
+               )
+    end
+
+    assert {:error, :invalid_review} =
+             VoiceLabReviews.save(
+               %{
+                 "context" => context,
+                 "ratings" => %{"comparison" => %{"preference" => "zero_pitch"}},
+                 "notes" => ""
+               },
+               path
+             )
+
+    for processor <- ~w(envelope_current envelope_bend_a envelope_bend_b) do
+      model =
+        Map.merge(context, %{
+          "view" => "model",
+          "mode" => "selective_resonance",
+          "processor" => processor
+        })
+
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{"context" => model, "ratings" => %{}, "notes" => "Clear"},
+                 path
+               )
+    end
+  end
+
   test "zero pitch is a processed choice distinct from rejecting the round", %{path: path} do
     context = %{
       "view" => "round",
@@ -149,6 +258,152 @@ defmodule RandosDev.VoiceLabReviewsTest do
     records = path |> File.read!() |> String.split("\n", trim: true) |> Enum.map(&JSON.decode!/1)
     assert Enum.at(records, 2)["ratings"]["comparison"]["preference"] == "zero_pitch"
     assert Enum.at(records, 3)["ratings"]["comparison"]["preference"] == "none"
+  end
+
+  test "FARGAN masking preferences stay separate from quality assessments", %{path: path} do
+    context = %{
+      "view" => "round",
+      "mode" => "fargan_masking_1",
+      "processor" => "fargan",
+      "build_id" => String.duplicate("a", 64),
+      "source_id" => String.duplicate("b", 64),
+      "sample" => "mid_voice",
+      "case_id" => "mid_voice",
+      "run_id" => "2026-10-30T00:00:00Z"
+    }
+
+    for choice <- ~w(control pitch envelope reference none unsure) do
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{
+                   "context" => context,
+                   "ratings" => %{"comparison" => %{"preference" => choice}},
+                   "notes" => ""
+                 },
+                 path
+               )
+    end
+
+    assert {:error, :invalid_review} =
+             VoiceLabReviews.save(
+               %{
+                 "context" => context,
+                 "ratings" => %{"comparison" => %{"preference" => "acceptable"}},
+                 "notes" => ""
+               },
+               path
+             )
+
+    for processor <- ~w(fargan_mask_control fargan_mask_pitch fargan_mask_envelope) do
+      model =
+        Map.merge(context, %{
+          "view" => "model",
+          "mode" => "fargan_masking",
+          "processor" => processor
+        })
+
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{"context" => model, "ratings" => %{}, "notes" => "A little rough"},
+                 path
+               )
+    end
+  end
+
+  test "final combined FARGAN round has its own preferences and context", %{path: path} do
+    context = %{
+      "view" => "round",
+      "mode" => "fargan_combined_1",
+      "processor" => "fargan",
+      "build_id" => String.duplicate("a", 64),
+      "source_id" => String.duplicate("b", 64),
+      "sample" => "mid_voice",
+      "case_id" => "mid_voice",
+      "run_id" => "2026-10-30T00:00:00Z"
+    }
+
+    for choice <- ~w(control combined reference none unsure) do
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{
+                   "context" => context,
+                   "ratings" => %{"comparison" => %{"preference" => choice}},
+                   "notes" => ""
+                 },
+                 path
+               )
+    end
+
+    assert {:error, :invalid_review} =
+             VoiceLabReviews.save(
+               %{
+                 "context" => context,
+                 "ratings" => %{"comparison" => %{"preference" => "pitch"}},
+                 "notes" => ""
+               },
+               path
+             )
+
+    model =
+      Map.merge(context, %{
+        "view" => "model",
+        "mode" => "fargan_combined",
+        "processor" => "fargan_combined"
+      })
+
+    assert {:ok, _} =
+             VoiceLabReviews.save(
+               %{"context" => model, "ratings" => %{}, "notes" => "Compare directly"},
+               path
+             )
+  end
+
+  test "FARGAN quality assessment is not a masking preference", %{path: path} do
+    context = %{
+      "view" => "round",
+      "mode" => "fargan_quality_1",
+      "processor" => "fargan",
+      "build_id" => String.duplicate("a", 64),
+      "source_id" => String.duplicate("b", 64),
+      "sample" => "mid_voice",
+      "case_id" => "mid_voice",
+      "run_id" => "2026-10-30T00:00:00Z"
+    }
+
+    for choice <- ~w(acceptable rough unusable unsure) do
+      assert {:ok, _} =
+               VoiceLabReviews.save(
+                 %{
+                   "context" => context,
+                   "ratings" => %{"comparison" => %{"preference" => choice}},
+                   "notes" => ""
+                 },
+                 path
+               )
+    end
+
+    assert {:error, :invalid_review} =
+             VoiceLabReviews.save(
+               %{
+                 "context" => context,
+                 "ratings" => %{"comparison" => %{"preference" => "bend_a"}},
+                 "notes" => ""
+               },
+               path
+             )
+
+    model =
+      Map.merge(context, %{
+        "view" => "model",
+        "mode" => "fargan_resynthesis",
+        "processor" => "fargan_control"
+      })
+
+    assert {:ok, _} =
+             VoiceLabReviews.save(
+               %{"context" => model, "ratings" => %{}, "notes" => "Clear control"},
+               path
+             )
   end
 
   test "engine comparison preferences cannot use strength-round choices", %{path: path} do

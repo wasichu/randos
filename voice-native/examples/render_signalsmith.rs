@@ -58,7 +58,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 masker.process(&[0.0; FRAME], &mut block)?;
                 output.extend(block);
             }
-            (output, 11 * FRAME)
+            (output, randos_voice_native::FRAME_PREFIX_SAMPLES)
         }
         _ => return Err("raw|stream required".into()),
     };

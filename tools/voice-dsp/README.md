@@ -1,5 +1,172 @@
 # Model-free voice masking screen
 
+## Signalsmith latency: native reduction, browser buffer retained
+
+The local native adapter now primes one 3,840-sample batch instead of two.
+Its additional returned-frame offset is **140 ms**, previously 220 ms; first
+delivery on a nominal 20 ms capture clock is **160 ms**, previously 240 ms.
+The core, presets, window/hop and waveform are unchanged. The renderer and helper
+stats share the derived `FRAME_PREFIX_SAMPLES` instead of copying alignment values.
+
+Reproduction, using the existing DSP environment, Rust/C++ toolchain and Chrome:
+
+- `just voice-latency-native`: isolated, hash-guarded copies of actual `Masker`
+  compare 160/80 ms prefill against the current real crate. Four styles and five
+  fixtures must match byte-for-byte after alignment, including tails. Two
+  directions run for 60 s each per buffer, with additional phase/burst stalls.
+- `python tools/voice-dsp/native/latency.py --finite-only` (use the DSP venv)
+  writes a separate post-change validation report, preserving the timed baseline.
+- `just voice-latency-browser`: actual AudioWorklet callbacks through the shared
+  production bridge's capture-enabled lab subclass and unchanged Worker/core.
+  All styles get exact callback/reference checks, controlled stalls and two
+  60 s ordinary trials. No microphone or development server is required.
+- `just voice-latency-report`: local `tmp/voice-latency/report.html`.
+
+Reports are `results/latency-{native,native-validation,browser}.json`.
+The pre-change native report embeds the exact core/runner sources it measured.
+The original source/build hashes remain evidence of that baseline, not a claim
+that the source is still unchanged after the optimization. The post-change
+validation compares the newly built real crate with both buffer configurations.
+`latency-helper.json` / `latency-helper-after.json` separately capture real release
+helper Port statistics with sine input and null output, never physical devices.
+
+Measured here: native mean processing about .32–.40 ms per 20 ms call, p95 about
+1.7 ms on batch-processing frames. Normal paced runs had no late completions;
+capture-clock-to-send-equivalent p95 age fell from about 226 to 146 ms. Controlled
+stalls produced late bursts in both settings. Original synthetic capture times
+remain attached to frames, so catch-up is not relabeled on-time. Small late-count
+differences do not establish a scheduling benefit. The synthetic capture queue is
+bounded to eight frames; it is not a model of every cpal device buffer.
+
+Browser callback offsets fell 240→160 ms, but the short buffer starved under a
+12 ms injected Worker stall. The current buffer survived 45 ms; both failed at
+100 ms. **Browser production buffering is unchanged.** Its consumer is independent
+of the Worker; native capture→AEC→mask→encode/send runs synchronously, so extra
+native output prefill cannot absorb an OS stall in that same sender.
+
+The unchanged core reports 80 ms sample delay. Core delay, API batching and
+prefill overlap: do not add an extra 80 ms batching term. Codec estimates already
+include a 20 ms capture frame, so add the 140 ms offset, not 160 ms again.
+Synthetic helper estimates fell 246.5→166.5 ms masked, with the codec term staying
+26.5 ms. Device fields are zero because no devices are open. These are internal
+estimates, **not acoustic mouth-to-ear measurements**. Physical device buffers,+AEC, resampling on actual devices, network and remote playout remain unmeasured.
+The owner subsequently reported “sounds good in the tui”; the exact note and
+intended-build fingerprints are in `results/latency-listening.json`. That is a
+positive subjective listening check, not an acoustic-delay measurement. Whether
+it included a real TUI↔browser call was not specified; do not infer cross-device
+measurements. Native CI and normal release qualification remain. No new API,
+style, setting, dependency or inference run was added.
+
+## Current: resonance width and estimated excitation
+
+**Listening outcome:** the owner found both rounds subtle and heard no significant
+difference or improvement over baseline Signalsmith. The exact conversation note
+is preserved against report/build fingerprints in `results/texture-listening.json`,
+without inventing per-voice scores. Park these implementations/settings and keep
+Signalsmith; retain all recordings/reviews. No stronger sweep, combined candidate
+or product integration is scheduled. This outcome does not reject every possible
+bandwidth or source-shaping algorithm.
+
+`just voice-dsp-texture` prepares two independent five-way lab rounds:
+Original / released Signalsmith / matched reconstruction / two candidates.
+All four voices and the generated tone are included, with existing sequential
+pauses, loop and exact-context autosave. The six processed/control choices also
+appear in Listen & compare. Earlier experiments/reviews remain intact.
+
+Both stages operate on the fixed full-band Signalsmith result, with no further
+pitch or resonance-center shift. The owner wants modest, pleasant disguise;
+naturalness, intelligibility, expression and conversational comfort matter more
+than sophisticated recognition attacks. There is no new attack evaluation.
+
+Fixed analysis: 48 kHz, 40 ms frames/20 ms hops, order-48 regularized
+autocorrelation LPC, pre-emphasis .97, windowed overlap-add. Periodicity gating
+uses 60–600 Hz lags with a smoothed strength ramp; low-energy/unvoiced frames
+retain the reference. Analysis/synthesis is actually exercised by the control,
+not skipped. Silence remains silent. Failures abort preparation; poles are not
+silently reflected and output is not clipped or replaced with dry speech.
+
+**Resonance width** scales eligible complex-pole decay bandwidths by .75/1.35,
+via `r′ = r^factor` and `B = −48000 log(r)/π`, retaining angles. Eligibility is
+150–4000 Hz and 40–1000 Hz initial bandwidth, with resulting widths 40–1500 Hz.
+Ineligible poles stay unchanged, so a narrowing floor never secretly widens a
+pole. Stable second-order sections synthesize the edited filter. Retained pole
+angles do not guarantee fixed peaks in the combined spectrum.
+
+**Voice-source shape** changes estimated LPC excitation using signed-power
+γ=.8/1.25, removes introduced DC and restores residual RMS. Fixed 35% shaped
+excitation blends with 65% unchanged residual, then restores RMS again. Full
+replacement excited excessive tone transients; this global blend is deliberately
+bounded. This is nonlinear estimated excitation shaping, not measured glottal
+flow, LF/open-quotient control or physiological source recovery. The source and
+tract estimates are imperfectly separated. No synthetic pitch track, noise or
+trained model is added, and the two techniques are never combined here.
+
+`just voice-dsp-texture-test` checks known poles, stable radii/angles, narrow-pole
+eligibility, source DC/RMS/period, identity through reconstruction, noise,
+silence, impulses and voiced–unvoiced transitions. It uses the existing DSP
+environment; no new minimal-CI dependency is needed. The generator runs these
+tests too. Reports `results/{bandwidth,source}.json` include settings, source/PCM
+hashes, gains, frame/pole counts, offline timing and exact code/native provenance.
+The source uses the accepted input hashes and compiles a separate unchanged
+Signalsmith wrapper after verifying vendor pins; shipping vendor code is untouched.
+
+These whole-array Python/native WAVs establish an audition, not bounded live
+memory, causality, browser parity, real-time compute or call latency. Avoid
+using their preparation wall time as a streaming benchmark. Human listening is
+needed to judge clarity, emotion and comfort; a speech model need not preserve
+the diagnostic tone. Public product README, self-hosting and privacy/protocol
+claims remain unchanged.
+
+Research motivation (not a claim of reproducing these systems):
+[source/formant/bandwidth parameters](https://www.isca-archive.org/icslp_1998/gutierrezarriola98_icslp.html),
+[source residual and naturalness limitations](https://www.isca-archive.org/interspeech_2022/wang22ca_interspeech.html).
+
+## Previous: selective resonance audition
+
+`just voice-dsp-envelope` adds **Selective resonance** to the local lab, plus
+three prepared modifications in Listen & compare. Compare Original, Released
+style, Bend A and Bend B for all four public voices; the fifth source is the
+synthetic diagnostic tone. Sequential playback retains quarter-second pauses,
+looping and exact-context review autosave. Nothing changes the released styles.
+
+The reference is strong resonance ×.8 with −1 semitone for high/mid voices,
+and ×1.25 with +1 semitone for low/Wasichu. This is a representative released
+Tone + Pitch choice per voice, not automatic voice classification. Each bend
+retains that pitch/scale and changes only the inverse spectral-envelope lookup.
+For normalized frequency `f`, cutoff `F=4000/48000`, and bend `b=±.15`, add
+`b*F/(2π)*sin(2πf/F)*sin²(πf/F)` to the existing lookup below F. Outside that
+band, and at zero bend, return the baseline lookup unchanged. The perturbation
+and its first two derivatives vanish at the endpoints; the lookup stays
+monotonic with these scales, with at most about 62 Hz of extra displacement.
+This preserves the baseline's high-frequency behavior, not absolute Nyquist
+identity (uniform resonance scaling itself does not preserve that identity).
+
+The recipe uses the existing Python research environment and local clang++;
+no download, model inference, new dependency or SDK rebuild is needed. It
+patches only an ignored COPY of the pinned Signalsmith header. The owned
+mapping test runs with fatal ASan/UBSan; all five zero-bend float64 outputs
+must exactly match a separately built untouched engine. Silence/onset/ending
+fixtures check finite complete output and the exact baseline. Fingerprints
+cover code, patched header, pinned-source manifest, native libraries, inputs,
+raw outputs and immutable WAVs in `results/selective-resonance.json`.
+RMS matching and common peak headroom apply across each four-way comparison;
+there is no limiter or per-clip clipping.
+
+These are **native-produced listening WAVs**. The new bends have no live-mic
+handoff, browser/native parity or streaming resource qualification yet. Shipping
+headers, bridge and WASM remain untouched. Stop after this round if neither
+bend improves perceived disguise without worse clarity or objectionable
+artifacts. Only a listening winner warrants browser/native qualification.
+Cadence and accent remain unchanged. No anonymity claim is added.
+
+The next distinct hypothesis is compact neural-vocoder resynthesis (for example
+FARGAN): first judge unchanged synthesis against a matching 16 kHz original,
+then test acoustic-feature edits. Resynthesis alone is not a masking method;
+browser size, memory, sustained compute and altered-feature quality remain
+unknown. This round does not download or run that model.
+
+## Earlier experiments
+
 `just voice-dsp` prepares four WORLD variants for each public recording in
 **Listen & compare → Modification → Model-free DSP · WORLD**:
 

@@ -17,7 +17,7 @@ import {COMPARISON_PAUSE_SECONDS, joinComparisonBuffers} from "./comparison"
 import {loadPreparedPair} from "./prepared"
 import {testToneSamples} from "./test_tone"
 
-const COMPARISON_IDS = ["round", "engines", "gentle"]
+const COMPARISON_IDS = ["round", "engines", "gentle", "envelope", "fargan", "fargan_mask", "fargan_combined", "bandwidth", "source_shape"]
 const RATE = 48000
 const $ = id => document.getElementById(id)
 const processor = () => $("voice-lab-processor").value
@@ -600,31 +600,24 @@ async function playLive(version) {
   }
 }
 
-function setupTabs() {
-  const tabs = [...$("voice-lab").querySelectorAll("[role=tab]")]
-  function select(tab) {
-    if (tab.dataset.tab !== "listen") stop()
-    if (tab.dataset.tab !== "voice") stopLive()
+function showLabView(id) {
+  const select = $("voice-lab-view")
+  select.value = id
+  select.dispatchEvent(new Event("change", {bubbles: true}))
+}
+
+function setupViews() {
+  const select = $("voice-lab-view")
+  select.addEventListener("change", () => {
+    const id = select.value
+    if (id !== "listen") stop()
+    if (id !== "voice") stopLive()
     stopRecovery()
-    if (tab.dataset.tab === "voice") showLiveSettings()
+    if (id === "voice") showLiveSettings()
     lab.reviews?.refresh()
-    for (const item of tabs) {
-      const active = item === tab
-      item.setAttribute("aria-selected", String(active))
-      item.tabIndex = active ? 0 : -1
-      $(item.getAttribute("aria-controls")).hidden = !active
-    }
-  }
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => select(tab))
-    tab.addEventListener("keydown", event => {
-      const next = {ArrowRight: (index + 1) % tabs.length, ArrowLeft: (index + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1}[event.key]
-      if (next === undefined) return
-      event.preventDefault()
-      tabs[next].focus()
-      select(tabs[next])
-    })
+    for (const option of select.options) $("voice-lab-panel-" + option.value).hidden = option.value !== id
   })
+  select.dataset.ready = "true"
 }
 
 function stopRecoverySequence(message = "") {
@@ -802,7 +795,7 @@ async function start() {
   window.addEventListener("pagehide", leave)
   document.addEventListener("phx:page-loading-start", leave)
   try {
-    setupTabs()
+    setupViews()
     setupRecovery()
     setupModelExperiment()
     lab.preparedModels = JSON.parse(root.dataset.preparedModels)
@@ -825,7 +818,7 @@ async function start() {
         $("voice-lab-live-profile").value = profile
         $("voice-lab-live-pitch-strength").value = strength
         $("voice-lab-live-buffering").value = "baseline"
-        $("voice-lab-tab-voice").click()
+        showLabView("voice")
       },
     })
     try {
@@ -861,7 +854,7 @@ async function start() {
       showLiveSettings()
     })
     $("voice-lab-live-stop").addEventListener("click", () => stopLive())
-    $("voice-lab-live-settings-link").addEventListener("click", () => $("voice-lab-tab-listen").click())
+    $("voice-lab-live-settings-link").addEventListener("click", () => showLabView("listen"))
     $("voice-lab-play-original").disabled = false
     $("voice-lab-play").disabled = false
     $("voice-lab-play-comparison").disabled = false

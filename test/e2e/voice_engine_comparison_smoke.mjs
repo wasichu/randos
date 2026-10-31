@@ -11,9 +11,9 @@ try{
   const fixture=${wavFixture.toString()};
   window.fetch=(url,options)=>{if(url==='/dev/voice-lab/reviews'){window.engineReviews.push(JSON.parse(options.body));return Promise.resolve(new Response(JSON.stringify({saved_at:new Date().toISOString()}),{status:201}))}if(String(url).includes('/voice-lab/models/'))return Promise.resolve(new Response(fixture()));return fetch(url,options)};
  })()`})
- await page.open(`${BASE_URL}/dev/voice-lab`)
+ await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
  await page.waitFor(`document.getElementById('voice-lab-status')?.dataset.state==='rendered'`,'lab readiness',30000)
- await page.click('#voice-lab-tab-engines')
+ await page.labView('engines')
  const choose=(id,value)=>page.eval(`{const x=document.getElementById(${JSON.stringify(id)});x.value=${JSON.stringify(value)};x.dispatchEvent(new Event('change',{bubbles:true}))}`)
  const ready=()=>page.waitFor(`document.getElementById('voice-lab-engines-status').dataset.state==='ready'`,'three-way readiness',10000)
  for(const source of ['high_voice.wav','low_voice.wav','mid_voice.wav','mencken_wasichu.wav','test_tone']){

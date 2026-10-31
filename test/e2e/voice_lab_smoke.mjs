@@ -27,9 +27,9 @@ try {
     };
     })();
   `})
-  await page.open(`${BASE_URL}/dev/voice-lab`)
+  await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
   await page.waitFor(`!!window.releaseEarlyLabSources`, "held initial source loading", 10_000)
-  await page.click("#voice-lab-tab-recovery")
+  await page.labView('recovery')
   await page.eval(`document.querySelectorAll("[data-recovery-audio] source").forEach(source => { source.src = "/dev/voice-lab/clips/high_voice.wav"; })`)
   await page.click("#voice-lab-recovery-play-all")
   await page.waitFor(`document.getElementById("voice-lab-recovery-playback-status").dataset.state === "playing"`, "recovery before Listen initialization", 10_000)
@@ -52,7 +52,7 @@ try {
     };
     })();
   `})
-  await page.open(`${BASE_URL}/dev/voice-lab`)
+  await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
   await page.waitFor(`!!window.releaseParameterWorklet && !!document.getElementById("voice-lab-param-pitch_shift-semitones")`, "pitch controls before next worklet", 10_000)
   await page.eval(`{
     const slider = document.getElementById("voice-lab-param-pitch_shift-semitones");
@@ -62,7 +62,7 @@ try {
   await page.waitFor(`document.getElementById("voice-lab-status").dataset.state === "rendered" && !document.getElementById("voice-lab-play").disabled`, "startup after an early parameter edit", 30_000)
   check(await page.eval(`document.getElementById("voice-lab-param-pitch_shift-semitones-number").value === "-3.5"`), "early parameter edit should be retained")
   await page.send("Page.removeScriptToEvaluateOnNewDocument", {identifier: parameterScript})
-  await page.open(`${BASE_URL}/dev/voice-lab`)
+  await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
   await page.waitFor(`document.querySelector("#voice-lab-status")?.dataset.state === "rendered"`, "the lab and its initial spectrogram to load", 30_000)
   const playing = version => `document.querySelector("#voice-lab").dataset.playing === "${version}"`
   const choose = async (id, value) => page.eval(`{
@@ -83,18 +83,13 @@ try {
   check(await page.eval(`${playing("none")} && !document.querySelector("#voice-lab-play [data-play-icon]").hidden`), "the active play button should become Stop and stop playback")
   await page.click("#voice-lab-play-original")
   await page.waitFor(playing("original"), "switching back to original", 10_000)
-  await page.click("#voice-lab-tab-basics")
+  await page.labView('basics')
   check(await page.eval(`${playing("none")} && document.querySelector("#voice-lab-panel-listen").hidden && !document.querySelector("#voice-lab-panel-basics").hidden`), "leaving Listen must stop playback and switch panels")
 
-  // The CDP helper clicks via DOM .click(), which does not focus a button.
-  await page.eval(`document.querySelector("#voice-lab-tab-basics").focus()`)
-  // Native keyboard events drive the same tab controls as mouse clicks.
-  await page.send("Input.dispatchKeyEvent", {type: "keyDown", key: "End", code: "End"})
-  await page.send("Input.dispatchKeyEvent", {type: "keyUp", key: "End", code: "End"})
-  check(await page.eval(`document.activeElement.id === "voice-lab-tab-benchmark" && !document.querySelector("#voice-lab-panel-benchmark").hidden`), "End should focus and select Benchmark")
-  await page.send("Input.dispatchKeyEvent", {type: "keyDown", key: "Home", code: "Home"})
-  await page.send("Input.dispatchKeyEvent", {type: "keyUp", key: "Home", code: "Home"})
-  check(await page.eval(`document.activeElement.id === "voice-lab-tab-listen" && !document.querySelector("#voice-lab-panel-listen").hidden`), "Home should return to Listen")
+  check(await page.eval(`document.getElementById('voice-lab-view').labels[0]?.control===document.getElementById('voice-lab-view')&&document.querySelectorAll('#voice-lab-view optgroup').length===4`), "view selector has an accessible label and four groups")
+  await page.labView('benchmark')
+  check(await page.eval(`!document.querySelector('#voice-lab-panel-benchmark').hidden`), "selector opens Benchmark")
+  await page.labView('listen')
 
   check(await page.eval(`[...document.querySelectorAll("#voice-lab-params label")].every(label => label.control?.type === "range")`), "slider labels should name the range inputs")
   const sources = JSON.parse(await page.eval(`JSON.stringify([...document.querySelectorAll("#voice-lab-source option")].map(o => o.value))`))
@@ -306,7 +301,7 @@ try {
   await page.click("#voice-lab-play")
   await page.waitFor(playing("modified"), "retry after render failure", 60_000)
 
-  await page.click("#voice-lab-tab-delay")
+  await page.labView('delay')
   await page.click("#voice-lab-measure")
   await page.waitFor(`["measured", "failed"].includes(document.querySelector("#voice-lab-seam-result").dataset.state)`, "the delay measurement", 30_000)
   const seam = await page.eval(`document.querySelector("#voice-lab-seam-result").textContent`)
@@ -315,7 +310,7 @@ try {
 
   // Exercise player exclusivity using bundled fixtures: generated recovery
   // WAVs are deliberately local and are not required for CI/offline tests.
-  await page.click("#voice-lab-tab-recovery")
+  await page.labView('recovery')
   await page.eval(`{
     window.restoreRecoverySources = [];
     for (const player of document.querySelectorAll("[data-recovery-audio]")) {
@@ -408,7 +403,7 @@ try {
   await page.waitFor(`${sequenceState} === "playing"`, "recovery retry", 10_000)
   await page.eval(`document.querySelector("[data-recovery-case]:not([hidden]) audio").play()`)
   await page.waitFor(`${sequenceState} === "idle" && window.recoverySequenceNode.context.state === "closed"`, "native playback to cancel the sequence", 10_000)
-  await page.click("#voice-lab-tab-listen")
+  await page.labView('listen')
   check(await page.eval(`!(${recoveryPlaying})`), "leaving Recovery should stop its audio")
   await page.eval(`window.restoreRecoverySequence(); window.restoreRecoverySources.forEach(restore => restore())`)
 
@@ -429,25 +424,25 @@ try {
   }`)
   const micStopped = `window.labMicStreams.every(stream => stream.getTracks().every(track => track.readyState === "ended"))`
   const monitoring = `document.querySelector("#voice-lab-live-status").dataset.state === "monitoring"`
-  await page.click("#voice-lab-tab-voice")
+  await page.labView('voice')
   await page.click("#voice-lab-live-modified")
   await page.waitFor(monitoring, "modified live microphone preview", 10_000)
   await page.click("#voice-lab-live-original")
   check(await page.eval(`document.querySelector("#voice-lab").dataset.live === "original" && window.labMicStreams.length === 1`), "switching live versions should reuse one microphone")
-  await page.click("#voice-lab-tab-listen")
+  await page.labView('listen')
   await page.waitFor(micStopped, "microphone teardown on tab change", 10_000)
 
   await choose("voice-lab-processor", "mcadams")
-  await page.click("#voice-lab-tab-voice")
+  await page.labView('voice')
   check(await page.eval(`document.querySelector("#voice-lab-live-settings").textContent.includes("McAdams")`), "live preview should describe the selected modification")
   await page.click("#voice-lab-live-modified")
   await page.waitFor(monitoring, "McAdams live microphone preview at 48 kHz", 10_000)
-  await page.click("#voice-lab-tab-listen")
+  await page.labView('listen')
   await page.waitFor(micStopped, "McAdams microphone teardown", 10_000)
   await choose("voice-lab-processor", "pitch_shift")
 
   // Stop during a permission prompt must close a late-granted microphone.
-  await page.click("#voice-lab-tab-voice")
+  await page.labView('voice')
   await page.eval(`window.labBeforeLateGrant = window.labMicStreams.length;
     navigator.mediaDevices.getUserMedia = (...args) => new Promise(resolve => {
     window.grantLabMic = async () => resolve(await window.labCapture(...args));
@@ -496,29 +491,29 @@ try {
   await page.waitFor(micStopped, "microphone teardown on navigation", 10_000)
 
   if (process.env.SCREENSHOT) {
-    await page.click("#voice-lab-tab-listen")
+    await page.labView('listen')
     await page.send("Emulation.setDeviceMetricsOverride", {width: 1200, height: 1300, deviceScaleFactor: 1, mobile: false})
     await page.eval(`new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))`)
     await page.eval(`document.getAnimations().forEach(animation => animation.finish())`)
     const {data} = await page.send("Page.captureScreenshot", {format: "png", captureBeyondViewport: true})
     writeFileSync(process.env.SCREENSHOT, Buffer.from(data, "base64"))
-    await page.click("#voice-lab-tab-delay")
+    await page.labView('delay')
     await page.eval(`document.documentElement.dataset.theme = "dark"; document.getAnimations().forEach(animation => animation.finish())`)
     const delay = await page.send("Page.captureScreenshot", {format: "png", captureBeyondViewport: true})
     writeFileSync(process.env.SCREENSHOT.replace(/\.png$/, "-delay-dark.png"), Buffer.from(delay.data, "base64"))
-    await page.click("#voice-lab-tab-voice")
+    await page.labView('voice')
     await page.eval(`document.getAnimations().forEach(animation => animation.finish())`)
     const live = await page.send("Page.captureScreenshot", {format: "png", captureBeyondViewport: true})
     writeFileSync(process.env.SCREENSHOT.replace(/\.png$/, "-voice-dark.png"), Buffer.from(live.data, "base64"))
-    await page.click("#voice-lab-tab-benchmark")
+    await page.labView('benchmark')
     await page.eval(`document.getAnimations().forEach(animation => animation.finish())`)
     const benchmark = await page.send("Page.captureScreenshot", {format: "png", captureBeyondViewport: true})
     writeFileSync(process.env.SCREENSHOT.replace(/\.png$/, "-benchmark-dark.png"), Buffer.from(benchmark.data, "base64"))
-    await page.click("#voice-lab-tab-listen")
+    await page.labView('listen')
     await page.send("Emulation.setDeviceMetricsOverride", {width: 390, height: 844, deviceScaleFactor: 1, mobile: true})
     check(await page.eval(`document.documentElement.scrollWidth <= window.innerWidth`), "Listen should fit a narrow screen")
     for (const tab of ["voice", "recovery", "models", "basics", "delay", "benchmark"]) {
-      await page.click(`#voice-lab-tab-${tab}`)
+      await page.labView(tab)
       check(await page.eval(`document.documentElement.scrollWidth <= window.innerWidth`), `${tab} should fit a narrow screen`)
     }
   }

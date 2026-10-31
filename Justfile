@@ -124,6 +124,11 @@ smoke:
     test/e2e/with_test_server.sh tmp/smoke-voice-round-server.log env BASE_URL=http://localhost:4010 node test/e2e/voice_round_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-engine-comparison.log env BASE_URL=http://localhost:4010 node test/e2e/voice_engine_comparison_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-gentle.log env BASE_URL=http://localhost:4010 node test/e2e/voice_gentle_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-envelope.log env BASE_URL=http://localhost:4010 node test/e2e/voice_envelope_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-texture.log env BASE_URL=http://localhost:4010 node test/e2e/voice_texture_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-fargan.log env BASE_URL=http://localhost:4010 node test/e2e/voice_fargan_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-fargan-mask.log env BASE_URL=http://localhost:4010 node test/e2e/voice_fargan_mask_smoke.mjs
+    test/e2e/with_test_server.sh tmp/smoke-fargan-combined.log env BASE_URL=http://localhost:4010 node test/e2e/voice_fargan_combined_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-dsp-stream.log env BASE_URL=http://localhost:4010 node test/e2e/voice_dsp_stream_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-dsp-live.log env BASE_URL=http://localhost:4010 node test/e2e/voice_dsp_live_smoke.mjs
     just recovery-smoke
@@ -167,8 +172,9 @@ precommit: check-state-encrypted check-privacy
     just translate-test
     node tools/voice-dsp/browser/clock.test.mjs
     python3 tools/voice-dsp/browser/check_vendor.py
-    cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev ruff check ../voice-browser ../voice-model ../voice-dsp
+    cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev ruff check ../voice-browser ../voice-model ../voice-dsp ../voice-fargan
     just voice-eval-test
+    just voice-fargan-test
 
 # Media helper loopback: default mic → Opus → default speaker; latency on stderr (use headphones)
 media-loopback seconds="20":
@@ -389,6 +395,43 @@ voice-dsp-engines:
     node tools/voice-dsp/browser/run.mjs --engines
     tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/engines.py --publish
 
+# Native-only selective resonance listening screen; does not rebuild product DSP.
+voice-dsp-envelope:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/envelope.py
+
+# Independent resonance-width and estimated excitation auditions; no models/devices.
+voice-dsp-texture:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/texture.py
+
+voice-dsp-texture-test:
+    tmp/voice-dsp/.venv/bin/python -m unittest discover -s tools/voice-dsp/browser -p test_texture.py
+
+# First compact neural-vocoder quality gate; native only, no feature masking yet.
+voice-fargan:
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/bootstrap.py
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/probe.py
+
+# Isolated feature edits on the accepted FARGAN controls; no new downloads.
+voice-fargan-mask:
+    just voice-fargan-test
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/masking.py
+
+# Final fixed combined preset, preserving both earlier reports and their reviews.
+voice-fargan-combined:
+    just voice-fargan-test
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/combined.py
+
+# Offline browser feasibility screen; needs the pinned native cache and existing SDK.
+voice-fargan-browser:
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/browser_build.py
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/browser_prepare.py
+    node tools/voice-fargan/browser/run.mjs
+    tmp/voice-dsp/.venv/bin/python tools/voice-fargan/browser_report.py
+
+# Pure numerical invariants only; uses the existing offline evaluation env.
+voice-fargan-test:
+    cd tools/voice-eval && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev python -m unittest discover -s ../voice-fargan -p 'test_*.py'
+
 # One-variable gentler Signalsmith pitch audition, preserving previous rounds.
 voice-dsp-gentle:
     tmp/voice-dsp/.venv/bin/python tools/voice-dsp/browser/gentle.py
@@ -412,6 +455,19 @@ voice-bridge-check:
     python3 tools/voice-dsp/browser/check_vendor.py
     cargo build --offline --release -p randos_voice_native --example render_signalsmith
     tmp/voice-dsp/.venv/bin/python tools/voice-dsp/native/check_bridge.py
+
+# Isolated native copies compare old/new prefill and the actual current Rust crate.
+voice-latency-native:
+    tmp/voice-dsp/.venv/bin/python tools/voice-dsp/native/latency.py
+
+# Real callback + Worker jitter screen; no physical audio or development server.
+voice-latency-browser:
+    mix esbuild voice_lab
+    node tools/voice-dsp/browser/latency.mjs
+
+# Requires the two reports above; creates a local, non-shipping HTML artifact.
+voice-latency-report:
+    python3 tools/voice-dsp/native/latency_report.py
 
 # Fill missing actual-browser TVTSyn clips, preserving existing listening reviews.
 voice-listening-complete:

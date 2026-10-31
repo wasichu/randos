@@ -1,3 +1,5 @@
+> **Historical research, not current model instructions.** Use the [translation tooling guide](../../tools/translate/README.md) and pinned project files for current contestants, groups and workflow.
+
 # Translation models for Phase 6 (research, 2026-10-20)
 
 Research for the Phase 6 translation shootout (see `refactor_plan.md`).

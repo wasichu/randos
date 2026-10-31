@@ -9,6 +9,7 @@ const report = {generated_at: new Date().toISOString(), base_url: BASE_URL, case
 try {
   const page = await browser.newPage("voice-lab-matrix")
   await page.open(`${BASE_URL}/dev/voice-lab`)
+  await page.labView('listen')
   await page.waitFor(`document.getElementById('voice-lab-status')?.dataset.state==='rendered'`, "lab readiness", 30_000)
   await page.eval(`(() => {
     const start=AudioBufferSourceNode.prototype.start;
@@ -66,8 +67,8 @@ try {
     }
     console.log(`✓ ${modification.label}: all ${voices.length} sources`)
   }
-  for (const id of ["round", "engines", "gentle"]) {
-    await page.click(`#voice-lab-tab-${id}`)
+  for (const id of ["round", "engines", "gentle", "envelope", "fargan", "fargan_mask", "fargan_combined", "bandwidth", "source_shape"]) {
+    await page.labView(id)
     const clips = []
     const round = await page.eval(`JSON.parse(document.getElementById('voice-lab-'+${JSON.stringify(id)}).dataset.round)`)
     for (const [source, item] of Object.entries(round.cases)) {
@@ -96,9 +97,10 @@ try {
       await page.click(`#voice-lab-${id}-stop`)
     }
     report[id + "_cases"] = clips
-    report[id + "_complete"] = clips.length === ({round:25,engines:15,gentle:20}[id])
+    const expectedClips = voices.length * round.variants.length
+    report[id + "_complete"] = clips.length === expectedClips
     assert(report[id + "_complete"], "all expected comparison clips")
-    console.log(`${clips.length}/${({round:25,engines:15,gentle:20}[id])} ${id} comparison clips passed`)
+    console.log(`${clips.length}/${expectedClips} ${id} comparison clips passed`)
   }
   report.modifications = modifications.length
   report.voices = 4

@@ -8,9 +8,9 @@ const failures = []
 const check = (ok, message) => ok || failures.push(message)
 try {
   const page = await browser.newPage("voice-model")
-  await page.open(`${BASE_URL}/dev/voice-lab`)
+  await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
   await page.waitFor(`document.getElementById("voice-lab-status")?.dataset.state === "rendered"`, "lab readiness", 30_000)
-  await page.click("#voice-lab-tab-models")
+  await page.labView('models')
   check(await page.eval(`document.querySelectorAll("[data-model-case]").length === 4`), "four public model comparisons should be present")
   await page.eval(`(() => {
     const fetch = window.fetch.bind(window), start = AudioBufferSourceNode.prototype.start;
@@ -53,13 +53,13 @@ try {
   await page.eval(`window.modelHold = true`)
   await page.click("#voice-lab-model-play-all")
   await page.waitFor(`!!window.releaseModel`, "pending model comparison", 10_000)
-  await page.click("#voice-lab-tab-recovery")
+  await page.labView('recovery')
   await page.eval(`window.releaseModel()`)
   await page.eval(`new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))`)
   check(await page.eval(`window.modelStarts === 1`), "leaving Models must cancel pending playback")
   await page.click("#voice-lab-recovery-loop")
   check(await page.eval(`[...document.querySelectorAll("[data-model-case] audio")].every(player=>!player.loop) && !document.getElementById("voice-lab-model-loop").checked`), "Recovery looping must not change Models looping")
-  await page.click("#voice-lab-tab-models")
+  await page.labView('models')
   await page.eval(`window.modelFail = true`)
   await page.click("#voice-lab-model-play-all")
   await page.waitFor(`document.getElementById("voice-lab-model-status").textContent.includes("Could not play")`, "missing generated WAV feedback", 10_000)
