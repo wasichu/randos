@@ -1,7 +1,8 @@
 # randos — current architecture and roadmap
 
 Verified against the v0.10.1 source (following published `f81f03d`), the local
-width/source auditions, documentation split, native latency reduction and owner
+width/source auditions, documentation split, native latency reduction, Phoenix.HTML
+4.4.0 security update and owner
 TUI listening check on
 2026-10-31. This file describes current ownership
 and active work; update the Verified line when either changes. The complete
@@ -106,6 +107,9 @@ implementation plans. No new technique is combined or promoted before listening.
 
 ## Recent verified engineering work
 
+- Release preparation updates Phoenix.HTML from 4.3.0 to 4.4.0 for upstream
+  CVE-2026-117645 (attribute-name validation). No application exploit is claimed;
+  the release still requires the normal rendering, call and native CI checks.
 - Documentation now separates current authority from history. The complete
   previous roadmap body is preserved verbatim (210,683 bytes); all 73 former
   headings have forwarding targets, and all 23 old Open items have a disposition.
