@@ -1,0 +1,592 @@
+{
+  "identity": {
+    "build": {
+      "pins": {
+        "repository": "https://github.com/xiph/opus.git",
+        "commit": "bafd40dcbd506e12da257b8cb05c0afe1ed44719",
+        "archive_sha256": "a5177ec6fb7d15058e99e57029746100121f68e4890b1467d4094aa336b6013e",
+        "archive_url": "https://media.xiph.org/opus/models/opus_data-a5177ec6fb7d15058e99e57029746100121f68e4890b1467d4094aa336b6013e.tar.gz"
+      },
+      "archive_bytes": 134674421,
+      "configure": [
+        "./configure",
+        "--enable-deep-plc",
+        "--disable-shared",
+        "--disable-doc",
+        "--enable-extra-programs",
+        "CFLAGS=-O3"
+      ],
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+      "executable_bytes": 1082680,
+      "fargan_model_object_bytes": 887168,
+      "files": {
+        "tools/voice-fargan/pins.json": "b13ec1b97a1d77f346a31642a8fe14ff3323fe734eedcc6ae7375f2820447723",
+        "tools/voice-fargan/bootstrap.py": "95b117d7af911d94b3fea8a08dd4c202a7bcf687496d33734c892b1b934e87d3",
+        "tools/voice-fargan/probe.c": "c7a387a3c7beef2af9b44bad149836d138df9adb2347a81c541ac76f8812a3d1",
+        "tmp/fargan/probe": "c6694247bee28c445477e3f7c13576de3f066c3af39f358795d0b051f6dc3db7",
+        "tmp/fargan/opus/config.h": "78f7d39d0a20d2aca4e30d77e2350d8d4a29c228730a4c62070e5bec461712e5",
+        "tmp/fargan/opus/COPYING": "01e1167d54a096d123cf6dfbbeb19587278845c6481d2d66d545669846079551",
+        "tmp/fargan/opus/dnn/fargan_data.c": "68ba6e8731007f7184be862d7d1afe4cef096a7c9bcbfa115962340f725e004c",
+        "tmp/fargan/opus/dnn/pitchdnn_data.c": "b086f190fbba4179bc4995169910a0178b0be608a608800d2090ddbf64b42b3e",
+        "tmp/fargan/opus/dnn/fargan.c": "31345cea40748e6e380d6b8c4ff612f2a78611fae7e26404e171dcda983ca759",
+        "tmp/fargan/opus/dnn/fargan_demo.c": "b608790b017ce979c5a13a807f3c9797bfe4bba0d79dc01b8dae4d4001823ae2",
+        "tmp/fargan/opus/dnn/lpcnet_enc.c": "6181341664a621ca0e020b1fe9a521c419bf55567d09643ced5cf56e95dd6f8b",
+        "tmp/fargan/opus/dnn/freq.c": "d50062b834535a8f2fa7e30bb1ad3162b69cc5dd869729701e9fe9e9bbab20fc"
+      }
+    },
+    "checks": [
+      {
+        "sample": "high_voice",
+        "input_pcm_sha256": "a62f342737605d0eaa9fef010aa381f0e5f928750f65aa7fcbd424ad17e3f05d",
+        "features_sha256": "674fa6d959ec37fc5caffeff106730a98f709a8727eea8a39658de1cb3db5e6c",
+        "output_float_sha256": "ed5f8dbb9c41a74f800325474ca037e554db4961252c650de1d645ace80bad42",
+        "timed_audio_seconds": 6.5,
+        "extract": {
+          "frames": 650,
+          "init_ms": 0.027,
+          "processing_ms": 5.499,
+          "total_ms": 5.526,
+          "peak_rss_bytes": 2129920,
+          "subprocess_wall_ms": 11.001708917319775
+        },
+        "synthesis": {
+          "frames": 650,
+          "init_ms": 0.507,
+          "processing_ms": 24.264,
+          "total_ms": 24.771,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 40.58095789514482
+        },
+        "native_total_rtf": 0.004661076923076923,
+        "output_peak": 0.05341110751032829,
+        "above_full_scale_samples": 0,
+        "first_100ms_output_rms": 5.397589575295569e-07,
+        "period_below_32": 0,
+        "period_above_256": 0
+      },
+      {
+        "sample": "mid_voice",
+        "input_pcm_sha256": "09e40774b51c680ed46c333e6c71bb1b55594ee67838966157aaee07d4eb1aea",
+        "features_sha256": "eab63b14a356b429aec45fbad9e72f0cf54b2df03c4d730ab9ee7d74a262a51d",
+        "output_float_sha256": "ed316b021aff02d57456f7370ea3c79808b3dddb22ad2f7801a829d431479520",
+        "timed_audio_seconds": 6.5,
+        "extract": {
+          "frames": 650,
+          "init_ms": 0.011,
+          "processing_ms": 5.42,
+          "total_ms": 5.431,
+          "peak_rss_bytes": 2129920,
+          "subprocess_wall_ms": 10.986665962263942
+        },
+        "synthesis": {
+          "frames": 650,
+          "init_ms": 0.121,
+          "processing_ms": 24.04,
+          "total_ms": 24.161,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 41.11279104836285
+        },
+        "native_total_rtf": 0.004552615384615385,
+        "output_peak": 0.08076313138008118,
+        "above_full_scale_samples": 0,
+        "first_100ms_output_rms": 5.397589575295569e-07,
+        "period_below_32": 0,
+        "period_above_256": 0
+      },
+      {
+        "sample": "low_voice",
+        "input_pcm_sha256": "7a618fb11f626f0f81cf2f8bc748271e5a8209e799de58abefa2bfdf165ecf29",
+        "features_sha256": "cfa143a9f37345f8092d22f290565a48d80f7f9ea686e1c23e106dbe8c8afc2d",
+        "output_float_sha256": "2f2021b179a5959caa0692d621b6a71e5afb46548923f791124c60a851dec43c",
+        "timed_audio_seconds": 6.5,
+        "extract": {
+          "frames": 650,
+          "init_ms": 0.01,
+          "processing_ms": 5.522,
+          "total_ms": 5.532,
+          "peak_rss_bytes": 2129920,
+          "subprocess_wall_ms": 12.727125082165003
+        },
+        "synthesis": {
+          "frames": 650,
+          "init_ms": 0.124,
+          "processing_ms": 23.19,
+          "total_ms": 23.314,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 41.51466581970453
+        },
+        "native_total_rtf": 0.004437846153846154,
+        "output_peak": 0.0843038558959961,
+        "above_full_scale_samples": 0,
+        "first_100ms_output_rms": 5.397589575295569e-07,
+        "period_below_32": 0,
+        "period_above_256": 0
+      },
+      {
+        "sample": "mencken_wasichu",
+        "input_pcm_sha256": "2c71d4378a2edddff1214fb05d0afdbce90a845bb622c918a145f758f0984c7e",
+        "features_sha256": "f323711510c901aee938a7b43711b55a0af7a067933b7c2fae18d55ff6fd437e",
+        "output_float_sha256": "d96f968657ed0d7f4ec87a4a6750a0c45ada809fdddd89a85beb93499aa2e66c",
+        "timed_audio_seconds": 6.5,
+        "extract": {
+          "frames": 650,
+          "init_ms": 0.01,
+          "processing_ms": 5.298,
+          "total_ms": 5.308,
+          "peak_rss_bytes": 2129920,
+          "subprocess_wall_ms": 11.577249970287085
+        },
+        "synthesis": {
+          "frames": 650,
+          "init_ms": 0.11,
+          "processing_ms": 23.333,
+          "total_ms": 23.443,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 39.526832988485694
+        },
+        "native_total_rtf": 0.00442323076923077,
+        "output_peak": 0.03848439082503319,
+        "above_full_scale_samples": 0,
+        "first_100ms_output_rms": 5.397589575295569e-07,
+        "period_below_32": 0,
+        "period_above_256": 0
+      },
+      {
+        "sample": "test_tone",
+        "input_pcm_sha256": "2f73c7bb47623b278cc72404edee3c38424f93665d05ab035a6040191b556da2",
+        "features_sha256": "dbd0665b746cacfef029fd5e0105818292fde4885c94fef2ea65fd1046f891fd",
+        "output_float_sha256": "f0c1d5bf7140e84149d85bb2737202266853667079556765084283a4ceb7ebce",
+        "timed_audio_seconds": 4.5,
+        "extract": {
+          "frames": 450,
+          "init_ms": 0.01,
+          "processing_ms": 3.64,
+          "total_ms": 3.65,
+          "peak_rss_bytes": 2113536,
+          "subprocess_wall_ms": 11.24612521380186
+        },
+        "synthesis": {
+          "frames": 450,
+          "init_ms": 0.114,
+          "processing_ms": 16.106,
+          "total_ms": 16.22,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 20.51979210227728
+        },
+        "native_total_rtf": 0.004415555555555555,
+        "output_peak": 0.1871596723794937,
+        "above_full_scale_samples": 0,
+        "first_100ms_output_rms": 5.397589575295569e-07,
+        "period_below_32": 0,
+        "period_above_256": 0
+      }
+    ],
+    "sources": {
+      "tools/voice-fargan/probe.py": "9dc3378176b4b0d245b760588d123a5cff132298a890cb5bd5654e27ef55ff43",
+      "tools/voice-dsp/browser/spectral.cpp": "862e6743238f09bf56efcbc265f78a5b34fc812151dd45c74ee29517bc17b051",
+      "tmp/fargan/spectral.dylib": "699dfc520746fc7ab4d681229ce0966aff8d94c94e654632f414cec7d0f2cf24"
+    },
+    "cases": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__fargan_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "bandlimited": "high_voice__fargan_bandlimited__2332d9f37de4298f1026f862bb90d83a102e5fd1e9d7001701fda1e4ae3c4984.wav",
+          "fargan": "high_voice__fargan_fargan__2af6a61d09d180781bf5c24409e764f5a1cb5cf6398d585152a3efabaccf6fa9.wav",
+          "reference": "high_voice__fargan_reference__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav"
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 full source bandwidth",
+          "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+          "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+          "reference": "Released Signalsmith reference \u00b7 pitch -1, resonances \u00d70.80"
+        },
+        "gains": {
+          "original": 1.0,
+          "bandlimited": 1.0000725708631666,
+          "fargan": 1.0204090676300657,
+          "reference": 1.422994029272365
+        },
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__fargan_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "bandlimited": "mid_voice__fargan_bandlimited__1eb78a3c1c8d7998695e406118624fb453402f8b134fea8ae8cd515952e8e8f9.wav",
+          "fargan": "mid_voice__fargan_fargan__bf3a9ef914720f810acf8add39662b1ea2c3affef91adced52e07a5858225948.wav",
+          "reference": "mid_voice__fargan_reference__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav"
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 full source bandwidth",
+          "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+          "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+          "reference": "Released Signalsmith reference \u00b7 pitch -1, resonances \u00d70.80"
+        },
+        "gains": {
+          "original": 1.0,
+          "bandlimited": 0.9993299107242152,
+          "fargan": 0.9971459947173371,
+          "reference": 1.4828962857400203
+        },
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__fargan_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "bandlimited": "low_voice__fargan_bandlimited__2622351babfd3f56e2418cc5f680c815e92eeed6f3dc1cb40601d92d4024baec.wav",
+          "fargan": "low_voice__fargan_fargan__294219cdf06cbd2e41454ae4bf3254f5b3ddee81621f4f9cb49d0f7d83c2e551.wav",
+          "reference": "low_voice__fargan_reference__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav"
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 full source bandwidth",
+          "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+          "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+          "reference": "Released Signalsmith reference \u00b7 pitch +1, resonances \u00d71.25"
+        },
+        "gains": {
+          "original": 1.0,
+          "bandlimited": 1.0320482042277621,
+          "fargan": 1.0448135870283757,
+          "reference": 1.211695203295392
+        },
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__fargan_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "bandlimited": "mencken_wasichu__fargan_bandlimited__c29d9df22d56ab7f77544d1b44dc9599156447508b3c4b0abd5884ddabb35cf9.wav",
+          "fargan": "mencken_wasichu__fargan_fargan__6ae4180f929be0d2452cd3cdc7d5a5db3dc3faea95381630d3f29e362be70481.wav",
+          "reference": "mencken_wasichu__fargan_reference__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav"
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 full source bandwidth",
+          "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+          "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+          "reference": "Released Signalsmith reference \u00b7 pitch +1, resonances \u00d71.25"
+        },
+        "gains": {
+          "original": 1.0,
+          "bandlimited": 0.9988670942744375,
+          "fargan": 1.0211395203300953,
+          "reference": 1.1784666867989158
+        },
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__fargan_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "bandlimited": "test_tone__fargan_bandlimited__fa2e0e80d9234157c09aed9103d60c7d7452e5587e3eea8aa888c62eac1bcf88.wav",
+          "fargan": "test_tone__fargan_fargan__1d8712716c50e3f4b1d31f091ad8c3205c122cd9fe48c8af75ae7a2e54775283.wav",
+          "reference": "test_tone__fargan_reference__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav"
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 full source bandwidth",
+          "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+          "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+          "reference": "Released Signalsmith reference \u00b7 pitch -1, resonances \u00d70.80"
+        },
+        "gains": {
+          "original": 1.0,
+          "bandlimited": 0.9993644513417012,
+          "fargan": 0.9837582793616966,
+          "reference": 1.2611850012511143
+        },
+        "note": "Tone diagnostic only. A speech-specific generator need not reproduce a synthetic tone faithfully."
+      }
+    }
+  },
+  "cases": {
+    "high_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_quality_1",
+        "processor": "fargan",
+        "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+        "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+        "sample": "high_voice",
+        "case_id": "high_voice",
+        "run_id": "2026-10-30T11:37:02.508394+00:00"
+      },
+      "audio": {
+        "original": "high_voice__fargan_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+        "bandlimited": "high_voice__fargan_bandlimited__2332d9f37de4298f1026f862bb90d83a102e5fd1e9d7001701fda1e4ae3c4984.wav",
+        "fargan": "high_voice__fargan_fargan__2af6a61d09d180781bf5c24409e764f5a1cb5cf6398d585152a3efabaccf6fa9.wav",
+        "reference": "high_voice__fargan_reference__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav"
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 full source bandwidth",
+        "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+        "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "reference": "Released Signalsmith reference \u00b7 pitch -1, resonances \u00d70.80"
+      },
+      "gains": {
+        "original": 1.0,
+        "bandlimited": 1.0000725708631666,
+        "fargan": 1.0204090676300657,
+        "reference": 1.422994029272365
+      },
+      "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+    },
+    "mid_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_quality_1",
+        "processor": "fargan",
+        "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+        "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+        "sample": "mid_voice",
+        "case_id": "mid_voice",
+        "run_id": "2026-10-30T11:37:02.508394+00:00"
+      },
+      "audio": {
+        "original": "mid_voice__fargan_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+        "bandlimited": "mid_voice__fargan_bandlimited__1eb78a3c1c8d7998695e406118624fb453402f8b134fea8ae8cd515952e8e8f9.wav",
+        "fargan": "mid_voice__fargan_fargan__bf3a9ef914720f810acf8add39662b1ea2c3affef91adced52e07a5858225948.wav",
+        "reference": "mid_voice__fargan_reference__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav"
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 full source bandwidth",
+        "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+        "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "reference": "Released Signalsmith reference \u00b7 pitch -1, resonances \u00d70.80"
+      },
+      "gains": {
+        "original": 1.0,
+        "bandlimited": 0.9993299107242152,
+        "fargan": 0.9971459947173371,
+        "reference": 1.4828962857400203
+      },
+      "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+    },
+    "low_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_quality_1",
+        "processor": "fargan",
+        "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+        "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+        "sample": "low_voice",
+        "case_id": "low_voice",
+        "run_id": "2026-10-30T11:37:02.508394+00:00"
+      },
+      "audio": {
+        "original": "low_voice__fargan_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+        "bandlimited": "low_voice__fargan_bandlimited__2622351babfd3f56e2418cc5f680c815e92eeed6f3dc1cb40601d92d4024baec.wav",
+        "fargan": "low_voice__fargan_fargan__294219cdf06cbd2e41454ae4bf3254f5b3ddee81621f4f9cb49d0f7d83c2e551.wav",
+        "reference": "low_voice__fargan_reference__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav"
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 full source bandwidth",
+        "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+        "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "reference": "Released Signalsmith reference \u00b7 pitch +1, resonances \u00d71.25"
+      },
+      "gains": {
+        "original": 1.0,
+        "bandlimited": 1.0320482042277621,
+        "fargan": 1.0448135870283757,
+        "reference": 1.211695203295392
+      },
+      "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+    },
+    "mencken_wasichu.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_quality_1",
+        "processor": "fargan",
+        "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+        "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+        "sample": "mencken_wasichu",
+        "case_id": "mencken_wasichu",
+        "run_id": "2026-10-30T11:37:02.508394+00:00"
+      },
+      "audio": {
+        "original": "mencken_wasichu__fargan_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+        "bandlimited": "mencken_wasichu__fargan_bandlimited__c29d9df22d56ab7f77544d1b44dc9599156447508b3c4b0abd5884ddabb35cf9.wav",
+        "fargan": "mencken_wasichu__fargan_fargan__6ae4180f929be0d2452cd3cdc7d5a5db3dc3faea95381630d3f29e362be70481.wav",
+        "reference": "mencken_wasichu__fargan_reference__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav"
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 full source bandwidth",
+        "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+        "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "reference": "Released Signalsmith reference \u00b7 pitch +1, resonances \u00d71.25"
+      },
+      "gains": {
+        "original": 1.0,
+        "bandlimited": 0.9988670942744375,
+        "fargan": 1.0211395203300953,
+        "reference": 1.1784666867989158
+      },
+      "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz."
+    },
+    "test_tone": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_quality_1",
+        "processor": "fargan",
+        "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+        "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+        "sample": "test_tone",
+        "case_id": "test_tone",
+        "run_id": "2026-10-30T11:37:02.508394+00:00"
+      },
+      "audio": {
+        "original": "test_tone__fargan_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+        "bandlimited": "test_tone__fargan_bandlimited__fa2e0e80d9234157c09aed9103d60c7d7452e5587e3eea8aa888c62eac1bcf88.wav",
+        "fargan": "test_tone__fargan_fargan__1d8712716c50e3f4b1d31f091ad8c3205c122cd9fe48c8af75ae7a2e54775283.wav",
+        "reference": "test_tone__fargan_reference__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav"
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 full source bandwidth",
+        "bandlimited": "Same original resampled to 16 kHz and quantized like the model input",
+        "fargan": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "reference": "Released Signalsmith reference \u00b7 pitch -1, resonances \u00d70.80"
+      },
+      "gains": {
+        "original": 1.0,
+        "bandlimited": 0.9993644513417012,
+        "fargan": 0.9837582793616966,
+        "reference": 1.2611850012511143
+      },
+      "note": "Tone diagnostic only. A speech-specific generator need not reproduce a synthetic tone faithfully."
+    }
+  },
+  "candidates": {
+    "fargan_control": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__fargan_bandlimited__2332d9f37de4298f1026f862bb90d83a102e5fd1e9d7001701fda1e4ae3c4984.wav",
+          "converted": "high_voice__fargan_fargan__2af6a61d09d180781bf5c24409e764f5a1cb5cf6398d585152a3efabaccf6fa9.wav"
+        },
+        "description": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "The same original resampled to 16 kHz and quantized like the FARGAN input; average level matched.",
+        "context": {
+          "view": "model",
+          "mode": "fargan_resynthesis",
+          "processor": "fargan_control",
+          "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-30T11:37:02.508394+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__fargan_bandlimited__1eb78a3c1c8d7998695e406118624fb453402f8b134fea8ae8cd515952e8e8f9.wav",
+          "converted": "mid_voice__fargan_fargan__bf3a9ef914720f810acf8add39662b1ea2c3affef91adced52e07a5858225948.wav"
+        },
+        "description": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "The same original resampled to 16 kHz and quantized like the FARGAN input; average level matched.",
+        "context": {
+          "view": "model",
+          "mode": "fargan_resynthesis",
+          "processor": "fargan_control",
+          "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-30T11:37:02.508394+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__fargan_bandlimited__2622351babfd3f56e2418cc5f680c815e92eeed6f3dc1cb40601d92d4024baec.wav",
+          "converted": "low_voice__fargan_fargan__294219cdf06cbd2e41454ae4bf3254f5b3ddee81621f4f9cb49d0f7d83c2e551.wav"
+        },
+        "description": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "The same original resampled to 16 kHz and quantized like the FARGAN input; average level matched.",
+        "context": {
+          "view": "model",
+          "mode": "fargan_resynthesis",
+          "processor": "fargan_control",
+          "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-30T11:37:02.508394+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__fargan_bandlimited__c29d9df22d56ab7f77544d1b44dc9599156447508b3c4b0abd5884ddabb35cf9.wav",
+          "converted": "mencken_wasichu__fargan_fargan__6ae4180f929be0d2452cd3cdc7d5a5db3dc3faea95381630d3f29e362be70481.wav"
+        },
+        "description": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "note": "Unchanged synthesis control: no masking features have been edited. First compare FARGAN with Original \u00b7 16 kHz.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "The same original resampled to 16 kHz and quantized like the FARGAN input; average level matched.",
+        "context": {
+          "view": "model",
+          "mode": "fargan_resynthesis",
+          "processor": "fargan_control",
+          "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-30T11:37:02.508394+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__fargan_bandlimited__fa2e0e80d9234157c09aed9103d60c7d7452e5587e3eea8aa888c62eac1bcf88.wav",
+          "converted": "test_tone__fargan_fargan__1d8712716c50e3f4b1d31f091ad8c3205c122cd9fe48c8af75ae7a2e54775283.wav"
+        },
+        "description": "Unchanged acoustic features \u2192 FARGAN \u00b7 16 kHz synthesis",
+        "note": "Tone diagnostic only. A speech-specific generator need not reproduce a synthetic tone faithfully.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "The same original resampled to 16 kHz and quantized like the FARGAN input; average level matched.",
+        "context": {
+          "view": "model",
+          "mode": "fargan_resynthesis",
+          "processor": "fargan_control",
+          "build_id": "06dc65cfb5fa7808d9781bd8be8b17f03095c7502a983ba41bdaeaa056ef84fc",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-30T11:37:02.508394+00:00"
+        }
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original"
+    },
+    {
+      "id": "bandlimited",
+      "label": "Original \u00b7 16 kHz"
+    },
+    {
+      "id": "fargan",
+      "label": "FARGAN \u00b7 unchanged"
+    },
+    {
+      "id": "reference",
+      "label": "Released Signalsmith"
+    }
+  ],
+  "title": "Does compact neural resynthesis sound good enough?",
+  "intro": "First compare the 16 kHz original with unchanged FARGAN. Judge clarity and naturalness before we try masking edits. The Signalsmith sample is our existing masking reference.",
+  "review_prompt": "Quality of unchanged FARGAN",
+  "preference_label": "Is the synthesis good enough to try masking edits?",
+  "details": [
+    "No masking features are edited. A changed sound in the FARGAN control is resynthesis behavior, not an established disguise or privacy guarantee.",
+    "The C model uses 16 kHz audio and 10 ms features. All WAVs play at 48 kHz for comparison; upsampling restores no lost high-frequency detail. Levels are RMS-matched together with common peak headroom, without limiting.",
+    "Input has 200 ms of leading and trailing silence. The driver retains upstream initial-feature repetition, 80-sample initial output skip and two ending synthesis frames, then trims only that fixed padding. It never aligns each output by correlation. This is an offline comparison, not measured live latency.",
+    "This research executable is 1.03 MiB and the FARGAN model object is 0.85 MiB. These native artifacts include build/runtime overhead and are not a measured browser download. The 128.4 MiB upstream setup archive bundles multiple models.",
+    "Fresh-process timings/RSS are recorded in the report. They include file processing and padded fixtures; they do not establish mobile or WASM performance. No microphone, transcription, training, network inference or product integration is involved."
+  ]
+}

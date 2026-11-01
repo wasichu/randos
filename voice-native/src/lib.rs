@@ -8,9 +8,10 @@ pub use ffi::Engine;
 pub const FRAME: usize = 960;
 pub const BATCH: usize = 3840;
 pub const CORE_DELAY: usize = 3840;
-/// Returned-frame offset; first delivery at 240 ms includes a capture frame.
-pub const FRAME_PREFIX_SAMPLES: usize = 11 * FRAME;
-const PREFILL: usize = 7680;
+const PREFILL: usize = BATCH;
+/// Returned-frame offset; first delivery at 160 ms includes a capture frame.
+/// Core crop and prefill overlap with batching; do not sum a second frame delay.
+pub const FRAME_PREFIX_SAMPLES: usize = CORE_DELAY + PREFILL - FRAME;
 const CAPACITY: usize = BATCH * 4;
 
 /// Two candidate style families, each with a lower/higher direction. These
@@ -204,11 +205,35 @@ mod tests {
             used.process(&signal(i, 220.0), &mut output).unwrap();
             reference.process(&signal(i, 220.0), &mut expected).unwrap();
             assert_eq!(output, expected, "frame {i}");
-            if i < 11 {
+            if i < FRAME_PREFIX_SAMPLES / FRAME {
                 assert!(output.iter().all(|x| *x == 0.0));
             }
         }
         assert!(output.iter().any(|x| x.abs() > 0.01));
+    }
+
+    #[test]
+    fn first_output_arrives_on_eighth_capture_frame_and_stays_contiguous() {
+        for style in [
+            Style::LowerResonance,
+            Style::LowerResonancePitch,
+            Style::HigherResonance,
+            Style::HigherResonancePitch,
+        ] {
+            let mut masker = Masker::new(style).unwrap();
+            let mut output = [0.; FRAME];
+            for frame in 0..100 {
+                masker.process(&signal(frame, 220.), &mut output).unwrap();
+                if frame < 7 {
+                    assert!(output.iter().all(|v| *v == 0.));
+                } else {
+                    assert!(
+                        output.iter().any(|v| v.abs() > 0.001),
+                        "missing frame {frame}"
+                    );
+                }
+            }
+        }
     }
 
     #[test]

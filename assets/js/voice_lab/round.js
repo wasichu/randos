@@ -104,7 +104,17 @@ export function setupMaskingRound({id = "round", sources, sourceIds, stopOthers,
       const note = root.querySelector('[data-round-note]')
       note.textContent = item.note || ''
       note.hidden = !item.note
-      status.textContent = (id === 'gentle' ? 'Ready. Resonance stays fixed; compare pitch movement.' : id === 'engines' ? 'Ready. Compare Original → Signalsmith → WORLD.' : (select.value === 'test_tone' ? 'Ready. The tone checks audio artifacts; judge voice masking on the speech samples.' : 'Ready. Start with Original → Current, then compare the stronger versions.'))
+      const hint = {
+        gentle: 'Resonance stays fixed; compare pitch movement.',
+        engines: 'Compare Original → Signalsmith → WORLD.',
+        envelope: 'Compare the released style with Bend A and Bend B.',
+        bandwidth: 'Compare Signalsmith with the reconstruction control first, then try narrower and wider resonances.',
+        source_shape: 'Compare Signalsmith with the reconstruction control first, then try the two pulse shapes.',
+        fargan: 'Compare Original · 16 kHz → FARGAN · unchanged for synthesis quality.',
+        fargan_mask: 'Compare unchanged FARGAN with each isolated edit, then the Signalsmith reference.',
+        fargan_combined: 'Compare the combined FARGAN preset directly with Signalsmith.',
+      }[id] ?? 'Start with Original → Current, then compare the stronger versions.'
+      status.textContent = select.value === 'test_tone' ? 'Ready. The tone checks audio artifacts; judge speech quality on the voice samples.' : `Ready. ${hint}`
       reviewChanged()
     } catch (error) {
       if (version !== revision || error.name === 'AbortError' || !root.isConnected) return

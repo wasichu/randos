@@ -1,7 +1,8 @@
 # Running your own randos
 
-randos is a single Phoenix application with no database, so an instance is
-one server process plus, ideally, a TURN relay. This is how
+randos is a single Phoenix application with no user database. An instance is
+one server process plus a TURN relay by default; direct calls require the
+explicit operator exception documented below. This is how
 [randos.slowinput.org](https://randos.slowinput.org) runs, and what you need
 to run your own. To work on the code, see [development](development.md).
 
@@ -16,10 +17,10 @@ Run exactly one instance of the app. The waiting room (the matchmaking
 queue) and every call live in that instance's memory, so two instances
 would be two separate waiting rooms: two people who arrived at different
 instances could never be matched. Restarting the instance ends the calls in
-progress and empties the waiting room; nothing else is lost, because
-nothing else is kept. (Matching across several instances is a possible
-future change: "Multi-node matchmaking" in the
-[roadmap](architecture/refactor_plan.md).)
+progress and empties the waiting room. The separately privacy-filtered aggregate
+status files can persist on disk; they contain no participant or call records
+([privacy](privacy.md)). Matching across several instances requires a deliberate
+scaling design; see the [current roadmap](architecture/refactor_plan.md#deferred-decisions-and-maintenance).
 
 One small machine is plenty: the server only relays signaling messages,
 never audio. Ours is a single shared-CPU, 512 MB Fly.io machine.

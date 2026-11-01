@@ -1,3 +1,5 @@
+> **Dated design and implementation evidence.** Current media/Port contract: [helper README](../../clients/tui/native/README.md); current ownership: [roadmap](refactor_plan.md). Staged plans and dependency versions below are historical.
+
 # TUI audio (Phase 4.3): design
 
 Status: **accepted 2026-10-19** (decisions below); built, Stages 0–3

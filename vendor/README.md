@@ -41,6 +41,8 @@ a copy (and its patch entry) once upstream has the change.
 
 Pinned Hex package, MIT (`ex_ratatui/LICENSE`); provenance and original file
 hashes are in `ex_ratatui.upstream.json`. No upstream message/issue has been sent.
+The upstream package's `erl_crash.dump` is intentionally omitted; its hash and
+exclusion reason are recorded separately from the vendored source inventory.
 The renderer patch adds local transition `full_redraw?: true`: keep a request
 pending across render coalescing, then call Ratatui Terminal::clear before the
 next draw. That erases the physical terminal and resets the retained frame

@@ -17,12 +17,17 @@ Sleep 5s
 Show
 Sleep 500ms
 Screenshot tmp/tui-language-pristine.png
+# VHS Screenshot schedules the NEXT frame (ExecuteScreenshot/ScreenshotNextFrame).
+# Advance rendering before sending another key, or the witness can capture it.
+Sleep 100ms
 Type "l"
 Sleep 500ms
 Screenshot docs/assets/tui-language.png
 Escape
 Sleep 500ms
 Screenshot tmp/tui-language-dismissed.png
+# Complete the deferred capture before Hide/Tab can change the witnessed frame.
+Sleep 100ms
 
 Hide
 # Also happy to hear Spanish (the peer speaks it), then confirm "I'm an

@@ -16,7 +16,7 @@ agents (and people who like rules written down) should also read
 | Translation shootout | `tools/translate/` | Python (uv): machine-translates the UI's gettext strings and scores the models |
 | Voice benchmark | `tools/voice-eval/` | Python (uv): can a speaker model still identify a voice after a processor? |
 | TURN server | `infra/coturn/` | coturn as code (OpenTofu + cloud-init): [its README](../infra/coturn/README.md) |
-| Design notes | `docs/architecture/` | The [roadmap](architecture/refactor_plan.md), the [call flow](architecture/call_flow.md), the channel protocol, and more |
+| Architecture | `docs/architecture/` | Start with the short [current architecture and roadmap](architecture/refactor_plan.md); it routes to authoritative contracts and the preserved historical evidence |
 
 There is no database: the matchmaking queue and each call's coordinator are
 processes, and everything vanishes on restart.
@@ -35,6 +35,26 @@ just dev          # http://localhost:4000 (with IEx)
 
 `just serve` runs the same server without IEx, in the background
 (`just serve-stop` stops it).
+
+### Machine-local code intelligence
+
+Expert is pinned in `mise.toml`. Enable its Claude Code plugin per machine:
+
+```bash
+claude plugin marketplace add ./tools/claude-plugins --scope local
+claude plugin install expert-lsp@randos-local --scope local
+claude plugin install rust-analyzer-lsp@claude-plugins-official --scope local
+```
+
+Restart Claude Code after installation. These are machine-local settings, not
+committed project defaults. The plugin CLI may rewrite `.claude/settings.json`
+and clear graft's `footerLinksRegexes`; inspect `git diff` afterward.
+Rust-analyzer also comes from the pinned mise toolchain.
+
+`AGENTS.md` is the concise project instruction entry point; detailed workflows
+stay in the guides it links. Preserve its generated usage-rules/Trail blocks.
+Its organization follows [scoped instruction discovery](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+and [contextual agent guidance](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
 
 ### Tidewave MCP startup
 
@@ -109,6 +129,16 @@ other text-only clients. More in [its README](../clients/tui/README.md).
 CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
 plus both smoke tests. The tests never play sound and never reach the
 internet; the smoke tests start their own throwaway server on :4010.
+
+The shipping Signalsmith engine must pass the actual 48 kHz worklet stream
+test. WORLD is a lab comparison: its transport/PCM conformance uses a deliberately
+slowed fixture clock with the same samples, DSP settings, bridge, tail and
+offline-reference assertions. A separate actual 48 kHz run reports measured
+sustained overload as a research finding, not a real-time pass. Unexpected
+faults, invalid output, unbounded queues and cleanup failures still fail CI.
+Prepared-listening UI checks supply generated WAV fixtures; they must not rely
+on ignored audio files from a developer's previous experiment. Live-preview
+checks still run the actual DSP Worker/worklet and fake microphone.
 
 `just setup` runs `just prefetch` (`bin/prefetch.sh`) between fetching
 dependencies and compiling: it fetches with curl the prebuilt files a
@@ -280,7 +310,16 @@ must actually import and run the updated libraries.
   “reviews ready” to have it read the file on its next turn. Untouched forms
   are not posted. Failed saves retain browser drafts and retry with bounded
   backoff; unsent drafts resume on reload. Requests are serialized and each
-  acknowledgment confirms its exact snapshot, preserving later edits.
+  acknowledgment confirms its exact snapshot, preserving later edits. Clearing
+  every answer after a submission appends an explicit withdrawal; it does not
+  delete history. Whitespace-only cleared notes are normalized to an empty
+  string. A browser-persisted submission marker covers clearing the first save
+  while its acknowledgment is still pending, including after reload. Each new
+  request invalidates the older confirmation until success, so undoing a pending
+  withdrawal and reloading resubmits the restored answer. Untouched
+  blank forms never post. Read the last append for each full context; a withdrawal
+  suppresses earlier judgments until a new answer is saved. Cross-page ordering
+  is best effort; do not order by timestamps or average earlier revisions.
   On departure, edits behind an in-flight request remain browser drafts until
   the lab opens again; only the Saved status confirms the checkout received them.
   A lost acknowledgment can cause a duplicate append: read the latest payload
@@ -336,6 +375,44 @@ The terminal client is released from a version tag:
    `Formula/randos.rb` ([details](../packaging/homebrew/README.md)).
 
 The server is deployed separately (`just deploy`, to Fly.io).
+
+The local voice lab opens the **current experiment** first. Its grouped view
+selector separates current work, listening/live tools, previous experiments and
+reference material. `just voice-fargan-combined` prepares the current final
+combined-preset comparison against unchanged FARGAN and Signalsmith, using the
+same nominal pitch and low-frequency resonance scale. The engines differ;
+this is not an equivalence claim. The earlier `just voice-fargan-mask` isolates
+pitch/envelope edits. Both reuse the accepted cache from `just voice-fargan`, which prepares
+the earlier unchanged-synthesis quality gate. The owner accepted its small
+clarity loss before feature edits. These use a pinned native C build and the existing DSP Python
+environment; setup downloads a hash-checked multi-model Opus archive. No
+product dependency, microphone capture or remote inference is added. Details,
+resource measurement limits and the remaining DSP shortlist are in
+`tools/voice-fargan/README.md`.
+
+After listening approval, `just voice-fargan-browser` builds a separate pinned
+WASM/portable pair, checks framing and numerical differences, then measures
+independently paced Workers against full-band Signalsmith. It needs the existing
+Emscripten SDK/cache. Its local HTML artifact contains actual browser recordings;
+the timer probe does not qualify microphone, AudioWorklet, iPad or call latency.
+Neither this command nor its generated bundles enters the production image.
+
+`just voice-dsp-texture` prepares the current **Resonance width** and
+**Voice-source shape** rounds: Original, Signalsmith, matched reconstruction and
+two isolated changes, for every public voice and the test tone. Prepared choices
+also appear in Listen & compare. No weights or microphone are used. The existing
+DSP research environment supplies NumPy/SciPy/SoundFile;
+`just voice-dsp-texture-test` runs model-free numerical tests without adding
+SciPy to the minimal CI environment. See `tools/voice-dsp/README.md` for scope.
+
+`just voice-dsp-envelope` prepares the dev lab's **Selective resonance** round:
+Original, the released strong-resonance + one-semitone style, and two nonlinear
+envelope bends, for all four public voices and the test tone. It uses native
+rendering with the existing research environment; no model or SDK download.
+The zero-bend copy must exactly reproduce the untouched pinned engine. New
+bends are prepared auditions only, with no live-mic handoff or browser streaming
+qualification. Production processors stay unchanged. See
+`tools/voice-dsp/README.md` for the formula, provenance and stopping rule.
 
 `just voice-dsp-browser` runs the dev-only three-adapter DSP Worker screen
 (WORLD, Signalsmith, and the existing Rust chain), then publishes all five
@@ -466,7 +543,8 @@ peers do not depend on the runner's multicast/DNS setup. Production browser
 behavior is unchanged; default Chrome mDNS itself is not covered by this suite.
 Relay-only policy and the local test TURN interruption/recovery remain enforced.
 
-Homepage shortcuts also offer A (click the acknowledgment checkbox), B (native
+Homepage shortcuts also offer C (cycle the speaking-language select), A (click
+the acknowledgment checkbox), B (native
 voice-disclosure toggle), P (preview microphone on/off, opening the voice panel if needed),
 S (next Style) and T (next enabled Tone). M is only the call mute button.
 E clicks End call; N clicks Next rando. Both are shown only when their call
@@ -533,3 +611,32 @@ manual toggling working when the flag cannot be stored; a module-local boolean
 then supports same-runtime LiveView returns only. Restoration uses the existing
 setOpen path and never moves focus, scrolls, invokes an action or captures audio.
 The preference never enters participant/channel messages or server storage.
+
+### Browser-session conversation preferences
+
+`ConversationPreferences` owns only the `conversation-form` language preference
+cookie, not the form DOM. On mount it validates supported codes, sets the select
+and hearing checkboxes synchronously, then pushes one existing preference event.
+Later LiveView patches never re-read the cookie. Only language-control changes
+save; acknowledgment changes in an older tab must not overwrite a newer tab's
+choices. C/c uses the same select/change path and shortcut visibility/focus gates.
+
+`randos_conversation` is a host-only session cookie (`Path=/`, `SameSite=Lax`,
+`Secure` on HTTPS, no `Expires` or `Max-Age`). It contains a format version and
+speaking/hearing codes; no participant ID, microphone state, masking, or age
+acknowledgment. This is browser-defined session behavior, including any session
+restore the browser performs; there is no hard browser-restart expiry promise.
+Blocked or invalid cookies leave the normal form usable. Privacy details are in
+[privacy.md](privacy.md); [cookie semantics](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#expiresdate_optional)
+are browser-controlled. No operator configuration changes.
+
+The browser smoke covers cross-tab/reload/back/reconnect restoration, delayed
+Invite setup, stale-tab acknowledgment isolation, shortcut gates, empty hearing
+choices, invalid/blocked cookies and a fresh browser context. The shared
+`chooseLanguages` helper emits a real hearing-control change before acknowledgment,
+so tests follow the same save path as an actual user.
+
+The legacy live preview and DSP preview share the same guarded failure owner.
+A runtime `processorerror` closes capture/context before notifying the UI, both
+for modified monitoring and the explicit Original route. Closed controllers
+ignore retired processor errors, so they cannot stop a replacement preview.

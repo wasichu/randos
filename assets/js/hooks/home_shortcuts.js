@@ -12,6 +12,7 @@ function rememberOpened() {
 }
 
 const actions = {
+  c: {key: 'c', selector: '#conversation_speaking_language', cycle: true},
   a: {key: 'a', selector: '#conversation_adult_acknowledgment'},
   b: {key: 'b', selector: '#voice-settings-toggle'},
   f: {key: 'f', selector: '#find-rando-button'},

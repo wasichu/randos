@@ -1,3 +1,5 @@
+> **Superseded conceptual notes, not current media policy.** The direct browser-to-browser preference below is obsolete: production calls require the relay by default. Use [privacy](../privacy.md), [call flow](call_flow.md) and [participant obligations](participant_channel.md); the explicit direct-call operator exception is documented in [self-hosting](../self-hosting.md).
+
 # WebRTC Notes
 
 randos uses browser-to-browser WebRTC for audio.

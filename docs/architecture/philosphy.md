@@ -1,3 +1,5 @@
+> **Product rationale.** The [README](../../README.md) owns current requirements; [privacy](../privacy.md) owns privacy claims and `Randos.Calls.Lifecycle` owns timing values. Use the [architecture map](refactor_plan.md) for implemented behavior.
+
 # randos Philosophy
 
 randos is an anonymous, audio-only language conversation app built around low pressure human interaction.

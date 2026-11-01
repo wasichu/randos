@@ -1,6 +1,6 @@
 > **Historical, not maintained.** Describes the app as of build step 5
 > (2026-05): Ash resources, mock calls, `ConversationFlow`. Superseded by
-> [`refactor_plan.md`](refactor_plan.md) ("How it fits together") and
+> [current architecture map](refactor_plan.md#current-architecture) and
 > [`participant_channel.md`](participant_channel.md).
 
 # randos Architecture Summary After Step 5

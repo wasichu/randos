@@ -696,7 +696,7 @@ defmodule Tui.AppTest do
                      5_000
 
       assert_receive {:tui_media, ^app,
-                      %{mic_test: %{phase: :running, stats: %{"voice_ms" => 220.0}}}},
+                      %{mic_test: %{phase: :running, stats: %{"voice_ms" => 140.0}}}},
                      5_000
 
       keys(app, ["1"])

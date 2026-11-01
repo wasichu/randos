@@ -1,24 +1,26 @@
 # randos_voice: the voice processors
 
-Phase 5 (voice anonymization, `docs/architecture/refactor_plan.md`). The Rust
-processors below are written once, here, and run in both clients. The dev lab
-also auditions C++ Signalsmith/WORLD engines. Signalsmith now has a separate
+Rust DSP and experimental processors; the [architecture map](../docs/architecture/refactor_plan.md)
+distinguishes current product masking from lab research. The Rust processors
+below can run natively or as WASM. Released masking uses Signalsmith through a separate
 owned native bridge in `voice-native/`, connected to the TUI worker through
 session-only product choices (off by default). Browser calls use the same
 Signalsmith settings through the pinned WASM SDK; WORLD remains lab-only. `just voice-bridge-check` verifies
 the real Rust/C++ boundary and live adapter against saved browser PCM.
 
-- **Browser:** compiled to WASM (`just voice-wasm`, committed as
+- **Legacy/experimental Rust seam in the browser:** compiled to WASM (`just voice-wasm`, committed as
   `assets/js/randos/voice/randos_voice.wasm`, since production builds have
   no Rust) and run inside an AudioWorklet by `assets/js/randos/voice/worklet.js`.
   Each variant is a small worklet entry (`passthrough.js`, `pitch_shift.js`)
   that names it and declares its parameters (`parameterDescriptors`, in
   `Processor::set_param`'s index order). The seam, `voice/seam.js`, puts
   one between the mic and the call.
-- **TUI:** linked natively into the media helper (`clients/tui/native`),
+- **Legacy/experimental Rust seam in the TUI:** linked natively into the media helper (`clients/tui/native`),
   whose call runs one on every mic frame (`CallConfig::voice`).
-- **The voice lab** (`/dev/voice-lab`, dev only) renders clips through the
-  same worklets, so what's judged there is what calls run.
+- **The voice lab** (`/dev/voice-lab`, dev only) includes browser-rendered and
+  prepared native/model auditions. Their labels and fingerprinted reports say
+  which implementation produced them; a prepared audition is not proof of live
+  browser/native call behavior. Unpromoted processors remain development-only.
 
 ## Processors
 

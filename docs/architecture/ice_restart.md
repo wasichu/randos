@@ -1,3 +1,5 @@
+> **Dated design and outcome.** Current messages, recovery policy and client obligations: [participant channel](participant_channel.md); current explanation: [call flow](call_flow.md). Proposal alternatives and old timing descriptions below are not a second contract.
+
 # ICE restart: design (2026-10-22)
 
 Status: **built** (see "Outcome" below for what changed from this

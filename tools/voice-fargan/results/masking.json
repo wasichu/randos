@@ -1,0 +1,3772 @@
+{
+  "identity": {
+    "quality_report_sha256": "3a64e7c04bf045f6920d704220eeb1eeca8b7857d66463f09c802e2b3fe61051",
+    "checks": [
+      {
+        "sample": "high_voice",
+        "control_byte_exact": true,
+        "native_dct_max_error": 1.9827900779034735e-06,
+        "roundtrip_max_error": 2.5036314754700584e-07,
+        "variants": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              42.0,
+              132.0
+            ],
+            "edited_period_range": [
+              42.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 21.79,
+              "total_ms": 21.897,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 45.10908294469118
+            },
+            "features_sha256": "674fa6d959ec37fc5caffeff106730a98f709a8727eea8a39658de1cb3db5e6c",
+            "output_sha256": "ed5f8dbb9c41a74f800325474ca037e554db4961252c650de1d645ace80bad42",
+            "raw_peak": 0.05341110751032829,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              42.0,
+              132.0
+            ],
+            "edited_period_range": [
+              45.0,
+              137.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08333337306976318,
+              0.0
+            ],
+            "settings": {
+              "pitch": -1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.102,
+              "processing_ms": 22.1,
+              "total_ms": 22.202,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.764958046376705
+            },
+            "features_sha256": "5cad03a1555c5dda957e456f013469cf9957d9281604a7982cc11197856537c8",
+            "output_sha256": "b1697959eff9617d0ed1d331d7424a57e3924ed377b3befa9fb021e965f8c52d",
+            "raw_peak": 0.05270117521286011,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              42.0,
+              132.0
+            ],
+            "edited_period_range": [
+              42.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.26512467861175537,
+              0.49735307693481445,
+              0.47089614532887936,
+              0.625641942024231,
+              0.7226877212524414,
+              0.760551929473877,
+              0.6634458303451538,
+              0.6192530393600464,
+              0.5516414642333984,
+              0.834717096760869,
+              0.49596741050481796,
+              0.6506777107715607,
+              0.5940803289413452,
+              0.47659723553806543,
+              0.5108513832092285,
+              0.4729926139116287,
+              0.48374781012535095,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 0.9
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.105,
+              "processing_ms": 21.941,
+              "total_ms": 22.046,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 46.94195790216327
+            },
+            "features_sha256": "424c9dff39654866ad585e02216bf443946c1936ecd97121a732d961aff2a63c",
+            "output_sha256": "67491cf3278963c5f26679ff58f63cdddb0c928e8df5ac77c31e7130ce5c6571",
+            "raw_peak": 0.056477051228284836,
+            "above_full_scale_samples": 0
+          }
+        }
+      },
+      {
+        "sample": "mid_voice",
+        "control_byte_exact": true,
+        "native_dct_max_error": 1.3726009306935794e-06,
+        "roundtrip_max_error": 2.492301529599672e-07,
+        "variants": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              132.0
+            ],
+            "edited_period_range": [
+              53.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 21.865,
+              "total_ms": 21.972,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.72479196637869
+            },
+            "features_sha256": "eab63b14a356b429aec45fbad9e72f0cf54b2df03c4d730ab9ee7d74a262a51d",
+            "output_sha256": "ed316b021aff02d57456f7370ea3c79808b3dddb22ad2f7801a829d431479520",
+            "raw_peak": 0.08076313138008118,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              132.0
+            ],
+            "edited_period_range": [
+              56.0,
+              137.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0833333432674408,
+              0.0
+            ],
+            "settings": {
+              "pitch": -1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.112,
+              "processing_ms": 22.638,
+              "total_ms": 22.75,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 45.05545902065933
+            },
+            "features_sha256": "e25cda2fd203c7eb8b8b5115fcce612a615da737da290a1ec2efcf6c365437d1",
+            "output_sha256": "1065e32110fa9fbc4039fefc20be81746ae9862ebfd235fe3c5f4fa41c39c7d8",
+            "raw_peak": 0.08615713566541672,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              132.0
+            ],
+            "edited_period_range": [
+              53.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.41956663131713867,
+              0.5099987685680389,
+              0.6985962390899658,
+              0.7079768180847168,
+              0.7857744693756104,
+              0.5830643177032471,
+              0.4789346233010292,
+              0.6795375645160675,
+              0.46039532870054245,
+              0.5389351844787598,
+              0.5678291916847229,
+              0.5480993390083313,
+              0.5658671632409096,
+              0.5893456637859344,
+              0.4742966368794441,
+              0.4352893829345703,
+              0.48558251559734344,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 0.9
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 22.012,
+              "total_ms": 22.119,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 44.62108388543129
+            },
+            "features_sha256": "bbedf197988611f54c606cba3e4b8dcc363a521f275c7d00f9bc21f6cc9aacf0",
+            "output_sha256": "14975d18bebf254c72eeeacbf7cebc0947e6a84f4609e30f01dfb281454ecdc2",
+            "raw_peak": 0.0739111453294754,
+            "above_full_scale_samples": 0
+          }
+        }
+      },
+      {
+        "sample": "low_voice",
+        "control_byte_exact": true,
+        "native_dct_max_error": 1.4927413189980143e-06,
+        "roundtrip_max_error": 2.8923466451058477e-07,
+        "variants": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              232.0
+            ],
+            "edited_period_range": [
+              53.0,
+              232.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.112,
+              "processing_ms": 21.92,
+              "total_ms": 22.032,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.45454194582999
+            },
+            "features_sha256": "cfa143a9f37345f8092d22f290565a48d80f7f9ea686e1c23e106dbe8c8afc2d",
+            "output_sha256": "2f2021b179a5959caa0692d621b6a71e5afb46548923f791124c60a851dec43c",
+            "raw_peak": 0.0843038558959961,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              232.0
+            ],
+            "edited_period_range": [
+              50.0,
+              219.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08333337306976318,
+              0.0
+            ],
+            "settings": {
+              "pitch": 1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 21.89,
+              "total_ms": 21.997,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 47.318125143647194
+            },
+            "features_sha256": "c76b9464e8a33b80b5a0ca1dcc48906ac03679262306c7adde9c0ebf9479c2c2",
+            "output_sha256": "48dfb8d1ae74a1fb0fc44ce39cc272d86edec11f1c6dfe2bd389dc0bc19f39a5",
+            "raw_peak": 0.08107154816389084,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              232.0
+            ],
+            "edited_period_range": [
+              53.0,
+              232.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.27451467514038086,
+              0.5505024194717407,
+              0.6068662405014038,
+              0.4529728889465332,
+              0.6222752332687378,
+              0.7253536880016327,
+              0.6037729978561401,
+              0.4737710803747177,
+              0.5318726412951946,
+              0.7015300840139389,
+              0.4834631681442261,
+              0.5560494065284729,
+              0.4507174789905548,
+              0.4253762662410736,
+              0.33747683465480804,
+              0.29620085656642914,
+              0.42539893090724945,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1.1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.102,
+              "processing_ms": 21.842,
+              "total_ms": 21.944,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.56929206289351
+            },
+            "features_sha256": "13acba3100362cb95707476d141a0421e8c86e1d5c29b103c8120b1e7d9afeaa",
+            "output_sha256": "91d4d9b488543f2b524696de0f3a1c9d68d01f1009a7e3a219ba2f0d14a39336",
+            "raw_peak": 0.09169500321149826,
+            "above_full_scale_samples": 0
+          }
+        }
+      },
+      {
+        "sample": "mencken_wasichu",
+        "control_byte_exact": true,
+        "native_dct_max_error": 1.0083427914864274e-06,
+        "roundtrip_max_error": 1.346974465299411e-07,
+        "variants": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              220.0
+            ],
+            "edited_period_range": [
+              53.0,
+              220.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.106,
+              "processing_ms": 21.844,
+              "total_ms": 21.95,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 46.11966712400317
+            },
+            "features_sha256": "f323711510c901aee938a7b43711b55a0af7a067933b7c2fae18d55ff6fd437e",
+            "output_sha256": "d96f968657ed0d7f4ec87a4a6750a0c45ada809fdddd89a85beb93499aa2e66c",
+            "raw_peak": 0.03848439082503319,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              220.0
+            ],
+            "edited_period_range": [
+              50.0,
+              207.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08333337306976318,
+              0.0
+            ],
+            "settings": {
+              "pitch": 1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.103,
+              "processing_ms": 22.331,
+              "total_ms": 22.434,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 42.825124925002456
+            },
+            "features_sha256": "2c1a1e27b62098afef4aa3200d4ba5770bb17218f723152c9ac7538292ba8425",
+            "output_sha256": "bfe38e2ab63f9bd0fbb6f4cc67bc2684fccdfd6002f89303d46098cae12c49af",
+            "raw_peak": 0.03438839316368103,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              220.0
+            ],
+            "edited_period_range": [
+              53.0,
+              220.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.17724275588989258,
+              0.31208083033561707,
+              0.4110046625137329,
+              0.48028844594955444,
+              0.5210843086242676,
+              0.47590088844299316,
+              0.4359140396118164,
+              0.4837340712547302,
+              0.4842155948281288,
+              0.3822597861289978,
+              0.488667368888855,
+              0.5584508180618286,
+              0.35355517268180847,
+              0.30797283351421356,
+              0.2720688730478287,
+              0.24752070754766464,
+              0.3397987186908722,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1.1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.104,
+              "processing_ms": 21.858,
+              "total_ms": 21.962,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 47.23520786501467
+            },
+            "features_sha256": "89068fe4940b2f0c97203085dfc854cff5922ac34e138e6cacd93481537b1a26",
+            "output_sha256": "f9b594487f6180cef399e1e5584b0d27c01b56bbbcb2dc54df7ed86b6b0147ba",
+            "raw_peak": 0.03903702273964882,
+            "above_full_scale_samples": 0
+          }
+        }
+      },
+      {
+        "sample": "test_tone",
+        "control_byte_exact": true,
+        "native_dct_max_error": 1.9633098631288703e-06,
+        "roundtrip_max_error": 2.63595547778106e-07,
+        "variants": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              69.0,
+              145.0
+            ],
+            "edited_period_range": [
+              69.0,
+              145.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 450,
+              "init_ms": 0.11,
+              "processing_ms": 15.154,
+              "total_ms": 15.264,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 24.301915895193815
+            },
+            "features_sha256": "dbd0665b746cacfef029fd5e0105818292fde4885c94fef2ea65fd1046f891fd",
+            "output_sha256": "f0c1d5bf7140e84149d85bb2737202266853667079556765084283a4ceb7ebce",
+            "raw_peak": 0.1871596723794937,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 410,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              69.0,
+              145.0
+            ],
+            "edited_period_range": [
+              69.0,
+              154.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0833333432674408,
+              0.0
+            ],
+            "settings": {
+              "pitch": -1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 450,
+              "init_ms": 0.1,
+              "processing_ms": 15.27,
+              "total_ms": 15.37,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 24.407124845311046
+            },
+            "features_sha256": "9aaee545a7debda48810fc69ce202df5142d68de2512d92ab6b35a8c6cc126ef",
+            "output_sha256": "fcc1e2f8f79dc9e87ae69b1049423bc1dc62e63ce5c8545fed00a513362b5d5c",
+            "raw_peak": 0.17685411870479584,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              69.0,
+              145.0
+            ],
+            "edited_period_range": [
+              69.0,
+              145.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.20172691345214844,
+              0.6681809425354004,
+              0.5080046057701111,
+              0.5110735893249512,
+              0.5826053619384766,
+              0.4406672418117523,
+              0.6172894239425659,
+              0.407494381070137,
+              0.4878690242767334,
+              0.2927225027233362,
+              0.32869040966033936,
+              0.3392268717288971,
+              0.19383949786424637,
+              0.2809591367840767,
+              0.11236196756362915,
+              0.17338506178930402,
+              0.2145397812128067,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 0.9
+            },
+            "synthesis": {
+              "frames": 450,
+              "init_ms": 0.094,
+              "processing_ms": 15.428,
+              "total_ms": 15.522,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 23.795542074367404
+            },
+            "features_sha256": "30165d2ea1b6be128188157d18bb88a2e925cf112061dc1d4264e0dcf0d33111",
+            "output_sha256": "b3fc8f3cd81d7aaad3592190d4d3b208b6c7b4b0804776de2d37230f27989870",
+            "raw_peak": 0.19874945282936096,
+            "above_full_scale_samples": 0
+          }
+        }
+      }
+    ],
+    "boundary_checks": [
+      {
+        "fixture": "silence",
+        "variant": "control",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          69.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.187,
+          "processing_ms": 6.041,
+          "total_ms": 6.228,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 11.898208875209093
+        },
+        "features_sha256": "5447a94c2d1350924a4ae73f5e24f530513487d41e041269b5158c6709b682e1",
+        "output_sha256": "4b8f3ab1932c5740ed4fe9bb82ffb62aa92bf0408fc72eca8c4e0e53361dfb36",
+        "raw_peak": 2.1836024188814918e-06,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.535273999157653e-07
+      },
+      {
+        "fixture": "silence",
+        "variant": "down",
+        "changed_pitch_frames": 80,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          69.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          137.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0833333432674408,
+          0.0
+        ],
+        "settings": {
+          "pitch": -1,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.131,
+          "processing_ms": 5.446,
+          "total_ms": 5.577,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 10.901667177677155
+        },
+        "features_sha256": "bd4b4c4ab785eae9742451b03b0c79f368a8cd786eabd64ace1552907c01206c",
+        "output_sha256": "c5f54adadf7f147da4860a01372b8c27d3627fa0e130da48ecbe7cdc2d0eee99",
+        "raw_peak": 2.3733484795229742e-06,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.250209369478398e-07
+      },
+      {
+        "fixture": "silence",
+        "variant": "up",
+        "changed_pitch_frames": 80,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          69.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0833333432674408,
+          0.0
+        ],
+        "settings": {
+          "pitch": 1,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.125,
+          "processing_ms": 5.553,
+          "total_ms": 5.678,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 11.972624808549881
+        },
+        "features_sha256": "1b1474eac3c3747ff789b549d7346e310a8c4774c5be7d8961a61d117f705e2d",
+        "output_sha256": "26284a96b070d3451b32f97268360d0325a856a48f09b033683e1424678df665",
+        "raw_peak": 2.31447552323516e-06,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.384845849221165e-07
+      },
+      {
+        "fixture": "silence",
+        "variant": "lower",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          69.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.006753520263977464,
+          0.051358697315055934,
+          0.0006646676726340672,
+          0.01531709296008188,
+          0.022800928602617176,
+          0.008165302686393261,
+          0.0385059118270874,
+          0.023945430293679237,
+          0.04707171767950058,
+          0.022377867251634598,
+          0.03745955228805542,
+          0.0097477613016963,
+          0.006326472852379084,
+          0.0072195143438875675,
+          0.019323017448186874,
+          0.007215667050331831,
+          0.02880278850595186,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 0.9
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.124,
+          "processing_ms": 5.262,
+          "total_ms": 5.386,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.269958853721619
+        },
+        "features_sha256": "fbcac126551ba7607c25ef3ec0ae4d102d7a1cb0e4e8fcabddd602b1ca45c5c1",
+        "output_sha256": "a4fa4dd9d48f6f64883a971e9f50982dc578839112fbc008ab6ef461d9d4330f",
+        "raw_peak": 2.1836024188814918e-06,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.167945005268848e-07
+      },
+      {
+        "fixture": "silence",
+        "variant": "higher",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          69.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0153768065695985,
+          0.04361182327071944,
+          0.011206394371885864,
+          0.017609960089124854,
+          0.009312566680211631,
+          0.02117527462542057,
+          0.024192756041884422,
+          0.035991426557302475,
+          0.022808274254202843,
+          0.03802058473229408,
+          0.0009853951632976532,
+          0.0253467857837677,
+          0.004623894579708576,
+          0.00086690962780267,
+          0.015070071443915367,
+          0.0004553069011308253,
+          0.025871316591898896,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 1.1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.119,
+          "processing_ms": 5.257,
+          "total_ms": 5.376,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.536083115264773
+        },
+        "features_sha256": "8e431f4d09a148e40a58e3528759198133654c89a37e3a3f6d602c262e06f345",
+        "output_sha256": "092c3c56b199f15efe0013d97bb55d365316b37ba7022b2dcfc2c2bcf4663fe8",
+        "raw_peak": 2.3171935481514083e-06,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.30611202975706e-07
+      },
+      {
+        "fixture": "onset",
+        "variant": "control",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          68.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.12,
+          "processing_ms": 4.994,
+          "total_ms": 5.114,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.46299990452826
+        },
+        "features_sha256": "08c4306589ce44074a72582fcfbe3d921814cde1d5f3828c77594abc49ff9783",
+        "output_sha256": "7d0b85e715d11ac368938c3177941e84a04f50e8fc1b46b4ae984f55ca72310b",
+        "raw_peak": 0.08879612386226654,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.308822323968343e-07
+      },
+      {
+        "fixture": "onset",
+        "variant": "down",
+        "changed_pitch_frames": 80,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0833333432674408,
+          0.0
+        ],
+        "settings": {
+          "pitch": -1,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.115,
+          "processing_ms": 4.861,
+          "total_ms": 4.976,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.06283294595778
+        },
+        "features_sha256": "b19a2fdc69d952c17178ddcbb3deaa350d77c29a152bcfb55573a25802c08e4a",
+        "output_sha256": "de3f98f57735cf05afc4702e0b188b4a0afdb5a35e04eab328a4d05ef5b468f6",
+        "raw_peak": 0.0863979309797287,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.760047088188003e-07
+      },
+      {
+        "fixture": "onset",
+        "variant": "up",
+        "changed_pitch_frames": 80,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          64.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0833333432674408,
+          0.0
+        ],
+        "settings": {
+          "pitch": 1,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.114,
+          "processing_ms": 4.796,
+          "total_ms": 4.91,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.666292022913694
+        },
+        "features_sha256": "49d12a6c097fccdb9a8e8d76e5f1ae6de8550092b76b458b7b774f3a099b6ec7",
+        "output_sha256": "451ea7f5eac259cd736b1801eb28d8885fb7853c27f76148b6f9f613eccbbf06",
+        "raw_peak": 0.08929209411144257,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.852366484759841e-07
+      },
+      {
+        "fixture": "onset",
+        "variant": "lower",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          68.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.40531492233276367,
+          0.18884515762329102,
+          0.04783058166503906,
+          0.18055510520935059,
+          0.30879512429237366,
+          0.34694012999534607,
+          0.31493639945983887,
+          0.18625909090042114,
+          0.07506054639816284,
+          0.1591806709766388,
+          0.146611787378788,
+          0.14136127661913633,
+          0.09704991430044174,
+          0.09556476026773453,
+          0.10974649339914322,
+          0.12235522270202637,
+          0.10252057760953903,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 0.9
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.109,
+          "processing_ms": 4.463,
+          "total_ms": 4.572,
+          "peak_rss_bytes": 2801664,
+          "subprocess_wall_ms": 12.784082908183336
+        },
+        "features_sha256": "29fae69f3e07e8ce5650269b6ae5763798518fc474a80cf9183769f89ec2c9c3",
+        "output_sha256": "fcfed0530de72ada188557939021dc17f96e732f93c594eedd8eb2091c1ba1cc",
+        "raw_peak": 0.08868218958377838,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.875715487491107e-07
+      },
+      {
+        "fixture": "onset",
+        "variant": "higher",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          68.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.37082624435424805,
+          0.04807710647583008,
+          0.23423361778259277,
+          0.4130479097366333,
+          0.41309671103954315,
+          0.2555529475212097,
+          0.12123239040374756,
+          0.2623361349105835,
+          0.29527586698532104,
+          0.1600542664527893,
+          0.14070627093315125,
+          0.13504792749881744,
+          0.08987698331475258,
+          0.04253598675131798,
+          0.08874558284878731,
+          0.13196493685245514,
+          0.1238754503428936,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 1.1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.113,
+          "processing_ms": 4.415,
+          "total_ms": 4.528,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.841916177421808
+        },
+        "features_sha256": "49ac5cf92890b8f4743824f7513d02624a43c993562bf7f593cfd3356c42d0b5",
+        "output_sha256": "02fb1843f947c6c3c94aba4be605996537afc0fef2e9fa16809d1ce10e7bdbec",
+        "raw_peak": 0.0817384421825409,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.74586920265574e-07
+      },
+      {
+        "fixture": "ending",
+        "variant": "control",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          68.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.114,
+          "processing_ms": 4.396,
+          "total_ms": 4.51,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 10.217250091955066
+        },
+        "features_sha256": "7d5ef4ef2c812437ea260378d46b8c4c4172ebf2cd0d5387e5febf5f65180536",
+        "output_sha256": "3fa9c52e9f459428b34889fe04a78f9bd41eb6277b2a171b50d1c9cba8a89e04",
+        "raw_peak": 0.08948715031147003,
+        "above_full_scale_samples": 0,
+        "tail_rms": 6.088314989938226e-07
+      },
+      {
+        "fixture": "ending",
+        "variant": "down",
+        "changed_pitch_frames": 80,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          69.0,
+          137.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0833333432674408,
+          0.0
+        ],
+        "settings": {
+          "pitch": -1,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.1,
+          "processing_ms": 4.255,
+          "total_ms": 4.355,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.565667042508721
+        },
+        "features_sha256": "5a3dca290a3a5787085423cace4e2fc8d07f7bfc926978b74f129f9cf65f0a39",
+        "output_sha256": "b80bff1febb0ada1f1d42babfe10cfa52632e0504420ed5a621b7d15cbd59c6e",
+        "raw_peak": 0.08765192329883575,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.623250558528525e-07
+      },
+      {
+        "fixture": "ending",
+        "variant": "up",
+        "changed_pitch_frames": 80,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          65.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0833333432674408,
+          0.0
+        ],
+        "settings": {
+          "pitch": 1,
+          "scale": 1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.101,
+          "processing_ms": 4.335,
+          "total_ms": 4.436,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 11.219084030017257
+        },
+        "features_sha256": "f31da273aaf83310ed9f03807f5f943df3b0f85d59be458da94e6efedb356a35",
+        "output_sha256": "b77bd14e55cc83b45d98f23f91c61d69b4aee4a32892f88ed79036cae2d5e9aa",
+        "raw_peak": 0.08791771531105042,
+        "above_full_scale_samples": 0,
+        "tail_rms": 6.052354137864313e-07
+      },
+      {
+        "fixture": "ending",
+        "variant": "lower",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          68.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.40531492233276367,
+          0.18884515762329102,
+          0.04783058166503906,
+          0.18055510520935059,
+          0.30879512429237366,
+          0.34694012999534607,
+          0.31493639945983887,
+          0.18625909090042114,
+          0.07506054639816284,
+          0.1591806709766388,
+          0.146611787378788,
+          0.14136127661913633,
+          0.09704991430044174,
+          0.09556476026773453,
+          0.10974649339914322,
+          0.12235522270202637,
+          0.10252057760953903,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 0.9
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.099,
+          "processing_ms": 4.204,
+          "total_ms": 4.303,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.216957984492183
+        },
+        "features_sha256": "2a21a627be8ade4ba17fd53a561797913d5157389be3e8b74f4b9a8e83764116",
+        "output_sha256": "543f6aba20839680e73ef826bc80334ad0a922651fd435dd230a8b5b80c6ddf4",
+        "raw_peak": 0.08844021707773209,
+        "above_full_scale_samples": 0,
+        "tail_rms": 6.163299417494272e-07
+      },
+      {
+        "fixture": "ending",
+        "variant": "higher",
+        "changed_pitch_frames": 0,
+        "unchanged_bound_frames": 0,
+        "original_period_range": [
+          68.0,
+          132.0
+        ],
+        "edited_period_range": [
+          68.0,
+          132.0
+        ],
+        "max_abs_coefficient_delta": [
+          0.0,
+          0.37082624435424805,
+          0.04807710647583008,
+          0.23423361778259277,
+          0.4130479097366333,
+          0.41309671103954315,
+          0.2555529475212097,
+          0.12123239040374756,
+          0.2623361349105835,
+          0.29527586698532104,
+          0.1600542664527893,
+          0.14070627093315125,
+          0.13504792749881744,
+          0.08987698331475258,
+          0.04253598675131798,
+          0.08874558284878731,
+          0.13196493685245514,
+          0.1238754503428936,
+          0.0,
+          0.0
+        ],
+        "settings": {
+          "pitch": 0,
+          "scale": 1.1
+        },
+        "synthesis": {
+          "frames": 120,
+          "init_ms": 0.094,
+          "processing_ms": 4.285,
+          "total_ms": 4.379,
+          "peak_rss_bytes": 2818048,
+          "subprocess_wall_ms": 12.07720790989697
+        },
+        "features_sha256": "8a9e6dc154122d080ade8784591d83430bf27c64d6c47a52b26a19eca051f0e5",
+        "output_sha256": "97321c9b5e5e43276019afe832735d4edd22cc01dc0ffc39455cef27867a6895",
+        "raw_peak": 0.0833808034658432,
+        "above_full_scale_samples": 0,
+        "tail_rms": 5.695770823876956e-07
+      }
+    ],
+    "dct_orthogonality_max_error": 3.089001276990189e-08,
+    "sources": {
+      "tools/voice-fargan/masking.py": "be822f597a760bf565ccbec7bf11212867f7468468359db907a777d6aed7ad05",
+      "tools/voice-fargan/features.py": "b310db8b1546a5c75775247c1e2ef26d55558aefa1c06101231fa383f38415fe",
+      "tools/voice-fargan/check_transform.c": "16fbc59f6c1190cfa143c2d1fbc4f1a30d68278e8fbd4a6e54704c8c01a6bdc3",
+      "tmp/fargan/masking/check_transform": "7aa2a04dc80519f8faf6a306ba58351d5465280671a6297bf4cc3c9b167ddf21",
+      "tmp/fargan/opus/.libs/libopus.a": "a4a4173bb56acefe11985220438e0f8e4cef667365447a6442776c8c48a585e8",
+      "tmp/fargan/opus/dnn/lpcnet_tables.c": "9a4b5490b8c45e11712d7d2d9eff99f7a13fe49bd2d911609a4435b35ef1996a",
+      "tmp/fargan/opus/dnn/freq.c": "d50062b834535a8f2fa7e30bb1ad3162b69cc5dd869729701e9fe9e9bbab20fc"
+    },
+    "cases": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__fargan_mask_original__2ab3ce927a9617d0dd27bf1fc5bde03965322e75cac68a1873e2db790f499cdf.wav",
+          "reference": "high_voice__fargan_mask_reference__7305f1f35966afe5b9cfab4fdf0512746fd688a3c384277359b813ce80fbe913.wav",
+          "control": "high_voice__fargan_mask_control__e6e2d0f4d1414f87c9e0c9ee25fba3fef97a802287b6602f8d67947a170ccd02.wav",
+          "pitch": "high_voice__fargan_mask_pitch__07d72649de602761e7c9c987f91af32ce8cab54e805e69a1e258b001df1f40d4.wav",
+          "envelope": "high_voice__fargan_mask_envelope__71e998d81b050bb03510b56fdbfbe8c6c24c05731dbbeb32ab1caf0bd782f089.wav"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.4228863264159113,
+          "control": 1.02033502103687,
+          "pitch": 1.0569273013784075,
+          "envelope": 1.1122101509049613
+        },
+        "settings": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              42.0,
+              132.0
+            ],
+            "edited_period_range": [
+              42.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 21.79,
+              "total_ms": 21.897,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 45.10908294469118
+            },
+            "features_sha256": "674fa6d959ec37fc5caffeff106730a98f709a8727eea8a39658de1cb3db5e6c",
+            "output_sha256": "ed5f8dbb9c41a74f800325474ca037e554db4961252c650de1d645ace80bad42",
+            "raw_peak": 0.05341110751032829,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              42.0,
+              132.0
+            ],
+            "edited_period_range": [
+              45.0,
+              137.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08333337306976318,
+              0.0
+            ],
+            "settings": {
+              "pitch": -1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.102,
+              "processing_ms": 22.1,
+              "total_ms": 22.202,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.764958046376705
+            },
+            "features_sha256": "5cad03a1555c5dda957e456f013469cf9957d9281604a7982cc11197856537c8",
+            "output_sha256": "b1697959eff9617d0ed1d331d7424a57e3924ed377b3befa9fb021e965f8c52d",
+            "raw_peak": 0.05270117521286011,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              42.0,
+              132.0
+            ],
+            "edited_period_range": [
+              42.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.26512467861175537,
+              0.49735307693481445,
+              0.47089614532887936,
+              0.625641942024231,
+              0.7226877212524414,
+              0.760551929473877,
+              0.6634458303451538,
+              0.6192530393600464,
+              0.5516414642333984,
+              0.834717096760869,
+              0.49596741050481796,
+              0.6506777107715607,
+              0.5940803289413452,
+              0.47659723553806543,
+              0.5108513832092285,
+              0.4729926139116287,
+              0.48374781012535095,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 0.9
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.105,
+              "processing_ms": 21.941,
+              "total_ms": 22.046,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 46.94195790216327
+            },
+            "features_sha256": "424c9dff39654866ad585e02216bf443946c1936ecd97121a732d961aff2a63c",
+            "output_sha256": "67491cf3278963c5f26679ff58f63cdddb0c928e8df5ac77c31e7130ce5c6571",
+            "raw_peak": 0.056477051228284836,
+            "above_full_scale_samples": 0
+          }
+        },
+        "descriptions": {
+          "original": "Original \u00b7 16 kHz, matched to the model input",
+          "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+          "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+          "pitch": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+          "envelope": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged"
+        },
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__fargan_mask_original__cab3aa2f4f8f2996059ee618ea4c636f3cfd61431d8254f13384175d9cca53e7.wav",
+          "reference": "mid_voice__fargan_mask_reference__966bf29fcd6e969d6e578e8e4d8d8a718e73326da94d9b71153676f751b0e57a.wav",
+          "control": "mid_voice__fargan_mask_control__1885fc1123bb597bd9cdebce37ba478b2dd89d9002ec3b1810e24cf1a4365771.wav",
+          "pitch": "mid_voice__fargan_mask_pitch__ffd44a8ba4c2612678970e9a0fa2208806e3d00558989c870bb07b1e1fcd876b.wav",
+          "envelope": "mid_voice__fargan_mask_envelope__b77e1b15a054560d666107d9d296c0752780f0069032b8dc057d36fb14d2f83b.wav"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.483890241231767,
+          "control": 0.9978146195931478,
+          "pitch": 1.0134495816785616,
+          "envelope": 1.0349027965898288
+        },
+        "settings": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              132.0
+            ],
+            "edited_period_range": [
+              53.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 21.865,
+              "total_ms": 21.972,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.72479196637869
+            },
+            "features_sha256": "eab63b14a356b429aec45fbad9e72f0cf54b2df03c4d730ab9ee7d74a262a51d",
+            "output_sha256": "ed316b021aff02d57456f7370ea3c79808b3dddb22ad2f7801a829d431479520",
+            "raw_peak": 0.08076313138008118,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              132.0
+            ],
+            "edited_period_range": [
+              56.0,
+              137.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0833333432674408,
+              0.0
+            ],
+            "settings": {
+              "pitch": -1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.112,
+              "processing_ms": 22.638,
+              "total_ms": 22.75,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 45.05545902065933
+            },
+            "features_sha256": "e25cda2fd203c7eb8b8b5115fcce612a615da737da290a1ec2efcf6c365437d1",
+            "output_sha256": "1065e32110fa9fbc4039fefc20be81746ae9862ebfd235fe3c5f4fa41c39c7d8",
+            "raw_peak": 0.08615713566541672,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              132.0
+            ],
+            "edited_period_range": [
+              53.0,
+              132.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.41956663131713867,
+              0.5099987685680389,
+              0.6985962390899658,
+              0.7079768180847168,
+              0.7857744693756104,
+              0.5830643177032471,
+              0.4789346233010292,
+              0.6795375645160675,
+              0.46039532870054245,
+              0.5389351844787598,
+              0.5678291916847229,
+              0.5480993390083313,
+              0.5658671632409096,
+              0.5893456637859344,
+              0.4742966368794441,
+              0.4352893829345703,
+              0.48558251559734344,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 0.9
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 22.012,
+              "total_ms": 22.119,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 44.62108388543129
+            },
+            "features_sha256": "bbedf197988611f54c606cba3e4b8dcc363a521f275c7d00f9bc21f6cc9aacf0",
+            "output_sha256": "14975d18bebf254c72eeeacbf7cebc0947e6a84f4609e30f01dfb281454ecdc2",
+            "raw_peak": 0.0739111453294754,
+            "above_full_scale_samples": 0
+          }
+        },
+        "descriptions": {
+          "original": "Original \u00b7 16 kHz, matched to the model input",
+          "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+          "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+          "pitch": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+          "envelope": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged"
+        },
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__fargan_mask_original__d1a5b3dda158badfad572922d6380b01f71a9a39f7a3cd39b7868a7c938bc736.wav",
+          "reference": "low_voice__fargan_mask_reference__f09e555cb978613fd6168a4ba7ad7108cd2749fbc6ffbc100f1563b9a3c676c6.wav",
+          "control": "low_voice__fargan_mask_control__e5d9bd17040a8f1416074845b32f8c74fcbc43b495f345f8fcf6861e93e429ab.wav",
+          "pitch": "low_voice__fargan_mask_pitch__f0fa9f77ee05960bd5f5f64eae15e03d1812dddeff9a7add567cfdc4678c6998.wav",
+          "envelope": "low_voice__fargan_mask_envelope__6f16329e226b32a10bbc18051553cb7acd720b57175a86ae2cc1a85d86f5d6ef.wav"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.174068192995409,
+          "control": 1.0123689792282187,
+          "pitch": 1.0136201554424253,
+          "envelope": 1.0516591842059637
+        },
+        "settings": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              232.0
+            ],
+            "edited_period_range": [
+              53.0,
+              232.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.112,
+              "processing_ms": 21.92,
+              "total_ms": 22.032,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.45454194582999
+            },
+            "features_sha256": "cfa143a9f37345f8092d22f290565a48d80f7f9ea686e1c23e106dbe8c8afc2d",
+            "output_sha256": "2f2021b179a5959caa0692d621b6a71e5afb46548923f791124c60a851dec43c",
+            "raw_peak": 0.0843038558959961,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              232.0
+            ],
+            "edited_period_range": [
+              50.0,
+              219.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08333337306976318,
+              0.0
+            ],
+            "settings": {
+              "pitch": 1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.107,
+              "processing_ms": 21.89,
+              "total_ms": 21.997,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 47.318125143647194
+            },
+            "features_sha256": "c76b9464e8a33b80b5a0ca1dcc48906ac03679262306c7adde9c0ebf9479c2c2",
+            "output_sha256": "48dfb8d1ae74a1fb0fc44ce39cc272d86edec11f1c6dfe2bd389dc0bc19f39a5",
+            "raw_peak": 0.08107154816389084,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              232.0
+            ],
+            "edited_period_range": [
+              53.0,
+              232.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.27451467514038086,
+              0.5505024194717407,
+              0.6068662405014038,
+              0.4529728889465332,
+              0.6222752332687378,
+              0.7253536880016327,
+              0.6037729978561401,
+              0.4737710803747177,
+              0.5318726412951946,
+              0.7015300840139389,
+              0.4834631681442261,
+              0.5560494065284729,
+              0.4507174789905548,
+              0.4253762662410736,
+              0.33747683465480804,
+              0.29620085656642914,
+              0.42539893090724945,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1.1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.102,
+              "processing_ms": 21.842,
+              "total_ms": 21.944,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 48.56929206289351
+            },
+            "features_sha256": "13acba3100362cb95707476d141a0421e8c86e1d5c29b103c8120b1e7d9afeaa",
+            "output_sha256": "91d4d9b488543f2b524696de0f3a1c9d68d01f1009a7e3a219ba2f0d14a39336",
+            "raw_peak": 0.09169500321149826,
+            "above_full_scale_samples": 0
+          }
+        },
+        "descriptions": {
+          "original": "Original \u00b7 16 kHz, matched to the model input",
+          "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+          "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+          "pitch": "Pitch +1 semitone where within model range \u00b7 resonance features unchanged",
+          "envelope": "Gentle approximate resonance warp \u00d71.10 \u00b7 pitch unchanged"
+        },
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__fargan_mask_original__dc469d4f8deb72134a719947cbed3cd0098e3d77fafbe4c446e63274baa7acfa.wav",
+          "reference": "mencken_wasichu__fargan_mask_reference__d2370419dfbfedae39b27ea08b75b2eb4ab968e74330b9a65b3217448f3bebae.wav",
+          "control": "mencken_wasichu__fargan_mask_control__c228aae275445ab6a55a7fe5f0791babea07eec7b8e18dfb2d76f4ba1db17224.wav",
+          "pitch": "mencken_wasichu__fargan_mask_pitch__dcf6a01366de81ee1ee8f88ba1417877e0814e245ee60cc4e351567fba0382ad.wav",
+          "envelope": "mencken_wasichu__fargan_mask_envelope__9f478c8c2a54b6b9ab7429deecc27df79fb86bf178f2fca5a0da9b1cdb78f09b.wav"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.1797885739936462,
+          "control": 1.022297687233191,
+          "pitch": 1.0385930591282375,
+          "envelope": 1.1490075091806249
+        },
+        "settings": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              220.0
+            ],
+            "edited_period_range": [
+              53.0,
+              220.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.106,
+              "processing_ms": 21.844,
+              "total_ms": 21.95,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 46.11966712400317
+            },
+            "features_sha256": "f323711510c901aee938a7b43711b55a0af7a067933b7c2fae18d55ff6fd437e",
+            "output_sha256": "d96f968657ed0d7f4ec87a4a6750a0c45ada809fdddd89a85beb93499aa2e66c",
+            "raw_peak": 0.03848439082503319,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 610,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              220.0
+            ],
+            "edited_period_range": [
+              50.0,
+              207.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08333337306976318,
+              0.0
+            ],
+            "settings": {
+              "pitch": 1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.103,
+              "processing_ms": 22.331,
+              "total_ms": 22.434,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 42.825124925002456
+            },
+            "features_sha256": "2c1a1e27b62098afef4aa3200d4ba5770bb17218f723152c9ac7538292ba8425",
+            "output_sha256": "bfe38e2ab63f9bd0fbb6f4cc67bc2684fccdfd6002f89303d46098cae12c49af",
+            "raw_peak": 0.03438839316368103,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              53.0,
+              220.0
+            ],
+            "edited_period_range": [
+              53.0,
+              220.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.17724275588989258,
+              0.31208083033561707,
+              0.4110046625137329,
+              0.48028844594955444,
+              0.5210843086242676,
+              0.47590088844299316,
+              0.4359140396118164,
+              0.4837340712547302,
+              0.4842155948281288,
+              0.3822597861289978,
+              0.488667368888855,
+              0.5584508180618286,
+              0.35355517268180847,
+              0.30797283351421356,
+              0.2720688730478287,
+              0.24752070754766464,
+              0.3397987186908722,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1.1
+            },
+            "synthesis": {
+              "frames": 650,
+              "init_ms": 0.104,
+              "processing_ms": 21.858,
+              "total_ms": 21.962,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 47.23520786501467
+            },
+            "features_sha256": "89068fe4940b2f0c97203085dfc854cff5922ac34e138e6cacd93481537b1a26",
+            "output_sha256": "f9b594487f6180cef399e1e5584b0d27c01b56bbbcb2dc54df7ed86b6b0147ba",
+            "raw_peak": 0.03903702273964882,
+            "above_full_scale_samples": 0
+          }
+        },
+        "descriptions": {
+          "original": "Original \u00b7 16 kHz, matched to the model input",
+          "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+          "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+          "pitch": "Pitch +1 semitone where within model range \u00b7 resonance features unchanged",
+          "envelope": "Gentle approximate resonance warp \u00d71.10 \u00b7 pitch unchanged"
+        },
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__fargan_mask_original__447626f67b1597fb73b197581d0ce13b4074f6f7d6a019a72acbad00b0d9c71d.wav",
+          "reference": "test_tone__fargan_mask_reference__2ecdcaf11bfe26dd4581f039b84270b674505fa5a1fae5cd1b6d81b21945886e.wav",
+          "control": "test_tone__fargan_mask_control__acaad9fa03ed1cb44ce929fa75ebbeda498929eb37780d3302a6e13f9c8bebf9.wav",
+          "pitch": "test_tone__fargan_mask_pitch__297424e7ac2a3a01284314591befd80d440f6d6eef835c1d86cab0a4c1df61da.wav",
+          "envelope": "test_tone__fargan_mask_envelope__80793592ae9602ca69afbefe47d2c7d8d7b567affb59b32e194fe29539d0f484.wav"
+        },
+        "gains": {
+          "original": 1.0,
+          "reference": 1.2619869780718365,
+          "control": 0.9843839032306458,
+          "pitch": 0.9919756733250811,
+          "envelope": 0.8961087331932807
+        },
+        "settings": {
+          "control": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              69.0,
+              145.0
+            ],
+            "edited_period_range": [
+              69.0,
+              145.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 450,
+              "init_ms": 0.11,
+              "processing_ms": 15.154,
+              "total_ms": 15.264,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 24.301915895193815
+            },
+            "features_sha256": "dbd0665b746cacfef029fd5e0105818292fde4885c94fef2ea65fd1046f891fd",
+            "output_sha256": "f0c1d5bf7140e84149d85bb2737202266853667079556765084283a4ceb7ebce",
+            "raw_peak": 0.1871596723794937,
+            "above_full_scale_samples": 0
+          },
+          "pitch": {
+            "changed_pitch_frames": 410,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              69.0,
+              145.0
+            ],
+            "edited_period_range": [
+              69.0,
+              154.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0833333432674408,
+              0.0
+            ],
+            "settings": {
+              "pitch": -1,
+              "scale": 1
+            },
+            "synthesis": {
+              "frames": 450,
+              "init_ms": 0.1,
+              "processing_ms": 15.27,
+              "total_ms": 15.37,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 24.407124845311046
+            },
+            "features_sha256": "9aaee545a7debda48810fc69ce202df5142d68de2512d92ab6b35a8c6cc126ef",
+            "output_sha256": "fcc1e2f8f79dc9e87ae69b1049423bc1dc62e63ce5c8545fed00a513362b5d5c",
+            "raw_peak": 0.17685411870479584,
+            "above_full_scale_samples": 0
+          },
+          "envelope": {
+            "changed_pitch_frames": 0,
+            "unchanged_bound_frames": 0,
+            "original_period_range": [
+              69.0,
+              145.0
+            ],
+            "edited_period_range": [
+              69.0,
+              145.0
+            ],
+            "max_abs_coefficient_delta": [
+              0.0,
+              0.20172691345214844,
+              0.6681809425354004,
+              0.5080046057701111,
+              0.5110735893249512,
+              0.5826053619384766,
+              0.4406672418117523,
+              0.6172894239425659,
+              0.407494381070137,
+              0.4878690242767334,
+              0.2927225027233362,
+              0.32869040966033936,
+              0.3392268717288971,
+              0.19383949786424637,
+              0.2809591367840767,
+              0.11236196756362915,
+              0.17338506178930402,
+              0.2145397812128067,
+              0.0,
+              0.0
+            ],
+            "settings": {
+              "pitch": 0,
+              "scale": 0.9
+            },
+            "synthesis": {
+              "frames": 450,
+              "init_ms": 0.094,
+              "processing_ms": 15.428,
+              "total_ms": 15.522,
+              "peak_rss_bytes": 2818048,
+              "subprocess_wall_ms": 23.795542074367404
+            },
+            "features_sha256": "30165d2ea1b6be128188157d18bb88a2e925cf112061dc1d4264e0dcf0d33111",
+            "output_sha256": "b3fc8f3cd81d7aaad3592190d4d3b208b6c7b4b0804776de2d37230f27989870",
+            "raw_peak": 0.19874945282936096,
+            "above_full_scale_samples": 0
+          }
+        },
+        "descriptions": {
+          "original": "Original \u00b7 16 kHz, matched to the model input",
+          "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+          "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+          "pitch": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+          "envelope": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged"
+        },
+        "note": "Tone diagnostic only; judge masking on the speech recordings."
+      }
+    }
+  },
+  "cases": {
+    "high_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_masking_1",
+        "processor": "fargan",
+        "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+        "sample": "high_voice",
+        "case_id": "high_voice",
+        "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+        "run_id": "2026-10-30T12:04:37.469767+00:00"
+      },
+      "audio": {
+        "original": "high_voice__fargan_mask_original__2ab3ce927a9617d0dd27bf1fc5bde03965322e75cac68a1873e2db790f499cdf.wav",
+        "reference": "high_voice__fargan_mask_reference__7305f1f35966afe5b9cfab4fdf0512746fd688a3c384277359b813ce80fbe913.wav",
+        "control": "high_voice__fargan_mask_control__e6e2d0f4d1414f87c9e0c9ee25fba3fef97a802287b6602f8d67947a170ccd02.wav",
+        "pitch": "high_voice__fargan_mask_pitch__07d72649de602761e7c9c987f91af32ce8cab54e805e69a1e258b001df1f40d4.wav",
+        "envelope": "high_voice__fargan_mask_envelope__71e998d81b050bb03510b56fdbfbe8c6c24c05731dbbeb32ab1caf0bd782f089.wav"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.4228863264159113,
+        "control": 1.02033502103687,
+        "pitch": 1.0569273013784075,
+        "envelope": 1.1122101509049613
+      },
+      "settings": {
+        "control": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            42.0,
+            132.0
+          ],
+          "edited_period_range": [
+            42.0,
+            132.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.107,
+            "processing_ms": 21.79,
+            "total_ms": 21.897,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 45.10908294469118
+          },
+          "features_sha256": "674fa6d959ec37fc5caffeff106730a98f709a8727eea8a39658de1cb3db5e6c",
+          "output_sha256": "ed5f8dbb9c41a74f800325474ca037e554db4961252c650de1d645ace80bad42",
+          "raw_peak": 0.05341110751032829,
+          "above_full_scale_samples": 0
+        },
+        "pitch": {
+          "changed_pitch_frames": 610,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            42.0,
+            132.0
+          ],
+          "edited_period_range": [
+            45.0,
+            137.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.08333337306976318,
+            0.0
+          ],
+          "settings": {
+            "pitch": -1,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.102,
+            "processing_ms": 22.1,
+            "total_ms": 22.202,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 48.764958046376705
+          },
+          "features_sha256": "5cad03a1555c5dda957e456f013469cf9957d9281604a7982cc11197856537c8",
+          "output_sha256": "b1697959eff9617d0ed1d331d7424a57e3924ed377b3befa9fb021e965f8c52d",
+          "raw_peak": 0.05270117521286011,
+          "above_full_scale_samples": 0
+        },
+        "envelope": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            42.0,
+            132.0
+          ],
+          "edited_period_range": [
+            42.0,
+            132.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.26512467861175537,
+            0.49735307693481445,
+            0.47089614532887936,
+            0.625641942024231,
+            0.7226877212524414,
+            0.760551929473877,
+            0.6634458303451538,
+            0.6192530393600464,
+            0.5516414642333984,
+            0.834717096760869,
+            0.49596741050481796,
+            0.6506777107715607,
+            0.5940803289413452,
+            0.47659723553806543,
+            0.5108513832092285,
+            0.4729926139116287,
+            0.48374781012535095,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 0.9
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.105,
+            "processing_ms": 21.941,
+            "total_ms": 22.046,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 46.94195790216327
+          },
+          "features_sha256": "424c9dff39654866ad585e02216bf443946c1936ecd97121a732d961aff2a63c",
+          "output_sha256": "67491cf3278963c5f26679ff58f63cdddb0c928e8df5ac77c31e7130ce5c6571",
+          "raw_peak": 0.056477051228284836,
+          "above_full_scale_samples": 0
+        }
+      },
+      "descriptions": {
+        "original": "Original \u00b7 16 kHz, matched to the model input",
+        "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+        "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "pitch": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+        "envelope": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged"
+      },
+      "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+    },
+    "mid_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_masking_1",
+        "processor": "fargan",
+        "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+        "sample": "mid_voice",
+        "case_id": "mid_voice",
+        "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+        "run_id": "2026-10-30T12:04:37.469767+00:00"
+      },
+      "audio": {
+        "original": "mid_voice__fargan_mask_original__cab3aa2f4f8f2996059ee618ea4c636f3cfd61431d8254f13384175d9cca53e7.wav",
+        "reference": "mid_voice__fargan_mask_reference__966bf29fcd6e969d6e578e8e4d8d8a718e73326da94d9b71153676f751b0e57a.wav",
+        "control": "mid_voice__fargan_mask_control__1885fc1123bb597bd9cdebce37ba478b2dd89d9002ec3b1810e24cf1a4365771.wav",
+        "pitch": "mid_voice__fargan_mask_pitch__ffd44a8ba4c2612678970e9a0fa2208806e3d00558989c870bb07b1e1fcd876b.wav",
+        "envelope": "mid_voice__fargan_mask_envelope__b77e1b15a054560d666107d9d296c0752780f0069032b8dc057d36fb14d2f83b.wav"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.483890241231767,
+        "control": 0.9978146195931478,
+        "pitch": 1.0134495816785616,
+        "envelope": 1.0349027965898288
+      },
+      "settings": {
+        "control": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            132.0
+          ],
+          "edited_period_range": [
+            53.0,
+            132.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.107,
+            "processing_ms": 21.865,
+            "total_ms": 21.972,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 48.72479196637869
+          },
+          "features_sha256": "eab63b14a356b429aec45fbad9e72f0cf54b2df03c4d730ab9ee7d74a262a51d",
+          "output_sha256": "ed316b021aff02d57456f7370ea3c79808b3dddb22ad2f7801a829d431479520",
+          "raw_peak": 0.08076313138008118,
+          "above_full_scale_samples": 0
+        },
+        "pitch": {
+          "changed_pitch_frames": 610,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            132.0
+          ],
+          "edited_period_range": [
+            56.0,
+            137.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0833333432674408,
+            0.0
+          ],
+          "settings": {
+            "pitch": -1,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.112,
+            "processing_ms": 22.638,
+            "total_ms": 22.75,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 45.05545902065933
+          },
+          "features_sha256": "e25cda2fd203c7eb8b8b5115fcce612a615da737da290a1ec2efcf6c365437d1",
+          "output_sha256": "1065e32110fa9fbc4039fefc20be81746ae9862ebfd235fe3c5f4fa41c39c7d8",
+          "raw_peak": 0.08615713566541672,
+          "above_full_scale_samples": 0
+        },
+        "envelope": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            132.0
+          ],
+          "edited_period_range": [
+            53.0,
+            132.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.41956663131713867,
+            0.5099987685680389,
+            0.6985962390899658,
+            0.7079768180847168,
+            0.7857744693756104,
+            0.5830643177032471,
+            0.4789346233010292,
+            0.6795375645160675,
+            0.46039532870054245,
+            0.5389351844787598,
+            0.5678291916847229,
+            0.5480993390083313,
+            0.5658671632409096,
+            0.5893456637859344,
+            0.4742966368794441,
+            0.4352893829345703,
+            0.48558251559734344,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 0.9
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.107,
+            "processing_ms": 22.012,
+            "total_ms": 22.119,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 44.62108388543129
+          },
+          "features_sha256": "bbedf197988611f54c606cba3e4b8dcc363a521f275c7d00f9bc21f6cc9aacf0",
+          "output_sha256": "14975d18bebf254c72eeeacbf7cebc0947e6a84f4609e30f01dfb281454ecdc2",
+          "raw_peak": 0.0739111453294754,
+          "above_full_scale_samples": 0
+        }
+      },
+      "descriptions": {
+        "original": "Original \u00b7 16 kHz, matched to the model input",
+        "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+        "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "pitch": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+        "envelope": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged"
+      },
+      "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+    },
+    "low_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_masking_1",
+        "processor": "fargan",
+        "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+        "sample": "low_voice",
+        "case_id": "low_voice",
+        "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+        "run_id": "2026-10-30T12:04:37.469767+00:00"
+      },
+      "audio": {
+        "original": "low_voice__fargan_mask_original__d1a5b3dda158badfad572922d6380b01f71a9a39f7a3cd39b7868a7c938bc736.wav",
+        "reference": "low_voice__fargan_mask_reference__f09e555cb978613fd6168a4ba7ad7108cd2749fbc6ffbc100f1563b9a3c676c6.wav",
+        "control": "low_voice__fargan_mask_control__e5d9bd17040a8f1416074845b32f8c74fcbc43b495f345f8fcf6861e93e429ab.wav",
+        "pitch": "low_voice__fargan_mask_pitch__f0fa9f77ee05960bd5f5f64eae15e03d1812dddeff9a7add567cfdc4678c6998.wav",
+        "envelope": "low_voice__fargan_mask_envelope__6f16329e226b32a10bbc18051553cb7acd720b57175a86ae2cc1a85d86f5d6ef.wav"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.174068192995409,
+        "control": 1.0123689792282187,
+        "pitch": 1.0136201554424253,
+        "envelope": 1.0516591842059637
+      },
+      "settings": {
+        "control": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            232.0
+          ],
+          "edited_period_range": [
+            53.0,
+            232.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.112,
+            "processing_ms": 21.92,
+            "total_ms": 22.032,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 48.45454194582999
+          },
+          "features_sha256": "cfa143a9f37345f8092d22f290565a48d80f7f9ea686e1c23e106dbe8c8afc2d",
+          "output_sha256": "2f2021b179a5959caa0692d621b6a71e5afb46548923f791124c60a851dec43c",
+          "raw_peak": 0.0843038558959961,
+          "above_full_scale_samples": 0
+        },
+        "pitch": {
+          "changed_pitch_frames": 610,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            232.0
+          ],
+          "edited_period_range": [
+            50.0,
+            219.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.08333337306976318,
+            0.0
+          ],
+          "settings": {
+            "pitch": 1,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.107,
+            "processing_ms": 21.89,
+            "total_ms": 21.997,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 47.318125143647194
+          },
+          "features_sha256": "c76b9464e8a33b80b5a0ca1dcc48906ac03679262306c7adde9c0ebf9479c2c2",
+          "output_sha256": "48dfb8d1ae74a1fb0fc44ce39cc272d86edec11f1c6dfe2bd389dc0bc19f39a5",
+          "raw_peak": 0.08107154816389084,
+          "above_full_scale_samples": 0
+        },
+        "envelope": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            232.0
+          ],
+          "edited_period_range": [
+            53.0,
+            232.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.27451467514038086,
+            0.5505024194717407,
+            0.6068662405014038,
+            0.4529728889465332,
+            0.6222752332687378,
+            0.7253536880016327,
+            0.6037729978561401,
+            0.4737710803747177,
+            0.5318726412951946,
+            0.7015300840139389,
+            0.4834631681442261,
+            0.5560494065284729,
+            0.4507174789905548,
+            0.4253762662410736,
+            0.33747683465480804,
+            0.29620085656642914,
+            0.42539893090724945,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1.1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.102,
+            "processing_ms": 21.842,
+            "total_ms": 21.944,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 48.56929206289351
+          },
+          "features_sha256": "13acba3100362cb95707476d141a0421e8c86e1d5c29b103c8120b1e7d9afeaa",
+          "output_sha256": "91d4d9b488543f2b524696de0f3a1c9d68d01f1009a7e3a219ba2f0d14a39336",
+          "raw_peak": 0.09169500321149826,
+          "above_full_scale_samples": 0
+        }
+      },
+      "descriptions": {
+        "original": "Original \u00b7 16 kHz, matched to the model input",
+        "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+        "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "pitch": "Pitch +1 semitone where within model range \u00b7 resonance features unchanged",
+        "envelope": "Gentle approximate resonance warp \u00d71.10 \u00b7 pitch unchanged"
+      },
+      "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+    },
+    "mencken_wasichu.wav": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_masking_1",
+        "processor": "fargan",
+        "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+        "sample": "mencken_wasichu",
+        "case_id": "mencken_wasichu",
+        "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+        "run_id": "2026-10-30T12:04:37.469767+00:00"
+      },
+      "audio": {
+        "original": "mencken_wasichu__fargan_mask_original__dc469d4f8deb72134a719947cbed3cd0098e3d77fafbe4c446e63274baa7acfa.wav",
+        "reference": "mencken_wasichu__fargan_mask_reference__d2370419dfbfedae39b27ea08b75b2eb4ab968e74330b9a65b3217448f3bebae.wav",
+        "control": "mencken_wasichu__fargan_mask_control__c228aae275445ab6a55a7fe5f0791babea07eec7b8e18dfb2d76f4ba1db17224.wav",
+        "pitch": "mencken_wasichu__fargan_mask_pitch__dcf6a01366de81ee1ee8f88ba1417877e0814e245ee60cc4e351567fba0382ad.wav",
+        "envelope": "mencken_wasichu__fargan_mask_envelope__9f478c8c2a54b6b9ab7429deecc27df79fb86bf178f2fca5a0da9b1cdb78f09b.wav"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.1797885739936462,
+        "control": 1.022297687233191,
+        "pitch": 1.0385930591282375,
+        "envelope": 1.1490075091806249
+      },
+      "settings": {
+        "control": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            220.0
+          ],
+          "edited_period_range": [
+            53.0,
+            220.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.106,
+            "processing_ms": 21.844,
+            "total_ms": 21.95,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 46.11966712400317
+          },
+          "features_sha256": "f323711510c901aee938a7b43711b55a0af7a067933b7c2fae18d55ff6fd437e",
+          "output_sha256": "d96f968657ed0d7f4ec87a4a6750a0c45ada809fdddd89a85beb93499aa2e66c",
+          "raw_peak": 0.03848439082503319,
+          "above_full_scale_samples": 0
+        },
+        "pitch": {
+          "changed_pitch_frames": 610,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            220.0
+          ],
+          "edited_period_range": [
+            50.0,
+            207.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.08333337306976318,
+            0.0
+          ],
+          "settings": {
+            "pitch": 1,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.103,
+            "processing_ms": 22.331,
+            "total_ms": 22.434,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 42.825124925002456
+          },
+          "features_sha256": "2c1a1e27b62098afef4aa3200d4ba5770bb17218f723152c9ac7538292ba8425",
+          "output_sha256": "bfe38e2ab63f9bd0fbb6f4cc67bc2684fccdfd6002f89303d46098cae12c49af",
+          "raw_peak": 0.03438839316368103,
+          "above_full_scale_samples": 0
+        },
+        "envelope": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            53.0,
+            220.0
+          ],
+          "edited_period_range": [
+            53.0,
+            220.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.17724275588989258,
+            0.31208083033561707,
+            0.4110046625137329,
+            0.48028844594955444,
+            0.5210843086242676,
+            0.47590088844299316,
+            0.4359140396118164,
+            0.4837340712547302,
+            0.4842155948281288,
+            0.3822597861289978,
+            0.488667368888855,
+            0.5584508180618286,
+            0.35355517268180847,
+            0.30797283351421356,
+            0.2720688730478287,
+            0.24752070754766464,
+            0.3397987186908722,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1.1
+          },
+          "synthesis": {
+            "frames": 650,
+            "init_ms": 0.104,
+            "processing_ms": 21.858,
+            "total_ms": 21.962,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 47.23520786501467
+          },
+          "features_sha256": "89068fe4940b2f0c97203085dfc854cff5922ac34e138e6cacd93481537b1a26",
+          "output_sha256": "f9b594487f6180cef399e1e5584b0d27c01b56bbbcb2dc54df7ed86b6b0147ba",
+          "raw_peak": 0.03903702273964882,
+          "above_full_scale_samples": 0
+        }
+      },
+      "descriptions": {
+        "original": "Original \u00b7 16 kHz, matched to the model input",
+        "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+        "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "pitch": "Pitch +1 semitone where within model range \u00b7 resonance features unchanged",
+        "envelope": "Gentle approximate resonance warp \u00d71.10 \u00b7 pitch unchanged"
+      },
+      "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately."
+    },
+    "test_tone": {
+      "context": {
+        "view": "round",
+        "mode": "fargan_masking_1",
+        "processor": "fargan",
+        "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+        "sample": "test_tone",
+        "case_id": "test_tone",
+        "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+        "run_id": "2026-10-30T12:04:37.469767+00:00"
+      },
+      "audio": {
+        "original": "test_tone__fargan_mask_original__447626f67b1597fb73b197581d0ce13b4074f6f7d6a019a72acbad00b0d9c71d.wav",
+        "reference": "test_tone__fargan_mask_reference__2ecdcaf11bfe26dd4581f039b84270b674505fa5a1fae5cd1b6d81b21945886e.wav",
+        "control": "test_tone__fargan_mask_control__acaad9fa03ed1cb44ce929fa75ebbeda498929eb37780d3302a6e13f9c8bebf9.wav",
+        "pitch": "test_tone__fargan_mask_pitch__297424e7ac2a3a01284314591befd80d440f6d6eef835c1d86cab0a4c1df61da.wav",
+        "envelope": "test_tone__fargan_mask_envelope__80793592ae9602ca69afbefe47d2c7d8d7b567affb59b32e194fe29539d0f484.wav"
+      },
+      "gains": {
+        "original": 1.0,
+        "reference": 1.2619869780718365,
+        "control": 0.9843839032306458,
+        "pitch": 0.9919756733250811,
+        "envelope": 0.8961087331932807
+      },
+      "settings": {
+        "control": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            69.0,
+            145.0
+          ],
+          "edited_period_range": [
+            69.0,
+            145.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 450,
+            "init_ms": 0.11,
+            "processing_ms": 15.154,
+            "total_ms": 15.264,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 24.301915895193815
+          },
+          "features_sha256": "dbd0665b746cacfef029fd5e0105818292fde4885c94fef2ea65fd1046f891fd",
+          "output_sha256": "f0c1d5bf7140e84149d85bb2737202266853667079556765084283a4ceb7ebce",
+          "raw_peak": 0.1871596723794937,
+          "above_full_scale_samples": 0
+        },
+        "pitch": {
+          "changed_pitch_frames": 410,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            69.0,
+            145.0
+          ],
+          "edited_period_range": [
+            69.0,
+            154.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0833333432674408,
+            0.0
+          ],
+          "settings": {
+            "pitch": -1,
+            "scale": 1
+          },
+          "synthesis": {
+            "frames": 450,
+            "init_ms": 0.1,
+            "processing_ms": 15.27,
+            "total_ms": 15.37,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 24.407124845311046
+          },
+          "features_sha256": "9aaee545a7debda48810fc69ce202df5142d68de2512d92ab6b35a8c6cc126ef",
+          "output_sha256": "fcc1e2f8f79dc9e87ae69b1049423bc1dc62e63ce5c8545fed00a513362b5d5c",
+          "raw_peak": 0.17685411870479584,
+          "above_full_scale_samples": 0
+        },
+        "envelope": {
+          "changed_pitch_frames": 0,
+          "unchanged_bound_frames": 0,
+          "original_period_range": [
+            69.0,
+            145.0
+          ],
+          "edited_period_range": [
+            69.0,
+            145.0
+          ],
+          "max_abs_coefficient_delta": [
+            0.0,
+            0.20172691345214844,
+            0.6681809425354004,
+            0.5080046057701111,
+            0.5110735893249512,
+            0.5826053619384766,
+            0.4406672418117523,
+            0.6172894239425659,
+            0.407494381070137,
+            0.4878690242767334,
+            0.2927225027233362,
+            0.32869040966033936,
+            0.3392268717288971,
+            0.19383949786424637,
+            0.2809591367840767,
+            0.11236196756362915,
+            0.17338506178930402,
+            0.2145397812128067,
+            0.0,
+            0.0
+          ],
+          "settings": {
+            "pitch": 0,
+            "scale": 0.9
+          },
+          "synthesis": {
+            "frames": 450,
+            "init_ms": 0.094,
+            "processing_ms": 15.428,
+            "total_ms": 15.522,
+            "peak_rss_bytes": 2818048,
+            "subprocess_wall_ms": 23.795542074367404
+          },
+          "features_sha256": "30165d2ea1b6be128188157d18bb88a2e925cf112061dc1d4264e0dcf0d33111",
+          "output_sha256": "b3fc8f3cd81d7aaad3592190d4d3b208b6c7b4b0804776de2d37230f27989870",
+          "raw_peak": 0.19874945282936096,
+          "above_full_scale_samples": 0
+        }
+      },
+      "descriptions": {
+        "original": "Original \u00b7 16 kHz, matched to the model input",
+        "reference": "Released Signalsmith \u00b7 strong resonance and one-semitone pitch shift",
+        "control": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "pitch": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+        "envelope": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged"
+      },
+      "note": "Tone diagnostic only; judge masking on the speech recordings."
+    }
+  },
+  "candidates": {
+    "fargan_mask_control": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__fargan_mask_original__2ab3ce927a9617d0dd27bf1fc5bde03965322e75cac68a1873e2db790f499cdf.wav",
+          "converted": "high_voice__fargan_mask_control__e6e2d0f4d1414f87c9e0c9ee25fba3fef97a802287b6602f8d67947a170ccd02.wav"
+        },
+        "description": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_control",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__fargan_mask_original__cab3aa2f4f8f2996059ee618ea4c636f3cfd61431d8254f13384175d9cca53e7.wav",
+          "converted": "mid_voice__fargan_mask_control__1885fc1123bb597bd9cdebce37ba478b2dd89d9002ec3b1810e24cf1a4365771.wav"
+        },
+        "description": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_control",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__fargan_mask_original__d1a5b3dda158badfad572922d6380b01f71a9a39f7a3cd39b7868a7c938bc736.wav",
+          "converted": "low_voice__fargan_mask_control__e5d9bd17040a8f1416074845b32f8c74fcbc43b495f345f8fcf6861e93e429ab.wav"
+        },
+        "description": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_control",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__fargan_mask_original__dc469d4f8deb72134a719947cbed3cd0098e3d77fafbe4c446e63274baa7acfa.wav",
+          "converted": "mencken_wasichu__fargan_mask_control__c228aae275445ab6a55a7fe5f0791babea07eec7b8e18dfb2d76f4ba1db17224.wav"
+        },
+        "description": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_control",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__fargan_mask_original__447626f67b1597fb73b197581d0ce13b4074f6f7d6a019a72acbad00b0d9c71d.wav",
+          "converted": "test_tone__fargan_mask_control__acaad9fa03ed1cb44ce929fa75ebbeda498929eb37780d3302a6e13f9c8bebf9.wav"
+        },
+        "description": "Unchanged FARGAN synthesis \u00b7 no masking features edited",
+        "note": "Tone diagnostic only; judge masking on the speech recordings.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_control",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      }
+    },
+    "fargan_mask_pitch": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__fargan_mask_original__2ab3ce927a9617d0dd27bf1fc5bde03965322e75cac68a1873e2db790f499cdf.wav",
+          "converted": "high_voice__fargan_mask_pitch__07d72649de602761e7c9c987f91af32ce8cab54e805e69a1e258b001df1f40d4.wav"
+        },
+        "description": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_pitch",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__fargan_mask_original__cab3aa2f4f8f2996059ee618ea4c636f3cfd61431d8254f13384175d9cca53e7.wav",
+          "converted": "mid_voice__fargan_mask_pitch__ffd44a8ba4c2612678970e9a0fa2208806e3d00558989c870bb07b1e1fcd876b.wav"
+        },
+        "description": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_pitch",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__fargan_mask_original__d1a5b3dda158badfad572922d6380b01f71a9a39f7a3cd39b7868a7c938bc736.wav",
+          "converted": "low_voice__fargan_mask_pitch__f0fa9f77ee05960bd5f5f64eae15e03d1812dddeff9a7add567cfdc4678c6998.wav"
+        },
+        "description": "Pitch +1 semitone where within model range \u00b7 resonance features unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_pitch",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__fargan_mask_original__dc469d4f8deb72134a719947cbed3cd0098e3d77fafbe4c446e63274baa7acfa.wav",
+          "converted": "mencken_wasichu__fargan_mask_pitch__dcf6a01366de81ee1ee8f88ba1417877e0814e245ee60cc4e351567fba0382ad.wav"
+        },
+        "description": "Pitch +1 semitone where within model range \u00b7 resonance features unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_pitch",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__fargan_mask_original__447626f67b1597fb73b197581d0ce13b4074f6f7d6a019a72acbad00b0d9c71d.wav",
+          "converted": "test_tone__fargan_mask_pitch__297424e7ac2a3a01284314591befd80d440f6d6eef835c1d86cab0a4c1df61da.wav"
+        },
+        "description": "Pitch -1 semitone where within model range \u00b7 resonance features unchanged",
+        "note": "Tone diagnostic only; judge masking on the speech recordings.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_pitch",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      }
+    },
+    "fargan_mask_envelope": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__fargan_mask_original__2ab3ce927a9617d0dd27bf1fc5bde03965322e75cac68a1873e2db790f499cdf.wav",
+          "converted": "high_voice__fargan_mask_envelope__71e998d81b050bb03510b56fdbfbe8c6c24c05731dbbeb32ab1caf0bd782f089.wav"
+        },
+        "description": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_envelope",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__fargan_mask_original__cab3aa2f4f8f2996059ee618ea4c636f3cfd61431d8254f13384175d9cca53e7.wav",
+          "converted": "mid_voice__fargan_mask_envelope__b77e1b15a054560d666107d9d296c0752780f0069032b8dc057d36fb14d2f83b.wav"
+        },
+        "description": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_envelope",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__fargan_mask_original__d1a5b3dda158badfad572922d6380b01f71a9a39f7a3cd39b7868a7c938bc736.wav",
+          "converted": "low_voice__fargan_mask_envelope__6f16329e226b32a10bbc18051553cb7acd720b57175a86ae2cc1a85d86f5d6ef.wav"
+        },
+        "description": "Gentle approximate resonance warp \u00d71.10 \u00b7 pitch unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_envelope",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__fargan_mask_original__dc469d4f8deb72134a719947cbed3cd0098e3d77fafbe4c446e63274baa7acfa.wav",
+          "converted": "mencken_wasichu__fargan_mask_envelope__9f478c8c2a54b6b9ab7429deecc27df79fb86bf178f2fca5a0da9b1cdb78f09b.wav"
+        },
+        "description": "Gentle approximate resonance warp \u00d71.10 \u00b7 pitch unchanged",
+        "note": "Compare masking against the unchanged FARGAN control, and sound quality against the Signalsmith reference. Pitch and resonance are tested separately.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_envelope",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__fargan_mask_original__447626f67b1597fb73b197581d0ce13b4074f6f7d6a019a72acbad00b0d9c71d.wav",
+          "converted": "test_tone__fargan_mask_envelope__80793592ae9602ca69afbefe47d2c7d8d7b567affb59b32e194fe29539d0f484.wav"
+        },
+        "description": "Gentle approximate resonance warp \u00d70.90 \u00b7 pitch unchanged",
+        "note": "Tone diagnostic only; judge masking on the speech recordings.",
+        "level_matched": true,
+        "reference_title": "Original \u00b7 16 kHz",
+        "reference_description": "Original \u00b7 16 kHz, matched to the model input",
+        "context": {
+          "view": "model",
+          "mode": "fargan_masking",
+          "processor": "fargan_mask_envelope",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "build_id": "babc31d5315d38593f4bdda30fdc8bc170454206f7366a5a838b5bed8cca942f",
+          "run_id": "2026-10-30T12:04:37.469767+00:00"
+        }
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original \u00b7 16 kHz"
+    },
+    {
+      "id": "control",
+      "label": "Unchanged FARGAN"
+    },
+    {
+      "id": "pitch",
+      "label": "FARGAN \u00b7 pitch only"
+    },
+    {
+      "id": "envelope",
+      "label": "FARGAN \u00b7 resonance only"
+    },
+    {
+      "id": "reference",
+      "label": "Signalsmith reference"
+    }
+  ],
+  "title": "Can compact FARGAN synthesis mask the voice?",
+  "intro": "Compare unchanged FARGAN with pitch-only and resonance-only edits. Which gives useful disguise without losing too much clarity? Signalsmith remains the product reference.",
+  "details": [
+    "Pitch moves one semitone down for high/mid voices and up for low/Wasichu. Frames that would exceed the model pitch range are left unchanged and counted. Envelope coefficients and voicing are untouched.",
+    "Resonance-only edits warp compensated log-band energies, then restore the original coefficient-zero value. This preserves average log-band level, not waveform loudness. Pitch, voicing and the fixed padding frames are untouched.",
+    "The envelope warp is gentle and frequency dependent (0.9/1.1 near the low end), tapering to unchanged lookup at 8 kHz. It is not uniform formant scaling, and feature edits may be outside the model training distribution.",
+    "All five versions share RMS matching and peak headroom. The original comes from the exact cached 16 kHz model-input PCM. Signalsmith reuses the accepted quantized playback reference with its old gain reversed approximately; it is not a raw-waveform identity claim. No output correlation alignment, limiter or live microphone is used.",
+    "The accepted quality report and its reviews remain intact. This round adds no browser performance, streaming or privacy guarantee. Stop if neither isolated edit improves disguise enough to justify its quality cost."
+  ]
+}

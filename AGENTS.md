@@ -1,336 +1,239 @@
 # randos — agent guide
 
-randos is an anonymous, audio-only language-practice app (Phoenix LiveView +
-browser WebRTC). Read `README.md` for product philosophy; the constraints there
-(no accounts, no recording, no server-side audio, no persistent social graph;
-free, with no ads, no tracking or analytics, no paid features, never video)
-are product requirements, not suggestions. Don't add features that violate them.
+randos is an anonymous, audio-only language-practice app: Phoenix LiveView,
+browser WebRTC, and a separate Elixir TUI with a Rust media helper.
+`README.md` defines the product: no accounts, recording, server-side audio,
+persistent social graph, ads, tracking/analytics, paid features, or video.
+These are requirements. There is no database; do not add Ecto/Postgres without
+asking. Live call state belongs in processes; aggregate status counters have
+separate privacy rules in `docs/privacy.md`.
 
-## Toolchain & commands
+## Start with relevant context
 
-- Versions are pinned in `mise.toml` (Erlang/OTP, Elixir, just, node, OpenTofu). Run `mise install`.
-- Commands live in the `Justfile`; prefer them over ad-hoc invocations:
-  - `just setup` — toolchain + deps + assets (with `just prefetch`: the
-    prebuilt NIFs and Tailwind through curl, since GitHub's big release
-    headers break Erlang's :httpc downloads; `bin/prefetch.sh`)
-  - `just dev` — `iex -S mix phx.server` (HTTP :4000, HTTPS :4001 if `priv/cert/*.pem` exist; `just certs` makes them)
-    `just dev` and `just dev-turn` first stop a background `just serve` on the port
-    (never an interactive IEx server: that's an error)
-  - `just serve` — the same server without IEx, for running in the background;
-    if something already answers on :4000 it reuses it and exits.
-    `just serve-stop` stops it (only a BEAM on the port)
-  - `just tui` — the terminal client against the local dev server (`RANDOS_URL`/`--url`
-    to override); `just test-tui [path]` runs the TUI's own tests. `just tui-smoke` —
-    through a throwaway server, two real TUI clients call each other, and a TUI
-    (helper playing a tone) calls headless Chrome in both WebRTC roles with audio
-    checked both ways; then the relay-only pass and the recovery tests (ICE
-    restart through the test TURN relay, `just test-turn` builds it). Run it after
-    changing `clients/tui`, the helper, the channel, or the browser call; needs
-    the helper built, node, Chrome
-  - `just screenshots` — regenerates the README's screenshots (`docs/assets/`)
-    from a real call on a throwaway server: headless Chrome peers and VHS
-    driving the TUI with `RANDOS_FAKE_AUDIO=1` (a test tone, no speaker, no
-    device names on screen). Rerun after visible UI changes; needs `vhs`
-  - `just top` — dev server plus a terminal dashboard (`RandosDev.Monitor`, in `dev/`):
-    queues, live calls, events from telemetry; logs go to `tmp/top.log`; `q` quits
-  - `just test [path]`, `just test-failed`
-  - `just precommit` — **run before declaring any change done** and fix everything it reports
-    (the server's warnings-as-errors compile, unused deps, format, `credo --strict`,
-    tests; then `native-check`, the TUI's own precommit, and the Python harnesses'
-    offline tests, `translate-test` with Ruff and `voice-eval-test`).
-    Check its exit status, not filtered output: piping it through `grep`/`tail`
-    hides failures. CI (`.github/workflows/ci.yml`) runs it on macOS and Linux
-    with `RANDOS_REQUIRE_NATIVE=1`, plus `just smoke` and `just tui-smoke`;
-    inspect runs with `gh run list` / `gh run view --log-failed`.
-    Dependabot (`.github/dependabot.yml`) opens grouped update PRs (weekly;
-    the Python harnesses monthly), and `dependency-check.yml` runs
-    `cargo deny check advisories` and `mix hex.audit` every Monday, so an
-    advisory surfaces without a push. Merge a Dependabot PR on green CI,
-    except: `major` (read the changelog for breaking changes first), and a
-    `gpu-check` harness's `-models` PR (the comparison in
-    `docs/development.md`, "Dependency updates", first); a `-tooling` PR
-    needs only CI though it carries `gpu-check`.
-  - `just smoke` — the browser end-to-end checks: `call_smoke.mjs` (two
-    headless Chromes with fake mics place a real WebRTC call, extend it, drop
-    and resume a socket, check mic teardown), `relay_only_smoke.mjs`,
-    `voice_lab_smoke.mjs`, and `just recovery-smoke` (ICE restart through the
-    test TURN relay). **Run it after any change to `assets/js/` or the call
-    flow**; `mix test` can't see browser behavior. Needs Chrome (or `CHROME_BIN`).
-    `docs/development.md` describes every recipe for contributors.
-  - Production check: `BASE_URL=https://randos.slowinput.org SMOKE_SKIP_EXTENSION=1 node test/e2e/call_smoke.mjs`
-    (the canonical host; `randos.fly.dev` rejects browser sockets by design)
-  - `RANDOS_CALL_SEGMENT_MS=8000 just dev` — dev-only short call segments for
-    trying the extension flow by hand
-  - `just outdated`, `just update` (also regenerates the usage-rules block below)
-  - `just graft` — rebuild the graft graph after large changes
-  - `just tofu <cmd>` — OpenTofu for the coturn server (`infra/coturn`). State is
-    encrypted and committed; needs `TF_VAR_state_passphrase` (user's password
-    manager) and `TF_VAR_do_token`. Never commit plaintext state (`just precommit` checks).
-- The TUI renderer is source-pinned under `vendor/ex_ratatui` with an atomic
-  physical-clear/backbuffer-reset patch (see `vendor/README.md`). Its NIF builds
-  through Rustler; `just prefetch` skips unpatched renderer binaries.
-- MCP servers (`.mcp.json`): `graft` (code graph, always on) and `tidewave`
-  (runtime: eval in the running app, logs, docs, SQL-free introspection).
-  Prefer Tidewave over `mix run` scripts for poking at live process state
-  (Matchmaker, calls). Tidewave is served by the dev server on :4000, so:
-  - Both Claude Code and Codex should use `mise exec -- ./bin/tidewave-mcp`:
-    the launcher starts or reuses `just serve`, then runs `mcp-proxy` (pinned
-    in `mise.toml`), which waits for the server and reconnects after restarts.
-    Keep the MCP startup timeout at 120 seconds so a cold compile can finish.
-    Don't configure Codex with a direct HTTP URL: it can fail before the dev
-    server is ready. Codex reads its own `config.toml`, not `.mcp.json`;
-  - a `SessionStart` hook in `.claude/settings.json` runs `just serve` in the
-    background (logs in `tmp/serve.log`; it reuses a running server).
-- **Standing rule: start the dev server yourself when needed.** If Tidewave,
-  the TUI (`just tui`), or a test needs the dev server and nothing is
-  listening on :4000, run `just serve` in the background (exactly that
-  command, so the user's permission rule matches) and wait until
-  `http://localhost:4000/` answers. If a server is already up (the user's
-  `just dev`, or one you started earlier), reuse it; never start a second
-  one. `just serve` checks this itself. The throwaway servers that
-  `just smoke` / `just tui-smoke` start on :4010 are separate and fine.
-- Prefer plain Elixir and OTP (`GenServer`, `:gen_statem`, `Registry`, `:pg`,
-  `Task`) over adding dependencies; justify any new dep. Production runs a
-  single node today, but don't bake in single-node assumptions casually.
-- Elixir code intelligence: the `expert-lsp` Claude Code plugin in
-  `tools/claude-plugins` runs Expert (pinned in `mise.toml`). It's enabled per
-  machine, not in committed settings. One-time setup from the repo root:
-  `claude plugin marketplace add ./tools/claude-plugins --scope local && claude plugin install expert-lsp@randos-local --scope local`,
-  then restart Claude Code. (The plugin CLI rewrites `.claude/settings.json`
-  and empties graft's `footerLinksRegexes`; check `git diff` afterwards.)
-- Use `Req` for HTTP. Don't add `:httpoison`, `:tesla`, or `:httpc`.
+Use the Trail guidance below for code discovery. Read only the guides relevant
+to the requested work; historical prompts are context, not specifications.
+Sessions launched at the repository root may not load nested agent guides
+automatically, so explicitly open relevant guides before changing those paths.
 
-## Architecture (layer boundaries)
+| Work | Required context |
+| --- | --- |
+| Setup, recipes, MCP, checks, dependencies | `docs/development.md`, `mise.toml`, `Justfile` |
+| Call behavior or either client | `docs/architecture/participant_channel.md`, `docs/architecture/call_flow.md` |
+| TUI or media Port | `clients/tui/README.md`, `clients/tui/native/README.md`; implement against the channel document, not channel source |
+| Rust/DSP/FFI | Relevant crate README (`voice/`, `voice-native/`, `clients/tui/native/`), root `Cargo.toml`, `vendor/README.md` |
+| Phoenix/HEEx | `.claude/skills/phoenix-framework/SKILL.md` before touching `lib/randos_web/` or templates |
+| Privacy, TURN, operations | `docs/privacy.md`, `docs/self-hosting.md`; `docs/architecture/coturn_audit.md` for relay changes |
+| Translations | `priv/gettext/README.md`, `tools/translate/README.md`, `docs/architecture/tui_translation.md` |
+| Lab/evaluation | Relevant `tools/voice-*` README and current experiment section of `docs/architecture/refactor_plan.md` |
+| Packaging/release | `docs/development.md` Releases, `packaging/homebrew/README.md`, `.github/workflows/release.yml` |
 
-| Layer | Module(s) | Owns |
-| --- | --- | --- |
-| Call model | `Randos.Calls.Call` (struct), `Randos.Calls.Lifecycle` (pure) | Public call state; timing constants and valid status transitions |
-| Matchmaking | `Randos.Matchmaking.Matchmaker` (singleton GenServer) | Live queue membership: one waiting list, oldest first; a match needs each person's speaking language among the other's hearing languages (`Entry.compatible?/2`); recently matched pairs are kept apart for `Lifecycle.rematch_window_seconds/0`; and invitations (`invite/2`, `accept/3`): someone waiting to be found by a link's token, kept apart from the queue (only the token's hash) |
-| Calls | `Randos.Calls.CallCoordinator` (`:gen_statem`, one per call, under `Randos.Calls.CallSupervisor`) | State timeouts, extension votes, participant monitoring, (a participant whose process goes away is marked away and may resume within `Lifecycle.recovery_budget_seconds/0` with its one-time ticket, `Randos.Calls.ResumeTicket`; `CallCoordinator.resume/4`) media signal relay, and **call health** (the connect timeout, then one recovery budget for media down or a participant away, with ICE restarts inside it) from clients' raw `media_state` reports. Clients follow "Client obligations" in `participant_channel.md` and run no health timers of their own; the one exception is obligation 11's offline limit (`Lifecycle.offline_limit_seconds/0`, sent in the call), since a client that can't reach the server can't ask it |
-| Signaling | `Randos.Signaling` | WebRTC signaling message shape/validation, and the relay-only filter (server never touches media) |
-| Participant core | `Randos.Participant` (pure) | One person's flow: find → queue → call → back, or invite → (someone accepts the link) → call → idle. `handle(participant, event) :: {participant, [effect]}` |
-| Web | `RandosWeb.HomeLive`, `RandosWeb.HomeComponents` | Shell over `Randos.Participant` (maps browser events/PubSub to participant events, runs effects); components render it |
-| Channel API | `RandosWeb.ParticipantSocket`/`ParticipantChannel` (shared `RandosWeb.ParticipantShell`) | Anonymous JSON API for non-browser clients (the TUI). Protocol: `docs/architecture/participant_channel.md`; keep it in sync with the channel |
-| Browser | `assets/js/randos/*`, `assets/js/hooks/*` | Mic capture, RTCPeerConnection, audio viz, timers |
-| TUI client | `clients/tui` (separate Mix project: `Tui.Supervisor` over `Tui.App`, `Tui.Model`, `Tui.View` (the screens; every string in gettext, `Tui.Gettext`, in the language `Tui.Language` picks, its cell widths from `Tui.Width`), `Tui.Connection`, and `Tui.Media`, which owns the Rust media helper over a Port; local audio state is the pure `Tui.Media.State`) | Terminal client over the participant channel, with call audio (Phase 4.3) in the Rust helper `clients/tui/native`. **Written against `participant_channel.md` only, never the channel source**; anything it needs that the doc lacks is a doc bug. Renders server state; no state machine of its own |
+Keep the living roadmap `docs/architecture/refactor_plan.md` in sync, including
+its Verified line. Use symbols rather than brittle line numbers. Update
+`docs/privacy.md` and protocol/call-flow docs when their claims change. For a
+user-visible feature, command, setting or merged lane, also check README,
+development and self-hosting docs; record why any of these need no change.
 
-- Processes notify LiveViews over `Randos.PubSub`. Topic per participant:
+## Work in small, reviewable steps
+
+- Prefer a small experiment that can disprove an approach before building a
+  large feature around it. Show playable comparisons, compact review views,
+  or a working browser/native path early. Preserve the owner's listening notes
+  and attach results to the exact source, settings and implementation used.
+- For masking, evaluate naturalness, intelligibility, perceived disguise,
+  latency, download size, memory and compute separately. Speaker-recognition
+  and recovery attacks describe limitations; failing a strong attack does not
+  automatically disqualify a useful voice mask. Do not promise anonymity.
+- Continue authorized preparation through implementation and validation.
+  Ask only for a genuinely missing decision or an action outside the authorized
+  scope. Push, tag, publish, deploy and external messages need authorization;
+  reuse authorization already given for that scope.
+- Use subagents only for bounded independent work when delegation is authorized
+  and useful. Prefer less costly models for narrow inventory or routine checks;
+  use a strong advisor for architecture, media/privacy boundaries, protocols,
+  difficult debugging and release reviews. Give each task clear inputs,
+  ownership and acceptance criteria; avoid concurrent edits to the same files.
+  The primary agent integrates and verifies the result.
+
+## Toolchain and runtime
+
+Versions are pinned in `mise.toml`; run `mise install` and use `just` recipes.
+`just setup` includes dependency/assets setup and `just prefetch` (curl avoids
+large GitHub-header problems in Erlang downloads). Prefer plain Elixir/OTP;
+justify each new dependency. Use `Req` for HTTP, not httppoison/tesla/httpc.
+Do not casually assume production will always be a single node.
+
+**Start the dev server yourself when needed.** Run exactly `just serve` in the
+background when :4000 is absent, then wait for HTTP readiness. It reuses an
+existing server. Never start a duplicate or stop the owner's interactive IEx.
+`just serve-stop` can stop any BEAM on the port: first verify it is the
+background server, not interactive IEx. `just dev`/`just dev-turn` replace a
+managed server and explicitly reject replacing interactive IEx. HTTPS uses local
+`priv/cert` files; see development docs for device testing and port overrides.
+
+MCP: graft is the configured code graph; Trail also indexes repository context.
+Use Tidewave for live process inspection instead of `mix run` scripts. Its
+launcher is `mise exec -- ./bin/tidewave-mcp`: it starts/reuses the server and
+runs the pinned reconnecting proxy. Keep startup timeout 120 seconds. Codex
+reads its own config, not `.mcp.json`; do not replace the launcher with a direct
+HTTP URL. Machine-local Expert/rust-analyzer plugin setup is in development docs.
+
+## Architecture and contracts
+
+| Owner | Responsibility |
+| --- | --- |
+| `Randos.Calls.Call`, pure `Lifecycle` | Public call state, transitions and all call timing constants |
+| `Matchmaking.Matchmaker` | Oldest-compatible queue, recent-pair exclusion, hashed-token invitations kept outside the queue |
+| Per-call `CallCoordinator` (`:gen_statem`) | Call timing, votes, participant monitoring/resume tickets, signal relay, connect/recovery health and ICE restart policy |
+| `Randos.Signaling` | Signal validation and relay-only filtering; never media |
+| Pure `Randos.Participant` | Flow events → state/effects; both clients render server policy |
+| `HomeLive` / `HomeComponents`, channel `ParticipantShell` | Web and anonymous channel shells over participant state |
+| Browser hooks/client, `Tui.Media` / Rust helper | Devices, media transport and local audio lifecycle |
+
+- Server policy is authoritative. Timing comes from `Lifecycle`, never copied
+  constants or client health timers. The documented client offline limit is the
+  explicit exception, since an unreachable server cannot end the local media.
+- Follow every client obligation in `participant_channel.md`. A new message or
+  obligation must reach that document, both clients and obligation tests. The
+  Rust Port contract lives in `clients/tui/native/README.md`: update Rust,
+  Elixir, docs and both sides' tests together.
+- Only the coordinator announces call updates/signals to participants.
+  `Matchmaker.join/1` replies to its caller but does not broadcast a match.
+  LiveView notifications use `Randos.PubSub`, participant topic
   `"matchmaking:participant:<id>"`.
-- **No database.** All state lives in processes and vanishes on restart.
-  Don't add Ecto/Postgres without asking.
-- Call timing constants (segments, extensions, the vote timeout, the connect
-  timeout, the recovery budget and the ICE restart delays, the offline limit, the rematch window) live in `Randos.Calls.Lifecycle`, the one
-  source of truth. Reuse them; don't hardcode them in the server or a client.
-- ICE/TURN config: `RandosWeb.IceServers` (env-driven; see `docs/self-hosting.md`).
-  Calls are relay-only whenever a TURN server is configured: the policy is
-  on `Randos.Calls.Call` (`ice_transport_policy`), set at boot, and the
-  coordinator enforces it on relayed signals (`Randos.Signaling.relay_only/2`).
-  Production refuses to boot without a relay unless `RANDOS_ALLOW_DIRECT_CALLS=true`.
-- A participant hears about its call only from the call's coordinator:
-  `{:call_updated, %Randos.Calls.Call{}}` on every status change (starting with
-  `:connecting`) and `{:signaling, msg}` from the peer. `Matchmaker.join/1`
-  replies `{:matched, match}` to the joiner but broadcasts nothing.
-- `docs/architecture/call_flow.md`: Mermaid diagrams of the call flow (shared,
-  then where the browser and the TUI differ); keep it in step with the code.
-- `docs/architecture/coturn_audit.md`: TURN server findings and proposed hardening.
-- `docs/architecture/invitations.md`: invitation links (design, the owner's
-  decisions, the review rounds); `docs/architecture/tui_translation.md`:
-  translating the TUI (right to left in terminals included).
-- `docs/privacy.md`: what each component sees, logs, and keeps, each claim
-  linked to its config or code. Change it with anything it describes;
-  `just check-privacy` (in precommit) fails if a coturn setting it promises
-  leaves the template, and relay-only enforcement is covered by
-  `signaling_test.exs` and `relay_only_smoke.mjs`.
-- `docs/architecture/translation_models.md`: Phase 6 research (translation models,
-  evaluators, licenses, memory on the owner's Mac).
-- The public status page: `RandosWeb.Status.snapshot/0` is everything it shows (JSON-safe, for other clients too); `RandosWeb.StatusLive` renders only from it. Counts come from `Randos.Stats` (raw counters merge across nodes with `merge/2`; `publish/1` applies the small-count rules after merging); relay health from `RandosWeb.RelayHealth` (this node's view). Tests tagged `:distributed` start peer nodes (`:peer`); `Randos.TestDistribution` makes the test VM distributed, starting epmd if needed under a pipe-guard. The participant channel's `status` request returns the same snapshot (`participant_channel.md`); the TUI shows it on its status screen (`s` on the idle screen, `Tui.View.StatusScreen`).
-- Interface language: `RandosWeb.Locale` (cookie `randos_locale`, then `Accept-Language`, then English; `dir="rtl"` for Arabic). Wrap every UI string in gettext; use `pgettext("button", …)` for buttons and `%{name}` placeholders, never concatenation; text a hook sets goes through `data-labels` (`assets/js/randos/labels.js`). After changing strings, run `mix gettext.extract --merge` (precommit fails on a stale `default.pot`); `just translate-update [site|tui]` then translates only what changed (it runs the models locally for a while, so ask the owner first). Translators' guide: `priv/gettext/README.md`; the shootout lives in `tools/translate/` (`just translate-test`; its uv groups `models`, `mlx`, `comet` share one
-venv and `uv run --group X` re-syncs it, so never run one while another
-group's model is running; what needs no model, the tests, `review`,
-`fill` and `tidy`, runs in `.venv-test` with `UV_PROJECT_ENVIRONMENT=.venv-test`,
-which `just translate-test` and so `just precommit` use, safe during a run). Its review page is `/dev/translations` (dev only; `RandosDev.TranslationReviewLive` reads `tools/translate/results/review.json`, and `results/tui/review.json` for the TUI's strings, rebuilt by `UV_PROJECT_ENVIRONMENT=.venv-test uv run python -m randos_translate.cli review`).
-  The public `/translations` page (`RandosWeb.TranslationsLive`, from
-  `RandosWeb.Translations`) lists every string with a "Suggest a fix" link to
-  a GitHub issue form; `.github/workflows/translation-fix.yml` turns such an
-  issue into a pull request (`randos_translate.issue_fix`, then
-  `mix randos.translation_fix`). The issue's text is untrusted: it never
-  reaches a shell.
-- `docs/architecture/refactor_plan.md` is the living roadmap (status, how the
-  pieces fit, Phase 4 TUI and 5 voice anonymization, open items, decisions).
-  Keep it in sync: symbols not line numbers, and update its "Verified" line.
-  `docs/architecture/` has design notes (dated ones say so at the top); `docs/prompts/` is the historical
-  prompt log of how features were built (context, not spec).
+- TURN configuration is `RandosWeb.IceServers`. With TURN configured, call
+  policy is relay-only and enforced by coordinator signal filtering.
+  Production requires a relay unless `RANDOS_ALLOW_DIRECT_CALLS=true`.
+- `RandosWeb.Status.snapshot/0` is the shared JSON-safe status contract. Stats
+  merge raw counters before applying small-count publication rules. Never
+  bypass those rules in a client or expose finer-grained counters.
+- Masking runs locally and starts off on a fresh page/client session. Freeze
+  the selected profile for a call. Failure must stop/withhold capture rather
+  than transmit an unmodified fallback; discard queued audio when ineligible.
+  Preview is explicit, never recorded/uploaded, and cleaned up on exit/failure.
+  Lab processors and bundles remain development-only until explicitly promoted.
 
-## Code-quality passes (milestones and triggers, not a schedule)
+## Verification and process ownership
 
-- **At milestones**, a full pass (DRY, architecture, tests, docs) before the
-  next stage builds on this one: the end of Phase 4.3 Stage 1 (after STUN/TURN
-  and the str0m-vs-webrtc-rs checkpoint), the start of Phase 5's voice lab,
-  and before 4.4/4.5 packaging. After any refactor lands, briefly check it
-  delivered what it promised.
-- **On triggers**, a focused mini-pass:
-  - a third media worker appears in the Rust helper;
-  - a new protocol message or client obligation is added (check it reached
-    `participant_channel.md`, both clients, and the obligation tests);
-  - a client gains its own timer, constant, or policy (ask whether it belongs
-    on the server);
-  - a test needs a timing fix more than once.
-  - a user-visible feature, a new command, or a new setting lands (or a
-    lane merges): check the README, `docs/development.md` and
-    `docs/self-hosting.md` still describe what users, contributors and
-    operators now see. The docs nearest a change (the roadmap, the
-    protocol and privacy docs) tend to keep up; these drift.
-- **How:** inventory before changing code; for each item propose extract,
-  merge, link, or leave, with a one-line reason (some duplication is cheaper
-  than a wrong abstraction); get the advisor's view; tell the owner which
-  decisions are theirs; record the outcome in `docs/architecture/refactor_plan.md`.
-- **Implementing:** no behaviour changes unless the owner approves them. After
-  each commit run `just precommit` (check its exit code), `just smoke`, and
-  `just tui-smoke`; keep CI green.
-- **Between passes**, rely on the automated guards (precommit, CI, the
-  obligation tests in both harnesses) rather than reviewing after every
-  feature. When a milestone or trigger is reached, raise it with the owner;
-  never skip it silently.
+- Run `just precommit` before declaring a change done and fix its findings.
+  Check the actual exit status; filtered logs do not prove success. It covers
+  server/TUI compile, formatting/lints/tests, native checks and offline Python
+  checks. CI repeats this on macOS/Linux with `RANDOS_REQUIRE_NATIVE=1`.
+- After every commit, run `just precommit`, `just smoke`, and `just tui-smoke`.
+  Browser and TUI smoke both own :4010: run them sequentially. Reuse valid
+  evidence for unchanged architecture; do not repeat whole audits without a
+  new milestone, changed code or unresolved finding.
+- Run browser smoke after changes to `assets/js/` or call flow; Mix tests cannot
+  see browser behavior. Run TUI smoke after TUI/helper/channel/browser-call
+  changes. These exercise real muted/fake-mic calls, relay-only and recovery.
+- Release qualification includes a clean checkout without ignored experiment
+  artifacts. Generated-media UI tests must supply explicit fixtures.
+- Run `just screenshots` after visible UI changes; it drives real disposable
+  browser/TUI calls with fake audio. Use `just turn-check` after relay-path
+  changes; only this explicit check contacts production coturn.
+- **Nothing started by a test may outlive its starter, including SIGKILL.** Use
+  Chrome `--remote-debugging-pipe` through `test/e2e/cdp.mjs`, never a debugging
+  port. Use `with_test_server.sh` and its watchdog; busy :4010 is an error.
+  Port workers exit on stdin EOF. Browsers are muted and TUI output is null;
+  tests must not play sound or capture the developer's microphone.
+- Hermetic tests have empty ICE servers and no TURN environment, and never
+  contact the internet. The intentionally persistent exception is the dev
+  server. Keep cleanup correct on success, failure, cancellation and owner death.
+- Eventual waits allow at least 5 seconds. Timing assertions and
+  `refute_receive` may retain tight bounds. Do not mask repeated timing failures
+  with retries or arbitrary deadline increases; investigate the cause.
+- Mirror `lib/` under `test/`. LiveView tests use LazyHTML/stable DOM IDs;
+  isolate named GenServers instead of using global instances. The deliberately
+  injected `:supervisor_down` matchmaking warning in tests is expected.
 
-## Testing
+## Code-quality checkpoints
 
-- **Nothing a test starts may outlive its starter**, however the starter dies
-  (`kill -9` included; a stranded headless Chrome once kept reconnecting to
-  test servers and stopped them from shutting down). The mechanisms:
-  - Chrome is driven over `--remote-debugging-pipe` (`test/e2e/cdp.mjs`),
-    never a DevTools port: it exits when the pipe closes, which the OS does
-    when its parent dies. Don't add a `--remote-debugging-port`.
-  - Test servers start through `test/e2e/with_test_server.sh`: a watchdog in
-    the server halts it once the script is gone, and a busy :4010 is an
-    error (never reused, so tests can't hit stale code).
-  - Scripts an Elixir test drives over a Port exit when their stdin closes
-    (the Port closing), like `tui_browser_call.mjs`; the media helper does
-    the same.
-  - Test browsers are muted (`--mute-audio` in `cdp.mjs`): the tests must
-    never play sound on the developer's machine. The TUI's helper plays to
-    `null` in tests for the same reason.
-  - Tests never reach the internet: the e2e test server hands out no ICE
-    servers (`RANDOS_ICE_SERVERS='[]'`, host candidates connect locally) and
-    drops any TURN env; only `just turn-check` talks to coturn, on purpose.
-  - The only long-lived process we start on purpose is the dev server
-    (`just serve`, from the session hook); stop it with `just serve-stop`.
+At architecture/media milestones and before packaging, inventory DRY,
+architecture, tests and docs before building the next stage. A focused pass is
+triggered by a third Rust media worker, a new protocol obligation, client-owned
+policy/timing, repeated test timing fixes, or a user-visible feature/setting.
 
-- **Waits in tests allow at least 5 s.** A wait for something to happen
-  (`assert_receive`, the `eventually` helpers, e2e `waitFor`) gets 5 s or
-  more: only a failing wait ever runs that long, and CI runners are slower
-  than a laptop (2 s waits flaked three tests in one day). The suites'
-  defaults say so (`assert_receive_timeout: 5_000` in both test helpers).
-  Assertions about timing itself (a short test timer firing on time) keep
-  their tight bounds; so does `refute_receive`.
-- Tests mirror `lib/` under `test/`. LiveView tests use `Phoenix.LiveViewTest`
-  + `LazyHTML`; assert on element IDs (`has_element?(view, "#id")`), not raw HTML
-  or copy text. Always give key template elements stable DOM IDs.
-- GenServer tests start isolated, named instances (see `matchmaker_test.exs`,
-  `call_coordinator_test.exs`) rather than using the app-global singletons.
-- A logged `matchmaking_call_start_failed ... reason=:supervisor_down` during
-  `mix test` is expected (`matchmaker_test.exs` injects that failure on purpose).
+For each candidate propose **extract, merge, link or leave**, with a reason.
+Use a strong advisor for substantive architecture/refactoring proposals and
+media/privacy/protocol/release risks; routine inventories can use cheaper
+agents. Identify actual owner decisions and record outcomes in the roadmap. File size alone is not a refactoring reason. Keep
+behavior-preserving refactors separate from approved behavior changes. Verify
+that a refactor delivered its stated benefit. Between checkpoints rely on
+existing guards, not a fresh whole-project review for every small edit.
 
-## Rust (the TUI media helper, `clients/tui/native`)
+## Rust and native code
 
-- The root `Cargo.toml` is a Cargo workspace with three members: the media
-  helper, `voice-native/` (the owned Signalsmith C++ bridge, with unsafe FFI
-  isolated in `src/ffi.rs`; the helper still forbids unsafe), and `voice/` (the voice processors, `randos_voice`, also compiled
-  to WASM for the browser by `just voice-wasm`; the committed `.wasm` is
-  checked fresh by `just voice-wasm-check` in `native-check`). The voice
-  crate uses `deny(unsafe_code)`, not `forbid`; its README explains the one
-  exception (the WASM exports' `no_mangle`). The rest of this section's
-  rules apply to it too. `tools/voice-eval` is the anonymization benchmark
-  (`just voice-eval`; `just voice-eval-test` offline); it renders through
-  `voice/examples/render.rs`, so a processor change shows up there. Rerun it
-  after changing a processor, and commit `results/benchmark.json`. The workspace lets rust-analyzer and `cargo` work
-  from the repo root; build output goes to `/target`, the lockfile is the
-  root `Cargo.lock`.
-- Toolchain pinned in `mise.toml` (Rust + rustfmt/clippy/rust-analyzer,
-  cargo-deny). `just native-check` runs fmt, clippy with warnings as errors,
-  tests, and `cargo deny check`; it is part of `just precommit`.
-  `just turn-check` runs the helper against the real coturn (allocations and
-  whole relay-only calls over UDP and TLS TURN; reads the TURN secret via
-  `just tofu`, never prints it). Run it after any change to the relay path:
-  three bugs once passed every hermetic test and showed only there.
-  `just media-loopback` runs mic → Opus → speaker by hand and prints latency
-  (headphones: the loopback plays your voice back on purpose, so it has no
-  echo cancellation; calls do).
-  `just tui-release` builds the installable TUI archive (`dist/`, checked by
-  running the unpacked copy); `just homebrew-formula VERSION` renders the
-  Homebrew formula (`packaging/homebrew/README.md`).
-- **One set of lints for all our Rust**: the root `Cargo.toml`'s
-  `[workspace.lints]` (each crate has `[lints] workspace = true`;
-  `just rust-lints-check`, in `native-check`, fails a crate that doesn't)
-  and the root `clippy.toml` (tests may unwrap, panic and index). The
-  helper runs the voice crate in its process, so a rule that guards one
-  guards both. Vendored crates (`vendor/`) are third-party code, not linted
-  at our levels; review their diff instead (`vendor/README.md`).
-- **No panics in the helper.** `unwrap`/`expect`/`panic!`/`todo!` and
-  unchecked indexing/slicing are denied by clippy outside tests; return
-  errors and report them over the Port as messages. A panic kills the
-  user's call.
-- **stdout is the Port.** Never print to it (`print_stdout` is denied); write
-  frames via `frame::write_frame`. Diagnostics go to stderr.
-- **No `unsafe`** (`#![forbid(unsafe_code)]` in the helper's `main.rs`; the
-  workspace lints deny it everywhere). If a dependency
-  forces FFI, isolate it and document why in the crate README.
-- **The Port protocol is a contract**, documented in
-  `clients/tui/native/README.md`; change the doc, the Rust side, and the
-  Elixir side together, with tests on both sides.
-- **Real-time audio threads** (cpal callbacks) must not allocate, lock, or do
-  I/O: hand frames off through a lock-free ring buffer.
-- **Dependencies:** justify each one in the crate README (purpose, license,
-  whether it pulls in C); permissive licenses only (`deny.toml`).
-- Rust code intelligence: install the official plugin once per machine,
-  `claude plugin install rust-analyzer-lsp@claude-plugins-official --scope local`
-  (rust-analyzer comes from `mise.toml`), then restart Claude Code.
+- Root Cargo workspace contains media helper, `voice/` (also WASM) and
+  `voice-native/` (owned Signalsmith bridge). Build output is `target/`; use the
+  root lockfile. Inherit root workspace lints in every owned crate; exceptions
+  must be documented. Vendored code is reviewed separately, not silently
+  reformatted to first-party rules.
+- No panics or unchecked indexing in helper production code: return errors over
+  the Port. Stdout is the Port; only framed messages, diagnostics to stderr.
+- The helper forbids unsafe. Unsafe FFI is isolated in `voice-native/src/ffi.rs`;
+  WASM export attributes are the voice crate's documented exception. Do not
+  spread either exception into unrelated code.
+- Real-time cpal callbacks must not allocate, lock or perform I/O; use lock-free
+  ring buffers. Preserve bounded queues and explicit failure states.
+- Justify dependencies in the crate README (purpose, license, C/FFI). Permissive
+  licenses only, enforced by cargo-deny. Check vendor source/patch/native-lock
+  provenance from a clean checkout; exclude runtime/build artifacts explicitly.
+- `just native-check` includes fmt, clippy, tests, advisories/licenses and WASM
+  freshness. After changing a processor, rerun its benchmark and commit the
+  matching `tools/voice-eval/results/benchmark.json`; distinguish correctness,
+  listening and attack evidence.
 
-## Phoenix / frontend house rules
+## Web, UI and translations
 
-These are project-specific and are **not** covered by the Phoenix skill:
+- First-party built same-origin JS/CSS only. No runtime CDN scripts/styles/fonts,
+  inline scripts/handlers, javascript URLs, eval or new Function. Third-party
+  code enters through dependencies or committed vendor assets. Declare bundle
+  entries in config; keep dev bundles out of production builds.
+- HEEx starts with `<Layouts.app flash={@flash} ...>`; flash_group belongs only
+  in layouts. Use core `<.icon>` and `<.input>` (overriding input class replaces
+  defaults). Hooks live in `assets/js/hooks/`, registered in app.js; DOM-owning
+  hooks also need `phx-update="ignore"`.
+- Tailwind v4: retain app.css imports/source lines, no config.js or @apply.
+  Hand-written components, stone/teal/red palette, calm typography and subtle
+  hover/loading states. Dark mode is data-theme on html; add explicit dark
+  variants for colors app.css does not remap.
+- Every public UI string uses gettext, button context via pgettext, named
+  placeholders rather than concatenation. Hook labels use data-labels/labels.js.
+  TUI uses Tui.Gettext, Tui.Language and Tui.Width (including RTL/cell widths).
+- Extract/merge catalogs when strings change. Ask before a new local model run
+  unless that run is already authorized. Translation contestants/scorers/judges
+  and automatic picks determine translations; do not hand-fill rejected ones.
+  Keep the established English fallback and document coverage limitations.
+- Translation uv groups models/mlx/comet share one venv; never resync it during
+  another group's model run. Model-free tests/review/fill/tidy use .venv-test
+  via UV_PROJECT_ENVIRONMENT. Run resource-heavy comparisons serially or in
+  isolated environments. Treat public translation suggestions as untrusted
+  data; never interpolate them into shell commands.
 
-- LiveView templates start with `<Layouts.app flash={@flash} ...>`. `<.flash_group>`
-  is only called inside `layouts.ex`.
-- Use `<.icon name="hero-...">` for icons and `<.input>` for form inputs (from
-  `core_components.ex`). Overriding `class` on `<.input>` drops all default classes.
-- Tailwind v4, no `tailwind.config.js`. Keep the `@import "tailwindcss" source(none);`
-  + `@source` lines in `assets/css/app.css`. Never use `@apply`.
-- Hand-write Tailwind components; there is no component library (daisyUI was
-  removed). Palette is stone (neutrals) + teal (accent) + red (errors).
-- Dark mode is `data-theme="dark"` on `<html>` (default dark; toggle in
-  `assets/js/app.js`). `app.css` remaps light stone/teal utilities for dark;
-  for colors it doesn't remap, add an explicit `dark:` variant.
-- **Front-end code is first-party, built, and same-origin.** Every script
-  and stylesheet is built from this repo by our esbuild/Tailwind pipeline
-  (entries declared in `config/config.exs`) and served from our own origin,
-  digested for cache-busting. Concretely:
-  - no third-party `<script src>` / `<link href>` (CDNs, analytics, fonts):
-    they'd tell a third party an anonymous user's IP and visit times;
-  - no inline JavaScript of any kind: no `<script>` blocks in HEEx, no
-    `onclick=`-style handlers, no `javascript:` URLs, no `eval`/`new
-    Function`, so a strict Content-Security-Policy stays possible;
-  - third-party code enters only through the build: a Mix dep (e.g.
-    `phoenix_live_view`'s JS) or a file committed under `assets/vendor/`
-    and imported (like `topbar.js`), never fetched at runtime.
-  `app.js` and `app.css` are the default bundles. Add another entry point
-  only when there's a reason (e.g. AudioWorklet processors, which browsers
-  load by URL, or the dev-only voice lab), and keep dev-only entries out of
-  production builds.
-- Hooks go in `assets/js/hooks/` and are registered in `assets/js/app.js`. A
-  hook that owns its DOM also needs `phx-update="ignore"`.
-- UI should feel calm and polished: clean typography, subtle transitions and
-  hover states, considered loading states.
+## Dependencies and releases
 
-## Skills
+Dependabot's green CI is required, but majors also need changelog review and
+model harness updates need the same-protocol comparison in development docs.
+Tooling-only harness updates do not need a model run. Check binary-compatible
+Torch/TorchAudio versions, not resolver success alone. Do not restore unpatched
+Hex renderers to clear PRs; rebase the source patch and qualify physical redraw
+and both platform packages separately.
 
-Framework rules are generated from dependency `usage-rules` into on-demand
-skills under `.claude/skills/` (regenerate with `mix usage_rules.sync`):
+Before an authorized release, require clean pushed code and green native CI,
+then tag the matching TUI version. Use the versioned release notes. Render the
+Homebrew formula from the published CI archive checksums. Validate the production
+image excludes labs, Tidewave, development certificates/keys and stale app
+versions. Local package success does not substitute for native CI. Deployment
+uses `just deploy` guards; do not bypass them as a routine shortcut. OpenTofu
+state must remain encrypted; never print relay credentials or commit plaintext
+state. See operator docs for secret retrieval.
 
-- `phoenix-framework` — Phoenix, HEEx, LiveView (streams, forms, tests). Load
-  before touching `lib/randos_web/` or templates.
+## Generated guidance
 
-Never edit generated content between `usage-rules-start`/`-end` markers or in
-those skill directories by hand; change `usage_rules/0` in `mix.exs` instead.
+Framework rules below and `.claude/skills/` are generated by usage-rules.
+Change `usage_rules/0` in mix.exs and regenerate; never hand-edit managed
+usage-rules blocks or generated skill directories. Preserve the managed Trail
+block when editing this guide. Keep the root guide concise enough to fit the
+agent instruction budget; put task-specific detail in linked documentation.
 
 <!-- usage-rules-start -->
 <!-- usage_rules-start -->

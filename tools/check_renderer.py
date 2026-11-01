@@ -11,6 +11,8 @@ def main():
     manifest = json.loads((ROOT / "vendor/ex_ratatui.upstream.json").read_text())
     patched = set(manifest["patched_files"])
     assert patched <= manifest["files"].keys()
+    assert all(Path(name).name != "erl_crash.dump" for name in manifest["files"])
+    assert not manifest["files"].keys() & manifest.get("excluded_upstream_files", {}).keys()
     for name, digest in manifest["files"].items():
         if name not in patched:
             assert hashlib.sha256((SOURCE / name).read_bytes()).hexdigest() == digest, name

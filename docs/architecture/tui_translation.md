@@ -1,3 +1,5 @@
+> **Dated plan and research evidence.** Current usage: [TUI README](../../clients/tui/README.md). Current translation procedure: [catalog guide](../../priv/gettext/README.md) and [tooling](../../tools/translate/README.md). “Today” and proposed shortcuts below refer to the dates stated there.
+
 # Translating the TUI (plan, 2026-10-23; built the same day)
 
 Current UI (2026-10-28): `l` now opens a language picker; arrows move, Enter
