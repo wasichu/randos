@@ -1,13 +1,14 @@
 # randos — current architecture and roadmap
 
-Verified against released v0.10.1 (`e8e37be`), green native/call CI, production
-deployment, published archive/Homebrew checks, and a focused post-release quality
-review on 2026-10-31. Multiple speaking choices are locally verified by
-precommit, browser/TUI smoke and screenshot review on 2026-10-31. The selected
-Centered connecting layout passed those same local checks on 2026-10-31; this is
-not release/deployment evidence. The TUI masking-panel polish and preview-only
-volume passed precommit, TUI smoke and screenshot review on 2026-11-01.
-Listening and latency evidence remain scoped below.
+Verified against released v0.11.0 (`ff7ec5f`) on 2026-11-01: green native
+macOS/Linux and browser/TUI CI, clean-checkout/package qualification, production
+server deployed before the TUI tag, verified public archive checksums, and a
+successful Homebrew upgrade/test. Production accepted legacy and list-speaking
+clients and passed a private relay-only masked call with processed audio and
+capture cleanup. Translation pipelines, 120 TUI locale/layout cases, 80 website
+locale/size cases and screenshots passed. Publication evidence is in
+[release readiness](../releases/v0.11.0-readiness.md). Listening and latency
+evidence remain scoped below.
 This file describes current ownership
 and active work; update the Verified line when either changes. The complete
 [previous roadmap and decision history](2026-10-31-roadmap-history.md) is preserved
@@ -124,8 +125,8 @@ Focused advisor checkpoint: **extract** offered-set access in `Entry`; **merge**
 the browser's two language pickers; **link** protocol/call-flow/client guides;
 **leave** coordinator timing, media/helper and stats publication policy unchanged.
 README, development, TUI and privacy docs change for usage/compatibility. Reviewed
-self-hosting and helper guides need no change: deployment configuration and the
-Port/media contract are unchanged. During implementation, new strings used the established English fallback.
+self-hosting now includes the server-first rollout note; deployment configuration
+and the speaking-choice feature's Port/media contract remain unchanged. During implementation, new strings used the established English fallback.
 The owner authorized v0.11.0 release qualification on 2026-11-01, including the
 required translation contestants/scorers/judges for both catalogs.
 
@@ -138,7 +139,7 @@ horizontal overflow and exact physical redraw after the TUI locale picker.
 The focused final advisor review found no blocking production defect; its
 invitation wording and multi-offer creator coverage follow-ups are addressed.
 Implementation evidence above preceded publication. End-to-end v0.11.0 release,
-push, deployment and Homebrew work is now authorized; current qualification is
+push, deployment and Homebrew work completed; qualification is
 tracked in [release readiness](../releases/v0.11.0-readiness.md).
 
 ## Real-input investigation and TUI masking visibility (2026-10-31)
@@ -233,6 +234,13 @@ preview already works. This is local listening evidence for the current source
 and preview path, not a claim that every native call input issue is resolved.
 
 ## Recent verified engineering work
+
+- v0.11.0 shipped multiple speaking choices, the centered browser connecting
+  screen, native closed-session cleanup, and the TUI masking/preview controls.
+  CI exposed and corrected a test-only WORLD timing-classification assumption;
+  no shipping DSP or timeout changed. `cc` and `usage_rules` routine updates
+  merged after green CI; the Torch evaluation-harness PR remains separate.
+
 
 - v0.10.1 updates Phoenix.HTML from 4.3.0 to 4.4.0 for upstream
   CVE-2026-117645 (attribute-name validation). No application exploit is claimed;
