@@ -67,11 +67,15 @@ defmodule Tui.Integration.BrowserCallTest do
     model = await_model(app, &(&1.status == :idle and &1.audio?))
 
     # Rarely used pairs, so nothing else on the dev server interferes.
-    find(app, model, "hi", "bn")
+    find(app, model, ["en", "hi"], "bn")
     await_model(app, &(&1.status == :looking))
 
     port = browser("bn", "hi")
-    assert %Model{webrtc_role: "offerer"} = await_model(app, &(&1.status == :in_call))
+    # Obligation 12: the server selects Hindi; unused English stays available for Next.
+    chosen = await_model(app, &(&1.status == :in_call))
+    assert %Model{webrtc_role: "offerer", speaks: ["en", "hi"]} = chosen
+    assert Model.self_speaks_any(chosen) == ["hi"]
+    assert Model.peer_speaks_any(chosen) == ["bn"]
     assert_audio_both_ways(await_call(app, port))
   end
 

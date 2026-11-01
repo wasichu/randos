@@ -8,7 +8,7 @@
     "msgstr": "%{device} (기본 설정)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} 또는 %{last}"
   },
   "%{language} both ways": {
@@ -100,7 +100,7 @@
     "msgstr": "서버에 연결 중…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -131,9 +131,17 @@
     "model": "hy-mt2",
     "msgstr": "오류: %{message}"
   },
+  "Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "Esc: 뒤로."
+  },
   "Fuller": {
     "model": "m2m100",
     "msgstr": "충만한"
+  },
+  "Headphones recommended": {
+    "model": "madlad-400",
+    "msgstr": "헤드폰 권장"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "madlad-400",
@@ -152,7 +160,7 @@
     "msgstr": "그 소식을 듣고 기쁩니다."
   },
   "Interface language": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "인터페이스 언어"
   },
   "Join through a link": {
@@ -216,7 +224,7 @@
     "msgstr": "이 서버에는 릴레이가 구성되어 있지 않으므로 이곳으로의 전화는 직접 전달됩니다."
   },
   "Nothing is recorded or uploaded.": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "아무것도 기록되거나 업로드되지 않습니다."
   },
   "Now:": {
@@ -232,7 +240,7 @@
     "msgstr": "마이크 열기…"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "다른 언어: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -255,6 +263,10 @@
     "model": "hy-mt2",
     "msgstr": "미리보기에 실패했습니다. 마이크가 작동을 중지했습니다. 다시 시도해 주세요."
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "hy-mt2",
+    "msgstr": "미리보기 볼륨: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
     "model": "hy-mt2",
     "msgstr": "오디오 재연결 중…"
@@ -274,6 +286,10 @@
   "Speaker:": {
     "model": "hy-mt2",
     "msgstr": "발표자:"
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "스타일: %{style} · %{tone}"
   },
   "Text only (no audio helper).": {
     "model": "hy-mt2",
@@ -324,7 +340,7 @@
     "msgstr": "음색 + 음높이"
   },
   "Tone: %{tone} (left/right)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "톤: %{tone} (왼쪽/오른쪽)"
   },
   "Typical length: %{length}": {
@@ -372,7 +388,7 @@
     "msgstr": "선택하신 언어 중 (%{count})개"
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결됨"
   },
   "connected directly": {
@@ -476,7 +492,7 @@
     "msgstr": "닫기"
   },
   "key\u0004continue": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "계속"
   },
   "key\u0004copy the link": {
@@ -516,7 +532,7 @@
     "msgstr": "링크에 참여하기"
   },
   "key\u0004language": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "언어"
   },
   "key\u0004mic": {
@@ -532,19 +548,23 @@
     "msgstr": "이동하기"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "음소거"
   },
   "key\u0004next rando": {
     "model": "madlad-400",
     "msgstr": "다음 rando"
   },
+  "key\u0004preview volume": {
+    "model": "madlad-400",
+    "msgstr": "미리 보기 음량"
+  },
   "key\u0004quit": {
     "model": "translategemma-4b",
     "msgstr": "그만두다"
   },
   "key\u0004refresh": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "새로 고침"
   },
   "key\u0004scroll": {
@@ -552,7 +572,7 @@
     "msgstr": "스크롤"
   },
   "key\u0004speaker": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "스피커"
   },
   "key\u0004status": {
@@ -560,11 +580,11 @@
     "msgstr": "상태"
   },
   "key\u0004style": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "스타일"
   },
   "key\u0004unmute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "음소거 해제"
   },
   "key\u0004voice masking": {
@@ -572,7 +592,7 @@
     "msgstr": "음성 가림"
   },
   "link copied": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "링크 복사됨"
   },
   "link sent to your terminal's clipboard (if it allows that)": {
@@ -647,12 +667,16 @@
     "model": "translategemma-4b",
     "msgstr": "작동하지 않음"
   },
+  "p: hear myself / stop.": {
+    "model": "hy-mt2",
+    "msgstr": "p: 내 말 들어봐 / 그만해."
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "translategemma-12b",
     "msgstr": "p: 내 목소리를 듣는다 / 멈춘다. Esc: 뒤로."
   },
   "panel title\u0004Connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결 중"
   },
   "panel title\u0004Find a rando": {
@@ -699,6 +723,10 @@
     "model": "translategemma-12b",
     "msgstr": "(최소 한 가지 이상의 언어를 선택하세요. 스페이스 바를 누르면 해당 언어가 선택됩니다.)"
   },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "말할 수 있는 언어를 적어도 하나 선택하세요 (%{key}를 사용하면 하나만 활성화됩니다)."
+  },
   "rando reconnecting…": {
     "model": "hy-mt2",
     "msgstr": "rando가 다시 연결 중입니다…"
@@ -712,7 +740,7 @@
     "msgstr": "다시 연결됨; 통화로 돌아옴"
   },
   "reconnecting…": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "재연결 중…"
   },
   "refused": {
@@ -736,7 +764,7 @@
     "msgstr": "텍스트만"
   },
   "text only (no audio)": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "텍스트만 (오디오 없음)"
   },
   "the audio helper isn't running (is it built? %{command})": {

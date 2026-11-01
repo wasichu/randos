@@ -912,11 +912,6 @@ msgstr "音调: %{tone} (左/右)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "使用耳机并保持低音量。"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "语音伪装"
 
@@ -924,11 +919,6 @@ msgstr "语音伪装"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "语音掩蔽已开启"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: 听到自己的声音/停止。 Esc: 返回。"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "更新音频助手，以便预览语音变化。"
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "麦克风： %{bars}%{peak}   （按 %{key} 键可停止）"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "请选择至少一种语言进行交流。（点击%{key}可以切换语言。）"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "样式:%{style} · %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc：返回。"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "建议使用耳机"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p:听听我自己/停下来。"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "预览音量：%{level}/9（-/+）"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "预览音量"

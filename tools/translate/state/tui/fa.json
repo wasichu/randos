@@ -8,7 +8,7 @@
     "msgstr": "%{device} (پیش‌فرض)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} یا %{last}"
   },
   "%{language} both ways": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} هر دو راه"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} دقیقه"
   },
   "%{minutes} min or more": {
@@ -24,7 +24,7 @@
     "msgstr": "%{minutes} دقیقه یا بیشتر"
   },
   "%{name} ✓": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
@@ -124,16 +124,24 @@
     "msgstr": "بر روی %{answered} از مجموع %{total} سرور شمارش شد."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "دستگاه‌ها"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطا: %{message}"
+  },
+  "Esc: back.": {
+    "model": "opus-mt",
+    "msgstr": "Esc: بازگشت."
   },
   "Fuller": {
     "model": "translategemma-4b",
     "msgstr": "پررنگ‌تر، با صدای غنی‌تر"
+  },
+  "Headphones recommended": {
+    "model": "opus-mt",
+    "msgstr": "هدفون های توصیه شده"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "madlad-400",
@@ -224,7 +232,7 @@
     "msgstr": "در حال حاضر:"
   },
   "Off": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خاموش"
   },
   "Opening microphone…": {
@@ -255,12 +263,16 @@
     "model": "translategemma-12b",
     "msgstr": "پیش‌نمایش با خطا مواجه شد. میکروفون متوقف شد؛ دوباره تلاش کنید."
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "hy-mt2",
+    "msgstr": "حجم نمایش اولیه: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
     "model": "translategemma-12b",
     "msgstr": "در حال برقراری مجدد اتصال صدا…"
   },
   "Selected: %{style}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "انتخاب شده: %{style}"
   },
   "Send it to them however you like. It works once.": {
@@ -274,6 +286,10 @@
   "Speaker:": {
     "model": "hy-mt2",
     "msgstr": "سخنران:"
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "translategemma-12b",
+    "msgstr": "سبک: %{style} · لحن: %{tone}"
   },
   "Text only (no audio helper).": {
     "model": "translategemma-12b",
@@ -396,7 +412,7 @@
     "msgstr": "اتصال از طریق رله"
   },
   "connecting to %{server}…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "در حال اتصال به %{server}…"
   },
   "connecting to the server…": {
@@ -428,11 +444,11 @@
     "msgstr": "اعتبارسنجی رد شد"
   },
   "disconnected; reconnecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "قطع شده؛ در حال اتصال مجدد"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطا: %{message}"
   },
   "in a call": {
@@ -448,7 +464,7 @@
     "msgstr": "درباره این اعداد"
   },
   "key\u0004back": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "بازگشت"
   },
   "key\u0004cancel": {
@@ -460,7 +476,7 @@
     "msgstr": "پیوند را لغو کنید"
   },
   "key\u0004change": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "تغییر"
   },
   "key\u0004change tone": {
@@ -472,7 +488,7 @@
     "msgstr": "بررسی کنید"
   },
   "key\u0004choose": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "انتخاب کنید"
   },
   "key\u0004close": {
@@ -543,6 +559,10 @@
     "model": "madlad-400",
     "msgstr": "بعدی rando"
   },
+  "key\u0004preview volume": {
+    "model": "m2m100",
+    "msgstr": "حجم پیش نمایش"
+  },
   "key\u0004quit": {
     "model": "hy-mt2",
     "msgstr": "ترک کنید"
@@ -556,7 +576,7 @@
     "msgstr": "اسکرول"
   },
   "key\u0004speaker": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "بلندگو"
   },
   "key\u0004status": {
@@ -564,7 +584,7 @@
     "msgstr": "وضعیت"
   },
   "key\u0004style": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "سبک"
   },
   "key\u0004unmute": {
@@ -651,6 +671,10 @@
     "model": "translategemma-4b",
     "msgstr": "غیر فعال"
   },
+  "p: hear myself / stop.": {
+    "model": "translategemma-12b",
+    "msgstr": "p: صدای خودم را بشنوید / (سپس) متوقف شوید."
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "madlad-400",
     "msgstr": "p: صدای خودم را بشنوید / توقف. Esc: برگردید."
@@ -702,6 +726,10 @@
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "حداقل یک زبان را انتخاب کنید تا صدای آن را بشنوید (با فشردن کلید Space می‌توانید یک زبان را انتخاب کنید)."
+  },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "madlad-400",
+    "msgstr": "حداقل یک زبان برای صحبت کردن انتخاب کنید (%{key} یک زبان را تغییر می‌دهد)"
   },
   "rando reconnecting…": {
     "model": "translategemma-12b",
@@ -768,7 +796,7 @@
     "msgstr": "زمان به پایان رسید: آیا باید ادامه داد؟"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "کمتر از ۱ دقیقه"
   },
   "unexpected reply": {

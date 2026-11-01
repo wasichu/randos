@@ -225,7 +225,12 @@ each entry. `fill <run>` writes one run's passing translations instead.
 Either **fills only empty entries**; with `--redo` it also replaces
 entries that still hold exactly what the machine wrote last time, and
 empties those that no longer have a passing translation. Anything a person
-wrote is never overwritten. Plural strings are left to people: a model
+wrote is never overwritten. A fuzzy copy introduced when only the Gettext
+context changes is treated as machine text only if its English source and
+translation exactly match original saved machine provenance in the same
+catalog/locale. The new context then gets its own approved pick or English
+fallback; PO entry order cannot change that decision. Unknown or edited values
+remain protected. Plural strings are left to people: a model
 translates one string, a plural needs a form per plural rule.
 
 ## The review page

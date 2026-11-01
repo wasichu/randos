@@ -145,3 +145,63 @@ def test_fill_keeps_its_record_in_the_catalogs_state_by_default(tmp_path, monkey
     monkeypatch.setattr(po, "STATE", state)
     po.fill("es", {"Ready": "Listo"}, "m1", root=root)
     assert po.load_state("es") == {"Ready": {"msgstr": "Listo", "model": "m1"}}
+
+
+def test_redo_replaces_only_a_proven_machine_copy_after_context_change(tmp_path):
+    root, state = setup(tmp_path)
+    po.fill("es", {"Ready": "Listo"}, "old", root=root, state_dir=state)
+    path = po.po_path("es", root)
+    path.write_text(path.read_text() + '\n#, fuzzy\nmsgctxt "button"\nmsgid "Ready"\nmsgstr "Listo"\n')
+    key = po.Source("Ready", "button").key
+    counts = po.fill("es", {"Ready": "Listo revisado", key: "Preparado"}, "new", redo=True, root=root, state_dir=state)
+    assert counts["redone"] == 2
+    assert entries(root)[key] == "Preparado"
+    assert po.load_state("es", state)[key] == {"msgstr": "Preparado", "model": "new"}
+    assert "fuzzy" not in polib.pofile(str(path)).find("Ready", msgctxt="button").flags
+
+
+def test_rejected_context_copy_clears_but_a_differing_human_edit_survives(tmp_path):
+    root, state = setup(tmp_path)
+    po.fill("es", {"Ready": "Listo"}, "old", root=root, state_dir=state)
+    path = po.po_path("es", root)
+    path.write_text(path.read_text() + '\n#, fuzzy\nmsgctxt "button"\nmsgid "Ready"\nmsgstr "Listo"\n'
+                    + '\n#, fuzzy\nmsgctxt "title"\nmsgid "Ready"\nmsgstr "Una corrección humana"\n')
+    copy = po.Source("Ready", "button").key
+    human = po.Source("Ready", "title").key
+    counts = po.fill("es", {"Ready": "Listo", human: "Changed"}, "new", redo=True, root=root, state_dir=state)
+    assert counts["cleared"] == 1
+    assert entries(root)[copy] == ""
+    assert entries(root)[human] == "Una corrección humana"
+    assert copy not in po.load_state("es", state)
+
+
+def test_context_pick_survives_old_context_clearing_and_preserves_nonfuzzy_text(tmp_path):
+    root, state = setup(tmp_path)
+    po.fill("es", {"Ready": "Listo"}, "old", root=root, state_dir=state)
+    path = po.po_path("es", root)
+    path.write_text(path.read_text() + '\n#, fuzzy\nmsgctxt "button"\nmsgid "Ready"\nmsgstr "Listo"\n'
+                    + '\nmsgctxt "title"\nmsgid "Ready"\nmsgstr "Listo"\n')
+    copy = po.Source("Ready", "button").key
+    human = po.Source("Ready", "title").key
+    counts = po.fill("es", {copy: "Preparado", human: "Different"}, "new", redo=True, root=root, state_dir=state)
+    assert counts["cleared"] == 1 and counts["redone"] == 1
+    assert entries(root)["Ready"] == ""
+    assert entries(root)[copy] == "Preparado"
+    assert entries(root)[human] == "Listo"
+    assert "Ready" not in po.load_state("es", state)
+
+
+def test_existing_context_provenance_protects_even_an_edit_matching_another_machine_text(tmp_path):
+    root, state = setup(tmp_path)
+    key = po.Source("Ready", "button").key
+    path = po.po_path("es", root)
+    path.write_text(path.read_text() + '\nmsgctxt "button"\nmsgid "Ready"\nmsgstr ""\n')
+    po.fill("es", {"Ready": "Listo", key: "Preparado"}, "old", root=root, state_dir=state)
+    catalog = polib.pofile(str(path))
+    entry = catalog.find("Ready", msgctxt="button")
+    entry.msgstr = "Listo"
+    entry.flags.append("fuzzy")
+    catalog.save(str(path))
+    counts = po.fill("es", {"Ready": "Listo", key: "Nuevo"}, "new", redo=True, root=root, state_dir=state)
+    assert counts["kept_human"] == 1
+    assert entries(root)[key] == "Listo"

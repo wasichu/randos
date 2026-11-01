@@ -92,7 +92,7 @@
     "msgstr": "Nakansela"
   },
   "Change": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "Pagbabago"
   },
   "Checking the relay…": {
@@ -108,8 +108,12 @@
     "msgstr": "Piliin ang inyong mga wika."
   },
   "Connecting": {
-    "model": "madlad-400",
-    "msgstr": "Pag-uugnay"
+    "model": "hy-mt2",
+    "msgstr": "Nagkokonekta"
+  },
+  "Connecting your audio": {
+    "model": "hy-mt2",
+    "msgstr": "Pagkonekta ng iyong audio"
   },
   "Connection lost": {
     "model": "hy-mt2",
@@ -363,9 +367,17 @@
     "model": "hy-mt2",
     "msgstr": "Pumili ng kahit isang wika para pakinggan"
   },
+  "Pick at least one language to speak": {
+    "model": "opus-mt",
+    "msgstr": "Pumili ng kahit isang wika na gagamitin sa pagsasalita"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "opus-mt",
     "msgstr": "Pumili ng bawat wika na gusto mong pakinggan."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Pumili ka ng bawat wika na komportable kang magsalita. Pipili kami ng isa kapag nakahanap kami ng rando para sa iyo."
   },
   "Pick the language you'd like to check.": {
     "model": "opus-mt",
@@ -627,6 +639,10 @@
     "model": "hy-mt2",
     "msgstr": "Maririnig mo ang %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "opus-mt",
+    "msgstr": "Ikaw ay magsasalita %{languages}"
+  },
   "Your call ended.": {
     "model": "opus-mt",
     "msgstr": "Natapos ang pagtawag mo."
@@ -639,6 +655,10 @@
     "model": "hy-mt2",
     "msgstr": "Ang iyong rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "Ang iyong rando ay dito. Ang iyong tawag ay magsisimula kapag handa na ang audio."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "Nawala ang koneksyon ng iyong rando; naghihintay ng ilang segundo hanggang sila ay makabalik."
@@ -646,6 +666,10 @@
   "asking for microphone access": {
     "model": "hy-mt2",
     "msgstr": "paghingi ng pahintulot para gamitin ang mikropono"
+  },
+  "button\u0004Cancel": {
+    "model": "opus-mt",
+    "msgstr": "Huwag ituloy"
   },
   "button\u0004Cancel the link": {
     "model": "translategemma-4b",
@@ -675,6 +699,10 @@
     "model": "hy-mt2",
     "msgstr": "Itago ang mga shortcut"
   },
+  "button\u0004Invite": {
+    "model": "translategemma-4b",
+    "msgstr": "Imbitahan"
+  },
   "button\u0004Invite someone": {
     "model": "madlad-400",
     "msgstr": "Mag-imbita ng isang tao"
@@ -694,6 +722,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "Susunod na rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "Huwag nang tumingin"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

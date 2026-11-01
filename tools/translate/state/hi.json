@@ -112,8 +112,12 @@
     "msgstr": "जुड़ा हुआ"
   },
   "Connecting": {
-    "model": "madlad-400",
-    "msgstr": "कनेक्शन हो रहा है"
+    "model": "hy-mt2",
+    "msgstr": "कनेक्ट कर रहा हूँ"
+  },
+  "Connecting your audio": {
+    "model": "hy-mt2",
+    "msgstr": "अपने ऑडियो को कनेक्ट करें"
   },
   "Connection lost": {
     "model": "opus-mt",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "translategemma-4b",
     "msgstr": "पूर्ण"
+  },
+  "End call": {
+    "model": "hy-mt2",
+    "msgstr": "कॉल समाप्त करें"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -363,9 +371,17 @@
     "model": "opus-mt",
     "msgstr": "सुनने के लिए कम से कम एक भाषा चुनें"
   },
+  "Pick at least one language to speak": {
+    "model": "opus-mt",
+    "msgstr": "बोलने के लिए कम से कम एक भाषा चुनें"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-12b",
     "msgstr": "उन सभी भाषाओं को चुनें जिन्हें आप सुनने में सहज महसूस करते हैं।"
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "वह प्रत्येक भाषा चुनें जिसमें आप बोलने में सहज महसूस करते हैं। जब हम आपके लिए कोई rando ढूँढ लेंगे, तब हम एक भाषा चुन लेंगे।"
   },
   "Pick the language you'd like to check.": {
     "model": "m2m100",
@@ -627,6 +643,10 @@
     "model": "opus-mt",
     "msgstr": "आप सुन सकते हैं %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "madlad-400",
+    "msgstr": "आप बोलेंगे %{languages}"
+  },
   "Your call ended.": {
     "model": "translategemma-12b",
     "msgstr": "आपका कॉल समाप्त हो गया।"
@@ -639,6 +659,10 @@
     "model": "hy-mt2",
     "msgstr": "आपका rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "hy-mt2",
+    "msgstr": "आपका rando यहाँ है। ऑडियो तैयार होने पर आपकी कॉल शुरू होगी।"
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "translategemma-12b",
     "msgstr": "आपके \"rando\" का कनेक्शन टूट गया है; वे वापस जुड़ने के लिए कुछ सेकंड का इंतज़ार कर रहे हैं।"
@@ -646,6 +670,10 @@
   "asking for microphone access": {
     "model": "translategemma-4b",
     "msgstr": "माइक्रोफ़ोन एक्सेस के लिए अनुरोध"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "रद्द करें"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +711,10 @@
     "model": "hy-mt2",
     "msgstr": "शॉर्टकट छिपाएँ"
   },
+  "button\u0004Invite": {
+    "model": "madlad-400",
+    "msgstr": "निमंत्रित करें"
+  },
   "button\u0004Invite someone": {
     "model": "madlad-400",
     "msgstr": "किसी को निमंत्रित करें"
@@ -702,6 +734,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "अगला rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "madlad-400",
+    "msgstr": "देखना बंद करो"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

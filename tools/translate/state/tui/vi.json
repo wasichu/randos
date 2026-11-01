@@ -4,7 +4,7 @@
     "msgstr": "%{connected} · bạn: %{you} dBFS · đối tác: %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (mặc định)"
   },
   "%{first} or %{last}": {
@@ -16,7 +16,7 @@
     "msgstr": "%{language} cả hai chiều"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} phút"
   },
   "%{minutes} min or more": {
@@ -24,7 +24,7 @@
     "msgstr": "%{minutes} Min hoặc nhiều hơn"
   },
   "%{name} ✓": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
@@ -76,7 +76,7 @@
     "msgstr": "Bật âm thanh lên."
   },
   "Brighter": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Sáng hơn"
   },
   "Calls started: %{started}": {
@@ -92,7 +92,7 @@
     "msgstr": "Đang kiểm tra tùy chọn giọng nói…"
   },
   "Connected: %{connected}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Đã kết nối: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,7 +100,7 @@
     "msgstr": "Đang kết nối tới máy chủ…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Kết nối:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -108,11 +108,11 @@
     "msgstr": "Tiếp tục thêm %{minutes} phút nữa không?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Tiếp tục?"
   },
   "Continued": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Tiếp tục"
   },
   "Continued past %{minutes} minutes": {
@@ -128,19 +128,27 @@
     "msgstr": "Thiết bị"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Lỗi: %{message}"
+  },
+  "Esc: back.": {
+    "model": "translategemma-12b",
+    "msgstr": "Esc: Quay lại."
   },
   "Fuller": {
     "model": "hy-mt2",
     "msgstr": "Đầy đặn hơn"
+  },
+  "Headphones recommended": {
+    "model": "translategemma-4b",
+    "msgstr": "Đề xuất sử dụng tai nghe"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
     "msgstr": "Cách các cuộc gọi kết thúc: kết thúc thành công %{finished}, không thể kết nối được %{not_connected}, mất kết nối %{lost}, hủy bỏ %{canceled}"
   },
   "I will speak:": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "Tôi sẽ nói:"
   },
   "I'm 18+ and OK with anonymous, unmoderated calls": {
@@ -204,11 +212,11 @@
     "msgstr": "Micro: mở…"
   },
   "Microphone off.": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Tắt micro."
   },
   "Microphone on.": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Bật micro."
   },
   "No relay is configured on this server, so calls here go directly.": {
@@ -224,7 +232,7 @@
     "msgstr": "Hiện tại:"
   },
   "Off": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Tắt"
   },
   "Opening microphone…": {
@@ -232,7 +240,7 @@
     "msgstr": "Mở micrô…"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "Các ngôn ngữ khác: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -255,12 +263,16 @@
     "model": "translategemma-4b",
     "msgstr": "Không thể xem trước. Micro không hoạt động; hãy thử lại."
   },
-  "Reconnecting audio…": {
+  "Preview volume: %{level}/9 (-/+)": {
     "model": "madlad-400",
+    "msgstr": "Âm lượng xem thử: %{level}/9 (-/+)"
+  },
+  "Reconnecting audio…": {
+    "model": "hy-mt2",
     "msgstr": "Đang kết nối lại âm thanh…"
   },
   "Selected: %{style}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Đã chọn: %{style}"
   },
   "Send it to them however you like. It works once.": {
@@ -274,6 +286,10 @@
   "Speaker:": {
     "model": "translategemma-12b",
     "msgstr": "Người phát biểu:"
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "Phong cách: %{style} · %{tone}"
   },
   "Text only (no audio helper).": {
     "model": "hy-mt2",
@@ -292,7 +308,7 @@
     "msgstr": "Bộ truyền tín hiệu không hoạt động."
   },
   "These styles change your voice, but people may still recognize you.": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Những phong cách này thay đổi giọng nói của bạn, nhưng mọi người vẫn có thể nhận ra bạn."
   },
   "This client is running without audio (no media helper): if the peer offers audio (a browser), the call ends and you go back to idle. Two terminal clients can stay in a call to try timers and extension votes.": {
@@ -380,11 +396,11 @@
     "msgstr": "Kết nối"
   },
   "connected directly": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "kết nối trực tiếp"
   },
   "connected to %{server}": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Kết nối với %{server}"
   },
   "connected to the server": {
@@ -440,7 +456,7 @@
     "msgstr": "trong cuộc gọi"
   },
   "key\u000418+": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -452,7 +468,7 @@
     "msgstr": "trở lại"
   },
   "key\u0004cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "hủy bỏ"
   },
   "key\u0004cancel the link": {
@@ -460,7 +476,7 @@
     "msgstr": "Hủy liên kết"
   },
   "key\u0004change": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "thay đổi"
   },
   "key\u0004change tone": {
@@ -468,7 +484,7 @@
     "msgstr": "thay đổi giọng điệu"
   },
   "key\u0004check": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "kiểm tra"
   },
   "key\u0004choose": {
@@ -488,7 +504,7 @@
     "msgstr": "sao chép liên kết"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "kết thúc"
   },
   "key\u0004end call": {
@@ -520,7 +536,7 @@
     "msgstr": "tham gia một liên kết"
   },
   "key\u0004language": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ngôn ngữ"
   },
   "key\u0004mic": {
@@ -532,7 +548,7 @@
     "msgstr": "Kiểm tra micrô"
   },
   "key\u0004move": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "di chuyển"
   },
   "key\u0004mute": {
@@ -542,6 +558,10 @@
   "key\u0004next rando": {
     "model": "hy-mt2",
     "msgstr": "rando tiếp theo"
+  },
+  "key\u0004preview volume": {
+    "model": "madlad-400",
+    "msgstr": "Độ lớn preview volume"
   },
   "key\u0004quit": {
     "model": "m2m100",
@@ -560,7 +580,7 @@
     "msgstr": "người phát biểu"
   },
   "key\u0004status": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "trạng thái"
   },
   "key\u0004style": {
@@ -651,6 +671,10 @@
     "model": "m2m100",
     "msgstr": "Không làm việc"
   },
+  "p: hear myself / stop.": {
+    "model": "hy-mt2",
+    "msgstr": "p: Nghe tôi nói / Dừng lại."
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "hy-mt2",
     "msgstr": "p: Nghe tôi nói / Dừng lại. Esc: Quay lại."
@@ -702,6 +726,10 @@
   "pick at least one language to hear (space toggles one)": {
     "model": "hy-mt2",
     "msgstr": "Chọn ít nhất một ngôn ngữ để nghe (dùng dấu cách để chuyển đổi giữa các ngôn ngữ)."
+  },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "Hãy chọn ít nhất một ngôn ngữ để nói (%{key} dùng để chuyển đổi giữa các ngôn ngữ)"
   },
   "rando reconnecting…": {
     "model": "hy-mt2",

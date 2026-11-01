@@ -912,11 +912,6 @@ msgstr "Âm sắc: %{tone} (trái/phải)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "Hãy sử dụng tai nghe và giữ âm lượng ở mức thấp."
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "Che giấu giọng nói"
 
@@ -924,11 +919,6 @@ msgstr "Che giấu giọng nói"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "Bật che giấu giọng nói"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: Nghe tôi nói / Dừng lại. Esc: Quay lại."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "Cập nhật công cụ hỗ trợ âm thanh để có thể xem trướ
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "Micrô: %{bars}%{peak}   (Nhấn %{key} để tạm dừng)"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "Hãy chọn ít nhất một ngôn ngữ để nói (%{key} dùng để chuyển đổi giữa các ngôn ngữ)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "Phong cách: %{style} · %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: Quay lại."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "Đề xuất sử dụng tai nghe"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: Nghe tôi nói / Dừng lại."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "Âm lượng xem thử: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "Độ lớn preview volume"

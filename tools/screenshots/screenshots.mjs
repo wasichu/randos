@@ -58,9 +58,26 @@ const browser = await Browser.launch()
 try {
   console.log("website:")
   const a = await sized(await browser.newPage("A"))
-  const b = await sized(await browser.newPage("B"))
+  const b = await sized(await browser.newPage("B", {getUserMediaDelayMs: 15_000}))
   await Promise.all([a.open(), b.open()])
   await bothThemes(a, "web-home")
+
+  // Witness multiple speaking choices, including narrow-screen wrapping.
+  await a.chooseLanguages(["en", "es"], ["en"])
+  await a.click("#speaking-summary")
+  for (const [theme, width] of [["light", WIDTH], ["dark", WIDTH], ["light", 390]]) {
+    await a.send("Emulation.setDeviceMetricsOverride", {
+      width, height: HEIGHT, deviceScaleFactor: 2, mobile: width < WIDTH,
+    })
+    await setTheme(a, theme)
+    if (!await a.eval("document.documentElement.scrollWidth <= window.innerWidth")) {
+      throw Error(`Speaking picker overflows at ${width}px`)
+    }
+    const {data} = await a.send("Page.captureScreenshot", {format: "png"})
+    writeFileSync(`tmp/speaking-picker-${theme}-${width}.png`, Buffer.from(data, "base64"))
+  }
+  await sized(a)
+  await a.click("#speaking-summary")
 
   // Inviting: the link to share (its host is PHX_HOST's, randos.slowinput.org).
   await a.invite("en", ["es"])
@@ -71,7 +88,29 @@ try {
 
   await a.findRando("en", "es")
   await b.findRando("es", "en")
-  await Promise.all([a.webrtcStateIs("connected"), b.webrtcStateIs("connected")])
+  await a.waitFor('!!document.querySelector("#connecting-panel")', 'the connecting layout')
+  for (const width of [WIDTH, 390, 320]) {
+    await a.send("Emulation.setDeviceMetricsOverride", {
+      width, height: HEIGHT, deviceScaleFactor: 2, mobile: width < WIDTH,
+    })
+    for (const theme of ["light", "dark"]) {
+      await setTheme(a, theme)
+      const fit = await a.eval(`(() => {
+        const mute = document.querySelector('#mute-button').getBoundingClientRect();
+        const cancel = document.querySelector('#cancel-connection-button').getBoundingClientRect();
+        return document.documentElement.scrollWidth <= innerWidth &&
+          mute.height === 48 && cancel.height === 48 &&
+          Math.abs(mute.width - cancel.width) < 1 && mute.top === cancel.top;
+      })()`)
+      if (!fit) throw Error(`Connecting controls do not align at ${width}px (${theme})`)
+      await shoot(a, `web-connecting-${theme}-${width}`)
+    }
+  }
+  await sized(a)
+  await Promise.all([a, b].map(page => page.waitFor(
+    'document.querySelector("#webrtc-audio")?.dataset.webrtcState === "connected"',
+    "audio after the deliberate microphone delay", 25_000,
+  )))
   await sleep(2_500) // the waveforms fill in
   await bothThemes(a, "web-call")
   // Leave the site, so neither page can be matched with the TUI later.

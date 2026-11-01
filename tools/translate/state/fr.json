@@ -112,8 +112,12 @@
     "msgstr": "Connecté"
   },
   "Connecting": {
-    "model": "translategemma-4b",
-    "msgstr": "En cours de connexion"
+    "model": "hy-mt2",
+    "msgstr": "Se connecter"
+  },
+  "Connecting your audio": {
+    "model": "m2m100",
+    "msgstr": "Connectez votre audio"
   },
   "Connection lost": {
     "model": "hy-mt2",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "hy-mt2",
     "msgstr": "Terminé"
+  },
+  "End call": {
+    "model": "translategemma-4b",
+    "msgstr": "Terminer l'appel"
   },
   "Ephemeral by default": {
     "model": "madlad-400",
@@ -363,9 +371,17 @@
     "model": "hy-mt2",
     "msgstr": "Choisissez au moins une langue à écouter"
   },
+  "Pick at least one language to speak": {
+    "model": "opus-mt",
+    "msgstr": "Choisissez au moins une langue pour parler"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-27b",
     "msgstr": "Choisissez toutes les langues que vous aimez écouter."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "madlad-400",
+    "msgstr": "Choisissez toutes les langues que vous êtes heureux de parler.Nous en choisirons une lorsque nous vous trouverons un rando."
   },
   "Pick the language you'd like to check.": {
     "model": "hy-mt2",
@@ -627,6 +643,10 @@
     "model": "opus-mt",
     "msgstr": "Vous entendrez %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "translategemma-4b",
+    "msgstr": "Vous parlerez les langues suivantes : %{languages}"
+  },
   "Your call ended.": {
     "model": "m2m100",
     "msgstr": "Votre appel est terminé."
@@ -639,6 +659,10 @@
     "model": "opus-mt",
     "msgstr": "Votre rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "m2m100",
+    "msgstr": "Votre rando est ici.Votre appel commence lorsque l'audio est prêt."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "La connexion de votre rando a été interrompue ; attendez quelques secondes qu’ils se reconnectent."
@@ -646,6 +670,10 @@
   "asking for microphone access": {
     "model": "madlad-400",
     "msgstr": "Demande d'accès au microphone"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "Annuler"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +711,10 @@
     "model": "hy-mt2",
     "msgstr": "Cacher les raccourcis"
   },
+  "button\u0004Invite": {
+    "model": "madlad-400",
+    "msgstr": "Inviter"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "Invitez quelqu’un"
@@ -702,6 +734,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "Prochain rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "m2m100",
+    "msgstr": "Arrêtez de regarder"
   },
   "button\u0004Stop preview": {
     "model": "madlad-400",

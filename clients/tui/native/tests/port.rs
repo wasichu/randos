@@ -129,6 +129,177 @@ fn live_audition_changes_keep_one_loopback_and_stop_remains_authoritative() {
 }
 
 #[test]
+fn preview_volume_changes_playback_but_not_reported_microphone_levels() {
+    let path = std::env::temp_dir().join(format!(
+        "randos-preview-volume-{}-{}.wav",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos(),
+    ));
+    let mut helper = Helper::spawn();
+    let mut events = Vec::new();
+    let output = format!("wav:{}", path.display());
+    assert!(helper.request(
+        json!({"id":1,"cmd":"loopback_start","in":"sine","out":output,"masking":"off","audition":18}),
+        &mut events,
+    )["ok"].is_object());
+    let mut peaks = Vec::new();
+    for (id, level) in [(2, 1), (3, 5), (4, 9)] {
+        if level != 1 {
+            assert_eq!(
+                helper.request(
+                    json!({"id":id,"cmd":"loopback_volume","volume":level}),
+                    &mut events,
+                )["ok"],
+                true
+            );
+        }
+        let deadline = std::time::Instant::now() + Duration::from_secs(5);
+        loop {
+            let event = helper.receive();
+            assert_ne!(event["event"], "loopback_failed", "{event:?}");
+            if event["event"] == "loopback_stats" {
+                peaks.push(event["input_peak_dbfs"].as_f64().unwrap());
+                break;
+            }
+            assert!(
+                std::time::Instant::now() < deadline,
+                "missing preview stats"
+            );
+        }
+    }
+    assert_eq!(
+        helper.request(json!({"id":5,"cmd":"loopback_stop"}), &mut events)["ok"],
+        true
+    );
+    assert_eq!(helper.close(), 0);
+    let samples: Vec<f32> = hound::WavReader::open(&path)
+        .unwrap()
+        .samples::<f32>()
+        .map(Result::unwrap)
+        .collect();
+    std::fs::remove_file(&path).unwrap();
+    let frame_rms: Vec<f64> = samples
+        .as_chunks::<960>()
+        .0
+        .iter()
+        .map(|frame| {
+            (frame
+                .iter()
+                .map(|sample| f64::from(*sample).powi(2))
+                .sum::<f64>()
+                / frame.len() as f64)
+                .sqrt()
+        })
+        .collect();
+    // Inspect amplitude plateaus, not wall-clock sample offsets: event and
+    // command delivery can be delayed independently of capture on a busy host.
+    assert!(
+        frame_rms.iter().any(|rms| (0.08..0.095).contains(rms)),
+        "default volume missing"
+    );
+    assert!(
+        frame_rms.iter().any(|rms| (0.33..0.37).contains(rms)),
+        "+12 dB volume missing"
+    );
+    assert!(
+        frame_rms.iter().any(|rms| *rms > 0.7),
+        "maximum volume missing"
+    );
+    assert!(samples.iter().any(|sample| sample.abs() == 1.0));
+    assert!(
+        peaks.iter().all(|peak| (*peak - peaks[0]).abs() < 0.05),
+        "monitor gain changed mic levels: {peaks:?}"
+    );
+}
+
+#[test]
+fn preview_volume_is_validated_and_restricted_to_explicit_auditions() {
+    let mut helper = Helper::spawn();
+    let mut events = Vec::new();
+    let capability = helper.request(json!({"id":1,"cmd":"capabilities"}), &mut events);
+    assert_eq!(capability["ok"]["preview_volume"], true);
+    assert_eq!(
+        helper.request(
+            json!({"id":2,"cmd":"loopback_volume","volume":9}),
+            &mut events
+        )["error"],
+        "no loopback running"
+    );
+    assert!(
+        helper.request(
+            json!({"id":3,"cmd":"loopback_start","in":"sine","out":"null"}),
+            &mut events,
+        )["ok"]
+            .is_object()
+    );
+    assert_eq!(
+        helper.request(
+            json!({"id":4,"cmd":"loopback_volume","volume":9}),
+            &mut events
+        )["error"],
+        "preview volume requires an explicit audition"
+    );
+    helper.request(json!({"id":5,"cmd":"loopback_stop"}), &mut events);
+    assert!(helper.request(
+        json!({"id":6,"cmd":"loopback_start","in":"sine","out":"null","masking":"off","audition":7}),
+        &mut events,
+    )["ok"].is_object());
+    for (index, volume) in [
+        json!(0),
+        json!(10),
+        json!(-1),
+        json!(256),
+        json!(1.5),
+        json!("9"),
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        let reply = helper.request(
+            json!({"id":10+index,"cmd":"loopback_volume","volume":volume}),
+            &mut events,
+        );
+        assert!(reply["error"].is_string(), "{reply:?}");
+    }
+    for (index, volume) in [1, 9, 4].into_iter().enumerate() {
+        assert_eq!(
+            helper.request(
+                json!({"id":20+index,"cmd":"loopback_volume","volume":volume}),
+                &mut events,
+            )["ok"],
+            true
+        );
+    }
+    assert_eq!(
+        helper.request(json!({"id":30,"cmd":"loopback_stop"}), &mut events)["ok"],
+        true
+    );
+    assert_eq!(
+        helper.request(
+            json!({"id":31,"cmd":"loopback_volume","volume":2}),
+            &mut events
+        )["error"],
+        "no loopback running"
+    );
+    assert!(helper.request(
+        json!({"id":32,"cmd":"loopback_start","in":"sine","out":"null","masking":"off","audition":8}),
+        &mut events,
+    )["ok"].is_object());
+    helper.request(
+        json!({"id":33,"cmd":"loopback_volume","volume":9}),
+        &mut events,
+    );
+    assert_eq!(
+        helper.close(),
+        0,
+        "stdin EOF stops a preview with pending volume updates"
+    );
+}
+
+#[test]
 fn ping_and_malformed_requests() {
     let mut helper = Helper::spawn();
     let mut events = Vec::new();

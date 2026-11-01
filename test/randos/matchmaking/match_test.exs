@@ -18,6 +18,26 @@ defmodule Randos.Matchmaking.MatchTest do
     %{match: Match.new(entry("a"), entry("b"))}
   end
 
+  test "multiple speaking choices match by intersections, with stable per-call assignments" do
+    a = %{entry("a") | offered_languages: ["es", "en"], hears_languages: ["fr", "de"]}
+    b = %{entry("b") | offered_languages: ["fr", "de"], hears_languages: ["es", "en"]}
+    assert Entry.compatible?(a, b)
+    match = Match.new(a, b)
+    assert match.participant_a.speaks_language == "en"
+    assert match.participant_b.speaks_language == "de"
+    assert Entry.speaks_any(match.participant_a) == ["en"]
+    assert Entry.offered_languages(match.participant_a) == ["es", "en"]
+
+    reversed =
+      Match.new(%{a | offered_languages: ["en", "es"]}, %{b | offered_languages: ["de", "fr"]})
+
+    assert reversed.participant_a.speaks_language == "en"
+    assert reversed.participant_b.speaks_language == "de"
+    refute Entry.compatible?(a, %{b | hears_languages: ["ja"]})
+    refute Entry.compatible?(a, %{b | offered_languages: ["ja"]})
+    refute Entry.compatible?(a, %{b | audio?: false})
+  end
+
   test "new matches get a random id and no call yet", %{match: match} do
     assert "match-" <> _ = match.id
     refute match.id == Match.new(entry("a"), entry("b")).id

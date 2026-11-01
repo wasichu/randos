@@ -166,3 +166,52 @@
 .home-navigation #locale-options {
   max-height: min(20rem, calc(100dvh - 5rem));
 }
+
+/* The same keyed, DOM-owning media hook survives connecting → active.
+   Layout changes here keep its controls and microphone state intact. */
+#conversation-card[data-ui-state="connecting"] {
+  max-width: 35rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-radius: 1.125rem;
+}
+#connecting-panel [data-audio-visualizer] {
+  height: 1.5rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#connecting-panel #local-waveform,
+#connecting-panel #remote-waveform {
+  min-width: 0;
+  padding: .25rem .75rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+#connecting-panel #remote-waveform { border-inline-start: 1px solid #e7e5e4; }
+[data-theme="dark"] #connecting-panel #remote-waveform { border-color: #44403c; }
+#connecting-panel [id$="-language"] { overflow-wrap: anywhere; }
+#conversation-card[data-ui-state="connecting"] [data-call-status] {
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 1.5rem;
+}
+#conversation-card[data-ui-state="connecting"] [data-call-status] p { justify-content: center; }
+#conversation-card[data-ui-state="connecting"] [data-call-mute] {
+  grid-column: 1;
+  border: 0;
+  padding: 0 0 1.5rem;
+  padding-inline: 1.25rem .375rem;
+}
+#conversation-card[data-ui-state="connecting"] #mute-button { border-radius: 10px; }
+#connecting-actions { grid-column: 2; padding-inline: .375rem 1.25rem; }
+#conversation-card[data-ui-state="connecting"]:not(:has([data-call-mute])) #connecting-actions {
+  grid-column: 1 / -1;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 640px) {
+  #conversation-card[data-ui-state="connecting"] [data-call-mute] { padding-inline-start: 2rem; }
+  #connecting-actions { padding-inline-end: 2rem; }
+}

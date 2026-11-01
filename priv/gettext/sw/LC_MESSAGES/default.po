@@ -50,11 +50,6 @@ msgstr "kujaribu kuunganisha tena"
 msgid "Both people choose whether to continue."
 msgstr "Watu wote wawili huamua kama watataka kuendelea."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Cancel"
-msgstr "Kuzuia"
-
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
@@ -65,7 +60,6 @@ msgstr "Chagua lugha ambazo zinaungwa mkono kwa ajili ya mazungumzo."
 msgid "Choose your languages."
 msgstr "Chagua lugha zako."
 
-#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
@@ -145,21 +139,11 @@ msgstr "kuangalia"
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "Hakuna akaunti. Hakuna wasifu. Hakuna video. Hakuna shinikizo."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Preparing the call"
-msgstr "Kupanga simu"
-
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
 msgstr "Tayari"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Secure audio connection is starting."
-msgstr "Uunganisho salama wa sauti unaanza."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -258,11 +242,6 @@ msgstr "Wewe"
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
 msgstr "Unaweza kuchagua lugha ambayo ungependa kuzungumza na lugha ambayo ungependa kusikiliza. randos hukufanya kuungana na mtu anayefaa kwa mazungumzo fupi, na kisha huondoka."
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "You have matched. Audio starts when the call opens."
-msgstr "Mmeunganishwa. Sauti itaanza kusikika baada ya simu kuunganishwa."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -719,13 +698,13 @@ msgstr "Tafsiri za tovuti hii zimetengenezwa kwa kutumia programu, na bado hazij
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "Tafsiri za tovuti hii zimetengenezwa kwa kutumia programu. Ikiwa kuna kitu ambacho hakielezeki vizuri, tafuta sehemu hiyo hapa chini na ubofye \"Pendekeza marekebisho\": hii itafungua ombi kwenye GitHub ambapo kila kitu kimeandikwa isipokuwa marekebisho yako (unahitaji akaunti ya GitHub). Ombi la marekebisho litafunguliwa kiotomatiki, na litatumika baada ya kukaguliwa."
 
-#. Opens the list of languages you can hear, to change it.
+#. Opens the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
-msgstr "Badilisha"
+msgstr "Mabadiliko"
 
-#. Closes the list of languages you can hear, once you've changed it.
+#. Closes the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
@@ -1104,7 +1083,7 @@ msgid "Conversation"
 msgstr "Mazungumzo"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Stop looking"
 msgstr "Kuacha kuangalia"
@@ -1147,7 +1126,7 @@ msgid "Find"
 msgstr "kutafuta"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Invite"
 msgstr "Kukaribisha"
@@ -1159,6 +1138,37 @@ msgstr "Nataka kusikia"
 
 #. Short keyboard shortcut label: hang up the current voice call.
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "End call"
 msgstr "isha simu"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick at least one language to speak"
+msgstr "Kuchagua angalau lugha moja ya kuzungumza"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You'll speak %{languages}"
+msgstr "Utazungumza lugha za: %{languages}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+msgstr "Tumia kila lugha ambayo unataka kuzungumza.Tutachagua moja wakati tunaona wewe rando."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting your audio"
+msgstr "Kuunganisha sauti yako"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando is here. Your call starts when audio is ready."
+msgstr "yako rando ni hapa. wito wako huanza wakati audio ni tayari."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Cancel"
+msgstr "Kuzuia"

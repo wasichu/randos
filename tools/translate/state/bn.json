@@ -108,8 +108,12 @@
     "msgstr": "সংযুক্ত"
   },
   "Connecting": {
-    "model": "madlad-400",
-    "msgstr": "সংযোগ করা হচ্ছে"
+    "model": "translategemma-4b",
+    "msgstr": "সংযোগ স্থাপন করা"
+  },
+  "Connecting your audio": {
+    "model": "translategemma-4b",
+    "msgstr": "আপনার অডিও সংযোগ করুন"
   },
   "Connection lost": {
     "model": "m2m100",
@@ -166,6 +170,10 @@
   "Done": {
     "model": "translategemma-4b",
     "msgstr": "সম্পন্ন"
+  },
+  "End call": {
+    "model": "translategemma-4b",
+    "msgstr": "কলটি শেষ করুন"
   },
   "Ephemeral by default": {
     "model": "madlad-400",
@@ -359,9 +367,17 @@
     "model": "madlad-400",
     "msgstr": "শুনতে অন্তত একটি ভাষা বেছে নিন"
   },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "কথা বলার জন্য অন্তত একটি ভাষা বেছে নিন"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-27b",
     "msgstr": "আপনি যে ভাষাগুলো শুনতে স্বচ্ছন্দ বোধ করেন, সেগুলো বেছে নিন।"
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "madlad-400",
+    "msgstr": "যেসব ভাষায় কথা বলতে আপনি খুশি, সেগুলো বেছে নিন। আমরা rando খুঁজে পেলে আপনার জন্য একটি ভাষা বেছে নেব।"
   },
   "Pick the language you'd like to check.": {
     "model": "hy-mt2",
@@ -623,6 +639,10 @@
     "model": "madlad-400",
     "msgstr": "আপনি শুনতে পাবেন %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "madlad-400",
+    "msgstr": "আপনি কথা বলবেন %{languages}"
+  },
   "Your call ended.": {
     "model": "hy-mt2",
     "msgstr": "আপনার কলটি শেষ হয়ে গেছে।"
@@ -635,6 +655,10 @@
     "model": "madlad-400",
     "msgstr": "আপনার rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "আপনার rando এখানে। অডিও প্রস্তুত হলে আপনার কল শুরু হবে।"
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
     "msgstr": "আপনার rando'র সংযোগ বিচ্ছিন্ন হয়েছে; পুনরায় সংযোগ স্থাপনের জন্য কয়েক সেকেন্ড অপেক্ষা করুন।"
@@ -642,6 +666,10 @@
   "asking for microphone access": {
     "model": "hy-mt2",
     "msgstr": "মাইক্রোফোন ব্যবহারের অনুমতি চাওয়া"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "বাতিল করুন"
   },
   "button\u0004Cancel the link": {
     "model": "translategemma-4b",
@@ -679,6 +707,10 @@
     "model": "madlad-400",
     "msgstr": "শর্টকাট আড়াল করো"
   },
+  "button\u0004Invite": {
+    "model": "madlad-400",
+    "msgstr": "আমন্ত্রণ জানাও"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "কাউকে আমন্ত্রণ জানান"
@@ -698,6 +730,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "পরবর্তী rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "দেখা বন্ধ করুন"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

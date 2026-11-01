@@ -912,11 +912,6 @@ msgstr "トーン： %{tone}（左/右）"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "ヘッドホンを使用し、音量を低めに設定してください。"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "音声マスキング"
 
@@ -924,11 +919,6 @@ msgstr "音声マスキング"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "音声マスキングを有効にする"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: 自分の声を聞く／停止。Esc: 戻る。"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "音声アシスタントを更新し、音声の変化をプレビュー
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "マイク: %{bars}%{peak}   (%{key}：停止)"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "少なくとも1つの言語を選択してください。（%{key} を操作すると、言語が切り替わります）"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "スタイル：%{style}、トーン：%{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: 戻る。"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "ヘッドフォン推奨"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: 自分の声が聞こえる／止めて。"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "プレビュー ボリューム: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "プレビュー音量"

@@ -214,6 +214,9 @@ defmodule Tui.App do
         "p" ->
           MediaState.toggle_audition(state.media_state)
 
+        key when key in ["+", "=", "-", "_"] ->
+          MediaState.preview_volume(state.media_state, key)
+
         key when key in ["1", "2", "3", "left", "right"] ->
           MediaState.voice_key(state.media_state, key)
 

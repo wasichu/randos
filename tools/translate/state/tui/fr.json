@@ -4,19 +4,19 @@
     "msgstr": "%{connected} · Votre niveau : %{you} dBFS · Niveau de l'interlocuteur : %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{device} (par défaut)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} ou %{last}"
   },
   "%{language} both ways": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{language} dans les deux sens"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} min"
   },
   "%{minutes} min or more": {
@@ -24,7 +24,7 @@
     "msgstr": "%{minutes} min ou plus"
   },
   "%{name} ✓": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
@@ -76,7 +76,7 @@
     "msgstr": "Le son est allumé."
   },
   "Brighter": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Plus brillant"
   },
   "Calls started: %{started}": {
@@ -92,7 +92,7 @@
     "msgstr": "Vérification des options de voix…"
   },
   "Connected: %{connected}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Connecté : %{connected}"
   },
   "Connecting to the server…": {
@@ -131,9 +131,17 @@
     "model": "madlad-400",
     "msgstr": "Erreur: %{message}"
   },
+  "Esc: back.": {
+    "model": "madlad-400",
+    "msgstr": "Esc: retour en arrière."
+  },
   "Fuller": {
     "model": "madlad-400",
     "msgstr": "Fuller"
+  },
+  "Headphones recommended": {
+    "model": "translategemma-4b",
+    "msgstr": "Casques audio recommandés"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "madlad-400",
@@ -255,12 +263,16 @@
     "model": "translategemma-12b",
     "msgstr": "La prévisualisation a échoué. Le microphone s'est arrêté ; veuillez réessayer."
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "madlad-400",
+    "msgstr": "Volume d'aperçu: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
     "model": "opus-mt",
     "msgstr": "Reconnecter l'audio…"
   },
   "Selected: %{style}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Sélectionné : %{style}"
   },
   "Send it to them however you like. It works once.": {
@@ -275,6 +287,10 @@
     "model": "madlad-400",
     "msgstr": "Speaker:"
   },
+  "Style: %{style} · %{tone}": {
+    "model": "m2m100",
+    "msgstr": "Le style : %{style} · %{tone}"
+  },
   "Text only (no audio helper).": {
     "model": "translategemma-12b",
     "msgstr": "Texte uniquement (pas d'aide audio)."
@@ -288,7 +304,7 @@
     "msgstr": "Le relais fonctionne."
   },
   "The relay isn't working.": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Le relais ne fonctionne pas."
   },
   "These styles change your voice, but people may still recognize you.": {
@@ -304,7 +320,7 @@
     "msgstr": "Ce serveur n'a pas de page d'état (il est plus ancien que la requête d'état)."
   },
   "Time is up.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Le temps est écoulé."
   },
   "Time is up. You agreed to continue, waiting on your rando…": {
@@ -376,7 +392,7 @@
     "msgstr": "n'importe laquelle des langues que vous avez sélectionnées (%{count})."
   },
   "connected": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté"
   },
   "connected directly": {
@@ -388,7 +404,7 @@
     "msgstr": "connecté à %{server}"
   },
   "connected to the server": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "connecté au serveur"
   },
   "connected via relay": {
@@ -452,7 +468,7 @@
     "msgstr": "Retour"
   },
   "key\u0004cancel": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "annuler"
   },
   "key\u0004cancel the link": {
@@ -488,7 +504,7 @@
     "msgstr": "Copiez le lien"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "fin"
   },
   "key\u0004end call": {
@@ -508,7 +524,7 @@
     "msgstr": "Aide"
   },
   "key\u0004invite": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "inviter"
   },
   "key\u0004join": {
@@ -536,12 +552,16 @@
     "msgstr": "déplacer"
   },
   "key\u0004mute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "muet"
   },
   "key\u0004next rando": {
     "model": "hy-mt2",
     "msgstr": "prochain rando"
+  },
+  "key\u0004preview volume": {
+    "model": "translategemma-4b",
+    "msgstr": "aperçu du volume"
   },
   "key\u0004quit": {
     "model": "m2m100",
@@ -564,7 +584,7 @@
     "msgstr": "Le statut"
   },
   "key\u0004style": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "style"
   },
   "key\u0004unmute": {
@@ -648,15 +668,19 @@
     "msgstr": "Pas à la recherche d'un rando"
   },
   "not working": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ne fonctionne pas"
+  },
+  "p: hear myself / stop.": {
+    "model": "opus-mt",
+    "msgstr": "p: écoutez-moi / arrêtez."
   },
   "p: hear myself / stop. Esc: back.": {
     "model": "m2m100",
     "msgstr": "P : Écoutez moi / stop. Esc : retour."
   },
   "panel title\u0004Connecting": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Connexion"
   },
   "panel title\u0004Find a rando": {
@@ -664,11 +688,11 @@
     "msgstr": "Trouver un rando"
   },
   "panel title\u0004In call": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "En appel"
   },
   "panel title\u0004Invitation": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Invitation"
   },
   "panel title\u0004Looking": {
@@ -702,6 +726,10 @@
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "Sélectionnez au moins une langue à écouter (la touche espace permet de sélectionner une langue)."
+  },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "Choisissez au moins une langue à parler (%{key} en active une)"
   },
   "rando reconnecting…": {
     "model": "madlad-400",
@@ -772,7 +800,7 @@
     "msgstr": "moins d'une minute"
   },
   "unexpected reply": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "réponse inattendue"
   },
   "waiting for someone to open your link": {

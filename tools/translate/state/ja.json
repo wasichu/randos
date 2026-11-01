@@ -88,7 +88,7 @@
     "msgstr": "キャンセル"
   },
   "Change": {
-    "model": "translategemma-4b",
+    "model": "m2m100",
     "msgstr": "変更"
   },
   "Checking the relay…": {
@@ -110,6 +110,10 @@
   "Connecting": {
     "model": "madlad-400",
     "msgstr": "接続中"
+  },
+  "Connecting your audio": {
+    "model": "hy-mt2",
+    "msgstr": "オーディオを接続する"
   },
   "Connection lost": {
     "model": "hy-mt2",
@@ -166,6 +170,10 @@
   "Done": {
     "model": "madlad-400",
     "msgstr": "完了"
+  },
+  "End call": {
+    "model": "hy-mt2",
+    "msgstr": "通話を終了する"
   },
   "Ephemeral by default": {
     "model": "hy-mt2",
@@ -359,9 +367,17 @@
     "model": "hy-mt2",
     "msgstr": "聞くための言語を1つ以上選んでください"
   },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "少なくとも一つの言語を選択してください"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-4b",
     "msgstr": "自分が聞き慣れているすべての言語を選んでください。"
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "話せる言語は何でも選んでください。randoを見つけたら、私たちが1つ選びます。"
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-4b",
@@ -623,6 +639,10 @@
     "model": "hy-mt2",
     "msgstr": "%{languages}の言語が聞こえます"
   },
+  "You'll speak %{languages}": {
+    "model": "madlad-400",
+    "msgstr": "あなたは話す %{languages}"
+  },
   "Your call ended.": {
     "model": "translategemma-4b",
     "msgstr": "通話は終了しました。"
@@ -635,6 +655,10 @@
     "model": "hy-mt2",
     "msgstr": "あなたのrando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "rando はここです。音声が準備できたら通話を開始します。"
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
     "msgstr": "rando の接続が途切れました。数秒待ってから再開します。"
@@ -642,6 +666,10 @@
   "asking for microphone access": {
     "model": "hy-mt2",
     "msgstr": "マイクの使用許可を求めています"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "キャンセル"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -679,6 +707,10 @@
     "model": "hy-mt2",
     "msgstr": "ショートカットを非表示にする"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "招待する"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "誰かを招待する"
@@ -698,6 +730,10 @@
   "button\u0004Next rando": {
     "model": "m2m100",
     "msgstr": "次へ rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "m2m100",
+    "msgstr": "見るのをやめて"
   },
   "button\u0004Stop preview": {
     "model": "translategemma-12b",

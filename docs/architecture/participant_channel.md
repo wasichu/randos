@@ -107,9 +107,9 @@ show up as [`state`](#state) pushes, not in the reply. The one exception is
 
 | Event | Payload | Applies when | Effect |
 | --- | --- | --- | --- |
-| `find` | `{"speaks": "en", "hears": ["en", "es"], "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone you can talk to **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
+| `find` | `{"speaks": ["en", "es"], "hears": ["en", "es"], "adult_acknowledged": true, "audio": false}` | `idle` | Join the queue (or match immediately) with someone you can talk to **and whose `audio` matches** (see below). Without the acknowledgment, state shows `error: "adult_terms_required"`. **Rate limited:** burst of 5, then 1 per 6 s → `rate_limited`. |
 | `cancel_search` | `{}` | `looking` | Leave the queue → `idle`. |
-| `invite` | `{"speaks": "en", "hears": ["de"], "adult_acknowledged": true, "audio": false}` | `idle` | Make an invitation link instead of joining the queue → `inviting`, with the link in `invitation` (see [Invitations](#invitations)). The same checks as `find` (`adult_terms_required`, `unsupported_language`), and the same rate limit (they share it). |
+| `invite` | `{"speaks": ["en", "es"], "hears": ["de"], "adult_acknowledged": true, "audio": false}` | `idle` | Make an invitation link instead of joining the queue → `inviting`, with the link in `invitation` (see [Invitations](#invitations)). The same checks as `find` (`adult_terms_required`, `unsupported_language`), and the same rate limit (they share it). |
 | `cancel_invitation` | `{}` | `inviting` | Withdraw the link (it stops working) → `idle`. |
 | `set_locale` | `{"locale": "es"}` | always | Switch the language of the server's words (`error_message`, `notice_message`, the `status` reply) from now on; the current state is pushed again in it if that changes anything. Anything not an interface language means English. Older servers reply `invalid_message`: harmless, the next join sends the `locale` anyway. |
 | `accept_invitation` | `{"token": "…", "adult_acknowledged": true, "audio": false}` | `idle` | Join the call an invitation link offers: a call, or state shows `error: "invitation_invalid"` (unknown, used, expired or withdrawn: one reason for all) or `"audio_mismatch"` (the link's creator and you disagree on `audio`; the link stays valid for someone who agrees), or `"call_start_failed"` (the link stays valid). Without the acknowledgment, `adult_terms_required`. A `token` over 64 bytes replies `invalid_message`. Shares `find`'s rate limit. |
@@ -123,16 +123,26 @@ Events that don't apply in the current status are accepted and ignored.
 Malformed payloads reply `invalid_message`; unknown signal types reply
 `unsupported_signal_type`.
 
-`speaks` is the language you'll speak; `hears` the languages you're happy
-to hear (one or more; a browser starts with the speaking language checked
-among them). Two people are matched when **each one's `speaks` is in the
-other's `hears`**: the same language both ways, or crosstalk (you speak
-Spanish and hear English, they the opposite). Among several compatible
-people, whoever has waited longest is matched. All codes must come from
-the join reply's `languages`, and `hears` can't be empty; otherwise the
-state shows `error: "unsupported_language"`. A `hears` that isn't a list of
-strings replies `invalid_message`. Clients from before `hears` send a
-single `"listens": "es"` instead, which means `"hears": ["es"]`.
+`speaks` is one or more languages you're happy to speak: a nonempty list
+of codes, or a single code string for existing clients. `hears` is the
+nonempty list you're happy to hear. Both lists contain supported codes;
+duplicates are ignored. Malformed types (including non-string elements or
+more than 32 elements) reply `invalid_message`; empty/unsupported choices
+show `unsupported_language` in state.
+
+Two people are compatible when each one's speaking choices intersect the
+other's hearing choices. The longest-waiting compatible person is still
+matched first. For each direction, the server selects the first compatible
+speaking code in lexicographic code order. Choices are alternatives, not a
+ranking or a promise of rotation. The selected languages are fixed for that
+random call (including resume); the full offered choices survive for Next
+and requeue. The two directions can use the same language or crosstalk.
+Clients from before `hears` send a single `"listens": "es"` instead, which
+means `"hears": ["es"]`.
+
+Deploy the server before distributing clients that send list `speaks`.
+Existing clients still work with this server; older servers do not accept
+list `speaks`.
 
 Two people who just had a call aren't matched with each other again for
 `Randos.Calls.Lifecycle.rematch_window_seconds/0` (90 s) after it ends, so
@@ -171,8 +181,9 @@ queue: random matching never pairs them.
 `accept_invitation` takes no languages: the joiner is taken to speak what
 the creator wants to hear (the creator's `hears`), so the creator's
 `peer_speaks` is the first of those and `peer_speaks_any` lists them all
-when there are several; the joiner's `peer_speaks` is the creator's
-`speaks`, as in any call.
+when there are several; the creator may speak any of their offered
+`speaks`. Both sides receive these flexible choices through `self_speaks_any` and `peer_speaks_any`.
+Invitations do not assign one language per person.
 
 The call is an ordinary one (the same timing, vote, audio and recovery)
 with `call.kind` `"invitation"`. When it ends, **both go `idle`**, never
@@ -272,6 +283,7 @@ e.g. `"in_call"`.
     "ice_generation": 0,
     "recovering": false,
     "kind": "random | invitation",
+    "self_speaks_any": ["en"],
     "peer_speaks": "es",
     "peer_speaks_any": ["es"],
     "call_deadline_unix_ms": 1760000000000 | null,
@@ -296,12 +308,14 @@ e.g. `"in_call"`.
 - `ice_servers`: this call's STUN/TURN servers (fresh TURN credentials,
   valid for at least the longest possible call). Use them for this call's
   peer connection.
-- `peer_speaks`: the language your rando speaks in this call (a code from
-  `languages`). With several hearing languages, it's the only way to know.
-  It's a language, never anything that identifies them.
-  `peer_speaks_any`: every language they may speak, the same as
-  `[peer_speaks]` except for an invitation's creator whose `hears` has
-  several ("German or Japanese"; see [Invitations](#invitations)).
+- `self_speaks_any`: your language(s) for this call. Exactly one in a
+  random call; potentially several in an invitation. Use this for your
+  call label, not your full offered speaking set. Older servers omit it;
+  they accepted only a single offered speaking language.
+- `peer_speaks`: the first code in `peer_speaks_any`, retained for existing
+  clients. `peer_speaks_any` lists your rando's language(s) for this call:
+  exactly one in a random call, potentially several in an invitation.
+  Random calls never reveal their unused speaking choices.
 - `kind`: `"invitation"` for a call made through a link (both go `idle`
   after it; don't offer `next`), else `"random"`.
 - `recovering`: `true` while the call is unhealthy and within its
@@ -384,6 +398,7 @@ end-to-end tests check these, by number, for both clients
 | 9: survive a dropped connection | "obligation 9: a dropped connection to the server keeps the call" (the page's socket drops and comes back; same call, same peer connection, audio both ways) | TUI ↔ TUI: `resume_test.exs` (the websocket's TCP socket shut down mid-call), text-only and with audio: the rando goes on hearing it through the drop, and after it the same helper session carries the call both ways |
 | 10: restart when asked | `recovery_smoke.mjs`: relay-only through `test_turn`, both media paths cut, and a cut with the websocket drop; same call and peer connection, audio both ways | `recovery_test.exs`: TUI ↔ TUI and TUI ↔ browser in both roles; the helper's `tests/restart.rs` (including detection within 7 s) and `turn-check` through the real coturn |
 | 11: out of reach too long → stop | not end to end (it would need a 17 s outage in every smoke run): the hook's offline timer (`call_hook.js` `disconnected`) reads `data-offline-limit-ms` | `Tui.Media.State` (`state_test.exs`): a drop past the limit stops the helper's call; a reconnect inside it, or an earlier drop's limit, doesn't |
+| 12: label the selected call languages, preserve offered choices | `conversation_preferences_smoke.mjs`, multi-language call and resume | `browser_call_test.exs`, model/view checks |
 
 (Obligation 8's tests run against a server whose only TURN server never
 answers, `RANDOS_TEST_UNREACHABLE_RELAY=1`, so a call can connect only by
@@ -478,6 +493,13 @@ going direct: `just smoke` and `just tui-smoke` run them.)
     back, the server's state says what happened. A reconnect inside the
     limit cancels it. This is the one timer a client runs: it can't ask
     the server, and the server sets its length.
+
+12. **Show the call's chosen languages.** Label your voice with
+    `call.self_speaks_any` and your rando's with `call.peer_speaks_any`.
+    Keep the full offered speaking choices for the next search, including
+    after a resume. Random calls show one language per side; invitations
+    may show alternatives. Do not select languages or narrow preferences
+    on the client.
 
 **Clients without audio** send `"audio": false` in `find`, so they're only
 matched with each other, and their calls go `in_call` without any media

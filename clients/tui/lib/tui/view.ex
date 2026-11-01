@@ -12,6 +12,7 @@ defmodule Tui.View do
   alias ExRatatui.Style
   alias ExRatatui.Widgets.{Block, List, Paragraph, Popup}
   alias Tui.Bidi
+  alias Tui.Media.State, as: MediaState
   alias Tui.Model
   alias Tui.View.StatusScreen
   alias Tui.Width
@@ -48,17 +49,20 @@ defmodule Tui.View do
     help_lines = help_lines(primary_help(state), frame.width)
     help_rows = length(help_lines)
 
+    header = header(state)
+    header_rows = length(Bidi.wrap(header.text, max(frame.width - 2, 1))) + 2
+
     # The main panel gives way first on a short terminal: the status lines
     # must stay visible.
     [header_area, main_area, status_area, help_area] =
       Layout.split(area, :vertical, [
-        {:length, 3},
+        {:length, header_rows},
         {:min, 3},
         {:length, status_rows + 2},
         {:length, help_rows}
       ])
 
-    ([{header(state), header_area} | main_with_meters(state, main_area)] ++
+    ([{header, header_area} | main_with_meters(state, main_area)] ++
        bottom_panels(state, status_area, side_by_side?) ++
        [
          {%Paragraph{text: Enum.join(help_lines, "\n"), style: %Style{fg: :dark_gray}}, help_area}
@@ -188,8 +192,8 @@ defmodule Tui.View do
 
     form = %List{
       items: [
-        "#{speak}◀ #{Model.language_name(model, model.speaks)} ▶",
-        "#{hear}#{hears_row(model)}",
+        "#{speak}#{language_row(model, model.speaks, Model.speaks_cursor(model))}",
+        "#{hear}#{language_row(model, model.hears, Model.hears_cursor(model))}",
         adult_line(model)
       ],
       selected: Enum.find_index([:speaks, :hears, :ack], &(&1 == model.focus)),
@@ -266,44 +270,14 @@ defmodule Tui.View do
   defp voice_panel(%{help_open?: true}, _area), do: []
 
   defp voice_panel(%{media_state: %{voice_panel?: true} = media}, area) do
-    style =
-      case media.voice_family do
-        "tone" ->
-          gettext_comment(
-            "Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone."
-          )
-
-          gettext("Tone")
-
-        "tone_pitch" ->
-          gettext_comment(
-            "Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds)."
-          )
-
-          gettext("Tone + Pitch")
-
-        _ ->
-          gettext("Off")
-      end
-
-    tone =
-      if media.voice_tone == "fuller" do
-        gettext_comment(
-          "Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name."
-        )
-
-        gettext("Fuller")
-      else
-        gettext_comment(
-          "Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence."
-        )
-
-        gettext("Brighter")
-      end
+    style = voice_style_label(media.voice_family)
+    tone = voice_tone_label(media.voice_tone)
 
     content =
-      Enum.join(
+      Enum.reject(
         [
+          gettext("These styles change your voice, but people may still recognize you."),
+          "",
           gettext("1  Off"),
           (
             gettext_comment(
@@ -321,17 +295,23 @@ defmodule Tui.View do
           ),
           "",
           gettext("Selected: %{style}", style: style),
-          gettext("Tone: %{tone} (left/right)", tone: tone),
+          if(media.voice_family != "off", do: gettext("Tone: %{tone} (left/right)", tone: tone)),
           "",
-          gettext("Use headphones and keep the volume low."),
-          gettext("p: hear myself / stop. Esc: back."),
+          gettext("Headphones recommended"),
+          "",
+          if(media.preview_volume_available?,
+            do: gettext("Preview volume: %{level}/9 (-/+)", level: media.preview_volume)
+          ),
+          gettext("p: hear myself / stop."),
+          gettext("Esc: back."),
           voice_status(media),
+          if(match?(%{phase: :running}, media.mic_test), do: mic_test_line(media.mic_test)),
           "",
-          gettext("Nothing is recorded or uploaded."),
-          gettext("These styles change your voice, but people may still recognize you.")
+          gettext("Nothing is recorded or uploaded.")
         ],
-        "\n"
+        &is_nil/1
       )
+      |> Enum.join("\n")
 
     width = max(div(area.width * 85, 100) - 2, 10)
     height = min(length(Tui.Bidi.wrap(content, width)) + 2, area.height)
@@ -347,6 +327,43 @@ defmodule Tui.View do
   end
 
   defp voice_panel(_state, _area), do: []
+
+  defp voice_style_label(family) do
+    case family do
+      "tone" ->
+        gettext_comment(
+          "Voice masking style: change the voice's timbre or resonance, without changing its pitch. Not emotional tone."
+        )
+
+        gettext("Tone")
+
+      "tone_pitch" ->
+        gettext_comment(
+          "Voice masking style: change both vocal timbre and pitch (how high or low the voice sounds)."
+        )
+
+        gettext("Tone + Pitch")
+
+      _ ->
+        gettext("Off")
+    end
+  end
+
+  defp voice_tone_label(tone) do
+    if tone == "fuller" do
+      gettext_comment(
+        "Voice timbre option: a fuller-sounding voice with lower resonances and more body. Not completeness or a person's name."
+      )
+
+      gettext("Fuller")
+    else
+      gettext_comment(
+        "Voice timbre option: a brighter-sounding voice with higher resonances. Describes sound, not light or intelligence."
+      )
+
+      gettext("Brighter")
+    end
+  end
 
   defp voice_status(%{masking_available?: false}),
     do: gettext("Voice masking is unavailable. Update randos or choose Off.")
@@ -415,14 +432,20 @@ defmodule Tui.View do
     ]
   end
 
-  defp all_shortcuts(%{media_state: %{voice_panel?: true}}) do
-    [
-      {"1/2/3", pgettext("key", "style")},
-      {"←→", pgettext("key", "change tone")},
-      {"p", pgettext("key", "hear myself / stop")},
-      {"esc/b/enter", pgettext("key", "back")},
-      quit()
-    ]
+  defp all_shortcuts(%{media_state: %{voice_panel?: true} = media}) do
+    volume =
+      if media.preview_volume_available?,
+        do: [{"-/+", pgettext("key", "preview volume")}],
+        else: []
+
+    volume ++
+      [
+        {"1/2/3", pgettext("key", "style")},
+        {"←→", pgettext("key", "change tone")},
+        {"p", pgettext("key", "hear myself / stop")},
+        {"esc/b/enter", pgettext("key", "back")},
+        quit()
+      ]
   end
 
   defp all_shortcuts(state), do: with_quit_last(help(state.model), mic_help(state))
@@ -470,10 +493,10 @@ defmodule Tui.View do
 
   # The language under the cursor with its box, then every checked code:
   # "◀ [x] Español (ES) ▶  EN ES".
-  defp hears_row(model) do
-    checked = model.hears |> Enum.map_join(" ", &String.upcase/1)
+  defp language_row(model, codes, cursor) do
+    checked = Enum.map_join(codes, " ", &String.upcase/1)
 
-    case Model.hears_cursor(model) do
+    case cursor do
       nil ->
         checked
 
@@ -517,7 +540,7 @@ defmodule Tui.View do
         main(model, area, "") ++
           meter(
             gettext("You"),
-            Model.language_name(model, model.speaks),
+            call_languages(model, Model.self_speaks_any(model)),
             levels.you,
             @you_color,
             rows,
@@ -583,7 +606,7 @@ defmodule Tui.View do
   defp cell(1, half), do: half
   defp cell(_fill, _half), do: " "
 
-  defp header(%{model: model, uri: uri}) do
+  defp header(%{model: model, uri: uri} = state) do
     audio =
       if model.audio?, do: gettext("Audio on."), else: gettext("Text only (no audio helper).")
 
@@ -594,7 +617,37 @@ defmodule Tui.View do
         do: gettext("connected to %{server}", server: server),
         else: gettext("connecting to %{server}…", server: server)
 
-    %Paragraph{text: "#{audio}  #{connection}", block: panel(" randos ")}
+    title =
+      if masking_enabled?(state),
+        do: " randos · #{gettext("Voice masking on")} ",
+        else: " randos "
+
+    summary = masking_summary(state)
+    text = Enum.join(Enum.reject(["#{audio}  #{connection}", summary], &is_nil/1), "\n")
+    %Paragraph{text: text, wrap: true, block: panel(title)}
+  end
+
+  # During a call the frozen profile is authoritative; before it, show the choice.
+  defp selected_masking(%{media_state: %{call: call}}) when is_map(call), do: call[:masking]
+  defp selected_masking(%{media_state: media}), do: MediaState.masking(media)
+  defp selected_masking(_state), do: nil
+
+  defp masking_enabled?(state), do: is_binary(selected_masking(state))
+
+  defp masking_summary(state) do
+    case selected_masking(state) do
+      nil ->
+        nil
+
+      profile ->
+        family = if String.ends_with?(profile, "_pitch"), do: "tone_pitch", else: "tone"
+        tone = if String.starts_with?(profile, "lower_"), do: "fuller", else: "brighter"
+
+        gettext("Style: %{style} · %{tone}",
+          style: voice_style_label(family),
+          tone: voice_tone_label(tone)
+        )
+    end
   end
 
   # The server's host (and port, if not the scheme's default): the
@@ -630,10 +683,11 @@ defmodule Tui.View do
   defp hearing_summary(%{hears: hears}),
     do: gettext("any of the languages you picked (%{count})", count: length(hears))
 
-  # The languages your rando may speak (several only when they joined your
-  # invitation): the first three, then "…".
-  defp peer_languages(model) do
-    case Model.peer_speaks_any(model) do
+  # Invitation alternatives on either meter: the first three, then "…".
+  defp peer_languages(model), do: call_languages(model, Model.peer_speaks_any(model))
+
+  defp call_languages(model, codes) do
+    case codes do
       [] -> Model.language_name(model, nil)
       codes when length(codes) <= 3 -> language_list(model, codes)
       codes -> language_list(model, Enum.take(codes, 3)) <> "…"
@@ -642,6 +696,9 @@ defmodule Tui.View do
 
   defp language_list(model, codes) do
     case Enum.map(codes, &Model.language_name(model, &1)) do
+      [] ->
+        "…"
+
       [only] ->
         only
 
@@ -664,7 +721,7 @@ defmodule Tui.View do
 
     gettext("Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…",
       hearing: hearing_summary(model),
-      speaking: Model.language_name(model, model.speaks)
+      speaking: hearing_summary(%{model | hears: model.speaks})
     )
   end
 
@@ -912,10 +969,10 @@ defmodule Tui.View do
 
   defp mic_help(_state), do: []
 
-  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state) <> rtl_note(state)
+  defp extra_text(%{model: %{status: :idle}, media_state: %{voice_panel?: true}} = state),
+    do: rtl_note(state)
 
-  defp extra_text(%{media_state: %{call: %{masking: style}}}) when is_binary(style),
-    do: "\n\n" <> gettext("Voice masking on")
+  defp extra_text(%{model: %{status: :idle}} = state), do: mic_test_text(state) <> rtl_note(state)
 
   defp extra_text(_state), do: ""
 

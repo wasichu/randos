@@ -112,7 +112,7 @@
     "msgstr": "هل تريد الاستمرار؟"
   },
   "Continued": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "مستمر"
   },
   "Continued past %{minutes} minutes": {
@@ -128,12 +128,20 @@
     "msgstr": "أجهزة"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطأ: %{message}"
+  },
+  "Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "Esc: الرجوع."
   },
   "Fuller": {
     "model": "translategemma-4b",
     "msgstr": "أكثر امتلاءً"
+  },
+  "Headphones recommended": {
+    "model": "m2m100",
+    "msgstr": "سماعات الرأس الموصى بها"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
@@ -160,7 +168,7 @@
     "msgstr": "انضم عبر رابط"
   },
   "Keyboard shortcuts": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "اختصارات لوحة المفاتيح"
   },
   "Languages spoken:": {
@@ -220,7 +228,7 @@
     "msgstr": "لا يتم تسجيل أو رفع أي شيء."
   },
   "Now:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "الآن:"
   },
   "Off": {
@@ -248,15 +256,19 @@
     "msgstr": "الصق الرابط الذي تم إرساله إليك:"
   },
   "Press Enter to find a rando.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "اضغط على Enter للعثور على rando."
   },
   "Preview failed. Microphone stopped; try again.": {
     "model": "translategemma-12b",
     "msgstr": "فشل المعاينة. توقف الميكروفون؛ حاول مرة أخرى."
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "hy-mt2",
+    "msgstr": "حجم المعاينة: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "إعادة توصيل الصوت…"
   },
   "Selected: %{style}": {
@@ -274,6 +286,10 @@
   "Speaker:": {
     "model": "m2m100",
     "msgstr": "المتحدث :"
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "الأسلوب: %{style} · %{tone}"
   },
   "Text only (no audio helper).": {
     "model": "translategemma-12b",
@@ -328,7 +344,7 @@
     "msgstr": "النبرة: %{tone} (يسار/يمين)"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "translategemma-12b",
     "msgstr": "الطول النموذجي: %{length}"
   },
   "Update the audio helper to preview voice changes.": {
@@ -432,7 +448,7 @@
     "msgstr": "قطع الاتصال؛ إعادة الاتصال"
   },
   "error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "خطأ: %{message}"
   },
   "in a call": {
@@ -440,7 +456,7 @@
     "msgstr": "خلال مكالمة"
   },
   "key\u000418+": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -492,7 +508,7 @@
     "msgstr": "النهاية"
   },
   "key\u0004end call": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "إنهاء المكالمة"
   },
   "key\u0004find": {
@@ -504,7 +520,7 @@
     "msgstr": "\"أسمع نفسي\" \"توقف\""
   },
   "key\u0004help": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "مساعدة"
   },
   "key\u0004invite": {
@@ -542,6 +558,10 @@
   "key\u0004next rando": {
     "model": "madlad-400",
     "msgstr": "التالي rando"
+  },
+  "key\u0004preview volume": {
+    "model": "madlad-400",
+    "msgstr": "حجم العرض المسبق"
   },
   "key\u0004quit": {
     "model": "madlad-400",
@@ -651,6 +671,10 @@
     "model": "hy-mt2",
     "msgstr": "لا يعمل"
   },
+  "p: hear myself / stop.": {
+    "model": "opus-mt",
+    "msgstr": "ب: الاستماع إلى نفسي/التوقف."
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "madlad-400",
     "msgstr": "p : اسمع نفسي / توقف Esc : العودة"
@@ -702,6 +726,10 @@
   "pick at least one language to hear (space toggles one)": {
     "model": "hy-mt2",
     "msgstr": "اختر لغة واحدة على الأقل للاستماع (يؤدي الفراغ إلى تبديل اللغة)"
+  },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "اختر لغة واحدة على الأقل للتحدث بها (%{key} يتحكم في تفعيل إحداها)"
   },
   "rando reconnecting…": {
     "model": "hy-mt2",

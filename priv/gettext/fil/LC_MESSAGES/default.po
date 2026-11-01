@@ -50,11 +50,6 @@ msgstr "Pagsisikap na Makipag - ugnayang muli"
 msgid "Both people choose whether to continue."
 msgstr "Parehong ang mga tao ang nagdedesisyon kung itutuloy pa ba ito."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Cancel"
-msgstr "I-cancel"
-
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
@@ -65,11 +60,10 @@ msgstr "Pumili ng mga suportadong wika para sa pag-uusap."
 msgid "Choose your languages."
 msgstr "Piliin ang inyong mga wika."
 
-#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
-msgstr "Pag-uugnay"
+msgstr "Nagkokonekta"
 
 #. Label before the call's connection state (for example "connecting").
 #: lib/randos_web/components/home_components.ex
@@ -145,21 +139,11 @@ msgstr "Naghahanap"
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "Walang mga account. Walang mga profile. Walang video. Walang presyon."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Preparing the call"
-msgstr "Paghahanda para sa tawag"
-
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
 msgstr "Handa"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Secure audio connection is starting."
-msgstr "Nagsisimula na ang ligtas na koneksyon sa audio."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -258,11 +242,6 @@ msgstr "Ikaw"
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
 msgstr "Ikaw ang pumipili ng wikang gusto mong gamitin at ng wikang gusto mong marinig. Ipinapares ka ng randos sa isang taong may pagkakatugma para sa isang maikling usapan, at pagkatapos ay hindi na ito nakikialam pa."
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "You have matched. Audio starts when the call opens."
-msgstr "Nagkatugma na kayo. Magsisimula ang audio kapag nagsimula na ang tawag."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -719,13 +698,13 @@ msgstr "Ang mga pagsasalin sa website na ito ay ginawa ng makina at hindi pa nas
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "Ang mga pagsasalin sa site na ito ay ginawa ng makina. Kung may mali sa pagbabasa, hanapin ito sa ibaba at pindutin ang “Suggest a fix”: magbubukas ito ng isyu sa GitHub kung saan nakalagay na ang lahat ng impormasyon maliban sa iyong solusyon (kailangan mo ng account sa GitHub). Ang pull request na may iyong solusyon ay awtomatikong magbubukas, at ito ay magiging aktibo kapag na-review na."
 
-#. Opens the list of languages you can hear, to change it.
+#. Opens the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "Pagbabago"
 
-#. Closes the list of languages you can hear, once you've changed it.
+#. Closes the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
@@ -1104,10 +1083,10 @@ msgid "Conversation"
 msgstr "Pag-uusap"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Stop looking"
-msgstr "Huwag nang maghanap"
+msgstr "Huwag nang tumingin"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -1147,7 +1126,7 @@ msgid "Find"
 msgstr "Hanapin"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Invite"
 msgstr "Imbitahan"
@@ -1162,3 +1141,34 @@ msgstr "Gusto kong marinig"
 #, elixir-autogen, elixir-format
 msgid "End call"
 msgstr "Tapusin ang tawag"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick at least one language to speak"
+msgstr "Pumili ng kahit isang wika na gagamitin sa pagsasalita"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You'll speak %{languages}"
+msgstr "Ikaw ay magsasalita %{languages}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+msgstr "Pumili ka ng bawat wika na komportable kang magsalita. Pipili kami ng isa kapag nakahanap kami ng rando para sa iyo."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting your audio"
+msgstr "Pagkonekta ng iyong audio"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando is here. Your call starts when audio is ready."
+msgstr "Ang iyong rando ay dito. Ang iyong tawag ay magsisimula kapag handa na ang audio."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Cancel"
+msgstr "Huwag ituloy"

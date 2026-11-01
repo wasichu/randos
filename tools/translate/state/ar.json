@@ -92,7 +92,7 @@
     "msgstr": "إلغاء"
   },
   "Change": {
-    "model": "translategemma-4b",
+    "model": "hy-mt2",
     "msgstr": "تغيير"
   },
   "Checking the relay…": {
@@ -112,8 +112,12 @@
     "msgstr": "متصلة"
   },
   "Connecting": {
-    "model": "madlad-400",
-    "msgstr": "اتصال"
+    "model": "translategemma-4b",
+    "msgstr": "التواصل"
+  },
+  "Connecting your audio": {
+    "model": "translategemma-4b",
+    "msgstr": "ربط جهاز الصوت الخاص بك"
   },
   "Connection lost": {
     "model": "hy-mt2",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "translategemma-4b",
     "msgstr": "تم"
+  },
+  "End call": {
+    "model": "m2m100",
+    "msgstr": "انتهاء المكالمة"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -358,6 +366,10 @@
   "Pick at least one language to hear": {
     "model": "madlad-400",
     "msgstr": "اختر لغة واحدة على الأقل للاستماع إليها"
+  },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "اختر لغة واحدة على الأقل لتتحدث بها"
   },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-12b",
@@ -623,6 +635,10 @@
     "model": "translategemma-12b",
     "msgstr": "ستسمع لغات: %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "translategemma-12b",
+    "msgstr": "ستتحدث بلغات: %{languages}"
+  },
   "Your call ended.": {
     "model": "m2m100",
     "msgstr": "انتهيت مكالمتك"
@@ -635,6 +651,10 @@
     "model": "hy-mt2",
     "msgstr": "rando الخاص بك"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "hy-mt2",
+    "msgstr": "rando الخاص بك هنا. سيبدأ المكالمة عندما يصبح الصوت جاهزًا."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "انقطع الاتصال بـrando الخاص بك؛ يُرجى الانتظار بضع ثوانٍ حتى يعودوا."
@@ -642,6 +662,10 @@
   "asking for microphone access": {
     "model": "madlad-400",
     "msgstr": "طلب الوصول إلى الميكروفون"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "إلغاء"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -679,6 +703,10 @@
     "model": "hy-mt2",
     "msgstr": "إخفاء الاختصارات"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "دعوة"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "دعوة شخص ما"
@@ -698,6 +726,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "rando التالي"
+  },
+  "button\u0004Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "توقف عن النظر"
   },
   "button\u0004Stop preview": {
     "model": "madlad-400",

@@ -70,6 +70,27 @@ defmodule RandosWeb.ParticipantChannelTest do
     assert length(languages) == length(Randos.ConversationLanguages.codes())
   end
 
+  test "speaking lists reject malformed data and report empty or unsupported choices" do
+    for invalid <- [["en", 3], %{}, 7, List.duplicate("en", 33)] do
+      {_state, socket} = join_participant()
+
+      ref =
+        push(socket, "find", %{
+          "speaks" => invalid,
+          "hears" => ["fr"],
+          "adult_acknowledged" => true
+        })
+
+      assert_reply ref, :error, %{reason: "invalid_message"}
+    end
+
+    for invalid <- [[], ["en", "xx"]] do
+      {_state, socket} = join_participant()
+      find(socket, invalid, ["fr"])
+      assert_push "state", %{status: :idle, error: :unsupported_language}
+    end
+  end
+
   test "find without the 18+ acknowledgment reports an error in state" do
     {_state, socket} = join_participant()
     find(socket, "fr", "de", false)
@@ -240,8 +261,8 @@ defmodule RandosWeb.ParticipantChannelTest do
     view
     |> form("#conversation-form",
       conversation: %{
-        speaking_language: speaks,
-        hearing_languages: [listens],
+        speaking_language: List.wrap(speaks),
+        hearing_languages: List.wrap(listens),
         adult_acknowledgment: "true"
       }
     )
@@ -349,7 +370,7 @@ defmodule RandosWeb.ParticipantChannelTest do
     end
 
     test "a dropped channel comes back into the same call with its ticket" do
-      {socket, view, call_id, ticket} = call_with_browser("tr", "id")
+      {socket, view, call_id, ticket} = call_with_browser(["tr", "en"], "id")
 
       # The connection drops: the channel process dies without saying it's
       # leaving. The call waits; the browser shows its rando reconnecting.
@@ -367,6 +388,13 @@ defmodule RandosWeb.ParticipantChannelTest do
                join_with(%{"resume_ticket" => ticket})
 
       assert %{status: :in_call, webrtc_role: :offerer, call: %{id: ^call_id} = call} = state
+      assert call.self_speaks_any == ["en"]
+
+      assert :sys.get_state(socket.channel_pid).assigns.participant.preferences.speaks == [
+               "tr",
+               "en"
+             ]
+
       assert call.peer_reconnecting == false
       assert [_ | _] = call.ice_servers
       # A fresh ticket for the next blip; the used one is spent.
@@ -464,6 +492,25 @@ defmodule RandosWeb.ParticipantChannelTest do
       assert_reply ref, :ok
       assert_push "state", %{status: :idle, call: nil}
       assert_push "state", %{status: :idle, call: nil}
+    end
+
+    test "both invitation participants see the creator's full speaking alternatives" do
+      {_state, creator} = join_participant()
+      {_url, token} = invite(creator, ["en", "es"], ["de", "ja"])
+      {_state, guest} = join_participant()
+      accept(guest, token)
+
+      assert_push "state", %{
+        status: :connecting,
+        call: %{self_speaks_any: ["en", "es"], peer_speaks_any: ["de", "ja"]}
+      }
+
+      assert_push "state", %{
+        status: :connecting,
+        call: %{self_speaks_any: ["de", "ja"], peer_speaks_any: ["en", "es"]}
+      }
+
+      assert_reply push(guest, "end_call", %{}), :ok
     end
 
     test "a withdrawn, unknown or used link: invitation_invalid" do

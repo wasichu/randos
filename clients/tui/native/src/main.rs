@@ -13,6 +13,7 @@ mod audio;
 mod call;
 mod candidates;
 mod codec;
+mod diagnostics;
 mod echo;
 mod frame;
 mod loopback;
@@ -164,9 +165,9 @@ fn handle(
     media.reap();
     match command {
         Command::Ping => Ok("pong".into()),
-        Command::Capabilities => {
-            Ok(serde_json::json!({"voice_masking": true, "live_audition": true}))
-        }
+        Command::Capabilities => Ok(
+            serde_json::json!({"voice_masking": true, "live_audition": true, "preview_volume": true}),
+        ),
         Command::Devices => Ok(serde_json::to_value(audio::list_devices()?)?),
         Command::LoopbackStart {
             audition: audition_id,
@@ -201,6 +202,14 @@ fn handle(
                 .as_ref()
                 .ok_or("no loopback running")?
                 .set_masking(style)?;
+            Ok(true.into())
+        }
+        Command::LoopbackVolume { volume } => {
+            media
+                .loopback
+                .as_ref()
+                .ok_or("no loopback running")?
+                .set_volume(volume)?;
             Ok(true.into())
         }
         Command::LoopbackStop => {

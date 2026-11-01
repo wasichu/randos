@@ -912,11 +912,6 @@ msgstr "Tonalità: %{tone} (sinistra/destra)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "Utilizzate le cuffie e mantenete il volume basso."
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "Mascheramento vocale"
 
@@ -924,11 +919,6 @@ msgstr "Mascheramento vocale"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "Mascheramento vocale attivato"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: ascoltami / fermati. Esc: indietro."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "Aggiornare l’assistente audio per visualizzare in anteprima le modific
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "Microfono: %{bars}%{peak}   (Premere %{key} per fermare)"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "Scegli almeno una lingua da parlare (%{key} ne attiva una)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "Lo stile: %{style} · %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: torna indietro."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "Cuffie consigliate"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: ascolto me stesso / basta."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "Volume di anteprima: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "Volume di anteprima"

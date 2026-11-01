@@ -112,8 +112,12 @@
     "msgstr": "منسلک"
   },
   "Connecting": {
-    "model": "madlad-400",
-    "msgstr": "اتصال قائم کیا جارہا ہے"
+    "model": "opus-mt",
+    "msgstr": "رابطہ کر رہا ہے"
+  },
+  "Connecting your audio": {
+    "model": "m2m100",
+    "msgstr": "آپ کے آڈیو کو منسلک کریں"
   },
   "Connection lost": {
     "model": "opus-mt",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "opus-mt",
     "msgstr": "کام ہو گیا"
+  },
+  "End call": {
+    "model": "hy-mt2",
+    "msgstr": "کال ختم کریں"
   },
   "Ephemeral by default": {
     "model": "hy-mt2",
@@ -351,9 +359,17 @@
     "model": "m2m100",
     "msgstr": "سننے کے لئے کم از کم ایک زبان کا انتخاب کریں"
   },
+  "Pick at least one language to speak": {
+    "model": "m2m100",
+    "msgstr": "بات کرنے کے لئے کم از کم ایک زبان کا انتخاب کریں"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "hy-mt2",
     "msgstr": "وہ تمام زبانیں منتخب کریں جنہیں سننے میں آپ کو آسانی ہو۔"
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "وہ تمام زبانیں منتخب کریں جنہیں بولنے میں آپ کو خوشی ہے۔ جب ہم آپ کے لیے کوئی rando تلاش کر لیں گے، تو ہم خود ایک زبان منتخب کریں گے۔"
   },
   "Pick the language you'd like to check.": {
     "model": "hy-mt2",
@@ -611,6 +627,10 @@
     "model": "madlad-400",
     "msgstr": "آپ سنیں گے %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "madlad-400",
+    "msgstr": "آپ بولیں گے %{languages}"
+  },
   "Your call ended.": {
     "model": "opus-mt",
     "msgstr": "آپ کی کال ختم ہوگئی۔"
@@ -623,6 +643,10 @@
     "model": "hy-mt2",
     "msgstr": "آپ کا rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "آپ کا rando یہاں ہے۔ آپ کی کال اس وقت شروع ہوگی جب آڈیو تیار ہو جائے گی۔"
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "آپ کے rando کا کنکشن ٹوٹ گیا ہے؛ ان کے دوبارہ کنکٹ ہونے کے لیے چند سیکنڈ کا انتظار کریں۔"
@@ -630,6 +654,10 @@
   "asking for microphone access": {
     "model": "hy-mt2",
     "msgstr": "مائکروفون تک رسائی کی درخواست"
+  },
+  "button\u0004Cancel": {
+    "model": "opus-mt",
+    "msgstr": "منسوخ کریں"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -667,6 +695,10 @@
     "model": "hy-mt2",
     "msgstr": "شارٹ کٹس چھپائیں"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "دعوت دیں"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "کسی کو مدعو کریں"
@@ -686,6 +718,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "اگلا rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "madlad-400",
+    "msgstr": "دیکھنا بند کرو"
   },
   "button\u0004Stop preview": {
     "model": "opus-mt",

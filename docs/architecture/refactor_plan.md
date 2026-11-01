@@ -1,10 +1,14 @@
 # randos — current architecture and roadmap
 
-Verified against the v0.10.1 source (following published `f81f03d`), the local
-width/source auditions, documentation split, native latency reduction, Phoenix.HTML
-4.4.0 security update and owner
-TUI listening check on
-2026-10-31. This file describes current ownership
+Verified against released v0.10.1 (`e8e37be`), green native/call CI, production
+deployment, published archive/Homebrew checks, and a focused post-release quality
+review on 2026-10-31. Multiple speaking choices are locally verified by
+precommit, browser/TUI smoke and screenshot review on 2026-10-31. The selected
+Centered connecting layout passed those same local checks on 2026-10-31; this is
+not release/deployment evidence. The TUI masking-panel polish and preview-only
+volume passed precommit, TUI smoke and screenshot review on 2026-11-01.
+Listening and latency evidence remain scoped below.
+This file describes current ownership
 and active work; update the Verified line when either changes. The complete
 [previous roadmap and decision history](2026-10-31-roadmap-history.md) is preserved
 as evidence, including plans that were superseded.
@@ -99,17 +103,153 @@ implementation plans. No new technique is combined or promoted before listening.
 1. Signalsmith remains the baseline; the two width/source auditions are parked
    following owner feedback. Choose a distinct, explicit hypothesis before the
    next experiment; no further parameter sweep is scheduled.
-2. The owner reports the updated TUI sounds good. The subjective listening check
+2. v0.10.1 is published, deployed and available through Homebrew. Development is
+   focused on multiple speaking choices before early-November recruitment;
+   prioritize actual usage feedback before another DSP round. The owner reports
+   the updated TUI sounds good. The subjective listening check
    is recorded in `tools/voice-dsp/results/latency-listening.json`; preview versus
    a real TUI↔browser call and device details were not specified, so do not infer
-   acoustic or cross-device measurements. The owner has authorized v0.10.1
-   publication after normal release qualification; follow [the release process](../development.md#releases).
+   acoustic or cross-device measurements.
+
+## Multiple speaking choices (2026-10-31)
+
+Authorized before Reddit recruitment: offer several speaking languages; retain
+oldest-compatible matching; assign one compatible language per person per random
+call. Choices are alternatives, not proficiency/profile data or rankings. Code
+order breaks ties deterministically. Full sets survive Next and resume; peers
+see only the selected random-call language. Invitations retain flexible choices.
+The [channel contract](participant_channel.md) owns the rule and obligation 12.
+
+Focused advisor checkpoint: **extract** offered-set access in `Entry`; **merge**
+the browser's two language pickers; **link** protocol/call-flow/client guides;
+**leave** coordinator timing, media/helper and stats publication policy unchanged.
+README, development, TUI and privacy docs change for usage/compatibility. Reviewed
+self-hosting and helper guides need no change: deployment configuration and the
+Port/media contract are unchanged. During implementation, new strings used the established English fallback.
+The owner authorized v0.11.0 release qualification on 2026-11-01, including the
+required translation contestants/scorers/judges for both catalogs.
+
+Validation: `just precommit` passed (289 server tests, 263 TUI unit tests,
+native/lint/offline harness checks); `just smoke` and `just tui-smoke` passed,
+including multi-offer browser/TUI calls, selected labels, resume, Next and
+legacy preferences. `just screenshots` passed; desktop light/dark, mobile
+390 px and the TUI were visually reviewed. The screenshot harness also checks
+horizontal overflow and exact physical redraw after the TUI locale picker.
+The focused final advisor review found no blocking production defect; its
+invitation wording and multi-offer creator coverage follow-ups are addressed.
+Implementation evidence above preceded publication. End-to-end v0.11.0 release,
+push, deployment and Homebrew work is now authorized; current qualification is
+tracked in [release readiness](../releases/v0.11.0-readiness.md).
+
+## Real-input investigation and TUI masking visibility (2026-10-31)
+
+Owner reports idle `t` microphone levels work, but browser↔TUI call input is
+silent with masking both Off and enabled, even with the browser's randos mic
+mute enabled. Root cause is not yet established. Real device calls enable AEC;
+idle mic and sine/null smoke bypass it. Keep the claims distinct.
+
+Opt-in local numeric diagnostics compare raw capture, post-AEC and sent peaks
+without saving PCM or changing the helper Port/channel contracts. Also keep the
+selected/frozen masking indicator visible in the main header. Focused media
+advisor reviewed capture/gate/AEC ownership; do not change AEC policy on a guess.
+The known render-before-playback-drop reference mismatch needs separate evidence
+before treating it as this report's cause. No voice processor settings changed,
+so no processor benchmark/recognition rerun is warranted for diagnostics/UI.
+README, TUI/helper, development and privacy docs cover the additions; self-hosting
+needs no change because no server configuration or relay path changes.
+
+Physical reproduction: the owner's opt-in `tmp/tui-audio.jsonl` compares raw,
+post-AEC and sent levels. Capture continues, and AEC often preserves the input
+when the browser is muted; native raw peaks are much lower than browser peaks.
+One session keeps capturing while both packet counters stall, with a changing
+post-processing peak: `Rtc::writer` is unavailable. The helper ignored final
+`RtcEvent::Closed` and could continue capturing with stale connected state.
+The bounded native lifecycle correction and synthetic regression passed the
+focused advisor review, precommit and browser/TUI smoke checks;
+this does not establish the cause of every quiet-input observation. Do not add
+AGC or change AEC settings without the separate listening/default decision.
+
+Diagnostics and header validation passed `just precommit`, `just tui-smoke`
+and `just screenshots`; the main header was checked with frozen profiles.
+The v0.11.0 release review found no blocking media/privacy defect; fresh
+committed-candidate and native CI evidence remain release requirements.
+
+The owner also requested connection-screen design choices after finding mixed
+button shapes/layouts distracting. The corrected local previews (Centered, Paired, Stacked) share one content
+template, the same Connecting state and identical controls; only layout varies.
+The comparison labels these as alternative replacements for the same screen.
+The owner selected Centered. The browser now centers the heading and two
+language/meter columns, with matching 48px Mute and Cancel controls side by side.
+The keyed media hook survives the transition into the active call. Microphone
+and connection labels remain driven by actual media state. New heading/copy use
+Gettext; release translation runs are tracked in v0.11.0 readiness.
+README, development and self-hosting need no layout-specific change: setup,
+commands, settings and call policy are unchanged. Validation passed: `just
+precommit`, `just screenshots`, `just smoke`, and `just tui-smoke`. Browser
+captures verify matching 48px controls and no overflow at 1200/390/320px in
+light/dark modes (`docs/assets/web-connecting-*.png`). The screenshot harness
+allows a longer connection window for its deliberate fake-microphone delay;
+production timing and the smoke suite's default timeout are unchanged.
+
+### TUI masking review (2026-11-01)
+
+The recognition limitation is now the first sentence after `b`. Off hides its
+unused tone row. The panel says “Headphones recommended” and gives Esc its
+own line. The main header adds a compact style/tone line alongside the
+existing masking-on title, following the frozen call profile and wrapping to
+terminal width. Style/tone labels are shared with the panel. The preview panel
+also shows its existing numeric peak/meter while running, hiding the main-area
+copy so only one meter appears while the popup is open. New summary text enters the authorized v0.11.0 translation pipeline, retaining
+English fallback only when no candidate passes the established checks. README and TUI guides describe the preview controls.
+Development and self-hosting need no setup changes: the new gain is local,
+session-only, and adds no service, environment variable or persisted setting.
+
+The owner reports inaudible preview through built-in speakers, including Off.
+The current helper preview has no AEC or headphone gate; the OS reports built-in
+speakers as default, unmuted. No gain or DSP changes have been made without
+establishing whether capture, playback or preview startup is failing.
+Synthetic sine-to-file checks produce nonzero, finite audio for Off, Fuller
+Tone and Brighter Tone + Pitch. This checks the codec/preview output path,
+not physical speaker playback. The owner reports running Off preview peaks near
+−48…−52 dBFS. Browser capture enables AGC; native capture does not. Both preview
+paths use quarter-level headroom, so native raw speech is about 12 dB higher
+than this displayed post-processing peak. Low input plausibly explains poor
+speaker audibility; it does not by itself qualify physical playback.
+
+The owner chose a preview-only volume control. Level 1 preserves monitoring
+level, with eight 3 dB increases up to +24 dB. Native amplification happens
+after decode, bounded to ±1 before local playback; microphone meters remain
+before monitoring gain. Calls and masking input headroom remain unchanged.
+The capability-gated Port command and generation-scoped failure handling are
+documented in the native README; no participant protocol change is needed.
+Checkpoint: **extract** shared style labels; **leave** call DSP/AGC/AEC and callback
+ownership unchanged; **link** native Port tests to the monitor-volume contract.
+Final validation passed `just precommit`, `just tui-smoke`, and `just screenshots`.
+Focused state/protocol/app tests passed (79); native unit and synthetic WAV Port
+tests verify gain, bounds, live changes, unchanged mic peaks, explicit-preview
+restriction and EOF cleanup. The owner confirmed physical speaker audition works after increasing preview
+volume. The owner chose to keep the extra control TUI-only because browser
+preview already works. This is local listening evidence for the current source
+and preview path, not a claim that every native call input issue is resolved.
 
 ## Recent verified engineering work
 
-- Release preparation updates Phoenix.HTML from 4.3.0 to 4.4.0 for upstream
+- v0.10.1 updates Phoenix.HTML from 4.3.0 to 4.4.0 for upstream
   CVE-2026-117645 (attribute-name validation). No application exploit is claimed;
-  the release still requires the normal rendering, call and native CI checks.
+  native macOS/Linux and browser/TUI call CI passed (run 41207750085), and both
+  published archives passed release qualification (run 41208622992). Production
+  serves `e8e37be`; lab and Tidewave routes return 404. Homebrew installation and
+  helper checks passed.
+- The post-release source/diff review, including a strong advisor, found no
+  actionable production defects. **Leave** native/browser buffers distinct because
+  their scheduling differs; **leave** core/FFI and call policy unchanged; **link**
+  existing contracts/evidence. **Leave** repeated lab experiment registration
+  metadata while experiments are parked; consider one validated catalogue only
+  if further rounds make registration drift a demonstrated problem. Correct the
+  development overview's stale Rust-only description instead of duplicating
+  implementation documentation. README and self-hosting need no change: usage,
+  deployment and privacy behavior are unchanged. No new physical-device tests or
+  whole-project audit are claimed; reuse the completed release evidence.
 - Documentation now separates current authority from history. The complete
   previous roadmap body is preserved verbatim (210,683 bytes); all 73 former
   headings have forwarding targets, and all 23 old Open items have a disposition.

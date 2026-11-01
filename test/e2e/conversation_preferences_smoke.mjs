@@ -3,15 +3,15 @@
 import assert from 'node:assert/strict'
 import {Browser, BASE_URL} from './cdp.mjs'
 const browser=await Browser.launch()
-const state=page=>page.eval(`({speaks:document.querySelector('#conversation_speaking_language').value,hears:[...document.querySelectorAll('#hearing-languages input[type=checkbox]:checked')].map(x=>x.value)})`)
+const state=page=>page.eval(`({speaks:[...document.querySelectorAll('#speaking-languages input[type=checkbox]:checked')].map(x=>x.value),hears:[...document.querySelectorAll('#hearing-languages input[type=checkbox]:checked')].map(x=>x.value)})`)
 const cookie=page=>page.eval(`(()=>{const entry=document.cookie.split(';').map(x=>x.trim()).find(x=>x.startsWith('randos_conversation='));return entry?JSON.parse(decodeURIComponent(entry.slice('randos_conversation='.length))):null})()`)
-const ready=(page,speaks,hears)=>page.waitFor(`document.querySelector('#conversation_speaking_language option[value=${JSON.stringify(speaks)}]')?.selected&&JSON.stringify([...document.querySelectorAll('#hearing-languages input[type=checkbox]:checked')].map(x=>x.value))===${JSON.stringify(JSON.stringify(hears))}`,'restored language choices',10000)
-const key=(page,key)=>page.eval(`document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:${JSON.stringify(key)},bubbles:true,cancelable:true}))`)
+const ready=(page,speaks,hears)=>page.waitFor(`JSON.stringify([...document.querySelectorAll('#speaking-languages input[type=checkbox][checked]')].map(x=>x.value))===${JSON.stringify(JSON.stringify([speaks].flat()))}&&JSON.stringify([...document.querySelectorAll('#hearing-languages input[type=checkbox][checked]')].map(x=>x.value))===${JSON.stringify(JSON.stringify(hears))}`,'restored language choices',10000)
+const key=(page,key)=>page.eval(`{const target=document.activeElement;for(const type of ['keydown','keyup'])target.dispatchEvent(new KeyboardEvent(type,{key:${JSON.stringify(key)},bubbles:true,cancelable:true}))}`)
 try{
  const first=await browser.newPage('preferences-first');await first.open()
  const defaults=await state(first)
  await first.chooseLanguages('es',['en','fr'])
- assert.deepEqual(await cookie(first),{version:1,speaks:'es',hears:['en','fr']})
+ assert.deepEqual(await cookie(first),{version:2,speaks:['es'],hears:['en','fr']})
  const cookies=(await first.send('Network.getCookies',{urls:[BASE_URL]})).cookies
  const saved=cookies.find(x=>x.name==='randos_conversation')
  assert(saved.session&&saved.expires===-1,'no persistent expiration')
@@ -23,12 +23,12 @@ try{
  const second=await browser.newPage('preferences-second-tab',{browserContextId:first.browserContextId});await second.open();await ready(second,'es',['en','fr'])
  await first.chooseLanguages('ja',['de'])
  await second.click('#conversation_adult_acknowledgment')
- assert.deepEqual(await cookie(second),{version:1,speaks:'ja',hears:['de']},'stale tab acknowledgment does not overwrite newer language choices')
+ assert.deepEqual(await cookie(second),{version:2,speaks:['ja'],hears:['de']},'stale tab acknowledgment does not overwrite newer language choices')
  // Delay transport while restoring, then acknowledge and invite immediately.
  const delayed=await browser.newPage('preferences-delayed',{browserContextId:first.browserContextId})
  await delayed.send('Page.addScriptToEvaluateOnNewDocument',{source:`(()=>{const send=WebSocket.prototype.send;WebSocket.prototype.send=function(data){setTimeout(()=>{if(this.readyState===WebSocket.OPEN)send.call(this,data)},150)}})()`})
  await delayed.open();await ready(delayed,'ja',['de'])
- const language=await delayed.eval('document.querySelector("#conversation_speaking_language option:checked").textContent')
+ const language=await delayed.eval('document.querySelector("#speaking-chip-ja span").textContent.trim()')
  await delayed.click('#conversation_adult_acknowledgment')
  await delayed.waitFor('!document.querySelector("#invite-button").disabled','invitation enabled',10000)
  await delayed.click('#invite-button')
@@ -52,20 +52,18 @@ try{
  await first.waitFor('document.documentElement.lang==="fr"&&!!document.querySelector("[data-phx-main].phx-connected")','interface-language navigation',10000)
  await ready(first,'ja',['de'])
  assert.equal(await first.eval('window.__randosStreams.length'),0,'locale restoration does not open microphone')
- // C uses the existing ordered select, only with shortcuts visible, both cases.
+ // C opens/closes the speaking choices, only with shortcuts visible.
  await first.eval('document.querySelector("#homepage-shortcuts-help").focus()')
- await key(first,'c');assert.equal((await state(first)).speaks,'ja')
+ await key(first,'c');assert.equal(await first.eval('document.querySelector("#speaking-details").open'),false)
  await key(first,'?')
- const options=await first.eval('[...document.querySelector("#conversation_speaking_language").options].map(x=>x.value)')
- let expected='ja'
- for(const letter of ['c','C']){
-  expected=options[(options.indexOf(expected)+1)%options.length]
-  await key(first,letter);await first.waitFor(`document.querySelector('#conversation_speaking_language option[value=${JSON.stringify(expected)}]').hasAttribute('selected')`,'speaking shortcut applied by server',10000)
+ for(const [letter,open] of [['c',true],['C',false]]){
+  await key(first,letter);assert.equal(await first.eval('document.querySelector("#speaking-details").open'),open)
  }
- await first.eval('document.querySelector("#conversation_speaking_language").focus()')
- await key(first,'c');assert.equal((await state(first)).speaks,expected,'form focus suppresses page shortcut')
+ await first.eval('document.querySelector("#speaking-details").open=true;document.querySelector("#speaking-language-ja").focus()')
+ await key(first,'c');assert.equal(await first.eval('document.querySelector("#speaking-details").open'),true,'form focus suppresses page shortcut')
  await first.eval('document.querySelector("#homepage-shortcuts-help").focus()');await key(first,'Escape')
- await key(first,'c');assert.equal((await state(first)).speaks,expected,'hidden shortcut panel disables C')
+ await key(first,'c');assert.equal(await first.eval('document.querySelector("#speaking-details").open'),true,'hidden shortcut panel disables C')
+ const expected='ja'
  await first.eval(`for(const input of document.querySelectorAll('#hearing-languages input[type=checkbox]'))input.checked=false;document.querySelector('#hearing-languages input[type=checkbox]').dispatchEvent(new Event('change',{bubbles:true}))`)
  const empty=await browser.newPage('preferences-empty-hearing',{browserContextId:first.browserContextId});await empty.open();await ready(empty,expected,[])
  assert.equal(await empty.eval('document.querySelector("#invite-button").disabled'),true,'empty hearing selection stays empty')
@@ -75,7 +73,7 @@ try{
  const blocked=await browser.newPage('preferences-blocked',{browserContextId:first.browserContextId})
  await blocked.send('Page.addScriptToEvaluateOnNewDocument',{source:`Object.defineProperty(document,'cookie',{get(){return ''},set(){}})`})
  await blocked.open();await blocked.chooseLanguages('es',['fr'])
- assert.deepEqual(await state(blocked),{speaks:'es',hears:['fr']},'blocked cookies do not block the form')
+ assert.deepEqual(await state(blocked),{speaks:['es'],hears:['fr']},'blocked cookies do not block the form')
  assert.equal(await blocked.eval('window.__randosStreams.length'),0)
  const clean=await Browser.launch()
  try{
@@ -83,5 +81,32 @@ try{
   assert.equal(await cookie(page),null,'fresh browser context has no remembered languages')
   assert.deepEqual(await state(page),defaults)
  }finally{await clean.close()}
- console.log('conversation preferences: session scope, cross-tab/reload/back/reconnect, delayed Invite, stale-tab isolation, C/c gates and blocked/invalid cookies passed')
+ // Obligation 12: select one language per random call; resume and Next keep all offers.
+ const multi=await browser.newPage('multi-speaker');await multi.open()
+ const peer=await browser.newPage('multi-peer');await peer.open()
+ await multi.findRando(['en','es'],'fr');await peer.findRando('fr','es')
+ await multi.inCall();await peer.inCall()
+ const labels=page=>page.eval(`({self:document.querySelector('#local-waveform').textContent,peer:document.querySelector('#remote-waveform').textContent})`)
+ assert((await labels(multi)).self.includes('Español'))
+ assert((await labels(peer)).peer.includes('Español'))
+ assert(!(await labels(peer)).peer.includes('English'),'unused speaking choices stay private')
+ const callId=await multi.eval('document.querySelector("#webrtc-audio").dataset.callId')
+ await multi.eval('window.liveSocket.disconnect();setTimeout(()=>window.liveSocket.connect(),150)')
+ await multi.waitFor('!!document.querySelector("[data-phx-main].phx-connected")','multi-language resume')
+ await multi.inCall()
+ assert.equal(await multi.eval('document.querySelector("#webrtc-audio").dataset.callId'),callId)
+ assert((await labels(multi)).self.includes('Español'),'resume retains the selected language')
+ await multi.click('#next-rando-button')
+ await multi.waitFor('!!document.querySelector("#looking-panel")','multi-language Next')
+ await peer.stopLooking()
+ const nextPeer=await browser.newPage('multi-next-peer');await nextPeer.open();await nextPeer.findRando('fr','en')
+ await multi.inCall();await nextPeer.inCall()
+ assert((await labels(multi)).self.includes('English'),'Next uses full offered choices after resume')
+ await multi.hangUp();await nextPeer.stopLooking()
+ await multi.waitFor('!!document.querySelector("#conversation-form")','multi form after call')
+ await ready(multi,['en','es'],['fr'])
+ // Version 1 preferences migrate without losing the old speaking choice.
+ await first.eval(`document.cookie='randos_conversation='+encodeURIComponent(JSON.stringify({version:1,speaks:'es',hears:['fr']}))+'; Path=/; SameSite=Lax'`)
+ const legacy=await browser.newPage('legacy-preferences',{browserContextId:first.browserContextId});await legacy.open();await ready(legacy,'es',['fr'])
+ console.log('conversation preferences: session scope, cross-tab/reload/back/reconnect, delayed Invite, stale-tab isolation, C/c gates, blocked/invalid/legacy cookies, and multi-language call/resume/Next passed')
 }finally{await browser.close()}

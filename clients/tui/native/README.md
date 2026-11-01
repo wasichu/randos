@@ -31,13 +31,24 @@ into or out of lock-free rings (`ringbuf`) and bump atomics; a worker thread
 does the downmix, Opus, upmix, and stats. Playback queues at most 40 ms, and
 extra frames are dropped, so device clock drift can't grow the latency.
 
+## Local diagnostics
+
+`RANDOS_AUDIO_DIAGNOSTICS=/absolute/path/to/levels.jsonl` opts into numeric-only
+call diagnostics (`src/diagnostics.rs`): raw capture and post-AEC peaks,
+transmitted/received peaks, frame/packet/drop counts, queue lengths, mute and
+connection state. Disabled when unset. The file opens at call startup; snapshot writes run on the call worker, never
+inside cpal callbacks; there is no recording or Port/signaling extension.
+The [development guide](../../../docs/development.md#local-audio-diagnostics)
+owns the reproduction workflow. An unwritable diagnostic path is an explicit
+call error; choose a writable local file.
+
 ## Port protocol
 
 Each message is a 4-byte big-endian length plus a JSON object (Erlang
 `{:packet, 4}`). The Elixir side is `Tui.Media` / `Tui.Media.Protocol`; the
 Rust side is `src/protocol.rs`. Change all three, and this table, together.
 
-`capabilities` returns `{"voice_masking": true, "live_audition": true}`. The TUI checks it before
+`capabilities` returns `{"voice_masking": true, "live_audition": true, "preview_volume": true}`. The TUI checks it before
 starting any selected masking or audition. Missing/unsupported capability blocks
 masked capture, protecting against older helpers silently ignoring new fields.
 Unmasked calls remain compatible. `live_audition` separately advertises live
@@ -47,7 +58,7 @@ Both `call_start` and `loopback_start` accept optional `masking`: absent, null
 or `"off"` disables it; `"lower_resonance"`, `"lower_resonance_pitch"`,
 `"higher_resonance"` and `"higher_resonance_pitch"` select fixed styles. Unknown
 values fail before devices open. `loopback_start` with a selected style is the
-explicit headphone audition; the TUI uses its selected output, and stops it on
+explicit local audition (headphones recommended); the TUI uses its selected output, and stops it on
 exit, Stop or before a call. Settings changes use `loopback_masking` to keep the
 same input/output devices and worker open. Explicit `masking: "off"` previews
 the original at the same quarter-level headroom as masked auditions; absent/null
@@ -65,10 +76,11 @@ unsolicited and carry `event` instead.
 | Request (`cmd`) | Fields | `ok` result |
 | --- | --- | --- |
 | `ping` | | `"pong"` |
-| `capabilities` | | `{"voice_masking": true, "live_audition": true}` |
+| `capabilities` | | `{"voice_masking": true, "live_audition": true, "preview_volume": true}` |
 | `devices` | | `{"inputs": [...], "outputs": [...], "default_input", "default_output"}`: device names, to pass as `device:NAME` |
 | `loopback_start` | `in`: `device`\|`device:NAME`\|`sine`; `out`: `device`\|`device:NAME`\|`null`\|`wav:PATH` (`device` is the system default; a `device:NAME` that isn't there falls back to the default, and the reply's name says so) | `{"input": "...", "output": "..."}`: what was opened |
 | `loopback_masking` | `masking`: a style name or `"off"`; no loopback is an error | `true`: queued, not yet applied; worker coalesces pending changes at a frame boundary |
+| `loopback_volume` | `volume`: integer 1..9; requires a running explicit audition (`masking` supplied on `loopback_start`) | `true`: queued to the worker; coalesces live changes without reopening devices or resetting DSP. Level 1 preserves original monitoring level; each step adds 3 dB, up to +24 dB. Applied only after codec decode, bounded to ±1 before local playback. Mic peaks/meters, masking input headroom and calls are unchanged. |
 | `loopback_stop` | | `true` (also when none was running) |
 | `call_start` | `role`: `offerer`\|`answerer`; `ice_servers` (the call's, from the channel's `state`; `stun:` URLs give server-reflexive candidates, the first UDP `turn:` URL with credentials a relayed one); `in`/`out` as above (default `device`); `bind_ip` (tests: `127.0.0.1`; default: the default route's address); `relay_only` (default `false`): only the relay candidate, never a direct connection, for the call map's `ice_transport_policy` `"relay"` | `{"input", "output"}` |
 | `call_signal` | `type` and `payload` of a peer's signal, exactly as the channel's `signal` push has them (`offer`, `answer`, `ice_candidate`; others are ignored) | `true` |
@@ -254,3 +266,12 @@ TUI ignores events from retired generations, including a silent meter's untagged
 events during an audition. Local start/update command metadata also retains the
 generation for delayed replies. These identifiers never enter the participant
 channel. Legacy meter/CLI requests and events remain untagged.
+
+Preview volume is a capability-gated, session-only TUI choice (`-/+` in the
+voice panel). An older helper without `preview_volume` keeps the original
+monitor level and gets no volume command. Stop/close and helper errors retire
+pending updates; TUI reply metadata scopes volume failures to the current
+audition generation. Nothing is added to participant signaling or Config.
+Volume changes never modify the masking processor, so processor benchmarks
+remain applicable; amplitude/bounds and live Port tests qualify this local
+monitor stage.

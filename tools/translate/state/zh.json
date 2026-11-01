@@ -115,6 +115,10 @@
     "model": "opus-mt",
     "msgstr": "正在连接"
   },
+  "Connecting your audio": {
+    "model": "madlad-400",
+    "msgstr": "连接您的音频"
+  },
   "Connection lost": {
     "model": "hy-mt2",
     "msgstr": "连接丢失"
@@ -168,8 +172,12 @@
     "msgstr": "当前通话"
   },
   "Done": {
-    "model": "translategemma-4b",
+    "model": "madlad-400",
     "msgstr": "已完成"
+  },
+  "End call": {
+    "model": "hy-mt2",
+    "msgstr": "结束通话"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -363,9 +371,17 @@
     "model": "hy-mt2",
     "msgstr": "至少选择一种语言来收听"
   },
+  "Pick at least one language to speak": {
+    "model": "m2m100",
+    "msgstr": "选择至少一个语言来说话"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-12b",
     "msgstr": "请选择您能够听懂的每一种语言。"
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "挑选所有你愿意使用的语言吧。等我们为你找到一个rando后，我们会从中选一种。"
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-27b",
@@ -627,6 +643,10 @@
     "model": "translategemma-12b",
     "msgstr": "您将听到以下语言：%{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "translategemma-12b",
+    "msgstr": "您将使用以下语言：%{languages}"
+  },
   "Your call ended.": {
     "model": "hy-mt2",
     "msgstr": "您的通话已结束。"
@@ -639,6 +659,10 @@
     "model": "madlad-400",
     "msgstr": "您的 rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "您的 rando 在这里。 音频准备就绪时,您的通话开始。"
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
     "msgstr": "您的 rando 的连接中断;等待几秒钟他们回来。"
@@ -646,6 +670,10 @@
   "asking for microphone access": {
     "model": "hy-mt2",
     "msgstr": "请求使用麦克风权限"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "取消"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +711,10 @@
     "model": "madlad-400",
     "msgstr": "隐藏快捷方式"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "邀请"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "邀请某人"
@@ -702,6 +734,10 @@
   "button\u0004Next rando": {
     "model": "madlad-400",
     "msgstr": "下一页 rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "hy-mt2",
+    "msgstr": "别再看了"
   },
   "button\u0004Stop preview": {
     "model": "translategemma-4b",

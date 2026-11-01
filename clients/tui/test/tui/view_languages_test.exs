@@ -156,7 +156,16 @@ defmodule Tui.ViewLanguagesTest do
             voice_family: "tone_pitch",
             voice_tone: "brighter",
             masking_available?: true,
-            audition_available?: true
+            audition_available?: true,
+            preview_volume_available?: true,
+            preview_volume: 9,
+            mic_test: %{
+              mode: :audition,
+              phase: :running,
+              seq: 1,
+              levels: List.duplicate(0.1, 12),
+              stats: %{"input_peak_dbfs" => -50.0}
+            }
         }
 
         # Draw the actual popup without text outside its rectangle being
@@ -168,7 +177,10 @@ defmodule Tui.ViewLanguagesTest do
 
         for message <- [
               gettext("3  Tone + Pitch"),
-              gettext("p: hear myself / stop. Esc: back."),
+              gettext("p: hear myself / stop."),
+              gettext("Esc: back."),
+              gettext("Preview volume: %{level}/9 (-/+)", level: 9),
+              gettext("Headphones recommended"),
               gettext("These styles change your voice, but people may still recognize you.")
             ] do
           assert text =~ squeeze(message), "masking panel clipped #{inspect(message)}:\n#{text}"

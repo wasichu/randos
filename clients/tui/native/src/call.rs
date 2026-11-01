@@ -275,7 +275,7 @@ impl Session {
         rtc_config.set_max_stun_retransmits(5);
         let mut rtc = rtc_config.build(Instant::now());
         let local_candidates = host_candidate(&mut rtc, local, config.relay_only)?;
-        let mut report = Report::new();
+        let mut report = Report::new()?;
         report.local_candidates = offered_kinds(config.relay_only);
 
         Ok(Self {
@@ -328,6 +328,9 @@ impl Session {
 
         loop {
             self.gather()?;
+            if !self.rtc.is_alive() {
+                return self.fail_media("media connection closed");
+            }
 
             match inbox.try_recv() {
                 Ok(Command::Remote(signal)) => {
@@ -356,10 +359,16 @@ impl Session {
 
             let mut frame = [0.0; FRAME];
             if self.capture.read(&mut frame)? {
+                if let Some(diagnostics) = &mut self.report.diagnostics {
+                    diagnostics.captured(&frame);
+                }
                 // The peer's voice, played on our speaker, out of the mic.
                 if let Some(echo) = self.echo.as_mut() {
                     let queued = self.capture.queued_ms() + self.playback.queued_ms();
                     echo.capture(&mut frame, queued)?;
+                }
+                if let Some(diagnostics) = &mut self.report.diagnostics {
+                    diagnostics.after_echo(&frame);
                 }
                 let mut voice = [0.0; FRAME];
                 self.voice.process(&frame, &mut voice)?;
@@ -375,7 +384,9 @@ impl Session {
                 &self.playback,
                 &self.notify,
                 &mut self.candidates,
-            );
+                self.connected,
+                self.muted,
+            )?;
         }
 
         // Send the teardown packets too, so the peer sees a clean close
@@ -520,7 +531,7 @@ impl Session {
         let frame = if self.muted { &silence } else { frame };
         self.report.sent(frame);
         let Some(writer) = self.rtc.writer(mid) else {
-            return Ok(());
+            return self.fail_media("media writer unavailable");
         };
         let pt = match self.pt {
             Some(pt) => pt,
@@ -646,8 +657,17 @@ impl Session {
         Ok(())
     }
 
+    fn fail_media(&mut self, reason: &'static str) -> Result<(), Error> {
+        self.connected = false;
+        self.update_voice_gate()?;
+        Err(reason.into())
+    }
+
     fn handle_event(&mut self, event: RtcEvent) -> Result<(), Error> {
         match event {
+            // DTLS/SCTP closure is final, unlike an ICE interruption. str0m
+            // disables its writer while closing without another ICE event.
+            RtcEvent::Closed => return self.fail_media("remote media connection closed"),
             RtcEvent::Connected => {
                 self.dtls_up = true;
                 self.connected = true;
@@ -1022,6 +1042,85 @@ mod tests {
             }
             thread::sleep(Duration::from_millis(10));
         }
+    }
+
+    fn synthetic_session(role: Role, notify: Notify) -> Session {
+        let config = CallConfig {
+            bind_ip: Some(IpAddr::V4(Ipv4Addr::LOCALHOST)),
+            ..CallConfig::new(role)
+        };
+        let Devices {
+            capture, playback, ..
+        } = Devices::open(Input::Sine, Output::Null, &notify).unwrap();
+        Session::new(&config, capture, playback, notify).unwrap()
+    }
+
+    #[test]
+    fn remote_dtls_close_reports_failure_and_exits_the_capture_worker() {
+        let (call, seen) = peer(Role::Offerer);
+        let (events, inbox) = mpsc::channel();
+        let notify: Notify = Arc::new(move |event| {
+            let _ = events.send(event);
+        });
+        let mut remote = synthetic_session(Role::Answerer, notify);
+        let deadline = Instant::now() + Duration::from_secs(15);
+        while Instant::now() < deadline {
+            for signal in std::mem::take(&mut seen.lock().unwrap().signals) {
+                remote.apply_remote(signal).unwrap();
+                remote.drain().unwrap();
+            }
+            while let Ok(event) = inbox.try_recv() {
+                if let Event::CallSignal { kind, payload } = event {
+                    call.signal(RemoteSignal { kind, payload }).unwrap();
+                }
+            }
+            if remote.connected && seen.lock().unwrap().states.iter().any(|s| s == "connected") {
+                break;
+            }
+            remote.receive().unwrap();
+            remote.drain().unwrap();
+        }
+        assert!(remote.connected, "remote did not finish its DTLS handshake");
+        assert!(seen.lock().unwrap().states.iter().any(|s| s == "connected"));
+        assert!(call.is_running());
+
+        // A real peer shutdown sends a DTLS close_notify. ICE can remain
+        // connected, so waiting only for an ICE disconnect misses this case.
+        remote.rtc.close().unwrap();
+        remote.drain().unwrap();
+        let deadline = Instant::now() + Duration::from_secs(5);
+        while call.is_running() && Instant::now() < deadline {
+            thread::sleep(Duration::from_millis(10));
+        }
+        assert!(
+            !call.is_running(),
+            "capture worker outlived remote DTLS close"
+        );
+        assert!(seen.lock().unwrap().states.iter().any(|s| s == "failed"));
+        assert_eq!(
+            call.stop().unwrap_err().to_string(),
+            "remote media connection closed"
+        );
+    }
+
+    #[test]
+    fn an_unavailable_writer_fails_instead_of_silently_discarding_capture() {
+        let mut session = synthetic_session(Role::Offerer, Arc::new(|_| {}));
+        session.send_offer().unwrap();
+        session.connected = true;
+        session.update_voice_gate().unwrap();
+        session.rtc.disconnect();
+        let error = session.send_frame(&[0.5; FRAME]).unwrap_err();
+        assert_eq!(error.to_string(), "media writer unavailable");
+        assert!(!session.connected);
+        assert_eq!(session.report.packets_sent, 0);
+    }
+
+    #[test]
+    fn intentional_stop_does_not_report_media_failure() {
+        let (call, seen) = peer(Role::Offerer);
+        call.stop().unwrap();
+        assert!(!seen.lock().unwrap().states.iter().any(|s| s == "failed"));
     }
 
     #[test]

@@ -92,8 +92,8 @@
     "msgstr": "Cancelado"
   },
   "Change": {
-    "model": "translategemma-4b",
-    "msgstr": "Mudar"
+    "model": "hy-mt2",
+    "msgstr": "Alterar"
   },
   "Checking the relay…": {
     "model": "translategemma-27b",
@@ -114,6 +114,10 @@
   "Connecting": {
     "model": "hy-mt2",
     "msgstr": "Conectando"
+  },
+  "Connecting your audio": {
+    "model": "hy-mt2",
+    "msgstr": "Conectando seu áudio"
   },
   "Connection lost": {
     "model": "hy-mt2",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "hy-mt2",
     "msgstr": "Concluído"
+  },
+  "End call": {
+    "model": "translategemma-4b",
+    "msgstr": "Encerrar a chamada"
   },
   "Ephemeral by default": {
     "model": "hy-mt2",
@@ -363,9 +371,17 @@
     "model": "hy-mt2",
     "msgstr": "Escolha pelo menos um idioma para ouvir"
   },
+  "Pick at least one language to speak": {
+    "model": "hy-mt2",
+    "msgstr": "Escolha pelo menos um idioma para falar"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "hy-mt2",
     "msgstr": "Escolha todos os idiomas que você se sente confortável em ouvir."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "madlad-400",
+    "msgstr": "Escolha todos os idiomas que você está feliz em falar. Nós escolheremos um quando encontrarmos um para você. rando"
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-4b",
@@ -627,6 +643,10 @@
     "model": "hy-mt2",
     "msgstr": "Você ouvirá %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "hy-mt2",
+    "msgstr": "Você falará %{languages}"
+  },
   "Your call ended.": {
     "model": "m2m100",
     "msgstr": "Sua chamada terminou."
@@ -639,6 +659,10 @@
     "model": "madlad-400",
     "msgstr": "O seu rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "hy-mt2",
+    "msgstr": "Seu rando está aqui. Sua ligação começa quando o áudio estiver pronto."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "translategemma-12b",
     "msgstr": "A conexão do seu \"rando\" foi interrompida; estamos aguardando alguns segundos para que ele se reconecte."
@@ -646,6 +670,10 @@
   "asking for microphone access": {
     "model": "madlad-400",
     "msgstr": "pedindo acesso ao microfone"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "Cancelar"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +711,10 @@
     "model": "madlad-400",
     "msgstr": "Ocultar os atalhos"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "Convidar"
+  },
   "button\u0004Invite someone": {
     "model": "m2m100",
     "msgstr": "Convite alguém"
@@ -702,6 +734,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "Próximo rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "madlad-400",
+    "msgstr": "Pare de olhar"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

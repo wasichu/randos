@@ -912,11 +912,6 @@ msgstr "Sauti: %{tone} (kushoto/kulia)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "Tumia vifaa vya kusikiliza na weka sauti kwa kiwango kidogo."
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "Kufunika sauti"
 
@@ -924,11 +919,6 @@ msgstr "Kufunika sauti"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "Kufunika sauti"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: sikia sauti yangu / acha. Esc: rudi nyuma."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "Kuboresha msaidizi wa sauti ili kutazama mabadiliko ya sauti."
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "Mikrofoni: %{bars}%{peak}   (%{key} ili kusitisha)."
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "Chagua lugha moja au zaidi kwa ajili ya kuzungumza (%{key} huwezesha chaguo hilo)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "Mtindo: %{style} · %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: nyuma."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "Sikilizaji zinapendekezwa"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: sikia sauti yangu / acha."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "Volum la utazamaji: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "volumu ya utendaji"

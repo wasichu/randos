@@ -17,6 +17,7 @@ defmodule Tui.Media.Protocol do
           | {:loopback_start, String.t(), String.t(), String.t()}
           | {:audition_start, pos_integer(), String.t(), String.t(), String.t()}
           | {:loopback_masking, pos_integer(), String.t()}
+          | {:loopback_volume, pos_integer(), 1..9}
           | :loopback_stop
           | {:call_start, role :: String.t(), ice_servers :: list() | nil, input :: String.t(),
              output :: String.t(), relay_only :: boolean()}
@@ -65,6 +66,9 @@ defmodule Tui.Media.Protocol do
         relay_only: relay_only,
         masking: masking
       })
+
+  def encode(id, {:loopback_volume, _generation, volume}),
+    do: Jason.encode_to_iodata!(%{id: id, cmd: "loopback_volume", volume: volume})
 
   def encode(id, :ping), do: Jason.encode_to_iodata!(%{id: id, cmd: "ping"})
   def encode(id, :capabilities), do: Jason.encode_to_iodata!(%{id: id, cmd: "capabilities"})

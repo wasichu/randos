@@ -32,7 +32,7 @@ defmodule Tui.ModelTest do
 
     assert model.connection == :connected
     assert model.status == :idle
-    assert Model.language_name(model, model.speaks) == "English (EN)"
+    assert Model.language_name(model, hd(model.speaks)) == "English (EN)"
     # The speaking language starts checked among the hearing ones.
     assert model.hears == ["en"]
     assert model.log == ["connected to the server"]
@@ -73,6 +73,9 @@ defmodule Tui.ModelTest do
         # Speak Spanish: the hearing languages stay as they were (English,
         # checked at the start).
         "right",
+        " ",
+        "left",
+        " ",
         # The hearing row: also check French.
         "tab",
         "right",
@@ -87,7 +90,7 @@ defmodule Tui.ModelTest do
     assert commands == [
              {:push, "find",
               %{
-                speaks: "es",
+                speaks: ["es"],
                 hears: ["en", "fr"],
                 adult_acknowledged: true,
                 audio: false,
@@ -99,16 +102,16 @@ defmodule Tui.ModelTest do
   end
 
   test "the speaking language starts checked; changing it leaves the hearing languages alone" do
-    assert {joined().speaks, joined().hears} == {"en", ["en"]}
+    assert {joined().speaks, joined().hears} == {["en"], ["en"]}
 
     {model, []} = keys(joined(), ["right", "right"])
-    assert {model.speaks, model.hears} == {"fr", ["en"]}
+    assert {model.speaks, model.hears} == {["en"], ["en"]}
 
     # Choices made by hand stay too, even unchecking everything.
     {model, []} = keys(joined(), ["tab", "right", " ", "up", "right"])
-    assert {model.speaks, model.hears} == {"es", ["en", "es"]}
+    assert {model.speaks, model.hears} == {["en"], ["en", "es"]}
     {model, []} = keys(model, ["tab", "left", " ", "right", " ", "up", "right"])
-    assert {model.speaks, model.hears} == {"fr", []}
+    assert {model.speaks, model.hears} == {["en"], []}
   end
 
   test "with nothing to hear, Enter says so instead of finding" do
@@ -126,10 +129,10 @@ defmodule Tui.ModelTest do
     {model, []} =
       Model.joined(model, %{"state" => state("idle"), "languages" => @languages})
 
-    assert {model.speaks, model.hears, model.adult_acknowledged?} == {"fr", ["es"], true}
+    assert {model.speaks, model.hears, model.adult_acknowledged?} == {["fr"], ["es"], true}
 
     assert Model.saved(model) == %{
-             "speaks" => "fr",
+             "speaks" => ["fr"],
              "hears" => ["es"],
              "adult_acknowledged" => true,
              "language" => "en"
@@ -137,7 +140,34 @@ defmodule Tui.ModelTest do
 
     # Nothing usable: the defaults.
     model = Model.restore(Model.new(), %{"speaks" => 7, "hears" => "en"})
-    assert {model.speaks, model.hears, model.adult_acknowledged?} == {"en", ["en"], false}
+    assert {model.speaks, model.hears, model.adult_acknowledged?} == {["en"], ["en"], false}
+  end
+
+  test "space chooses multiple speaking languages; call labels and resume preserve choices" do
+    {model, []} = keys(joined(), ["right", " ", "right", " "])
+    assert model.speaks == ["en", "es", "fr"]
+    assert model.hears == ["en"]
+    call = %{"self_speaks_any" => ["fr"], "peer_speaks_any" => ["en"]}
+    {model, []} = Model.push(model, "state", state("in_call", %{"call" => call}))
+    assert Model.self_speaks_any(model) == ["fr"]
+    {dropped, []} = Model.disconnected(model)
+
+    {back, []} =
+      Model.joined(dropped, %{
+        "resumed" => true,
+        "state" => state("in_call", %{"call" => call}),
+        "languages" => @languages
+      })
+
+    assert back.speaks == ["en", "es", "fr"]
+    assert Model.self_speaks_any(back) == ["fr"]
+    assert Model.restore(Model.new(), Model.saved(back)).speaks == back.speaks
+  end
+
+  test "empty speaking choices remain empty and cannot find or invite" do
+    {model, []} = keys(joined(), [" ", "enter", "v"])
+    assert model.speaks == []
+    assert model.message =~ "at least one language to speak"
   end
 
   test "the call map says which language the rando speaks" do
@@ -198,7 +228,7 @@ defmodule Tui.ModelTest do
     assert {^model, []} = Model.push(model, "signal", offer)
 
     idle = Model.set_audio(joined("idle"), true)
-    {idle, []} = Model.key(idle, " ")
+
     # With audio, the helper can restart ICE when asked (obligation 10).
     assert {_, [{:push, "find", %{audio: true, ice_restart: true}}]} = Model.key(idle, "enter")
   end
@@ -324,7 +354,7 @@ defmodule Tui.ModelTest do
     test "v invites with the form's choices; the link comes in the state" do
       model = %{joined() | adult_acknowledged?: true}
       {model, [{:push, "invite", payload}]} = Model.key(model, "v")
-      assert payload.speaks == "en" and payload.hears == ["en"] and payload.adult_acknowledged
+      assert payload.speaks == ["en"] and payload.hears == ["en"] and payload.adult_acknowledged
 
       invitation = %{"url" => "https://randos.example/join#tok", "expires_at_unix_ms" => 9}
       {model, []} = Model.push(model, "state", state("inviting", %{"invitation" => invitation}))

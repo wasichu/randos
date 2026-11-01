@@ -81,7 +81,7 @@
   },
   "Change": {
     "model": "translategemma-4b",
-    "msgstr": "Badilisha"
+    "msgstr": "Mabadiliko"
   },
   "Checking the relay…": {
     "model": "translategemma-4b",
@@ -102,6 +102,10 @@
   "Connecting": {
     "model": "translategemma-4b",
     "msgstr": "kuunganisha"
+  },
+  "Connecting your audio": {
+    "model": "m2m100",
+    "msgstr": "Kuunganisha sauti yako"
   },
   "Connection lost": {
     "model": "madlad-400",
@@ -158,6 +162,10 @@
   "Done": {
     "model": "madlad-400",
     "msgstr": "Imekwisha"
+  },
+  "End call": {
+    "model": "translategemma-4b",
+    "msgstr": "isha simu"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -339,9 +347,17 @@
     "model": "translategemma-4b",
     "msgstr": "Chagua lugha moja au zaidi ili kusikiliza"
   },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "Kuchagua angalau lugha moja ya kuzungumza"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-12b",
     "msgstr": "Chagua lugha zote ambazo unaweza kusikiliza kwa urahisi."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "m2m100",
+    "msgstr": "Tumia kila lugha ambayo unataka kuzungumza.Tutachagua moja wakati tunaona wewe rando."
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-27b",
@@ -591,6 +607,10 @@
     "model": "translategemma-12b",
     "msgstr": "Utasikia lugha za: %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "translategemma-12b",
+    "msgstr": "Utazungumza lugha za: %{languages}"
+  },
   "Your call ended.": {
     "model": "translategemma-12b",
     "msgstr": "Simu yako imekatika."
@@ -603,6 +623,10 @@
     "model": "madlad-400",
     "msgstr": "yako rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "yako rando ni hapa. wito wako huanza wakati audio ni tayari."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
     "msgstr": "rando yako ya uhusiano kuanguka; kusubiri sekunde chache kwa ajili yao kuja nyuma."
@@ -610,6 +634,10 @@
   "asking for microphone access": {
     "model": "translategemma-4b",
     "msgstr": "amaomba upatikanaji wa microphone"
+  },
+  "button\u0004Cancel": {
+    "model": "m2m100",
+    "msgstr": "Kuzuia"
   },
   "button\u0004Cancel the link": {
     "model": "translategemma-4b",
@@ -647,6 +675,10 @@
     "model": "translategemma-4b",
     "msgstr": "Fichua njia za haraka"
   },
+  "button\u0004Invite": {
+    "model": "madlad-400",
+    "msgstr": "Kukaribisha"
+  },
   "button\u0004Invite someone": {
     "model": "madlad-400",
     "msgstr": "Kukaribisha mtu"
@@ -666,6 +698,10 @@
   "button\u0004Next rando": {
     "model": "madlad-400",
     "msgstr": "Ifuatayo rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "madlad-400",
+    "msgstr": "Kuacha kuangalia"
   },
   "button\u0004Stop preview": {
     "model": "m2m100",

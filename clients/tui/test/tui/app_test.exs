@@ -45,6 +45,57 @@ defmodule Tui.AppTest do
     ExRatatui.get_buffer_content(terminal)
   end
 
+  test "the main header shows masking before a call and follows the frozen call profile" do
+    selected = %{MediaState.new(true) | voice_family: "tone"}
+
+    for status <- ["idle", "looking", "connecting", "in_call"] do
+      text = render_text(model(status), %{media_state: selected})
+      assert hd(String.split(text, "\n")) =~ "Voice masking on"
+      assert text =~ "Style: Tone · Fuller"
+    end
+
+    off = %{selected | call: %{masking: nil, connection: :connected, phase: :active, stats: nil}}
+    refute render_text(model("in_call"), %{media_state: off}) =~ "Voice masking on"
+    frozen = %{off | voice_family: "off", call: %{off.call | masking: "lower_resonance"}}
+
+    text = render_text(model("in_call"), %{media_state: frozen})
+    assert hd(String.split(text, "\n")) =~ "Voice masking on"
+    assert text =~ "Style: Tone · Fuller"
+
+    brighter = %{selected | voice_family: "tone_pitch", voice_tone: "brighter"}
+
+    assert render_text(model("idle"), %{media_state: brighter}, {45, 24}) =~
+             "Style: Tone + Pitch · Brighter"
+  end
+
+  test "voice masking starts with the recognition note" do
+    media = %{MediaState.new(true) | voice_panel?: true}
+
+    widgets =
+      App.render(
+        %{model: model("idle"), media_state: media, uri: "ws://localhost"},
+        %ExRatatui.Frame{width: 100, height: 30}
+      )
+
+    {popup, _} =
+      Enum.find(widgets, fn {widget, _} -> match?(%ExRatatui.Widgets.Popup{}, widget) end)
+
+    refute popup.content.text =~ "Tone:"
+    assert popup.content.text =~ "Headphones recommended\n\np: hear myself / stop.\nEsc: back."
+
+    assert String.starts_with?(
+             popup.content.text,
+             "These styles change your voice, but people may still recognize you.\n\n1  Off"
+           )
+  end
+
+  test "the audition meter appears only inside the open masking panel" do
+    test = %{phase: :running, mode: :audition, levels: [0.1, 0.5, 0.9], stats: nil}
+    media = %{MediaState.new(true) | voice_panel?: true, mic_test: test}
+    text = render_text(model("idle"), %{media_state: media}, {100, 35})
+    assert length(Regex.scan(~r/Mic: [▁▂▃▄▅▆▇█]+/, text)) == 1
+  end
+
   describe "keyboard help" do
     test "compact footer and full context, including audio controls" do
       extra = %{media_state: MediaState.new(true)}
@@ -218,7 +269,7 @@ defmodule Tui.AppTest do
 
     test "idle form shows languages, the 18+ box, and key help" do
       text = render_text(model("idle"))
-      assert text =~ "I will speak:      ◀ English (EN) ▶"
+      assert text =~ "I will speak:      ◀ [x] English (EN) ▶"
       # The language under the cursor, then every checked one.
       assert text =~ "I'm happy to hear: ◀ [x] English (EN) ▶  EN"
       assert text =~ "[ ] I'm 18+"
@@ -539,9 +590,15 @@ defmodule Tui.AppTest do
       }
 
       # The server says which language the rando speaks.
-      in_call = %{model("in_call") | audio?: true, call: %{"peer_speaks" => "es"}}
+      in_call = %{
+        model("in_call")
+        | audio?: true,
+          speaks: ["en", "es"],
+          call: %{"self_speaks_any" => ["es"], "peer_speaks" => "es"}
+      }
+
       text = render_text(in_call, %{media_state: media}, {80, 30})
-      assert text =~ "You · English (EN)"
+      assert text =~ "You · Español (ES)"
       assert text =~ "Your rando · Español (ES)"
       # The loud low bars, at the centre: full blocks, mirrored.
       assert text =~ "█ █ █ █"
@@ -598,7 +655,7 @@ defmodule Tui.AppTest do
 
     assert_receive {:"$gen_cast",
                     {:push, "find",
-                     %{speaks: "en", hears: ["en"], adult_acknowledged: true, audio: false}}}
+                     %{speaks: ["en"], hears: ["en"], adult_acknowledged: true, audio: false}}}
 
     send(pid, {:randos, {:push, "state", server_state("in_call")}})
     assert_receive {:tui_model, ^pid, %Model{status: :in_call}}
@@ -680,9 +737,10 @@ defmodule Tui.AppTest do
                       %{audition_available?: true, endpoints: {"sine", "null"}}},
                      5_000
 
-      keys(app, ["b", "p"])
+      keys(app, ["b", "+", "+", "p"])
 
-      assert_receive {:tui_media, ^app, %{mic_test: %{mode: :audition, phase: :running, seq: 1}}},
+      assert_receive {:tui_media, ^app,
+                      %{preview_volume: 3, mic_test: %{mode: :audition, phase: :running, seq: 1}}},
                      5_000
 
       keys(app, ["2", "right", "3"])

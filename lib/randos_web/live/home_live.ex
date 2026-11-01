@@ -62,7 +62,7 @@ defmodule RandosWeb.HomeLive do
         if participant.call_kind == :invitation and participant.webrtc_role == :answerer,
           do: Map.put(default_preferences(socket), "adult_acknowledgment", "true"),
           else: %{
-            "speaking_language" => participant.preferences.speaks,
+            "speaking_language" => List.wrap(participant.preferences.speaks),
             "hearing_languages" => participant.preferences.hears,
             "adult_acknowledgment" => "true"
           }
@@ -218,6 +218,7 @@ defmodule RandosWeb.HomeLive do
       ice_generation: nil,
       ice_restart: false,
       recovering: false,
+      self_languages: [],
       peer_languages: [],
       peer_reconnecting: false,
       agreed_to_continue: false
@@ -233,6 +234,7 @@ defmodule RandosWeb.HomeLive do
       ice_generation: call.ice_generation,
       ice_restart: call.ice_restart?,
       recovering: call.recovering,
+      self_languages: ParticipantShell.self_speaks_any(call, participant_id),
       peer_languages: ParticipantShell.peer_speaks_any(call, participant_id),
       peer_reconnecting: ParticipantShell.peer_reconnecting?(call, participant_id),
       agreed_to_continue: ParticipantShell.agreed_to_continue?(call, participant_id)
@@ -265,6 +267,7 @@ defmodule RandosWeb.HomeLive do
             ice_restart={@ice_restart}
             voice_processor={@voice_processor}
             preferences={@preferences}
+            self_languages={@self_languages}
             peer_languages={@peer_languages}
             live_action={@live_action}
             join_link={@join_link}
@@ -301,7 +304,7 @@ defmodule RandosWeb.HomeLive do
     # Only here: after the form first appears, the hearing choices are the
     # person's alone, whatever they speak.
     %{
-      "speaking_language" => speaking_language,
+      "speaking_language" => [speaking_language],
       "hearing_languages" => [speaking_language],
       "adult_acknowledgment" => "false"
     }
@@ -324,6 +327,7 @@ defmodule RandosWeb.HomeLive do
       Map.take(params, ["speaking_language", "hearing_languages", "adult_acknowledgment"])
     )
     |> Map.update("adult_acknowledgment", "false", &normalize_checkbox/1)
+    |> Map.update("speaking_language", [], &(List.wrap(&1) |> supported_languages()))
     |> Map.update("hearing_languages", [], &supported_languages/1)
   end
 

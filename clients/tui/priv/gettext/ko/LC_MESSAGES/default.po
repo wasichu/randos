@@ -912,11 +912,6 @@ msgstr "톤: %{tone} (왼쪽/오른쪽)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "헤드폰을 사용하고 볼륨을 낮게 유지하십시오."
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "목소리 변조"
 
@@ -924,11 +919,6 @@ msgstr "목소리 변조"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "음성 마스킹 켜기"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: 내 목소리를 듣는다 / 멈춘다. Esc: 뒤로."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "음성 변경을 미리 볼 수 있도록 오디오 헬퍼를 업데이�
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "마이크: %{bars}%{peak}   (정지하려면 %{key} 입력)"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "말할 수 있는 언어를 적어도 하나 선택하세요 (%{key}를 사용하면 하나만 활성화됩니다)."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "스타일: %{style} · %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: 뒤로."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "헤드폰 권장"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: 내 말 들어봐 / 그만해."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "미리보기 볼륨: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "미리 보기 음량"

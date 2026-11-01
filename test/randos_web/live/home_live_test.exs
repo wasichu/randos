@@ -31,10 +31,10 @@ defmodule RandosWeb.HomeLiveTest do
     # Outside a call, the language switcher shows.
     assert has_element?(view, "#locale-switcher-slot")
     refute has_element?(view, "#locale-switcher-slot.hidden")
-    assert has_element?(view, "#conversation_speaking_language option[value='zh']")
-    assert has_element?(view, "#conversation_speaking_language option[value='hi']")
-    assert has_element?(view, "#conversation_speaking_language option[value='ar']")
-    assert has_element?(view, "#conversation_speaking_language option[value='id']")
+    assert has_element?(view, "#speaking-language-zh")
+    assert has_element?(view, "#speaking-language-hi")
+    assert has_element?(view, "#speaking-language-ar")
+    assert has_element?(view, "#speaking-language-id")
     assert has_element?(view, "#hearing-languages #hearing-language-zh")
     assert has_element?(view, "#hearing-languages #hearing-language-hi")
     assert has_element?(view, "#hearing-languages #hearing-language-ar")
@@ -43,7 +43,7 @@ defmodule RandosWeb.HomeLiveTest do
     view
     |> form("#conversation-form",
       conversation: %{
-        speaking_language: "en",
+        speaking_language: ["en"],
         hearing_languages: ["es"],
         adult_acknowledgment: "true"
       }
@@ -63,7 +63,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     assert has_element?(
              view,
-             "#hearing-details #hearing-summary #hearing-summary-text[data-hearing='en']"
+             "#hearing-details #hearing-summary #hearing-summary-text[data-languages='en']"
            )
 
     # Every language is a chip with a real checkbox inside, in one labelled group.
@@ -83,13 +83,13 @@ defmodule RandosWeb.HomeLiveTest do
     )
     |> render_change()
 
-    assert has_element?(view, "#hearing-summary-text[data-hearing='en es fr de']")
+    assert has_element?(view, "#hearing-summary-text[data-languages='en es fr de']")
 
     view
     |> form("#conversation-form", conversation: %{hearing_languages: [""]})
     |> render_change()
 
-    assert has_element?(view, "#hearing-summary-text[data-hearing='']")
+    assert has_element?(view, "#hearing-summary-text[data-languages='']")
   end
 
   test "defaults the speaking language from the browser locale, checked among the hearing ones",
@@ -98,7 +98,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     {:ok, view, _html} = live(conn, ~p"/")
 
-    assert has_element?(view, "#conversation_speaking_language option[value='pt'][selected]")
+    assert has_element?(view, "#speaking-language-pt[checked]")
     assert has_element?(view, "#hearing-language-pt[checked]")
     refute has_element?(view, "#hearing-language-en[checked]")
   end
@@ -108,7 +108,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     {:ok, view, _html} = live(conn, ~p"/")
 
-    assert has_element?(view, "#conversation_speaking_language option[value='en'][selected]")
+    assert has_element?(view, "#speaking-language-en[checked]")
     assert has_element?(view, "#hearing-language-en[checked]")
   end
 
@@ -122,7 +122,7 @@ defmodule RandosWeb.HomeLiveTest do
     # Changing the speaking language doesn't touch what's checked.
     view
     |> form("#conversation-form",
-      conversation: %{speaking_language: "es", hearing_languages: ["", "en"]}
+      conversation: %{speaking_language: ["es"], hearing_languages: ["", "en"]}
     )
     |> render_change()
 
@@ -139,7 +139,7 @@ defmodule RandosWeb.HomeLiveTest do
 
     view
     |> form("#conversation-form",
-      conversation: %{speaking_language: "ja", hearing_languages: ["", "fr", "de"]}
+      conversation: %{speaking_language: ["ja"], hearing_languages: ["", "fr", "de"]}
     )
     |> render_change()
 
@@ -152,7 +152,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view, _html} = live(conn, ~p"/")
 
     submit(view, %{
-      speaking_language: "en",
+      speaking_language: ["en"],
       hearing_languages: ["es"],
       adult_acknowledgment: "false"
     })
@@ -165,7 +165,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view, _html} = live(conn, ~p"/")
 
     submit(view, %{
-      speaking_language: "en",
+      speaking_language: ["en"],
       hearing_languages: ["es", "fr"],
       adult_acknowledgment: "true"
     })
@@ -174,7 +174,7 @@ defmodule RandosWeb.HomeLiveTest do
     render_click(view, "cancel_search")
 
     submit(view, %{
-      speaking_language: "en",
+      speaking_language: ["en"],
       hearing_languages: ~w(es fr de it ja),
       adult_acknowledgment: "true"
     })
@@ -190,7 +190,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view_a, _html} = live(conn, ~p"/")
 
     submit(view_a, %{
-      speaking_language: "en",
+      speaking_language: ["en"],
       hearing_languages: ["es"],
       adult_acknowledgment: "true"
     })
@@ -206,7 +206,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view_b, _html} = live(conn, ~p"/")
 
     submit(view_b, %{
-      speaking_language: "es",
+      speaking_language: ["es"],
       hearing_languages: ["en"],
       adult_acknowledgment: "true"
     })
@@ -311,7 +311,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view_a, _html} = live(conn, ~p"/")
 
     submit(view_a, %{
-      speaking_language: "en",
+      speaking_language: ["en"],
       hearing_languages: ["es"],
       adult_acknowledgment: "true"
     })
@@ -319,7 +319,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view_b, _html} = live(conn, ~p"/")
 
     submit(view_b, %{
-      speaking_language: "es",
+      speaking_language: ["es"],
       hearing_languages: ["en"],
       adult_acknowledgment: "true"
     })
@@ -341,7 +341,7 @@ defmodule RandosWeb.HomeLiveTest do
     {:ok, view, _html} = live(conn, ~p"/")
 
     submit(view, %{
-      speaking_language: "en",
+      speaking_language: ["en"],
       hearing_languages: ["es"],
       adult_acknowledgment: "true"
     })
@@ -367,6 +367,8 @@ defmodule RandosWeb.HomeLiveTest do
   # As a person would: the speaking language first (the page then checks it
   # among the hearing languages), then everything else, then Find.
   defp submit(view, conversation) do
+    conversation = Map.update!(conversation, :speaking_language, &List.wrap/1)
+
     view
     |> form("#conversation-form", conversation: Map.take(conversation, [:speaking_language]))
     |> render_change()
@@ -420,7 +422,7 @@ defmodule RandosWeb.HomeLiveTest do
       view
       |> form("#conversation-form",
         conversation: %{
-          speaking_language: speaks,
+          speaking_language: List.wrap(speaks),
           hearing_languages: hears,
           adult_acknowledgment: "true"
         }

@@ -48,7 +48,7 @@ defmodule Randos.Participant do
   @type status :: :idle | :looking | :inviting | :connecting | :in_call | :extension_pending
 
   @typedoc """
-  What the person asked for: the language they'll speak, and the languages
+  What the person asked for: speaking choices (a list, or legacy single code), and the languages
   they're happy to hear (`hears`, at least one). `audio?` is whether their
   client can carry call audio (WebRTC); only clients that agree on it are
   matched, so nobody sits through a silent call with a text-only client.
@@ -56,7 +56,7 @@ defmodule Randos.Participant do
   (obligation 10); optional, `false` for clients from before.
   """
   @type preferences :: %{
-          required(:speaks) => String.t(),
+          required(:speaks) => String.t() | [String.t()],
           required(:hears) => [String.t()],
           required(:adult_acknowledged?) => boolean(),
           required(:audio?) => boolean(),
@@ -178,7 +178,7 @@ defmodule Randos.Participant do
   @spec resumed(Randos.Matchmaking.Entry.t(), Call.t()) :: t()
   def resumed(entry, %Call{} = call) do
     preferences = %{
-      speaks: entry.speaks_language,
+      speaks: entry.offered_languages || entry.speaks_language,
       hears: entry.hears_languages,
       adult_acknowledged?: true,
       audio?: entry.audio?,

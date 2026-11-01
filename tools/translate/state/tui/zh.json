@@ -8,7 +8,7 @@
     "msgstr": "%{device}（默认）"
   },
   "%{first} or %{last}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "%{first}或%{last}"
   },
   "%{language} both ways": {
@@ -100,7 +100,7 @@
     "msgstr": "正在连接服务器…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "连接："
   },
   "Continue for another %{minutes} minutes?": {
@@ -108,7 +108,7 @@
     "msgstr": "继续再等%{minutes}分钟?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "继续？"
   },
   "Continued": {
@@ -131,9 +131,17 @@
     "model": "translategemma-12b",
     "msgstr": "错误：%{message}"
   },
+  "Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "Esc：返回。"
+  },
   "Fuller": {
     "model": "translategemma-4b",
     "msgstr": "更饱满"
+  },
+  "Headphones recommended": {
+    "model": "madlad-400",
+    "msgstr": "建议使用耳机"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
@@ -152,15 +160,15 @@
     "msgstr": "我很高兴听到："
   },
   "Interface language": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "界面语言"
   },
   "Join through a link": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "通过链接加入"
   },
   "Keyboard shortcuts": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "键盘快捷键"
   },
   "Languages spoken:": {
@@ -255,6 +263,10 @@
     "model": "translategemma-12b",
     "msgstr": "预览失败。麦克风已停止工作，请重试。"
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "hy-mt2",
+    "msgstr": "预览音量：%{level}/9（-/+）"
+  },
   "Reconnecting audio…": {
     "model": "m2m100",
     "msgstr": "重新连接音频…"
@@ -274,6 +286,10 @@
   "Speaker:": {
     "model": "hy-mt2",
     "msgstr": "演讲者："
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "opus-mt",
+    "msgstr": "样式:%{style} · %{tone}"
   },
   "Text only (no audio helper).": {
     "model": "hy-mt2",
@@ -360,7 +376,7 @@
     "msgstr": "我们只统计通话次数，不记录任何个人信息：没有地址，没有身份信息，没有任何关于任何人的信息。"
   },
   "You": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "你"
   },
   "You're in a call.": {
@@ -376,11 +392,11 @@
     "msgstr": "您选择的任何一种语言（共%{count}种）。"
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "已连接"
   },
   "connected directly": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "直接连接"
   },
   "connected to %{server}": {
@@ -408,11 +424,11 @@
     "msgstr": "正在连接中…"
   },
   "connection closed": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "连接已关闭"
   },
   "couldn't connect": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "无法连接"
   },
   "couldn't copy the link: select it with the mouse": {
@@ -448,7 +464,7 @@
     "msgstr": "关于这些数字"
   },
   "key\u0004back": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "返回"
   },
   "key\u0004cancel": {
@@ -488,7 +504,7 @@
     "msgstr": "复制链接"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "结束"
   },
   "key\u0004end call": {
@@ -532,7 +548,7 @@
     "msgstr": "麦克风测试"
   },
   "key\u0004move": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "移动"
   },
   "key\u0004mute": {
@@ -543,12 +559,16 @@
     "model": "madlad-400",
     "msgstr": "下一页 rando"
   },
+  "key\u0004preview volume": {
+    "model": "hy-mt2",
+    "msgstr": "预览音量"
+  },
   "key\u0004quit": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "退出"
   },
   "key\u0004refresh": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "刷新"
   },
   "key\u0004scroll": {
@@ -560,15 +580,15 @@
     "msgstr": "发言者"
   },
   "key\u0004status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "状态"
   },
   "key\u0004style": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "风格"
   },
   "key\u0004unmute": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "取消静音"
   },
   "key\u0004voice masking": {
@@ -647,6 +667,10 @@
     "model": "opus-mt",
     "msgstr": "没有工作"
   },
+  "p: hear myself / stop.": {
+    "model": "opus-mt",
+    "msgstr": "p:听听我自己/停下来。"
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "translategemma-4b",
     "msgstr": "p: 听到自己的声音/停止。 Esc: 返回。"
@@ -699,12 +723,16 @@
     "model": "translategemma-12b",
     "msgstr": "请选择至少一种语言来收听（空格键可切换语言）。"
   },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "请选择至少一种语言进行交流。（点击%{key}可以切换语言。）"
+  },
   "rando reconnecting…": {
     "model": "hy-mt2",
     "msgstr": "rando正在重新连接中……"
   },
   "reconnected as a new participant": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "作为新参与者重新连接"
   },
   "reconnected; back in the call": {
@@ -720,7 +748,7 @@
     "msgstr": "拒绝"
   },
   "secure connection failed": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "安全连接失败"
   },
   "starting audio…": {

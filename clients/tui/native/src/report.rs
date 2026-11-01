@@ -3,15 +3,18 @@
 
 use std::time::{Duration, Instant};
 
+use crate::Error;
 use crate::audio::{Capture, Notify, Playback};
 use crate::candidates::Candidates;
 use crate::codec::{FRAME, Peak};
+use crate::diagnostics::InputDiagnostics;
 use crate::protocol::{CallStats, Event};
 use crate::spectrum::Analyser;
 
 /// Once a second: packets each way and the levels, so a test (or the TUI)
 /// can tell audio is flowing in both directions.
 pub(crate) struct Report {
+    pub(crate) diagnostics: Option<InputDiagnostics>,
     pub(crate) since: Instant,
     pub(crate) packets_sent: u64,
     pub(crate) packets_received: u64,
@@ -35,8 +38,9 @@ pub(crate) struct Report {
 pub(crate) const LEVELS_EVERY: Duration = Duration::from_millis(50);
 
 impl Report {
-    pub(crate) fn new() -> Self {
-        Self {
+    pub(crate) fn new() -> Result<Self, Error> {
+        Ok(Self {
+            diagnostics: InputDiagnostics::from_env()?,
             since: Instant::now(),
             packets_sent: 0,
             packets_received: 0,
@@ -51,7 +55,7 @@ impl Report {
             input_bars: Analyser::new(),
             output_bars: Analyser::new(),
             levels_since: Instant::now(),
-        }
+        })
     }
 
     pub(crate) fn sent(&mut self, frame: &[f32; FRAME]) {
@@ -71,7 +75,9 @@ impl Report {
         playback: &Playback,
         notify: &Notify,
         candidates: &mut Candidates,
-    ) {
+        connected: bool,
+        muted: bool,
+    ) -> Result<(), Error> {
         if self.levels_since.elapsed() >= LEVELS_EVERY {
             self.levels_since = Instant::now();
             // A failed FFT only skips one meter frame; it never ends the call.
@@ -83,9 +89,9 @@ impl Report {
             }
         }
         if self.since.elapsed() < Duration::from_secs(1) {
-            return;
+            return Ok(());
         }
-        notify(Event::CallStats(CallStats {
+        let stats = CallStats {
             packets_sent: self.packets_sent,
             packets_received: self.packets_received,
             concealed: self.concealed,
@@ -99,11 +105,16 @@ impl Report {
             capture_ring_ms: capture.queued_ms(),
             playback_ring_ms: playback.queued_ms(),
             path: candidates.take_path().map(String::from),
-        }));
+        };
+        if let Some(diagnostics) = &mut self.diagnostics {
+            diagnostics.write_snapshot(&stats, connected, muted)?;
+        }
+        notify(Event::CallStats(stats));
         // Counters are cumulative; peaks are per report.
         self.since = Instant::now();
         self.input_peak = Peak::default();
         self.output_peak = Peak::default();
+        Ok(())
     }
 }
 

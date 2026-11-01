@@ -12,6 +12,9 @@ defmodule Tui.Media.ProtocolTest do
     assert encoded(2, {:loopback_start, "sine", "null"}) ==
              %{"id" => 2, "cmd" => "loopback_start", "in" => "sine", "out" => "null"}
 
+    assert encoded(15, {:loopback_volume, 7, 9}) ==
+             %{"id" => 15, "cmd" => "loopback_volume", "volume" => 9}
+
     assert encoded(3, :loopback_stop) == %{"id" => 3, "cmd" => "loopback_stop"}
 
     assert encoded(14, {:audition_start, 9, "sine", "null", "off"}) ==

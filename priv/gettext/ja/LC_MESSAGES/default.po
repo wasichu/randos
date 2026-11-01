@@ -50,11 +50,6 @@ msgstr "再接続を試みています"
 msgid "Both people choose whether to continue."
 msgstr "二人とも、続けるかどうかを選ぶ。"
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Cancel"
-msgstr "キャンセル"
-
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
@@ -65,7 +60,6 @@ msgstr "利用可能な会話言語を選択してください。"
 msgid "Choose your languages."
 msgstr "ご希望の言語をお選びください。"
 
-#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
@@ -145,21 +139,11 @@ msgstr "探している"
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "アカウントは不要。プロフィールも不要。動画も不要。プレッシャーもありません。"
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Preparing the call"
-msgstr "通話の準備をしています"
-
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
 msgstr "準備完了"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Secure audio connection is starting."
-msgstr "安全な音声接続を開始します。"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -258,11 +242,6 @@ msgstr "私"
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
 msgstr "話したい言語と聞きたい言語を選択します。randosは、短い会話に適した相手とあなたをマッチングさせますが、その後は一切関与しません。"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "You have matched. Audio starts when the call opens."
-msgstr "マッチングが成立しました。通話が開始されると音声が聞こえます。"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -718,13 +697,13 @@ msgstr "このサイトの翻訳はコンピュータによって行われたも
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "このサイトの翻訳はコンピュータによって行われています。何か間違っている部分があれば、下にその部分を見つけて「修正を提案する」を押してください。そうすると、すべての情報が入力された状態でGitHub上にイシューが作成されますが、修正案はご自身で入力する必要があります（GitHubアカウントが必要です）。ご自身の修正案を含むプルリクエストが自動的に作成され、レビューが終了すると公開されます。"
 
-#. Opens the list of languages you can hear, to change it.
+#. Opens the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "変更"
 
-#. Closes the list of languages you can hear, once you've changed it.
+#. Closes the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
@@ -1103,10 +1082,10 @@ msgid "Conversation"
 msgstr "会話"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Stop looking"
-msgstr "探すのをやめる"
+msgstr "見るのをやめて"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -1146,7 +1125,7 @@ msgid "Find"
 msgstr "検索"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Invite"
 msgstr "招待する"
@@ -1158,6 +1137,37 @@ msgstr "聞きたい"
 
 #. Short keyboard shortcut label: hang up the current voice call.
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "End call"
-msgstr "コールを終了"
+msgstr "通話を終了する"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick at least one language to speak"
+msgstr "少なくとも一つの言語を選択してください"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You'll speak %{languages}"
+msgstr "あなたは話す %{languages}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+msgstr "話せる言語は何でも選んでください。randoを見つけたら、私たちが1つ選びます。"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting your audio"
+msgstr "オーディオを接続する"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando is here. Your call starts when audio is ready."
+msgstr "rando はここです。音声が準備できたら通話を開始します。"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Cancel"
+msgstr "キャンセル"

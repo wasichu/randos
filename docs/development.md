@@ -12,7 +12,8 @@ agents (and people who like rules written down) should also read
 | Server and website | `lib/`, `assets/` | Phoenix LiveView: matchmaking, one process per call, WebRTC signaling. The browser does the audio. |
 | Terminal client | `clients/tui/` | A separate Mix project on [ex_ratatui](https://hex.pm/packages/ex_ratatui), talking to the server over the [participant channel](architecture/participant_channel.md) |
 | Media helper | `clients/tui/native/` | Rust (str0m WebRTC, Opus, cpal), run by the terminal client as a Port: [its README](../clients/tui/native/README.md) |
-| Voice processors | `voice/` | Rust (`randos_voice`), written once: native in the helper, WASM in the browser (`just voice-wasm` rebuilds the committed `.wasm`) |
+| Product voice masking | `voice-native/`, `assets/vendor/voice_dsp/` | The same pinned Signalsmith core, through an owned Rust/C++ bridge in the helper and a Worker/AudioWorklet in the browser; see the [native guide](../voice-native/README.md) |
+| Experimental Rust processors | `voice/` | Earlier Rust DSP experiments, also compiled to WASM; see the [crate guide](../voice/README.md). These are not the current product masking path |
 | Translation shootout | `tools/translate/` | Python (uv): machine-translates the UI's gettext strings and scores the models |
 | Voice benchmark | `tools/voice-eval/` | Python (uv): can a speaker model still identify a voice after a processor? |
 | TURN server | `infra/coturn/` | coturn as code (OpenTofu + cloud-init): [its README](../infra/coturn/README.md) |
@@ -114,6 +115,42 @@ just tui --url wss://randos.slowinput.org/participant/websocket
 
 Without the helper, the client runs text-only and is matched only with
 other text-only clients. More in [its README](../clients/tui/README.md).
+
+### Speaking choices and client compatibility
+
+Random matchmaking accepts one or more offered speaking languages and assigns
+one per person for that call. The [channel contract](architecture/participant_channel.md)
+owns matching and client obligations. Deploy the server before distributing the
+updated TUI; existing single-language clients remain supported. Browser session
+preferences and old TUI settings migrate their single speaking choice.
+
+Speaking-picker guidance uses the shared translation pipeline; when no candidate
+passes its checks and judges, the established English fallback remains. Catalog
+extraction/merge requires no model run; model-based updates are part of release
+qualification and require the owner's authorized release/translation scope.
+
+### Local audio diagnostics
+
+For a TUI input problem that the idle `t` meter does not reproduce, run from
+the repository root:
+
+```bash
+RANDOS_AUDIO_DIAGNOSTICS="$PWD/tmp/tui-audio.jsonl" just tui
+```
+
+Reproduce with a fresh call, masking Off, local mute Off, and the peer's mic
+muted. The opt-in local JSONL file appends one numeric snapshot per second:
+`raw_peak_dbfs` before echo cancellation, `post_aec_peak_dbfs` after it, and
+`sent_peak_dbfs` after masking/mute. `captured_frames`, packet/drop counts,
+queue lengths, `connected` and `muted` distinguish stopped capture from AEC,
+voice-gating or transport problems. Peaks reset each report; counts reset per
+call. The idle mic test and synthetic sine/null calls bypass AEC, so they do
+not rule out a real device call-path problem.
+
+Diagnostics contain no PCM, addresses, device names or participant/call IDs.
+They stay in the chosen local file until you delete it, never enter signaling,
+and are disabled when the variable is unset. Use a writable path; file errors
+end the diagnostic call explicitly. Automated checks use synthetic audio only.
 
 ## Tests and checks
 

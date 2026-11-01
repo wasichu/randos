@@ -912,11 +912,6 @@ msgstr "Tono: %{tone} (kaliwa/kanan)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "Gumamit ng earphones at panatilihing mababa ang volume."
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "Pagtatago ng boses"
 
@@ -924,11 +919,6 @@ msgstr "Pagtatago ng boses"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "Pagtatago ng boses"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: Pakinggan ang sarili ko / Huminto. Esc: Bumalik."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "I-update ang audio helper upang makita ang mga pagbabago sa boses."
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "Mikropono: %{bars}%{peak}   (%{key} para itigil)"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "Pumili ng kahit isang wika na nais mong gamitin (%{key} ay nagpapalit ng pagpipilian)."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "Estilo: %{style} · %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: balik."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "Headphones inirerekomenda"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: Pakinggan ang sarili ko / Huminto."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "Antas ng pag-preview: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "tingnan muna ang volume"

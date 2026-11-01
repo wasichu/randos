@@ -112,8 +112,12 @@
     "msgstr": "Подключено"
   },
   "Connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Подключение"
+  },
+  "Connecting your audio": {
+    "model": "m2m100",
+    "msgstr": "Подключение вашего аудио"
   },
   "Connection lost": {
     "model": "opus-mt",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "madlad-400",
     "msgstr": "Выполнено"
+  },
+  "End call": {
+    "model": "hy-mt2",
+    "msgstr": "Завершить звонок"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -363,9 +371,17 @@
     "model": "madlad-400",
     "msgstr": "Выберите хотя бы один язык для прослушивания"
   },
+  "Pick at least one language to speak": {
+    "model": "opus-mt",
+    "msgstr": "Выбери хотя бы один язык, чтобы говорить"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "madlad-400",
     "msgstr": "Выберите любой язык, который вам удобно слушать."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "madlad-400",
+    "msgstr": "Выберите любой язык, на котором вы счастливы говорить. Мы выберем один, когда мы найдем вам rando."
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-27b",
@@ -627,6 +643,10 @@
     "model": "opus-mt",
     "msgstr": "Ты услышишь %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "opus-mt",
+    "msgstr": "Ты будешь говорить %{languages}"
+  },
   "Your call ended.": {
     "model": "hy-mt2",
     "msgstr": "Ваш разговор завершился."
@@ -639,6 +659,10 @@
     "model": "opus-mt",
     "msgstr": "Твой rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "Ваш rando здесь. Ваш звонок начнется, когда аудио будет готово."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
     "msgstr": "Соединение с вашим rando прервано; жду несколько секунд, пока оно восстановится."
@@ -646,6 +670,10 @@
   "asking for microphone access": {
     "model": "hy-mt2",
     "msgstr": "запрос на доступ к микрофону"
+  },
+  "button\u0004Cancel": {
+    "model": "translategemma-4b",
+    "msgstr": "Отменить"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +711,10 @@
     "model": "translategemma-4b",
     "msgstr": "Скрыть ярлыки"
   },
+  "button\u0004Invite": {
+    "model": "m2m100",
+    "msgstr": "приглашаем"
+  },
   "button\u0004Invite someone": {
     "model": "madlad-400",
     "msgstr": "Пригласить кого-то"
@@ -702,6 +734,10 @@
   "button\u0004Next rando": {
     "model": "madlad-400",
     "msgstr": "Следующая rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "Прекратите искать"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

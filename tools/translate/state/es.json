@@ -112,8 +112,12 @@
     "msgstr": "Conectado"
   },
   "Connecting": {
-    "model": "translategemma-4b",
+    "model": "hy-mt2",
     "msgstr": "Conectando"
+  },
+  "Connecting your audio": {
+    "model": "opus-mt",
+    "msgstr": "Conectando su audio"
   },
   "Connection lost": {
     "model": "madlad-400",
@@ -367,9 +371,17 @@
     "model": "madlad-400",
     "msgstr": "Elige al menos un idioma para escuchar"
   },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "Elige al menos un idioma para hablar"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "madlad-400",
     "msgstr": "Elige cada idioma que te sientas cómodo escuchando."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Elige todos los idiomas que te guste hablar. Nosotros elegiremos uno cuando encontremos un rando para ti."
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-27b",
@@ -631,6 +643,10 @@
     "model": "hy-mt2",
     "msgstr": "Escucharás %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "opus-mt",
+    "msgstr": "Hablarás %{languages}"
+  },
   "Your call ended.": {
     "model": "translategemma-4b",
     "msgstr": "Su llamada ha finalizado."
@@ -643,6 +659,10 @@
     "model": "hy-mt2",
     "msgstr": "Tu rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "Su rando está aquí. Su llamada comienza cuando el audio está listo."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "La conexión de tu rando se interrumpió; espera unos segundos a que vuelvan."
@@ -650,6 +670,10 @@
   "asking for microphone access": {
     "model": "translategemma-4b",
     "msgstr": "solicitando acceso al micrófono"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "Cancelar"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +707,10 @@
     "model": "hy-mt2",
     "msgstr": "Ocultar atajos"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "Invitar"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "Invita a alguien"
@@ -702,6 +730,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "Próximo rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "m2m100",
+    "msgstr": "Deja de mirar"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

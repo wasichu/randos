@@ -130,3 +130,11 @@ randos --url wss://randos.example.org/participant/websocket
 
 (or set `RANDOS_URL`). The client and the server speak the
 [participant channel protocol](architecture/participant_channel.md).
+
+## v0.11.0 client rollout
+
+Deploy the v0.11.0 server before distributing the v0.11.0 terminal client.
+The new TUI sends speaking-language lists, including when only one language
+is selected. The updated server continues to accept older single-language
+clients. See the [release notes](releases/v0.11.0.md) and
+[participant contract](architecture/participant_channel.md).

@@ -33,6 +33,10 @@ pub enum Command {
     LoopbackMasking {
         masking: String,
     },
+    /// Local listening volume, only for an explicitly started audition.
+    LoopbackVolume {
+        volume: u8,
+    },
     /// Starts a call. `ice_servers` are the call's, from the channel's state
     /// push (STUN and TURN). `bind_ip` is for tests (`127.0.0.1`); by default
     /// the default route's address is used.

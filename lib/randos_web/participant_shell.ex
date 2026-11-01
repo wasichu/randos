@@ -110,9 +110,9 @@ defmodule RandosWeb.ParticipantShell do
     |> Map.put(:media, media_view(call, participant_id))
     # The language the rando speaks (with several hearing languages, the
     # client can't know which): a language code, nothing that identifies them.
+    |> Map.put(:self_speaks_any, self_speaks_any(call, participant_id))
     |> Map.put(:peer_speaks, peer_speaks(call, participant_id))
-    # All they may speak: more than one only for an invitation's joiner,
-    # taken to speak whatever the creator hears.
+    # Invitations keep flexible alternatives; random calls expose only the chosen code.
     |> Map.put(:peer_speaks_any, peer_speaks_any(call, participant_id))
     # "invitation": both go idle after it, and there's no "next".
     |> Map.put(:kind, call.match.kind)
@@ -160,6 +160,15 @@ defmodule RandosWeb.ParticipantShell do
     case Match.peer(match, participant_id) do
       {:ok, peer} -> peer.speaks_language
       {:error, _} -> nil
+    end
+  end
+
+  @doc "The participant's own language(s) in this call, not their full queue choices."
+  @spec self_speaks_any(Call.t(), String.t()) :: [String.t()]
+  def self_speaks_any(%Call{match: match}, participant_id) do
+    case Enum.find([match.participant_a, match.participant_b], &(&1.id == participant_id)) do
+      nil -> []
+      entry -> Entry.speaks_any(entry)
     end
   end
 

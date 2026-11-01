@@ -8,7 +8,7 @@
     "msgstr": "%{device} (Standardeinstellung)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} oder %{last}"
   },
   "%{language} both ways": {
@@ -24,7 +24,7 @@
     "msgstr": "%{minutes} min oder mehr"
   },
   "%{name} ✓": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
@@ -64,7 +64,7 @@
     "msgstr": "Ein Sprachpaar wird angezeigt, sobald es mindestens %{count} Aufrufe hat; kleinere zählen als „andere“."
   },
   "About these numbers": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Über diese Zahlen"
   },
   "Asking the server…": {
@@ -80,7 +80,7 @@
     "msgstr": "heller klingend"
   },
   "Calls started: %{started}": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "Anrufe gestartet: %{started}"
   },
   "Checking the relay…": {
@@ -100,7 +100,7 @@
     "msgstr": "Verbindung zum Server herstellen…"
   },
   "Connection:": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Verbindung:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -124,23 +124,31 @@
     "msgstr": "Berechnet für %{answered} von %{total} Servern."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Geräte"
   },
   "Error: %{message}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Fehler: %{message}"
+  },
+  "Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "Esc: Zurück."
   },
   "Fuller": {
     "model": "madlad-400",
     "msgstr": "Fuller"
+  },
+  "Headphones recommended": {
+    "model": "madlad-400",
+    "msgstr": "Kopfhörer werden empfohlen"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "hy-mt2",
     "msgstr": "Wie die Anrufe beendet wurden: abgeschlossen %{finished}, keine Verbindung möglich %{not_connected}, Verbindung verloren %{lost}, abgebrochen %{canceled}"
   },
   "I will speak:": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Ich werde sprechen:"
   },
   "I'm 18+ and OK with anonymous, unmoderated calls": {
@@ -152,7 +160,7 @@
     "msgstr": "Ich freue mich, das zu hören:"
   },
   "Interface language": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Sprache der Benutzeroberfläche"
   },
   "Join through a link": {
@@ -164,7 +172,7 @@
     "msgstr": "Tastenkürzel"
   },
   "Languages spoken:": {
-    "model": "opus-mt",
+    "model": "translategemma-12b",
     "msgstr": "Gesprochene Sprachen:"
   },
   "Languages spoken: no calls yet": {
@@ -184,7 +192,7 @@
     "msgstr": "Verbindung hergestellt! Der Anruf wird gestartet…"
   },
   "Mic test failed: %{error}": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Mikrofontest fehlgeschlagen: %{error}"
   },
   "Mic:": {
@@ -204,7 +212,7 @@
     "msgstr": "Mikrofon: Aktivierung…"
   },
   "Microphone off.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Mikrofon aus."
   },
   "Microphone on.": {
@@ -216,7 +224,7 @@
     "msgstr": "Auf diesem Server ist kein Relais konfiguriert, daher werden Anfragen direkt weitergeleitet."
   },
   "Nothing is recorded or uploaded.": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Nichts wird aufgezeichnet oder hochgeladen."
   },
   "Now:": {
@@ -232,7 +240,7 @@
     "msgstr": "Öffnen des Mikrofons…"
   },
   "Other languages: %{calls}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Andere Sprachen: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -255,12 +263,16 @@
     "model": "translategemma-12b",
     "msgstr": "Die Vorschau konnte nicht gestartet werden. Das Mikrofon ist ausgefallen; bitte versuchen Sie es erneut."
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "opus-mt",
+    "msgstr": "Vorschauvolumen: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
     "model": "translategemma-12b",
     "msgstr": "Audioverbindung wird wiederhergestellt…"
   },
   "Selected: %{style}": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Ausgewählt: %{style}"
   },
   "Send it to them however you like. It works once.": {
@@ -275,6 +287,10 @@
     "model": "m2m100",
     "msgstr": "Der Sprecher:"
   },
+  "Style: %{style} · %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "Stil: %{style} · %{tone}"
+  },
   "Text only (no audio helper).": {
     "model": "translategemma-4b",
     "msgstr": "Nur Text (keine Audio-Hilfe)."
@@ -288,7 +304,7 @@
     "msgstr": "Das Relais funktioniert."
   },
   "The relay isn't working.": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Das Relais funktioniert nicht."
   },
   "These styles change your voice, but people may still recognize you.": {
@@ -328,7 +344,7 @@
     "msgstr": "Tonlage: %{tone} (links/rechts)"
   },
   "Typical length: %{length}": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Typische Länge: %{length}"
   },
   "Update the audio helper to preview voice changes.": {
@@ -376,7 +392,7 @@
     "msgstr": "Jede der Sprachen, die Sie gewählt haben (%{count})"
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "verbunden"
   },
   "connected directly": {
@@ -408,7 +424,7 @@
     "msgstr": "Verbinden…"
   },
   "connection closed": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Verbindung geschlossen"
   },
   "couldn't connect": {
@@ -440,7 +456,7 @@
     "msgstr": "in einem Telefonat"
   },
   "key\u000418+": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
@@ -448,7 +464,7 @@
     "msgstr": "über diese Zahlen"
   },
   "key\u0004back": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "zurück"
   },
   "key\u0004cancel": {
@@ -504,7 +520,7 @@
     "msgstr": "mich selbst hören / aufhören"
   },
   "key\u0004help": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Hilfe"
   },
   "key\u0004invite": {
@@ -543,8 +559,12 @@
     "model": "opus-mt",
     "msgstr": "Nächster rando"
   },
+  "key\u0004preview volume": {
+    "model": "madlad-400",
+    "msgstr": "Lautstärke der Vorschau"
+  },
   "key\u0004quit": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "aufhören"
   },
   "key\u0004refresh": {
@@ -560,7 +580,7 @@
     "msgstr": "Redner/in"
   },
   "key\u0004status": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Status"
   },
   "key\u0004style": {
@@ -588,7 +608,7 @@
     "msgstr": "Leerlauf"
   },
   "log\u0004in call": {
-    "model": "opus-mt",
+    "model": "translategemma-4b",
     "msgstr": "im Gespräch"
   },
   "log\u0004invitation link ready to share": {
@@ -651,6 +671,10 @@
     "model": "opus-mt",
     "msgstr": "Funktioniert nicht"
   },
+  "p: hear myself / stop.": {
+    "model": "translategemma-12b",
+    "msgstr": "p: Mich selbst hören / Stopp."
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "translategemma-12b",
     "msgstr": "p: Mich selbst hören / Stopp. Esc: Zurück."
@@ -668,11 +692,11 @@
     "msgstr": "Im Telefonat"
   },
   "panel title\u0004Invitation": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "Einladung"
   },
   "panel title\u0004Looking": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Suchen"
   },
   "panel title\u0004Matched": {
@@ -703,6 +727,10 @@
     "model": "madlad-400",
     "msgstr": "Wählen Sie mindestens eine Sprache aus, die Sie hören möchten (Leertaste wechselt eine Sprache)"
   },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "hy-mt2",
+    "msgstr": "Wählen Sie mindestens eine Sprache zum Sprechen aus (%{key} wechselt zwischen ihnen)."
+  },
   "rando reconnecting…": {
     "model": "hy-mt2",
     "msgstr": "rando verbindet sich erneut…"
@@ -720,7 +748,7 @@
     "msgstr": "Die Verbindung wird wieder hergestellt…"
   },
   "refused": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "abgelehnt"
   },
   "secure connection failed": {

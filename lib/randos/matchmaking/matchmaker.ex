@@ -66,7 +66,7 @@ defmodule Randos.Matchmaking.Matchmaker do
           required(:id) => String.t(),
           required(:pid) => pid(),
           required(:topic) => String.t(),
-          required(:speaks_language) => String.t(),
+          required(:speaks_language) => String.t() | [String.t()],
           required(:hears_languages) => [String.t()],
           optional(:accepted_adult_terms) => boolean(),
           optional(:audio?) => boolean(),
@@ -314,7 +314,8 @@ defmodule Randos.Matchmaking.Matchmaker do
       Map.get(attrs, :accepted_adult_terms) != true ->
         {:error, :adult_terms_required}
 
-      not supported_language?(entry.speaks_language) or
+      Entry.offered_languages(entry) == [] or
+        not Enum.all?(Entry.offered_languages(entry), &supported_language?/1) or
         entry.hears_languages == [] or
           not Enum.all?(entry.hears_languages, &supported_language?/1) ->
         {:error, :unsupported_language}
@@ -359,13 +360,17 @@ defmodule Randos.Matchmaking.Matchmaker do
 
     entry =
       entry_from_attrs(
-        Map.merge(attrs, %{speaks_language: hd(hears), hears_languages: [creator.speaks_language]})
+        Map.merge(attrs, %{
+          speaks_language: hd(hears),
+          hears_languages: Entry.offered_languages(creator)
+        })
       )
 
     %{entry | speaks_any: if(match?([_, _ | _], hears), do: hears)}
   end
 
   defp start_invitation_call(hash, creator, joiner, state) do
+    creator = %{creator | speaks_any: Entry.offered_languages(creator)}
     match = Match.new(creator, joiner, :invitation)
 
     case start_call(match, state) do
@@ -528,11 +533,14 @@ defmodule Randos.Matchmaking.Matchmaker do
   end
 
   defp entry_from_attrs(attrs) do
+    offered = attrs |> Map.fetch!(:speaks_language) |> List.wrap() |> Enum.uniq()
+
     %Entry{
       id: Map.fetch!(attrs, :id),
       pid: Map.fetch!(attrs, :pid),
       topic: Map.fetch!(attrs, :topic),
-      speaks_language: Map.fetch!(attrs, :speaks_language),
+      speaks_language: List.first(offered),
+      offered_languages: offered,
       hears_languages: attrs |> Map.fetch!(:hears_languages) |> List.wrap() |> Enum.uniq(),
       audio?: Map.get(attrs, :audio?, false) == true,
       ice_restart?: Map.get(attrs, :ice_restart?, false) == true

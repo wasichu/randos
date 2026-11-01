@@ -50,11 +50,6 @@ msgstr "Intentando reconectar"
 msgid "Both people choose whether to continue."
 msgstr "Ambas personas deciden si desean continuar."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Cancel"
-msgstr "Cancelar"
-
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
@@ -65,7 +60,6 @@ msgstr "Seleccione los idiomas de conversación admitidos."
 msgid "Choose your languages."
 msgstr "Elige tus idiomas."
 
-#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
@@ -145,21 +139,11 @@ msgstr "Buscando"
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "Sin cuentas. Sin perfiles. Sin videos. Sin presiones."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Preparing the call"
-msgstr "Preparar la llamada"
-
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
 msgstr "Listo/a"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Secure audio connection is starting."
-msgstr "Se está estableciendo una conexión de audio segura."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -258,11 +242,6 @@ msgstr "Tú"
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
 msgstr "Usted elige el idioma que desea hablar y el idioma que desea escuchar. randos le conecta con alguien compatible para una breve conversación, y luego se retira."
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "You have matched. Audio starts when the call opens."
-msgstr "Se ha establecido la conexión. El audio comenzará cuando se inicie la llamada."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -719,13 +698,13 @@ msgstr "Las traducciones de este sitio fueron realizadas por máquina y aún no 
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "Las traducciones de este sitio fueron realizadas por un sistema automatizado. Si encuentra algún error, puede encontrarlo a continuación y hacer clic en \"Sugerir una corrección\". Esto abrirá un problema en GitHub con toda la información ya completada, excepto la corrección que usted propone (necesitará una cuenta de GitHub). Una solicitud de modificación con su corrección se abrirá automáticamente y se publicará una vez que sea revisada."
 
-#. Opens the list of languages you can hear, to change it.
+#. Opens the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "Cambiar"
 
-#. Closes the list of languages you can hear, once you've changed it.
+#. Closes the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
@@ -1104,10 +1083,10 @@ msgid "Conversation"
 msgstr "Conversación"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Stop looking"
-msgstr "Deja de buscar"
+msgstr "Deja de mirar"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -1147,10 +1126,10 @@ msgid "Find"
 msgstr "Encontrar"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Invite"
-msgstr "Invita"
+msgstr "Invitar"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -1162,3 +1141,34 @@ msgstr "Quiero escuchar"
 #, elixir-autogen, elixir-format
 msgid "End call"
 msgstr "Fin de la llamada"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick at least one language to speak"
+msgstr "Elige al menos un idioma para hablar"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You'll speak %{languages}"
+msgstr "Hablarás %{languages}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+msgstr "Elige todos los idiomas que te guste hablar. Nosotros elegiremos uno cuando encontremos un rando para ti."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting your audio"
+msgstr "Conectando su audio"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando is here. Your call starts when audio is ready."
+msgstr "Su rando está aquí. Su llamada comienza cuando el audio está listo."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Cancel"
+msgstr "Cancelar"

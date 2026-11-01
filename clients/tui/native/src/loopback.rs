@@ -26,6 +26,8 @@ pub struct Loopback {
     _streams: Vec<Stream>,
     stop: Arc<AtomicBool>,
     updates: Sender<Option<randos_voice_native::Style>>,
+    volume_updates: Sender<MonitorVolume>,
+    audition: bool,
     worker: JoinHandle<Result<(), Error>>,
 }
 
@@ -53,6 +55,8 @@ impl Loopback {
 
         let stop = Arc::new(AtomicBool::new(false));
         let (updates, changes) = mpsc::channel();
+        let (volume_updates, volume_changes) = mpsc::channel();
+        let monitor = Monitor::new(volume_changes);
         let preview = Preview {
             voice,
             masking,
@@ -64,7 +68,8 @@ impl Loopback {
             thread::Builder::new()
                 .name("loopback".into())
                 .spawn(move || {
-                    let result = run_worker(capture, playback, &stop, &stats, &notify, preview);
+                    let result =
+                        run_worker(capture, playback, &stop, &stats, &notify, preview, monitor);
                     if let Err(err) = &result {
                         notify(Event::LoopbackFailed {
                             error: err.to_string(),
@@ -79,6 +84,8 @@ impl Loopback {
                 _streams: streams,
                 stop,
                 updates,
+                volume_updates,
+                audition,
                 worker,
             },
             started,
@@ -92,6 +99,17 @@ impl Loopback {
             .map_err(|_| "loopback worker stopped".into())
     }
 
+    /// Queues a local listening change without resetting capture or DSP.
+    pub fn set_volume(&self, level: u8) -> Result<(), Error> {
+        if !self.audition {
+            return Err("preview volume requires an explicit audition".into());
+        }
+        let volume = MonitorVolume::new(level)?;
+        self.volume_updates
+            .send(volume)
+            .map_err(|_| "loopback worker stopped".into())
+    }
+
     /// False once the worker has stopped on its own (it reported `LoopbackFailed`).
     pub fn is_running(&self) -> bool {
         !self.worker.is_finished()
@@ -100,6 +118,65 @@ impl Loopback {
     pub fn stop(self) -> Result<(), Error> {
         self.stop.store(true, Relaxed);
         self.worker.join().map_err(|_| "loopback worker panicked")?
+    }
+}
+
+/// Monitoring is deliberately downstream of decoding and metering: this
+/// setting cannot alter masking headroom, microphone levels, or call audio.
+#[derive(Clone, Copy)]
+struct MonitorVolume {
+    gain: f64,
+}
+
+impl MonitorVolume {
+    fn new(level: u8) -> Result<Self, Error> {
+        if !(1..=9).contains(&level) {
+            return Err("preview volume must be between 1 and 9".into());
+        }
+        Ok(Self {
+            gain: 10.0f64.powf(f64::from(level - 1) * 3.0 / 20.0),
+        })
+    }
+}
+
+struct Monitor {
+    volume: MonitorVolume,
+    changes: Receiver<MonitorVolume>,
+}
+
+impl Monitor {
+    fn new(changes: Receiver<MonitorVolume>) -> Self {
+        Self {
+            volume: MonitorVolume { gain: 1.0 },
+            changes,
+        }
+    }
+
+    fn apply_pending(&mut self, stop: &AtomicBool) {
+        if stop.load(Relaxed) {
+            return;
+        }
+        let mut latest = None;
+        for volume in self.changes.try_iter() {
+            if stop.load(Relaxed) {
+                return;
+            }
+            latest = Some(volume);
+        }
+        if let Some(volume) = latest.filter(|_| !stop.load(Relaxed)) {
+            self.volume = volume;
+        }
+    }
+
+    fn process(&self, decoded: &[f32; FRAME], output: &mut [f32; FRAME]) -> Result<(), Error> {
+        for (input, output) in decoded.iter().zip(output.iter_mut()) {
+            if !input.is_finite() {
+                return Err("nonfinite preview audio".into());
+            }
+            // f64 multiplication stays finite for any finite f32 input.
+            *output = (f64::from(*input) * self.volume.gain).clamp(-1.0, 1.0) as f32;
+        }
+        Ok(())
     }
 }
 
@@ -161,13 +238,16 @@ fn run_worker(
     stats: &DeviceStats,
     notify: &Notify,
     mut preview: Preview,
+    mut monitor: Monitor,
 ) -> Result<(), Error> {
     let (mut encoder, mut decoder) = (Encoder::new()?, Decoder::new()?);
     let (mut frame, mut decoded) = ([0.0; FRAME], [0.0; FRAME]);
     let mut report = Report::new();
+    let audition = preview.audition;
     report.voice_ms = preview.delay_ms();
 
     while !stop.load(Relaxed) {
+        monitor.apply_pending(stop);
         if preview.apply_pending(stop, &mut capture)? {
             encoder = Encoder::new()?;
             decoder = Decoder::new()?;
@@ -189,7 +269,16 @@ fn run_worker(
         let packet_bytes = packet.len();
         decoder.decode(packet, &mut decoded)?;
 
-        if !playback.write(&decoded)? {
+        let mut listening = [0.0; FRAME];
+        if audition {
+            monitor.process(&decoded, &mut listening)?;
+        } else {
+            listening.copy_from_slice(&decoded);
+        }
+        if stop.load(Relaxed) {
+            break;
+        }
+        if !playback.write(&listening)? {
             report.dropped += 1;
         }
 
@@ -316,6 +405,67 @@ mod tests {
         std::array::from_fn(|i| {
             ((frame * FRAME + i) as f32 * hz * std::f32::consts::TAU / 48000.0).sin() * 0.2
         })
+    }
+
+    #[test]
+    fn monitor_levels_have_three_db_steps_and_finite_bounded_output() {
+        let (_, changes) = mpsc::channel();
+        let mut monitor = Monitor::new(changes);
+        let mut output = [0.0; FRAME];
+        let input = tone(0, 440.0);
+        monitor.process(&input, &mut output).unwrap();
+        assert_eq!(
+            output, input,
+            "default monitoring changes no ordinary samples"
+        );
+        for level in 1..=9 {
+            monitor.volume = MonitorVolume::new(level).unwrap();
+            let amplitude = 10.0f32.powf(f32::from(level - 1) * 3.0 / 20.0);
+            monitor.process(&[0.01; FRAME], &mut output).unwrap();
+            assert!(
+                output
+                    .iter()
+                    .all(|sample| (*sample - 0.01 * amplitude).abs() < 1e-6)
+            );
+            monitor.process(&[f32::MAX; FRAME], &mut output).unwrap();
+            assert_eq!(output, [1.0; FRAME]);
+            monitor.process(&[-f32::MAX; FRAME], &mut output).unwrap();
+            assert_eq!(output, [-1.0; FRAME]);
+        }
+        for level in [0, 10, 255] {
+            assert!(MonitorVolume::new(level).is_err());
+        }
+        for invalid in [f32::NAN, f32::INFINITY, f32::NEG_INFINITY] {
+            assert!(monitor.process(&[invalid; FRAME], &mut output).is_err());
+        }
+    }
+
+    #[test]
+    fn monitor_changes_coalesce_and_stop_wins_without_resetting_masking() {
+        let (updates, changes) = mpsc::channel();
+        let mut monitor = Monitor::new(changes);
+        let (mut running, _) = preview(Some(Style::LowerResonance), true);
+        let (mut reference, _) = preview(Some(Style::LowerResonance), true);
+        let mut output = [0.0; FRAME];
+        let mut expected = [0.0; FRAME];
+        for frame in 0..40 {
+            if frame == 20 {
+                for level in [9, 1, 4] {
+                    updates.send(MonitorVolume::new(level).unwrap()).unwrap();
+                }
+                monitor.apply_pending(&AtomicBool::new(false));
+                assert!((monitor.volume.gain - 10.0f64.powf(9.0 / 20.0)).abs() < 1e-9);
+            }
+            running.process(&tone(frame, 220.0), &mut output).unwrap();
+            reference
+                .process(&tone(frame, 220.0), &mut expected)
+                .unwrap();
+            assert_eq!(output, expected, "volume reset masking at frame {frame}");
+        }
+        updates.send(MonitorVolume::new(9).unwrap()).unwrap();
+        let before = monitor.volume.gain;
+        monitor.apply_pending(&AtomicBool::new(true));
+        assert_eq!(monitor.volume.gain, before);
     }
 
     #[test]

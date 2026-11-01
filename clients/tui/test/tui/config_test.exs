@@ -62,17 +62,17 @@ defmodule Tui.ConfigTest do
     assert_receive {:tui_model, ^app,
                     %Model{
                       status: :idle,
-                      speaks: "fr",
+                      speaks: ["fr"],
                       hears: ["es", "fr"],
                       adult_acknowledged?: true
                     }}
 
-    # Speak English instead (French → Spanish → English): saved straight
-    # away, and the hearing languages are left exactly as they were.
-    keys(app, ["left", "left"])
-    assert_receive {:tui_model, ^app, %Model{speaks: "en"}}
+    # Uncheck French and check English: saved straight away, and the hearing
+    # languages are left exactly as they were.
+    keys(app, ["right", "right", " ", "left", "left", " "])
+    assert_receive {:tui_model, ^app, %Model{speaks: ["en"]}}
 
-    assert %{"speaks" => "en", "hears" => ["es", "fr"], "input" => "Some Mic"} =
+    assert %{"speaks" => ["en"], "hears" => ["es", "fr"], "input" => "Some Mic"} =
              Config.load(path)
   end
 

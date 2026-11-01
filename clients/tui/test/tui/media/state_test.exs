@@ -28,6 +28,45 @@ defmodule Tui.Media.StateTest do
     assert [{:request, {:call_start, _, _, _, _, _, "lower_resonance"}}] = commands
   end
 
+  test "preview volume is session-only, restores at start, and ignores stale errors" do
+    initial = %{
+      State.new(true, {"sine", "null"})
+      | masking_available?: true,
+        audition_available?: true,
+        preview_volume_available?: true
+    }
+
+    {selected, []} = State.preview_volume(initial, "+")
+    assert selected.preview_volume == 2
+    {opening, [{:request, start}]} = State.toggle_audition(selected)
+    {opening, []} = State.preview_volume(opening, "+")
+    {running, [{:request, {:loopback_volume, 1, 3}}]} = State.reply(opening, start, {:ok, %{}})
+    {louder, [{:request, {:loopback_volume, 1, 4}}]} = State.preview_volume(running, "=")
+    assert louder.preview_volume == 4
+    {capped, []} = State.preview_volume(%{louder | preview_volume: 9}, "+")
+    assert capped.preview_volume == 9
+
+    assert State.preview_volume(%{initial | preview_volume_available?: false}, "+") ==
+             {%{initial | preview_volume_available?: false}, []}
+
+    assert State.reply(louder, {:loopback_volume, 0, 9}, {:error, "old preview"}) == {louder, []}
+
+    {failed, [{:request, :loopback_stop}]} =
+      State.reply(louder, {:loopback_volume, 1, 4}, {:error, "failed volume"})
+
+    assert failed.mic_test.phase == :failed
+    assert Map.keys(State.saved_choice(louder)) |> Enum.sort() == ["input", "output"]
+
+    {call, commands} =
+      State.server_state(louder, :connecting, "offerer", %{
+        "id" => "volume-call",
+        "ice_servers" => []
+      })
+
+    assert call.preview_volume == 4
+    assert {:request, {:call_start, "offerer", [], "sine", "null", false}} in commands
+  end
+
   test "voice choices stay local and audition stops before a masked call" do
     initial = %{
       State.new(true, {"sine", "null"})

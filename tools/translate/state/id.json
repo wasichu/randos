@@ -112,8 +112,12 @@
     "msgstr": "Terhubung"
   },
   "Connecting": {
-    "model": "hy-mt2",
-    "msgstr": "Sedang terhubung"
+    "model": "translategemma-4b",
+    "msgstr": "Menghubungkan"
+  },
+  "Connecting your audio": {
+    "model": "translategemma-4b",
+    "msgstr": "Menghubungkan perangkat audio Anda"
   },
   "Connection lost": {
     "model": "madlad-400",
@@ -168,8 +172,12 @@
     "msgstr": "Panggilan saat ini"
   },
   "Done": {
-    "model": "hy-mt2",
+    "model": "opus-mt",
     "msgstr": "Selesai"
+  },
+  "End call": {
+    "model": "translategemma-4b",
+    "msgstr": "Mengakhiri panggilan"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -363,9 +371,17 @@
     "model": "opus-mt",
     "msgstr": "Pilih setidaknya satu bahasa untuk mendengar"
   },
+  "Pick at least one language to speak": {
+    "model": "opus-mt",
+    "msgstr": "Pilih setidaknya satu bahasa untuk berbicara"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-27b",
     "msgstr": "Pilihlah setiap bahasa yang Anda merasa nyaman mendengarkannya."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "hy-mt2",
+    "msgstr": "Pilih semua bahasa yang kamu kuasai. Kami akan memilih satu ketika menemukankanmu seorang rando."
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-27b",
@@ -627,6 +643,10 @@
     "model": "translategemma-12b",
     "msgstr": "Anda akan mendengar bahasa-bahasa berikut: %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "opus-mt",
+    "msgstr": "Anda akan berbicara %{languages}"
+  },
   "Your call ended.": {
     "model": "hy-mt2",
     "msgstr": "Panggilan Anda telah berakhir."
@@ -639,6 +659,10 @@
     "model": "madlad-400",
     "msgstr": "Anda rando"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "opus-mt",
+    "msgstr": "rando Anda di sini. Panggilan Anda dimulai ketika audio siap."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "Koneksi rando Anda terputus; tunggu beberapa detik hingga mereka kembali terhubung."
@@ -646,6 +670,10 @@
   "asking for microphone access": {
     "model": "translategemma-4b",
     "msgstr": "meminta akses ke mikrofon"
+  },
+  "button\u0004Cancel": {
+    "model": "translategemma-4b",
+    "msgstr": "Batalkan"
   },
   "button\u0004Cancel the link": {
     "model": "translategemma-4b",
@@ -683,6 +711,10 @@
     "model": "translategemma-4b",
     "msgstr": "Sembunyikan pintasan"
   },
+  "button\u0004Invite": {
+    "model": "madlad-400",
+    "msgstr": "Mengundang"
+  },
   "button\u0004Invite someone": {
     "model": "hy-mt2",
     "msgstr": "Undang seseorang"
@@ -702,6 +734,10 @@
   "button\u0004Next rando": {
     "model": "madlad-400",
     "msgstr": "Berikutnya rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "m2m100",
+    "msgstr": "Berhentilah melihat"
   },
   "button\u0004Stop preview": {
     "model": "translategemma-4b",

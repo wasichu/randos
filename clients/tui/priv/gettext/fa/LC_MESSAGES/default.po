@@ -912,11 +912,6 @@ msgstr "لحن: %{tone} (چپ/راست)"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
-msgid "Use headphones and keep the volume low."
-msgstr "از هدفون استفاده کنید و حجم را کم نگه دارید."
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
 msgid "Voice masking"
 msgstr "پنهان کردن صدا"
 
@@ -924,11 +919,6 @@ msgstr "پنهان کردن صدا"
 #, elixir-autogen, elixir-format
 msgid "Voice masking on"
 msgstr "مخفی کردن صدا"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "p: hear myself / stop. Esc: back."
-msgstr "p: صدای خودم را بشنوید / توقف. Esc: برگردید."
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1047,3 +1037,39 @@ msgstr "کمک‌کننده صوتی را برای نمایش اولیه تغی�
 #, elixir-autogen, elixir-format
 msgid "Mic: %{bars}%{peak}   (%{key} to stop)"
 msgstr "میکروفون: %{bars}%{peak}   (برای متوقف کردن، از کلید %{key} استفاده کنید)"
+
+#: lib/tui/model.ex
+#, elixir-autogen, elixir-format
+msgid "pick at least one language to speak (%{key} toggles one)"
+msgstr "حداقل یک زبان برای صحبت کردن انتخاب کنید (%{key} یک زبان را تغییر می‌دهد)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Style: %{style} · %{tone}"
+msgstr "سبک: %{style} · لحن: %{tone}"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Esc: back."
+msgstr "Esc: بازگشت."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Headphones recommended"
+msgstr "هدفون های توصیه شده"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "p: hear myself / stop."
+msgstr "p: صدای خودم را بشنوید / (سپس) متوقف شوید."
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "Preview volume: %{level}/9 (-/+)"
+msgstr "حجم نمایش اولیه: %{level}/9 (-/+)"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgctxt "key"
+msgid "preview volume"
+msgstr "حجم پیش نمایش"

@@ -112,8 +112,12 @@
     "msgstr": "연결됨"
   },
   "Connecting": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "연결 중"
+  },
+  "Connecting your audio": {
+    "model": "madlad-400",
+    "msgstr": "오디오 연결하기"
   },
   "Connection lost": {
     "model": "m2m100",
@@ -170,6 +174,10 @@
   "Done": {
     "model": "translategemma-4b",
     "msgstr": "완료"
+  },
+  "End call": {
+    "model": "hy-mt2",
+    "msgstr": "통화 종료"
   },
   "Ephemeral by default": {
     "model": "translategemma-4b",
@@ -355,9 +363,17 @@
     "model": "madlad-400",
     "msgstr": "듣고 싶은 언어를 적어도 하나 선택하세요"
   },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "적어도 하나의 언어를 선택하세요"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-27b",
     "msgstr": "자신이 편하게 들을 수 있는 모든 언어를 선택하세요."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "madlad-400",
+    "msgstr": "말하고 싶은 언어를 모두 선택하세요. rando을 찾으면 하나를 선택해 드리겠습니다."
   },
   "Pick the language you'd like to check.": {
     "model": "translategemma-27b",
@@ -619,6 +635,10 @@
     "model": "m2m100",
     "msgstr": "당신은 들을 것입니다 %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "m2m100",
+    "msgstr": "당신은 말을 할 것입니다 %{languages}"
+  },
   "Your call ended.": {
     "model": "m2m100",
     "msgstr": "귀하의 전화가 끝났습니다."
@@ -627,6 +647,10 @@
     "model": "m2m100",
     "msgstr": "당신의 링크는 누군가가 그것을 사용하기 전에 끝났습니다."
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "rando이 여기에 있습니다. 오디오가 준비되면 통화가 시작됩니다."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "madlad-400",
     "msgstr": "rando 의 연결이 끊어졌습니다. 다시 연결될 때까지 몇 초 동안 기다립니다."
@@ -634,6 +658,10 @@
   "asking for microphone access": {
     "model": "madlad-400",
     "msgstr": "마이크 액세스 요청"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "취소"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -671,6 +699,10 @@
     "model": "hy-mt2",
     "msgstr": "단축키 숨기기"
   },
+  "button\u0004Invite": {
+    "model": "hy-mt2",
+    "msgstr": "초대하기"
+  },
   "button\u0004Invite someone": {
     "model": "m2m100",
     "msgstr": "누군가를 초대"
@@ -690,6 +722,10 @@
   "button\u0004Next rando": {
     "model": "m2m100",
     "msgstr": "다음과 같이 rando"
+  },
+  "button\u0004Stop looking": {
+    "model": "translategemma-4b",
+    "msgstr": "더 이상 보지 마"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

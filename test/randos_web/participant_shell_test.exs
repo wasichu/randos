@@ -17,6 +17,7 @@ defmodule RandosWeb.ParticipantShellTest do
         id: id,
         pid: self(),
         topic: "t:#{id}",
+        offered_languages: ["en", "fr"],
         speaks_language: "en",
         hears_languages: ["es"],
         audio?: true
@@ -70,6 +71,7 @@ defmodule RandosWeb.ParticipantShellTest do
                # Built without Call.new/2, so no media has been reported.
                media: %{self: nil, peer: nil},
                # The rando's language, a code: never who they are.
+               self_speaks_any: ["en"],
                peer_speaks: "en",
                peer_speaks_any: ["en"],
                kind: :random,
@@ -84,6 +86,8 @@ defmodule RandosWeb.ParticipantShellTest do
     # The peer's id never appears (`media.peer` is a label, not an id).
     refute encoded =~ "anon-the-peers-id"
     refute encoded =~ "match-1"
+    refute encoded =~ "fr"
+    refute encoded =~ "offered_languages"
   end
 
   test "an idle participant has no call" do

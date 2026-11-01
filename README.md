@@ -15,8 +15,8 @@
   <a href="LICENSE"><img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue.svg"></a>
 </p>
 
-Pick the language you'll speak and the one you want to hear, and randos
-pairs you with a stranger who wants the opposite: a short voice call, then
+Pick the languages you're happy to speak and hear, and randos
+pairs you with a compatible stranger: a short voice call, then
 you both disappear. No accounts, no profiles, no video, no pressure.
 
 <picture>
@@ -26,13 +26,13 @@ you both disappear. No accounts, no profiles, no video, no pressure.
 
 ## How it works
 
-1. Choose the language you'll speak, and every language you're happy to
-   hear. You can practise both ways (I speak Spanish, you speak English),
+1. Choose every language you're happy to speak and hear. You can practise both ways (I speak Spanish, you speak English),
    both speak the same language, or just listen.
 2. Confirm you're 18 or older. Calls are anonymous and unmoderated.
 3. randos finds someone who speaks a language you're happy to hear and is
-   happy to hear yours, and connects the two of you. Whoever has waited
-   longest is matched first, and you won't be matched with the same person
+   happy to hear one of yours, and connects the two of you. It chooses one
+   speaking language for each of you and shows it beside your waveform.
+   Whoever has waited longest is matched first, and you won't be matched with the same person
    again straight away.
 4. You talk for ten minutes. When time is up, you both choose whether to
    keep going, ten more minutes at a time, up to thirty. Either of you can
@@ -78,7 +78,7 @@ new session; it changes how you sound, but people may still recognize you.
 Press **?** or click **Keyboard shortcuts** below the homepage form to show
 the shortcut bar and activate
 **F** Find, **I** Invite, **P** microphone preview, and **M** mute during a call.
-**C** cycles “I will speak in.” **X** stops looking while you’re queued. **A** toggles the acknowledgment checkbox and **B** opens/closes Voice masking.
+**C** opens/closes “I will speak in.” **X** stops looking while you’re queued. **A** toggles the acknowledgment checkbox and **B** opens/closes Voice masking.
 During a call, **E** ends it and **N** moves on to the next rando (except invitation calls).
 **P** opens the voice panel if needed; with it open, **S** cycles Style and **T**
 cycles Tone. **O** opens About, **R** Server Status, and **L** the interface-language
@@ -105,7 +105,10 @@ randos
 In the terminal, press **b** before finding someone to open Voice masking.
 Choose a style with **1/2/3**, change tone with **left/right**, and press **p**
 to hear yourself or stop. Preview stays on while you change style or tone;
-Off lets you hear your original voice. **Esc** closes the preview. Choices last for this
+Off lets you hear your original voice. **Esc** closes the preview. **Voice masking on**
+and the selected style/tone stay visible in the main screen’s header when enabled,
+including during calls. Use **−/+** in the panel to adjust **Preview volume**;
+it changes local listening only. Choices last for this
 session and apply to your next call. Press **l** to choose the interface
 language from a list; arrows move, Enter applies, Esc cancels. See the [voice panel](docs/assets/tui-voice.png).
 
@@ -126,7 +129,7 @@ standard library—`libstdc++6` on Ubuntu—which most desktop distributions hav
 
 - The essential keys for each screen are listed along the bottom; press **?**
   for all shortcuts available on that screen (**Esc** closes help, **↑/↓** scroll).
-  Use arrows to pick languages (space checks the ones you're happy to hear)
+  Use arrows to move through languages and space to check speaking or hearing choices
   and Enter to find a rando. During a call, `m` to mute, `n` for the next rando, `e` to end the call, `q` to
   quit.
 - `v` invites someone you know: it shows a one-time link to send them

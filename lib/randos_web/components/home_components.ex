@@ -76,6 +76,7 @@ defmodule RandosWeb.HomeComponents do
   attr :call_deadline_unix_ms, :integer, default: nil
   attr :webrtc_role, :atom, default: nil
   attr :preferences, :map, required: true
+  attr :self_languages, :list, default: []
   attr :peer_languages, :list, default: []
   attr :peer_reconnecting, :boolean, default: false
   attr :recovering, :boolean, default: false
@@ -99,6 +100,7 @@ defmodule RandosWeb.HomeComponents do
     ~H"""
     <div
       id="conversation-card"
+      data-ui-state={@ui_state}
       class="order-3 grid w-full max-w-2xl min-w-0 grid-cols-1 justify-self-center overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm shadow-stone-200/70 sm:grid-cols-3"
     >
       <%!-- Keyed by call: a new call (even an instant rematch, in the same
@@ -141,10 +143,14 @@ defmodule RandosWeb.HomeComponents do
         <% :looking -> %>
           <.searching_panel preferences={@preferences} language_name={&language_name/1} />
         <% :connecting -> %>
-          <.connecting_panel webrtc_role={@webrtc_role} />
+          <.connecting_panel
+            webrtc_role={@webrtc_role}
+            self_languages={@self_languages}
+            peer_languages={@peer_languages}
+          />
         <% :in_call -> %>
           <.call_panel
-            preferences={@preferences}
+            self_languages={@self_languages}
             peer_languages={@peer_languages}
             peer_reconnecting={@peer_reconnecting}
             recovering={@recovering}
@@ -412,79 +418,104 @@ defmodule RandosWeb.HomeComponents do
   defp language_fields(assigns) do
     ~H"""
     <div class="space-y-4">
-      <.input
-        field={@form[:speaking_language]}
-        type="select"
+      <.language_picker
+        id="speaking"
+        field="speaking_language"
         label={gettext("I will speak in")}
-        options={language_options()}
-        class="w-full rounded-md border border-stone-300 bg-white px-3 py-3 text-base text-stone-950 shadow-sm outline-none transition focus:border-teal-600 focus:ring-4 focus:ring-teal-100"
+        codes={@preferences["speaking_language"]}
+        summary={speaking_line(@preferences["speaking_language"])}
+        help={
+          gettext(
+            "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+          )
+        }
       />
-      <fieldset id="hearing-languages">
-        <legend class="mb-1.5 text-sm font-semibold text-stone-800">
-          {gettext("I want to hear")}
-        </legend>
-        <%!-- The choice in one line; "Change" opens the chips. Native
+      <.language_picker
+        id="hearing"
+        field="hearing_languages"
+        label={gettext("I want to hear")}
+        codes={@preferences["hearing_languages"]}
+        summary={hearing_line(@preferences["hearing_languages"])}
+        help={gettext("Pick every language you're comfortable listening to.")}
+      />
+    </div>
+    """
+  end
+
+  attr :id, :string, required: true
+  attr :field, :string, required: true
+  attr :label, :string, required: true
+  attr :codes, :list, required: true
+  attr :summary, :string, required: true
+  attr :help, :string, required: true
+
+  defp language_picker(assigns) do
+    ~H"""
+    <fieldset id={@id <> "-languages"}>
+      <legend class="mb-1.5 text-sm font-semibold text-stone-800">
+        {@label}
+      </legend>
+      <%!-- The choice in one line; "Change" opens the chips. Native
              <details>, no script. Start collapsed with the current choice
              visible; ignore_attributes preserves how the person leaves it. --%>
-        <details
-          id="hearing-details"
-          class="group"
-          phx-mounted={JS.ignore_attributes(["open"])}
+      <details
+        id={@id <> "-details"}
+        class="group"
+        phx-mounted={JS.ignore_attributes(["open"])}
+      >
+        <summary
+          id={@id <> "-summary"}
+          class="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md border border-stone-200 bg-white px-3 py-2.5 text-sm transition hover:border-stone-400 dark:hover:border-stone-500 [&::-webkit-details-marker]:hidden"
         >
-          <summary
-            id="hearing-summary"
-            class="flex cursor-pointer list-none items-center justify-between gap-3 rounded-md border border-stone-200 bg-white px-3 py-2.5 text-sm transition hover:border-stone-400 dark:hover:border-stone-500 [&::-webkit-details-marker]:hidden"
+          <span
+            id={@id <> "-summary-text"}
+            data-languages={Enum.join(@codes, " ")}
+            class="min-w-0 text-stone-800"
           >
-            <span
-              id="hearing-summary-text"
-              data-hearing={Enum.join(@preferences["hearing_languages"], " ")}
-              class="min-w-0 text-stone-800"
-            >
-              {hearing_line(@preferences["hearing_languages"])}
+            {@summary}
+          </span>
+          <span class="shrink-0 font-medium text-teal-700">
+            <% gettext_comment("Opens the language choices.") %>
+            <span class="group-open:hidden">{gettext("Change")}</span>
+            <% gettext_comment("Closes the language choices.") %>
+            <span class="hidden group-open:inline">{gettext("Done")}</span>
+          </span>
+        </summary>
+        <p class="mb-3 mt-3 text-sm text-stone-500">
+          {@help}
+        </p>
+        <%!-- Submitted even with nothing checked, so unchecking all clears it. --%>
+        <input type="hidden" name={"conversation[#{@field}][]"} value="" />
+        <div id={@id <> "-chips"} class="flex flex-wrap gap-2">
+          <label
+            :for={{name, code} <- language_options()}
+            id={"#{@id}-chip-#{code}"}
+            for={"#{@id}-language-#{code}"}
+            class="cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              id={"#{@id}-language-#{code}"}
+              name={"conversation[#{@field}][]"}
+              value={code}
+              checked={code in @codes}
+              class="peer sr-only"
+            />
+            <span class={[
+              "inline-flex select-none items-center rounded-full border px-3 py-1.5 text-sm transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-teal-600",
+              if(code in @codes,
+                do:
+                  "border-teal-600 bg-teal-600 text-white dark:border-teal-400 dark:bg-teal-400 dark:text-stone-950",
+                else:
+                  "border-stone-300 bg-white text-stone-700 hover:border-stone-400 dark:hover:border-stone-500"
+              )
+            ]}>
+              {name}
             </span>
-            <span class="shrink-0 font-medium text-teal-700">
-              <% gettext_comment("Opens the list of languages you can hear, to change it.") %>
-              <span class="group-open:hidden">{gettext("Change")}</span>
-              <% gettext_comment("Closes the list of languages you can hear, once you've changed it.") %>
-              <span class="hidden group-open:inline">{gettext("Done")}</span>
-            </span>
-          </summary>
-          <p class="mb-3 mt-3 text-sm text-stone-500">
-            {gettext("Pick every language you're comfortable listening to.")}
-          </p>
-          <%!-- Submitted even with nothing checked, so unchecking all clears it. --%>
-          <input type="hidden" name="conversation[hearing_languages][]" value="" />
-          <div id="hearing-chips" class="flex flex-wrap gap-2">
-            <label
-              :for={{name, code} <- language_options()}
-              id={"hearing-chip-#{code}"}
-              for={"hearing-language-#{code}"}
-              class="cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                id={"hearing-language-#{code}"}
-                name="conversation[hearing_languages][]"
-                value={code}
-                checked={code in @preferences["hearing_languages"]}
-                class="peer sr-only"
-              />
-              <span class={[
-                "inline-flex select-none items-center rounded-full border px-3 py-1.5 text-sm transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-teal-600",
-                if(code in @preferences["hearing_languages"],
-                  do:
-                    "border-teal-600 bg-teal-600 text-white dark:border-teal-400 dark:bg-teal-400 dark:text-stone-950",
-                  else:
-                    "border-stone-300 bg-white text-stone-700 hover:border-stone-400 dark:hover:border-stone-500"
-                )
-              ]}>
-                {name}
-              </span>
-            </label>
-          </div>
-        </details>
-      </fieldset>
-    </div>
+          </label>
+        </div>
+      </details>
+    </fieldset>
     """
   end
 
@@ -505,7 +536,7 @@ defmodule RandosWeb.HomeComponents do
           {gettext(
             "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.",
             hearing_languages: hearing_summary(@preferences["hearing_languages"], @language_name),
-            speaking_language: @language_name.(@preferences["speaking_language"])
+            speaking_language: hearing_summary(@preferences["speaking_language"], @language_name)
           )}
         </p>
       </div>
@@ -530,48 +561,53 @@ defmodule RandosWeb.HomeComponents do
 
   attr :webrtc_role, :atom, default: nil
 
+  attr :self_languages, :list, default: []
+  attr :peer_languages, :list, default: []
+
   defp connecting_panel(assigns) do
     ~H"""
     <div
       id="connecting-panel"
       data-webrtc-role={@webrtc_role}
-      class="col-span-full space-y-6 p-5 sm:p-7"
+      class="order-1 col-span-full px-5 pb-7 pt-8 text-center sm:px-8"
     >
-      <div>
-        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
-          <% gettext_comment(
-            "The call's status: its audio is connecting right now (a state, not the action \"log in\")."
-          ) %>
-          {gettext("Connecting")}
-        </p>
-        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
-          {gettext("Preparing the call")}
-        </h2>
-        <p class="mt-3 leading-7 text-stone-600">
-          {gettext("You have matched. Audio starts when the call opens.")}
-        </p>
-      </div>
-      <p
-        :if={@webrtc_role}
-        id="match-connection-label"
-        class="rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"
-      >
-        {gettext("Secure audio connection is starting.")}
+      <p class="flex items-center justify-center gap-2 text-sm font-medium text-teal-700">
+        <span aria-hidden="true" class="size-2 rounded-full bg-teal-700 motion-safe:animate-pulse"></span>
+        {gettext("Connecting")}
       </p>
-      <div class="grid gap-3 sm:grid-cols-2">
-        <button
-          id="cancel-connection-button"
-          phx-click="end_call"
-          class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
-        >
-          {gettext("Cancel")}
-        </button>
+      <h2 class="mt-4 text-3xl font-semibold tracking-normal text-stone-950">
+        {gettext("Connecting your audio")}
+      </h2>
+      <p id="match-connection-label" class="mx-auto mt-3 max-w-sm leading-7 text-stone-600">
+        {gettext("Your rando is here. Your call starts when audio is ready.")}
+      </p>
+      <div class="mt-7 grid grid-cols-2">
+        <.waveform
+          id="local-waveform"
+          label={gettext("You")}
+          language={@self_languages != [] && hearing_summary(@self_languages, &language_name/1)}
+        />
+        <.waveform
+          id="remote-waveform"
+          label={gettext("Your rando")}
+          language={@peer_languages != [] && hearing_summary(@peer_languages, &language_name/1)}
+        />
       </div>
+    </div>
+    <div id="connecting-actions" class="order-3 px-5 pb-6 sm:px-8">
+      <button
+        id="cancel-connection-button"
+        type="button"
+        phx-click="end_call"
+        class="inline-flex h-12 w-full items-center justify-center rounded-[10px] border border-red-200 px-4 font-semibold text-red-700 transition hover:border-red-700 hover:bg-red-50 dark:text-red-300"
+      >
+        {pgettext("button", "Cancel")}
+      </button>
     </div>
     """
   end
 
-  attr :preferences, :map, required: true
+  attr :self_languages, :list, default: []
   attr :peer_languages, :list, default: []
   attr :peer_reconnecting, :boolean, default: false
   attr :recovering, :boolean, default: false
@@ -622,7 +658,7 @@ defmodule RandosWeb.HomeComponents do
         <.waveform
           id="local-waveform"
           label={gettext("You")}
-          language={@language_name.(@preferences["speaking_language"])}
+          language={@self_languages != [] && hearing_summary(@self_languages, @language_name)}
         />
         <.waveform
           id="remote-waveform"
@@ -716,7 +752,10 @@ defmodule RandosWeb.HomeComponents do
       data-labels={call_labels()}
       class="contents"
     >
-      <div class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7">
+      <div
+        data-call-status
+        class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7"
+      >
         <div class="min-w-0">
           <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5">
             <% gettext_comment(
@@ -737,7 +776,10 @@ defmodule RandosWeb.HomeComponents do
         </div>
       </div>
 
-      <div class="order-3 col-span-full border-t border-stone-200 px-4 py-3 sm:col-span-1 sm:px-7">
+      <div
+        data-call-mute
+        class="order-3 col-span-full border-t border-stone-200 px-4 py-3 sm:col-span-1 sm:px-7"
+      >
         <button
           id="mute-button"
           type="button"
@@ -967,6 +1009,11 @@ defmodule RandosWeb.HomeComponents do
 
   # The hearing choice's one-line summary (the TUI's rule: up to three
   # names, then a count).
+  defp speaking_line([]), do: gettext("Pick at least one language to speak")
+
+  defp speaking_line(codes),
+    do: gettext("You'll speak %{languages}", languages: hearing_summary(codes, &language_name/1))
+
   defp hearing_line([]), do: gettext("Pick at least one language to hear")
 
   defp hearing_line(codes),

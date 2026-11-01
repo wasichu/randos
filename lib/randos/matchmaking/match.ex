@@ -31,7 +31,21 @@ defmodule Randos.Matchmaking.Match do
   @spec new(Entry.t(), Entry.t(), kind()) :: t()
   def new(%Entry{} = a, %Entry{} = b, kind \\ :random) do
     id = "match-" <> Base.url_encode64(:crypto.strong_rand_bytes(12), padding: false)
+    {a, b} = select_languages(a, b, kind)
     %__MODULE__{id: id, participant_a: a, participant_b: b, kind: kind}
+  end
+
+  # Stable code order breaks ties without changing oldest-compatible queue policy.
+  # Only the call's copies change; offered_languages survives resume and requeue.
+  defp select_languages(a, b, :random) do
+    {select_language(a, b.hears_languages), select_language(b, a.hears_languages)}
+  end
+
+  defp select_languages(a, b, :invitation), do: {a, b}
+
+  defp select_language(entry, hears) do
+    code = entry |> Entry.offered_languages() |> Enum.sort() |> Enum.find(&(&1 in hears))
+    %{entry | speaks_language: code, speaks_any: nil}
   end
 
   @doc "Whether `participant_id` is one of the two people in the match."

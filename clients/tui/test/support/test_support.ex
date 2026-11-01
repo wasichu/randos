@@ -136,25 +136,24 @@ defmodule Tui.TestSupport do
   or a list), tick 18+, press Enter.
   """
   def find(app, model, speaks, hears) do
+    speaks = List.wrap(speaks)
     hears = List.wrap(hears)
     codes = Enum.map(model.languages, & &1.code)
-    # A fresh form: only the speaking language is checked, automatically.
-    true =
-      model.hears == [model.speaks] and model.hears_cursor == 0 and not model.adult_acknowledged?
+    true = model.speaks_cursor == 0 and model.hears_cursor == 0 and not model.adult_acknowledged?
 
-    index = fn code -> Enum.find_index(codes, &(&1 == code)) end
+    keys(
+      app,
+      language_row_keys(codes, model.speaks, speaks) ++
+        ["tab"] ++
+        language_row_keys(codes, model.hears, hears) ++ ["tab", " ", "enter"]
+    )
+  end
 
-    to_speaks =
-      List.duplicate("right", Integer.mod(index.(speaks) - index.(model.speaks), length(codes)))
-
-    # Choosing `speaks` leaves just it checked; walk the row, toggling what differs.
-    hears_row =
-      codes
-      |> Enum.map(fn code -> if code == speaks != code in hears, do: [" "], else: [] end)
-      |> Enum.intersperse(["right"])
-      |> List.flatten()
-
-    keys(app, to_speaks ++ ["tab"] ++ hears_row ++ ["tab", " ", "enter"])
+  defp language_row_keys(codes, current, wanted) do
+    codes
+    |> Enum.map(fn code -> if code in current != code in wanted, do: [" "], else: [] end)
+    |> Enum.intersperse(["right"])
+    |> List.flatten()
   end
 
   @doc "Kills a `Tui.Media` server's helper process (`kill -9`), as a crash would."

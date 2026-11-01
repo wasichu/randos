@@ -50,11 +50,6 @@ msgstr "تلاش برای اتصال مجدد"
 msgid "Both people choose whether to continue."
 msgstr "هر دو نفر تصمیم می‌گیرند که آیا به این کار ادامه دهند یا نه."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Cancel"
-msgstr "لغو"
-
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
@@ -65,11 +60,10 @@ msgstr "زبان های گفتگوی پشتیبانی شده را انتخاب �
 msgid "Choose your languages."
 msgstr "زبان‌های مورد نظرتان را انتخاب کنید."
 
-#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
-msgstr "در حال اتصال"
+msgstr "اتصال برقرار کردن"
 
 #. Label before the call's connection state (for example "connecting").
 #: lib/randos_web/components/home_components.ex
@@ -145,21 +139,11 @@ msgstr "در حال جستجو"
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "بدون حساب کاربری. بدون پروفایل. بدون ویدیو. بدون فشار."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Preparing the call"
-msgstr "آماده‌سازی برای تماس"
-
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
 msgstr "آماده"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Secure audio connection is starting."
-msgstr "اتصال صوتی امن در حال برقراری است."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -258,11 +242,6 @@ msgstr "تو"
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
 msgstr "شما زبان مورد نظر برای صحبت و زبان مورد نظر برای شنیدن را انتخاب می‌کنید. برنامه \"randos\" شما را با فردی سازگار برای یک مکالمه کوتاه همراه می‌کند و سپس از این فرآیند خارج می‌شود."
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "You have matched. Audio starts when the call opens."
-msgstr "اتصال برقرار شد. با باز شدن تماس، پخش صدا آغاز می‌شود."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -719,13 +698,13 @@ msgstr "ترجمه‌های این وب‌سایت توسط ماشین انجا�
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "ترجمه‌های این وب‌سایت توسط یک سیستم خودکار انجام شده‌اند. اگر متوجه اشتباهی شدید، آن را در قسمت زیر پیدا کنید و روی گزینه \"پیشنهاد اصلاح\" کلیک کنید. این کار یک درخواست در GitHub ایجاد می‌کند که تمام اطلاعات لازم در آن پر شده‌اند، به جز اصلاحی که شما ارائه می‌دهید (شما به یک حساب کاربری در GitHub نیاز دارید). یک درخواست اصلاحی به طور خودکار ایجاد می‌شود و پس از بررسی، به صورت نهایی منتشر خواهد شد."
 
-#. Opens the list of languages you can hear, to change it.
+#. Opens the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "تغییر"
 
-#. Closes the list of languages you can hear, once you've changed it.
+#. Closes the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
@@ -1104,7 +1083,7 @@ msgid "Conversation"
 msgstr "گفتگو"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Stop looking"
 msgstr "نگاه کردن را متوقف کنید"
@@ -1147,7 +1126,7 @@ msgid "Find"
 msgstr "پیدا کنید"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Invite"
 msgstr "دعوت"
@@ -1159,6 +1138,37 @@ msgstr "می خواهم بشنوم"
 
 #. Short keyboard shortcut label: hang up the current voice call.
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "End call"
 msgstr "پایان تماس"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick at least one language to speak"
+msgstr "برای صحبت کردن دست کم یک زبان انتخاب کنید"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You'll speak %{languages}"
+msgstr "شما به زبان‌های زیر صحبت می‌کنید: %{languages}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+msgstr "هر زبانی که دوست دارید صحبت کنید را انتخاب کنید. ما زمانی که برای شما rando پیدا کنیم یکی را انتخاب می‌کنیم."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting your audio"
+msgstr "اتصال دادن دستگاه صوتی شما"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando is here. Your call starts when audio is ready."
+msgstr "rando شما اینجاست. تماس شما زمانی آغاز می شود که صدا آماده باشد."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Cancel"
+msgstr "لغو"

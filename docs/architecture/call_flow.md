@@ -8,6 +8,12 @@ is specified in [`participant_channel.md`](participant_channel.md) (its
 values live in `Randos.Calls.Lifecycle`. These diagrams show how the pieces
 fit; when they disagree with the code or the protocol doc, those win.
 
+Speaking choices are alternatives. Each random call fixes one compatible
+language per person; both clients label the call from the server's choices.
+The full offered sets survive Next and resume. Invitations retain flexible
+alternatives. Matching and the deterministic tie rule belong to the
+[channel contract](participant_channel.md#client--server-events).
+
 The two clients are different UIs over the same behaviour: the server owns
 matching and call health, and both clients meet the same obligations. Only
 the transport to the server and the media stack differ.
@@ -26,8 +32,8 @@ sequenceDiagram
 
     A->>S: find {speaks, hears, audio}
     S-->>A: state: looking
-    B->>S: find {speaks one of A's hears, hears A's speaks, same audio}
-    Note over S: Matchmaker pairs them (the longest-waiting compatible person) and starts a CallCoordinator
+    B->>S: find {speaks intersect A's hears, hears intersect A's speaks, same audio}
+    Note over S: Matchmaker pairs them (the longest-waiting compatible person), selects one language per direction and starts a CallCoordinator
     S-->>A: state: connecting (role offerer, call: id, ice_servers, ice_transport_policy, media)
     S-->>B: state: connecting (role answerer, call: id, ice_servers, ice_transport_policy, media)
 

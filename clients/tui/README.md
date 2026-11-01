@@ -29,9 +29,12 @@ hear a beep). Logs go to
 `tmp/tui.log` (an installed copy: `~/.cache/randos/tui.log` on Linux,
 `~/Library/Caches/randos/tui.log` on macOS).
 
-On the start screen, ←→ picks the language you'll speak; on the "I'm happy
-to hear" row, ←→ moves through the languages and space checks or unchecks
-one (pick as many as you like; your speaking language starts checked).
+On both language rows, ←→ moves through languages and space checks or unchecks
+one. Pick every language you're happy to speak and hear. For a random call,
+the server chooses one speaking language per person and shows it beside the
+meters; your full choices remain for the next search. Existing settings with
+one speaking language still load. Deploy the updated server before this client;
+see the [channel contract](../../docs/architecture/participant_channel.md).
 
 The TUI speaks your language too: it starts in your system's
 (`LC_ALL`, `LC_MESSAGES`, `LANG`), else English, and `l` on the start
@@ -55,6 +58,22 @@ randos --settings         # where it is, and what's in it
 randos --edit-settings    # open it in $VISUAL / $EDITOR (vi if neither is set)
 randos --reset-settings   # forget it; the next start begins fresh
 ```
+
+## Local input diagnosis
+
+If the idle mic test works but a call is silent, use the opt-in numeric
+[local audio diagnostics](../../docs/development.md#local-audio-diagnostics).
+They distinguish raw capture, echo cancellation and transmitted input; they
+never record audio or send diagnostics to the server. The main header shows
+**Voice masking on** whenever a profile is selected, with its style and tone
+beneath it, using the frozen profile while in a call. `b` opens the masking
+panel, starting with the recognition limitation; `p` explicitly starts/stops
+local listening through the selected speaker. Its live meter and peak stay
+visible only in the panel while it is open. `-/+` adjusts **Preview volume**
+from 1 to 9 while listening, or before starting. It lasts for this session and
+affects only what you hear locally; it does not change the voice sent in calls.
+Off hides the unused tone option. Headphones are
+recommended for this listening preview, but are not required by the helper.
 
 ## Installable builds
 

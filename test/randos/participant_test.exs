@@ -50,6 +50,21 @@ defmodule Randos.ParticipantTest do
     {p, m}
   end
 
+  test "resume and Next retain the full speaking set rather than the selected call language" do
+    prefs = %{@prefs | speaks: ["en", "fr"]}
+    p = Participant.new(prefs)
+    m = match(p)
+    entry = %{m.participant_a | offered_languages: ["en", "fr"], speaks_language: "fr"}
+    m = %{m | participant_a: entry}
+    active = call(m, :active)
+    resumed = Participant.resumed(entry, active)
+    assert resumed.preferences.speaks == ["en", "fr"]
+    {next, _effects} = Participant.handle(resumed, :next)
+    ended = %{active | status: :ended, ended_reason: :hangup}
+    {_p, effects} = Participant.handle(next, {:call_updated, ended})
+    assert [{:join_queue, %{speaks_language: ["en", "fr"]}}] = effects
+  end
+
   describe "new/1" do
     test "starts idle with a random anonymous id and its own topic" do
       p = participant()

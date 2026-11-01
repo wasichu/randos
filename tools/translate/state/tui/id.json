@@ -4,11 +4,11 @@
     "msgstr": "%{connected} · Anda: %{you} dBFS · Pihak lain: %{peer} dBFS"
   },
   "%{device} (default)": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{device} (default)"
   },
   "%{first} or %{last}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{first} atau %{last}"
   },
   "%{language} both ways": {
@@ -16,19 +16,19 @@
     "msgstr": "%{language} Kedua cara"
   },
   "%{minutes} min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} menit"
   },
   "%{minutes} min or more": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{minutes} menit atau lebih"
   },
   "%{name} ✓": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{name} ✓"
   },
   "%{request} refused: %{reason}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "%{request} ditolak: %{reason}"
   },
   "%{sent} sent / %{received} received": {
@@ -64,7 +64,7 @@
     "msgstr": "Sebuah pasangan bahasa akan ditampilkan jika memiliki setidaknya %{count} panggilan; yang jumlahnya lebih sedikit dianggap sebagai “lainnya”."
   },
   "About these numbers": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Tentang angka-angka ini"
   },
   "Asking the server…": {
@@ -88,11 +88,11 @@
     "msgstr": "Memeriksa relai…"
   },
   "Checking voice options…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Memeriksa opsi suara…"
   },
   "Connected: %{connected}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Terhubung: %{connected}"
   },
   "Connecting to the server…": {
@@ -100,7 +100,7 @@
     "msgstr": "Menyambung ke server…"
   },
   "Connection:": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Koneksi:"
   },
   "Continue for another %{minutes} minutes?": {
@@ -108,7 +108,7 @@
     "msgstr": "Lanjutkan selama %{minutes} menit lagi?"
   },
   "Continue?": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Lanjutkan?"
   },
   "Continued": {
@@ -124,16 +124,24 @@
     "msgstr": "Jumlah ini mencakup %{answered} dari total %{total} server."
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "Perangkat"
   },
   "Error: %{message}": {
     "model": "translategemma-12b",
     "msgstr": "Kesalahan: %{message}"
   },
+  "Esc: back.": {
+    "model": "hy-mt2",
+    "msgstr": "Esc: kembali."
+  },
   "Fuller": {
     "model": "opus-mt",
     "msgstr": "Fuller"
+  },
+  "Headphones recommended": {
+    "model": "m2m100",
+    "msgstr": "Headset yang disarankan"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "translategemma-4b",
@@ -152,7 +160,7 @@
     "msgstr": "Saya senang mendengarnya:"
   },
   "Interface language": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Bahasa antarmuka"
   },
   "Join through a link": {
@@ -232,7 +240,7 @@
     "msgstr": "Membuka mikrofon…"
   },
   "Other languages: %{calls}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Bahasa lain: %{calls}"
   },
   "Over TLS (networks that block UDP)": {
@@ -255,12 +263,16 @@
     "model": "hy-mt2",
     "msgstr": "Pratinjau gagal. Mikrofon berhenti bekerja; coba lagi."
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "translategemma-12b",
+    "msgstr": "Pratinjau volume: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
     "model": "madlad-400",
     "msgstr": "Menyambungkan audio kembali…"
   },
   "Selected: %{style}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Terpilih: %{style}"
   },
   "Send it to them however you like. It works once.": {
@@ -268,12 +280,16 @@
     "msgstr": "Kirimkan saja ke mereka dengan cara yang kamu suka. Cara ini hanya berfungsi sekali."
   },
   "Server status": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Status server"
   },
   "Speaker:": {
     "model": "hy-mt2",
     "msgstr": "Pembicara:"
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "hy-mt2",
+    "msgstr": "Gaya: %{style} · %{tone}"
   },
   "Text only (no audio helper).": {
     "model": "translategemma-4b",
@@ -324,7 +340,7 @@
     "msgstr": "Nada + Tinggi Suara"
   },
   "Tone: %{tone} (left/right)": {
-    "model": "madlad-400",
+    "model": "translategemma-12b",
     "msgstr": "Nada: %{tone} (kiri/kanan)"
   },
   "Typical length: %{length}": {
@@ -376,7 +392,7 @@
     "msgstr": "salah satu bahasa yang Anda pilih (%{count})"
   },
   "connected": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "terhubung"
   },
   "connected directly": {
@@ -384,7 +400,7 @@
     "msgstr": "Terhubung langsung"
   },
   "connected to %{server}": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "terhubung ke %{server}"
   },
   "connected to the server": {
@@ -440,11 +456,11 @@
     "msgstr": "dalam sebuah panggilan"
   },
   "key\u000418+": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "18+"
   },
   "key\u0004about these numbers": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "tentang angka-angka ini"
   },
   "key\u0004back": {
@@ -452,7 +468,7 @@
     "msgstr": "Kembali"
   },
   "key\u0004cancel": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "batalkan"
   },
   "key\u0004cancel the link": {
@@ -476,7 +492,7 @@
     "msgstr": "pilih"
   },
   "key\u0004close": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "tutup"
   },
   "key\u0004continue": {
@@ -488,7 +504,7 @@
     "msgstr": "salin tautannya"
   },
   "key\u0004end": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "akhir"
   },
   "key\u0004end call": {
@@ -496,7 +512,7 @@
     "msgstr": "akhiri panggilan"
   },
   "key\u0004find": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "temukan"
   },
   "key\u0004hear myself / stop": {
@@ -520,7 +536,7 @@
     "msgstr": "ikuti tautan tersebut"
   },
   "key\u0004language": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "bahasa"
   },
   "key\u0004mic": {
@@ -532,7 +548,7 @@
     "msgstr": "uji mikrofon"
   },
   "key\u0004move": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "pindah"
   },
   "key\u0004mute": {
@@ -543,8 +559,12 @@
     "model": "m2m100",
     "msgstr": "Selanjutnya rando"
   },
+  "key\u0004preview volume": {
+    "model": "m2m100",
+    "msgstr": "Jumlah Preview Volume"
+  },
   "key\u0004quit": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "berhenti"
   },
   "key\u0004refresh": {
@@ -556,7 +576,7 @@
     "msgstr": "gulung"
   },
   "key\u0004speaker": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "pembicara"
   },
   "key\u0004status": {
@@ -564,7 +584,7 @@
     "msgstr": "Status"
   },
   "key\u0004style": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "gaya"
   },
   "key\u0004unmute": {
@@ -651,12 +671,16 @@
     "model": "translategemma-4b",
     "msgstr": "tidak berfungsi"
   },
+  "p: hear myself / stop.": {
+    "model": "m2m100",
+    "msgstr": "P: Dengarkan diri sendiri / berhenti."
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "hy-mt2",
     "msgstr": "p: Dengarkan saya / Berhenti. Esc: Kembali."
   },
   "panel title\u0004Connecting": {
-    "model": "m2m100",
+    "model": "translategemma-4b",
     "msgstr": "Menghubungkan"
   },
   "panel title\u0004Find a rando": {
@@ -668,11 +692,11 @@
     "msgstr": "Dalam panggilan"
   },
   "panel title\u0004Invitation": {
-    "model": "opus-mt",
+    "model": "hy-mt2",
     "msgstr": "Undangan"
   },
   "panel title\u0004Looking": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "Mencari"
   },
   "panel title\u0004Matched": {
@@ -702,6 +726,10 @@
   "pick at least one language to hear (space toggles one)": {
     "model": "translategemma-12b",
     "msgstr": "Pilih setidaknya satu bahasa yang ingin Anda dengar (tekan spasi untuk memilih)."
+  },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "translategemma-12b",
+    "msgstr": "Pilih setidaknya satu bahasa yang ingin Anda gunakan (%{key} berfungsi untuk memilih satu bahasa)."
   },
   "rando reconnecting…": {
     "model": "hy-mt2",
@@ -768,7 +796,7 @@
     "msgstr": "Waktu habis: lanjutkan?"
   },
   "under 1 min": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "kurang dari 1 menit"
   },
   "unexpected reply": {
@@ -776,7 +804,7 @@
     "msgstr": "jawaban tak terduga"
   },
   "waiting for someone to open your link": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "menunggu seseorang untuk membuka tautan Anda"
   },
   "waiting on your rando": {

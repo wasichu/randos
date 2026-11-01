@@ -115,6 +115,10 @@
     "model": "madlad-400",
     "msgstr": "Đang kết nối"
   },
+  "Connecting your audio": {
+    "model": "madlad-400",
+    "msgstr": "Đang kết nối âm thanh"
+  },
   "Connection lost": {
     "model": "hy-mt2",
     "msgstr": "Kết nối bị mất"
@@ -367,9 +371,17 @@
     "model": "m2m100",
     "msgstr": "Chọn ít nhất một ngôn ngữ để nghe"
   },
+  "Pick at least one language to speak": {
+    "model": "madlad-400",
+    "msgstr": "Chọn ít nhất một ngôn ngữ để nói"
+  },
   "Pick every language you're comfortable listening to.": {
     "model": "translategemma-4b",
     "msgstr": "Chọn tất cả các ngôn ngữ mà bạn cảm thấy thoải mái khi nghe."
+  },
+  "Pick every language you're happy to speak. We'll choose one when we find you a rando.": {
+    "model": "madlad-400",
+    "msgstr": "Chọn bất kỳ ngôn ngữ nào mà anh thích nói. Chúng tôi sẽ chọn một khi chúng tôi tìm được cho anh một rando."
   },
   "Pick the language you'd like to check.": {
     "model": "m2m100",
@@ -631,6 +643,10 @@
     "model": "translategemma-4b",
     "msgstr": "Bạn sẽ nghe các ngôn ngữ: %{languages}"
   },
+  "You'll speak %{languages}": {
+    "model": "translategemma-12b",
+    "msgstr": "Bạn sẽ sử dụng ngôn ngữ: %{languages}"
+  },
   "Your call ended.": {
     "model": "hy-mt2",
     "msgstr": "Cuộc gọi của bạn đã kết thúc."
@@ -643,6 +659,10 @@
     "model": "madlad-400",
     "msgstr": "rando của bạn"
   },
+  "Your rando is here. Your call starts when audio is ready.": {
+    "model": "madlad-400",
+    "msgstr": "rando của bạn ở đây. Cuộc gọi của bạn sẽ bắt đầu khi âm thanh sẵn sàng."
+  },
   "Your rando's connection dropped; waiting a few seconds for them to come back.": {
     "model": "hy-mt2",
     "msgstr": "Kết nối với rando của bạn đã bị ngắt; hãy chờ vài giây để họ kết nối trở lại."
@@ -650,6 +670,10 @@
   "asking for microphone access": {
     "model": "translategemma-4b",
     "msgstr": "xin quyền truy cập micro"
+  },
+  "button\u0004Cancel": {
+    "model": "hy-mt2",
+    "msgstr": "Hủy"
   },
   "button\u0004Cancel the link": {
     "model": "m2m100",
@@ -683,6 +707,10 @@
     "model": "hy-mt2",
     "msgstr": "Ẩn các phím tắt"
   },
+  "button\u0004Invite": {
+    "model": "m2m100",
+    "msgstr": "mời"
+  },
   "button\u0004Invite someone": {
     "model": "translategemma-4b",
     "msgstr": "Mời một người"
@@ -702,6 +730,10 @@
   "button\u0004Next rando": {
     "model": "hy-mt2",
     "msgstr": "rando tiếp theo"
+  },
+  "button\u0004Stop looking": {
+    "model": "m2m100",
+    "msgstr": "Ngừng nhìn"
   },
   "button\u0004Stop preview": {
     "model": "hy-mt2",

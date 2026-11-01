@@ -40,16 +40,16 @@ defmodule Tui.Model do
   @type command :: {:push, String.t(), map()} | {:copy, String.t()}
 
   @typedoc """
-  `speaks` is a language code; `hears` the codes the person is happy to
-  hear. The speaking language starts checked (without saved settings);
+  `speaks` is the selected language codes; `hears` the codes the person is happy to
+  hear. English starts checked on both rows (without saved settings);
   after that the hearing choices are the person's alone, whatever they
-  speak, as on the website. `hears_cursor` is the language the hearing row
-  points at (space toggles it).
+  speak, as on the website. Each row has its own cursor (space toggles it).
   """
   @type t :: %__MODULE__{
           connection: :connecting | :connected,
           languages: [%{code: String.t(), name: String.t()}],
-          speaks: String.t(),
+          speaks: [String.t()],
+          speaks_cursor: non_neg_integer(),
           hears: [String.t()],
           hears_cursor: non_neg_integer(),
           adult_acknowledged?: boolean(),
@@ -80,7 +80,8 @@ defmodule Tui.Model do
 
   defstruct connection: :connecting,
             languages: [],
-            speaks: "en",
+            speaks: ["en"],
+            speaks_cursor: 0,
             hears: ["en"],
             hears_cursor: 0,
             adult_acknowledged?: false,
@@ -126,7 +127,12 @@ defmodule Tui.Model do
   """
   @spec restore(t(), map()) :: t()
   def restore(model, saved) do
-    speaks = if is_binary(saved["speaks"]), do: saved["speaks"], else: model.speaks
+    speaks =
+      case saved["speaks"] do
+        code when is_binary(code) -> [code]
+        codes when is_list(codes) -> Enum.filter(codes, &is_binary/1) |> Enum.uniq()
+        _ -> model.speaks
+      end
 
     hears =
       case saved["hears"] do
@@ -416,6 +422,20 @@ defmodule Tui.Model do
     end
   end
 
+  @doc "The language the speaking row points at, and whether it's checked."
+  @spec speaks_cursor(t()) :: {String.t(), boolean()} | nil
+  def speaks_cursor(%{languages: []}), do: nil
+
+  def speaks_cursor(model) do
+    %{code: code} = Enum.at(model.languages, model.speaks_cursor)
+    {code, code in model.speaks}
+  end
+
+  @doc "Own call languages from the server; legacy servers only have the single offered language."
+  @spec self_speaks_any(t()) :: [String.t()]
+  def self_speaks_any(%{call: %{"self_speaks_any" => codes}}) when is_list(codes), do: codes
+  def self_speaks_any(model), do: model.speaks
+
   @doc "The language the hearing row points at, and whether it's checked."
   @spec hears_cursor(t()) :: {String.t(), boolean()} | nil
   def hears_cursor(%{languages: []}), do: nil
@@ -431,8 +451,8 @@ defmodule Tui.Model do
   def peer_speaks(_model), do: nil
 
   @doc """
-  Every language the rando may speak: more than one only when they joined
-  your invitation (taken to speak whatever you hear).
+  Every language the rando may speak: exactly one in random calls,
+  potentially several on either side of an invitation.
   """
   @spec peer_speaks_any(t()) :: [String.t()]
   def peer_speaks_any(%{call: %{"peer_speaks_any" => [_ | _] = codes}}), do: codes
@@ -510,12 +530,20 @@ defmodule Tui.Model do
 
   # Without audio the server pairs us only with other text-only clients,
   # never with a browser user who would sit through a silent call.
+  defp find(%{speaks: []} = model),
+    do:
+      {say(
+         model,
+         gettext("pick at least one language to speak (%{key} toggles one)", key: "space")
+       ), []}
+
   defp find(%{hears: []} = model),
     do: {say(model, pick_a_language()), []}
 
   defp find(model), do: {model, [{:push, "find", find_payload(model)}]}
 
   # The same choices as find: what you'll speak, what you'd hear from them.
+  defp invite(%{speaks: []} = model), do: find(model)
   defp invite(%{hears: []} = model), do: find(model)
   defp invite(model), do: {model, [{:push, "invite", find_payload(model)}]}
 
@@ -561,17 +589,25 @@ defmodule Tui.Model do
 
   defp move(%{languages: []} = model, _step), do: model
 
-  # Changing the speaking language leaves the hearing choices alone.
-  defp move(%{focus: :speaks} = model, step) do
-    codes = Enum.map(model.languages, & &1.code)
-    index = Enum.find_index(codes, &(&1 == model.speaks)) || 0
-    %{model | speaks: Enum.at(codes, Integer.mod(index + step, length(codes)))}
-  end
+  # Arrows move the cursor; space changes the selected set on either row.
+  defp move(%{focus: :speaks} = model, step),
+    do: %{model | speaks_cursor: Integer.mod(model.speaks_cursor + step, length(model.languages))}
 
   defp move(%{focus: :hears} = model, step),
     do: %{model | hears_cursor: Integer.mod(model.hears_cursor + step, length(model.languages))}
 
   defp move(model, _step), do: model
+
+  defp toggle(%{focus: :speaks, languages: [_ | _]} = model) do
+    {code, checked?} = speaks_cursor(model)
+
+    speaks =
+      if checked?,
+        do: List.delete(model.speaks, code),
+        else: in_order(model, [code | model.speaks])
+
+    %{model | speaks: speaks}
+  end
 
   defp toggle(%{focus: :hears, languages: [_ | _]} = model) do
     {code, checked?} = hears_cursor(model)
@@ -594,15 +630,15 @@ defmodule Tui.Model do
   # Saved or default codes the server doesn't offer are dropped.
   defp offered_languages_only(%{languages: languages} = model) do
     codes = Enum.map(languages, & &1.code)
-    speaks = if model.speaks in codes, do: model.speaks, else: List.first(codes)
+    speaks = Enum.filter(model.speaks, &(&1 in codes))
     hears = Enum.filter(model.hears, &(&1 in codes))
-    hears = if hears == [] and speaks, do: [speaks], else: hears
 
     %{
       model
       | speaks: speaks,
         hears: hears,
-        hears_cursor: min(model.hears_cursor, length(codes) - 1)
+        speaks_cursor: max(0, min(model.speaks_cursor, length(codes) - 1)),
+        hears_cursor: max(0, min(model.hears_cursor, length(codes) - 1))
     }
   end
 

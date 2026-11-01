@@ -4,7 +4,7 @@ defmodule Tui.Config do
   start picks up where they left off. A small JSON object, kept on this
   computer only (nothing here goes to the server):
 
-      {"speaks": "en", "hears": ["en", "es"], "adult_acknowledged": true,
+      {"speaks": ["en"], "hears": ["en", "es"], "adult_acknowledged": true,
        "language": "es", "input": "MacBook Pro Microphone", "output": null}
 
   `language` is the interface's (`Tui.Language`; a file from before it

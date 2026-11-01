@@ -43,6 +43,60 @@ defmodule Randos.Matchmaking.MatchmakerTest do
 
   setup :start_matchmaker
 
+  test "multiple offers preserve oldest-compatible matching and full choices", %{
+    matchmaker: server
+  } do
+    pids = for _ <- 1..3, do: waiting_pid()
+    on_exit(fn -> Enum.each(pids, &send(&1, :stop)) end)
+    [a, b, c] = pids
+
+    assert :queued =
+             Matchmaker.join(
+               server,
+               participant(
+                 id: "oldest",
+                 pid: a,
+                 speaks_language: ["en", "es", "es"],
+                 hears_languages: ["fr"]
+               )
+             )
+
+    assert :queued =
+             Matchmaker.join(
+               server,
+               participant(id: "newer", pid: b, speaks_language: "es", hears_languages: ["fr"])
+             )
+
+    assert {:matched, match} =
+             Matchmaker.join(
+               server,
+               participant(
+                 id: "joiner",
+                 pid: c,
+                 speaks_language: ["de", "fr"],
+                 hears_languages: ["es"]
+               )
+             )
+
+    assert match.participant_a.id == "oldest"
+    assert match.participant_a.speaks_language == "es"
+    assert match.participant_a.offered_languages == ["en", "es"]
+    assert match.participant_b.speaks_language == "fr"
+    assert %{waiting: ["newer"]} = Matchmaker.snapshot(server)
+  end
+
+  test "empty or unsupported speaking offers cannot enter the queue", %{matchmaker: server} do
+    for codes <- [[], ["en", "xx"]] do
+      assert {:error, :unsupported_language} =
+               Matchmaker.join(
+                 server,
+                 participant(pid: self(), speaks_language: codes, hears_languages: ["fr"])
+               )
+    end
+
+    assert %{queued_count: 0} = Matchmaker.snapshot(server)
+  end
+
   test "keeps the waiting participant queued when call start fails" do
     name = :"matchmaker_failure_#{System.unique_integer([:positive])}"
     call_starter = fn _match, _call_options -> {:error, :supervisor_down} end
@@ -478,6 +532,21 @@ defmodule Randos.Matchmaking.MatchmakerTest do
       {:matched, match} = Matchmaker.accept(matchmaker, token, joiner(waiting_pid()))
       assert match.participant_b.speaks_language == "de"
       assert Entry.speaks_any(match.participant_b) == ["de", "ja"]
+    end
+
+    test "an invitation keeps the creator's multiple speaking alternatives", %{matchmaker: server} do
+      creator = waiting_pid()
+      guest = waiting_pid()
+      on_exit(fn -> Enum.each([creator, guest], &send(&1, :stop)) end)
+
+      attrs =
+        participant(pid: creator, speaks_language: ["en", "es"], hears_languages: ["de", "ja"])
+
+      assert {:invited, token, _} = Matchmaker.invite(server, attrs)
+      assert {:matched, match} = Matchmaker.accept(server, token, joiner(guest))
+      assert Entry.speaks_any(match.participant_a) == ["en", "es"]
+      assert Entry.speaks_any(match.participant_b) == ["de", "ja"]
+      assert match.participant_b.hears_languages == ["en", "es"]
     end
 
     test "a link works once", %{matchmaker: matchmaker} do

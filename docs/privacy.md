@@ -28,7 +28,8 @@ something can't be checked from the outside, this says so.
 | **Your browser (conversation preferences)** | Your speaking and hearing language choices | The first-party, host-only session cookie `randos_conversation`, containing only language codes and a format version. It accompanies requests to this host; it contains no participant identifier, audio, microphone/masking state or 18+ acknowledgment. See [preference hook](../assets/js/hooks/conversation_preferences.js). | Browser-defined session, including browser session restoration |
 | **Your browser (display preferences)** | Your color theme and whether you have opened keyboard shortcuts | Local storage only: `randos:theme` and the boolean flag `randos:shortcuts-opened`. No identifier or audio; these values are not sent to the server. See [theme](../assets/js/app.js) and [shortcuts](../assets/js/hooks/home_shortcuts.js). | Until you clear this site's local storage |
 | **Your terminal (the TUI)** | Nothing new | A settings file on your own computer (`~/.config/randos/config.json`, or `~/Library/Application Support/randos/config.json` on macOS): your languages, the TUI's own interface language, that you confirmed the 18+ notice, and the mic and speaker names. It never leaves your computer. | Until you delete it |
-| **Your rando's browser or terminal** | The relay's address, never yours; your voice | Nothing (randos has no recording feature) | Not applicable |
+| **Your terminal (opt-in input diagnostics)** | Numeric capture/post-AEC/transmitted/received peaks, frame/packet/drop counts, queue lengths, mute and connection state | Only when `RANDOS_AUDIO_DIAGNOSTICS` names a local file: one JSONL snapshot per second. No audio samples, addresses, device names or participant/call IDs. Nothing is sent to the server. See [development](development.md#local-audio-diagnostics). | Until you delete that file; disabled by default |
+| **Your rando's browser or terminal** | The relay's address, never yours; your voice and selected call language (offered alternatives only in an invitation) | Nothing (randos has no recording feature) | Not applicable |
 
 ### The web server
 
@@ -46,7 +47,8 @@ something can't be checked from the outside, this says so.
   midnight): calls started and connected, how they ended (finished,
   couldn't connect, connection lost, canceled), calls continued past 10
   minutes, connected lengths in whole minutes (for the typical length),
-  and calls per language pair (the two speaking languages, unordered). No
+  and calls per language pair (the two selected call languages, unordered;
+  unused speaking choices are not counted). No
   addresses, no ids, nothing per person, no cookies. Published only above
   small counts: a language pair shows once it has 3 calls (smaller ones are
   summed under "other"), and the typical length once 3 calls connected.
@@ -171,7 +173,9 @@ fingerprint so two people could compare.
 
 Browser and TUI voice choices start Off and stay in this session's memory only.
 They are not added to cookies, local storage, the TUI settings file, participant
-signaling or server call records. The selection freezes for a call. When enabled,
+signaling or server call records. TUI preview volume likewise stays in session
+memory and changes local listening only, after decoding; it never affects call
+audio or enters signaling. The selection freezes for a call. When enabled,
 the TUI processes locally after echo cancellation and before Opus; the browser
 uses a same-origin, locally built Worker/worklet containing the same DSP core.
 Muted or unconnected input is excluded before the buffered DSP; closure purges
@@ -185,7 +189,7 @@ tones to temporary WAVs. See [`voice.rs`](../clients/tui/native/src/voice.rs),
 [`bridge safety audit`](../voice-native/README.md).
 
 Hear myself (TUI: p in the voice panel) explicitly opens a local microphone
-audition through headphones. It records/uploads nothing, and stops on Stop,
+audition through the selected speaker (headphones recommended). It records/uploads nothing, and stops on Stop,
 exit or before call capture. Style/tone changes keep the microphone open while
 replacing the processor; Off explicitly plays the original. Late microphone
 grants are closed.

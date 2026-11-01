@@ -75,17 +75,21 @@ defmodule RandosWeb.ParticipantChannel do
         %{"speaks" => speaks, "adult_acknowledged" => ack} = payload,
         socket
       )
-      when event in ["find", "invite"] and is_binary(speaks) and is_boolean(ack) and
+      when event in ["find", "invite"] and is_boolean(ack) and
              (not is_map_key(payload, "audio") or is_boolean(:erlang.map_get("audio", payload))) and
              (not is_map_key(payload, "ice_restart") or
                 is_boolean(:erlang.map_get("ice_restart", payload))) do
-    with {:ok, hears} <- hears(payload),
+    with {:ok, speaks} <- speaks(speaks),
+         {:ok, hears} <- hears(payload),
          {:ok, socket} <- take_find_token(socket) do
       preferences = Map.merge(client_capabilities(payload, ack), %{speaks: speaks, hears: hears})
       {:reply, :ok, run(socket, {if(event == "find", do: :find, else: :invite), preferences})}
     else
-      :invalid -> {:reply, {:error, %{reason: "invalid_message"}}, socket}
-      {:error, socket} -> {:reply, {:error, %{reason: "rate_limited"}}, socket}
+      :invalid ->
+        {:reply, {:error, %{reason: "invalid_message"}}, socket}
+
+      {:error, socket} ->
+        {:reply, {:error, %{reason: "rate_limited"}}, socket}
     end
   end
 
@@ -248,12 +252,19 @@ defmodule RandosWeb.ParticipantChannel do
     }
   end
 
+  defp speaks(code) when is_binary(code), do: {:ok, code}
+  defp speaks(codes), do: language_list(codes)
+
+  defp language_list(codes) when is_list(codes) and length(codes) <= 32 do
+    if Enum.all?(codes, &is_binary/1), do: {:ok, codes}, else: :invalid
+  end
+
+  defp language_list(_codes), do: :invalid
+
   # The languages the person is happy to hear: `hears`, a list of codes, or
   # (clients before it, like the v0.2.0 TUI) a single `listens`. The
   # matchmaker checks they're supported and that there's at least one.
-  defp hears(%{"hears" => hears}) when is_list(hears) and length(hears) <= 32 do
-    if Enum.all?(hears, &is_binary/1), do: {:ok, hears}, else: :invalid
-  end
+  defp hears(%{"hears" => hears}), do: language_list(hears)
 
   defp hears(%{"listens" => listens}) when is_binary(listens), do: {:ok, [listens]}
   defp hears(_payload), do: :invalid

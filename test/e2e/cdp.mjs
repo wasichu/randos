@@ -326,17 +326,16 @@ export class Page {
 
   async chooseLanguages(speaks, hears) {
     const heard = [hears].flat()
-    // The speaking language first, and wait until the server has it (its
-    // re-render could otherwise land after the boxes are set), then the
-    // hearing languages exactly.
+    const spoken = [speaks].flat()
     await this.eval(`(() => {
-      const el = document.getElementById("conversation_speaking_language");
-      el.value = ${JSON.stringify(speaks)};
-      el.dispatchEvent(new Event("change", {bubbles: true}));
+      const spoken = ${JSON.stringify(spoken)};
+      for (const box of document.querySelectorAll("#speaking-languages input[type=checkbox]"))
+        box.checked = spoken.includes(box.value);
+      document.querySelector("#speaking-languages input[type=checkbox]").dispatchEvent(new Event("change", {bubbles: true}));
     })()`)
     await this.waitFor(
-      `!!document.querySelector("#conversation_speaking_language option[value='${speaks}'][selected]")`,
-      "speaking language set")
+      `JSON.stringify([...document.querySelectorAll('#speaking-languages input[checked]')].map(x=>x.value).sort()) === ${JSON.stringify(JSON.stringify([...spoken].sort()))}`,
+      "speaking languages set")
     await this.eval(`(() => {
       const heard = ${JSON.stringify(heard)};
       for (const box of document.querySelectorAll("#hearing-languages input[type=checkbox]"))

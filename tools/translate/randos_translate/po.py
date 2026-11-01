@@ -139,6 +139,7 @@ def fill(
     path = po_path(locale, root)
     po = polib.pofile(str(path))
     state = load_state(locale, state_dir)
+    original_state = state.copy()
     counts = {"filled": 0, "redone": 0, "cleared": 0, "kept_human": 0, "kept_existing": 0}
 
     for entry in po:
@@ -146,10 +147,23 @@ def fill(
         if not entry.msgid or entry.msgid_plural:
             continue
         machine_wrote = state.get(key, {}).get("msgstr")
+        if key not in original_state and "fuzzy" in entry.flags:
+            # Gettext can copy a translation when only msgctxt changes.
+            # Recognize only an exact, known machine copy of the same English;
+            # an unknown value or a person's edit retains its protection.
+            machine_wrote = next(
+                (
+                    prior["msgstr"]
+                    for prior_key, prior in original_state.items()
+                    if prior_key.split("\x04")[-1] == entry.msgid
+                    and prior.get("msgstr") == entry.msgstr
+                ),
+                None,
+            )
         if key not in translations:
             if redo and entry.msgstr and entry.msgstr == machine_wrote:
                 entry.msgstr = ""
-                del state[key]
+                state.pop(key, None)
                 counts["cleared"] += 1
             continue
         if not entry.msgstr:

@@ -57,6 +57,8 @@ defmodule Tui.Media.State do
   @type t :: %__MODULE__{
           masking_available?: boolean() | nil,
           audition_available?: boolean(),
+          preview_volume_available?: boolean(),
+          preview_volume: 1..9,
           auditions: non_neg_integer(),
           voice_panel?: boolean(),
           voice_family: String.t(),
@@ -83,6 +85,8 @@ defmodule Tui.Media.State do
   defstruct available?: false,
             masking_available?: nil,
             audition_available?: false,
+            preview_volume_available?: false,
+            preview_volume: 1,
             auditions: 0,
             voice_panel?: false,
             voice_family: "off",
@@ -151,6 +155,22 @@ defmodule Tui.Media.State do
     do: %{state | voice_tone: if(state.voice_tone == "fuller", do: "brighter", else: "fuller")}
 
   defp select_voice(state, _key), do: state
+
+  # Local monitoring only: never included in call_start or saved Config.
+  def preview_volume(%{preview_volume_available?: false} = state, _key), do: {state, []}
+
+  def preview_volume(state, key) do
+    step = if key in ["+", "="], do: 1, else: -1
+    level = state.preview_volume |> Kernel.+(step) |> max(1) |> min(9)
+
+    commands =
+      if level != state.preview_volume &&
+           match?(%{mode: :audition, phase: :running}, state.mic_test),
+         do: [{:request, {:loopback_volume, state.mic_test.seq, level}}],
+         else: []
+
+    {%{state | preview_volume: level}, commands}
+  end
 
   def close_voice(state) do
     {state, commands} = stop_mic_test_for_call(state)
@@ -336,9 +356,18 @@ defmodule Tui.Media.State do
     follow_status(%{
       state
       | masking_available?: supported,
-        audition_available?: match?({:ok, %{"live_audition" => true}}, result)
+        audition_available?: match?({:ok, %{"live_audition" => true}}, result),
+        preview_volume_available?: match?({:ok, %{"preview_volume" => true}}, result)
     })
   end
+
+  def reply(
+        %{mic_test: %{mode: :audition, seq: seq, phase: phase}} = state,
+        {:loopback_volume, seq, _},
+        {:error, error}
+      )
+      when phase in [:starting, :running],
+      do: {fail_mic_test(state, error), [{:request, :loopback_stop}]}
 
   def reply(
         %{mic_test: %{mode: :audition, seq: seq, phase: phase}} = state,
@@ -396,8 +425,14 @@ defmodule Tui.Media.State do
 
   def reply(state, _command, _result), do: {state, []}
 
-  defp audition_reply(%{mic_test: %{phase: :starting}} = state, {:ok, _}),
-    do: {put_mic_test(state, phase: :running), []}
+  defp audition_reply(%{mic_test: %{phase: :starting}} = state, {:ok, _}) do
+    commands =
+      if state.preview_volume_available? && state.preview_volume != 1,
+        do: [{:request, {:loopback_volume, state.mic_test.seq, state.preview_volume}}],
+        else: []
+
+    {put_mic_test(state, phase: :running), commands}
+  end
 
   defp audition_reply(%{mic_test: %{phase: :starting}} = state, {:error, error}),
     do: {fail_mic_test(state, error), []}
@@ -466,7 +501,14 @@ defmodule Tui.Media.State do
 
     # Ask what devices there are (they may have changed with the restart).
     {state, commands} = if state.call, do: give_up(state, "audio_failed"), else: {state, []}
-    state = %{state | masking_available?: nil, audition_available?: false}
+
+    state = %{
+      state
+      | masking_available?: nil,
+        audition_available?: false,
+        preview_volume_available?: false
+    }
+
     {state, commands ++ [{:request, :capabilities}] ++ device_request(state)}
   end
 

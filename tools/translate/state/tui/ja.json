@@ -120,16 +120,24 @@
     "msgstr": "%{total}台のサーバーのうち、%{answered}台で集計しました。"
   },
   "Devices": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "デバイス"
   },
   "Error: %{message}": {
     "model": "translategemma-12b",
     "msgstr": "エラー：%{message}"
   },
+  "Esc: back.": {
+    "model": "translategemma-12b",
+    "msgstr": "Esc: 戻る。"
+  },
   "Fuller": {
     "model": "translategemma-4b",
     "msgstr": "より豊か"
+  },
+  "Headphones recommended": {
+    "model": "m2m100",
+    "msgstr": "ヘッドフォン推奨"
   },
   "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}": {
     "model": "translategemma-4b",
@@ -156,7 +164,7 @@
     "msgstr": "リンクからご参加ください"
   },
   "Keyboard shortcuts": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "キーボードショートカット"
   },
   "Languages spoken:": {
@@ -220,7 +228,7 @@
     "msgstr": "現在:"
   },
   "Off": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "オフ"
   },
   "Opening microphone…": {
@@ -251,6 +259,10 @@
     "model": "hy-mt2",
     "msgstr": "プレビューに失敗しました。マイクの動作が停止しています。もう一度試してください。"
   },
+  "Preview volume: %{level}/9 (-/+)": {
+    "model": "m2m100",
+    "msgstr": "プレビュー ボリューム: %{level}/9 (-/+)"
+  },
   "Reconnecting audio…": {
     "model": "translategemma-4b",
     "msgstr": "オーディオの再接続…"
@@ -270,6 +282,10 @@
   "Speaker:": {
     "model": "madlad-400",
     "msgstr": "スピーカー:"
+  },
+  "Style: %{style} · %{tone}": {
+    "model": "translategemma-12b",
+    "msgstr": "スタイル：%{style}、トーン：%{tone}"
   },
   "Text only (no audio helper).": {
     "model": "translategemma-4b",
@@ -312,7 +328,7 @@
     "msgstr": "今日（%{date} の %{time} UTC から計算）："
   },
   "Tone": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "トーン"
   },
   "Tone + Pitch": {
@@ -400,7 +416,7 @@
     "msgstr": "サーバーに接続中…"
   },
   "connecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "接続中…"
   },
   "connection closed": {
@@ -456,7 +472,7 @@
     "msgstr": "リンクを無効化する"
   },
   "key\u0004change": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "変更"
   },
   "key\u0004change tone": {
@@ -539,6 +555,10 @@
     "model": "hy-mt2",
     "msgstr": "次のrando"
   },
+  "key\u0004preview volume": {
+    "model": "madlad-400",
+    "msgstr": "プレビュー音量"
+  },
   "key\u0004quit": {
     "model": "hy-mt2",
     "msgstr": "終了する"
@@ -552,15 +572,15 @@
     "msgstr": "スクロール"
   },
   "key\u0004speaker": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "スピーカー"
   },
   "key\u0004status": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "ステータス"
   },
   "key\u0004style": {
-    "model": "m2m100",
+    "model": "hy-mt2",
     "msgstr": "スタイル"
   },
   "key\u0004unmute": {
@@ -647,6 +667,10 @@
     "model": "m2m100",
     "msgstr": "働かない"
   },
+  "p: hear myself / stop.": {
+    "model": "hy-mt2",
+    "msgstr": "p: 自分の声が聞こえる／止めて。"
+  },
   "p: hear myself / stop. Esc: back.": {
     "model": "hy-mt2",
     "msgstr": "p: 自分の声を聞く／停止。Esc: 戻る。"
@@ -699,6 +723,10 @@
     "model": "hy-mt2",
     "msgstr": "聞く言語を1つ以上選んでください（スペースキーで切り替え可能）"
   },
+  "pick at least one language to speak (%{key} toggles one)": {
+    "model": "translategemma-4b",
+    "msgstr": "少なくとも1つの言語を選択してください。（%{key} を操作すると、言語が切り替わります）"
+  },
   "rando reconnecting…": {
     "model": "hy-mt2",
     "msgstr": "randoが再接続中…"
@@ -712,7 +740,7 @@
     "msgstr": "再接続; 電話に戻る"
   },
   "reconnecting…": {
-    "model": "madlad-400",
+    "model": "hy-mt2",
     "msgstr": "再接続中…"
   },
   "refused": {
@@ -732,7 +760,7 @@
     "msgstr": "システムデフォルト"
   },
   "text only": {
-    "model": "madlad-400",
+    "model": "translategemma-4b",
     "msgstr": "テキストのみ"
   },
   "text only (no audio)": {

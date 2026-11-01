@@ -50,11 +50,6 @@ msgstr "Đang cố kết nối lại"
 msgid "Both people choose whether to continue."
 msgstr "Cả hai người đều có quyền quyết định xem có tiếp tục hay không."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Cancel"
-msgstr "Hủy"
-
 #: lib/randos_web/participant_errors.ex
 #, elixir-autogen, elixir-format
 msgid "Choose supported conversation languages."
@@ -65,7 +60,6 @@ msgstr "Chọn các ngôn ngữ hội thoại được hỗ trợ."
 msgid "Choose your languages."
 msgstr "Chọn ngôn ngữ của bạn."
 
-#. The call's status: its audio is connecting right now (a state, not the action "log in").
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Connecting"
@@ -145,21 +139,11 @@ msgstr "Đang tìm kiếm"
 msgid "No accounts. No profiles. No video. No pressure."
 msgstr "Không có tài khoản. Không có hồ sơ cá nhân. Không có video. Không áp lực."
 
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Preparing the call"
-msgstr "Đang chuẩn bị cuộc gọi"
-
 #. Your status before a call: ready to look for someone to talk to.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Ready"
 msgstr "Sẵn sàng"
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "Secure audio connection is starting."
-msgstr "Kết nối âm thanh an toàn bắt đầu."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -258,11 +242,6 @@ msgstr "Tôi"
 #, elixir-autogen, elixir-format
 msgid "You choose the language you want to speak and the language you want to hear. randos pairs you with someone compatible for a short conversation, then gets out of the way."
 msgstr "Bạn chọn ngôn ngữ bạn muốn nói và ngôn ngữ bạn muốn nghe. randos kết hợp bạn với ai đó tương thích cho một cuộc trò chuyện ngắn, sau đó đi ra ngoài."
-
-#: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format
-msgid "You have matched. Audio starts when the call opens."
-msgstr "Hai người đã được kết nối. Âm thanh sẽ bắt đầu phát khi cuộc gọi được mở."
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -718,13 +697,13 @@ msgstr "Các bản dịch trên trang web này được tạo ra bằng máy và
 msgid "This site's translations were made by machine. If something reads wrong, find it below and press “Suggest a fix”: it opens an issue on GitHub with everything filled in but your fix (you need a GitHub account). A pull request with your fix opens on its own, and it goes live once it's reviewed."
 msgstr "Các bản dịch trên trang này được thực hiện bởi máy tính. Nếu có điều gì bị dịch sai, hãy tìm nó ở phía dưới và nhấn “Đề xuất sửa chữa”: điều này sẽ mở một ticket trên GitHub với mọi thông tin đã được điền sẵn, cùng với đề xuất sửa chữa của bạn (bạn cần có tài khoản GitHub). Yêu cầu pull request với đề xuất sửa chữa của bạn sẽ được tạo tự động, và nó sẽ được công bố sau khi được xem xét."
 
-#. Opens the list of languages you can hear, to change it.
+#. Opens the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Change"
 msgstr "Thay đổi"
 
-#. Closes the list of languages you can hear, once you've changed it.
+#. Closes the language choices.
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
 msgid "Done"
@@ -1103,10 +1082,10 @@ msgid "Conversation"
 msgstr "Đối thoại"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Stop looking"
-msgstr "Dừng tìm"
+msgstr "Ngừng nhìn"
 
 #: lib/randos_web/components/home_components.ex
 #, elixir-autogen, elixir-format
@@ -1146,7 +1125,7 @@ msgid "Find"
 msgstr "Tìm kiếm"
 
 #: lib/randos_web/components/home_components.ex
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgctxt "button"
 msgid "Invite"
 msgstr "mời"
@@ -1161,3 +1140,34 @@ msgstr "Tôi muốn nghe"
 #, elixir-autogen, elixir-format
 msgid "End call"
 msgstr "Kết thúc cuộc gọi"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick at least one language to speak"
+msgstr "Chọn ít nhất một ngôn ngữ để nói"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "You'll speak %{languages}"
+msgstr "Bạn sẽ sử dụng ngôn ngữ: %{languages}"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Pick every language you're happy to speak. We'll choose one when we find you a rando."
+msgstr "Chọn bất kỳ ngôn ngữ nào mà anh thích nói. Chúng tôi sẽ chọn một khi chúng tôi tìm được cho anh một rando."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Connecting your audio"
+msgstr "Đang kết nối âm thanh"
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgid "Your rando is here. Your call starts when audio is ready."
+msgstr "rando của bạn ở đây. Cuộc gọi của bạn sẽ bắt đầu khi âm thanh sẵn sàng."
+
+#: lib/randos_web/components/home_components.ex
+#, elixir-autogen, elixir-format
+msgctxt "button"
+msgid "Cancel"
+msgstr "Hủy"
