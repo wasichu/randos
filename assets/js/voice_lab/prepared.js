@@ -12,7 +12,7 @@ export async function loadPreparedPair(item, signal) {
     modified: {buffer: buffers[1], title: "Chunked WORLD", playLabel: "chunked", description: item.description, metrics: "Chunked comparison · average level matched"},
   }
   return {
-    original: {buffer: buffers[0], description: item.level_matched ? "Original recording, matched to the comparison's average signal level." : "The original recording with the experiment's fixed listening gain.", metrics: item.level_matched ? "Average level matched · RMS" : "Prepared reference · fixed 0.25 listening gain"},
+    original: {buffer: buffers[0], title: item.reference_title, description: item.reference_description || (item.level_matched ? "Original recording, matched to the comparison's average signal level." : "The original recording with the experiment's fixed listening gain."), metrics: item.level_matched ? "Average level matched · RMS" : "Prepared reference · fixed 0.25 listening gain"},
     modified: {buffer: buffers[1], description: item.description || "Saved experiment output for this recording, using its fixed settings.", metrics: item.level_matched ? "Average level matched · RMS · playback only" : "Pre-rendered experiment output · playback only"},
   }
 }

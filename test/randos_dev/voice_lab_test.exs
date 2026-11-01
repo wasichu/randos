@@ -41,9 +41,10 @@ defmodule RandosDev.VoiceLabTest do
     assert has_element?(view, "#voice-lab-review-recovery")
     assert has_element?(view, "#voice-lab-recovery-play-all")
 
-    for tab <- ~w(listen round engines gentle voice recovery models basics delay benchmark) do
-      assert has_element?(view, "#voice-lab-tab-#{tab}[role=tab]")
-      assert has_element?(view, "#voice-lab-panel-#{tab}[role=tabpanel]")
+    for tab <-
+          ~w(listen round engines gentle envelope fargan fargan_mask fargan_combined bandwidth source_shape voice recovery models basics delay benchmark) do
+      assert has_element?(view, "#voice-lab-view option[value=#{tab}]")
+      assert has_element?(view, "#voice-lab-panel-#{tab}[role=region]")
     end
 
     assert has_element?(view, "#voice-lab-panel-voice[hidden] #voice-lab-live-stop")

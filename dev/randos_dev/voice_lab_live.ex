@@ -25,6 +25,12 @@ defmodule RandosDev.VoiceLabLive do
        buffering_report: buffering,
        short_buffer_ready: VoiceLabRound.short_buffer_ready?(buffering),
        gentle_pitch: VoiceLabRound.load("gentle"),
+       fargan_quality: VoiceLabRound.load("fargan"),
+       fargan_masking: VoiceLabRound.load("fargan_mask"),
+       fargan_combined: VoiceLabRound.load("fargan_combined"),
+       bandwidth: VoiceLabRound.load("bandwidth"),
+       source_shape: VoiceLabRound.load("source_shape"),
+       selective_resonance: VoiceLabRound.load("envelope"),
        engine_comparison: VoiceLabRound.load("engines"),
        masking_round: VoiceLabRound.load(),
        page_title: "Voice lab",
@@ -63,46 +69,52 @@ defmodule RandosDev.VoiceLabLive do
           </p>
         </header>
 
-        <p class="text-sm">
-          <a
-            id="voice-lab-dsp-report"
-            href="/dev/voice-lab/browser-probe/dsp.html"
-            class="text-teal-700 underline"
-          >Browser DSP experiment: size, processing and delay</a>
-        </p>
-        <nav role="tablist" aria-label="Voice lab views" class="flex flex-wrap gap-2">
-          <button
-            :for={
-              {key, label} <- [
-                {"listen", "Listen & compare"},
-                {"round", "Masking round"},
-                {"engines", "Engine comparison"},
-                {"gentle", "Gentler pitch"},
-                {"voice", "Try your voice"},
-                {"recovery", "Recovery test"},
-                {"models", "Models"},
-                {"basics", "Audio basics"},
-                {"delay", "Call delay"},
-                {"benchmark", "Benchmark"}
-              ]
-            }
-            id={"voice-lab-tab-#{key}"}
-            type="button"
-            role="tab"
-            aria-controls={"voice-lab-panel-#{key}"}
-            aria-selected={if key == "listen", do: "true", else: "false"}
-            tabindex={if key == "listen", do: "0", else: "-1"}
-            data-tab={key}
-            class="rounded-md border border-stone-300 px-4 py-2 text-sm font-medium transition hover:bg-stone-100 aria-selected:border-teal-700 aria-selected:bg-teal-700 aria-selected:text-white"
-          >
-            {label}
-          </button>
+        <nav aria-label="Voice lab views" class="rounded-lg border border-stone-200 bg-white p-4">
+          <div class="grid gap-3 sm:grid-cols-[minmax(0,24rem)_1fr] sm:items-end">
+            <.input
+              id="voice-lab-view"
+              name="lab_view"
+              type="select"
+              label="Lab view"
+              value="bandwidth"
+              options={[
+                {"Current experiments",
+                 [{"Resonance width", "bandwidth"}, {"Voice-source shape", "source_shape"}]},
+                {"Tools", [{"Listen & compare", "listen"}, {"Try your voice", "voice"}]},
+                {"Previous experiments",
+                 [
+                   {"FARGAN · final combined preset", "fargan_combined"},
+                   {"FARGAN · isolated masking edits", "fargan_mask"},
+                   {"FARGAN · synthesis quality", "fargan"},
+                   {"Selective resonance", "envelope"},
+                   {"Gentler pitch", "gentle"},
+                   {"Engine comparison", "engines"},
+                   {"Masking round", "round"},
+                   {"Earlier generative models", "models"}
+                 ]},
+                {"Reference",
+                 [
+                   {"Audio basics", "basics"},
+                   {"Call delay", "delay"},
+                   {"Recovery test", "recovery"},
+                   {"Recognition benchmark", "benchmark"}
+                 ]}
+              ]}
+            />
+            <p id="voice-lab-current-experiment" class="pb-2 text-sm text-stone-600">
+              <span class="font-medium text-teal-700">Current experiment:</span>
+              do resonance width or estimated source-pulse changes add a pleasant disguise
+              while preserving clarity and expression?
+              Earlier rounds remain under Previous experiments.
+            </p>
+          </div>
         </nav>
 
         <section
           id="voice-lab-panel-listen"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-listen"
+          hidden
+          role="region"
+          aria-label="Listen & compare"
           class="space-y-5"
         >
           <div
@@ -215,6 +227,34 @@ defmodule RandosDev.VoiceLabLive do
                       label="Modification"
                       class="w-full rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm text-stone-950 focus:border-teal-700 focus:outline-2 focus:outline-teal-700"
                       options={[
+                        {"Resonance width",
+                         [
+                           {"Resonance width · reconstruction control", "texture_bandwidth_control"},
+                           {"Resonance width · narrower", "texture_bandwidth_narrower"},
+                           {"Resonance width · wider", "texture_bandwidth_wider"}
+                         ]},
+                        {"Voice-source shape",
+                         [
+                           {"Voice-source shape · reconstruction control", "texture_source_control"},
+                           {"Voice-source shape · softer pulses", "texture_source_softer"},
+                           {"Voice-source shape · sharper pulses", "texture_source_sharper"}
+                         ]},
+                        {"FARGAN · final combined preset",
+                         [{"FARGAN · combined pitch + resonance", "fargan_combined"}]},
+                        {"FARGAN · masking edits",
+                         [
+                           {"FARGAN masking · unchanged control", "fargan_mask_control"},
+                           {"FARGAN masking · pitch only", "fargan_mask_pitch"},
+                           {"FARGAN masking · resonance only", "fargan_mask_envelope"}
+                         ]},
+                        {"Compact neural vocoder · quality control",
+                         [{"FARGAN · unchanged resynthesis", "fargan_control"}]},
+                        {"Selective resonance · Signalsmith",
+                         [
+                           {"Selective resonance · released style", "envelope_current"},
+                           {"Selective resonance · bend A", "envelope_bend_a"},
+                           {"Selective resonance · bend B", "envelope_bend_b"}
+                         ]},
                         {"Gentler pitch · Signalsmith",
                          [
                            {"Gentler · current pitch", "gentle_current_pitch"},
@@ -350,8 +390,8 @@ defmodule RandosDev.VoiceLabLive do
 
         <section
           id="voice-lab-panel-voice"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-voice"
+          role="region"
+          aria-label="Try your voice"
           hidden
         >
           <div class="space-y-5 rounded-lg border border-stone-200 bg-white p-5 sm:p-6">
@@ -496,64 +536,114 @@ defmodule RandosDev.VoiceLabLive do
         </section>
         <section
           id="voice-lab-panel-basics"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-basics"
+          role="region"
+          aria-label="Audio basics"
           hidden
         >
           <VoiceLabGuide.basics />
         </section>
         <section
           id="voice-lab-panel-delay"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-delay"
+          role="region"
+          aria-label="Call delay"
           hidden
         >
+          <p class="text-sm">
+            <a
+              id="voice-lab-dsp-report"
+              href="/dev/voice-lab/browser-probe/dsp.html"
+              class="text-teal-700 underline"
+            >Browser DSP experiment: size, processing and delay</a>
+          </p>
           <VoiceLabGuide.delay />
         </section>
         <section
           id="voice-lab-panel-benchmark"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-benchmark"
+          role="region"
+          aria-label="Recognition benchmark"
           hidden
         >
           <VoiceLabBenchmark.section report={@benchmark} />
         </section>
         <section
           id="voice-lab-panel-recovery"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-recovery"
+          role="region"
+          aria-label="Recovery test"
           hidden
         >
           <VoiceLabRecovery.section report={@recovery} />
         </section>
+        <section id="voice-lab-panel-bandwidth" role="region" aria-label="Resonance width">
+          <VoiceLabRound.section id="bandwidth" report={@bandwidth} />
+        </section>
+        <section
+          id="voice-lab-panel-source_shape"
+          role="region"
+          aria-label="Estimated voice-source shape"
+          hidden
+        >
+          <VoiceLabRound.section id="source_shape" report={@source_shape} />
+        </section>
+        <section
+          id="voice-lab-panel-fargan_combined"
+          role="region"
+          aria-label="Final combined FARGAN preset"
+          hidden
+        >
+          <VoiceLabRound.section id="fargan_combined" report={@fargan_combined} />
+        </section>
+        <section
+          id="voice-lab-panel-fargan_mask"
+          role="region"
+          aria-label="FARGAN masking edits"
+          hidden
+        >
+          <VoiceLabRound.section id="fargan_mask" report={@fargan_masking} />
+        </section>
+        <section
+          id="voice-lab-panel-fargan"
+          role="region"
+          aria-label="FARGAN synthesis quality"
+          hidden
+        >
+          <VoiceLabRound.section id="fargan" report={@fargan_quality} />
+        </section>
+        <section
+          id="voice-lab-panel-envelope"
+          role="region"
+          aria-label="Selective resonance"
+          hidden
+        >
+          <VoiceLabRound.section id="envelope" report={@selective_resonance} />
+        </section>
         <section
           id="voice-lab-panel-gentle"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-gentle"
+          role="region"
+          aria-label="Gentler pitch"
           hidden
         >
           <VoiceLabRound.section id="gentle" report={@gentle_pitch} />
         </section>
         <section
           id="voice-lab-panel-engines"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-engines"
+          role="region"
+          aria-label="Engine comparison"
           hidden
         >
           <VoiceLabRound.section id="engines" report={@engine_comparison} />
         </section>
         <section
           id="voice-lab-panel-round"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-round"
+          role="region"
+          aria-label="Masking round"
           hidden
         >
           <VoiceLabRound.section report={@masking_round} />
         </section>
         <section
           id="voice-lab-panel-models"
-          role="tabpanel"
-          aria-labelledby="voice-lab-tab-models"
+          role="region"
+          aria-label="Earlier generative models"
           hidden
         >
           <VoiceLabModels.section report={@model_experiment} />

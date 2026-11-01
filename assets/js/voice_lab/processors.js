@@ -4,6 +4,26 @@ import {VOICE_PROCESSORS, createVoiceNode} from "../randos/voice/seam"
 export const LAB_PROCESSORS = Object.freeze({
   ...VOICE_PROCESSORS,
   ...Object.fromEntries([
+    ["texture_bandwidth_control", "Resonance width · reconstruction control"],
+    ["texture_bandwidth_narrower", "Resonance width · narrower"],
+    ["texture_bandwidth_wider", "Resonance width · wider"],
+    ["texture_source_control", "Voice-source shape · reconstruction control"],
+    ["texture_source_softer", "Voice-source shape · softer pulses"],
+    ["texture_source_sharper", "Voice-source shape · sharper pulses"],
+  ].map(([name,label])=>[name,{label,preRendered:true,note:"Full-band prepared audition on the fixed Signalsmith reference. Compare with the matched reconstruction control. No live/streaming qualification; source shaping uses estimated excitation, not measured glottal flow."}])),
+  fargan_combined: {label:"FARGAN · combined pitch + resonance",preRendered:true,note:"Final native combined preset: matching Signalsmith's nominal pitch and low-frequency resonance scale, using a different synthesis engine. No live/browser qualification."},
+  ...Object.fromEntries([
+    ["fargan_mask_control", "FARGAN masking · unchanged control"],
+    ["fargan_mask_pitch", "FARGAN masking · pitch only"],
+    ["fargan_mask_envelope", "FARGAN masking · resonance only"],
+  ].map(([name,label])=>[name,{label,preRendered:true,note:"Isolated native FARGAN feature edits. Compare all five versions in the current FARGAN masking view; no live or browser qualification yet."}])),
+  fargan_control: {label:"FARGAN · unchanged resynthesis",preRendered:true,note:"Native compact-vocoder quality control, not a masking transformation. Compare with a matched 16 kHz original; no feature edits or live preview yet."},
+  ...Object.fromEntries([
+    ["envelope_current", "Selective resonance · released style"],
+    ["envelope_bend_a", "Selective resonance · bend A"],
+    ["envelope_bend_b", "Selective resonance · bend B"],
+  ].map(([name,label])=>[name,{label,preRendered:true,note:"Native-only selective-envelope audition. Compare all four versions in Selective resonance. New bends have no live/browser qualification yet."}])),
+  ...Object.fromEntries([
     ["gentle_current_pitch", "Gentler · current pitch"],
     ["gentle_half_pitch", "Gentler · half pitch"],
     ["gentle_zero_pitch", "Gentler · resonance only"],

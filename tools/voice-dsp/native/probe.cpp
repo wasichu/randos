@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <cerrno>
 #include <cmath>
 #include <cstdint>
 #include <cstdlib>
@@ -14,6 +15,7 @@
 #include <thread>
 #include <vector>
 #include <sys/resource.h>
+#include <unistd.h>
 
 extern "C" {
 int dsp_new(double, double);
@@ -229,7 +231,14 @@ int main(int argc, char **argv) {
   try {
     // Parent owns an open stdin pipe. Its death (including SIGKILL) closes the
     // pipe, so this worker cannot outlive the starter. No child processes.
-    std::thread([] { std::cin.get(); std::_Exit(72); }).detach();
+    // A blocked iostream read can hold stdio locks during normal Linux exit.
+    std::thread([] {
+      while (true) {
+        char byte;
+        const auto status = ::read(STDIN_FILENO, &byte, 1);
+        if (status == 0 || (status < 0 && errno != EINTR)) std::_Exit(72);
+      }
+    }).detach();
     if (argc != 6) throw std::runtime_error("INPUT OUTPUT PITCH SCALE SECONDS (0=finite, 1..60=paced)");
     const auto input = read_input(argv[1]);
     const double pitch = std::stod(argv[3]), scale = std::stod(argv[4]);

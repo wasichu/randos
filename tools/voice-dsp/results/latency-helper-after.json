@@ -1,0 +1,165 @@
+{
+  "scope": "Release helper, sine input/null output, no physical device or AEC/call/network. Latency fields are the helper internal estimates: voice_ms is configured frame offset, codec_ms includes one capture frame and Opus lookahead; not measured acoustic mouth-to-ear.",
+  "helper_sha256": "d12a8e330dda8f9dc7a8808f96a45896cc175581285ec3a9dc0553cdc3231e3d",
+  "cases": [
+    {
+      "style": null,
+      "rows": [
+        {
+          "event": "loopback_stats",
+          "voice_ms": 0.0,
+          "latency_ms": 26.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 28.263372266391364,
+          "input_peak_dbfs": -8.956911087036133,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        },
+        {
+          "event": "loopback_stats",
+          "voice_ms": 0.0,
+          "latency_ms": 26.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 23.535688125167148,
+          "input_peak_dbfs": -8.956921577453613,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        },
+        {
+          "event": "loopback_stats",
+          "voice_ms": 0.0,
+          "latency_ms": 26.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 23.629353697516457,
+          "input_peak_dbfs": -8.956930160522461,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        }
+      ]
+    },
+    {
+      "style": "lower_resonance_pitch",
+      "rows": [
+        {
+          "event": "loopback_stats",
+          "voice_ms": 140.0,
+          "latency_ms": 166.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 28.247294210301316,
+          "input_peak_dbfs": -22.288806915283203,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        },
+        {
+          "event": "loopback_stats",
+          "voice_ms": 140.0,
+          "latency_ms": 166.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 21.20436610175931,
+          "input_peak_dbfs": -22.549266815185547,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        },
+        {
+          "event": "loopback_stats",
+          "voice_ms": 140.0,
+          "latency_ms": 166.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 18.589372714174182,
+          "input_peak_dbfs": -22.549039840698242,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        }
+      ]
+    },
+    {
+      "style": "higher_resonance_pitch",
+      "rows": [
+        {
+          "event": "loopback_stats",
+          "voice_ms": 140.0,
+          "latency_ms": 166.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 26.474888415736036,
+          "input_peak_dbfs": -22.021564483642578,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        },
+        {
+          "event": "loopback_stats",
+          "voice_ms": 140.0,
+          "latency_ms": 166.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 19.598265354624772,
+          "input_peak_dbfs": -22.37858009338379,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        },
+        {
+          "event": "loopback_stats",
+          "voice_ms": 140.0,
+          "latency_ms": 166.5,
+          "capture_device_ms": 0.0,
+          "capture_ring_ms": 0.0,
+          "codec_ms": 26.5,
+          "resample_ms": 0.0,
+          "playback_ring_ms": 0.0,
+          "playback_device_ms": 0.0,
+          "kbps": 14.573035659683834,
+          "input_peak_dbfs": -22.379810333251953,
+          "underruns": 0,
+          "overruns": 0,
+          "dropped": 0
+        }
+      ]
+    }
+  ]
+}

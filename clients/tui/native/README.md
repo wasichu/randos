@@ -51,9 +51,12 @@ explicit headphone audition; the TUI uses its selected output, and stops it on
 exit, Stop or before a call. Settings changes use `loopback_masking` to keep the
 same input/output devices and worker open. Explicit `masking: "off"` previews
 the original at the same quarter-level headroom as masked auditions; absent/null
-masking preserves ordinary meter/CLI levels. `voice_ms` is the additive 220 ms frame
+masking preserves ordinary meter/CLI levels. `voice_ms` is the additive 140 ms frame
 adapter offset when masked (zero otherwise); the codec estimate already includes
-the first capture frame, so adding 240 ms would count that frame twice.
+the first capture frame, so adding 160 ms would count that frame twice.
+The prefill-only reduction preserves the Signalsmith core/settings and aligned
+audio; devices, AEC and network still add their own delay. The browser retains
+its larger asynchronous-consumer buffer. See the [latency experiment](../../../tools/voice-dsp/README.md).
 
 Requests carry an integer `id`, and each gets exactly one reply echoing it as
 `reply`, with either `ok` (a result) or `error` (a message). Events are

@@ -1,5 +1,6 @@
 // Fake microphone only; Chrome is muted. No real audio or review writes.
 import assert from 'node:assert/strict'
+import {wavFixture} from './wav_fixture.mjs'
 import {Browser, BASE_URL} from './cdp.mjs'
 const browser=await Browser.launch()
 const instrument=`(() => {
@@ -8,15 +9,17 @@ const instrument=`(() => {
  window.Worker=class extends WorkerClass{constructor(...args){super(...args);window.dspWorkers.push(this)}postMessage(data,...args){if(data.type==='init')this.initConfig={engine:data.engine,pitch:data.pitch,scale:data.scale};return super.postMessage(data,...args)}terminate(){this.wasTerminated=true;super.terminate()}};
  window.AudioContext=class extends Context{constructor(...args){super(...args);window.dspContexts.push(this)}};
  navigator.mediaDevices.getUserMedia=(...args)=>{window.dspRequested=true;return capture(...args)};
+ const fixture=${wavFixture.toString()};
  const fetch=window.fetch.bind(window);window.fetch=(url,options)=>{
   if(url==='/dev/voice-lab/reviews')return Promise.reject(Error('This test must not save reviews'));
+  if(String(url).includes('/voice-lab/models/'))return Promise.resolve(new Response(fixture()));
   return fetch(url,options);
  };
 })()`
 async function open(name,options){
  const page=await browser.newPage(name,options)
  await page.send('Page.addScriptToEvaluateOnNewDocument',{source:instrument})
- await page.open(`${BASE_URL}/dev/voice-lab`)
+ await page.open(`${BASE_URL}/dev/voice-lab`); await page.labView('listen')
  await page.waitFor(`document.getElementById('voice-lab-status')?.dataset.state==='rendered'`,'lab ready',30000)
  return page
 }
@@ -24,10 +27,10 @@ const choose=(page,id,value)=>page.eval(`{const x=document.getElementById(${JSON
 const stopped=page=>page.waitFor(`window.__randosStreams.every(s=>s.getTracks().every(t=>t.readyState==='ended'))&&window.dspWorkers.every(w=>w.wasTerminated)&&window.dspContexts.every(c=>c.state==='closed')`,'complete DSP teardown',10000)
 try {
  const page=await open('dsp-live')
- await page.click('#voice-lab-tab-engines')
+ await page.labView('engines')
  await page.waitFor(`document.getElementById('voice-lab-engines-status')?.dataset.state==='ready'`,'engine comparison ready',30000)
  await page.click('#voice-lab-engines-live-world')
- assert(await page.eval(`document.getElementById('voice-lab-tab-voice').getAttribute('aria-selected')==='true'&&document.getElementById('voice-lab-live-mode').value==='dsp'&&document.getElementById('voice-lab-live-engine').value==='world'`))
+ assert(await page.eval(`document.getElementById('voice-lab-view').value==='voice'&&document.getElementById('voice-lab-live-mode').value==='dsp'&&document.getElementById('voice-lab-live-engine').value==='world'`))
  assert.equal(await page.eval('window.__randosStreams.length'),0,'Use live selects settings without opening microphone')
  await choose(page,'voice-lab-live-engine','spectral')
  await page.click('#voice-lab-live-modified')
@@ -62,10 +65,10 @@ try {
  await choose(page,'voice-lab-live-engine','spectral')
  await page.click('#voice-lab-live-modified')
  await page.waitFor(`document.getElementById('voice-lab-live-dsp-metrics').dataset.delaySamples!==undefined`,'restart after failure',15000)
- await page.click('#voice-lab-tab-listen')
+ await page.labView('listen')
  await stopped(page)
  // Device loss must close the remaining microphone tracks and worker too.
- await page.click('#voice-lab-tab-voice')
+ await page.labView('voice')
  await page.click('#voice-lab-live-modified')
  await page.waitFor(`document.getElementById('voice-lab-live-dsp-metrics').dataset.delaySamples!==undefined`,'device-loss preview',15000)
  await page.eval(`window.__randosStreams.at(-1).getAudioTracks()[0].dispatchEvent(new Event('ended'))`)
@@ -77,7 +80,7 @@ try {
  await page.send('Page.navigate',{url:BASE_URL+'/'})
  await page.waitFor(`document.getElementById('voice-lab')===null&&sessionStorage.getItem('dspEndedOnLeave')==='true'`,'navigation releases microphone',10000)
  const initializing=await open('dsp-initializing')
- await initializing.click('#voice-lab-tab-voice');await choose(initializing,'voice-lab-live-mode','dsp')
+ await initializing.labView('voice');await choose(initializing,'voice-lab-live-mode','dsp')
  await initializing.eval(`{const add=AudioWorklet.prototype.addModule;AudioWorklet.prototype.addModule=function(...args){if(args[0].includes('dsp_bridge'))return new Promise(resolve=>{window.releaseDspModule=resolve});return add.apply(this,args)}}`)
  await initializing.click('#voice-lab-live-modified')
  await initializing.waitFor('typeof window.releaseDspModule===\"function\"','pending bridge initialization',10000)
@@ -86,11 +89,11 @@ try {
  await stopped(initializing)
  assert.equal(await initializing.eval('window.dspRequested'),false,'cancelled initialization never requests the microphone')
  const denied=await open('dsp-denied',{getUserMediaError:'NotAllowedError'})
- await denied.click('#voice-lab-tab-voice');await choose(denied,'voice-lab-live-mode','dsp');await denied.click('#voice-lab-live-modified')
+ await denied.labView('voice');await choose(denied,'voice-lab-live-mode','dsp');await denied.click('#voice-lab-live-modified')
  await denied.waitFor(`document.getElementById('voice-lab-live-status').dataset.state==='failed'`,'denied microphone',15000)
  await stopped(denied)
  const late=await open('dsp-late',{getUserMediaDelayMs:1500})
- await late.click('#voice-lab-tab-voice');await choose(late,'voice-lab-live-mode','dsp');await late.click('#voice-lab-live-modified')
+ await late.labView('voice');await choose(late,'voice-lab-live-mode','dsp');await late.click('#voice-lab-live-modified')
  await late.waitFor('window.dspRequested','pending permission',15000)
  await late.click('#voice-lab-live-stop')
  await late.waitFor('window.__randosStreams.length===1','late permission grant',10000)

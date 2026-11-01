@@ -142,16 +142,48 @@ Listen & compare and Recovery test collect optional categorical judgments
 of naturalness, clarity, and resemblance to the original person, plus notes.
 Recovery has separate disguised/recovered judgments. All start “Not judged”;
 no numeric score or required questionnaire is imposed. Browser drafts follow
-exact contexts, not display labels. Explicit Save review appends a versioned
-JSONL record to git-ignored `results/listening-reviews.jsonl`.
+exact contexts, not display labels. Edits auto-save after a short pause,
+periodically while typing, and on context changes. Save now flushes immediately.
+Each save appends a versioned JSONL record to git-ignored
+`results/listening-reviews.jsonl`.
 
 Records include source and processing fingerprints, parameters/mode, and
 recovery run/case/headroom. Only ratings and text are accepted. Generated
 WAV names are content-addressed and published atomically: an old open page
 still fetches the same bytes after regeneration. The report records source
-and native-renderer SHA-256 values. Local drafts are not submitted in the
-background; failed saves keep answers in memory/browser storage as available.
+and native-renderer SHA-256 values. Failed saves retain and retry the draft in
+memory/browser storage as available. Untouched blank forms never submit.
+Clearing every answer after a submission appends a withdrawal with
+`withdrawn: true`, empty `ratings`, and empty `notes`; earlier history remains.
+A later nonempty save reactivates the same context.
 The assistant reads the file when the owner says reviews are ready; the save
 does not automatically invoke a model. Use the latest appended answer for
 each exact context, retaining earlier revisions instead of averaging different
-settings/builds/runs. These are qualitative observations, not benchmark labels.
+settings/builds/runs. A latest withdrawal means no current judgment: never fall
+back to an older active answer. Latest means physical JSONL append order for the
+complete context, not the `saved_at` timestamp. Each page serializes its own
+requests; cross-page ordering remains best effort. These are qualitative
+observations, not benchmark labels.
+
+## Adding a small lab comparison
+
+Keep the released Signalsmith style as a stable baseline. Add one technique
+with a few fixed settings, listen first, and qualify a browser/native path
+before promoting it into the product. A research engine's measured overload
+is a result to report; the shipping engine retains its strict real-time gate.
+
+- Generate all four public voices and the test tone; preserve content-addressed
+  audio, exact settings, source/implementation fingerprints and prior reviews.
+- Keep the dev-only descriptor (`LAB_PROCESSORS`), prepared-file mapping
+  (`VoiceLabModels`), comparison view and review-context whitelist
+  (`VoiceLabReviews`) in step. Labels should describe the recorded experiment;
+  current live/product availability belongs in the appropriate controls.
+- Exercise original/modified/sequential playback, missing/stale results,
+  explicit microphone handoff, failure cleanup and context-specific autosave.
+- Record naturalness, clarity, perceived disguise and resource costs separately.
+  Recognition/recovery attacks explain limitations; they do not replace the
+  owner's masking assessment or turn a useful voice mask into a hidden option.
+
+Share neutral registration metadata only when the next addition demonstrates
+that its duplication is costly. Keep browser/native execution settings owned by
+those paths; a general plugin framework is not required for the next experiment.

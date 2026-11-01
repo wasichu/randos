@@ -1,0 +1,1058 @@
+{
+  "identity": {
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "compile_flags": [
+      "-O3",
+      "-std=c++17",
+      "-ffp-contract=off",
+      "-shared",
+      "-fPIC"
+    ],
+    "provenance": {
+      "tools/voice-dsp/browser/envelope.py": "83f71f96a06f556ce7f41f75fd95d77b819a9a9493a8a956ba2e699b4231001b",
+      "tools/voice-dsp/browser/envelope_map.h": "f7958b56199299fc4f94ff9119269b71880b82fef331630d9a97e8c5427fe820",
+      "tools/voice-dsp/browser/envelope_map_test.cpp": "cd8623d12094510a5b9d1ab2588270e4c7c4271acea6e46e1092930d19b528ce",
+      "tools/voice-dsp/browser/spectral.cpp": "862e6743238f09bf56efcbc265f78a5b34fc812151dd45c74ee29517bc17b051",
+      "vendor/signalsmith/stretch/signalsmith-stretch.h": "1188667959ac19dd40c0a6abbce694e44705615ec4f0e8db8af0f1cfb4c5dea7",
+      "vendor/signalsmith/manifest.json": "07a743672596f1766d40da2e4e8cf2d52ae36cf53a5d4dfefcb14291cdd8d059",
+      "tmp/voice-dsp/browser/envelope/research-signalsmith-stretch.h": "7141279f2fcb66d2767e9d17320189481b662529700764eef0be474f921ee563",
+      "tmp/voice-dsp/browser/envelope/envelope.cpp": "1dee1f405dcc2ae1d51e36b08484148be46f30a9549c0d2da303e3d621460290",
+      "tmp/voice-dsp/browser/envelope.dylib": "301324e03927850c0dc4f4d11a9f717a073f371f7c807bd761b3d52a6af2db0a",
+      "tmp/voice-dsp/browser/envelope_control.dylib": "6860d06bce34e10ded983851ef5e0f533ffffce23592a65f9f8ec778d40b3241"
+    },
+    "checks": [
+      {
+        "sample": "high_voice",
+        "input_sha256": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a",
+        "samples": 292800,
+        "zero_bend_exact": true,
+        "control_pcm_sha256": "087724861b1e5a3c570a429ec251dad7e352318d702fcc2c1cec98167489f931",
+        "rendered_pcm_sha256": {
+          "original": "8ff8554f2d2f64ec0da6c5305239040dfca5a7e83c4bd7e092de72bb9f808c3a",
+          "current": "087724861b1e5a3c570a429ec251dad7e352318d702fcc2c1cec98167489f931",
+          "bend_a": "36c506270b976daa85393f0da7f0eba05734934abd3e76e6f1f735de24d8e6db",
+          "bend_b": "6c0dd5d122d767231eb4d70a1e60e7bd3bd2be94fb8fd4fa9650905867dbe46a"
+        }
+      },
+      {
+        "sample": "low_voice",
+        "input_sha256": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2",
+        "samples": 292800,
+        "zero_bend_exact": true,
+        "control_pcm_sha256": "5c30125eb23cd224c1721c93d8525ee8438019c0b52d26673013a66b2e946f42",
+        "rendered_pcm_sha256": {
+          "original": "934cb490b9acc652d67ea6ce8b16f1ace7349b1be5fd1ac18d38fc603a0d46b2",
+          "current": "5c30125eb23cd224c1721c93d8525ee8438019c0b52d26673013a66b2e946f42",
+          "bend_a": "9a1c2dc7c2970508553092bbee593985e308a93702c6ac19e5c0bfff2cd88bfd",
+          "bend_b": "e5603c562dda4ac393cb8061b9774c25cd59d8c40259e233bdcc738c645e35ef"
+        }
+      },
+      {
+        "sample": "mid_voice",
+        "input_sha256": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747",
+        "samples": 292800,
+        "zero_bend_exact": true,
+        "control_pcm_sha256": "a4812375db1726b7430a51f6c1e7479347c7109f92009d0aa95bb2fffcb66514",
+        "rendered_pcm_sha256": {
+          "original": "471059fd34c672febc870094de6aede329c16f8e129a455c2fe04dc7bc925747",
+          "current": "a4812375db1726b7430a51f6c1e7479347c7109f92009d0aa95bb2fffcb66514",
+          "bend_a": "371f58b9ca64a58fbf0988eabd232dbb59c0149bc3a098410161d03b79955143",
+          "bend_b": "dbabef2da1eaeff0392538129d80852e68a90bd9ec540b8eccce845da5b1c0da"
+        }
+      },
+      {
+        "sample": "mencken_wasichu",
+        "input_sha256": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1",
+        "samples": 292800,
+        "zero_bend_exact": true,
+        "control_pcm_sha256": "58362e43f240f10ffb26d17d44be7c992b5c6a810974c6d0fcdeb68a83e64064",
+        "rendered_pcm_sha256": {
+          "original": "4af33151cc4fdbea36849e9f892b0fb58e33dfb666e61690b2e39b4a8ac4cda1",
+          "current": "58362e43f240f10ffb26d17d44be7c992b5c6a810974c6d0fcdeb68a83e64064",
+          "bend_a": "2b1b029f55d590245fd39b82787ac57b1d55e9bd4a7638630df5891345aeb09d",
+          "bend_b": "788b5b735384782fbc4900afd6983e54bb7776de2a610ebb0ae93c0a69b342fe"
+        }
+      },
+      {
+        "sample": "test_tone",
+        "input_sha256": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97",
+        "samples": 196800,
+        "zero_bend_exact": true,
+        "control_pcm_sha256": "4f0d366c5d06cd965927bc2585e754177a5922dcd1984ea4d67e10a28cbd3824",
+        "rendered_pcm_sha256": {
+          "original": "0baae64209e1158beb1ea429c9e4cca615a0222ecffcf0f7a38019d0c59e5a97",
+          "current": "4f0d366c5d06cd965927bc2585e754177a5922dcd1984ea4d67e10a28cbd3824",
+          "bend_a": "375eb6092c8ca5380272da58e04a153ca909d5e1024e8695c4702362f0187f9a",
+          "bend_b": "307d28be6f0647e7d853b5d7c1a4290243a052dd5d4221ecb1c5dc4f736a470a"
+        }
+      }
+    ],
+    "boundary_checks": [
+      {
+        "fixture": "silence",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": 0,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "silence",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": 0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "silence",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": -0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "silence",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": 0,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "silence",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": 0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "silence",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": -0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "onset",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": 0,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "onset",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": 0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "onset",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": -0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "onset",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": 0,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "onset",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": 0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "onset",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": -0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "ending",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": 0,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "ending",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": 0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "ending",
+        "pitch": -1,
+        "scale": 0.8,
+        "bend": -0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "ending",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": 0,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "ending",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": 0.15,
+        "samples": 12993,
+        "finite": true
+      },
+      {
+        "fixture": "ending",
+        "pitch": 1,
+        "scale": 1.25,
+        "bend": -0.15,
+        "samples": 12993,
+        "finite": true
+      }
+    ],
+    "mapping_checks": [
+      {
+        "scale": 0.8,
+        "bend": -0.15,
+        "min_slope": 1.1656250115239692,
+        "max_lookup_delta_hz": 62.02449648364523
+      },
+      {
+        "scale": 0.8,
+        "bend": 0,
+        "min_slope": 1.2499999999933387,
+        "max_lookup_delta_hz": 0.0
+      },
+      {
+        "scale": 0.8,
+        "bend": 0.15,
+        "min_slope": 1.1000000385524946,
+        "max_lookup_delta_hz": 62.02449648364523
+      },
+      {
+        "scale": 1.25,
+        "bend": -0.15,
+        "min_slope": 0.7156250115239693,
+        "max_lookup_delta_hz": 62.02449648364523
+      },
+      {
+        "scale": 1.25,
+        "bend": 0,
+        "min_slope": 0.7999999999978684,
+        "max_lookup_delta_hz": 0.0
+      },
+      {
+        "scale": 1.25,
+        "bend": 0.15,
+        "min_slope": 0.6500000385528276,
+        "max_lookup_delta_hz": 62.02449648364523
+      }
+    ],
+    "cases": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__envelope_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "current": "high_voice__envelope_current__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav",
+          "bend_a": "high_voice__envelope_bend_a__038a4da8e9c67259f2869cc6c06320906265c3d1a45f2ac2e1b6886c741de416.wav",
+          "bend_b": "high_voice__envelope_bend_b__bdbc1213a1cfeb2005a45cab61dd3acc7ea2ba3bbbb2d07acc1923a4bf2694b5.wav"
+        },
+        "settings": {
+          "current": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": 0,
+            "cutoff_hz": 4000
+          },
+          "bend_a": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": 0.15,
+            "cutoff_hz": 4000
+          },
+          "bend_b": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": -0.15,
+            "cutoff_hz": 4000
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 matched average level",
+          "current": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+          "bend_a": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+          "bend_b": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz"
+        },
+        "gains": {
+          "original": 1.0,
+          "current": 1.422994029272365,
+          "bend_a": 1.4339335933768942,
+          "bend_b": 1.4194569013574434
+        },
+        "note": "Prepared native audio; the new bends are not available in live preview."
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__envelope_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "current": "low_voice__envelope_current__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav",
+          "bend_a": "low_voice__envelope_bend_a__967ffa0d169493eeb13e8628ccaaee62ecb57626580204f9e3e5a3727f32bed6.wav",
+          "bend_b": "low_voice__envelope_bend_b__dd7efc14ac364c62a5ee0e384d169ab2644e34f75cec65042572460e1d4caeba.wav"
+        },
+        "settings": {
+          "current": {
+            "pitch": 1,
+            "scale": 1.25,
+            "bend": 0,
+            "cutoff_hz": 4000
+          },
+          "bend_a": {
+            "pitch": 1,
+            "scale": 1.25,
+            "bend": 0.15,
+            "cutoff_hz": 4000
+          },
+          "bend_b": {
+            "pitch": 1,
+            "scale": 1.25,
+            "bend": -0.15,
+            "cutoff_hz": 4000
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 matched average level",
+          "current": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 no extra bend",
+          "bend_a": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend +0.15 below 4 kHz",
+          "bend_b": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend -0.15 below 4 kHz"
+        },
+        "gains": {
+          "original": 1.0,
+          "current": 1.211695203295392,
+          "bend_a": 1.2102849372204518,
+          "bend_b": 1.2095869175639968
+        },
+        "note": "Prepared native audio; the new bends are not available in live preview."
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__envelope_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "current": "mid_voice__envelope_current__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav",
+          "bend_a": "mid_voice__envelope_bend_a__6fe5b8f4f05dbf592df6afc023025fc1c93d9806142a3f9c9b1e1ae28648a884.wav",
+          "bend_b": "mid_voice__envelope_bend_b__5f779dd51987b9dc44f1ed62bc740af082efbd1bdbaacd3ce2ee50d48abffa31.wav"
+        },
+        "settings": {
+          "current": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": 0,
+            "cutoff_hz": 4000
+          },
+          "bend_a": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": 0.15,
+            "cutoff_hz": 4000
+          },
+          "bend_b": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": -0.15,
+            "cutoff_hz": 4000
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 matched average level",
+          "current": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+          "bend_a": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+          "bend_b": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz"
+        },
+        "gains": {
+          "original": 1.0,
+          "current": 1.4828962857400203,
+          "bend_a": 1.5138247148003074,
+          "bend_b": 1.4509672542086398
+        },
+        "note": "Prepared native audio; the new bends are not available in live preview. This voice previously retained a recognizable cadence/accent; this experiment changes neither."
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__envelope_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "current": "mencken_wasichu__envelope_current__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+          "bend_a": "mencken_wasichu__envelope_bend_a__9e3f81e110980e29f2377a5cd93ed3c6869950077fb03ba53ddaadfaa4eb2c3a.wav",
+          "bend_b": "mencken_wasichu__envelope_bend_b__47c8eb47f8aa4dceb2548d04ef5f00db035032f03f6866d0299699942a168f66.wav"
+        },
+        "settings": {
+          "current": {
+            "pitch": 1,
+            "scale": 1.25,
+            "bend": 0,
+            "cutoff_hz": 4000
+          },
+          "bend_a": {
+            "pitch": 1,
+            "scale": 1.25,
+            "bend": 0.15,
+            "cutoff_hz": 4000
+          },
+          "bend_b": {
+            "pitch": 1,
+            "scale": 1.25,
+            "bend": -0.15,
+            "cutoff_hz": 4000
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 matched average level",
+          "current": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 no extra bend",
+          "bend_a": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend +0.15 below 4 kHz",
+          "bend_b": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend -0.15 below 4 kHz"
+        },
+        "gains": {
+          "original": 1.0,
+          "current": 1.1784666867989158,
+          "bend_a": 1.2380882832816713,
+          "bend_b": 1.1618371217131611
+        },
+        "note": "Prepared native audio; the new bends are not available in live preview."
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__envelope_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "current": "test_tone__envelope_current__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav",
+          "bend_a": "test_tone__envelope_bend_a__2a727d7814069550d8499fbfdf8dd5a0d5eec263f4a114dfa59d80ae1476f062.wav",
+          "bend_b": "test_tone__envelope_bend_b__55abaf2de89959c189ca0f0f99736b8ddfc6d6effcfeb7029a9c4aa44f37af14.wav"
+        },
+        "settings": {
+          "current": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": 0,
+            "cutoff_hz": 4000
+          },
+          "bend_a": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": 0.15,
+            "cutoff_hz": 4000
+          },
+          "bend_b": {
+            "pitch": -1,
+            "scale": 0.8,
+            "bend": -0.15,
+            "cutoff_hz": 4000
+          }
+        },
+        "descriptions": {
+          "original": "Original recording \u00b7 matched average level",
+          "current": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+          "bend_a": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+          "bend_b": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz"
+        },
+        "gains": {
+          "original": 1.0,
+          "current": 1.2611850012511143,
+          "bend_a": 1.2672790362562503,
+          "bend_b": 1.2540684110808102
+        },
+        "note": "Synthetic tone diagnostic only; do not judge masking quality from this source."
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original"
+    },
+    {
+      "id": "current",
+      "label": "Released style"
+    },
+    {
+      "id": "bend_a",
+      "label": "Bend A"
+    },
+    {
+      "id": "bend_b",
+      "label": "Bend B"
+    }
+  ],
+  "cases": {
+    "high_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "selective_resonance_1",
+        "processor": "signalsmith_envelope",
+        "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+        "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+        "sample": "high_voice",
+        "case_id": "high_voice",
+        "run_id": "2026-10-29T18:03:24.403279+00:00"
+      },
+      "audio": {
+        "original": "high_voice__envelope_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+        "current": "high_voice__envelope_current__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav",
+        "bend_a": "high_voice__envelope_bend_a__038a4da8e9c67259f2869cc6c06320906265c3d1a45f2ac2e1b6886c741de416.wav",
+        "bend_b": "high_voice__envelope_bend_b__bdbc1213a1cfeb2005a45cab61dd3acc7ea2ba3bbbb2d07acc1923a4bf2694b5.wav"
+      },
+      "settings": {
+        "current": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": 0,
+          "cutoff_hz": 4000
+        },
+        "bend_a": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": 0.15,
+          "cutoff_hz": 4000
+        },
+        "bend_b": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": -0.15,
+          "cutoff_hz": 4000
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 matched average level",
+        "current": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+        "bend_a": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+        "bend_b": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz"
+      },
+      "gains": {
+        "original": 1.0,
+        "current": 1.422994029272365,
+        "bend_a": 1.4339335933768942,
+        "bend_b": 1.4194569013574434
+      },
+      "note": "Prepared native audio; the new bends are not available in live preview."
+    },
+    "low_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "selective_resonance_1",
+        "processor": "signalsmith_envelope",
+        "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+        "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+        "sample": "low_voice",
+        "case_id": "low_voice",
+        "run_id": "2026-10-29T18:03:24.403279+00:00"
+      },
+      "audio": {
+        "original": "low_voice__envelope_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+        "current": "low_voice__envelope_current__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav",
+        "bend_a": "low_voice__envelope_bend_a__967ffa0d169493eeb13e8628ccaaee62ecb57626580204f9e3e5a3727f32bed6.wav",
+        "bend_b": "low_voice__envelope_bend_b__dd7efc14ac364c62a5ee0e384d169ab2644e34f75cec65042572460e1d4caeba.wav"
+      },
+      "settings": {
+        "current": {
+          "pitch": 1,
+          "scale": 1.25,
+          "bend": 0,
+          "cutoff_hz": 4000
+        },
+        "bend_a": {
+          "pitch": 1,
+          "scale": 1.25,
+          "bend": 0.15,
+          "cutoff_hz": 4000
+        },
+        "bend_b": {
+          "pitch": 1,
+          "scale": 1.25,
+          "bend": -0.15,
+          "cutoff_hz": 4000
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 matched average level",
+        "current": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 no extra bend",
+        "bend_a": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend +0.15 below 4 kHz",
+        "bend_b": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend -0.15 below 4 kHz"
+      },
+      "gains": {
+        "original": 1.0,
+        "current": 1.211695203295392,
+        "bend_a": 1.2102849372204518,
+        "bend_b": 1.2095869175639968
+      },
+      "note": "Prepared native audio; the new bends are not available in live preview."
+    },
+    "mid_voice.wav": {
+      "context": {
+        "view": "round",
+        "mode": "selective_resonance_1",
+        "processor": "signalsmith_envelope",
+        "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+        "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+        "sample": "mid_voice",
+        "case_id": "mid_voice",
+        "run_id": "2026-10-29T18:03:24.403279+00:00"
+      },
+      "audio": {
+        "original": "mid_voice__envelope_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+        "current": "mid_voice__envelope_current__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav",
+        "bend_a": "mid_voice__envelope_bend_a__6fe5b8f4f05dbf592df6afc023025fc1c93d9806142a3f9c9b1e1ae28648a884.wav",
+        "bend_b": "mid_voice__envelope_bend_b__5f779dd51987b9dc44f1ed62bc740af082efbd1bdbaacd3ce2ee50d48abffa31.wav"
+      },
+      "settings": {
+        "current": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": 0,
+          "cutoff_hz": 4000
+        },
+        "bend_a": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": 0.15,
+          "cutoff_hz": 4000
+        },
+        "bend_b": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": -0.15,
+          "cutoff_hz": 4000
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 matched average level",
+        "current": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+        "bend_a": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+        "bend_b": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz"
+      },
+      "gains": {
+        "original": 1.0,
+        "current": 1.4828962857400203,
+        "bend_a": 1.5138247148003074,
+        "bend_b": 1.4509672542086398
+      },
+      "note": "Prepared native audio; the new bends are not available in live preview. This voice previously retained a recognizable cadence/accent; this experiment changes neither."
+    },
+    "mencken_wasichu.wav": {
+      "context": {
+        "view": "round",
+        "mode": "selective_resonance_1",
+        "processor": "signalsmith_envelope",
+        "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+        "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+        "sample": "mencken_wasichu",
+        "case_id": "mencken_wasichu",
+        "run_id": "2026-10-29T18:03:24.403279+00:00"
+      },
+      "audio": {
+        "original": "mencken_wasichu__envelope_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+        "current": "mencken_wasichu__envelope_current__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav",
+        "bend_a": "mencken_wasichu__envelope_bend_a__9e3f81e110980e29f2377a5cd93ed3c6869950077fb03ba53ddaadfaa4eb2c3a.wav",
+        "bend_b": "mencken_wasichu__envelope_bend_b__47c8eb47f8aa4dceb2548d04ef5f00db035032f03f6866d0299699942a168f66.wav"
+      },
+      "settings": {
+        "current": {
+          "pitch": 1,
+          "scale": 1.25,
+          "bend": 0,
+          "cutoff_hz": 4000
+        },
+        "bend_a": {
+          "pitch": 1,
+          "scale": 1.25,
+          "bend": 0.15,
+          "cutoff_hz": 4000
+        },
+        "bend_b": {
+          "pitch": 1,
+          "scale": 1.25,
+          "bend": -0.15,
+          "cutoff_hz": 4000
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 matched average level",
+        "current": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 no extra bend",
+        "bend_a": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend +0.15 below 4 kHz",
+        "bend_b": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend -0.15 below 4 kHz"
+      },
+      "gains": {
+        "original": 1.0,
+        "current": 1.1784666867989158,
+        "bend_a": 1.2380882832816713,
+        "bend_b": 1.1618371217131611
+      },
+      "note": "Prepared native audio; the new bends are not available in live preview."
+    },
+    "test_tone": {
+      "context": {
+        "view": "round",
+        "mode": "selective_resonance_1",
+        "processor": "signalsmith_envelope",
+        "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+        "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+        "sample": "test_tone",
+        "case_id": "test_tone",
+        "run_id": "2026-10-29T18:03:24.403279+00:00"
+      },
+      "audio": {
+        "original": "test_tone__envelope_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+        "current": "test_tone__envelope_current__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav",
+        "bend_a": "test_tone__envelope_bend_a__2a727d7814069550d8499fbfdf8dd5a0d5eec263f4a114dfa59d80ae1476f062.wav",
+        "bend_b": "test_tone__envelope_bend_b__55abaf2de89959c189ca0f0f99736b8ddfc6d6effcfeb7029a9c4aa44f37af14.wav"
+      },
+      "settings": {
+        "current": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": 0,
+          "cutoff_hz": 4000
+        },
+        "bend_a": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": 0.15,
+          "cutoff_hz": 4000
+        },
+        "bend_b": {
+          "pitch": -1,
+          "scale": 0.8,
+          "bend": -0.15,
+          "cutoff_hz": 4000
+        }
+      },
+      "descriptions": {
+        "original": "Original recording \u00b7 matched average level",
+        "current": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+        "bend_a": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+        "bend_b": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz"
+      },
+      "gains": {
+        "original": 1.0,
+        "current": 1.2611850012511143,
+        "bend_a": 1.2672790362562503,
+        "bend_b": 1.2540684110808102
+      },
+      "note": "Synthetic tone diagnostic only; do not judge masking quality from this source."
+    }
+  },
+  "candidates": {
+    "envelope_current": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__envelope_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__envelope_current__434e8e3c256fdcb8199cdc9d967c1f20f28131e7299813e998df63a14222e4ee.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_current",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__envelope_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__envelope_current__96242de60bfa39794e9b894be6255400aaf1896dacaa0fe678bedd46228da462.wav"
+        },
+        "description": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 no extra bend",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_current",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__envelope_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__envelope_current__edd6b42a93b6ffb8a0785933a840a21f09c921b275a7595b2f3472d1689841ca.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+        "note": "Prepared native audio; the new bends are not available in live preview. This voice previously retained a recognizable cadence/accent; this experiment changes neither.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_current",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__envelope_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__envelope_current__84f89cf4dd4c089cc99668bde18b354ff9eb8c9bb095f88ee2343db9e5e065a5.wav"
+        },
+        "description": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 no extra bend",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_current",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__envelope_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__envelope_current__e9742c2f82af54d543ac925f8293cc444658feb4a5ac1ae6b560c96d6efa3b46.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 no extra bend",
+        "note": "Synthetic tone diagnostic only; do not judge masking quality from this source.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_current",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      }
+    },
+    "envelope_bend_a": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__envelope_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__envelope_bend_a__038a4da8e9c67259f2869cc6c06320906265c3d1a45f2ac2e1b6886c741de416.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_a",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__envelope_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__envelope_bend_a__967ffa0d169493eeb13e8628ccaaee62ecb57626580204f9e3e5a3727f32bed6.wav"
+        },
+        "description": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend +0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_a",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__envelope_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__envelope_bend_a__6fe5b8f4f05dbf592df6afc023025fc1c93d9806142a3f9c9b1e1ae28648a884.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview. This voice previously retained a recognizable cadence/accent; this experiment changes neither.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_a",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__envelope_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__envelope_bend_a__9e3f81e110980e29f2377a5cd93ed3c6869950077fb03ba53ddaadfaa4eb2c3a.wav"
+        },
+        "description": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend +0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_a",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__envelope_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__envelope_bend_a__2a727d7814069550d8499fbfdf8dd5a0d5eec263f4a114dfa59d80ae1476f062.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend +0.15 below 4 kHz",
+        "note": "Synthetic tone diagnostic only; do not judge masking quality from this source.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_a",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      }
+    },
+    "envelope_bend_b": {
+      "high_voice.wav": {
+        "audio": {
+          "original": "high_voice__envelope_original__594cf7ecfe66ae630986890378b0dec80fabeca456f12def3df369b42967f184.wav",
+          "converted": "high_voice__envelope_bend_b__bdbc1213a1cfeb2005a45cab61dd3acc7ea2ba3bbbb2d07acc1923a4bf2694b5.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_b",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "57ae1e0c3c7797c8b21e0bb0818ddfd565fb9b32f13e6812d782f6135ed18338",
+          "sample": "high_voice",
+          "case_id": "high_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "low_voice.wav": {
+        "audio": {
+          "original": "low_voice__envelope_original__904c1dc07b012f900903b6e258f2dc4484ffe7095740e6ede499ac4d02ffb993.wav",
+          "converted": "low_voice__envelope_bend_b__dd7efc14ac364c62a5ee0e384d169ab2644e34f75cec65042572460e1d4caeba.wav"
+        },
+        "description": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend -0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_b",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "f1cf9e893d10217d0170fedd6d05436d710dc89716edaa7354e662e554d65c45",
+          "sample": "low_voice",
+          "case_id": "low_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "mid_voice.wav": {
+        "audio": {
+          "original": "mid_voice__envelope_original__b2bcc1bacbc8cbc3f0f94022a920d56c47f3edd41910c2e7d6b65b85d85da70c.wav",
+          "converted": "mid_voice__envelope_bend_b__5f779dd51987b9dc44f1ed62bc740af082efbd1bdbaacd3ce2ee50d48abffa31.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview. This voice previously retained a recognizable cadence/accent; this experiment changes neither.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_b",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "830b4dac677fc49f294d75001c1c392152438c6afd0ae12301db71eb4af5b57f",
+          "sample": "mid_voice",
+          "case_id": "mid_voice",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "mencken_wasichu.wav": {
+        "audio": {
+          "original": "mencken_wasichu__envelope_original__31832c193eb23bd5f4f3b13e5678f4705b0b6eb84a96d5c7b7125f87dce89e93.wav",
+          "converted": "mencken_wasichu__envelope_bend_b__47c8eb47f8aa4dceb2548d04ef5f00db035032f03f6866d0299699942a168f66.wav"
+        },
+        "description": "Pitch +1 semitone \u00b7 resonances \u00d71.25 \u00b7 envelope bend -0.15 below 4 kHz",
+        "note": "Prepared native audio; the new bends are not available in live preview.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_b",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "b5652e5f8bd30510e1b9953dbb2631b15d71ba4695c980c7ec3eb20b794ab95f",
+          "sample": "mencken_wasichu",
+          "case_id": "mencken_wasichu",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      },
+      "test_tone": {
+        "audio": {
+          "original": "test_tone__envelope_original__d0b8f9d3619b4c0ed97d39c8a33a0d478ba2cfa2b1f711b87d69b879eb7e06b7.wav",
+          "converted": "test_tone__envelope_bend_b__55abaf2de89959c189ca0f0f99736b8ddfc6d6effcfeb7029a9c4aa44f37af14.wav"
+        },
+        "description": "Pitch -1 semitone \u00b7 resonances \u00d70.80 \u00b7 envelope bend -0.15 below 4 kHz",
+        "note": "Synthetic tone diagnostic only; do not judge masking quality from this source.",
+        "level_matched": true,
+        "context": {
+          "view": "model",
+          "mode": "selective_resonance",
+          "processor": "envelope_bend_b",
+          "build_id": "998784e531785ae1aa2062645253b6a28ac5a780445c79a004e66e9c972f9479",
+          "source_id": "d6cb85cf2c04761ad153efcaa6002d324b62ac46c0ca27908d109f10aff1a5cb",
+          "sample": "test_tone",
+          "case_id": "test_tone",
+          "run_id": "2026-10-29T18:03:24.403279+00:00"
+        }
+      }
+    }
+  },
+  "title": "A different resonance pattern?",
+  "intro": "Compare the released style with two gentle changes to the shape of its resonances. Pitch stays fixed. Does either disguise the voice better while keeping it clear?",
+  "details": [
+    "Bend A and B move lower and middle resonance regions in opposing directions, fading smoothly to the unchanged lookup at 4 kHz. They reshape the envelope, not the harmonic frequencies.",
+    "The baseline uses the released strong-resonance + one-semitone style. High/mid voices use Fuller; low voice and Wasichu use Brighter. Pitch and overall resonance scale are identical across all three processed versions.",
+    "These are native-produced WAVs, not browser-produced DSP. The zero-bend research copy must match the untouched pinned engine exactly. Browser parity, streaming performance and masking strength are not yet established for the bends.",
+    "All versions share RMS matching and peak headroom, without limiting. Prefer the released style or None is useful if the bends add roughness or obscure speech. Cadence and accent are unchanged."
+  ]
+}

@@ -1,3 +1,5 @@
+> **Dated deployment evidence and rationale.** Current configuration and operations: [coturn README](../../infra/coturn/README.md), [self-hosting](../self-hosting.md) and [privacy](../privacy.md). Resource identifiers and version claims below describe the audit date, not live infrastructure.
+
 # coturn audit (2026-10-19)
 
 **Decisions (2026-10-19):** option C (harden in place now, then rebuild from

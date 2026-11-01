@@ -46,7 +46,7 @@ fn masking_is_validated_and_local_audition_uses_the_call_processor() {
     assert!(
         events
             .iter()
-            .any(|event| event["event"] == "loopback_stats" && event["voice_ms"] == 220.0)
+            .any(|event| event["event"] == "loopback_stats" && event["voice_ms"] == 140.0)
     );
     assert_eq!(helper.close(), 0);
 }
@@ -63,9 +63,9 @@ fn live_audition_changes_keep_one_loopback_and_stop_remains_authoritative() {
     );
     assert!(started.get("ok").is_some());
     for (id, style, delay) in [
-        (3, "higher_resonance_pitch", 220.0),
+        (3, "higher_resonance_pitch", 140.0),
         (4, "off", 0.0),
-        (5, "lower_resonance", 220.0),
+        (5, "lower_resonance", 140.0),
     ] {
         let reply = helper.request(
             json!({"id":id,"cmd":"loopback_masking","masking":style}),

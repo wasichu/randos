@@ -1,0 +1,11 @@
+{
+  "source": "Owner conversation following instructions to try the updated local TUI with real headphones/microphone",
+  "owner_note": "sounds good in the tui",
+  "assessment": "Positive subjective TUI sound check",
+  "intended_local_build": {
+    "voice-native/src/lib.rs": "d212f0d74604fcc07eee364f3d0f4beb506b67b0d3d0bc54ec0354df8a1af952",
+    "tools/voice-dsp/results/latency-native-validation.json": "c1c674300238271502911cc946460daf9162dae6b0bc37d7162c6d8571b68962",
+    "tools/voice-dsp/results/latency-helper-after.json": "13e6eb1e5603d064907d69b424172fc2c6c74f1d28ab8cf831655e48f90d5c27"
+  },
+  "limits": "Device models, duration and whether this was preview or a TUI\u2194browser call were not specified. This is not an acoustic-delay measurement or native CI qualification."
+}

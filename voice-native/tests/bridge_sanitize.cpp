@@ -1,11 +1,12 @@
 // Black-box ABI checks under fatal ASan/UBSan, including distinct owners.
 #include <array>
+#include <cerrno>
 #include <cmath>
 #include <cstdlib>
-#include <iostream>
 #include <limits>
 #include <memory>
 #include <thread>
+#include <unistd.h>
 extern "C" {
 void *randos_spectral_new(double, double) noexcept;
 int randos_spectral_process(void *, const float *, float *, size_t, bool) noexcept;
@@ -13,7 +14,14 @@ void randos_spectral_delete(void *) noexcept;
 }
 using Owner = std::unique_ptr<void, decltype(&randos_spectral_delete)>;
 int main() {
-  std::thread([] { std::cin.get(); std::_Exit(72); }).detach();
+  // Raw read avoids holding stdio locks during normal exit on libstdc++.
+  std::thread([] {
+    while (true) {
+      char byte;
+      const auto status = ::read(STDIN_FILENO, &byte, 1);
+      if (status == 0 || (status < 0 && errno != EINTR)) std::_Exit(72);
+    }
+  }).detach();
   if (randos_spectral_new(0, .4) || randos_spectral_new(std::numeric_limits<double>::quiet_NaN(), 1)) return 1;
   Owner a(randos_spectral_new(-1, .8), randos_spectral_delete);
   Owner b(randos_spectral_new(1, 1.25), randos_spectral_delete);

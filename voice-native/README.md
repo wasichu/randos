@@ -1,15 +1,15 @@
 # randos_voice_native
 
-Owned native Signalsmith bridge for the TUI media worker. First integration
-slice: `CallConfig::masking`, off by default, exercised in local real
-Opus/WebRTC calls. The local Port choice now connects the TUI voice panel to
-this path and its explicit audition. Browser calls use the same pinned
-core/configuration through the production Worker/worklet.
-Browser and TUI remain joint first-release requirements.
+Owned native Signalsmith bridge used by the TUI media worker for calls and
+explicit local auditions. `CallConfig::masking` is off by default; the Port
+connects the TUI voice panel to this path. Browser calls use the same pinned
+core/configuration through the production Worker/worklet. Both clients shipped
+voice masking in v0.10.0. The [current architecture map](../docs/architecture/refactor_plan.md)
+links the contracts; dated integration experiments are historical evidence.
 
-`Style` provides the two proposed families in both directions: resonance alone
-at ×.8/×1.25, or that resonance plus −1/+1 semitone. These internal names are not
-final UI labels or a promise of anonymity. Higher/lower direction is not inferred
+`Style` provides resonance alone at ×.8/×1.25, or that resonance plus
+−1/+1 semitone. These internal names map to the current UI labels rather than
+defining a promise of anonymity. Higher/lower direction is not inferred
 from someone's voice. No inference model or runtime download.
 
 ## Boundary and safety audit
@@ -42,17 +42,26 @@ existing Rust/WASM voice crate.
 `Engine` preserves the raw core's startup/tail for exact finite comparisons.
 `Masker` supplies bounded causal 960-sample ingress/egress around unchanged
 3,840-sample core calls, crops the initial 3,840 invalid samples once and primes
-7,680 output samples. Fixed input/output arrays never grow. Startup emits
+3,840 output samples. Fixed input/output arrays never grow. Startup emits
 silence; overflow, starvation, nonfinite or out-of-range output returns an error
 and silence, with no dry fallback or automatic recovery. Explicit reset purges
 both queues and replaces the C++ engine. Live Stop drops it without flushing.
 
-The first valid frame is returned on the twelfth input call. This is 10,560
+The first valid frame is returned on the eighth input call. This is 6,720
 leading samples in concatenated returned frame arrays; with each 20 ms capture
-frame available at its end, the first frame is delivered at 240 ms. These are
+frame available at its end, the first frame is delivered at 160 ms. These are
 different coordinate conventions, **not** two additive delays. Relative to
-unmasked 20 ms frame delivery, the adapter adds about 220 ms. Core latency,
+unmasked 20 ms frame delivery, the adapter adds about 140 ms. Core latency,
 batching and prefill overlap. Device, AEC, Opus and network delays are additional.
+
+The prefill-only latency experiment reduced this offset by 80 ms with exact
+aligned PCM/tails for all four styles and five fixtures. Native processing and
+sending are synchronous: the former extra DSP queue did not protect the sender
+from an OS stall. Independent synthetic capture timestamps retain late bursts
+instead of hiding them as catch-up. The browser keeps its larger buffer because
+its AudioWorklet consumes independently and shorter buffering starved under
+controlled Worker stalls. See the [experiment guide](../tools/voice-dsp/README.md).
+This is a software-path result, not physical-device or acoustic qualification.
 
 ## Call placement
 

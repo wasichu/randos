@@ -1,5 +1,5 @@
 defmodule RandosDev.VoiceLabReviews do
-  @moduledoc "Explicit, text-only local listening feedback; never part of production."
+  @moduledoc "Text-only local listening feedback and withdrawals; never part of production."
   use RandosWeb, :html
 
   @root Path.expand("../..", __DIR__)
@@ -74,12 +74,11 @@ defmodule RandosDev.VoiceLabReviews do
 
   defp validate(%{"context" => context, "ratings" => ratings, "notes" => notes} = payload)
        when is_map(context) and is_map(ratings) and is_binary(notes) do
-    valid = Map.keys(payload) |> Enum.sort() == ~w(context notes ratings)
+    valid = valid_content?(payload)
 
     if valid and byte_size(notes) <= 8000 and String.valid?(notes) and
          String.length(notes) <= 2000 and
-         valid_context?(context) and valid_ratings?(ratings, context) and
-         (map_size(ratings) > 0 or String.trim(notes) != "") do
+         valid_context?(context) and valid_ratings?(ratings, context) do
       {:ok,
        Map.merge(payload, %{
          "schema_version" => 1,
@@ -91,6 +90,16 @@ defmodule RandosDev.VoiceLabReviews do
   end
 
   defp validate(_payload), do: {:error, :invalid_review}
+
+  defp valid_content?(%{"withdrawn" => true, "ratings" => ratings, "notes" => ""} = payload),
+    do:
+      map_size(ratings) == 0 and
+        Enum.sort(Map.keys(payload)) == ~w(context notes ratings withdrawn)
+
+  defp valid_content?(%{"ratings" => ratings, "notes" => notes} = payload),
+    do:
+      Enum.sort(Map.keys(payload)) == ~w(context notes ratings) and
+        (map_size(ratings) > 0 or String.trim(notes) != "")
 
   defp valid_context?(%{"view" => "listen", "build_id" => build} = context) do
     Map.keys(context) |> Enum.sort() ==
@@ -142,7 +151,21 @@ defmodule RandosDev.VoiceLabReviews do
         {"preferred_world", "preferred_engines"},
         {"gentle_current_pitch", "gentle_pitch"},
         {"gentle_half_pitch", "gentle_pitch"},
-        {"gentle_zero_pitch", "gentle_pitch"}
+        {"gentle_zero_pitch", "gentle_pitch"},
+        {"envelope_current", "selective_resonance"},
+        {"envelope_bend_a", "selective_resonance"},
+        {"envelope_bend_b", "selective_resonance"},
+        {"fargan_control", "fargan_resynthesis"},
+        {"fargan_mask_control", "fargan_masking"},
+        {"fargan_mask_pitch", "fargan_masking"},
+        {"fargan_mask_envelope", "fargan_masking"},
+        {"fargan_combined", "fargan_combined"},
+        {"texture_bandwidth_control", "texture_bandwidth"},
+        {"texture_bandwidth_narrower", "texture_bandwidth"},
+        {"texture_bandwidth_wider", "texture_bandwidth"},
+        {"texture_source_control", "texture_source"},
+        {"texture_source_softer", "texture_source"},
+        {"texture_source_sharper", "texture_source"}
       ] and
       fingerprint?(context["build_id"]) and fingerprint?(context["source_id"]) and
       text?(context["sample"], 100) and text?(context["case_id"], 100) and
@@ -155,7 +178,13 @@ defmodule RandosDev.VoiceLabReviews do
       {context["processor"], context["mode"]} in [
         {"signalsmith", "signalsmith_strength_1"},
         {"signalsmith_world", "engine_comparison_1"},
-        {"signalsmith", "gentle_pitch_1"}
+        {"signalsmith", "gentle_pitch_1"},
+        {"signalsmith_envelope", "selective_resonance_1"},
+        {"fargan", "fargan_quality_1"},
+        {"fargan", "fargan_masking_1"},
+        {"fargan", "fargan_combined_1"},
+        {"signalsmith_texture", "bandwidth_1"},
+        {"signalsmith_texture", "source_1"}
       ] and
       fingerprint?(context["build_id"]) and fingerprint?(context["source_id"]) and
       text?(context["sample"], 100) and text?(context["case_id"], 100) and
@@ -187,6 +216,12 @@ defmodule RandosDev.VoiceLabReviews do
       case mode do
         "engine_comparison_1" -> ~w(spectral world none unsure)
         "gentle_pitch_1" -> ~w(current_pitch half_pitch zero_pitch none unsure)
+        "selective_resonance_1" -> ~w(current bend_a bend_b none unsure)
+        "bandwidth_1" -> ~w(reference control narrower wider none unsure)
+        "source_1" -> ~w(reference control softer sharper none unsure)
+        "fargan_quality_1" -> ~w(acceptable rough unusable unsure)
+        "fargan_masking_1" -> ~w(control pitch envelope reference none unsure)
+        "fargan_combined_1" -> ~w(control combined reference none unsure)
         _ -> ~w(current more_pitch more_resonance opposing none unsure)
       end
 
@@ -219,12 +254,13 @@ defmodule RandosDev.VoiceLabReviews do
   attr :voices, :list, default: [{"disguised", "Modified voice"}]
   attr :preference_choices, :list, default: []
   attr :preference, :boolean, default: false
+  attr :preference_label, :string, default: "Best balance of disguise, naturalness and clarity"
   attr :notes_placeholder, :string, default: "For example: nasal at 0.7, clearer at 0.8…"
 
   def feedback(assigns) do
     questions =
       if assigns.preference,
-        do: [{"preference", "Best balance of disguise, naturalness and clarity"}],
+        do: [{"preference", assigns.preference_label}],
         else: [
           {"naturalness", "Naturalness"},
           {"clarity", "Clarity"},

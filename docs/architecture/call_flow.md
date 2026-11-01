@@ -1,7 +1,8 @@
 # Call flow: how a call happens, for the browser and the TUI
 
-Diagrams of the WebRTC call flow, as built (2026-10-20; the TUI helper's
-parts updated 2026-10-21 for Stages 2 and 3). The protocol itself
+**Maintained architecture explanation.** For current ownership and work, start
+with the [architecture map and roadmap](refactor_plan.md). Dated design notes
+are rationale, not competing protocol specifications. The protocol itself
 is specified in [`participant_channel.md`](participant_channel.md) (its
 "Client obligations" are the contract both clients follow); call timing
 values live in `Randos.Calls.Lifecycle`. These diagrams show how the pieces
