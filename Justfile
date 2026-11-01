@@ -171,6 +171,7 @@ precommit: check-state-encrypted check-privacy
     cd clients/tui && mix precommit
     just translate-test
     node tools/voice-dsp/browser/clock.test.mjs
+    node --test test/e2e/dsp_stream_diagnostics_test.mjs
     python3 tools/voice-dsp/browser/check_vendor.py
     cd tools/translate && UV_PROJECT_ENVIRONMENT=.venv-test uv run --group dev ruff check ../voice-browser ../voice-model ../voice-dsp ../voice-fargan
     just voice-eval-test

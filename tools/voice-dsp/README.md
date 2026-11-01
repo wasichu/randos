@@ -578,3 +578,15 @@ passing the original through. The stable browser processed track stays attached
 to WebRTC through gate changes. Shared lab mechanics retain fixture capture only
 in the dev entry. See the product integration checkpoint in the roadmap for
 validation and remaining release limits.
+
+## Realtime stream-test diagnostics
+
+The WORLD research fixture can miss a playback deadline because of computation,
+scheduling, or delivery delay. A terminal starvation snapshot therefore does
+not prove sustained compute overload. The smoke test keeps strict transport,
+queue, sample-contiguity and wall-clock guards, and reports both actual mean
+completed-call time and warmup-inclusive cost per emitted output hop. The first
+lookahead call contributes time without emitting a hop; only the actual mean
+must be bounded by the largest measured call. Deterministic test-only snapshots
+cover this distinction and reject malformed/gapped/overflowing diagnostics.
+No shipping DSP or realtime performance threshold changes with this reporting.
