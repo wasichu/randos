@@ -30,10 +30,13 @@ models = [
 mlx = ["mlx-lm==0.32.2"]
 # The COMET-Kiwi scorer (`--group comet`): Unbabel's package and its own
 # PyTorch Lightning stack, kept apart from the rest.
-comet = ["unbabel-comet==2.2.7", "setuptools==84.2.1"]
+# COMET pins torchmetrics 0.10/0.11, which imports pkg_resources (removed in setuptools 81).
+comet = ["unbabel-comet==2.2.7", "setuptools==80.9.0"]
 
 [tool.uv]
 package = false
+# Remove when COMET supports torchmetrics without pkg_resources.
+constraint-dependencies = ["setuptools<81"]
 # mlx-lm needs transformers 5; the seq2seq models and COMET stay on 4.x, so
 # the groups resolve apart (one group per `uv run`, which is how runs go anyway).
 conflicts = [

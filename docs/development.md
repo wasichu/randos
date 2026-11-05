@@ -200,7 +200,10 @@ workflow (`dependency-check.yml`) runs `cargo deny check advisories` and
 
 - **CI green, and no `major` or `gpu-check` label: merge.** A Python
   harness's `-tooling` PR (pytest, Ruff, setuptools) counts as this,
-  though it carries `gpu-check` (labels are per directory).
+  though it carries `gpu-check` (labels are per directory). For setuptools,
+  also sync the isolated worktree with `--group comet` and verify `import comet`:
+  offline tests do not import that model stack. COMET currently requires
+  setuptools below 81 because its torchmetrics dependency imports pkg_resources.
 - **`major`** (a dependency up a major version; these come in PRs of their
   own, `<group>-major`, labelled by `dependabot-labels.yml`): read the
   changelog for breaking changes first. Majors are worth taking, not
