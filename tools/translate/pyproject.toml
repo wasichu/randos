@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest==8.4.2", "ruff==0.17.3"]
+dev = ["pytest==9.2.0", "ruff==0.17.3"]
 # Running models (`uv sync --group models`): Opus-MT, M2M100, MADLAD-400 and
 # the MetricX-24 scorer, through transformers on Apple's GPU (MPS).
 models = [
@@ -30,10 +30,13 @@ models = [
 mlx = ["mlx-lm==0.32.2"]
 # The COMET-Kiwi scorer (`--group comet`): Unbabel's package and its own
 # PyTorch Lightning stack, kept apart from the rest.
+# COMET pins torchmetrics 0.10/0.11, which imports pkg_resources (removed in setuptools 81).
 comet = ["unbabel-comet==2.2.7", "setuptools==80.9.0"]
 
 [tool.uv]
 package = false
+# Remove when COMET supports torchmetrics without pkg_resources.
+constraint-dependencies = ["setuptools<81"]
 # mlx-lm needs transformers 5; the seq2seq models and COMET stay on 4.x, so
 # the groups resolve apart (one group per `uv run`, which is how runs go anyway).
 conflicts = [

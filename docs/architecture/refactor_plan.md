@@ -290,6 +290,12 @@ and preview path, not a claim that every native call input issue is resolved.
 
 ## Deferred decisions and maintenance
 
+- Dependency review (2026-11-05) retained setuptools 80.9.0: version 84.2.1
+  breaks COMET startup through torchmetrics (`pkg_resources` was removed in 81).
+  The translation project constrains setuptools below 81 until that upstream
+  chain is compatible; pytest 9.2.0 remains eligible. Isolated `import comet`
+  passed with the retained pin. No product, privacy or deployment change.
+
 - Drop the recorded `RUSTSEC-2026-0387` exception when the native dependency
   chain permits it; [current advisory policy](../../clients/tui/native/deny.toml)
   owns the exception, not dated dependency-version claims.
