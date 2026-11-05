@@ -63,8 +63,8 @@ Native manifest metadata explicitly identifies the package MIT license and pins
 the two already-vendored 3D path packages at 0.1.0 for the existing cargo-deny
 policy. Their code/features are unchanged.
 
-The upstream native lock was retained except pulldown-cmark 0.13.3 → 0.13.5,
-fixing RUSTSEC-2026-0414 found by the new audit. Bincode 1.3 and yaml-rust are
+The upstream native lock was retained except pulldown-cmark 0.13.3 → 0.13.6,
+fixing RUSTSEC-2026-0414 and RUSTSEC-2026-0433 found by the audit. Bincode 1.3 and yaml-rust are
 upstream transitive unmaintained notices, not vulnerability waivers. Renderer
 checks retain them at warning level; actual vulnerabilities and licensing/source
 violations fail precommit. Track their upstream replacements; no vulnerability waiver was added.
