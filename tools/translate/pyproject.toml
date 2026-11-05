@@ -17,7 +17,7 @@ dev = ["pytest==8.4.2", "ruff==0.17.3"]
 # Running models (`uv sync --group models`): Opus-MT, M2M100, MADLAD-400 and
 # the MetricX-24 scorer, through transformers on Apple's GPU (MPS).
 models = [
-    "torch==2.14.1",
+    "torch==2.15.0",
     "transformers==4.56.2",
     "sentencepiece==0.2.2",
     "sacremoses==0.2.0",
