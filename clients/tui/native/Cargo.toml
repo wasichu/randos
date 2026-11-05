@@ -14,7 +14,7 @@ opus = "0.4"
 randos_voice = { path = "../../../voice", version = "0.1" }
 randos_voice_native = { path = "../../../voice-native", version = "0.1" }
 realfft = "3.5"
-ringbuf = "0.5"
+ringbuf = "0.6"
 rubato = "5"
 rustls = { version = "0.23", default-features = false, features = ["std", "tls12", "aws_lc_rs"] }
 serde = { version = "1", features = ["derive"] }
