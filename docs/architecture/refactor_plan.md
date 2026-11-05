@@ -1,5 +1,12 @@
 # randos — current architecture and roadmap
 
+Verified dependency maintenance locally on 2026-11-05 with `just precommit`:
+the vendored renderer lock uses pulldown-cmark 0.13.6 for RUSTSEC-2026-0433,
+with the physical redraw patch and source provenance guard preserved. The
+usage_rules update regenerated framework task guidance. Browser/TUI smoke and
+native CI must pass before merging. README, development and self-hosting need
+no changes for this patch: usage, setup, deployment and privacy are unchanged.
+
 Verified against released v0.11.0 (`ff7ec5f`) on 2026-11-01: green native
 macOS/Linux and browser/TUI CI, clean-checkout/package qualification, production
 server deployed before the TUI tag, verified public archive checksums, and a
