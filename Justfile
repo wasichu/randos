@@ -112,6 +112,7 @@ test *args:
 
 # Browser smoke test: two headless Chromes place a real WebRTC call (needs Chrome)
 smoke:
+    RANDOS_CALL_SEGMENT_MS=60000 test/e2e/with_test_server.sh tmp/smoke-mobile-call-layout.log env BASE_URL=http://localhost:4010 node test/e2e/mobile_call_layout_smoke.mjs
     RANDOS_CALL_SEGMENT_MS=60000 test/e2e/with_test_server.sh tmp/smoke-voice-product.log env BASE_URL=http://localhost:4010 node test/e2e/voice_product_smoke.mjs
     test/e2e/with_test_server.sh tmp/smoke-conversation-preferences.log env BASE_URL=http://localhost:4010 node test/e2e/conversation_preferences_smoke.mjs
     node --test test/e2e/cdp_startup_test.mjs

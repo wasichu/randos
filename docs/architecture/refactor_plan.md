@@ -1,5 +1,12 @@
 # randos — current architecture and roadmap
 
+v0.11.1 preparation on 2026-11-06: the owner authorized a maintenance release.
+The independent packaging review prompted translated active-call text-bound
+checks and a bounded mobile label-wrap fix; no new strings, protocol or DSP
+changes. Versioned notes and qualification are tracked in
+[v0.11.1 readiness](../releases/v0.11.1-readiness.md). Existing model comparisons
+and unchanged media/privacy ownership remain applicable; defer broad refactors.
+
 Verified mobile call presentation on 2026-11-06 with `just precommit`,
 `just smoke`, `just tui-smoke` and `just screenshots`. The first UI refinement
 keeps the existing visual identity and server policy.

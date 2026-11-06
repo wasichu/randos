@@ -798,7 +798,7 @@ defmodule RandosWeb.HomeComponents do
             <.icon name="hero-speaker-wave" class="size-5 shrink-0" />
           </span>
           <% gettext_comment("Button: turn your own microphone off.") %>
-          <span data-mute-label class="leading-none">{pgettext("button", "Mute")}</span>
+          <span data-mute-label class="min-w-0 leading-snug">{pgettext("button", "Mute")}</span>
         </button>
       </div>
 
