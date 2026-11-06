@@ -1,9 +1,12 @@
 # randos — current architecture and roadmap
 
-v0.11.1 preparation on 2026-11-06: the owner authorized a maintenance release.
-The independent packaging review prompted translated active-call text-bound
-checks and a bounded mobile label-wrap fix; no new strings, protocol or DSP
-changes. Versioned notes and qualification are tracked in
+Verified released v0.11.1 (`e95545b`) on 2026-11-06: green native macOS/Linux
+and browser/TUI CI, clean-checkout package qualification, verified public archive
+checksums, production deployment and a successful Homebrew upgrade/test. The
+independent packaging review prompted translated active-call text-bound checks
+and a bounded mobile label-wrap fix; all 240 locale/size/theme/mute cases passed.
+No new strings, protocol or DSP changes. Publication evidence and focused
+extract/merge/link/leave decisions are in
 [v0.11.1 readiness](../releases/v0.11.1-readiness.md). Existing model comparisons
 and unchanged media/privacy ownership remain applicable; defer broad refactors.
 
