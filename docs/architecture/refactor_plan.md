@@ -1,5 +1,36 @@
 # randos — current architecture and roadmap
 
+Verified mobile call presentation on 2026-11-06 with `just precommit`,
+`just smoke`, `just tui-smoke` and `just screenshots`. The first UI refinement
+keeps the existing visual identity and server policy.
+Mobile calls use compact branding, retain the current progress step for assistive
+technology, and show both voices and Mute/Next/End side by side. The connecting
+panel drops its duplicate eyebrow; the connection prefix remains available to
+screen readers. Microphone permission and transport states remain visible, and
+the keyed media hook is preserved through call transitions. No timing, protocol,
+privacy or TUI behavior changes.
+
+The screenshot harness now checks mobile call voices and controls at 320/390 px
+and captures light/dark evidence. README screenshots are refreshed; README,
+development and self-hosting prose need no changes because the controls,
+configuration and call semantics are unchanged. Translated message keys are
+reused, so no model run or catalog changes are needed.
+The detector's five gray-on-color warnings are pre-existing theme-pair false
+positives: white text on dark teal in light mode and dark text on light teal
+in dark mode. No detector rules were suppressed.
+Owner review: "it looks pretty subtle. it looks good"; keep this restrained
+first pass rather than expanding into a redesign.
+
+Verified Impeccable product-context initialization on 2026-11-06 against the
+owner's confirmed direction and README: [PRODUCT.md](../../PRODUCT.md) records
+equal support for crosstalk, exchange, listening and casual conversation;
+`.impeccable/config.json` records the owner's code-first workflow choice.
+This adds design context only. README, development and self-hosting need no
+changes because product behavior, setup and operations are unchanged. Live-mode
+integration is deferred; no template injection or CSP changes are part of init.
+Validation: product schema and workflow JSON checks, `git diff --check` and
+`just precommit` passed.
+
 Verified dependency maintenance locally on 2026-11-05 with `just precommit`:
 the vendored renderer lock uses pulldown-cmark 0.13.6 for RUSTSEC-2026-0433,
 with the physical redraw patch and source provenance guard preserved. The

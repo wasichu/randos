@@ -113,6 +113,23 @@ try {
   )))
   await sleep(2_500) // the waveforms fill in
   await bothThemes(a, "web-call")
+  for (const width of [390, 320]) {
+    await a.send("Emulation.setDeviceMetricsOverride", {
+      width, height: HEIGHT, deviceScaleFactor: 2, mobile: true,
+    })
+    const fit = await a.eval(`(() => {
+      const box = selector => document.querySelector(selector).getBoundingClientRect();
+      const local = box('#local-waveform'), remote = box('#remote-waveform');
+      const controls = ['#mute-button', '#next-rando-button', '#end-call-button'].map(box);
+      return document.documentElement.scrollWidth <= innerWidth &&
+        local.top === remote.top &&
+        controls.every(r => r.width >= 44 && r.height >= 44 && r.bottom <= innerHeight) &&
+        controls.every(r => r.top === controls[0].top);
+    })()`)
+    if (!fit) throw Error(`Mobile call controls or voices do not fit at ${width}px`)
+    await bothThemes(a, `web-call-${width}`)
+  }
+  await sized(a)
   // Leave the site, so neither page can be matched with the TUI later.
   await a.hangUp()
   await Promise.all([a, b].map(page => page.send("Page.navigate", {url: "about:blank"})))

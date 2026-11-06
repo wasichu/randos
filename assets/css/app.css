@@ -169,6 +169,10 @@
 
 /* The same keyed, DOM-owning media hook survives connecting → active.
    Layout changes here keep its controls and microphone state intact. */
+#conversation-card[data-ui-state="in_call"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+#conversation-card[data-ui-state="in_call"] #mute-button { height: 100%; }
 #conversation-card[data-ui-state="connecting"] {
   max-width: 35rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));

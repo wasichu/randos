@@ -21,15 +21,18 @@ defmodule RandosWeb.HomeComponents do
   def hero_panel(assigns) do
     ~H"""
     <%!-- Header and progress are separate items in the centered page grid. --%>
-    <div id="hero-panel" class="contents">
+    <div id="hero-panel" data-ui-state={@ui_state} class="contents">
       <div class="order-1 mx-auto w-full max-w-2xl text-center">
         <div class="flex items-center justify-center gap-3">
-          <img src={~p"/images/logo.svg"} alt="" class="size-10 sm:size-12" />
-          <h1 class="text-4xl font-semibold leading-none tracking-normal text-stone-950 sm:text-5xl">
+          <img src={~p"/images/logo.svg"} alt="" class="size-8 sm:size-12" />
+          <h1 class="text-2xl font-semibold leading-none tracking-normal text-stone-950 sm:text-5xl">
             randos
           </h1>
         </div>
-        <p class="mt-3 text-base leading-7 text-stone-700 sm:text-lg">
+        <p class={[
+          "mt-3 text-sm leading-6 text-stone-700 sm:text-lg sm:leading-7",
+          @ui_state != :idle && "hidden sm:block"
+        ]}>
           {gettext("Short anonymous conversations for language practice.")}
         </p>
       </div>
@@ -52,7 +55,10 @@ defmodule RandosWeb.HomeComponents do
       id="state-progress"
       data-flow={@flow}
       aria-label={gettext("Call progress")}
-      class="order-2 flex flex-wrap items-center justify-center gap-2"
+      class={[
+        "order-2 flex flex-wrap items-center justify-center gap-2",
+        @ui_state != :idle && "sr-only sm:not-sr-only"
+      ]}
     >
       <li
         :for={state <- @steps}
@@ -60,6 +66,7 @@ defmodule RandosWeb.HomeComponents do
         aria-current={if state in lit_steps(@ui_state), do: "step"}
         class={[
           "rounded-full border px-3 py-1 text-xs font-medium transition-colors duration-200",
+          state not in lit_steps(@ui_state) && "hidden sm:list-item",
           progress_step_class(@ui_state, state)
         ]}
       >
@@ -571,11 +578,7 @@ defmodule RandosWeb.HomeComponents do
       data-webrtc-role={@webrtc_role}
       class="order-1 col-span-full px-5 pb-7 pt-8 text-center sm:px-8"
     >
-      <p class="flex items-center justify-center gap-2 text-sm font-medium text-teal-700">
-        <span aria-hidden="true" class="size-2 rounded-full bg-teal-700 motion-safe:animate-pulse"></span>
-        {gettext("Connecting")}
-      </p>
-      <h2 class="mt-4 text-3xl font-semibold tracking-normal text-stone-950">
+      <h2 class="text-2xl font-semibold tracking-normal text-stone-950 sm:text-3xl">
         {gettext("Connecting your audio")}
       </h2>
       <p id="match-connection-label" class="mx-auto mt-3 max-w-sm leading-7 text-stone-600">
@@ -622,7 +625,7 @@ defmodule RandosWeb.HomeComponents do
       class="order-1 col-span-full space-y-5 p-4 sm:space-y-6 sm:p-7"
     >
       <div>
-        <h2 class="text-3xl font-semibold tracking-normal text-stone-950">
+        <h2 class="text-2xl font-semibold tracking-normal text-stone-950 sm:text-3xl">
           <% gettext_comment(
             "Heading over the voice call in progress, with your conversation partner."
           ) %>
@@ -651,7 +654,7 @@ defmodule RandosWeb.HomeComponents do
         </p>
       </div>
 
-      <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
+      <div class="grid grid-cols-2 gap-3 sm:gap-4">
         <% gettext_comment(
           "Label of your own voice's waveform during a call (you, not the other person)."
         ) %>
@@ -676,14 +679,14 @@ defmodule RandosWeb.HomeComponents do
   defp call_actions_panel(assigns) do
     ~H"""
     <div class={[
-      "order-3 col-span-full grid gap-2 border-t border-stone-200 px-4 py-3 sm:col-span-2 sm:gap-3 sm:border-s sm:px-7",
-      @call_kind != :invitation && "sm:grid-cols-2"
+      "order-3 col-span-2 grid gap-2 border-t border-s border-stone-200 px-3 py-3 sm:gap-3 sm:px-7",
+      @call_kind != :invitation && "grid-cols-2"
     ]}>
       <button
         :if={@call_kind != :invitation}
         id="next-rando-button"
         phx-click="next_rando"
-        class="inline-flex h-12 items-center justify-center rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+        class="inline-flex min-h-12 items-center justify-center rounded-md border border-stone-300 px-2 py-2 text-sm font-semibold leading-snug text-stone-700 transition hover:border-stone-950 hover:text-stone-950 sm:px-4 sm:text-base"
       >
         <% gettext_comment("Button: end this call and find another person to talk to.") %>
         {pgettext("button", "Next rando")}
@@ -691,7 +694,7 @@ defmodule RandosWeb.HomeComponents do
       <button
         id="end-call-button"
         phx-click="end_call"
-        class="inline-flex h-12 items-center justify-center rounded-md border border-red-200 px-4 py-0 font-semibold leading-none text-red-700 transition hover:border-red-700 hover:bg-red-50"
+        class="inline-flex min-h-12 items-center justify-center rounded-md border border-red-200 px-2 py-2 text-sm font-semibold leading-snug text-red-700 transition hover:border-red-700 hover:bg-red-50 dark:text-red-300 sm:px-4 sm:text-base"
       >
         <% gettext_comment("Button: hang up, ending the call now.") %>
         {pgettext("button", "End")}
@@ -705,7 +708,7 @@ defmodule RandosWeb.HomeComponents do
 
   defp call_timer_panel(assigns) do
     ~H"""
-    <div class="order-2 col-span-full flex border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-1 sm:h-full sm:items-center sm:justify-end sm:px-7">
+    <div class="order-2 col-span-2 flex items-center justify-end border-t border-stone-200 px-3 py-3 text-sm text-stone-500 sm:col-span-1 sm:h-full sm:px-7">
       <div
         :if={@call_status == :active && @call_deadline_unix_ms}
         id="call-countdown"
@@ -754,14 +757,14 @@ defmodule RandosWeb.HomeComponents do
     >
       <div
         data-call-status
-        class="order-2 col-span-full flex flex-col gap-2 border-t border-stone-200 px-4 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7"
+        class="order-2 col-span-1 flex flex-col justify-center gap-2 border-t border-stone-200 px-3 py-3 text-sm text-stone-500 sm:col-span-2 sm:h-full sm:flex-row sm:items-center sm:justify-between sm:px-7"
       >
         <div class="min-w-0">
           <p class="flex flex-wrap items-center gap-x-1 gap-y-0.5">
             <% gettext_comment(
               "Label before the call's connection state (for example \"connecting\")."
             ) %>
-            <span>{gettext("Connection:")}</span>
+            <span class="sr-only">{gettext("Connection:")}</span>
             <span id="webrtc-state-label" data-webrtc-status>
               {pgettext("connection state", "not started")}
             </span>
@@ -778,7 +781,7 @@ defmodule RandosWeb.HomeComponents do
 
       <div
         data-call-mute
-        class="order-3 col-span-full border-t border-stone-200 px-4 py-3 sm:col-span-1 sm:px-7"
+        class="order-3 col-span-1 border-t border-stone-200 px-3 py-3 sm:px-7"
       >
         <button
           id="mute-button"
@@ -786,7 +789,7 @@ defmodule RandosWeb.HomeComponents do
           data-webrtc-mute
           disabled
           aria-pressed="false"
-          class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-stone-300 px-4 py-0 font-semibold leading-none text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400"
+          class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-stone-300 px-2 py-2 text-sm font-semibold leading-snug text-stone-700 transition hover:border-stone-950 hover:text-stone-950 disabled:cursor-not-allowed disabled:border-stone-200 disabled:text-stone-400 sm:px-4 sm:text-base"
         >
           <span data-mute-icon class="inline-flex">
             <.icon name="hero-speaker-x-mark" class="size-5 shrink-0" />
@@ -818,15 +821,15 @@ defmodule RandosWeb.HomeComponents do
 
   defp waveform(assigns) do
     ~H"""
-    <div id={@id} class="rounded-md border border-stone-200 bg-stone-50 p-3 sm:p-4">
+    <div id={@id} class="min-w-0 rounded-md border border-stone-200 bg-stone-50 p-3 sm:p-4">
       <div class="mb-4">
         <p class="text-sm font-semibold text-stone-800">{@label}</p>
-        <p id={"#{@id}-language"} class="mt-1 text-sm text-stone-500">{@language}</p>
+        <p id={"#{@id}-language"} class="mt-1 text-sm break-words text-stone-500">{@language}</p>
       </div>
       <canvas
         id={"#{@id}-canvas"}
         data-audio-visualizer={if(@id == "local-waveform", do: "local", else: "remote")}
-        class="h-20 w-full rounded-md border border-stone-100 bg-white shadow-inner shadow-stone-100 sm:h-28"
+        class="h-16 w-full rounded-md border border-stone-100 bg-white shadow-inner shadow-stone-100 sm:h-28"
       ></canvas>
     </div>
     """
