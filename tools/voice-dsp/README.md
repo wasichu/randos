@@ -589,4 +589,8 @@ completed-call time and warmup-inclusive cost per emitted output hop. The first
 lookahead call contributes time without emitting a hop; only the actual mean
 must be bounded by the largest measured call. Deterministic test-only snapshots
 cover this distinction and reject malformed/gapped/overflowing diagnostics.
+The finite fixture stops capture at its input length, while delayed playout
+continues through the output tail. Terminal snapshots use that fixture length
+to cap released input hops and bound the clock by input length plus startup
+delay; crossing the input-length clock boundary alone is not a transport fault.
 No shipping DSP or realtime performance threshold changes with this reporting.

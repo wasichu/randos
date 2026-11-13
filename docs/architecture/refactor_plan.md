@@ -1,5 +1,17 @@
 # randos — current architecture and roadmap
 
+Verified WORLD smoke diagnostic bounds locally on 2026-11-13 with the exact
+snapshot from failing main CI run `43419483613`, eight diagnostic unit tests,
+`just precommit`, `just tui-smoke` and `just smoke`.
+The combined browser/TUI job failed before reaching TUI tests: its research
+fixture incorrectly required the playout clock to stay below the input length.
+Derive the bound from fixture length plus startup delay and cap input hops at
+the finite capture length. Queue, continuity, compute and wall-clock guards
+remain; shipping DSP, protocol and timeouts are unchanged. **Leave** runtime
+ownership unchanged and **link** the CI snapshot to a deterministic regression.
+README, development and self-hosting need no change because product behavior,
+commands and operations are unchanged; the DSP guide records the test boundary.
+
 Verified v0.11.2 (`fddd63a`) on 2026-11-13: green native macOS/Linux and
 browser/TUI CI, full local post-commit checks, clean-checkout macOS packaging
 and production-image inspection. The guarded website deployment serves the
