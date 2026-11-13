@@ -156,20 +156,10 @@ msgstr ""
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr ""
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr ""
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
-msgstr ""
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
 msgstr ""
 
 #: lib/tui/view/status_screen.ex
@@ -185,12 +175,6 @@ msgstr ""
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
-msgstr ""
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
 msgstr ""
 
 #: lib/tui/view.ex
@@ -1072,4 +1056,14 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "preview volume"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
 msgstr ""

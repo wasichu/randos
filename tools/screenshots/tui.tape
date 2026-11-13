@@ -64,6 +64,13 @@ Sleep 500ms
 
 Type "e"
 Sleep 1s
+# The peer is now idle: show the language choices while waiting alone.
+Enter
+Sleep 1s
+Screenshot docs/assets/tui-looking.png
+Sleep 500ms
+Type "c"
+Sleep 1s
 # Inviting someone (the link's host is PHX_HOST's).
 Type "v"
 Sleep 2s

@@ -86,7 +86,37 @@ try {
   await a.click("#cancel-invitation-button")
   await a.waitFor(`!!document.querySelector("#conversation-form")`, "the form again")
 
-  await a.findRando("en", "es")
+  await a.send("Emulation.setEmulatedMedia", {features: [{name: "prefers-reduced-motion", value: "no-preference"}]})
+  // Multiple alternatives exercise wrapping in both language rows.
+  await a.findRando(["en", "de", "ja"], ["es", "fr", "de"])
+  await a.waitFor(`document.querySelector('#search-activity')?.dataset.searchRunning === 'true'`, "search animation running")
+  if (await a.eval('window.__randosStreams.length !== 0')) throw Error('Searching must not open the microphone')
+  for (const width of [WIDTH, 390, 320]) {
+    await a.send("Emulation.setDeviceMetricsOverride", {
+      width, height: HEIGHT, deviceScaleFactor: 2, mobile: width < WIDTH,
+    })
+    if (!await a.eval('document.documentElement.scrollWidth <= innerWidth')) {
+      throw Error(`Searching layout overflows at ${width}px`)
+    }
+    for (const theme of ["light", "dark"]) {
+      await setTheme(a, theme)
+      await shoot(a, `web-looking-${theme}-${width}`)
+    }
+  }
+  await a.eval(`window.__searchFrameTime = document.querySelector('.search-orbit').getAnimations()[0].currentTime`)
+  await a.waitFor(`document.querySelector('.search-orbit').getAnimations()[0].currentTime > window.__searchFrameTime`, "search dot advances")
+  await a.send("Emulation.setEmulatedMedia", {features: [{name: "prefers-reduced-motion", value: "reduce"}]})
+  if (!await a.eval(`getComputedStyle(document.querySelector('.search-orbit')).animationName === 'none'`)) {
+    throw Error('Reduced motion must keep a static search indicator')
+  }
+  await a.send("Emulation.setEmulatedMedia", {features: [{name: "prefers-reduced-motion", value: "no-preference"}]})
+  await a.send("Emulation.setDeviceMetricsOverride", {width: 320, height: 240, deviceScaleFactor: 2, mobile: true})
+  await a.eval('window.scrollTo(0, document.documentElement.scrollHeight)')
+  await a.waitFor(`document.querySelector('#search-activity').dataset.searchRunning === 'false'`, "offscreen search animation pauses")
+  await a.eval('window.scrollTo(0, 0)')
+  await a.waitFor(`document.querySelector('#search-activity').dataset.searchRunning === 'true'`, "visible search animation resumes")
+  await sized(a)
+  console.log('  search motion advances, pauses offscreen, respects reduced motion and opens no microphone')
   await b.findRando("es", "en")
   await a.waitFor('!!document.querySelector("#connecting-panel")', 'the connecting layout')
   for (const width of [WIDTH, 390, 320]) {

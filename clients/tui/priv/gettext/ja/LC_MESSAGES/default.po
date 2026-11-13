@@ -156,21 +156,11 @@ msgstr "エラー：%{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "通話の終了状況：完了 %{finished}、接続不能 %{not_connected}、接続途絶 %{lost}、キャンセル %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "私が話します。"
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "私は18歳以上で 匿名の電話もOKです"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "お話を聞いて、嬉しく思います。"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "話せる言語：まだ通話はありません"
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "最後にチェックされました %{time} UTC."
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "%{hearing}を話せて、 %{speaking}を聞きたいと思っているrandoを探しています…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1073,3 +1057,13 @@ msgstr "プレビュー ボリューム: %{level}/9 (-/+)"
 msgctxt "key"
 msgid "preview volume"
 msgstr "プレビュー音量"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "聞きたい"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
+msgstr "私が話す"

@@ -533,22 +533,42 @@ defmodule RandosWeb.HomeComponents do
     ~H"""
     <div id="looking-panel" class="col-span-full space-y-6 p-5 sm:p-7">
       <div>
-        <p class="text-sm font-medium uppercase tracking-[0.16em] text-teal-700">
-          {gettext("Looking")}
-        </p>
-        <h2 class="mt-3 text-3xl font-semibold tracking-normal text-stone-950">
-          {gettext("Finding a rando")}
-        </h2>
-        <p id="looking-status" class="mt-3 leading-7 text-stone-600">
+        <div class="flex items-center gap-4">
+          <span
+            id="search-activity"
+            phx-hook="SearchActivity"
+            phx-update="ignore"
+            aria-hidden="true"
+            class="relative flex size-12 shrink-0 items-center justify-center text-teal-700"
+          >
+            <.icon name="hero-magnifying-glass" class="size-6" />
+            <span class="search-orbit absolute inset-0"></span>
+          </span>
+          <h2 class="text-2xl font-semibold tracking-normal text-stone-950 sm:text-3xl">
+            {gettext("Finding a rando")}
+          </h2>
+        </div>
+        <p id="looking-status" role="status" class="sr-only">
           {gettext(
             "Looking for a rando who speaks %{hearing_languages} and wants to hear %{speaking_language}.",
             hearing_languages: hearing_summary(@preferences["hearing_languages"], @language_name),
             speaking_language: hearing_summary(@preferences["speaking_language"], @language_name)
           )}
         </p>
-      </div>
-      <div class="h-2 overflow-hidden rounded-full bg-stone-100">
-        <div class="h-full w-1/2 rounded-full bg-teal-700 motion-safe:animate-pulse"></div>
+        <dl class="mt-5 space-y-4">
+          <div class="grid gap-x-6 gap-y-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] sm:items-baseline">
+            <dt class="text-sm text-stone-600">{gettext("I will speak in")}</dt>
+            <dd id="looking-speaking" class="font-medium leading-7 text-stone-950">
+              {hearing_summary(@preferences["speaking_language"], @language_name)}
+            </dd>
+          </div>
+          <div class="grid gap-x-6 gap-y-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] sm:items-baseline">
+            <dt class="text-sm text-stone-600">{gettext("I want to hear")}</dt>
+            <dd id="looking-hearing" class="font-medium leading-7 text-stone-950">
+              {hearing_summary(@preferences["hearing_languages"], @language_name)}
+            </dd>
+          </div>
+        </dl>
       </div>
       <div class="grid gap-3">
         <button

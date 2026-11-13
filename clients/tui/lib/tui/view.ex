@@ -188,7 +188,7 @@ defmodule Tui.View do
   # (Paragraph wrapping trims leading spaces).
   defp main(%{connection: :connected, status: :idle} = model, area, mic_test) do
     [form_area, text_area] = Layout.split(area, :vertical, [{:length, 5}, {:min, 0}])
-    [speak, hear] = labels([gettext("I will speak:"), gettext("I'm happy to hear:")])
+    [speak, hear] = labels([gettext("I will speak in"), gettext("I want to hear")])
 
     form = %List{
       items: [
@@ -216,6 +216,14 @@ defmodule Tui.View do
          wrap: true
        }, text_area}
     ]
+  end
+
+  defp main(%{connection: :connected, status: :looking} = model, area, extra) do
+    width = max(area.width - 2, 1)
+    text = looking_text(model, width) <> Enum.join(Bidi.wrap(extra <> said(model), width), "\n")
+
+    # Prewrap before indenting: Paragraph's word wrapper trims leading spaces.
+    [{%Paragraph{text: text, block: panel(title(model)), wrap: false}, area}]
   end
 
   defp main(model, area, extra) do
@@ -712,18 +720,26 @@ defmodule Tui.View do
     end
   end
 
-  defp main_text(%{connection: :connecting}), do: gettext("Connecting to the server…")
+  defp looking_text(model, width) do
+    indent = min(2, width - 1)
 
-  defp main_text(%{status: :looking} = model) do
-    gettext_comment(
-      ~S|%{hearing}: one language, "A, B or C", or a count of the languages picked.|
-    )
+    [
+      {gettext("I will speak in"), hearing_summary(%{model | hears: model.speaks})},
+      {gettext("I want to hear"), hearing_summary(model)}
+    ]
+    |> Enum.map_join("\n\n", fn {label, languages} ->
+      heading = Enum.join(Bidi.wrap(label, width), "\n")
 
-    gettext("Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…",
-      hearing: hearing_summary(model),
-      speaking: hearing_summary(%{model | hears: model.speaks})
-    )
+      values =
+        languages
+        |> Bidi.wrap(width - indent)
+        |> Enum.map_join("\n", &(String.duplicate(" ", indent) <> &1))
+
+      heading <> "\n" <> values
+    end)
   end
+
+  defp main_text(%{connection: :connecting}), do: gettext("Connecting to the server…")
 
   # The link on a line of its own, to select and copy.
   defp main_text(%{status: :inviting, invitation: %{"url" => url} = invitation} = model) do

@@ -269,9 +269,9 @@ defmodule Tui.AppTest do
 
     test "idle form shows languages, the 18+ box, and key help" do
       text = render_text(model("idle"))
-      assert text =~ "I will speak:      ◀ [x] English (EN) ▶"
+      assert text =~ "I will speak in ◀ [x] English (EN) ▶"
       # The language under the cursor, then every checked one.
-      assert text =~ "I'm happy to hear: ◀ [x] English (EN) ▶  EN"
+      assert text =~ "I want to hear  ◀ [x] English (EN) ▶  EN"
       assert text =~ "[ ] I'm 18+"
       assert text =~ "enter find"
     end
@@ -466,13 +466,14 @@ defmodule Tui.AppTest do
     end
 
     test "looking, matched, in call with a countdown, and the vote" do
-      assert render_text(model("looking")) =~ "Looking for a rando"
+      assert render_text(model("looking")) =~ "Looking"
       # Up to three hearing languages are named; past that, a count.
-      assert render_text(%{model("looking") | hears: ["es", "en"]}) =~
-               "who speaks Español (ES) or English (EN) and"
+      looking = render_text(%{model("looking") | speaks: ["en"], hears: ["es", "en"]})
+      assert looking =~ ~r/I will speak in.*\n│  English \(EN\)/
+      assert looking =~ ~r/I want to hear.*\n│  Español \(ES\) or English \(EN\)/
 
       assert render_text(%{model("looking") | hears: ~w(en es fr de)}) =~
-               "who speaks any of the languages you picked (4) and"
+               "any of the languages you picked (4)"
 
       assert render_text(model("connecting")) =~ "Matched!"
 

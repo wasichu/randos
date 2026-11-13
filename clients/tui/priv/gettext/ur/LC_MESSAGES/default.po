@@ -156,21 +156,11 @@ msgstr "غلطی: %{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "کالز کس طرح ختم ہوئیں: مکمل ہو گئیں %{finished}، کنکشن قائم نہیں ہو سکا %{not_connected}، کنکشن منقطع ہو گیا %{lost}، منسوخ کر دی گئیں %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "میں بات کروں گا:"
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "میں 18+ ہوں اور ناخوشگوار، نامعلوم کالز کے ساتھ ٹھیک ہوں"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "مجھے یہ سن کر خوشی ہوئی:"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "بولنے والی زبانیں: ابھی تک کوئی کال نہیں
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "آخری بار %{time} UTC پر چیک کیا گیا۔"
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "ایسے rando کی تلاش ہے جو %{hearing} بول سکے اور %{speaking} سننا چاہے…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1072,4 +1056,14 @@ msgstr "پیش نظر حجم: %{level}/9 (کم/زیادہ)"
 #, elixir-autogen, elixir-format
 msgctxt "key"
 msgid "preview volume"
+msgstr ""
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "میں سننا چاہتا ہوں"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
 msgstr ""

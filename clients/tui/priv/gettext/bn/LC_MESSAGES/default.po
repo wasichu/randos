@@ -156,21 +156,11 @@ msgstr "ত্রুটি: %{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "কলগুলো কীভাবে শেষ হয়েছে: সম্পন্ন হয়েছে %{finished}, সংযোগ স্থাপন করা যায়নি %{not_connected}, সংযোগ হারিয়ে গেছে %{lost}, বাতিল করা হয়েছে %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "আমি কথা বলবো:"
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "আমি 18+ এবং অ্যানোনাম, অমড্রেট কল সঙ্গে OK"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "আমি এটা শুনে খুশি হলাম:"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "যেসব ভাষায় কথা বলা হয়: এখন
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "সর্বশেষ পরীক্ষা করা হয়েছে %{time} UTC-এ।"
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "একজন rando খুঁজছি যে %{hearing} কথা বলে এবং %{speaking} শুনতে চায়…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1073,3 +1057,13 @@ msgstr "প্রিভিউ ভলিউম: %{level}/9 (-/+)"
 msgctxt "key"
 msgid "preview volume"
 msgstr "প্রিভিউ ভলিউম"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "আমি শুনতে চাই"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
+msgstr "আমি কথা বলবো"

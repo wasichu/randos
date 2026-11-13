@@ -156,21 +156,11 @@ msgstr "Pagkakamali: %{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "Kung paano natapos ang mga tawag: natapos %{finished}, hindi makapag-ugnay %{not_connected}, ang koneksyon ay nawala %{lost}, kinansela %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "Magsasalita ako:"
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "Ako ay 18+ at OK sa anonymous, unmoderated tawag"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "Natutuwa akong marinig:"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "Mga wika na ginagamit: wala pang tawag"
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "Huling tiningnan noong %{time} UTC."
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "Naghahanap ng rando na nakakapagsalita ng %{hearing} at gustong makarinig ng %{speaking}…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1073,3 +1057,13 @@ msgstr "Antas ng pag-preview: %{level}/9 (-/+)"
 msgctxt "key"
 msgid "preview volume"
 msgstr "tingnan muna ang volume"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "Gusto kong marinig"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
+msgstr "Ako'y makikipag - usap"

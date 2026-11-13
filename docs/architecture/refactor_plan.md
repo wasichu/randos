@@ -1,5 +1,34 @@
 # randos — current architecture and roadmap
 
+Verified searching-state presentation locally on 2026-11-13 with
+`just precommit`, `just screenshots`, `just smoke` and `just tui-smoke`: replace the fixed half-filled pulse
+bar with a magnifier and one calmly orbiting dot beside the existing heading.
+The indicator communicates an unbounded search without an upload fraction,
+queue estimate or simulated audio. `SearchActivity` only gates decorative
+motion by viewport/tab visibility and removes its observer/listener on exit;
+it owns no media, matchmaking policy or timers. Reduced motion keeps a static
+search icon, and the translated language explanation is announced as status.
+Speaking and hearing choices now occupy separate labeled rows in setup order:
+aligned columns on wide web layouts, stacked labels/values on phones and the
+TUI. Both TUI setup/search headings match the website's "I will speak in" and
+"I want to hear". Terminal values and wrapped continuations are inset two cells;
+prewrapping preserves the inset through the renderer. Alternatives retain their
+existing localized list/count summaries.
+The screenshot harness checks moving, offscreen-paused and reduced-motion
+states, no microphone capture while queued, and light/dark 1200/390/320 px
+layouts. TUI render checks keep both directions visible in every supported
+locale at 80×24, 60×20 and 40×20; screenshots include the queued terminal.
+All 360 translated queued web cases fit at 320/390/1200 px in both themes,
+including named alternatives, count summaries and RTL. The independent patch
+release review found no blockers; its focused inventory and release evidence
+are tracked in [v0.11.2 readiness](../releases/v0.11.2-readiness.md).
+README, development and self-hosting prose need no change: commands,
+configuration and call semantics are unchanged. Model-free TUI catalog extraction
+retires the old sentence/labels and imports the website's exact labels: 35
+existing translations with their original model provenance; the remaining three
+entries retain the site's English fallback. No new model run. The detector reports
+only the same five documented theme-pair false positives below.
+
 Verified released v0.11.1 (`e95545b`) on 2026-11-06: green native macOS/Linux
 and browser/TUI CI, clean-checkout package qualification, verified public archive
 checksums, production deployment and a successful Homebrew upgrade/test. The

@@ -156,21 +156,11 @@ msgstr "Kesalahan: %{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "Bagaimana panggilan berakhir: selesai %{finished}, tidak dapat terhubung %{not_connected}, koneksi terputus %{lost}, dibatalkan %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "Aku akan berbicara:"
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "Aku 18+ dan OK dengan panggilan anonim, unmoderated"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "Saya senang mendengarnya:"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "Bahasa yang diucapkan: belum ada panggilan"
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "Terakhir diperiksa pada pukul %{time} UTC."
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "Mencari rando yang bisa berbicara %{hearing} dan ingin mendengar %{speaking}…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1073,3 +1057,13 @@ msgstr "Pratinjau volume: %{level}/9 (-/+)"
 msgctxt "key"
 msgid "preview volume"
 msgstr "Jumlah Preview Volume"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "Saya ingin mendengar"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
+msgstr "Saya akan berbicara dalam"

@@ -196,6 +196,34 @@ defmodule Tui.ViewLanguagesTest do
   for language <- Tui.Language.available(), size <- [{80, 24}, {60, 20}, {40, 20}] do
     @language language
     @size size
+    test "#{language} at #{elem(size, 0)}×#{elem(size, 1)}: both search directions remain visible" do
+      Gettext.with_locale(Tui.Gettext, @language, fn ->
+        looking = model("looking", nil, %{speaks: ["ja"], hears: ~w(en de ja)})
+        buffer = render(@size, looking)
+        text = buffer |> flat() |> squeeze()
+
+        for expected <- [
+              gettext("I will speak in"),
+              gettext("I want to hear"),
+              Model.language_name(looking, "en"),
+              Model.language_name(looking, "de"),
+              Model.language_name(looking, "ja")
+            ] do
+          assert text =~ squeeze(expected), "search clipped #{inspect(expected)}:\n#{text}"
+        end
+
+        if @language == "en" do
+          # Check actual terminal cells, including the wrapped continuation.
+          values =
+            buffer
+            |> String.split("\n")
+            |> Enum.filter(&String.contains?(&1, ["(EN)", "(DE)", "(JA)"]))
+
+          assert Enum.all?(values, &String.starts_with?(&1, "│  "))
+        end
+      end)
+    end
+
     test "#{language} at #{elem(size, 0)}×#{elem(size, 1)}: every screen draws whole" do
       Gettext.with_locale(Tui.Gettext, @language, fn ->
         quit = "q " <> pgettext("key", "quit")

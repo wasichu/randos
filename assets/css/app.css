@@ -167,6 +167,30 @@
   max-height: min(20rem, calc(100dvh - 5rem));
 }
 
+/* A search has no measurable completion fraction. Only the small dot moves;
+   the magnifier and translated status remain steady. */
+.search-orbit {
+  animation: randos-search-orbit 2.4s linear infinite;
+  animation-play-state: paused;
+}
+.search-orbit::after {
+  content: "";
+  position: absolute;
+  inset-block-start: .0625rem;
+  inset-inline-start: calc(50% - .1875rem);
+  width: .375rem;
+  height: .375rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+[data-search-running="true"] .search-orbit { animation-play-state: running; }
+@keyframes randos-search-orbit {
+  to { transform: rotate(1turn); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .search-orbit { animation: none; }
+}
+
 /* The same keyed, DOM-owning media hook survives connecting → active.
    Layout changes here keep its controls and microphone state intact. */
 #conversation-card[data-ui-state="in_call"] {

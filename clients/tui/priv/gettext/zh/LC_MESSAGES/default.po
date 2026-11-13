@@ -156,21 +156,11 @@ msgstr "错误：%{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "通话结束方式：已完成 %{finished}，无法连接 %{not_connected}，连接中断 %{lost}，已取消 %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "我将发言："
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "我已满18岁,可以接受匿名、未经审核的电话"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "我很高兴听到："
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "使用的语言：尚未有通话记录"
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "上次检查时间为世界协调时%{time}。"
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "正在寻找会说 %{hearing} 语言且愿意听 %{speaking} 语言的rando……"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1073,3 +1057,13 @@ msgstr "预览音量：%{level}/9（-/+）"
 msgctxt "key"
 msgid "preview volume"
 msgstr "预览音量"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "我想听"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
+msgstr "我将发言"

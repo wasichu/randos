@@ -28,6 +28,7 @@ import {WebRTCAudio} from "./hooks/call_hook"
 import {CallCountdown} from "./hooks/countdown_hook"
 import {ConversationPreferences} from "./hooks/conversation_preferences"
 import {HomeShortcuts} from "./hooks/home_shortcuts"
+import {SearchActivity} from "./hooks/search_activity"
 import {VoiceSettings} from "./hooks/voice_settings"
 import {CopyLink, JoinLink} from "./hooks/invitation_hooks"
 import {resumeTicket, setResumeTicket} from "./randos/resume"
@@ -37,6 +38,7 @@ const browserLocale = navigator.languages?.[0] || navigator.language || null
 const Hooks = {
   ConversationPreferences,
   HomeShortcuts,
+  SearchActivity,
   VoiceSettings,
   CallCountdown,
   CopyLink,

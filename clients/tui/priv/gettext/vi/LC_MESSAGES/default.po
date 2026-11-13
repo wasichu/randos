@@ -156,21 +156,11 @@ msgstr "Lỗi: %{message}"
 msgid "How calls ended: finished %{finished}, couldn't connect %{not_connected}, connection lost %{lost}, canceled %{canceled}"
 msgstr "Cách các cuộc gọi kết thúc: kết thúc thành công %{finished}, không thể kết nối được %{not_connected}, mất kết nối %{lost}, hủy bỏ %{canceled}"
 
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I will speak:"
-msgstr "Tôi sẽ nói:"
-
 #. The 18+ box on the form; its [x]/[ ] comes before it.
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
 msgid "I'm 18+ and OK with anonymous, unmoderated calls"
 msgstr "Tôi đã 18 tuổi và ổn với những cuộc gọi nặc danh"
-
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "I'm happy to hear:"
-msgstr "Tôi rất vui khi nghe thấy điều đó:"
 
 #: lib/tui/view/status_screen.ex
 #, elixir-autogen, elixir-format
@@ -186,12 +176,6 @@ msgstr "Ngôn ngữ sử dụng: hiện tại chưa có cuộc gọi"
 #, elixir-autogen, elixir-format
 msgid "Last checked at %{time} UTC."
 msgstr "Đã kiểm tra lần cuối vào %{time} UTC."
-
-#. %{hearing}: one language, "A, B or C", or a count of the languages picked.
-#: lib/tui/view.ex
-#, elixir-autogen, elixir-format
-msgid "Looking for a rando who speaks %{hearing} and wants to hear %{speaking}…"
-msgstr "Đang tìm một rando có thể nói tiếng %{hearing} và muốn nghe tiếng %{speaking}…"
 
 #: lib/tui/view.ex
 #, elixir-autogen, elixir-format
@@ -1073,3 +1057,13 @@ msgstr "Âm lượng xem thử: %{level}/9 (-/+)"
 msgctxt "key"
 msgid "preview volume"
 msgstr "Độ lớn preview volume"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I want to hear"
+msgstr "Tôi muốn nghe"
+
+#: lib/tui/view.ex
+#, elixir-autogen, elixir-format
+msgid "I will speak in"
+msgstr "Tôi sẽ nói bằng"
