@@ -1,5 +1,13 @@
 # randos — current architecture and roadmap
 
+Verified v0.11.2 (`fddd63a`) on 2026-11-13: green native macOS/Linux and
+browser/TUI CI, full local post-commit checks, clean-checkout macOS packaging
+and production-image inspection. The guarded website deployment serves the
+qualified commit. Native package publication and the Homebrew formula are linked
+from [v0.11.2 readiness](../releases/v0.11.2-readiness.md). The independent
+release review found no blockers; reuse unchanged DSP, protocol and relay
+qualification and leave broad refactors deferred.
+
 Verified searching-state presentation locally on 2026-11-13 with
 `just precommit`, `just screenshots`, `just smoke` and `just tui-smoke`: replace the fixed half-filled pulse
 bar with a magnifier and one calmly orbiting dot beside the existing heading.
