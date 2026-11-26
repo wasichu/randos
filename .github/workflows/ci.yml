@@ -59,8 +59,8 @@ jobs:
       - name: Fetch deps
         run: |
           mix local.hex --force --if-missing
-          mix deps.get
-          (cd clients/tui && mix deps.get)
+          mix deps.get --check-locked
+          (cd clients/tui && mix deps.get --check-locked)
           just prefetch
 
       - run: just precommit
@@ -104,10 +104,11 @@ jobs:
         run: |
           mix local.hex --force --if-missing
           # Both projects' deps, the prebuilt NIFs and Tailwind (just prefetch), then compile.
-          mix deps.get
-          (cd clients/tui && mix deps.get)
+          mix deps.get --check-locked
+          (cd clients/tui && mix deps.get --check-locked)
           just prefetch
-          mix setup
+          mix assets.setup
+          mix assets.build
           cargo build --quiet -p randos_media
 
       - name: Browser smoke (two headless Chromes, fake mics)
