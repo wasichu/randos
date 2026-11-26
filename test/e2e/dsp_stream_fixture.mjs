@@ -32,7 +32,7 @@ export async function streamFixture(page,{engine="spectral",prefillSamples=7680,
     const rendered=new Promise((resolve,reject)=>{
      deadline=setTimeout(()=>reject(Error('Streaming fixture timed out')),20000);
      node.onprocessorerror=()=>reject(Error('Bridge error'));
-     node.port.onmessage=({data})=>{if(data.type==='fault'){const fault={engine,message:data.message,diagnostics:data.diagnostics,wallMs:performance.now()-startedAt};const error=Error(engine+': '+data.message+' '+JSON.stringify(fault));error.dspFault=fault;reject(error)};if(data.type==='test-result')resolve(data)};
+     node.port.onmessage=({data})=>{if(data.type==='fault'){const fault={engine,count,message:data.message,diagnostics:data.diagnostics,wallMs:performance.now()-startedAt};const error=Error(engine+': '+data.message+' '+JSON.stringify(fault));error.dspFault=fault;reject(error)};if(data.type==='test-result')resolve(data)};
      worker.onerror=e=>reject(Error(e.message));worker.onmessage=({data})=>{
       if(cancelled)return;
       if(data.type==='fault')reject(Error(data.message));
