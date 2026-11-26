@@ -418,6 +418,10 @@ must actually import and run the updated libraries.
 
 The terminal client is released from a version tag:
 
+Package assembly uses Cargo `--locked` and Mix `--check-locked`; the production
+image also checks its Mix lock. Release CI rejects source changes from package
+assembly. Resolve and commit dependency changes before qualification.
+
 1. Update both clients' translations, review the model checks/picks and check
    translated layouts. Bump `version` in `clients/tui/mix.exs`, write
    `docs/releases/vX.Y.Z.md`, and commit after the release checks pass.

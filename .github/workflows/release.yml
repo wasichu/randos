@@ -53,6 +53,9 @@ jobs:
 
       - run: just tui-release
 
+      - name: Packaging left the source unchanged
+        run: git diff --exit-code
+
       - uses: actions/upload-artifact@v7
         with:
           name: randos-${{ matrix.os }}

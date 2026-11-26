@@ -257,8 +257,8 @@ prefetch:
 tui-release:
     #!/usr/bin/env bash
     set -euo pipefail
-    cargo build --release -p randos_media
-    (cd clients/tui && MIX_ENV=prod mix deps.get --only prod >/dev/null)
+    cargo build --locked --release -p randos_media
+    (cd clients/tui && MIX_ENV=prod mix deps.get --only prod --check-locked >/dev/null)
     bin/prefetch.sh nifs
     # Mix --overwrite retains old app/dependency directories. Archives must
     # contain only this assembly; keep compilation caches, not old releases.
