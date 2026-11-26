@@ -167,6 +167,7 @@ format:
 
 # Full pre-commit check: server, clients/tui, the Rust crates, the Python harnesses' offline tests, and the guards
 precommit: check-state-encrypted check-privacy
+    python3 tools/test_dependency_labels.py
     mix precommit
     just native-check
     cargo build --quiet -p randos_media
