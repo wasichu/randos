@@ -1,5 +1,18 @@
 # randos — current architecture and roadmap
 
+CI dependency repair in progress on 2026-11-26: the routine dependency PRs
+passed their checks but failed the final clean-tree guard because fetching
+resolved newer transitive dependencies. Commit both resolved Mix locks and
+use `deps.get --check-locked` in CI and scheduled audits; keep the clean-tree
+guard. Bring the locally verified WORLD diagnostic fix into the PR base.
+The major native update separately bypasses the vendored ICE patch and needs
+a patch rebase with the existing dead-path/recovery timing guards preserved.
+Phoenix/LiveView advisory fixes are handled in the server dependency PR.
+**Leave** runtime ownership and client policy unchanged; **link** upstream
+changes and validation to each dependency PR. README and self-hosting need no
+change because product behavior, configuration and deployment are unchanged;
+development documents the checked dependency-fetch workflow.
+
 Verified WORLD smoke diagnostic bounds locally on 2026-11-13 with the exact
 snapshot from failing main CI run `43419483613`, eight diagnostic unit tests,
 `just precommit`, `just tui-smoke` and `just smoke`.

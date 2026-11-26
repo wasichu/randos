@@ -167,6 +167,12 @@ CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
 plus both smoke tests. The tests never play sound and never reach the
 internet; the smoke tests start their own throwaway server on :4010.
 
+CI fetches both Mix projects with `mix deps.get --check-locked`, so dependency
+resolution must already be committed. After a dependency update, run plain
+`mix deps.get` in both projects and commit any lockfile changes before pushing.
+The smoke job builds assets after the checked fetch rather than invoking
+`mix setup`, which would resolve dependencies a second time.
+
 The shipping Signalsmith engine must pass the actual 48 kHz worklet stream
 test. WORLD is a lab comparison: its transport/PCM conformance uses a deliberately
 slowed fixture clock with the same samples, DSP settings, bridge, tail and
