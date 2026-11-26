@@ -1,5 +1,24 @@
 # randos — current architecture and roadmap
 
+Verified CI root causes locally on 2026-11-26: both projects used the patched
+path renderer but retained its obsolete Hex lock entry. Hex recursively
+unlocked that entry's former dependency subtree, so unrelated PRs failed the
+final clean-tree guard after fetching newer versions. Removing only those two
+stale entries preserves the existing locks, including telemetry 1.4.2 despite
+1.4.3 being available, in fresh checked fetches. Keep `--check-locked`, the
+clean-tree guard and a renderer-lock regression guard; no renderer/runtime
+patch or timeout is relaxed.
+
+Advisor review also traced bot labeling to its first-commit assumption. Scan
+paginated commits for verified Dependabot metadata instead; signed `*-major`
+groups cover breaking 0.x updates. Seven offline fixtures cover maintainer/base
+commits, forged/unsigned or missing metadata, pagination and major classification.
+No PR checkout or verification bypass is introduced. Full native and browser/TUI
+CI must pass before this repair and the dependent update PRs merge. **Leave**
+runtime ownership unchanged and **link** dependency changes to their PR evidence.
+README and self-hosting need no change because product behavior and operations
+are unchanged; development and vendor guides document the dependency invariant.
+
 Verified WORLD smoke diagnostic bounds locally on 2026-11-13 with the exact
 snapshot from failing main CI run `43419483613`, eight diagnostic unit tests,
 `just precommit`, `just tui-smoke` and `just smoke`.

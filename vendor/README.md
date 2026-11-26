@@ -59,6 +59,11 @@ notices. Review this patch separately from upstream; remove it when the upstream
 runtime supports atomic clear/invalidate. Linux and macOS release builds must
 qualify this source-built NIF before release.
 
+Both Mix locks omit the former Hex `ex_ratatui` entry: retaining it after the
+switch to a path dependency makes Hex unlock its old dependency subtree during
+every fetch. `tools/check_renderer.py` rejects that stale entry alongside the
+source/patch/native-lock provenance checks.
+
 Native manifest metadata explicitly identifies the package MIT license and pins
 the two already-vendored 3D path packages at 0.1.0 for the existing cargo-deny
 policy. Their code/features are unchanged.
