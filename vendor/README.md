@@ -19,11 +19,16 @@ Patched copies of dependencies, used in place of the published ones through
 plus the smallest change we need, marked `// randos:` in the source. Remove
 a copy (and its patch entry) once upstream has the change.
 
-## `is` 0.11.1 (str0m's ICE agent)
+## `is` 0.12.0 (str0m's ICE agent)
 
-- **Source:** crates.io `is` 0.11.1, from the str0m project
+- **Source:** crates.io `is` 0.12.0, from the str0m project
   (https://github.com/algesten/str0m), MIT OR Apache-2.0; we use it under
   MIT (`is/LICENSE-MIT.txt`, from str0m). No C, no new dependencies.
+- **Published source:** str0m commit `5f2183ce7c67117cd1960dfeb11bed11fc188b66`,
+  `crates/is`; crate archive SHA-256 `72dd0494853a6c3769c87adc610e8b228fd8c65c41cc4d2717ff6151ee2d6c73`.
+  All published source is retained, including ICE nomination/validation fixes.
+  The library's published `Cargo.lock` is omitted because the root workspace
+  lock is authoritative; the existing MIT license file is retained.
 - **The change:** `RECENT_BINDING_REQUEST` in `src/pair.rs` is 4 s instead
   of 15 s. A candidate pair counts as still possible for that long after
   the peer's last binding request, whatever our own unanswered requests

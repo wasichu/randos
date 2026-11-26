@@ -10,7 +10,7 @@ use str0m_proto::Pii;
 
 // When running ice-lite we need a cutoff when we consider the remote definitely gone.
 // randos: 15 s upstream; 4 s so a dead path is noticed in ~4 s, like
-// browsers (vendor/README.md).
+// browsers. See vendor/README.md and the helper restart tests.
 const RECENT_BINDING_REQUEST: Duration = Duration::from_secs(4);
 
 /// A pair of candidates, local and remote, in the ice agent.
@@ -263,6 +263,13 @@ impl CandidatePair {
             NominationState::Attempt => {
                 self.nomination_state = NominationState::Nominated;
             }
+        }
+
+        // The replacement has the same local base and remote address, so a check
+        // that succeeded on the old pair validated this path too. An in-progress
+        // check is not copied, for the same reason as Attempt above.
+        if other.state == CheckState::Succeeded {
+            self.state = CheckState::Succeeded;
         }
     }
 
