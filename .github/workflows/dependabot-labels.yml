@@ -1,9 +1,5 @@
-# A Dependabot PR that takes a dependency up a major version gets the
-# `major` label: read its changelog for breaking changes before merging
-# (docs/development.md, "Dependency updates"). Dependabot's own metadata
-# says which kind of update it is (for a group, the biggest). Runs on
-# pull_request_target, so it can label, but it never checks out or runs
-# the PR's code.
+# Classify authenticated Dependabot metadata even after maintainer repairs or
+# base merges. Runs trusted base-workflow code only; never checks out PR code.
 name: Dependabot labels
 
 on:
@@ -18,12 +14,65 @@ jobs:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-24.04
     steps:
-      - id: metadata
-        # Pinned (v3.1.0): this job can write to pull requests, so a moved tag
-        # mustn't change what runs here; Dependabot's actions updates keep it current.
-        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
-      - if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+      - name: Label verified dependency updates
+        shell: python
         env:
           GH_TOKEN: ${{ github.token }}
-          PR: ${{ github.event.pull_request.number }}
-        run: gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" --add-label major
+        run: |
+          import json
+          import os
+          import re
+          import subprocess
+
+          def needs_major(commits):
+              found = False
+              major = False
+              for commit in commits:
+                  data = commit.get("commit", {})
+                  if (commit.get("author") or {}).get("login") != "dependabot[bot]":
+                      continue
+                  if data.get("verification", {}).get("verified") is not True:
+                      continue
+                  block = re.search(
+                      r"^---\r?\nupdated-dependencies:\r?\n(.*?)^\.\.\.[ \t]*$",
+                      data.get("message", "").replace("\r\n", "\n"), re.M | re.S,
+                  )
+                  if not block:
+                      continue
+                  metadata = block.group(1)
+                  names = re.findall(r"^- dependency-name: .+$", metadata, re.M)
+                  updates = re.findall(
+                      r"^  update-type: (version-update:semver-(?:major|minor|patch))[ \t]*$",
+                      metadata, re.M,
+                  )
+                  groups = re.findall(r"^  dependency-group: ([\w.-]+)[ \t]*$", metadata, re.M)
+                  if not names or len(updates) != len(names):
+                      continue
+                  found = True
+                  major |= "version-update:semver-major" in updates or any(
+                      group.endswith("-major") for group in groups
+                  )
+              if not found:
+                  raise ValueError("No verified Dependabot dependency metadata found in PR commits")
+              return major
+
+          def main():
+              with open(os.environ["GITHUB_EVENT_PATH"]) as source:
+                  pr = json.load(source)["pull_request"]
+              if pr["user"]["login"] != "dependabot[bot]":
+                  raise ValueError("Expected a Dependabot-authored PR")
+              repo = os.environ["GITHUB_REPOSITORY"]
+              number = str(int(pr["number"]))
+              pages = json.loads(subprocess.check_output([
+                  "gh", "api", "--paginate", "--slurp",
+                  f"repos/{repo}/pulls/{number}/commits?per_page=100",
+              ], text=True))
+              if needs_major([commit for page in pages for commit in page]):
+                  subprocess.run([
+                      "gh", "pr", "edit", number, "--repo", repo, "--add-label", "major",
+                  ], check=True)
+              else:
+                  print("Verified dependency update does not require the major label")
+
+          if __name__ == "__main__":
+              main()

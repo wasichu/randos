@@ -167,6 +167,14 @@ CI (`.github/workflows/ci.yml`) runs `just precommit` on macOS and Linux,
 plus both smoke tests. The tests never play sound and never reach the
 internet; the smoke tests start their own throwaway server on :4010.
 
+CI fetches both Mix projects with `mix deps.get --check-locked` and retains
+the final clean-tree guard. The patched renderer is a path dependency: never
+retain its obsolete Hex entry in either `mix.lock`. Hex uses that stale entry
+to unlock its former transitive dependencies on every fetch; remove it with
+`mix deps.unlock ex_ratatui`. `tools/check_renderer.py` guards this condition.
+Smoke builds assets after the checked fetch instead of invoking `mix setup`,
+which would resolve dependencies again.
+
 The shipping Signalsmith engine must pass the actual 48 kHz worklet stream
 test. WORLD is a lab comparison: its transport/PCM conformance uses a deliberately
 slowed fixture clock with the same samples, DSP settings, bridge, tail and
@@ -208,6 +216,7 @@ workflow (`dependency-check.yml`) runs `cargo deny check advisories` and
   own, `<group>-major`, labelled by `dependabot-labels.yml`): read the
   changelog for breaking changes first. Majors are worth taking, not
   ignoring; they just get that care.
+
 - **`gpu-check` (a harness's `-models` group): compare before merging**,
   in a git worktree on the PR's branch (its own `.venv`; never the main
   tree's, and never while a model runs). For `tools/translate`: run each
@@ -221,6 +230,12 @@ workflow (`dependency-check.yml`) runs `cargo deny check advisories` and
   A difference
   doesn't block merging by itself: it means the next run may pick
   differently, which is worth knowing first.
+
+The label workflow scans all PR commits for verified Dependabot metadata,
+so base merges and maintainer repairs do not defeat classification. Signed
+`*-major` groups also require major review for breaking 0.x updates. It runs
+trusted base-workflow code without checking out PR code and fails explicitly
+if authenticated metadata is absent.
 
 Check [TorchAudio's binary compatibility requirements](https://docs.pytorch.org/audio/stable/installation.html)
 alongside the lockfile. Resolution and offline tests can pass while its native
