@@ -3,7 +3,8 @@
 # (docs/development.md, "Dependency updates"). Dependabot's own metadata
 # says which kind of update it is (for a group, the biggest). Runs on
 # pull_request_target, so it can label, but it never checks out or runs
-# the PR's code.
+# the PR's code. Maintainer repair pushes keep the existing labels: their
+# commits do not carry Dependabot's signed metadata.
 name: Dependabot labels
 
 on:
@@ -15,7 +16,7 @@ permissions:
 
 jobs:
   major:
-    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.event.sender.login == 'dependabot[bot]'
     runs-on: ubuntu-24.04
     steps:
       - id: metadata

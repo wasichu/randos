@@ -35,6 +35,6 @@ jobs:
       - name: Hex advisories and retired packages (server and TUI)
         run: |
           mix local.hex --force --if-missing
-          mix deps.get
+          mix deps.get --check-locked
           mix hex.audit
-          (cd clients/tui && mix deps.get && mix hex.audit)
+          (cd clients/tui && mix deps.get --check-locked && mix hex.audit)
