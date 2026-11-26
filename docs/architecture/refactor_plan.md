@@ -19,6 +19,12 @@ runtime ownership unchanged and **link** dependency changes to their PR evidence
 README and self-hosting need no change because product behavior and operations
 are unchanged; development and vendor guides document the dependency invariant.
 
+Server dependency qualification on 2026-11-26: Phoenix 1.8.17 and LiveView
+1.2.15 replace the versions flagged by the scheduled Hex audit; the existing
+HTML security patch and source-built terminal renderer remain. Server compile,
+formatting, lint and all 289 tests passed locally. Native and browser/TUI CI
+must pass before merge. No product configuration, privacy or protocol changes.
+
 Verified WORLD smoke diagnostic bounds locally on 2026-11-13 with the exact
 snapshot from failing main CI run `43419483613`, eight diagnostic unit tests,
 `just precommit`, `just tui-smoke` and `just smoke`.
