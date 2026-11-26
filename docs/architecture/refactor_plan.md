@@ -1,15 +1,17 @@
 # randos — current architecture and roadmap
 
-Verified v0.11.3 local precommit, clean macOS package and production-image
-qualification on 2026-11-26 with the owner's authorization to
-publish the TUI, update Homebrew and deploy the website. The baseline `d0391c0`
-has green native/browser/TUI CI and dependency audit. This maintenance release
-updates networking/AEC/crypto and server security dependencies while preserving
-the already released ICE recovery patch. UI, catalogs and owned masking DSP are
-unchanged; reuse their existing evidence. Clean package/image qualification,
-locked assembly and exact-commit CI are tracked in
-[v0.11.3 readiness](../releases/v0.11.3-readiness.md). README and self-hosting
-need no change because usage and configuration are unchanged.
+Verified v0.11.3 publication, Homebrew upgrade and website deployment on
+2026-11-26. Tag `v0.11.3` points to `c6a82fa`; candidate CI and both native
+release builds passed. Published archive checksums/inventories, installed macOS
+Homebrew checks, guarded deployment, live commit/development-route checks and
+private synthetic-audio invitation calls all passed. The exact production image
+also passed masking/layout and owner-death cleanup checks. See
+[v0.11.3 readiness](../releases/v0.11.3-readiness.md) for evidence and the remaining
+Linux Homebrew installation limitation. This maintenance release updates
+networking/AEC/crypto and server security dependencies while preserving the
+already released ICE recovery patch. UI, catalogs and owned masking DSP are
+unchanged; their existing evidence applies. README and self-hosting need no
+change because usage and configuration are unchanged.
 
 Verified CI root causes locally on 2026-11-26: both projects used the patched
 path renderer but retained its obsolete Hex lock entry. Hex recursively
