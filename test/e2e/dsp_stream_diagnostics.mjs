@@ -3,8 +3,9 @@
 // from deadline misses whose queued/in-flight cause is not measured here.
 import assert from 'node:assert/strict'
 
-export function validateWorldRealtimeFault({engine,message,diagnostics:d,wallMs}) {
+export function validateWorldRealtimeFault({engine,count,message,diagnostics:d,wallMs}) {
   assert.equal(engine,'world')
+  assert(Number.isSafeInteger(count)&&count>0&&count<=480000&&count%3840===0,'bounded fixture input')
   assert.equal(message,'DSP playback starved after starting','unexpected research failure')
   assert(d&&typeof d==='object'&&!Array.isArray(d)&&Object.values(d).every(Number.isFinite),'complete finite fault diagnostics')
   for(const key of ['clockFrames','sentSamples','acknowledgedSamples','writtenSamples','playedSamples','bufferedSamples','delaySamples','prefillSamples','pendingSamples','computeBlocks']) assert(Number.isSafeInteger(d[key])&&d[key]>=0,key)
@@ -18,8 +19,10 @@ export function validateWorldRealtimeFault({engine,message,diagnostics:d,wallMs}
   assert.equal(d.pendingSamples,d.sentSamples-d.acknowledgedSamples)
   assert(d.pendingSamples>3840&&d.pendingSamples<=15360,'bounded compute backlog')
   assert.equal(d.clockFrames,d.delaySamples+d.playedSamples,'continuous playout clock')
-  assert.equal(d.sentSamples,Math.floor((d.clockFrames+128)/3840)*3840,'no missing input hops')
-  assert(d.clockFrames<3840*24)
+  // Capture ends at count; the delayed playout clock continues through the
+  // tail. A deadline miss can happen on either side of the capture boundary.
+  assert.equal(d.sentSamples,Math.min(count,Math.floor((d.clockFrames+128)/3840)*3840),'no missing input hops')
+  assert(d.clockFrames<count+d.delaySamples,'playout has not completed')
   assert.equal(d.computeBlocks,d.acknowledgedSamples/3840)
   assert(d.computeBlocks>2)
   for(const key of ['computeTotalMs','computeMaxMs']) assert(Number.isFinite(d[key])&&d[key]>=0,key)

@@ -6,7 +6,7 @@ function snapshot(overrides={}) {
   // Three input credits, two contiguous output hops consumed; two additional
   // input hops are queued/in flight when the 48 kHz callback starves.
   return {
-    engine:'world',message:'DSP playback starved after starting',wallMs:400,
+    engine:'world',count:3840*24,message:'DSP playback starved after starting',wallMs:400,
     diagnostics:{
       clockFrames:19200,sentSamples:19200,acknowledgedSamples:11520,
       writtenSamples:7680,playedSamples:7680,bufferedSamples:0,
@@ -33,6 +33,31 @@ test('starvation with cheap completed work is an unattributed deadline miss',()=
 
 test('the 80 ms budget boundary does not assert the research engine must overload',()=>{
   assert.equal(validateWorldRealtimeFault(snapshot({computeTotalMs:160})).classification,'deadline-miss/undetermined')
+})
+
+test('CI starvation after the input-length clock boundary is valid during delayed playout',()=>{
+  const fault=snapshot({
+    clockFrames:94592,sentSamples:92160,acknowledgedSamples:84480,
+    writtenSamples:80640,playedSamples:80640,delaySamples:13952,
+    computeBlocks:22,computeTotalMs:1590.899999999965,computeMaxMs:93.09999999997672,
+  })
+  fault.wallMs=1966.5
+  assert.equal(validateWorldRealtimeFault(fault).classification,'deadline-miss/undetermined')
+  // Later in the tail no more input hops are released, even as the clock runs.
+  fault.diagnostics.clockFrames=96000
+  fault.diagnostics.delaySamples=15360
+  fault.wallMs=2000
+  validateWorldRealtimeFault(fault)
+  fault.diagnostics.sentSamples+=3840
+  fault.diagnostics.pendingSamples+=3840
+  assert.throws(()=>validateWorldRealtimeFault(fault),/no missing input hops/)
+})
+
+test('invalid fixture lengths and input beyond the fixture remain fatal',()=>{
+  for(const count of [undefined,NaN,0,-3840,92161,483840]) {
+    assert.throws(()=>validateWorldRealtimeFault({...snapshot(),count}),/bounded fixture input/)
+  }
+  assert.throws(()=>validateWorldRealtimeFault({...snapshot(),count:7680}),/no missing input hops/)
 })
 
 test('unexpected engine errors and invalid output still fail',()=>{
