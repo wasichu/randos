@@ -25,6 +25,18 @@ HTML security patch and source-built terminal renderer remain. Server compile,
 formatting, lint and all 289 tests passed locally. Native and browser/TUI CI
 must pass before merge. No product configuration, privacy or protocol changes.
 
+Verified the combined native dependency candidate locally on 2026-11-26:
+`just native-check` passed with routine rubato/STUN/root-certificate/build-tool
+updates retained alongside str0m 0.25, Sonora 0.3 and TURN 0.8. Rebased the
+four-second ICE peer-request window onto published `is` 0.12.0 without losing
+upstream validation fixes; all restart/dead-path and synthetic AEC tests pass.
+`just turn-check` passed all five real coturn UDP/TLS tests on this combined
+graph. Cargo-deny passes without the former crypto-bigint advisory exception.
+Independent advisor verified source provenance, unchanged renderer/runtime
+contracts, no weakened timing assertions and no dependency downgrades. Native
+macOS/Linux and full browser/TUI CI must pass on the final PR head before merge;
+synthetic AEC evidence does not claim physical-device listening qualification.
+
 Verified WORLD smoke diagnostic bounds locally on 2026-11-13 with the exact
 snapshot from failing main CI run `43419483613`, eight diagnostic unit tests,
 `just precommit`, `just tui-smoke` and `just smoke`.
@@ -421,9 +433,9 @@ and preview path, not a claim that every native call input issue is resolved.
   chain is compatible; pytest 9.2.0 remains eligible. Isolated `import comet`
   passed with the retained pin. No product, privacy or deployment change.
 
-- Drop the recorded `RUSTSEC-2026-0387` exception when the native dependency
-  chain permits it; [current advisory policy](../../clients/tui/native/deny.toml)
-  owns the exception, not dated dependency-version claims.
+- Resolved `RUSTSEC-2026-0387`: the native update reaches crypto-bigint 0.7.11
+  through the newer DTLS crypto chain; the exception is removed from the
+  [current advisory policy](../../clients/tui/native/deny.toml), and cargo-deny passes.
 - Multi-node matchmaking and regional relays require a separate design and
   evidence of need; current ownership does not assume production is always one node.
 - Echo cancellation is enabled; additional noise suppression/automatic gain
