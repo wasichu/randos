@@ -1,19 +1,23 @@
 # randos — current architecture and roadmap
 
-CI dependency repair in progress on 2026-11-26: the routine dependency PRs
-passed their checks but failed the final clean-tree guard because fetching
-resolved newer transitive dependencies. Commit both resolved Mix locks and
-use `deps.get --check-locked` in CI and scheduled audits; keep the clean-tree
-guard. Bring the locally verified WORLD diagnostic fix into the PR base.
-Dependency labeling runs only for Dependabot events; maintainer repair pushes
-retain existing labels without requiring bot-signed commit metadata.
-The major native update separately bypasses the vendored ICE patch and needs
-a patch rebase with the existing dead-path/recovery timing guards preserved.
-Phoenix/LiveView advisory fixes are handled in the server dependency PR.
-**Leave** runtime ownership and client policy unchanged; **link** upstream
-changes and validation to each dependency PR. README and self-hosting need no
-change because product behavior, configuration and deployment are unchanged;
-development documents the checked dependency-fetch workflow.
+Verified CI root causes locally on 2026-11-26: both projects used the patched
+path renderer but retained its obsolete Hex lock entry. Hex recursively
+unlocked that entry's former dependency subtree, so unrelated PRs failed the
+final clean-tree guard after fetching newer versions. Removing only those two
+stale entries preserves the existing locks, including telemetry 1.4.2 despite
+1.4.3 being available, in fresh checked fetches. Keep `--check-locked`, the
+clean-tree guard and a renderer-lock regression guard; no renderer/runtime
+patch or timeout is relaxed.
+
+Advisor review also traced bot labeling to its first-commit assumption. Scan
+paginated commits for verified Dependabot metadata instead; signed `*-major`
+groups cover breaking 0.x updates. Seven offline fixtures cover maintainer/base
+commits, forged/unsigned or missing metadata, pagination and major classification.
+No PR checkout or verification bypass is introduced. Full native and browser/TUI
+CI must pass before this repair and the dependent update PRs merge. **Leave**
+runtime ownership unchanged and **link** dependency changes to their PR evidence.
+README and self-hosting need no change because product behavior and operations
+are unchanged; development and vendor guides document the dependency invariant.
 
 Server dependency qualification on 2026-11-26: Phoenix 1.8.17 and LiveView
 1.2.15 replace the versions flagged by the scheduled Hex audit; the existing

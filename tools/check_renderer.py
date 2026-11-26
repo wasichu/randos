@@ -1,6 +1,7 @@
 """Offline guard for the narrowly patched terminal renderer and native lock."""
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -8,6 +9,12 @@ SOURCE = ROOT / "vendor/ex_ratatui"
 
 
 def main():
+    for name in ("mix.lock", "clients/tui/mix.lock"):
+        # The renderer is a path dependency. Its obsolete Hex lock record
+        # makes Hex recursively unlock its former transitive dependencies.
+        assert not re.search(r'^\s*"ex_ratatui":', (ROOT / name).read_text(), re.M), (
+            f"{name}: remove the stale Hex renderer entry with mix deps.unlock ex_ratatui"
+        )
     manifest = json.loads((ROOT / "vendor/ex_ratatui.upstream.json").read_text())
     patched = set(manifest["patched_files"])
     assert patched <= manifest["files"].keys()
