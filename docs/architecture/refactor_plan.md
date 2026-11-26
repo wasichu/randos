@@ -5,6 +5,8 @@ passed their checks but failed the final clean-tree guard because fetching
 resolved newer transitive dependencies. Commit both resolved Mix locks and
 use `deps.get --check-locked` in CI and scheduled audits; keep the clean-tree
 guard. Bring the locally verified WORLD diagnostic fix into the PR base.
+Dependency labeling runs only for Dependabot events; maintainer repair pushes
+retain existing labels without requiring bot-signed commit metadata.
 The major native update separately bypasses the vendored ICE patch and needs
 a patch rebase with the existing dead-path/recovery timing guards preserved.
 Phoenix/LiveView advisory fixes are handled in the server dependency PR.
